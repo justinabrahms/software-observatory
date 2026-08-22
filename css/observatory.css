@@ -598,11 +598,11 @@ a.wikilink:hover {
 
 /* ── Atlas page — matrix ────────────────────────────────────────────────── */
 .atlas-container {
-  max-width: var(--max-width);
+  max-width: 960px;
   margin: 0 auto;
   padding: 2rem 2rem 5rem;
 }
-.atlas-intro { margin-bottom: 3rem; }
+.atlas-intro { margin-bottom: 2rem; }
 
 /* The matrix */
 .atlas-matrix-wrapper {
@@ -716,8 +716,10 @@ a.wikilink:hover {
 .atlas-axes {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   padding: 0 .5rem;
+  flex-wrap: wrap;
+  gap: .5rem;
 }
 .axis-label-h {
   font-family: var(--font-mono);
@@ -1359,26 +1361,32 @@ a.wikilink:hover {
 
 /* Family map */
 .family-map-section {
-  margin-top: 4rem;
-  padding-top: 3rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
   border-top: 1px solid var(--border);
 }
 .family-map-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+  gap: .8rem;
 }
 .family-map-card {
   display: flex;
   flex-direction: column;
   gap: .3rem;
-  padding: 1.2rem;
+  padding: 1rem;
   background: var(--bg-card);
   border: 1px solid var(--border);
+  border-left: 2px solid var(--accent-soft);
   border-radius: 6px;
-  transition: border-color .2s;
+  transition: border-color .2s, transform .2s;
+  text-decoration: none;
 }
-.family-map-card:hover { border-color: var(--accent-soft); }
+.family-map-card:hover {
+  border-color: var(--accent-soft);
+  border-left-color: var(--accent);
+  transform: translateX(2px);
+}
 .fam-num {
   font-family: var(--font-mono);
   font-size: .72rem;
