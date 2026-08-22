@@ -1,7 +1,7 @@
 // Software Observatory — minimal interactivity
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Filter list active toggle
+  // Filter list active toggle (general)
   document.querySelectorAll('.filter-list li').forEach(li => {
     li.addEventListener('click', () => {
       const siblings = li.closest('.filter-list').querySelectorAll('li');
@@ -9,6 +9,24 @@ document.addEventListener('DOMContentLoaded', () => {
       li.classList.add('active');
     });
   });
+
+  // Catalog family filter
+  const familyFilter = document.getElementById('family-filter');
+  if (familyFilter) {
+    familyFilter.querySelectorAll('li').forEach(li => {
+      li.addEventListener('click', () => {
+        const family = li.dataset.family;
+        const sections = document.querySelectorAll('.family-section');
+        sections.forEach(section => {
+          if (family === 'all' || section.dataset.family === family) {
+            section.classList.remove('hidden');
+          } else {
+            section.classList.add('hidden');
+          }
+        });
+      });
+    });
+  }
 
   // Signal card keyboard accessibility
   document.querySelectorAll('.signal-card').forEach(card => {
@@ -20,25 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
           e.preventDefault();
           card.click();
         }
-      });
-    }
-  });
-
-  // Atlas dot hover tooltip
-  document.querySelectorAll('.atlas-svg .zone-group').forEach(g => {
-    const dot = g.querySelector('.zone-dot');
-    const label = g.querySelector('text');
-    if (dot && label) {
-      label.style.opacity = '0.7';
-      dot.addEventListener('mouseenter', () => {
-        label.style.opacity = '1';
-        label.style.fill = 'var(--accent)';
-        dot.setAttribute('r', '10');
-      });
-      dot.addEventListener('mouseleave', () => {
-        label.style.opacity = '0.7';
-        label.style.fill = '';
-        dot.setAttribute('r', '7');
       });
     }
   });

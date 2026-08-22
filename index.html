@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Software Observatory</title>
-  <meta name="description" content="Navigating the signals that software emits. An industry resource.">
+  <meta name="description" content="A catalog of epistemic sensors — the observable signals that increase our confidence that software is correct, maintainable, and behaving as intended.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -18,13 +18,13 @@
     </a>
     <nav class="primary-nav">
       <a href="pages/catalog.html">Catalog</a>
-      <a href="pages/signals.html">Signals</a>
       <a href="pages/atlas.html">Atlas</a>
+      <a href="pages/framework.html">Framework</a>
       <a href="pages/about.html">About</a>
     </nav>
     <label class="search-toggle">
       <input type="checkbox" id="search-checkbox" hidden>
-      <span class="search-hint">Search signals…</span>
+      <span class="search-hint">Search sensors…</span>
     </label>
   </header>
 
@@ -34,20 +34,21 @@
       <div class="hero-inner">
         <p class="eyebrow">An industry resource</p>
         <h1 class="hero-title">
-          Navigating the signals<br>
-          <em>that software emits.</em>
+          What independent observations<br>
+          <em>would cause us to believe</em><br>
+          this software is correct?
         </h1>
         <p class="hero-lede">
-          Software is not silent. Every system, at every layer, continuously
-          emits evidence of what it is doing — logs, metrics, traces, events,
-          states, failures, recoveries. The Software Observatory is a field
-          guide to that evidence: what to look for, where it appears, how to
-          read it, and what it tells you about the health, behavior, and
-          intent of the systems you depend on.
+          Software is increasingly an opaque artifact. We cannot — and often
+          do not want to — fully understand every implementation. The Software
+          Observatory is a catalog of <a href="pages/catalog.html" class="wikilink">epistemic sensors</a>:
+          the observable signals that reduce uncertainty about whether a system
+          is correct, maintainable, and behaving as intended. Not "code quality
+          metrics." Measurement instruments pointed at different failure modes.
         </p>
         <div class="hero-actions">
           <a href="pages/catalog.html" class="btn btn-primary">Browse the catalog →</a>
-          <a href="pages/atlas.html" class="btn btn-ghost">Open the atlas</a>
+          <a href="pages/atlas.html" class="btn btn-ghost">View the confidence stack</a>
         </div>
       </div>
       <div class="hero-visual" aria-hidden="true">
@@ -63,88 +64,259 @@
       </div>
     </section>
 
-    <!-- THREE PILLARS -->
-    <section class="pillars">
-      <article class="pillar">
-        <span class="pillar-num">01</span>
-        <h2 class="pillar-title">Observe</h2>
-        <p class="pillar-body">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-          ad minim veniam, quis nostrud exercitation ullamco laboris.
+    <!-- CORE INSIGHT -->
+    <section class="core-insight">
+      <blockquote class="big-quote">
+        <p>
+          No single sensor measures correctness. Coverage measures execution.
+          <a href="pages/sensors/mutation-testing.html" class="wikilink">Mutation testing</a> measures
+          test sensitivity. <a href="pages/sensors/type-checker.html" class="wikilink">Types</a> measure
+          a particular class of structural inconsistency.
+          <a href="pages/sensors/contract-tests.html" class="wikilink">Contracts</a> measure boundary
+          assumptions. <a href="pages/sensors/observability-events.html" class="wikilink">Observability</a>
+          measures what actually happened and preserves enough dimensionality
+          to investigate unknown unknowns.
         </p>
-        <a href="pages/signals.html" class="pillar-link">Signal taxonomy →</a>
-      </article>
-      <article class="pillar">
-        <span class="pillar-num">02</span>
-        <h2 class="pillar-title">Interpret</h2>
-        <p class="pillar-body">
-          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-          dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-          non proident, sunt in culpa qui officia deserunt mollit anim.
+        <p>
+          They are all measurement instruments pointed at different failure modes.
         </p>
-        <a href="pages/catalog.html" class="pillar-link">Interpretation catalog →</a>
-      </article>
-      <article class="pillar">
-        <span class="pillar-num">03</span>
-        <h2 class="pillar-title">Navigate</h2>
-        <p class="pillar-body">
-          Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-          accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae
-          ab illo inventore veritatis et quasi architecto beatae vitae.
-        </p>
-        <a href="pages/atlas.html" class="pillar-link">Open the atlas →</a>
-      </article>
+      </blockquote>
     </section>
 
-    <!-- FEATURED SIGNAL -->
+    <!-- ELEVEN FAMILIES -->
+    <section class="families-section">
+      <h2 class="section-heading">Eleven sensor families</h2>
+      <p class="section-lede">
+        The catalog is organized into eleven families, each asking a different
+        question about the system. Together, they form a mesh of independent
+        evidence — no single sensor is sufficient, but the combination
+        constrains uncertainty from multiple directions.
+      </p>
+      <div class="families-grid">
+        <a href="pages/catalog.html#structural" class="family-card">
+          <span class="family-num">01</span>
+          <h3 class="family-name">Structural</h3>
+          <p class="family-question">"Is this artifact internally coherent?"</p>
+          <p class="family-examples">Compiler, type checker, linter, formatter, schema validator</p>
+        </a>
+        <a href="pages/catalog.html#behavioral" class="family-card">
+          <span class="family-num">02</span>
+          <h3 class="family-name">Behavioral</h3>
+          <p class="family-question">"Does it do what we expect?"</p>
+          <p class="family-examples">Unit, integration, E2E, contract, snapshot tests</p>
+        </a>
+        <a href="pages/catalog.html#test-effectiveness" class="family-card">
+          <span class="family-num">03</span>
+          <h3 class="family-name">Test Effectiveness</h3>
+          <p class="family-question">"Do our tests actually detect failures?"</p>
+          <p class="family-examples">Coverage, diff coverage, mutation testing</p>
+        </a>
+        <a href="pages/catalog.html#invariants" class="family-card">
+          <span class="family-num">04</span>
+          <h3 class="family-name">Invariants</h3>
+          <p class="family-question">"What must always be true?"</p>
+          <p class="family-examples">Balance ≥ 0, every FK valid, every request has one ID</p>
+        </a>
+        <a href="pages/catalog.html#adversarial" class="family-card">
+          <span class="family-num">05</span>
+          <h3 class="family-name">Adversarial</h3>
+          <p class="family-question">"Can we make our evidence of correctness fail?"</p>
+          <p class="family-examples">Fuzzing, mutation testing, fault injection, chaos</p>
+        </a>
+        <a href="pages/catalog.html#runtime" class="family-card">
+          <span class="family-num">06</span>
+          <h3 class="family-name">Runtime</h3>
+          <p class="family-question">"What is it actually doing?"</p>
+          <p class="family-examples">Logs, traces, metrics, profiles, high-cardinality events</p>
+        </a>
+        <a href="pages/catalog.html#change" class="family-card">
+          <span class="family-num">07</span>
+          <h3 class="family-name">Change</h3>
+          <p class="family-question">"What did this change actually affect?"</p>
+          <p class="family-examples">Diff coverage, API compatibility, canary, shadow traffic</p>
+        </a>
+        <a href="pages/catalog.html#architecture" class="family-card">
+          <span class="family-num">08</span>
+          <h3 class="family-name">Architecture</h3>
+          <p class="family-question">"Is the system becoming harder to reason about?"</p>
+          <p class="family-examples">Dependency graphs, coupling, fitness functions, hotspots</p>
+        </a>
+        <a href="pages/catalog.html#evolution" class="family-card">
+          <span class="family-num">09</span>
+          <h3 class="family-name">Evolution</h3>
+          <p class="family-question">"Does this look like changes that caused trouble before?"</p>
+          <p class="family-examples">Revert rate, regression rate, churn, incident correlation</p>
+        </a>
+        <a href="pages/catalog.html#comprehension" class="family-card">
+          <span class="family-num">10</span>
+          <h3 class="family-name">Human Comprehension</h3>
+          <p class="family-question">"Can another observer understand and challenge this?"</p>
+          <p class="family-examples">Review, explainability tests, documentation drift, onboarding</p>
+        </a>
+        <a href="pages/catalog.html#ai-sensors" class="family-card">
+          <span class="family-num">11</span>
+          <h3 class="family-name">AI-Generated Code</h3>
+          <p class="family-question">"What evidence do we have that this change is safe?"</p>
+          <p class="family-examples">Agent sensor stacks, computational gates, independence</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- CONFIDENCE STACK PREVIEW -->
+    <section class="stack-preview">
+      <h2 class="section-heading">The confidence stack</h2>
+      <p class="section-lede">
+        Sensors are not peers. They form a hierarchy — from the cheapest, most
+        certain signals at the bottom to the most expensive, most meaningful
+        signals at the top. Each layer depends on the layers below it.
+      </p>
+      <div class="stack-diagram">
+        <div class="stack-layer stack-top">
+          <span class="stack-label">User outcome</span>
+          <span class="stack-desc">Did the system accomplish its purpose for users?</span>
+        </div>
+        <div class="stack-layer">
+          <span class="stack-label">Production behavior</span>
+          <span class="stack-desc">What is it actually doing in the real world?</span>
+        </div>
+        <div class="stack-layer">
+          <span class="stack-label">Canary / shadow</span>
+          <span class="stack-desc">Does the new version behave differently from the old?</span>
+        </div>
+        <div class="stack-layer">
+          <span class="stack-label">Integration tests</span>
+          <span class="stack-desc">Does it work connected to its real dependencies?</span>
+        </div>
+        <div class="stack-layer">
+          <span class="stack-label">Behavioral tests</span>
+          <span class="stack-desc">Does it do what we expect for given inputs?</span>
+        </div>
+        <div class="stack-layer">
+          <span class="stack-label">Property / metamorphic</span>
+          <span class="stack-desc">Does it obey generalized properties across input spaces?</span>
+        </div>
+        <div class="stack-layer">
+          <span class="stack-label">Mutation testing</span>
+          <span class="stack-desc">Would our tests detect plausible wrong implementations?</span>
+        </div>
+        <div class="stack-layer">
+          <span class="stack-label">Static analysis / types</span>
+          <span class="stack-desc">Is it internally coherent and structurally valid?</span>
+        </div>
+        <div class="stack-layer">
+          <span class="stack-label">Compilation</span>
+          <span class="stack-desc">Is it a valid inhabitant of the language?</span>
+        </div>
+        <div class="stack-layer stack-bottom">
+          <span class="stack-label">Source text</span>
+          <span class="stack-desc">The opaque artifact itself.</span>
+        </div>
+      </div>
+      <div class="stack-cta">
+        <a href="pages/atlas.html" class="btn btn-ghost">Explore the full atlas →</a>
+      </div>
+    </section>
+
+    <!-- SENSOR PROPERTIES PREVIEW -->
+    <section class="properties-preview">
+      <h2 class="section-heading">Every sensor has properties</h2>
+      <p class="section-lede">
+        We don't rank sensors as "good" or "bad." Each sensor is characterized
+        along six dimensions that determine when it is useful and what it can
+        — and cannot — tell you.
+      </p>
+      <div class="properties-grid">
+        <div class="property-card">
+          <h3 class="property-name">Oracle strength</h3>
+          <p class="property-desc">How confidently does it know that something is wrong?</p>
+          <div class="property-bar"><div class="bar-fill" style="width:100%"></div></div>
+          <span class="property-example">compiler error</span>
+          <div class="property-bar"><div class="bar-fill" style="width:80%"></div></div>
+          <span class="property-example">test assertion</span>
+          <div class="property-bar"><div class="bar-fill" style="width:40%"></div></div>
+          <span class="property-example">coverage</span>
+        </div>
+        <div class="property-card">
+          <h3 class="property-name">Independence</h3>
+          <p class="property-desc">Can the thing being evaluated manipulate the sensor?</p>
+          <p class="property-note">The producer and evaluator should be separated wherever possible.</p>
+        </div>
+        <div class="property-card">
+          <h3 class="property-name">Feedback latency</h3>
+          <p class="property-desc">How long until the sensor tells you something?</p>
+          <div class="latency-list">
+            <span>compiler <em>milliseconds</em></span>
+            <span>unit tests <em>seconds</em></span>
+            <span>integration <em>minutes</em></span>
+            <span>canary <em>minutes</em></span>
+            <span>production <em>hours/days</em></span>
+            <span>incident <em>weeks</em></span>
+          </div>
+        </div>
+        <div class="property-card">
+          <h3 class="property-name">Actionability</h3>
+          <p class="property-desc">Does it say "bad" or "Foo violates invariant X because Y"?</p>
+          <p class="property-note">Guiding sensors tell the agent what to do next.</p>
+        </div>
+      </div>
+      <div class="properties-cta">
+        <a href="pages/framework.html" class="btn btn-ghost">The full framework →</a>
+      </div>
+    </section>
+
+    <!-- FEATURED SENSOR -->
     <section class="featured-signal">
       <div class="featured-meta">
-        <span class="tag tag-type">Metric</span>
-        <span class="tag tag-layer">Runtime</span>
-        <span class="tag tag-confidence">High confidence</span>
+        <span class="tag tag-family">Test Effectiveness</span>
+        <span class="tag tag-confidence">High oracle strength</span>
       </div>
-      <h2 class="featured-title"><a href="pages/signals.html" class="wikilink" style="border-bottom:none">P99 Latency Divergence</a></h2>
+      <h2 class="featured-title"><a href="pages/sensors/mutation-testing.html" class="wikilink" style="border-bottom:none">Mutation Testing</a></h2>
       <p class="featured-blurb">
-        When the <a href="pages/signals.html" class="wikilink">99th-percentile response time</a> diverges sharply from the <a href="#" class="wikilink">median</a>,
-        the system is telling you something specific: a small number of
-        requests are hitting a <a href="#" class="wikilink">pathological path</a>. This signal appears in
-        virtually every <a href="#" class="wikilink">request-processing system</a>, yet is frequently drowned
-        out by <a href="#" class="wikilink">aggregate averages</a>.
+        Take <code>if user.is_admin: allow()</code> and mutate it to
+        <code>if not user.is_admin: allow()</code>. If all your tests still
+        pass, your tests did not actually establish the behavior you thought
+        they established. Mutation testing is a sensor of test
+        <em>sensitivity</em> rather than test <em>presence</em> — and it may
+        be one of the most interesting sensors in the entire catalog.
       </p>
       <div class="featured-cta">
-        <a href="pages/signals.html">Read the full entry →</a>
+        <a href="pages/sensors/mutation-testing.html">Read the full entry →</a>
       </div>
     </section>
 
     <!-- RECENT ENTRIES -->
     <section class="recent">
-      <h2 class="section-heading">Recent additions</h2>
+      <h2 class="section-heading">Catalog entries</h2>
       <ul class="entry-list">
         <li class="entry">
-          <span class="entry-date">2026-08-21</span>
-          <span class="entry-type">Event</span>
-          <a href="#" class="entry-title wikilink" style="border-bottom:none">Graceful Shutdown Backpressure</a>
+          <span class="entry-family">Structural</span>
+          <a href="pages/sensors/type-checker.html" class="entry-title wikilink" style="border-bottom:none">Type Checker</a>
+          <span class="entry-blurb">Is this artifact internally coherent? The implementation doesn't get to argue.</span>
         </li>
         <li class="entry">
-          <span class="entry-date">2026-08-19</span>
-          <span class="entry-type">Log Pattern</span>
-          <a href="#" class="entry-title wikilink" style="border-bottom:none">Silent Retry Storms</a>
+          <span class="entry-family">Adversarial</span>
+          <a href="pages/sensors/fuzzing.html" class="entry-title wikilink" style="border-bottom:none">Fuzzing</a>
+          <span class="entry-blurb">What happens on inputs humans didn't think of?</span>
         </li>
         <li class="entry">
-          <span class="entry-date">2026-08-17</span>
-          <span class="entry-type">Metric</span>
-          <a href="#" class="entry-title wikilink" style="border-bottom:none">Connection Pool Exhaustion Slope</a>
+          <span class="entry-family">Runtime</span>
+          <a href="pages/sensors/observability-events.html" class="entry-title wikilink" style="border-bottom:none">Observability Events</a>
+          <span class="entry-blurb">Wide structured events with enough context to investigate unknown unknowns.</span>
         </li>
         <li class="entry">
-          <span class="entry-date">2026-08-14</span>
-          <span class="entry-type">Trace</span>
-          <a href="#" class="entry-title wikilink" style="border-bottom:none">Span-Tree Asymmetry</a>
+          <span class="entry-family">Change</span>
+          <a href="pages/sensors/diff-coverage.html" class="entry-title wikilink" style="border-bottom:none">Diff Coverage</a>
+          <span class="entry-blurb">Did the code I just changed have evidence attached to it?</span>
         </li>
         <li class="entry">
-          <span class="entry-date">2026-08-12</span>
-          <span class="entry-type">State</span>
-          <a href="#" class="entry-title wikilink" style="border-bottom:none">Leader Election Thrash</a>
+          <span class="entry-family">Invariants</span>
+          <a href="pages/sensors/runtime-invariants.html" class="entry-title wikilink" style="border-bottom:none">Runtime Invariants</a>
+          <span class="entry-blurb">"5,213 payments occurred; 17 have no corresponding order transition."</span>
+        </li>
+        <li class="entry">
+          <span class="entry-family">Adversarial</span>
+          <a href="pages/sensors/metamorphic-testing.html" class="entry-title wikilink" style="border-bottom:none">Metamorphic Testing</a>
+          <span class="entry-blurb">You don't know the answer, but you know how the answer should change.</span>
         </li>
       </ul>
     </section>
@@ -153,7 +325,7 @@
   <footer class="site-footer">
     <div class="footer-inner">
       <p class="footer-tagline">
-        Software Observatory — an open reference for the signals software emits.
+        Software Observatory — a catalog of epistemic sensors for software.
       </p>
       <p class="footer-copy">© 2026 Software Observatory · <a href="pages/about.html">About</a> · <a href="#">RSS</a> · <span class="license-badge">CC BY-NC-SA 4.0</span></p>
     </div>
