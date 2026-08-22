@@ -173,9 +173,49 @@ LATENCY_LABELS = {
 # ── Markdown rendering ──────────────────────────────────────────────────────
 
 def render_markdown(text):
-    """Render markdown to HTML, converting [text](atlas.html) etc. to links."""
+    """Render markdown to HTML."""
     md = markdown.Markdown(extensions=["tables", "fenced_code", "smarty"])
     return md.convert(text)
+
+
+def fix_link_depths(html_str, pages_depth=""):
+    """Fix relative URLs in rendered markdown HTML for the current page depth.
+    
+    pages_depth is the relative path to pages/ from the current page.
+    For pages/*.html, pages_depth="" (links like catalog.html are correct).
+    For pages/sensors/*.html, pages_depth="../" (links need ../ prefix).
+    
+    Also adds a class to inline <a> tags so they get link styling.
+    """
+    import re
+    
+    # Add link-body class to <a> tags that don't already have a class
+    # This gives them visible link styling
+    def add_link_class(match):
+        tag = match.group(0)
+        if 'class="' in tag:
+            return tag  # already has a class
+        if 'href="#"' in tag:
+            return tag  # placeholder links
+        return tag.replace('<a ', '<a class="body-link" ', 1)
+    
+    html_str = re.sub(r'<a(?![^>]*class=)[^>]*>', add_link_class, html_str)
+    
+    if not pages_depth:
+        return html_str
+    
+    # Fix relative links: prefix pages/-relative URLs with pages_depth
+    # Match href="something.html or href="sensors/... but not http/https/#
+    def fix_href(match):
+        full = match.group(0)
+        url = match.group(1)
+        if url.startswith(('http://', 'https://', '#', 'mailto:')):
+            return full
+        return f'href="{pages_depth}{url}"'
+    
+    html_str = re.sub(r'href="([^"]+)"', fix_href, html_str)
+    
+    return html_str
 
 
 # ── Frontmatter parsing ─────────────────────────────────────────────────────
@@ -210,7 +250,7 @@ def load_sensors():
         meta, body = parse_frontmatter(filepath)
         slug = filepath.stem
         meta["slug"] = slug
-        meta["body_html"] = render_markdown(body)
+        meta["body_html"] = fix_link_depths(render_markdown(body), pages_depth="../")
         meta["filename"] = str(filepath)
         sensors.append(meta)
 
