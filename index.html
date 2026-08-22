@@ -3,8 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Software Observatory</title>
-  <meta name="description" content="A catalog of epistemic sensors — the observable signals that increase our confidence that software is correct, maintainable, and behaving as intended.">
+  <title>Software Observatory — Software Observatory</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -17,19 +16,17 @@
       <span class="logo-text">Software&nbsp;Observatory</span>
     </a>
     <nav class="primary-nav">
-      <a href="pages/catalog.html">Catalog</a>
-      <a href="pages/atlas.html">Atlas</a>
-      <a href="pages/framework.html">Framework</a>
-      <a href="pages/about.html">About</a>
+      <a href="catalog.html">Catalog</a>
+      <a href="atlas.html">Atlas</a>
+      <a href="framework.html">Framework</a>
+      <a href="about.html">About</a>
     </nav>
     <label class="search-toggle">
-      <input type="checkbox" id="search-checkbox" hidden>
+      <input type="checkbox" hidden>
       <span class="search-hint">Search sensors…</span>
     </label>
   </header>
-
   <main>
-    <!-- HERO -->
     <section class="hero">
       <div class="hero-inner">
         <p class="eyebrow">An industry resource</p>
@@ -48,7 +45,7 @@
         </p>
         <div class="hero-actions">
           <a href="pages/catalog.html" class="btn btn-primary">Browse the catalog →</a>
-          <a href="pages/atlas.html" class="btn btn-ghost">View the confidence stack</a>
+          <a href="pages/atlas.html" class="btn btn-ghost">Open the atlas</a>
         </div>
       </div>
       <div class="hero-visual" aria-hidden="true">
@@ -64,7 +61,6 @@
       </div>
     </section>
 
-    <!-- CORE INSIGHT -->
     <section class="core-insight">
       <blockquote class="big-quote">
         <p>
@@ -77,13 +73,10 @@
           measures what actually happened and preserves enough dimensionality
           to investigate unknown unknowns.
         </p>
-        <p>
-          They are all measurement instruments pointed at different failure modes.
-        </p>
+        <p>They are all measurement instruments pointed at different failure modes.</p>
       </blockquote>
     </section>
 
-    <!-- ELEVEN FAMILIES -->
     <section class="families-section">
       <h2 class="section-heading">Eleven sensor families</h2>
       <p class="section-lede">
@@ -115,7 +108,7 @@
           <span class="family-num">04</span>
           <h3 class="family-name">Invariants</h3>
           <p class="family-question">"What must always be true?"</p>
-          <p class="family-examples">Balance ≥ 0, every FK valid, every request has one ID</p>
+          <p class="family-examples">Balance &gt;= 0, every FK valid, every request has one ID</p>
         </a>
         <a href="pages/catalog.html#adversarial" class="family-card">
           <span class="family-num">05</span>
@@ -162,7 +155,6 @@
       </div>
     </section>
 
-    <!-- CONFIDENCE STACK PREVIEW -->
     <section class="stack-preview">
       <h2 class="section-heading">The confidence stack</h2>
       <p class="section-lede">
@@ -173,37 +165,37 @@
       <div class="stack-diagram">
         <div class="stack-layer stack-top">
           <span class="stack-label">User outcome</span>
-          <span class="stack-desc">Did the system accomplish its purpose for users?</span>
+          <span class="stack-desc">Does the system produce the intended result for users?</span>
         </div>
-        <div class="stack-layer">
+        <div class="stack-layer ">
           <span class="stack-label">Production behavior</span>
           <span class="stack-desc">What is it actually doing in the real world?</span>
         </div>
-        <div class="stack-layer">
+        <div class="stack-layer ">
           <span class="stack-label">Canary / shadow</span>
           <span class="stack-desc">Does the new version behave differently from the old?</span>
         </div>
-        <div class="stack-layer">
+        <div class="stack-layer ">
           <span class="stack-label">Integration tests</span>
           <span class="stack-desc">Does it work connected to its real dependencies?</span>
         </div>
-        <div class="stack-layer">
+        <div class="stack-layer ">
           <span class="stack-label">Behavioral tests</span>
           <span class="stack-desc">Does it do what we expect for given inputs?</span>
         </div>
-        <div class="stack-layer">
+        <div class="stack-layer ">
           <span class="stack-label">Property / metamorphic</span>
           <span class="stack-desc">Does it obey generalized properties across input spaces?</span>
         </div>
-        <div class="stack-layer">
+        <div class="stack-layer ">
           <span class="stack-label">Mutation testing</span>
           <span class="stack-desc">Would our tests detect plausible wrong implementations?</span>
         </div>
-        <div class="stack-layer">
+        <div class="stack-layer ">
           <span class="stack-label">Static analysis / types</span>
           <span class="stack-desc">Is it internally coherent and structurally valid?</span>
         </div>
-        <div class="stack-layer">
+        <div class="stack-layer ">
           <span class="stack-label">Compilation</span>
           <span class="stack-desc">Is it a valid inhabitant of the language?</span>
         </div>
@@ -213,58 +205,10 @@
         </div>
       </div>
       <div class="stack-cta">
-        <a href="pages/atlas.html" class="btn btn-ghost">Explore the full atlas →</a>
+        <a href="pages/atlas.html" class="btn btn-ghost">Open the atlas →</a>
       </div>
     </section>
 
-    <!-- SENSOR PROPERTIES PREVIEW -->
-    <section class="properties-preview">
-      <h2 class="section-heading">Every sensor has properties</h2>
-      <p class="section-lede">
-        We don't rank sensors as "good" or "bad." Each sensor is characterized
-        along six dimensions that determine when it is useful and what it can
-        — and cannot — tell you.
-      </p>
-      <div class="properties-grid">
-        <div class="property-card">
-          <h3 class="property-name">Oracle strength</h3>
-          <p class="property-desc">How confidently does it know that something is wrong?</p>
-          <div class="property-bar"><div class="bar-fill" style="width:100%"></div></div>
-          <span class="property-example">compiler error</span>
-          <div class="property-bar"><div class="bar-fill" style="width:80%"></div></div>
-          <span class="property-example">test assertion</span>
-          <div class="property-bar"><div class="bar-fill" style="width:40%"></div></div>
-          <span class="property-example">coverage</span>
-        </div>
-        <div class="property-card">
-          <h3 class="property-name">Independence</h3>
-          <p class="property-desc">Can the thing being evaluated manipulate the sensor?</p>
-          <p class="property-note">The producer and evaluator should be separated wherever possible.</p>
-        </div>
-        <div class="property-card">
-          <h3 class="property-name">Feedback latency</h3>
-          <p class="property-desc">How long until the sensor tells you something?</p>
-          <div class="latency-list">
-            <span>compiler <em>milliseconds</em></span>
-            <span>unit tests <em>seconds</em></span>
-            <span>integration <em>minutes</em></span>
-            <span>canary <em>minutes</em></span>
-            <span>production <em>hours/days</em></span>
-            <span>incident <em>weeks</em></span>
-          </div>
-        </div>
-        <div class="property-card">
-          <h3 class="property-name">Actionability</h3>
-          <p class="property-desc">Does it say "bad" or "Foo violates invariant X because Y"?</p>
-          <p class="property-note">Guiding sensors tell the agent what to do next.</p>
-        </div>
-      </div>
-      <div class="properties-cta">
-        <a href="pages/framework.html" class="btn btn-ghost">The full framework →</a>
-      </div>
-    </section>
-
-    <!-- FEATURED SENSOR -->
     <section class="featured-signal">
       <div class="featured-meta">
         <span class="tag tag-family">Test Effectiveness</span>
@@ -284,53 +228,48 @@
       </div>
     </section>
 
-    <!-- RECENT ENTRIES -->
     <section class="recent">
       <h2 class="section-heading">Catalog entries</h2>
       <ul class="entry-list">
         <li class="entry">
-          <span class="entry-family">Structural</span>
-          <a href="pages/sensors/type-checker.html" class="entry-title wikilink" style="border-bottom:none">Type Checker</a>
-          <span class="entry-blurb">Is this artifact internally coherent? The implementation doesn't get to argue.</span>
+          <span class="entry-family">Behavioral</span>
+          <a href="pages/sensors/contract-tests.html" class="entry-title wikilink" style="border-bottom:none">Contract Tests</a>
+          <span class="entry-blurb">Does service A continue satisfying the assumptions of service B? Contract</span>
+        </li>
+        <li class="entry">
+          <span class="entry-family">Test Effectiveness</span>
+          <a href="pages/sensors/diff-coverage.html" class="entry-title wikilink" style="border-bottom:none">Diff Coverage</a>
+          <span class="entry-blurb">You don&amp;rsquo;t necessarily care whether some 15-year-old module has 43% coverage.</span>
         </li>
         <li class="entry">
           <span class="entry-family">Adversarial</span>
           <a href="pages/sensors/fuzzing.html" class="entry-title wikilink" style="border-bottom:none">Fuzzing</a>
-          <span class="entry-blurb">What happens on inputs humans didn't think of?</span>
-        </li>
-        <li class="entry">
-          <span class="entry-family">Runtime</span>
-          <a href="pages/sensors/observability-events.html" class="entry-title wikilink" style="border-bottom:none">Observability Events</a>
-          <span class="entry-blurb">Wide structured events with enough context to investigate unknown unknowns.</span>
-        </li>
-        <li class="entry">
-          <span class="entry-family">Change</span>
-          <a href="pages/sensors/diff-coverage.html" class="entry-title wikilink" style="border-bottom:none">Diff Coverage</a>
-          <span class="entry-blurb">Did the code I just changed have evidence attached to it?</span>
-        </li>
-        <li class="entry">
-          <span class="entry-family">Invariants</span>
-          <a href="pages/sensors/runtime-invariants.html" class="entry-title wikilink" style="border-bottom:none">Runtime Invariants</a>
-          <span class="entry-blurb">"5,213 payments occurred; 17 have no corresponding order transition."</span>
+          <span class="entry-blurb">What happens on inputs humans didn&amp;rsquo;t think of? Fuzzing is a sensor of</span>
         </li>
         <li class="entry">
           <span class="entry-family">Adversarial</span>
           <a href="pages/sensors/metamorphic-testing.html" class="entry-title wikilink" style="border-bottom:none">Metamorphic Testing</a>
-          <span class="entry-blurb">You don't know the answer, but you know how the answer should change.</span>
+          <span class="entry-blurb">You don&amp;rsquo;t know the answer, but you know how the answer should change. This</span>
+        </li>
+        <li class="entry">
+          <span class="entry-family">Test Effectiveness</span>
+          <a href="pages/sensors/mutation-testing.html" class="entry-title wikilink" style="border-bottom:none">Mutation Testing</a>
+          <span class="entry-blurb">Take if user.is_admin: allow() and mutate it to</span>
+        </li>
+        <li class="entry">
+          <span class="entry-family">Runtime</span>
+          <a href="pages/sensors/observability-events.html" class="entry-title wikilink" style="border-bottom:none">Observability Events</a>
+          <span class="entry-blurb">Traditional monitoring says: &amp;ldquo;CPU is 82%.&amp;rdquo; Observability says: &amp;ldquo;Show me</span>
         </li>
       </ul>
     </section>
   </main>
-
   <footer class="site-footer">
     <div class="footer-inner">
-      <p class="footer-tagline">
-        Software Observatory — a catalog of epistemic sensors for software.
-      </p>
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
       <p class="footer-copy">© 2026 Software Observatory · <a href="pages/about.html">About</a> · <a href="#">RSS</a> · <span class="license-badge">CC BY-NC-SA 4.0</span></p>
     </div>
   </footer>
-
   <script src="js/main.js"></script>
 </body>
 </html>

@@ -545,50 +545,136 @@ a:hover { color: var(--accent); }
   color: var(--text);
 }
 
-/* ── Atlas page ────────────────────────────────────────────────────────── */
+/* ── Atlas page — matrix ────────────────────────────────────────────────── */
 .atlas-container {
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 2rem 2rem 5rem;
 }
 .atlas-intro { margin-bottom: 3rem; }
-.atlas-svg {
-  width: 100%;
-  height: auto;
-  max-width: 800px;
-  margin: 0 auto;
-  display: block;
+
+/* The matrix */
+.atlas-matrix-wrapper {
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-card);
 }
-.atlas-svg text {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  fill: var(--text-soft);
+.atlas-matrix {
+  display: grid;
+  grid-template-columns: 160px repeat(10, 1fr);
+  min-width: 900px;
 }
-.atlas-svg .zone-circle {
-  fill: none;
-  stroke: var(--border-soft);
-  transition: stroke .3s;
+.matrix-header-row {
+  display: contents;
 }
-.atlas-svg .zone-circle:hover { stroke: var(--accent); }
-.atlas-svg .zone-dot { fill: var(--accent); cursor: pointer; }
-.atlas-svg .zone-label { font-family: var(--font-serif); font-size: 14px; fill: var(--text); }
-.atlas-legend {
+.matrix-corner {
+  border-bottom: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+}
+.matrix-col-header {
+  border-bottom: 1px solid var(--border);
+  border-right: 1px solid var(--border-soft);
+  padding: .8rem .4rem;
+  text-align: center;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  min-height: 120px;
   display: flex;
-  gap: 2rem;
+  align-items: center;
   justify-content: center;
-  margin-top: 2rem;
-  flex-wrap: wrap;
 }
-.legend-item {
+.matrix-col-header:last-child { border-right: none; }
+.col-label {
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  color: var(--text-dim);
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+.matrix-row {
+  display: contents;
+}
+.matrix-row-label {
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: .8rem .8rem;
   display: flex;
   align-items: center;
   gap: .5rem;
+  background: var(--bg-soft);
+}
+.matrix-row:last-child .matrix-row-label { border-bottom: none; }
+.matrix-fam-num {
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  color: var(--accent);
+}
+.matrix-fam-name {
+  font-family: var(--font-serif);
   font-size: .85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: color .2s;
+}
+.matrix-fam-name:hover { color: var(--accent); }
+.matrix-cell {
+  border-right: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border);
+  padding: .5rem;
+  min-height: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+  align-items: center;
+  justify-content: center;
+}
+.matrix-cell:last-of-type { border-right: none; }
+.matrix-row:last-child .matrix-cell { border-bottom: none; }
+.matrix-cell.empty {
+  background: transparent;
+}
+.matrix-cell.has-sensors {
+  background: var(--signal-soft);
+}
+.matrix-chip {
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  padding: .2rem .4rem;
+  border: 1px solid var(--border-soft);
+  border-radius: 3px;
   color: var(--text-soft);
+  transition: all .2s;
+  white-space: nowrap;
 }
-.legend-dot {
-  width: 10px; height: 10px; border-radius: 50%;
+.matrix-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-glow);
 }
+
+/* Axis labels */
+.atlas-axes {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+  padding: 0 .5rem;
+}
+.axis-label-h {
+  font-family: var(--font-mono);
+  font-size: .76rem;
+  color: var(--text-dim);
+}
+.axis-label-v {
+  font-family: var(--font-mono);
+  font-size: .76rem;
+  color: var(--text-dim);
+  text-align: right;
+}
+
+/* Old atlas SVG (deprecated, keeping for reference) */
+.atlas-svg { display: none; }
 
 /* ── About page ────────────────────────────────────────────────────────── */
 .about-content {
