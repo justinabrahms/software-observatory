@@ -602,6 +602,10 @@ a.wikilink:hover {
   margin: 0 auto;
   padding: 2rem 2rem 5rem;
 }
+.atlas-container .page-header {
+  max-width: none;
+  padding: 4rem 0 2rem;
+}
 .atlas-intro { margin-bottom: 2rem; }
 
 /* The matrix */

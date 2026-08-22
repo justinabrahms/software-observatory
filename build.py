@@ -689,21 +689,21 @@ def generate_atlas_page(sensors, output_dir):
         </a>
 """
 
-    body = f"""  <section class="page-header">
-    <p class="eyebrow">The Atlas</p>
-    <h1 class="page-title">Sensor Atlas</h1>
-    <p class="page-lede">
-      A navigational map of the sensor landscape. Each row is a
-      <a href="catalog.html" class="wikilink">sensor family</a> — a question
-      you're asking about the system. Each column is a level of the
-      <a href="#" class="wikilink">confidence stack</a> — a layer of evidence,
-      from cheap and certain at the left to expensive and meaningful at the
-      right. The intersection tells you which sensors to use when you're
-      asking that question at that level.
-    </p>
-  </section>
+    body = f"""  <div class="atlas-container">
+    <section class="page-header">
+      <p class="eyebrow">The Atlas</p>
+      <h1 class="page-title">Sensor Atlas</h1>
+      <p class="page-lede">
+        A navigational map of the sensor landscape. Each row is a
+        <a href="catalog.html" class="wikilink">sensor family</a> — a question
+        you're asking about the system. Each column is a level of the
+        <a href="#" class="wikilink">confidence stack</a> — a layer of evidence,
+        from cheap and certain at the left to expensive and meaningful at the
+        right. The intersection tells you which sensors to use when you're
+        asking that question at that level.
+      </p>
+    </section>
 
-  <div class="atlas-container">
     <div class="atlas-intro">
       <p style="color:var(--text-soft);max-width:44rem;line-height:1.7;">
         Use the atlas to orient yourself. <em>What question are you
