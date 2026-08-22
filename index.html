@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Software Observatory</title>
+  <meta name="description" content="Navigating the signals that software emits. An industry resource.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/observatory.css">
+</head>
+<body>
+  <header class="site-header">
+    <a href="index.html" class="logo">
+      <span class="logo-mark">◐</span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="pages/catalog.html">Catalog</a>
+      <a href="pages/signals.html">Signals</a>
+      <a href="pages/atlas.html">Atlas</a>
+      <a href="pages/about.html">About</a>
+    </nav>
+    <label class="search-toggle">
+      <input type="checkbox" id="search-checkbox" hidden>
+      <span class="search-hint">Search signals…</span>
+    </label>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-inner">
+        <p class="eyebrow">An industry resource</p>
+        <h1 class="hero-title">
+          Navigating the signals<br>
+          <em>that software emits.</em>
+        </h1>
+        <p class="hero-lede">
+          Software is not silent. Every system, at every layer, continuously
+          emits evidence of what it is doing — logs, metrics, traces, events,
+          states, failures, recoveries. The Software Observatory is a field
+          guide to that evidence: what to look for, where it appears, how to
+          read it, and what it tells you about the health, behavior, and
+          intent of the systems you depend on.
+        </p>
+        <div class="hero-actions">
+          <a href="pages/catalog.html" class="btn btn-primary">Browse the catalog →</a>
+          <a href="pages/atlas.html" class="btn btn-ghost">Open the atlas</a>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="ring ring-1"></div>
+        <div class="ring ring-2"></div>
+        <div class="ring ring-3"></div>
+        <div class="ring ring-4"></div>
+        <div class="ring-dot dot-1"></div>
+        <div class="ring-dot dot-2"></div>
+        <div class="ring-dot dot-3"></div>
+        <div class="ring-dot dot-4"></div>
+        <div class="ring-dot dot-5"></div>
+      </div>
+    </section>
+
+    <!-- THREE PILLARS -->
+    <section class="pillars">
+      <article class="pillar">
+        <span class="pillar-num">01</span>
+        <h2 class="pillar-title">Observe</h2>
+        <p class="pillar-body">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+          ad minim veniam, quis nostrud exercitation ullamco laboris.
+        </p>
+        <a href="pages/signals.html" class="pillar-link">Signal taxonomy →</a>
+      </article>
+      <article class="pillar">
+        <span class="pillar-num">02</span>
+        <h2 class="pillar-title">Interpret</h2>
+        <p class="pillar-body">
+          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+          dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+          non proident, sunt in culpa qui officia deserunt mollit anim.
+        </p>
+        <a href="pages/catalog.html" class="pillar-link">Interpretation catalog →</a>
+      </article>
+      <article class="pillar">
+        <span class="pillar-num">03</span>
+        <h2 class="pillar-title">Navigate</h2>
+        <p class="pillar-body">
+          Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+          accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae
+          ab illo inventore veritatis et quasi architecto beatae vitae.
+        </p>
+        <a href="pages/atlas.html" class="pillar-link">Open the atlas →</a>
+      </article>
+    </section>
+
+    <!-- FEATURED SIGNAL -->
+    <section class="featured-signal">
+      <div class="featured-meta">
+        <span class="tag tag-type">Metric</span>
+        <span class="tag tag-layer">Runtime</span>
+        <span class="tag tag-confidence">High confidence</span>
+      </div>
+      <h2 class="featured-title"><a href="pages/signals.html" class="wikilink" style="border-bottom:none">P99 Latency Divergence</a></h2>
+      <p class="featured-blurb">
+        When the <a href="pages/signals.html" class="wikilink">99th-percentile response time</a> diverges sharply from the <a href="#" class="wikilink">median</a>,
+        the system is telling you something specific: a small number of
+        requests are hitting a <a href="#" class="wikilink">pathological path</a>. This signal appears in
+        virtually every <a href="#" class="wikilink">request-processing system</a>, yet is frequently drowned
+        out by <a href="#" class="wikilink">aggregate averages</a>.
+      </p>
+      <div class="featured-cta">
+        <a href="pages/signals.html">Read the full entry →</a>
+      </div>
+    </section>
+
+    <!-- RECENT ENTRIES -->
+    <section class="recent">
+      <h2 class="section-heading">Recent additions</h2>
+      <ul class="entry-list">
+        <li class="entry">
+          <span class="entry-date">2026-08-21</span>
+          <span class="entry-type">Event</span>
+          <a href="#" class="entry-title wikilink" style="border-bottom:none">Graceful Shutdown Backpressure</a>
+        </li>
+        <li class="entry">
+          <span class="entry-date">2026-08-19</span>
+          <span class="entry-type">Log Pattern</span>
+          <a href="#" class="entry-title wikilink" style="border-bottom:none">Silent Retry Storms</a>
+        </li>
+        <li class="entry">
+          <span class="entry-date">2026-08-17</span>
+          <span class="entry-type">Metric</span>
+          <a href="#" class="entry-title wikilink" style="border-bottom:none">Connection Pool Exhaustion Slope</a>
+        </li>
+        <li class="entry">
+          <span class="entry-date">2026-08-14</span>
+          <span class="entry-type">Trace</span>
+          <a href="#" class="entry-title wikilink" style="border-bottom:none">Span-Tree Asymmetry</a>
+        </li>
+        <li class="entry">
+          <span class="entry-date">2026-08-12</span>
+          <span class="entry-type">State</span>
+          <a href="#" class="entry-title wikilink" style="border-bottom:none">Leader Election Thrash</a>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">
+        Software Observatory — an open reference for the signals software emits.
+      </p>
+      <p class="footer-copy">© 2026 Software Observatory · <a href="pages/about.html">About</a> · <a href="#">RSS</a> · <span class="license-badge">CC BY-NC-SA 4.0</span></p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
