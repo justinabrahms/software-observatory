@@ -611,11 +611,14 @@ a.wikilink:hover {
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--bg-card);
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .atlas-matrix {
   display: grid;
-  grid-template-columns: 160px repeat(10, 1fr);
-  min-width: 900px;
+  grid-template-columns: 140px repeat(10, minmax(72px, 1fr));
+  width: 100%;
 }
 .matrix-header-row {
   display: contents;
@@ -623,15 +626,16 @@ a.wikilink:hover {
 .matrix-corner {
   border-bottom: 1px solid var(--border);
   border-right: 1px solid var(--border);
+  background: var(--bg-soft);
 }
 .matrix-col-header {
   border-bottom: 1px solid var(--border);
   border-right: 1px solid var(--border-soft);
-  padding: .8rem .4rem;
+  padding: .5rem .2rem;
   text-align: center;
   writing-mode: vertical-rl;
   transform: rotate(180deg);
-  min-height: 120px;
+  height: 90px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -639,9 +643,9 @@ a.wikilink:hover {
 .matrix-col-header:last-child { border-right: none; }
 .col-label {
   font-family: var(--font-mono);
-  font-size: .72rem;
+  font-size: .68rem;
   color: var(--text-dim);
-  letter-spacing: .04em;
+  letter-spacing: .03em;
   white-space: nowrap;
 }
 .matrix-row {
@@ -649,35 +653,37 @@ a.wikilink:hover {
 }
 .matrix-row-label {
   border-right: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: .8rem .8rem;
+  border-bottom: 1px solid var(--border-soft);
+  padding: .5rem .6rem;
   display: flex;
   align-items: center;
-  gap: .5rem;
+  gap: .4rem;
   background: var(--bg-soft);
 }
 .matrix-row:last-child .matrix-row-label { border-bottom: none; }
 .matrix-fam-num {
   font-family: var(--font-mono);
-  font-size: .72rem;
+  font-size: .68rem;
   color: var(--accent);
 }
 .matrix-fam-name {
   font-family: var(--font-serif);
-  font-size: .85rem;
+  font-size: .8rem;
   font-weight: 600;
   white-space: nowrap;
   transition: color .2s;
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-soft);
 }
 .matrix-fam-name:hover { color: var(--accent); }
 .matrix-cell {
   border-right: 1px solid var(--border-soft);
-  border-bottom: 1px solid var(--border);
-  padding: .5rem;
-  min-height: 3.5rem;
+  border-bottom: 1px solid var(--border-soft);
+  padding: .4rem .3rem;
+  min-height: 2.5rem;
   display: flex;
   flex-direction: column;
-  gap: .3rem;
+  gap: .25rem;
   align-items: center;
   justify-content: center;
 }
