@@ -238,8 +238,9 @@ def compute_backlinks(sensors):
     return backlinks
 
 
-def resolve_see_also(see_also_ids, sensors_by_id, families_by_slug):
-    """Resolve see_also IDs to objects with title, slug, family, url."""
+def resolve_see_also(see_also_ids, sensors_by_id, families_by_slug, pages_depth=""):
+    """Resolve see_also IDs to objects with title, slug, family, url.
+    pages_depth: relative path to pages/ (e.g. '' for pages/, '../' for pages/sensors/)."""
     results = []
     for ref in see_also_ids:
         if ref in sensors_by_id:
@@ -248,7 +249,7 @@ def resolve_see_also(see_also_ids, sensors_by_id, families_by_slug):
                 "title": s["title"],
                 "family": FAMILY_BY_SLUG.get(s.get("family", ""), {}).get("name", ""),
                 "family_slug": s.get("family", ""),
-                "url": f"sensors/{s['slug']}.html",
+                "url": f"{pages_depth}sensors/{s['slug']}.html",
             })
         elif ref in families_by_slug:
             f = families_by_slug[ref]
@@ -256,14 +257,14 @@ def resolve_see_also(see_also_ids, sensors_by_id, families_by_slug):
                 "title": f["name"],
                 "family": "Family",
                 "family_slug": f["slug"],
-                "url": f"catalog.html#{f['slug']}",
+                "url": f"{pages_depth}catalog.html#{f['slug']}",
             })
         elif ref == "atlas":
             results.append({
                 "title": "Confidence Stack",
                 "family": "Atlas",
                 "family_slug": "atlas",
-                "url": "atlas.html",
+                "url": f"{pages_depth}atlas.html",
             })
     return results
 
@@ -305,16 +306,17 @@ def html_head(title, depth=""):
 </head>"""
 
 
-def html_header(depth=""):
+def html_header(nav_depth="", root_depth=""):
+    """nav_depth: relative path to pages/. root_depth: relative path to site root."""
     nav_items = [
         ("catalog.html", "Catalog"),
         ("atlas.html", "Atlas"),
         ("framework.html", "Framework"),
         ("about.html", "About"),
     ]
-    nav_html = "\n".join(f'      <a href="{depth}{href}">{label}</a>' for href, label in nav_items)
+    nav_html = "\n".join(f'      <a href="{nav_depth}{href}">{label}</a>' for href, label in nav_items)
     return f"""  <header class="site-header">
-    <a href="{depth}index.html" class="logo">
+    <a href="{root_depth}index.html" class="logo">
       <span class="logo-mark">◐</span>
       <span class="logo-text">Software&nbsp;Observatory</span>
     </a>
@@ -328,22 +330,24 @@ def html_header(depth=""):
   </header>"""
 
 
-def html_footer(depth=""):
+def html_footer(root_depth="", nav_depth=""):
     return f"""  <footer class="site-footer">
     <div class="footer-inner">
       <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
-      <p class="footer-copy">© 2026 Software Observatory · <a href="{depth}pages/about.html">About</a> · <a href="#">RSS</a> · <span class="license-badge">CC BY-NC-SA 4.0</span></p>
+      <p class="footer-copy">© 2026 Software Observatory · <a href="{nav_depth}about.html">About</a> · <a href="#">RSS</a> · <span class="license-badge">CC BY-NC-SA 4.0</span></p>
     </div>
   </footer>"""
 
 
-def html_page(title, body_content, depth=""):
-    return f"""{html_head(title, depth)}
+def html_page(title, body_content, root_depth="", nav_depth=""):
+    """root_depth: relative path to site root (for css/js).
+    nav_depth: relative path to pages/ (for nav links)."""
+    return f"""{html_head(title, root_depth)}
 <body>
-{html_header(depth)}
+{html_header(nav_depth, root_depth)}
 {body_content}
-{html_footer(depth)}
-  <script src="{depth}js/main.js"></script>
+{html_footer(root_depth, nav_depth)}
+  <script src="{root_depth}js/main.js"></script>
 </body>
 </html>"""
 
@@ -357,8 +361,8 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
     family_name = family.get("name", sensor.get("family", ""))
     family_slug = family.get("slug", "")
 
-    # Resolve see_also
-    see_also_items = resolve_see_also(sensor.get("see_also", []), sensors_by_id, families_by_slug)
+    # Resolve see_also (sensor pages are in pages/sensors/, so pages/ is ../)
+    see_also_items = resolve_see_also(sensor.get("see_also", []), sensors_by_id, families_by_slug, pages_depth="../")
 
     # Resolve backlinks
     backlink_items = []
@@ -470,7 +474,7 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
     </aside>
   </div>"""
 
-    page_html = html_page(f"{sensor['title']}", body, depth)
+    page_html = html_page(f"{sensor['title']}", body, root_depth="../../", nav_depth="../")
     out_path = output_dir / "pages" / "sensors" / f"{sensor['slug']}.html"
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w") as f:
@@ -570,7 +574,7 @@ def generate_catalog_page(sensors, output_dir):
     </div>
   </div>"""
 
-    page_html = html_page("Sensor Catalog", body, depth)
+    page_html = html_page("Sensor Catalog", body, root_depth="../", nav_depth="")
     out_path = output_dir / "pages" / "catalog.html"
     with open(out_path, "w") as f:
         f.write(page_html)
@@ -579,6 +583,10 @@ def generate_catalog_page(sensors, output_dir):
 def generate_atlas_page(sensors, output_dir):
     """Generate the atlas page — a 2D matrix of families × stack layers."""
     depth = "../"
+
+    # Reverse stack layers for the atlas: cheapest/most certain on the left,
+    # most expensive/most meaningful on the right
+    atlas_layers = list(reversed(STACK_LAYERS))
 
     # Group sensors by family
     by_family = {}
@@ -602,8 +610,8 @@ def generate_atlas_page(sensors, output_dir):
           </div>
 """
 
-        # Cells for each stack layer
-        for layer in STACK_LAYERS:
+        # Cells for each stack layer (cheapest first)
+        for layer in atlas_layers:
             cell_sensors = []
             for s in fam_sensors:
                 # Match sensor's stack_level to the column
@@ -623,9 +631,9 @@ def generate_atlas_page(sensors, output_dir):
 
         matrix_rows += "        </div>\n"
 
-    # Column headers
+    # Column headers (cheapest first)
     col_headers = ""
-    for layer in STACK_LAYERS:
+    for layer in atlas_layers:
         col_headers += f"""            <div class="matrix-col-header" title="{html.escape(layer['desc'])}">
               <span class="col-label">{html.escape(layer['label'])}</span>
             </div>
@@ -691,7 +699,7 @@ def generate_atlas_page(sensors, output_dir):
     </div>
   </div>"""
 
-    page_html = html_page("Sensor Atlas", body, depth)
+    page_html = html_page("Sensor Atlas", body, root_depth="../", nav_depth="")
     out_path = output_dir / "pages" / "atlas.html"
     with open(out_path, "w") as f:
         f.write(page_html)
@@ -845,7 +853,7 @@ def generate_index_page(sensors, output_dir):
     </section>
   </main>"""
 
-    page_html = html_page("Software Observatory", body, depth)
+    page_html = html_page("Software Observatory", body, root_depth="", nav_depth="pages/")
     out_path = output_dir / "index.html"
     with open(out_path, "w") as f:
         f.write(page_html)
@@ -973,7 +981,7 @@ def generate_framework_page(sensors, output_dir):
     </section>
   </div>"""
 
-    page_html = html_page("Framework", body, depth)
+    page_html = html_page("Framework", body, root_depth="../", nav_depth="")
     out_path = output_dir / "pages" / "framework.html"
     with open(out_path, "w") as f:
         f.write(page_html)
@@ -1057,7 +1065,7 @@ def generate_about_page(output_dir):
     </p>
   </div>"""
 
-    page_html = html_page("About", body, depth)
+    page_html = html_page("About", body, root_depth="../", nav_depth="")
     out_path = output_dir / "pages" / "about.html"
     with open(out_path, "w") as f:
         f.write(page_html)

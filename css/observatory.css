@@ -525,7 +525,8 @@ a:hover { color: var(--accent); }
   border-radius: 3px;
   color: var(--accent);
 }
-.signal-detail-body .code-block {
+.signal-detail-body .code-block,
+.signal-detail-body pre {
   font-family: var(--font-mono);
   font-size: .85rem;
   background: var(--bg-elev);
@@ -536,12 +537,46 @@ a:hover { color: var(--accent); }
   line-height: 1.5;
   color: var(--text-soft);
   margin: 1.5rem 0;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
-.signal-detail-body .callout {
+.signal-detail-body pre code {
+  font-family: var(--font-mono);
+  font-size: .85rem;
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  color: var(--text-soft);
+}
+.signal-detail-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: .92rem;
+}
+.signal-detail-body th,
+.signal-detail-body td {
+  text-align: left;
+  padding: .6rem .8rem;
+  border-bottom: 1px solid var(--border);
+}
+.signal-detail-body th {
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  color: var(--text-dim);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border-soft);
+}
+.signal-detail-body td:last-child { color: var(--text-soft); }
+.signal-detail-body blockquote {
   border-left: 3px solid var(--accent);
   padding: .5rem 0 .5rem 1.2rem;
   margin: 1.5rem 0;
   font-style: italic;
+  color: var(--text);
+}
+.signal-detail-body blockquote p { margin: 0; }
   color: var(--text);
 }
 
