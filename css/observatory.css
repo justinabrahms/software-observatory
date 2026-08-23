@@ -1361,12 +1361,17 @@ a.wikilink:hover {
   z-index: 1;
 }
 .scatter-dot {
-  display: block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  font-size: 11px;
+  line-height: 1;
+  color: var(--accent);
   border: 2px solid var(--bg);
+  border-radius: 50%;
+  background: transparent;
   transition: transform .15s ease;
 }
 .scatter-point:hover .scatter-dot { transform: scale(1.5); }
@@ -1409,21 +1414,22 @@ a.wikilink:hover {
 /* Sensors mode: dots colored by sensor family, labels on hover only */
 .scatter-frame[data-scatter-mode="sensors"] .layer-point { display: none; }
 .scatter-frame[data-scatter-mode="sensors"] .sensor-point .scatter-dot {
-  width: 9px;
-  height: 9px;
-  background: var(--signal);
+  width: 13px;
+  height: 13px;
+  font-size: 10px;
+  color: var(--signal);
 }
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-structural .scatter-dot        { background: var(--fam-structural); }
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-behavioral .scatter-dot        { background: var(--fam-behavioral); }
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-test-effectiveness .scatter-dot{ background: var(--fam-test-effectiveness); }
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-invariants .scatter-dot        { background: var(--fam-invariants); }
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-adversarial .scatter-dot       { background: var(--fam-adversarial); }
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-runtime .scatter-dot           { background: var(--fam-runtime); }
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-change .scatter-dot            { background: var(--fam-change); }
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-architecture .scatter-dot      { background: var(--fam-architecture); }
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-evolution .scatter-dot         { background: var(--fam-evolution); }
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-comprehension .scatter-dot     { background: var(--fam-comprehension); }
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-ai-sensors .scatter-dot        { background: var(--fam-ai-sensors); }
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-structural .scatter-dot        { color: var(--fam-structural); }
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-behavioral .scatter-dot        { color: var(--fam-behavioral); }
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-test-effectiveness .scatter-dot{ color: var(--fam-test-effectiveness); }
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-invariants .scatter-dot        { color: var(--fam-invariants); }
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-adversarial .scatter-dot       { color: var(--fam-adversarial); }
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-runtime .scatter-dot           { color: var(--fam-runtime); }
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-change .scatter-dot            { color: var(--fam-change); }
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-architecture .scatter-dot      { color: var(--fam-architecture); }
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-evolution .scatter-dot         { color: var(--fam-evolution); }
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-comprehension .scatter-dot     { color: var(--fam-comprehension); }
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-ai-sensors .scatter-dot        { color: var(--fam-ai-sensors); }
 .scatter-frame[data-scatter-mode="sensors"] .sensor-point { z-index: 0; }
 .scatter-frame[data-scatter-mode="sensors"] .sensor-point:hover { z-index: 2; }
 /* legend hover dims other families and names the surviving dots */

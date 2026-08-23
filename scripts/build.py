@@ -1219,8 +1219,9 @@ def generate_index_page(sensors, output_dir):
                 dy = math.sin(ang) * spread * rad / 2.2
                 fam = FAMILY_BY_SLUG.get(s.get("family", ""), {}).get("name", "")
                 fam_slug = s.get("family", "")
+                fam_icon = FAMILY_BY_SLUG.get(fam_slug, {}).get("icon", "")
                 pts += f"""          <a href="pages/sensors/{s['slug']}.html" class="scatter-point sensor-point fam-{html.escape(fam_slug)}" style="left:{x + dx:.1f}%;bottom:{y + dy:.1f}%" data-label="{html.escape(s['title'])}" data-family="{html.escape(fam)}">
-            <span class="scatter-dot"></span>
+            <span class="scatter-dot" aria-hidden="true">{fam_icon}</span>
             <span class="scatter-tag">{html.escape(s['title'])}</span>
           </a>
 """
