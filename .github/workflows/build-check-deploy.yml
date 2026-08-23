@@ -132,7 +132,9 @@ jobs:
 
       - name: Publish CLI to npm
         working-directory: cli
-        # Trusted publishing: npm exchanges the job's OIDC id-token, so no
-        # NPM_TOKEN secret is needed. Requires the package on npmjs.com to
-        # list this repo + workflow as a trusted publisher.
-        run: npm publish --access public --provenance
+        # Publishes with NPM_TOKEN. Once the package on npmjs.com lists this
+        # repo + workflow as a trusted publisher, the OIDC path also works and
+        # the token can be dropped.
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --provenance
