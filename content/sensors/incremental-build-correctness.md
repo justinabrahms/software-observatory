@@ -17,6 +17,7 @@ see_also:
   - SO-007b
   - SO-014c
   - SO-001
+last_reviewed: 2026-08-23
 ---
 
 Did the build system actually rebuild everything this change touched?

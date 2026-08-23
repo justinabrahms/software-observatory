@@ -20,6 +20,7 @@ see_also:
   - change-family
   - evolution-family
   - ai-sensors
+last_reviewed: 2026-08-23
 ---
 
 Traditional monitoring says: *"CPU is 82%."* Observability says: *"Show me

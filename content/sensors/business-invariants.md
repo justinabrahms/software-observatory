@@ -18,6 +18,7 @@ see_also:
   - SO-004
   - SO-004b
   - SO-006
+last_reviewed: 2026-08-23
 ---
 
 A successful payment implies an order eventually becomes paid.

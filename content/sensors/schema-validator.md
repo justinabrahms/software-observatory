@@ -18,6 +18,7 @@ see_also:
   - SO-001
   - SO-001c
   - SO-002
+last_reviewed: 2026-08-23
 ---
 
 Structural coherence at the boundary of the system. OpenAPI/GraphQL schema

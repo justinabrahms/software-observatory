@@ -18,6 +18,7 @@ see_also:
   - SO-007
   - SO-007b
   - evolution-family
+last_reviewed: 2026-08-23
 ---
 
 Did this change consume an abnormal amount of reliability budget? A sensor

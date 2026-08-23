@@ -20,6 +20,7 @@ see_also:
   - SO-006
   - adversarial
   - behavioral-family
+last_reviewed: 2026-08-23
 ---
 
 You don't need to know how the payment service works. You can observe:

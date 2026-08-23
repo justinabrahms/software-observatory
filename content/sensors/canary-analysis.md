@@ -18,6 +18,7 @@ see_also:
   - SO-007c
   - SO-007d
   - SO-005c
+last_reviewed: 2026-08-23
 ---
 
 Does the new version behave differently from the old version? A sensor of

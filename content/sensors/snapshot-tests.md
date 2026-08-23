@@ -17,6 +17,7 @@ see_also:
   - SO-002b
   - SO-002c
   - SO-003
+last_reviewed: 2026-08-23
 ---
 
 Did observable output change? Not "is it correct" but "did it change" — a

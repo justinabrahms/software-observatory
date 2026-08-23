@@ -19,6 +19,7 @@ see_also:
   - SO-003
   - change-family
   - ai-sensors
+last_reviewed: 2026-08-23
 ---
 
 You don't necessarily care whether some 15-year-old module has 43% coverage.

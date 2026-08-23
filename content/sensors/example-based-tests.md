@@ -17,6 +17,7 @@ see_also:
   - SO-002c
   - SO-002d
   - SO-003
+last_reviewed: 2026-08-23
 ---
 
 Given X, expect Y. The fundamental behavioral sensor.

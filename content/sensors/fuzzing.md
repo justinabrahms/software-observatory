@@ -19,6 +19,7 @@ see_also:
   - SO-005b
   - SO-003
   - adversarial
+last_reviewed: 2026-08-23
 ---
 
 What happens on inputs humans didn't think of? Fuzzing is a sensor of

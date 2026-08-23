@@ -141,6 +141,12 @@ def main():
         if not isinstance(categories, list):
             errors.append(f"{loc}: categories must be a list, got {type(categories).__name__}")
 
+        reviewed = meta.get("last_reviewed", "")
+        if reviewed:
+            import re as _re
+            if not _re.match(r"^\d{4}-\d{2}-\d{2}$", str(reviewed)):
+                errors.append(f"{loc}: last_reviewed '{reviewed}' must be YYYY-MM-DD")
+
         if sid and see_also and sid in see_also:
             errors.append(f"{loc}: see_also references its own id '{sid}' (self-loop)")
 

@@ -17,6 +17,7 @@ see_also:
   - SO-001
   - SO-014
   - SO-012b
+last_reviewed: 2026-08-23
 ---
 
 Is the artifact you are about to deploy structurally the one your pipeline

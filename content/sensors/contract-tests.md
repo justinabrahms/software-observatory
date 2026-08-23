@@ -20,6 +20,7 @@ see_also:
   - SO-004
   - change-family
   - structural-family
+last_reviewed: 2026-08-23
 ---
 
 Does service A continue satisfying the assumptions of service B? Contract

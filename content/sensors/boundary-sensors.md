@@ -18,6 +18,7 @@ see_also:
   - SO-008
   - SO-008b
   - SO-002
+last_reviewed: 2026-08-23
 ---
 
 "This package must not import that package." A sensor of *encapsulation* and

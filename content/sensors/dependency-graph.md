@@ -18,6 +18,7 @@ see_also:
   - SO-008b
   - SO-008c
   - SO-008d
+last_reviewed: 2026-08-23
 ---
 
 Fan-in, fan-out, cycles, dependency depth, unstable dependencies. A sensor

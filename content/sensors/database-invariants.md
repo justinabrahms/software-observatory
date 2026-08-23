@@ -18,6 +18,7 @@ see_also:
   - SO-004
   - SO-004c
   - SO-006
+last_reviewed: 2026-08-23
 ---
 
 Every foreign key refers to an existing object. Every request has exactly

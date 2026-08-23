@@ -17,6 +17,7 @@ see_also:
   - SO-004
   - SO-012
   - SO-001d
+last_reviewed: 2026-08-23
 ---
 
 Invariants the compiler refuses to let you violate: Dafny `invariant`

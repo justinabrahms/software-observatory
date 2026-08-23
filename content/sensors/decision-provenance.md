@@ -17,6 +17,7 @@ see_also:
   - SO-010
   - SO-010b
   - SO-010c
+last_reviewed: 2026-08-23
 ---
 
 Can you answer "why is this weird thing here?" A sensor of *archaeological

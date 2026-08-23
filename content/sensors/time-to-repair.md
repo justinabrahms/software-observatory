@@ -18,6 +18,7 @@ see_also:
   - SO-009
   - SO-009b
   - SO-009c
+last_reviewed: 2026-08-23
 ---
 
 When this component breaks, how long does it take to restore? A sensor of

@@ -17,6 +17,7 @@ see_also:
   - SO-006
   - SO-006b
   - SO-006c
+last_reviewed: 2026-08-23
 ---
 
 CPU, memory, IO, network, GC, queues. Traditional monitoring — useful but

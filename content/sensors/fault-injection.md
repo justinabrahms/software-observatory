@@ -18,6 +18,7 @@ see_also:
   - SO-004
   - SO-005
   - change-family
+last_reviewed: 2026-08-23
 ---
 
 Kill a node. Drop a network connection. Inject latency. A sensor of

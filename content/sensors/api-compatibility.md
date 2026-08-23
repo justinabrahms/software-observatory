@@ -17,6 +17,7 @@ see_also:
   - SO-002
   - SO-007
   - SO-007d
+last_reviewed: 2026-08-23
 ---
 
 Did externally observable contracts change? A sensor of *boundary stability*

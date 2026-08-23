@@ -18,6 +18,7 @@ see_also:
   - SO-001
   - SO-001c
   - SO-001d
+last_reviewed: 2026-08-23
 ---
 
 The cheapest and most certain sensor. Is this thing even a valid inhabitant

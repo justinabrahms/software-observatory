@@ -18,6 +18,7 @@ see_also:
   - SO-009b
   - SO-009c
   - SO-009d
+last_reviewed: 2026-08-23
 ---
 
 How often does this area get reverted? A *black-box sensor* of

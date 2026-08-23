@@ -20,6 +20,7 @@ see_also:
   - SO-001b
   - SO-004
   - atlas
+last_reviewed: 2026-08-23
 ---
 
 A Rust compiler saying `expected Option<Foo>, found Foo` is vastly more useful

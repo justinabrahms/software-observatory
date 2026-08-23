@@ -19,6 +19,7 @@ see_also:
   - SO-006c
   - SO-006d
   - change-family
+last_reviewed: 2026-08-23
 ---
 
 What path did this particular operation take? A sensor of *execution flow*

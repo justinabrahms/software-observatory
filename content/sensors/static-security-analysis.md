@@ -17,6 +17,7 @@ see_also:
   - SO-005
   - SO-005c
   - SO-001c
+last_reviewed: 2026-08-23
 ---
 
 Attacking the code before it runs. Taint tracking, dataflow analysis, and

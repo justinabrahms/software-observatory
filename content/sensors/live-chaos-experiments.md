@@ -17,6 +17,7 @@ see_also:
   - SO-005c
   - SO-006c
   - SO-004b
+last_reviewed: 2026-08-23
 ---
 
 Fault injection against the running production system: kill a node, sever a

@@ -17,6 +17,7 @@ see_also:
   - SO-001
   - SO-001b
   - SO-001d
+last_reviewed: 2026-08-23
 ---
 
 Catches structural inconsistencies that are syntactically valid but

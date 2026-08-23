@@ -19,6 +19,7 @@ see_also:
   - SO-009b
   - SO-009d
   - SO-006
+last_reviewed: 2026-08-23
 ---
 
 Which components correlate with production failures? A sensor of operational

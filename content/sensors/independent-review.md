@@ -17,6 +17,7 @@ see_also:
   - SO-010b
   - SO-010c
   - SO-010d
+last_reviewed: 2026-08-23
 ---
 
 Can another engineer explain what this does? A sensor of *epistemic

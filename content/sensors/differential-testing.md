@@ -17,6 +17,7 @@ see_also:
   - SO-005
   - SO-005b
   - SO-005d
+last_reviewed: 2026-08-23
 ---
 
 `implementation_A(input) == implementation_B(input)`. You don't know which is

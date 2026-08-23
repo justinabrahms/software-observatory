@@ -18,6 +18,7 @@ see_also:
   - SO-011b
   - SO-011c
   - SO-010
+last_reviewed: 2026-08-23
 ---
 
 An independent agent reviews the first agent's output. A sensor that applies

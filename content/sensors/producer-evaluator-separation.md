@@ -19,6 +19,7 @@ see_also:
   - SO-011b
   - SO-011d
   - SO-003
+last_reviewed: 2026-08-23
 ---
 
 A model writing `tests/` is allowed to write tests that make itself pass.

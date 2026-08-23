@@ -18,6 +18,7 @@ see_also:
   - SO-008
   - SO-008c
   - SO-008d
+last_reviewed: 2026-08-23
 ---
 
 `frontend -> application -> domain -> infrastructure`, and fail if `domain

@@ -19,6 +19,7 @@ see_also:
   - SO-009c
   - SO-009d
   - SO-008
+last_reviewed: 2026-08-23
 ---
 
 Which files repeatedly change together? A sensor of *hidden coupling* — the

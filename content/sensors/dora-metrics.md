@@ -17,6 +17,7 @@ see_also:
   - SO-009
   - SO-009b
   - SO-009d
+last_reviewed: 2026-08-23
 ---
 
 Deployment frequency, lead time for changes, change failure rate, time to

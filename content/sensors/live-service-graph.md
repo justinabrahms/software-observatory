@@ -17,6 +17,7 @@ see_also:
   - SO-008b
   - SO-006c
   - SO-006
+last_reviewed: 2026-08-23
 ---
 
 The declared architecture says service A never calls service C. The live

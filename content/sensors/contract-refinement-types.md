@@ -17,6 +17,7 @@ see_also:
   - SO-001d
   - SO-002
   - SO-005
+last_reviewed: 2026-08-23
 ---
 
 Behavioral guarantees checked before the code ever runs. Typestate systems,

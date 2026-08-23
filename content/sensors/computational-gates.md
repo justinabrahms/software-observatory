@@ -18,6 +18,7 @@ see_also:
   - SO-011
   - SO-011c
   - SO-011d
+last_reviewed: 2026-08-23
 ---
 
 An instruction saying "verify this" is weaker than a gate that literally

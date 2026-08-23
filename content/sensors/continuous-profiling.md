@@ -18,6 +18,7 @@ see_also:
   - SO-006
   - SO-006b
   - SO-006d
+last_reviewed: 2026-08-23
 ---
 
 Where did computation actually go? Not "CPU is 82%" but "this function

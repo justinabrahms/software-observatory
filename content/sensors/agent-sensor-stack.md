@@ -18,6 +18,7 @@ see_also:
   - SO-003
   - SO-006
   - SO-007
+last_reviewed: 2026-08-23
 ---
 
 An agent should be surrounded by sensors. And crucially: the agent doesn't

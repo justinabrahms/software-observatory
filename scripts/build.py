@@ -684,6 +684,7 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
           <dt>Latency</dt>         <dd>{html.escape(LATENCY_LABELS.get(sensor.get('latency', ''), sensor.get('latency', '')))}</dd>
           <dt>Actionability</dt>   <dd>{html.escape(sensor.get('actionability', '').title())}</dd>
           <dt>Entry ID</dt>        <dd>{html.escape(sensor.get('id', ''))}</dd>
+          <dt>Reviewed</dt>        <dd>{html.escape(str(sensor.get('last_reviewed', ''))[:7])}</dd>
         </dl>
       </div>
 {backlink_html}
@@ -1066,9 +1067,14 @@ def generate_index_page(sensors, output_dir):
         </a>
 """
 
-    # Recent entries
+    # Recent entries — sorted by last_reviewed date, descending
+    recent_sensors = sorted(
+        sensors,
+        key=lambda s: s.get("last_reviewed", ""),
+        reverse=True,
+    )[:6]
     recent_html = ""
-    for s in sensors[:6]:
+    for s in recent_sensors:
         fam = FAMILY_BY_SLUG.get(s.get("family", ""), {})
         recent_html += f"""        <li class="entry">
           <span class="entry-family">{html.escape(fam.get('name', ''))}</span>
@@ -1272,7 +1278,7 @@ def generate_index_page(sensors, output_dir):
     </section>
 
     <section class="recent">
-      <h2 class="section-heading">Catalog entries</h2>
+      <h2 class="section-heading">Recently reviewed</h2>
       <ul class="entry-list">
 {recent_html.rstrip()}
       </ul>

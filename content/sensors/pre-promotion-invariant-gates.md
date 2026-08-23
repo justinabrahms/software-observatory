@@ -17,6 +17,7 @@ see_also:
   - SO-004
   - SO-007
   - SO-012b
+last_reviewed: 2026-08-23
 ---
 
 Invariants checked at the moment of promotion, before a change can reach

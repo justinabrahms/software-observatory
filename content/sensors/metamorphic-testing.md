@@ -20,6 +20,7 @@ see_also:
   - SO-003
   - adversarial
   - invariants
+last_reviewed: 2026-08-23
 ---
 
 You don't know the answer, but you know *how the answer should change*. This

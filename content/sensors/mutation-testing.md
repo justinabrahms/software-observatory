@@ -20,6 +20,7 @@ see_also:
   - behavioral-family
   - SO-005
   - SO-005b
+last_reviewed: 2026-08-23
 ---
 
 Take `if user.is_admin: allow()` and mutate it to
