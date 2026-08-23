@@ -2,3 +2,7 @@
 __pycache__/
 .browser-libs/
 archive-*/
+
+pages/
+TODO.md
+chat-w-gpt.md
