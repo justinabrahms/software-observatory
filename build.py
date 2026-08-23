@@ -406,7 +406,7 @@ def html_footer(root_depth="", nav_depth=""):
     return f"""  <footer class="site-footer">
     <div class="footer-inner">
       <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
-      <p class="footer-copy">© 2026 Software Observatory · <a href="{nav_depth}about.html">About</a> · <a href="#">RSS</a> · <span class="license-badge">CC BY-NC-SA 4.0</span></p>
+      <p class="footer-copy">© 2026 Software Observatory · <a href="{nav_depth}about.html">About</a> · <span class="license-badge">CC BY-NC-SA 4.0</span></p>
     </div>
   </footer>"""
 
