@@ -73,3 +73,13 @@ Diff coverage cannot tell you whether the tests that *ran* the changed code
 actually *asserted* anything about its correctness. A line can execute
 without any test verifying its output. It also says nothing about
 [untested behavior](mutation-testing.html) that the tests don't cover.
+
+## Tooling
+
+- diff-cover
+- Codecov
+- Coveralls
+
+## References
+
+- https://docs.codecov.com/docs/commit-coverage

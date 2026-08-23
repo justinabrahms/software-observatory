@@ -44,3 +44,15 @@ its own output faithfully. Provenance tells you the artifact is the one the
 pipeline produced; whether the pipeline was honest is a question for
 [static security analysis](static-security-analysis.html) and dependency
 auditing.
+
+## Tooling
+
+- SLSA
+- cosign
+- Sigstore
+- in-toto
+
+## References
+
+- SLSA: https://slsa.dev
+- Sigstore: https://sigstore.dev

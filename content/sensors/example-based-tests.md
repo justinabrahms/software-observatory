@@ -48,3 +48,14 @@ the author thought to test. [Mutation testing](mutation-testing.html) and
 Missing behavior, untested edge cases, and [integration
 failures](contract-tests.html) that emerge only when components are
 connected.
+
+## Tooling
+
+- pytest
+- Jest
+- JUnit
+- Go testing
+
+## References
+
+- Beizer, 'Software Testing Techniques' (1990)

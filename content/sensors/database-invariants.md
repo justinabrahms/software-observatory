@@ -47,3 +47,14 @@ Only properties expressible as database constraints. Business rules
 ("a successful payment implies an order eventually becomes paid") require
 [runtime invariants](runtime-invariants.html) checked against [event
 streams](observability-events.html).
+
+## Tooling
+
+- DB constraints
+- CHECK constraints
+- foreign keys
+- pg_constraint
+
+## References
+
+- https://www.postgresql.org/docs/current/ddl-constraints.html

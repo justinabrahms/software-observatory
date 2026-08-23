@@ -44,3 +44,13 @@ exceeds the experiment's safety limits. The most dangerous production
 conditions are precisely the ones a responsible chaos program refuses to
 create — those remain observable only through
 [incident correlation](incident-correlation.html) after nature provides them.
+
+## Tooling
+
+- Chaos Mesh
+- Gremlin
+- Litmus
+
+## References
+
+- Chaos Engineering: https://principlesofchaos.org

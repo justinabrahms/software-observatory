@@ -47,3 +47,13 @@ where risk concentrates.
 Hotspot analysis doesn't tell you *why* a module changes frequently or
 *whether* it's correct. It identifies where attention is needed, not what
 the attention should fix.
+
+## Tooling
+
+- CodeScene
+- crux
+- git-quick-stats
+
+## References
+
+- Adam Tornhill, 'Your Code as a Crime Scene' (2015)

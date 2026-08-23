@@ -46,3 +46,12 @@ business rules, duplicated logic, or implicit coordination.
 Change coupling shows correlation, not causation. Files that change together
 may do so for coincidental reasons (same sprint, same author) rather than
 structural coupling.
+
+## Tooling
+
+- CodeScene
+- git-quick-stats
+
+## References
+
+- Adam Tornhill, 'Your Code as a Crime Scene' (2015)

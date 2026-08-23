@@ -69,3 +69,15 @@ Metamorphic testing can only check relations you *know*. If a function has
 no obvious metamorphic relations, this sensor has nothing to test. It also
 cannot detect [missing behavior](mutation-testing.html) — if a feature is
 absent, there's no function to check relations on.
+
+## Tooling
+
+- Hypothesis
+- QuickCheck
+- fast-check
+- test.check
+
+## References
+
+- Chen et al., 'Metamorphic Testing: A New Approach for Generating Next Test Cases' (1998)
+- Hypothesis: https://hypothesis.readthedocs.io

@@ -43,3 +43,14 @@ declared rule is violated.
 Violations of rules nobody declared, and rules whose declaration is wrong.
 The gate is only as good as the invariant list, which is why the list itself
 deserves [independent review](independent-review.html).
+
+## Tooling
+
+- OPA Gatekeeper
+- Kyverno
+- Conftest
+- HashiCorp Sentinel
+
+## References
+
+- OPA Gatekeeper: https://open-policy-agent.github.io/gatekeeper/

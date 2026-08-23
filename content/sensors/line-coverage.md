@@ -43,3 +43,14 @@ not the same thing.
 Whether the code that *executed* was actually *asserted on*. A line can
 execute without any test verifying its output. This is why coverage alone
 is a [weak oracle](mutation-testing.html).
+
+## Tooling
+
+- coverage.py
+- Istanbul
+- JaCoCo
+- gcov
+
+## References
+
+- https://martinfowler.com/bliki/TestCoverage.html

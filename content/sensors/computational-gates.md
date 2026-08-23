@@ -72,3 +72,10 @@ auditable — every override should leave a trail.
 A gate can only enforce what it's configured to check. A gate that doesn't
 exist can't block anything. The gap between "should be gated" and "is gated"
 is invisible.
+
+## Tooling
+
+- GitHub Actions
+- GitLab CI
+- Jenkins
+- pre-commit hooks

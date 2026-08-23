@@ -46,3 +46,15 @@ Contracts only cover what was specified. The specification itself is
 written by the same mind that wrote the code, which is why contract checking
 composes with rather than replaces [example-based tests](example-based-tests.html)
 and [property testing](fuzzing.html).
+
+## Tooling
+
+- Dafny
+- Frama-C
+- JML
+- Rust typestate
+
+## References
+
+- Leino, 'Dafny: An Automatic Program Verifier' (2010)
+- Dafny: https://dafny.org

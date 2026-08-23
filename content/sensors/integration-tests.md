@@ -40,3 +40,14 @@ see — connection failures, serialization mismatches, timeout behavior.
 Integration tests with mock dependencies don't test the real integration.
 They test your assumptions about the real integration. [Contract
 tests](contract-tests.html) are a stronger sensor for boundary assumptions.
+
+## Tooling
+
+- pytest
+- JUnit
+- Testcontainers
+- Docker Compose
+
+## References
+
+- https://martinfowler.com/articles/practical-test-pyramid.html

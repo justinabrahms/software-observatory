@@ -43,3 +43,15 @@ dependencies' runtime behavior — those belong to
 [fault injection](fault-injection.html) and live chaos. And a clean scan
 says nothing about attacks that arrive through valid inputs:
 [fuzzing](fuzzing.html) covers that side.
+
+## Tooling
+
+- Semgrep
+- CodeQL
+- Bandit
+- brakeman
+
+## References
+
+- Semgrep: https://semgrep.dev
+- CodeQL: https://codeql.github.com

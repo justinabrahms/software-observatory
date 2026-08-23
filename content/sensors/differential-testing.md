@@ -71,3 +71,14 @@ two implementations that *should* agree.
 
 If both implementations share the same bug, differential testing won't find
 it. Also requires two implementations, which may not exist.
+
+## Tooling
+
+- Csmith
+- DifferentialFuzzer
+- SQLancer
+
+## References
+
+- Yang et al., 'Finding and Understanding Bugs in C Compilers' (2011, Csmith)
+- SQLancer: https://github.com/sqlancer/sqlancer

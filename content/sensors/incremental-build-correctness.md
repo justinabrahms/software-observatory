@@ -44,3 +44,14 @@ no graph captures (a shared constant edited in a header the graph treats as
 irrelevant). That class of surprise is what
 [API compatibility](api-compatibility.html) and
 [integration tests](integration-tests.html) exist for.
+
+## Tooling
+
+- Bazel
+- Buck
+- Nix
+- ccache
+
+## References
+
+- Bazel: https://bazel.build

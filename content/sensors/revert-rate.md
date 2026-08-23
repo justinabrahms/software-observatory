@@ -47,3 +47,13 @@ or misunderstood requirements.
 Revert rate can't tell you *why* changes are reverted. It identifies
 where attention is needed, not what the fix is. Also misses problems that
 were fixed forward rather than reverted.
+
+## Tooling
+
+- git log
+- git-quick-stats
+- CodeScene
+
+## References
+
+- https://github.com/erikbern/git-quick-stats

@@ -66,3 +66,15 @@ Fuzzing with a crash oracle cannot detect *wrong but non-crashing* behavior.
 A function that returns the wrong answer without crashing will pass a fuzzer.
 For correctness properties, pair fuzzing with [property-based
 testing](metamorphic-testing.html) or [mutation testing](mutation-testing.html).
+
+## Tooling
+
+- libFuzzer
+- cargo-fuzz
+- AFL++
+- CIFuzz
+
+## References
+
+- Manes et al., 'The Art, Science, and Engineering of Fuzzing: A Survey' (2021)
+- libFuzzer: https://llvm.org/docs/LibFuzzer.html

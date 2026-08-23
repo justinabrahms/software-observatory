@@ -61,3 +61,14 @@ behavior to [observed behavior](observability-events.html).
 
 Documentation drift can only be detected where documentation exists.
 Undocumented behavior is invisible to this sensor.
+
+## Tooling
+
+- doctest
+- rustdoc
+- TypeDoc
+- OpenAPI round-trip
+
+## References
+
+- https://docs.python.org/3/library/doctest.html

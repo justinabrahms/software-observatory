@@ -46,3 +46,15 @@ the contract? Does this infrastructure definition resolve?
 Schema validation cannot detect whether a valid request produces the
 correct [behavioral result](catalog.html#behavioral). It checks shape, not
 meaning.
+
+## Tooling
+
+- OpenAPI Validator
+- Terraform plan
+- kubectl admission
+- sqlfluff
+
+## References
+
+- OpenAPI Specification: https://spec.openapis.org
+- Kubernetes Admission Controllers: https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/

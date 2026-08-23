@@ -46,3 +46,13 @@ events](observability-events.html) as a data source.
 Business invariants can only check properties you *thought to specify*. They
 don't find unknown unknowns — that's what [observability](observability-events.html)
 is for.
+
+## Tooling
+
+- Great Expectations
+- Soda
+- dbt tests
+
+## References
+
+- Great Expectations: https://greatexpectations.io

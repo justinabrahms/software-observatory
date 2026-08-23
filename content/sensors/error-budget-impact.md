@@ -45,3 +45,12 @@ that budget — connecting code changes to [user outcomes](catalog.html#evolutio
 Error-budget impact shows correlation between deployment and reliability
 degradation, but not causation. Other factors (traffic patterns, upstream
 failures) may contribute.
+
+## Tooling
+
+- SLO dashboards
+- error budget calculators
+
+## References
+
+- Google SRE Workbook: https://sre.google/workbook/error-budget/

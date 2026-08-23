@@ -45,3 +45,13 @@ difficult.
 Time-to-repair conflates code difficulty with operational factors (on-call
 response time, deployment latency, test suite duration). A long repair time
 may not reflect code quality at all.
+
+## Tooling
+
+- Jira
+- Linear
+- incident.io
+
+## References
+
+- DORA: https://dora.dev

@@ -46,3 +46,13 @@ stage; understanding it requires [decision provenance](decision-provenance.html)
 and [incident correlation](incident-correlation.html). And like all metrics
 that become targets, they invite gaming — deployment frequency can be raised
 by shipping trivia.
+
+## Tooling
+
+- DORA survey
+- DevOps Research Assessment
+
+## References
+
+- DORA: https://dora.dev
+- Forsgren et al., 'Accelerate' (2018)

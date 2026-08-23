@@ -45,3 +45,14 @@ risk factors.
 The dependency graph shows structural coupling, not *behavioral* coupling —
 modules that change together for reasons the graph can't see. That requires
 [change coupling](catalog.html#evolution) analysis.
+
+## Tooling
+
+- dependency-cruiser
+- import-linter
+- madge
+- dependency-graph
+
+## References
+
+- dependency-cruiser: https://github.com/sverweij/dependency-cruiser

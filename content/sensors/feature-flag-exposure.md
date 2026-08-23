@@ -42,3 +42,14 @@ rollout's state.
 Whether the new behavior is *correct* — only where it is *active*. Exposure
 is the denominator; behavioral evidence still has to come from
 [synthetic monitoring](synthetic-monitoring.html) or real traffic.
+
+## Tooling
+
+- LaunchDarkly
+- Statsig
+- GrowthBook
+- Unleash
+
+## References
+
+- Feature flags: https://martinfowler.com/articles/feature-toggles.html

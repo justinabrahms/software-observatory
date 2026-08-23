@@ -41,3 +41,14 @@ to "does it do what we expect?" even when no user happens to be asking.
 Behavior outside the scripted paths. Synthetics cover the flows you thought
 to script; the long tail of user behavior is the domain of
 [observability events](observability-events.html) and real-user monitoring.
+
+## Tooling
+
+- Checkly
+- k6
+- Pingdom
+- Datadog Synthetic
+
+## References
+
+- Checkly: https://checklyhq.com

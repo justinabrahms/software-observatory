@@ -49,3 +49,14 @@ under stress.
 Fault injection can only test failure modes you *thought to inject*. Unknown
 failure modes (cascading failures from unexpected coupling) require
 [observability](observability-events.html) to detect in production.
+
+## Tooling
+
+- Chaos Mesh
+- Gremlin
+- Litmus
+- Chaos Monkey
+
+## References
+
+- Chaos Engineering: https://principlesofchaos.org

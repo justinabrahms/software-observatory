@@ -45,3 +45,13 @@ are risk concentrations — places where the system is most likely to fail.
 Incident correlation can't tell you *why* a component fails — only that it
 does. Also depends on incident reporting quality: unreported incidents
 produce no signal.
+
+## Tooling
+
+- Datadog
+- Sentry
+- Jira correlation
+
+## References
+
+- https://www.sentry.io

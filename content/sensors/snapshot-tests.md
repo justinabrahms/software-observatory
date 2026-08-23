@@ -44,3 +44,13 @@ without intention.
 Snapshot tests can't tell you whether the *original* snapshot was correct.
 They only detect *change*, not *correctness*. Also prone to "approve all"
 fatigue when outputs are large.
+
+## Tooling
+
+- Jest snapshot
+- Vitest
+- instanbul
+
+## References
+
+- https://jestjs.io/docs/snapshot-testing

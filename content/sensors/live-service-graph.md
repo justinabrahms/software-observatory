@@ -43,3 +43,14 @@ Edges that are legitimate but unwise, and edges that exist only under rare
 load patterns not yet observed. The discovered graph is a lower bound on the
 real one; [boundary sensors](boundary-sensors.html) enforce the upper bound
 at build time, and the two are strongest together.
+
+## Tooling
+
+- Istio
+- Linkerd
+- Kiali
+- Hubble
+
+## References
+
+- Istio: https://istio.io

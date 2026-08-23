@@ -44,3 +44,13 @@ inputs.
 Shadow traffic can only compare what both versions produce. If both have
 the same bug, it won't be detected. Also, side effects (database writes,
 external calls) must be carefully isolated.
+
+## Tooling
+
+- Envoy shadow
+- diffy
+- go-shadow
+
+## References
+
+- https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/cluster/cluster#shadow

@@ -79,3 +79,15 @@ Observability events tell you *what happened*, not *whether it was correct*.
 Determining correctness requires [invariants](runtime-invariants.html) layered
 on top of events. Events without invariants are raw data, not yet sensors of
 correctness.
+
+## Tooling
+
+- Honeycomb
+- Honeycomb
+- Lightstep
+- OpenTelemetry
+
+## References
+
+- Charity Majors et al., 'Observability Engineering' (2022)
+- OpenTelemetry: https://opentelemetry.io

@@ -45,3 +45,13 @@ and unclear logic.
 Review quality varies enormously with reviewer expertise, attention, and
 time. A rubber-stamp review provides no signal. Also, review can't catch
 problems in code the reviewer doesn't read carefully.
+
+## Tooling
+
+- GitHub PR review
+- Gerrit
+- Reviewable
+
+## References
+
+- Fagan, 'Design and Code Inspections to Reduce Errors' (1976)

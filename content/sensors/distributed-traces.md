@@ -47,3 +47,14 @@ Traces show execution paths but not [correctness](runtime-invariants.html).
 A trace that completes successfully may still violate a business invariant.
 Pair traces with [invariant checking](runtime-invariants.html) for
 correctness signal.
+
+## Tooling
+
+- OpenTelemetry
+- Jaeger
+- Zipkin
+- Tempo
+
+## References
+
+- Dapper paper: https://research.google/pubs/pub36356/

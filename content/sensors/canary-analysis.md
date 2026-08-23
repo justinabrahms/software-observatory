@@ -44,3 +44,13 @@ version and compares its behavior to the old. If error rates, latency, or
 Canary analysis can only detect differences in metrics you're measuring.
 Unknown unknowns require [high-cardinality events](observability-events.html)
 to investigate after the fact.
+
+## Tooling
+
+- Kayenta
+- Argo Rollouts
+- Flagger
+
+## References
+
+- Netflix Kayenta: https://github.com/spinnaker/kayenta

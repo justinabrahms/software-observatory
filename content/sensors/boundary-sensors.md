@@ -45,3 +45,14 @@ strength — a forbidden import is a definitive violation.
 Boundary sensors check structural boundaries, not [behavioral
 boundaries](contract-tests.html). A module can respect import boundaries
 while still violating encapsulation through shared mutable state.
+
+## Tooling
+
+- Istio
+- Linkerd
+- Cilium
+- eBPF tools
+
+## References
+
+- Istio: https://istio.io

@@ -44,3 +44,14 @@ the line containing the branch executes either way.
 Same limitations as [line coverage](line-coverage.html) — execution is not
 assertion. Branch coverage tells you the branch ran, not that the right
 thing happened when it did.
+
+## Tooling
+
+- coverage.py
+- Istanbul
+- JaCoCo
+- gcov
+
+## References
+
+- https://martinfowler.com/bliki/TestCoverage.html

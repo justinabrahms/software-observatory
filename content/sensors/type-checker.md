@@ -68,3 +68,15 @@ Types measure a particular class of *structural inconsistency*. They cannot
 detect *logical errors* — a function that type-checks perfectly but returns
 the wrong answer. They cannot detect *runtime behavior*. They cannot tell
 you whether the system produces the *intended result for users*.
+
+## Tooling
+
+- Rust compiler
+- TypeScript
+- Mypy
+- pyright
+
+## References
+
+- Luca Cardelli, 'Type Systems' (2004)
+- https://en.wikipedia.org/wiki/Type_system

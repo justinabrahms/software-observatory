@@ -43,3 +43,15 @@ Invariants that were never written down, and invariants whose statement is
 wrong. The gap between "the invariant holds" and "the invariant is the one
 the business needs" is exactly what [business invariants](business-invariants.html)
 measure from the other direction.
+
+## Tooling
+
+- Dafny
+- Frama-C
+- JML
+- Liquid Haskell
+
+## References
+
+- Leino, 'Dafny' (2010)
+- Liquid Haskell: https://ucsd-progsys.github.io/liquidhaskell/

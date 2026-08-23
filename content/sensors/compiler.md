@@ -46,3 +46,14 @@ A compiler cannot detect [logical errors](mutation-testing.html) — a function
 that compiles perfectly but returns the wrong answer. It also cannot detect
 [architectural problems](catalog.html#architecture) or [runtime
 behavior](observability-events.html).
+
+## Tooling
+
+- GCC
+- Clang
+- rustc
+- tsc
+
+## References
+
+- Aho et al., 'Compilers: Principles, Techniques, and Tools'

@@ -41,3 +41,13 @@ before [canary analysis](canary-analysis.html) has enough traffic to judge.
 Anything that requires real load, real data shapes, or real user behavior.
 A smoke test passing is necessary for the deployment to proceed and
 sufficient for almost nothing else.
+
+## Tooling
+
+- smoke-tester
+- curl-based smoke tests
+- k6 smoke
+
+## References
+
+- https://martinfowler.com/bliki/SelfTestingCode.html

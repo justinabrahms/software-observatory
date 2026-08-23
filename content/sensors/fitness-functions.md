@@ -45,3 +45,13 @@ dependency forming. They turn architectural rules from prose into
 
 Fitness functions only check rules you've *codified*. Implicit architectural
 rules that haven't been expressed as functions are invisible to this sensor.
+
+## Tooling
+
+- ArchUnit
+- NetArchTest
+- dependency-cruiser
+
+## References
+
+- ArchUnit: https://www.archunit.org

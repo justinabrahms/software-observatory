@@ -68,3 +68,13 @@ Runtime invariants can only check properties you *thought to specify*. They
 don't find unknown unknowns — that's what [observability
 events](observability-events.html) are for. They also can't tell you *why*
 an invariant was violated, only that it was.
+
+## Tooling
+
+- assertpy
+- pytest-check
+- Hypothesis invariants
+
+## References
+
+- Hoare, 'An Axiomatic Basis for Computer Programming' (1969)

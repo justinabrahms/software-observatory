@@ -44,3 +44,14 @@ between versions."
 API compatibility checks the *shape* of the interface, not the
 *behavioral meaning*. A response with the same fields and types but
 different semantics will pass compatibility checks.
+
+## Tooling
+
+- Akka
+- grpcurl
+- openapi-diff
+- revapi
+
+## References
+
+- revapi: https://revapi.org

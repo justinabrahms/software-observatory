@@ -75,3 +75,14 @@ response that has the right fields and types but contains wrong values will
 pass a contract test. They also cannot detect
 [integration failures](catalog.html#behavioral) that emerge from the
 *interaction* of correct components producing incorrect emergent behavior.
+
+## Tooling
+
+- Pact
+- Spring Cloud Contract
+- Postman
+
+## References
+
+- Ian Robinson, 'Consumer-Driven Contracts' (2007)
+- Pact: https://pact.io

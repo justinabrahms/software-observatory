@@ -45,3 +45,14 @@ linter can be wrong; a compiler cannot.
 A linter cannot detect [behavioral correctness](catalog.html#behavioral) —
 it operates on syntax and patterns, not execution. It also produces false
 positives, which erodes its authority over time.
+
+## Tooling
+
+- ESLint
+- ruff
+- golangci-lint
+- Semgrep
+
+## References
+
+- https://en.wikipedia.org/wiki/Lint_(software)

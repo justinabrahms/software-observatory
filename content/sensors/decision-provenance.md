@@ -58,3 +58,14 @@ provenance alive.
 Decision provenance can only exist where decisions were *recorded*. Decisions
 made verbally, in deleted branches, or in private messages are invisible to
 this sensor.
+
+## Tooling
+
+- ADRs
+- Conventional Commits
+- git blame
+
+## References
+
+- Michael Nygard, 'Documenting Architecture Decisions' (2017)
+- ADR: https://adr.github.io

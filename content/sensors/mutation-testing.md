@@ -89,3 +89,15 @@ their operators define — operator-level mutators miss whole classes of bugs
 exist but doesn't). A surviving-mutation rate of 0% doesn't mean the tests
 would catch every wrong implementation, only every wrong implementation the
 tool's operators can produce.
+
+## Tooling
+
+- Stryker
+- mutmut
+- PIT
+- cargo-mutants
+
+## References
+
+- Jia & Harman, 'An Analysis and Survey of the Development of Mutation Testing' (2011)
+- Stryker: https://stryker-mutator.io

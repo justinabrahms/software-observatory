@@ -46,3 +46,14 @@ Resource telemetry cannot tell you *why* resources are consumed or *which*
 requests are responsible. It shows aggregate state, not per-execution
 reality. This is why [observability events](observability-events.html) are a
 strictly richer sensor.
+
+## Tooling
+
+- Prometheus
+- Datadog
+- Grafana
+- CloudWatch
+
+## References
+
+- Prometheus: https://prometheus.io

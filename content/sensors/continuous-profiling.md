@@ -44,3 +44,14 @@ benchmarks, but in real traffic.
 
 Profiling shows resource consumption, not [correctness](runtime-invariants.html).
 A function that consumes 40% of CPU may be doing the wrong thing efficiently.
+
+## Tooling
+
+- Pyroscope
+- pprof
+- Parca
+- Datadog Profiler
+
+## References
+
+- https://github.com/google/pprof
