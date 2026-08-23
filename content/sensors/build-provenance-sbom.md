@@ -45,6 +45,14 @@ pipeline produced; whether the pipeline was honest is a question for
 [static security analysis](static-security-analysis.html) and dependency
 auditing.
 
+Supply chain security is a deeper topic than this catalog covers.
+Build provenance and SBOMs are one sensor in the structural family — they
+verify the artifact matches what the pipeline built — but the broader
+practice of supply chain security (dependency vulnerabilities, artifact
+signing trust roots, runtime attestation, policy enforcement) deserves its
+own resources. See [SLSA](https://slsa.dev) and
+[Sigstore](https://sigstore.dev) for dedicated treatment.
+
 ## Tooling
 
 - SLSA

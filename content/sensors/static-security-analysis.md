@@ -44,6 +44,14 @@ dependencies' runtime behavior — those belong to
 says nothing about attacks that arrive through valid inputs:
 [fuzzing](fuzzing.html) covers that side.
 
+Security is a deeper topic than this catalog covers. SAST is one sensor in
+the adversarial family — it asks whether an adversary's input can reach a
+dangerous sink — but the broader practice of application security
+(threat modeling, penetration testing, dependency vulnerabilities, runtime
+exploit detection) deserves its own resources. See
+[OWASP](https://owasp.org) and the
+[CWE](https://cwe.mitre.org) for dedicated treatment.
+
 ## Tooling
 
 - Semgrep
