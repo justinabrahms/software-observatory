@@ -737,6 +737,7 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
         <div class="signal-detail-meta">
           <span class="tag tag-family">{html.escape(family_name)}</span>
           <span class="tag tag-confidence">{html.escape(sensor.get('oracle', '').title())} oracle</span>
+          <span class="tag tag-type">{html.escape(sensor.get('type', '').title())}</span>
         </div>
       </header>
 
@@ -761,6 +762,7 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
           <dt>Scope</dt>           <dd>{html.escape(sensor.get('scope', '').replace('-', ' ').title())}</dd>
           <dt>Latency</dt>         <dd>{html.escape(LATENCY_LABELS.get(sensor.get('latency', ''), sensor.get('latency', '')))}</dd>
           <dt>Actionability</dt>   <dd>{html.escape(sensor.get('actionability', '').title())}</dd>
+          <dt>Type</dt>             <dd>{html.escape(sensor.get('type', '').title())}</dd>
           <dt>Entry ID</dt>        <dd>{html.escape(sensor.get('id', ''))}</dd>
           <dt>Reviewed</dt>        <dd>{html.escape(str(sensor.get('last_reviewed', ''))[:7])}</dd>
         </dl>
@@ -805,6 +807,7 @@ def generate_catalog_page(sensors, output_dir):
             cards += f"""          <article class="signal-card" onclick="window.location='sensors/{slug}.html'">
             <div class="signal-card-meta">
               <span class="tag tag-family">{html.escape(family['name'])}</span>
+              <span class="tag tag-type">{html.escape(s.get('type', '').title())}</span>
             </div>
             <h3 class="signal-card-title"><a href="sensors/{slug}.html" class="wikilink">{html.escape(title)}</a></h3>
             <p class="signal-card-blurb">{html.escape(blurb_text(s.get('body_html', ''), 200))}</p>
@@ -1549,10 +1552,23 @@ def generate_framework_page(sensors, output_dir):
       <h2 class="property-detail-title">Predictive vs retrospective</h2>
       <p class="property-detail-question">"This is wrong" or "this looks like things that became wrong before"?</p>
       <p>
+        Predictive sensors gate: they tell you something is wrong before the
+        code ships — a compiler error, a failed test, a mutation that
+        survives. Retrospective sensors warn: they tell you that past changes
+        look like changes that caused trouble before — revert rate, incident
+        correlation, escaped defect rate.
+      </p>
+      <p>
         You don't need to understand <code>FooManagerFactoryImpl</code>. You
         can observe: <em>27 changes in six months, 8 reverts, 4 incidents,
-        touched by 11 teams.</em> That's a signal — a black-box sensor of
-        maintainability.
+        touched by 11 teams.</em> That's a retrospective signal — a black-box
+        sensor of maintainability.
+      </p>
+      <p>
+        The catalog splits roughly evenly: predictive sensors catch bugs
+        before they ship; retrospective sensors tell you where the bugs came
+        from. Both matter — a sensor stack with only predictive sensors has
+        no feedback loop; one with only retrospective sensors has no gate.
       </p>
     </section>
   </div>"""
