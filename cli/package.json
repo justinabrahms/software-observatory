@@ -1,0 +1,38 @@
+{
+  "name": "softwareobservatory",
+  "version": "0.1.0",
+  "description": "Query the Software Observatory catalog of epistemic sensors for software correctness. Built for humans and agents: every command emits JSON with --json.",
+  "keywords": [
+    "observability",
+    "testing",
+    "correctness",
+    "sensors",
+    "software-quality",
+    "agents",
+    "mcp"
+  ],
+  "homepage": "https://softwareobservatory.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/justinabrahms/software-observatory",
+    "directory": "cli"
+  },
+  "license": "CC-BY-NC-SA-4.0",
+  "type": "module",
+  "scripts": {
+    "test": "node test/smoke.mjs"
+  },
+  "bin": {
+    "softwareobservatory": "./bin/softwareobservatory.mjs",
+    "sensors": "./bin/softwareobservatory.mjs"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "data/",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}

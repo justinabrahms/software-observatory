@@ -1,23 +1,29 @@
 # AGENTS.md — Software Observatory
 
 Static site for [softwareobservatory.com](https://softwareobservatory.com): a
-catalog of "epistemic sensors" for software correctness. No framework, no
-tests, no CI — one Python generator script plus hand-written CSS/JS.
+catalog of "epistemic sensors" for software correctness. No framework —
+one Python generator script plus hand-written CSS/JS, and a zero-dependency
+Node CLI/MCP server in `cli/` (published to npm as `softwareobservatory`).
 
 ## Commands
 
 - **Build:** `.venv/bin/python scripts/build.py` — reads `content/sensors/*.md`,
-  regenerates `index.html`, `pages/*.html`, `pages/sensors/*.html`, and
-  `search-index.json` **in place at the repo root** (generated files are
-  gitignored; `make deploy` ships them from the working tree). System
-  `python3` is missing the `markdown` module; always use `.venv/bin/python`.
+  regenerates `index.html`, `pages/*.html`, `pages/sensors/*.html`,
+  `search-index.json`, **and `cli/data/sensors.json`** (via
+  `scripts/export_cli_data.py`) in place at the repo root. Site output is
+  gitignored; `cli/data/sensors.json` is **committed** so the npm package can
+  ship it. System `python3` is missing the `markdown` module; always use
+  `.venv/bin/python`.
+- **CLI test:** `node cli/test/smoke.mjs` (or `make cli-test`) — exercises
+  every CLI command plus the MCP handshake. Needs Node >= 18, no npm
+  dependencies.
 - **Link check:** `.venv/bin/python scripts/check_links.py` — validates internal
   links and `#anchors` across all generated HTML, exits 1 on breakage
   (CI-gateable). `--external` also HEADs outbound links (needs network).
 - **Preview:** `python3 -m http.server` from the repo root, then open
   `http://localhost:8000`.
-- **Tests/lint:** none exist. Verification = run the build and eyeball the
-  generated HTML.
+- **Tests/lint:** `cli/test/smoke.mjs` covers the CLI. For site changes,
+  verification = run the build and eyeball the generated HTML.
 
 Deps (`pyyaml`, `markdown`) are already installed in `.venv/` (gitignored).
 The `--watch` flag mentioned in the `scripts/build.py` docstring is **not
@@ -89,6 +95,8 @@ the homepage scatter legend and dots key off.
 |------|------|
 | `scripts/build.py` | The whole generator. Templates + data + logic in one file. |
 | `scripts/check_links.py` | Internal link/anchor validator over the generated HTML. |
+| `scripts/export_cli_data.py` | Emits `cli/data/sensors.json`; runs at the end of every build. |
+| `cli/` | Zero-dependency Node CLI + MCP server (npm package `softwareobservatory`). `bin/softwareobservatory.mjs` is the entry; `lib/core.mjs` holds query logic; `lib/mcp.mjs` is the stdio JSON-RPC server; `data/sensors.json` is committed build output. |
 | `content/sensors/*.md` | Source of truth for sensor entries (YAML frontmatter). |
 | `content/pages/` | Empty; reserved. |
 | `index.html`, `pages/`, `search-index.json` | **Generated output** — gitignored, overwritten by every build; deploys ship it from the working tree. |

@@ -35,12 +35,31 @@ am I asking?* and *when can I afford to learn the answer?*
 - **[About](https://softwareobservatory.com/pages/about.html)** — the
   thesis, inspirations, and how to contribute.
 
+## Querying the catalog (CLI / agents)
+
+The full catalog ships in an npm package, so agents and scripts can query it
+offline. JSON is the default output when stdout is piped; `mcp` speaks the
+Model Context Protocol over stdio.
+
+```sh
+npx softwareobservatory list --family structural
+npx softwareobservatory get SO-003
+npx softwareobservatory suggest "our tests pass but bugs still ship"
+npx softwareobservatory stack linter,SO-003,canary-analysis
+npx softwareobservatory mcp   # MCP server for agent clients
+```
+
+See [cli/README.md](cli/README.md) for the full command reference and MCP
+client configuration.
+
 ## Repository layout
 
 ```
 content/sensors/*.md   Source of truth — one file per sensor (YAML frontmatter + markdown)
 scripts/build.py      The generator: templates, data, and logic in one file
 scripts/check_links.py Internal link/anchor validator over the generated HTML
+scripts/export_cli_data.py Emits cli/data/sensors.json on every build
+cli/                  Node CLI + MCP server (npm: softwareobservatory)
 css/observatory.css    Hand-written stylesheet (design tokens in :root)
 js/main.js            No build step — filter, search dropdown, scatter, jumplinks
 index.html            Generated (gitignored)

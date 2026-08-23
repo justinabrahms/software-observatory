@@ -1,10 +1,13 @@
-.PHONY: build deploy check serve
+.PHONY: build deploy check serve cli-test
 
 build:
 	.venv/bin/python scripts/build.py
 
 check:
 	.venv/bin/python scripts/check_links.py
+
+cli-test:
+	node cli/test/smoke.mjs
 
 # Publish to the observer@abrah.ms deploy slot. The `observer` user's only
 # authorized key is pinned by `rrsync -wo` to /srv/softwareobservatory.com,
@@ -19,6 +22,7 @@ deploy: build
 	  --exclude='templates/' \
 	  --exclude='archive-*/' \
 	  --exclude='scripts/' \
+	  --exclude='cli/' \
 	  --exclude='Makefile' \
 	  --exclude='.gitignore' \
 	  --exclude='AGENTS.md' \

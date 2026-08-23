@@ -2023,6 +2023,11 @@ def main():
         generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, output_dir)
         print(f"  pages/sensors/{sensor['slug']}.html")
 
+    print("Exporting CLI dataset...")
+    import export_cli_data
+    export_cli_data.export()
+    print("  cli/data/sensors.json")
+
     print("Done.")
 
 
