@@ -2036,3 +2036,44 @@ a.wikilink:hover {
   .hero-actions { flex-direction: column; }
   .featured-signal { padding: 2rem 1.5rem; }
 }
+
+/* References section */
+.references-subheading {
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin: 1.5rem 0 .5rem;
+}
+.reference-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+}
+.reference-list li {
+  padding: .35rem 0;
+  line-height: 1.5;
+  color: var(--text-soft);
+}
+.reference-list li a {
+  color: var(--text);
+}
+.ref-meta {
+  color: var(--text-dim);
+  font-size: .85em;
+}
+.reference-tools li {
+  display: flex;
+  gap: .6rem;
+  align-items: baseline;
+}
+.ref-title {
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+}
+.ref-desc {
+  color: var(--text-dim);
+  font-size: .9em;
+}
