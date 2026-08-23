@@ -493,6 +493,7 @@ def html_header(nav_depth="", root_depth=""):
         ("catalog.html", "Catalog"),
         ("atlas.html", "Atlas"),
         ("framework.html", "Framework"),
+        ("glossary.html", "Glossary"),
         ("about.html", "About"),
     ]
     nav_html = "\n".join(f'      <a href="{nav_depth}{href}">{label}</a>' for href, label in nav_items)
@@ -744,7 +745,7 @@ def generate_catalog_page(sensors, output_dir):
     <p class="eyebrow">The Catalog</p>
     <h1 class="page-title">Sensor Catalog</h1>
     <p class="page-lede">
-      A catalog of <a href="#" class="wikilink">epistemic sensors</a> — the
+      A catalog of <a href="glossary.html#epistemic-sensor" class="wikilink">epistemic sensors</a> — the
       observable signals that increase our confidence that a system is correct,
       maintainable, and behaving as intended. Organized into eleven families.
       Each entry documents what the sensor can detect, what it cannot detect,
@@ -1412,7 +1413,7 @@ def generate_about_page(output_dir):
   <div class="about-content">
     <h2>The problem</h2>
     <p>
-      Software is increasingly an <a href="#" class="wikilink">opaque
+      Software is increasingly an <a href="glossary.html#opaque-artifact" class="wikilink">opaque
       artifact</a>. We cannot — and increasingly do not want to — fully
       understand every implementation. Code is produced by agents, by teams
       we'll never meet, by systems that span services we don't own. The
@@ -1535,6 +1536,167 @@ def generate_about_page(output_dir):
 
 # ── Main ────────────────────────────────────────────────────────────────────
 
+def generate_glossary_page(output_dir):
+    """Generate pages/glossary.html: definitions of the core vocabulary used
+    across the site, cross-linked to the framework and catalog."""
+
+    entries = [
+        ("epistemic-sensor",
+         "Epistemic sensor",
+         "A measurement instrument pointed at a failure mode. The term is "
+         "deliberately not \"quality metric\": a metric aggregates or scores, "
+         "while a sensor reduces uncertainty about a specific property of the "
+         "system. A compiler is a sensor of structural validity; mutation "
+         "testing is a sensor of test sensitivity; observability events are "
+         "sensors of what actually happened. Each sensor measures one thing — "
+         "no single sensor measures correctness. The catalog is organized into "
+         '<a href="catalog.html" class="wikilink">eleven families</a> of '
+         "epistemic sensor, each asking a different question about the system."),
+        ("opaque-artifact",
+         "Opaque artifact",
+         "Software we cannot — or do not want to — fully understand by "
+         "reading. Code is increasingly produced by agents, by teams we'll "
+         "never meet, and by systems that span services we don't own. The "
+         "question for an opaque artifact is not \"is this code good?\" but "
+         '"<em>what independent observations would cause us to update our '
+         'belief that this software is correct?</em>\" The Observatory is a '
+         "catalog of those observations."),
+        ("oracle",
+         "Oracle",
+         "An oracle is the thing that tells you whether a given behavior is "
+         "correct. A compiler error is a perfect oracle of structural validity "
+         "— the implementation cannot argue with it. A test assertion is a "
+         "strong oracle for the specific case it checks. A complexity metric "
+         "is a weak oracle — high complexity doesn't prove anything is wrong. "
+         '<a href="framework.html" class="wikilink">Oracle strength</a> is one '
+         "of the six dimensions every sensor is characterized along."),
+        ("oracle-strength",
+         "Oracle strength",
+         "How confidently a sensor knows that something is wrong. The scale "
+         "runs from maximum (a compiler error — the code cannot argue) to low "
+         "(a complexity metric — it suggests risk but proves nothing). See the "
+         '<a href="framework.html" class="wikilink">framework page</a> for the '
+         "full ranking."),
+        ("independence",
+         "Independence",
+         "Whether the thing being evaluated can manipulate the sensor. A model "
+         "writing <code>tests/</code> is allowed to write tests that make itself "
+         "pass — that's low independence. A compiler is maximum independence — "
+         "the code cannot talk its way past a type error. Independence is "
+         "especially important for AI-generated code: the producer and the "
+         "evaluator should be separated wherever possible. See "
+         '<a href="framework.html" class="wikilink">the framework</a> and '
+         '<a href="sensors/producer-evaluator-separation.html" class="wikilink">'
+         "producer-evaluator separation</a>."),
+        ("scope",
+         "Scope",
+         "What level of the system the sensor tells you about: a single line, "
+         "a function, a module, a service, the whole system, or a user journey. "
+         "A type checker has function-level scope; observability events have "
+         'system-level scope. See <a href="framework.html" class="wikilink">'
+         "the framework</a>."),
+        ("feedback-latency",
+         "Feedback latency",
+         "How long until the sensor tells you something. A compiler reports in "
+         "milliseconds; an escaped-defect-rate sensor reports in months. "
+         "Latency determines where in the lifecycle a sensor is useful — you "
+         "can't gate a merge on a signal that takes weeks. See "
+         '<a href="framework.html" class="wikilink">the framework</a>.'),
+        ("actionability",
+         "Actionability",
+         "Whether a sensor merely flags a problem or tells you what to fix. A "
+         "guiding sensor doesn't just say \"bad\" — it tells the agent what to "
+         'do next. See <a href="framework.html" class="wikilink">the framework</a>.'),
+        ("guiding-sensor",
+         "Guiding sensor",
+         "A sensor whose feedback directs the next action, not just whether "
+         "something is wrong. A mutation testing report shows the exact "
+         "untested mutation — the agent knows what to write a test for. A "
+         "complexity score just says \"this is complex\" and leaves the agent "
+         "to figure out what to do. The distinction comes from Birgitta "
+         "Böckeler's \"guides &amp; sensors\" framing."),
+        ("predictive-vs-retrospective",
+         "Predictive vs retrospective",
+         "Whether the sensor says \"this is wrong\" (predictive — a compiler "
+         "error before merge) or \"this looks like things that became wrong "
+         "before\" (retrospective — revert rate, incident correlation). "
+         'Predictive sensors gate; retrospective sensors warn. See '
+         '<a href="framework.html" class="wikilink">the framework</a>.'),
+        ("producer-evaluator-separation",
+         "Producer-evaluator separation",
+         "The principle that the thing producing the code should not be the "
+         "thing evaluating it. A model writing <code>tests/</code> is allowed to "
+         "write tests that make itself pass. Independence is the dimension that "
+         'captures this; see <a href="sensors/producer-evaluator-separation.html" '
+         'class="wikilink">the entry</a>.'),
+        ("computational-gate",
+         "Computational gate",
+         "A control that literally refuses to proceed unless a verification "
+         "command succeeds — not a prose rule that says \"verify this.\" An "
+         "instruction is weaker than a gate; a gate is weaker than a gate with "
+         "no bypass path. See "
+         '<a href="sensors/computational-gates.html" class="wikilink">the entry</a>.'),
+        ("confidence-stack",
+         "Confidence stack",
+         "The layers of evidence that accumulate as code moves from authoring "
+         "to production: compilation, types, tests, mutation, integration, "
+         "canary, production events, outcomes. No single layer is sufficient; "
+         "the combination constrains uncertainty from multiple directions. "
+         'The <a href="atlas.html" class="wikilink">atlas</a> arranges the '
+         "stack as a navigational matrix."),
+        ("metamorphic-testing",
+         "Metamorphic testing",
+         "A testing technique where you don't know the correct answer, but you "
+         "know how the answer should change when the input changes. If "
+         "<code>f(x) == f(-x)</code> for a square root, then "
+         "<code>sqrt(4) == sqrt(-4)</code> must hold. You don't need an oracle; "
+         "you need a relation. See "
+         '<a href="sensors/metamorphic-testing.html" class="wikilink">the entry</a>.'),
+        ("high-cardinality",
+         "High cardinality",
+         "A property of observability events: each event carries enough "
+         "distinct fields (user_id, cart_id, order_id, deployment, git_sha) "
+         "that you can slice the data along dimensions you didn't know you'd "
+         "need. The opposite of pre-aggregated metrics, which answer only "
+         "predetermined questions. See "
+         '<a href="sensors/observability-events.html" class="wikilink">the entry</a>.'),
+        ("agent-sensor-stack",
+         "Agent sensor stack",
+         "The confidence stack applied to AI-generated code: each layer is a "
+         "gate the agent's output must pass before it reaches production. The "
+         "key principle is that the agent cannot self-certify — the sensors "
+         "declare success. See "
+         '<a href="sensors/agent-sensor-stack.html" class="wikilink">the entry</a>.'),
+    ]
+
+    sections = ""
+    for slug, term, definition in entries:
+        sections += f"""    <section class="glossary-entry">
+      <h2 class="glossary-term" id="{slug}">{html.escape(term)}</h2>
+      <p class="glossary-definition">{definition}</p>
+    </section>
+"""
+
+    body = f"""  <section class="page-header">
+    <p class="eyebrow">Glossary</p>
+    <h1 class="page-title">Glossary</h1>
+    <p class="page-lede">
+      The core vocabulary the Observatory uses to talk about software
+      correctness. These terms appear throughout the catalog, the atlas, and
+      the framework; this page collects their definitions in one place.
+    </p>
+  </section>
+
+  <div class="about-content">
+{sections.rstrip()}
+  </div>"""
+
+    page_html = html_page("Glossary", body, root_depth="../", nav_depth="")
+    out_path = output_dir / "pages" / "glossary.html"
+    with open(out_path, "w") as f:
+        f.write(page_html)
+
+
 def generate_categories_page(sensors, output_dir):
     """Generate pages/categories.html: an index of all non-family categories
     with the sensors in each, anchorable by slug."""
@@ -1621,6 +1783,7 @@ def generate_sitemap(sensors, output_dir):
         ("pages/atlas.html", ""),
         ("pages/framework.html", ""),
         ("pages/about.html", ""),
+        ("pages/glossary.html", ""),
         ("pages/categories.html", ""),
     ]
     for s in sensors:
@@ -1686,6 +1849,9 @@ def main():
 
     generate_about_page(output_dir)
     print("  pages/about.html")
+
+    generate_glossary_page(output_dir)
+    print("  pages/glossary.html")
 
     generate_categories_page(sensors, output_dir)
     print("  pages/categories.html")
