@@ -526,7 +526,7 @@ def html_footer(root_depth="", nav_depth=""):
     return f"""  <footer class="site-footer">
     <div class="footer-inner">
       <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
-      <p class="footer-copy">© 2026 Software Observatory · <a href="{nav_depth}about.html">About</a> · <span class="license-badge">CC BY-NC-SA 4.0</span></p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="{nav_depth}about.html">About</a> · <span class="license-badge">CC BY-NC-SA 4.0</span></p>
     </div>
   </footer>"""
 
@@ -1448,6 +1448,26 @@ def generate_about_page(output_dir):
       <strong>Honeycomb's conception of observability.</strong>
       Don't merely collect predetermined health metrics; preserve enough
       information to ask questions you didn't know you would need to ask.
+    </p>
+
+    <h2>Maintained by</h2>
+    <p>
+      The Software Observatory is built and maintained by
+      <a href="https://justin.abrah.ms/" class="wikilink">Justin Abrahms</a>
+      — a principal engineer working on agent-assisted software delivery and
+      the sensors that let us assess what agents produce. The catalog grows
+      out of that work: if agents can produce software faster than humans can
+      inspect it, code review cannot remain the primary mechanism for
+      establishing quality, and we need a living catalog of the signals we
+      can use instead.
+    </p>
+    <p>
+      Reach out via <a href="mailto:justin@abrah.ms" class="wikilink">email</a>,
+      <a href="https://bsky.app/profile/justin.abrah.ms" class="wikilink">Bluesky</a>,
+      or <a href="https://github.com/justinabrahms" class="wikilink">GitHub</a>.
+      Errors and gaps in the catalog are best filed in the
+      <a href="https://github.com/justinabrahms/software-observatory/issues"
+      class="wikilink">issue tracker</a>.
     </p>
 
     <h2>Contributing</h2>

@@ -7,6 +7,8 @@ Measurement instruments pointed at different failure modes.
 
 Live at **<https://softwareobservatory.com>**.
 
+Built and maintained by [Justin Abrahms](https://justin.abrah.ms/).
+
 The central question the catalog tries to organize:
 
 > What independent observations would cause us to believe this software is correct?
