@@ -472,18 +472,33 @@ def independence_dots_html(ind_str):
 
 # ── HTML templates ──────────────────────────────────────────────────────────
 
-def html_head(title, depth=""):
+def html_head(title, depth="", canonical="", json_ld=""):
     """depth is '' for root, '../' for pages/, '../../' for pages/sensors/"""
+    canonical_link = ""
+    if canonical:
+        canonical_link = f'\n  <link rel="canonical" href="{SITE_URL}/{canonical}">'
+    json_ld_block = ""
+    if json_ld:
+        json_ld_block = f'\n  <script type="application/ld+json">\n{json_ld}\n  </script>'
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{html.escape(title)} — Software Observatory</title>
+  <meta name="description" content="A catalog of epistemic sensors for software correctness — the observable signals that reduce uncertainty about whether a system is correct, maintainable, and behaving as intended.">{canonical_link}
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{html.escape(title)} — Software Observatory">
+  <meta property="og:description" content="A catalog of epistemic sensors for software correctness.">
+  <meta property="og:url" content="{SITE_URL}/{canonical}">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{html.escape(title)} — Software Observatory">
+  <meta name="twitter:description" content="A catalog of epistemic sensors for software correctness.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{depth}css/observatory.css">
+  <link rel="stylesheet" href="{depth}css/observatory.css">{json_ld_block}
 </head>"""
 
 
@@ -532,12 +547,14 @@ def html_footer(root_depth="", nav_depth=""):
   </footer>"""
 
 
-def html_page(title, body_content, root_depth="", nav_depth=""):
+def html_page(title, body_content, root_depth="", nav_depth="", canonical="", json_ld=""):
     """root_depth: relative path to site root (for css/js).
-    nav_depth: relative path to pages/ (for nav links)."""
+    nav_depth: relative path to pages/ (for nav links).
+    canonical: path-relative URL for the canonical link (e.g. 'pages/about.html').
+    json_ld: JSON-LD string to inject as a script block in <head>."""
     # Deep-linkable headings get ids before the page is assembled
     body_content = add_heading_ids(body_content)
-    return f"""{html_head(title, root_depth)}
+    return f"""{html_head(title, root_depth, canonical=canonical, json_ld=json_ld)}
 <body>
 {html_header(nav_depth, root_depth)}
 {body_content}
@@ -674,7 +691,7 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
     </aside>
   </div>"""
 
-    page_html = html_page(f"{sensor['title']}", body, root_depth="../../", nav_depth="../")
+    page_html = html_page(f"{sensor['title']}", body, root_depth="../../", nav_depth="../", canonical=f"pages/sensors/{sensor['slug']}.html")
     out_path = output_dir / "pages" / "sensors" / f"{sensor['slug']}.html"
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w") as f:
@@ -769,7 +786,7 @@ def generate_catalog_page(sensors, output_dir):
     </div>
   </div>"""
 
-    page_html = html_page("Sensor Catalog", body, root_depth="../", nav_depth="")
+    page_html = html_page("Sensor Catalog", body, root_depth="../", nav_depth="", canonical="pages/catalog.html")
     out_path = output_dir / "pages" / "catalog.html"
     with open(out_path, "w") as f:
         f.write(page_html)
@@ -1024,7 +1041,7 @@ def generate_atlas_page(sensors, output_dir):
     </div>
   </div>"""
 
-    page_html = html_page("Sensor Atlas", body, root_depth="../", nav_depth="")
+    page_html = html_page("Sensor Atlas", body, root_depth="../", nav_depth="", canonical="pages/atlas.html")
     out_path = output_dir / "pages" / "atlas.html"
     with open(out_path, "w") as f:
         f.write(page_html)
@@ -1262,7 +1279,27 @@ def generate_index_page(sensors, output_dir):
     </section>
   </main>"""
 
-    page_html = html_page("Software Observatory", body, root_depth="", nav_depth="pages/")
+    import json as _json
+    website_ld = _json.dumps({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Software Observatory",
+        "url": SITE_URL,
+        "description": "A catalog of epistemic sensors for software correctness.",
+        "author": {
+            "@type": "Person",
+            "name": "Justin Abrahms",
+            "url": "https://justin.abrah.ms",
+            "email": "mailto:justin@abrah.ms",
+            "sameAs": [
+                "https://github.com/justinabrahms",
+                "https://bsky.app/profile/justin.abrah.ms",
+                "https://www.linkedin.com/in/justinabrahms",
+            ],
+        },
+    }, indent=2)
+
+    page_html = html_page("Software Observatory", body, root_depth="", nav_depth="pages/", canonical="", json_ld=website_ld)
     out_path = output_dir / "index.html"
     with open(out_path, "w") as f:
         f.write(page_html)
@@ -1390,7 +1427,7 @@ def generate_framework_page(sensors, output_dir):
     </section>
   </div>"""
 
-    page_html = html_page("Framework", body, root_depth="../", nav_depth="")
+    page_html = html_page("Framework", body, root_depth="../", nav_depth="", canonical="pages/framework.html")
     out_path = output_dir / "pages" / "framework.html"
     with open(out_path, "w") as f:
         f.write(page_html)
@@ -1528,7 +1565,7 @@ def generate_about_page(output_dir):
     </p>
   </div>"""
 
-    page_html = html_page("About", body, root_depth="../", nav_depth="")
+    page_html = html_page("About", body, root_depth="../", nav_depth="", canonical="pages/about.html")
     out_path = output_dir / "pages" / "about.html"
     with open(out_path, "w") as f:
         f.write(page_html)
@@ -1691,7 +1728,7 @@ def generate_glossary_page(output_dir):
 {sections.rstrip()}
   </div>"""
 
-    page_html = html_page("Glossary", body, root_depth="../", nav_depth="")
+    page_html = html_page("Glossary", body, root_depth="../", nav_depth="", canonical="pages/glossary.html")
     out_path = output_dir / "pages" / "glossary.html"
     with open(out_path, "w") as f:
         f.write(page_html)
@@ -1739,7 +1776,7 @@ def generate_categories_page(sensors, output_dir):
 {sections.rstrip()}
   </div>"""
 
-    page_html = html_page("Sensor Categories", body, root_depth="../", nav_depth="")
+    page_html = html_page("Sensor Categories", body, root_depth="../", nav_depth="", canonical="pages/categories.html")
     out_path = output_dir / "pages" / "categories.html"
     with open(out_path, "w") as f:
         f.write(page_html)
