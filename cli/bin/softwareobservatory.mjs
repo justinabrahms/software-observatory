@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import {
+  CLI_VERSION,
   loadData,
   siteUrl,
   listFamilies,
@@ -284,9 +285,9 @@ function main() {
       const data = loadData();
       emit(
         flags,
-        { cli: "0.1.0", dataset_version: data.version, dataset_generated_at: data.generated_at, sensors: data.sensors.length },
+        { cli: CLI_VERSION, dataset_version: data.version, dataset_generated_at: data.generated_at, sensors: data.sensors.length },
         () => {
-          console.log(`softwareobservatory 0.1.0`);
+          console.log(`softwareobservatory ${CLI_VERSION}`);
           console.log(`dataset v${data.version}, generated ${data.generated_at}, ${data.sensors.length} sensors`);
         }
       );

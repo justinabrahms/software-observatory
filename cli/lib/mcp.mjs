@@ -1,5 +1,6 @@
 import readline from "node:readline";
 import {
+  CLI_VERSION,
   loadData,
   siteUrl,
   listFamilies,
@@ -12,7 +13,7 @@ import {
 } from "./core.mjs";
 
 const PROTOCOL_VERSION = "2024-11-05";
-const SERVER_INFO = { name: "softwareobservatory", version: "0.1.0" };
+const SERVER_INFO = { name: "softwareobservatory", version: CLI_VERSION };
 
 const TOOLS = [
   {

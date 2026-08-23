@@ -1,8 +1,10 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import path from "node:path";
 
 const DATA_PATH = fileURLToPath(new URL("../data/sensors.json", import.meta.url));
+const PACKAGE_PATH = fileURLToPath(new URL("../package.json", import.meta.url));
+
+export const CLI_VERSION = JSON.parse(readFileSync(PACKAGE_PATH, "utf8")).version;
 
 let cache = null;
 
