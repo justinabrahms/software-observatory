@@ -1353,11 +1353,15 @@ def generate_index_page(sensors, output_dir):
     <section class="stack-preview" id="confidence-stack">
       <h2 class="section-heading">The confidence landscape</h2>
       <p class="section-lede">
-        Sensors are not a hierarchy. Each one trades <em>effort</em> — how long
-        you wait and how much it costs — against <em>efficacy</em>: how much the
-        signal can actually tell you. Compilation is instant and definitive about
-        validity; user outcomes are slow and definitive about everything that
-        matters. Most sensors live somewhere in between.
+        No single sensor is sufficient, so there is no total ordering across
+        sensors — no "best" sensor. But each <em>dimension</em> (oracle
+        strength, latency, scope) is a partial order, and the atlas's
+        left-to-right axis is <em>time</em>, not quality. Each one trades
+        <em>effort</em> — how long you wait and how much it costs — against
+        <em>efficacy</em>: how much the signal can actually tell you.
+        Compilation is instant and definitive about validity; user outcomes
+        are slow and definitive about everything that matters. Most sensors
+        live somewhere in between.
       </p>
 {scatter_html}
       <div class="stack-cta">
