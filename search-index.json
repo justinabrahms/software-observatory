@@ -1,0 +1,471 @@
+[
+ {
+  "title": "Structural",
+  "kind": "family",
+  "family": "Structural",
+  "url": "pages/catalog.html#structural",
+  "blurb": "Is this artifact internally coherent?"
+ },
+ {
+  "title": "Behavioral",
+  "kind": "family",
+  "family": "Behavioral",
+  "url": "pages/catalog.html#behavioral",
+  "blurb": "Does it do what we expect?"
+ },
+ {
+  "title": "Test Effectiveness",
+  "kind": "family",
+  "family": "Test Effectiveness",
+  "url": "pages/catalog.html#test-effectiveness",
+  "blurb": "Do our tests actually detect failures?"
+ },
+ {
+  "title": "Invariants",
+  "kind": "family",
+  "family": "Invariants",
+  "url": "pages/catalog.html#invariants",
+  "blurb": "What must always be true?"
+ },
+ {
+  "title": "Adversarial",
+  "kind": "family",
+  "family": "Adversarial",
+  "url": "pages/catalog.html#adversarial",
+  "blurb": "Can we make our evidence of correctness fail?"
+ },
+ {
+  "title": "Runtime",
+  "kind": "family",
+  "family": "Runtime",
+  "url": "pages/catalog.html#runtime",
+  "blurb": "What is it actually doing?"
+ },
+ {
+  "title": "Change",
+  "kind": "family",
+  "family": "Change",
+  "url": "pages/catalog.html#change",
+  "blurb": "What did this change actually affect?"
+ },
+ {
+  "title": "Architecture",
+  "kind": "family",
+  "family": "Architecture",
+  "url": "pages/catalog.html#architecture",
+  "blurb": "Is the system becoming harder to reason about?"
+ },
+ {
+  "title": "Evolution",
+  "kind": "family",
+  "family": "Evolution",
+  "url": "pages/catalog.html#evolution",
+  "blurb": "Does this look like changes that caused trouble before?"
+ },
+ {
+  "title": "Human Comprehension",
+  "kind": "family",
+  "family": "Human Comprehension",
+  "url": "pages/catalog.html#comprehension",
+  "blurb": "Can another observer understand and challenge this?"
+ },
+ {
+  "title": "AI-Generated Code",
+  "kind": "family",
+  "family": "AI-Generated Code",
+  "url": "pages/catalog.html#ai-sensors",
+  "blurb": "What evidence do we have that this change is safe?"
+ },
+ {
+  "title": "Agent Sensor Stack",
+  "kind": "sensor",
+  "family": "AI-Generated Code",
+  "url": "pages/sensors/agent-sensor-stack.html",
+  "blurb": "An agent should be surrounded by sensors. And crucially: the agent doesn&rsquo;t"
+ },
+ {
+  "title": "API Compatibility",
+  "kind": "sensor",
+  "family": "Change",
+  "url": "pages/sensors/api-compatibility.html",
+  "blurb": "Did externally observable contracts change? A sensor of boundary stability"
+ },
+ {
+  "title": "Boundary Sensors",
+  "kind": "sensor",
+  "family": "Architecture",
+  "url": "pages/sensors/boundary-sensors.html",
+  "blurb": "&ldquo;This package must not import that package.&rdquo; A sensor of encapsulation and"
+ },
+ {
+  "title": "Branch Coverage",
+  "kind": "sensor",
+  "family": "Test Effectiveness",
+  "url": "pages/sensors/branch-coverage.html",
+  "blurb": "Did we exercise both sides of decisions? Better than line"
+ },
+ {
+  "title": "Build Provenance & SBOM",
+  "kind": "sensor",
+  "family": "Structural",
+  "url": "pages/sensors/build-provenance-sbom.html",
+  "blurb": "Is the artifact you are about to deploy structurally the one your pipeline"
+ },
+ {
+  "title": "Business Invariants",
+  "kind": "sensor",
+  "family": "Invariants",
+  "url": "pages/sensors/business-invariants.html",
+  "blurb": "A successful payment implies an order eventually becomes paid."
+ },
+ {
+  "title": "Canary Analysis",
+  "kind": "sensor",
+  "family": "Change",
+  "url": "pages/sensors/canary-analysis.html",
+  "blurb": "Does the new version behave differently from the old version? A sensor of"
+ },
+ {
+  "title": "Change Coupling",
+  "kind": "sensor",
+  "family": "Evolution",
+  "url": "pages/sensors/change-coupling.html",
+  "blurb": "Which files repeatedly change together? A sensor of hidden coupling \u2014 the"
+ },
+ {
+  "title": "Compiler",
+  "kind": "sensor",
+  "family": "Structural",
+  "url": "pages/sensors/compiler.html",
+  "blurb": "The cheapest and most certain sensor. Is this thing even a valid inhabitant"
+ },
+ {
+  "title": "Computational Gates",
+  "kind": "sensor",
+  "family": "AI-Generated Code",
+  "url": "pages/sensors/computational-gates.html",
+  "blurb": "An instruction saying &ldquo;verify this&rdquo; is weaker than a gate that literally"
+ },
+ {
+  "title": "Continuous Profiling",
+  "kind": "sensor",
+  "family": "Runtime",
+  "url": "pages/sensors/continuous-profiling.html",
+  "blurb": "Where did computation actually go? Not &ldquo;CPU is 82%&rdquo; but &ldquo;this function"
+ },
+ {
+  "title": "Contract & Refinement Types",
+  "kind": "sensor",
+  "family": "Behavioral",
+  "url": "pages/sensors/contract-refinement-types.html",
+  "blurb": "Behavioral guarantees checked before the code ever runs. Typestate systems,"
+ },
+ {
+  "title": "Contract Tests",
+  "kind": "sensor",
+  "family": "Behavioral",
+  "url": "pages/sensors/contract-tests.html",
+  "blurb": "Does service A continue satisfying the assumptions of service B? Contract"
+ },
+ {
+  "title": "Database Invariants",
+  "kind": "sensor",
+  "family": "Invariants",
+  "url": "pages/sensors/database-invariants.html",
+  "blurb": "Every foreign key refers to an existing object. Every request has exactly"
+ },
+ {
+  "title": "Decision Provenance",
+  "kind": "sensor",
+  "family": "Human Comprehension",
+  "url": "pages/sensors/decision-provenance.html",
+  "blurb": "Can you answer &ldquo;why is this weird thing here?&rdquo; A sensor of archaeological"
+ },
+ {
+  "title": "Dependency Graph",
+  "kind": "sensor",
+  "family": "Architecture",
+  "url": "pages/sensors/dependency-graph.html",
+  "blurb": "Fan-in, fan-out, cycles, dependency depth, unstable dependencies. A sensor"
+ },
+ {
+  "title": "Diff Coverage",
+  "kind": "sensor",
+  "family": "Test Effectiveness",
+  "url": "pages/sensors/diff-coverage.html",
+  "blurb": "You don&rsquo;t necessarily care whether some 15-year-old module has 43% coverage."
+ },
+ {
+  "title": "Differential Testing",
+  "kind": "sensor",
+  "family": "Adversarial",
+  "url": "pages/sensors/differential-testing.html",
+  "blurb": "implementation_A(input) == implementation_B(input). You don&rsquo;t know which is"
+ },
+ {
+  "title": "Distributed Traces",
+  "kind": "sensor",
+  "family": "Runtime",
+  "url": "pages/sensors/distributed-traces.html",
+  "blurb": "What path did this particular operation take? A sensor of execution flow"
+ },
+ {
+  "title": "Documentation Drift",
+  "kind": "sensor",
+  "family": "Human Comprehension",
+  "url": "pages/sensors/documentation-drift.html",
+  "blurb": "Does documentation still predict behavior? A sensor of the gap between what"
+ },
+ {
+  "title": "DORA Metrics",
+  "kind": "sensor",
+  "family": "Evolution",
+  "url": "pages/sensors/dora-metrics.html",
+  "blurb": "Deployment frequency, lead time for changes, change failure rate, time to"
+ },
+ {
+  "title": "Error-Budget Impact",
+  "kind": "sensor",
+  "family": "Change",
+  "url": "pages/sensors/error-budget-impact.html",
+  "blurb": "Did this change consume an abnormal amount of reliability budget? A sensor"
+ },
+ {
+  "title": "Escaped Defect Rate",
+  "kind": "sensor",
+  "family": "Test Effectiveness",
+  "url": "pages/sensors/escaped-defect-rate.html",
+  "blurb": "Of the bugs that reached users, which ones should the test suite have"
+ },
+ {
+  "title": "Example-Based Tests",
+  "kind": "sensor",
+  "family": "Behavioral",
+  "url": "pages/sensors/example-based-tests.html",
+  "blurb": "Given X, expect Y. The fundamental behavioral sensor."
+ },
+ {
+  "title": "Fault Injection",
+  "kind": "sensor",
+  "family": "Adversarial",
+  "url": "pages/sensors/fault-injection.html",
+  "blurb": "Kill a node. Drop a network connection. Inject latency. A sensor of"
+ },
+ {
+  "title": "Feature Flag Exposure Telemetry",
+  "kind": "sensor",
+  "family": "Change",
+  "url": "pages/sensors/feature-flag-exposure.html",
+  "blurb": "A change behind a flag is not a change anyone has experienced. Flag"
+ },
+ {
+  "title": "Architecture Fitness Functions",
+  "kind": "sensor",
+  "family": "Architecture",
+  "url": "pages/sensors/fitness-functions.html",
+  "blurb": "frontend -&gt; application -&gt; domain -&gt; infrastructure, and fail if domain"
+ },
+ {
+  "title": "Fuzzing",
+  "kind": "sensor",
+  "family": "Adversarial",
+  "url": "pages/sensors/fuzzing.html",
+  "blurb": "What happens on inputs humans didn&rsquo;t think of? Fuzzing is a sensor of"
+ },
+ {
+  "title": "Hotspot Analysis",
+  "kind": "sensor",
+  "family": "Architecture",
+  "url": "pages/sensors/hotspot-analysis.html",
+  "blurb": "Change frequency times complexity. Identifies places where the system is"
+ },
+ {
+  "title": "Incident Correlation",
+  "kind": "sensor",
+  "family": "Evolution",
+  "url": "pages/sensors/incident-correlation.html",
+  "blurb": "Which components correlate with production failures? A sensor of operational"
+ },
+ {
+  "title": "Incremental Build Correctness",
+  "kind": "sensor",
+  "family": "Change",
+  "url": "pages/sensors/incremental-build-correctness.html",
+  "blurb": "Did the build system actually rebuild everything this change touched?"
+ },
+ {
+  "title": "Independent Review",
+  "kind": "sensor",
+  "family": "Human Comprehension",
+  "url": "pages/sensors/independent-review.html",
+  "blurb": "Can another engineer explain what this does? A sensor of epistemic"
+ },
+ {
+  "title": "Integration Tests",
+  "kind": "sensor",
+  "family": "Behavioral",
+  "url": "pages/sensors/integration-tests.html",
+  "blurb": "Does the thing work when connected to its actual dependencies? Catches"
+ },
+ {
+  "title": "Line Coverage",
+  "kind": "sensor",
+  "family": "Test Effectiveness",
+  "url": "pages/sensors/line-coverage.html",
+  "blurb": "Did we execute this line? Useful but weak. A project can have 90% line"
+ },
+ {
+  "title": "Linter",
+  "kind": "sensor",
+  "family": "Structural",
+  "url": "pages/sensors/linter.html",
+  "blurb": "Catches structural inconsistencies that are syntactically valid but"
+ },
+ {
+  "title": "Live Chaos Experiments",
+  "kind": "sensor",
+  "family": "Adversarial",
+  "url": "pages/sensors/live-chaos-experiments.html",
+  "blurb": "Fault injection against the running production system: kill a node, sever a"
+ },
+ {
+  "title": "Live Service Graph Discovery",
+  "kind": "sensor",
+  "family": "Architecture",
+  "url": "pages/sensors/live-service-graph.html",
+  "blurb": "The declared architecture says service A never calls service C. The live"
+ },
+ {
+  "title": "Metamorphic Testing",
+  "kind": "sensor",
+  "family": "Adversarial",
+  "url": "pages/sensors/metamorphic-testing.html",
+  "blurb": "You don&rsquo;t know the answer, but you know how the answer should change. This"
+ },
+ {
+  "title": "Mutation Testing",
+  "kind": "sensor",
+  "family": "Test Effectiveness",
+  "url": "pages/sensors/mutation-testing.html",
+  "blurb": "Take if user.is_admin: allow() and mutate it to"
+ },
+ {
+  "title": "Observability Events",
+  "kind": "sensor",
+  "family": "Runtime",
+  "url": "pages/sensors/observability-events.html",
+  "blurb": "Traditional monitoring says: &ldquo;CPU is 82%.&rdquo; Observability says: &ldquo;Show me"
+ },
+ {
+  "title": "Onboarding Experiment",
+  "kind": "sensor",
+  "family": "Human Comprehension",
+  "url": "pages/sensors/onboarding-experiment.html",
+  "blurb": "How long does it take a competent engineer to safely modify this subsystem?"
+ },
+ {
+  "title": "Pre-Promotion Invariant Gates",
+  "kind": "sensor",
+  "family": "Invariants",
+  "url": "pages/sensors/pre-promotion-invariant-gates.html",
+  "blurb": "Invariants checked at the moment of promotion, before a change can reach"
+ },
+ {
+  "title": "Producer-Evaluator Separation",
+  "kind": "sensor",
+  "family": "AI-Generated Code",
+  "url": "pages/sensors/producer-evaluator-separation.html",
+  "blurb": "A model writing tests/ is allowed to write tests that make itself pass."
+ },
+ {
+  "title": "Resource Telemetry",
+  "kind": "sensor",
+  "family": "Runtime",
+  "url": "pages/sensors/resource-telemetry.html",
+  "blurb": "CPU, memory, IO, network, GC, queues. Traditional monitoring \u2014 useful but"
+ },
+ {
+  "title": "Revert Rate",
+  "kind": "sensor",
+  "family": "Evolution",
+  "url": "pages/sensors/revert-rate.html",
+  "blurb": "How often does this area get reverted? A black-box sensor of"
+ },
+ {
+  "title": "Runtime Invariants",
+  "kind": "sensor",
+  "family": "Invariants",
+  "url": "pages/sensors/runtime-invariants.html",
+  "blurb": "You don&rsquo;t need to know how the payment service works. You can observe:"
+ },
+ {
+  "title": "Schema Validator",
+  "kind": "sensor",
+  "family": "Structural",
+  "url": "pages/sensors/schema-validator.html",
+  "blurb": "Structural coherence at the boundary of the system. OpenAPI/GraphQL schema"
+ },
+ {
+  "title": "Second-Agent Review",
+  "kind": "sensor",
+  "family": "AI-Generated Code",
+  "url": "pages/sensors/second-agent-review.html",
+  "blurb": "An independent agent reviews the first agent&rsquo;s output. A sensor that applies"
+ },
+ {
+  "title": "Shadow Traffic",
+  "kind": "sensor",
+  "family": "Change",
+  "url": "pages/sensors/shadow-traffic.html",
+  "blurb": "Run the new implementation against real inputs without affecting users. A"
+ },
+ {
+  "title": "Smoke Tests",
+  "kind": "sensor",
+  "family": "Behavioral",
+  "url": "pages/sensors/smoke-tests.html",
+  "blurb": "The cheapest behavioral check against a live deployment: hit /health,"
+ },
+ {
+  "title": "Snapshot Tests",
+  "kind": "sensor",
+  "family": "Behavioral",
+  "url": "pages/sensors/snapshot-tests.html",
+  "blurb": "Did observable output change? Not &ldquo;is it correct&rdquo; but &ldquo;did it change&rdquo; \u2014 a"
+ },
+ {
+  "title": "Static Security Analysis",
+  "kind": "sensor",
+  "family": "Adversarial",
+  "url": "pages/sensors/static-security-analysis.html",
+  "blurb": "Attacking the code before it runs. Taint tracking, dataflow analysis, and"
+ },
+ {
+  "title": "Statically Checked Invariants",
+  "kind": "sensor",
+  "family": "Invariants",
+  "url": "pages/sensors/statically-checked-invariants.html",
+  "blurb": "Invariants the compiler refuses to let you violate: Dafny invariant"
+ },
+ {
+  "title": "Synthetic Monitoring",
+  "kind": "sensor",
+  "family": "Behavioral",
+  "url": "pages/sensors/synthetic-monitoring.html",
+  "blurb": "Scripted user flows run against the production system around the clock:"
+ },
+ {
+  "title": "Time-to-Repair",
+  "kind": "sensor",
+  "family": "Evolution",
+  "url": "pages/sensors/time-to-repair.html",
+  "blurb": "When this component breaks, how long does it take to restore? A sensor of"
+ },
+ {
+  "title": "Type Checker",
+  "kind": "sensor",
+  "family": "Structural",
+  "url": "pages/sensors/type-checker.html",
+  "blurb": "A Rust compiler saying expected Option&lt;Foo&gt;, found Foo is vastly more useful"
+ }
+]

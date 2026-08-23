@@ -395,10 +395,10 @@ def html_header(nav_depth="", root_depth=""):
     <nav class="primary-nav">
 {nav_html}
     </nav>
-    <label class="search-toggle">
-      <input type="checkbox" hidden>
-      <span class="search-hint">Search sensors…</span>
-    </label>
+    <div class="search-box" data-root-depth="{root_depth}">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+    </div>
   </header>"""
 
 
@@ -1275,6 +1275,33 @@ def generate_about_page(output_dir):
 
 # ── Main ────────────────────────────────────────────────────────────────────
 
+def generate_search_index(sensors, output_dir):
+    """Write search-index.json: title, family, url, and plain-text blurb
+    for every sensor, plus an entry per family."""
+    import json
+    entries = []
+    for f in FAMILIES:
+        entries.append({
+            "title": f["name"],
+            "kind": "family",
+            "family": f["name"],
+            "url": f"pages/catalog.html#{f['slug']}",
+            "blurb": f["question"],
+        })
+    for s in sensors:
+        fam = FAMILY_BY_SLUG.get(s.get("family", ""), {})
+        blurb = re.sub(r"<[^>]+>", "", s.get("body_html", "")).split("\n")[0][:160]
+        entries.append({
+            "title": s["title"],
+            "kind": "sensor",
+            "family": fam.get("name", ""),
+            "url": f"pages/sensors/{s['slug']}.html",
+            "blurb": blurb,
+        })
+    with open(output_dir / "search-index.json", "w") as f:
+        json.dump(entries, f, indent=1)
+
+
 def main():
     print("Loading sensors...")
     sensors = load_sensors()
@@ -1290,6 +1317,10 @@ def main():
         print(f"  {sid}: {len(bls)} backlinks")
 
     output_dir = OUTPUT_DIR
+
+    print("Generating search index...")
+    generate_search_index(sensors, output_dir)
+    print("  search-index.json")
 
     print("Generating pages...")
     generate_index_page(sensors, output_dir)

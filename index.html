@@ -32,10 +32,10 @@
       <a href="pages/framework.html">Framework</a>
       <a href="pages/about.html">About</a>
     </nav>
-    <label class="search-toggle">
-      <input type="checkbox" hidden>
-      <span class="search-hint">Search sensors…</span>
-    </label>
+    <div class="search-box" data-root-depth="">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+    </div>
   </header>
   <main>
     <section class="hero">
