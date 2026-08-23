@@ -199,17 +199,23 @@ def render_markdown(text):
     return md.convert(text)
 
 
-def fix_link_depths(html_str, pages_depth=""):
+def fix_link_depths(html_str, pages_depth="", sensor_slugs=()):
     """Fix relative URLs in rendered markdown HTML for the current page depth.
-    
+
     pages_depth is the relative path to pages/ from the current page.
     For pages/*.html, pages_depth="" (links like catalog.html are correct).
-    For pages/sensors/*.html, pages_depth="../" (links need ../ prefix).
-    
+    For pages/sensors/*.html, pages_depth="../" (links to other files in
+    pages/ need ../ prefix).
+
+    Sensor markdown links to sibling sensors by bare filename
+    (type-checker.html) — those resolve inside pages/sensors/ and must NOT
+    be prefixed. Links to catalog.html, atlas.html, etc. DO need the prefix.
+    sensor_slugs is the set of sensor URL slugs used to tell them apart.
+
     Also adds a class to inline <a> tags so they get link styling.
     """
     import re
-    
+
     # Add link-body class to <a> tags that don't already have a class
     # This gives them visible link styling
     def add_link_class(match):
@@ -219,23 +225,25 @@ def fix_link_depths(html_str, pages_depth=""):
         if 'href="#"' in tag:
             return tag  # placeholder links
         return tag.replace('<a ', '<a class="body-link" ', 1)
-    
+
     html_str = re.sub(r'<a(?![^>]*class=)[^>]*>', add_link_class, html_str)
-    
+
     if not pages_depth:
         return html_str
-    
-    # Fix relative links: prefix pages/-relative URLs with pages_depth
-    # Match href="something.html or href="sensors/... but not http/https/#
+
     def fix_href(match):
         full = match.group(0)
         url = match.group(1)
         if url.startswith(('http://', 'https://', '#', 'mailto:')):
             return full
+        # Bare sibling-sensor filenames stay unprefixed
+        stem = url.split("#")[0].removesuffix(".html")
+        if "/" not in url and stem in sensor_slugs:
+            return full
         return f'href="{pages_depth}{url}"'
-    
+
     html_str = re.sub(r'href="([^"]+)"', fix_href, html_str)
-    
+
     return html_str
 
 
@@ -267,11 +275,12 @@ def load_sensors():
     if not sensor_dir.exists():
         return sensors
 
+    sensor_slugs = {p.stem for p in sensor_dir.glob("*.md")}
     for filepath in sorted(sensor_dir.glob("*.md")):
         meta, body = parse_frontmatter(filepath)
         slug = filepath.stem
         meta["slug"] = slug
-        meta["body_html"] = fix_link_depths(render_markdown(body), pages_depth="../")
+        meta["body_html"] = fix_link_depths(render_markdown(body), pages_depth="../", sensor_slugs=sensor_slugs)
         meta["filename"] = str(filepath)
         sensors.append(meta)
 

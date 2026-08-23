@@ -7,10 +7,13 @@ tests, no CI — one Python generator script plus hand-written CSS/JS.
 ## Commands
 
 - **Build:** `.venv/bin/python build.py` — reads `content/sensors/*.md`,
-  regenerates `index.html`, `pages/*.html`, and `pages/sensors/*.html`
-  **in place at the repo root** (generated files are committed to git).
-  System `python3` is missing the `markdown` module; always use
-  `.venv/bin/python`.
+  regenerates `index.html`, `pages/*.html`, `pages/sensors/*.html`, and
+  `search-index.json` **in place at the repo root** (generated files are
+  committed to git). System `python3` is missing the `markdown` module;
+  always use `.venv/bin/python`.
+- **Link check:** `.venv/bin/python check_links.py` — validates internal
+  links and `#anchors` across all generated HTML, exits 1 on breakage
+  (CI-gateable). `--external` also HEADs outbound links (needs network).
 - **Preview:** `python3 -m http.server` from the repo root, then open
   `http://localhost:8000`.
 - **Tests/lint:** none exist. Verification = run the build and eyeball the
@@ -107,12 +110,13 @@ bar widths, latency labels) are module-level constants at the top of
 ### Relative-link gotcha
 
 Markdown bodies are rendered once and reused at different directory depths.
-`fix_link_depths()` prefixes every relative `href` in the body with `../`
-so links work from `pages/sensors/`. Therefore **links inside sensor
-markdown must be written as if they live in `pages/`** — e.g.
-`[type checker](type-checker.html)` for a sibling sensor,
+`fix_link_depths()` prefixes relative `href`s with `../` for files living
+in `pages/` (catalog.html, atlas.html, ...), but **bare filenames matching
+a sensor slug are left alone** — they are sibling links that resolve inside
+`pages/sensors/`. So: `[type checker](type-checker.html)` for a sibling,
 `[catalog](catalog.html#behavioral)` for a catalog section. Root-relative
-and absolute URLs are left alone.
+and absolute URLs are left alone. `check_links.py` will catch any link
+that gets this wrong.
 
 ## Conventions
 
