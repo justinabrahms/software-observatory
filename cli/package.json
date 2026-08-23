@@ -14,7 +14,7 @@
   "homepage": "https://softwareobservatory.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/justinabrahms/software-observatory",
+    "url": "git+https://github.com/justinabrahms/software-observatory.git",
     "directory": "cli"
   },
   "license": "CC-BY-NC-SA-4.0",
@@ -23,8 +23,11 @@
     "test": "node test/smoke.mjs"
   },
   "bin": {
-    "softwareobservatory": "./bin/softwareobservatory.mjs",
-    "sensors": "./bin/softwareobservatory.mjs"
+    "softwareobservatory": "bin/softwareobservatory.mjs",
+    "sensors": "bin/softwareobservatory.mjs"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "files": [
     "bin/",
