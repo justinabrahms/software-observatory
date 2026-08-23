@@ -128,12 +128,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
-          registry-url: "https://registry.npmjs.org"
+          # NOTE: no registry-url. Setting registry-url makes setup-node write
+          # a placeholder NODE_AUTH_TOKEN into .npmrc, which makes npm publish
+          # use token auth instead of OIDC trusted publishing (and fail E404).
 
       - name: Publish CLI to npm
         working-directory: cli
         # OIDC trusted publishing: npm exchanges the job's id-token, so no
         # long-lived secret is stored. Requires the package on npmjs.com to
-        # list this repo + workflow as a trusted publisher (web UI only;
-        # there is no API for it).
+        # list this repo + workflow as a trusted publisher (already configured).
         run: npm publish --provenance
