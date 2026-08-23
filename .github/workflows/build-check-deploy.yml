@@ -1,0 +1,104 @@
+name: Build, check, deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install pyyaml markdown
+
+      - name: Build
+        run: .venv/bin/python scripts/build.py
+
+      - name: Check links
+        run: .venv/bin/python scripts/check_links.py
+
+      - name: Upload built site
+        if: github.event_name == 'push'
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: |
+            index.html
+            pages/
+            css/
+            js/
+            search-index.json
+          retention-days: 7
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install pyyaml markdown
+
+      - name: Build
+        run: .venv/bin/python scripts/build.py
+
+      - name: Check links
+        run: .venv/bin/python scripts/check_links.py
+
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.SOFTWAREOBSERVATORY_DEPLOY_KEY }}" > ~/.ssh/softwareobservatory-deploy
+          chmod 600 ~/.ssh/softwareobservatory-deploy
+          {
+            echo "Host abrah.ms"
+            echo "  HostName abrah.ms"
+            echo "  User observer"
+            echo "  IdentityFile ~/.ssh/softwareobservatory-deploy"
+            echo "  StrictHostKeyChecking yes"
+          } > ~/.ssh/config
+
+      - name: Add known_hosts
+        run: |
+          echo "abrah.ms ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDWwAzVcplm5TMfVqPvxIhmcGtahqbiKLyXUvnyvlJSG" >> ~/.ssh/known_hosts
+          echo "abrah.ms ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDU6xfBzF9PGXM/Bks7K7MLeYMlk7vOX9hd2/2qdm42Dga0rgVdAsEpwGpp7dx8Q4veJQf8KJsdOTtMapfI9E5WcnIBnsjofRHIpKPk+wlF7anb0W+HiNcN3bheZALqafp0losjiKKY41T+SYDRuL9TOvk63sKP5FRUHCWyZo7OzqH2KvaVfM2VCuPK+SwVAFImaUfzru4z2/mO5IsKQYGbLewMVMnRJzv73DC8HWnTmBDPAuiiji1kvc2gMQ8m32tgKPXKzN3AZcN08zGMkY/Wm4fNjTkybQFcUW3gADCubYjj1q1BFNCLl9Yds8Bh00nN3WJMS5Vsl57qd9asIoirvtlnZN1QkCEqoRRLCsDkhpzJCYFVY5FAOllIHaOW3kKkVjEB7eq5CbJkwrDHnlOMKRP6PhECktisg+t/ff2EqU4VeHFEyWq+BeZa/2xjf5BMrS6muQ1PmoLpJUniEYfSemky63ntJ8kwcbYnS3Gijb0YLYvhmNozDNySjSWPH/c=" >> ~/.ssh/known_hosts
+
+      - name: Deploy
+        run: |
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/softwareobservatory-deploy" \
+            --exclude='.git/' \
+            --exclude='.venv/' \
+            --exclude='.github/' \
+            --exclude='content/' \
+            --exclude='templates/' \
+            --exclude='archive-*/' \
+            --exclude='scripts/' \
+            --exclude='Makefile' \
+            --exclude='.gitignore' \
+            --exclude='AGENTS.md' \
+            --exclude='CONTRIBUTING.md' \
+            --exclude='README.md' \
+            --exclude='TODO.md' \
+            ./ observer@abrah.ms:.
