@@ -37,6 +37,7 @@ FAMILIES = [
         "slug": "structural",
         "num": "01",
         "name": "Structural",
+        "icon": "\u25a0",
         "question": "Is this artifact internally coherent?",
         "examples": "Compiler, type checker, linter, formatter, schema validator",
         "stack_levels": ["compilation", "static-analysis"],
@@ -45,6 +46,7 @@ FAMILIES = [
         "slug": "behavioral",
         "num": "02",
         "name": "Behavioral",
+        "icon": "●",
         "question": "Does it do what we expect?",
         "examples": "Unit, integration, E2E, contract, snapshot tests",
         "stack_levels": ["behavioral-tests", "integration-tests"],
@@ -53,6 +55,7 @@ FAMILIES = [
         "slug": "test-effectiveness",
         "num": "03",
         "name": "Test Effectiveness",
+        "icon": "▲",
         "question": "Do our tests actually detect failures?",
         "examples": "Coverage, diff coverage, mutation testing",
         "stack_levels": ["mutation-testing"],
@@ -61,6 +64,7 @@ FAMILIES = [
         "slug": "invariants",
         "num": "04",
         "name": "Invariants",
+        "icon": "◆",
         "question": "What must always be true?",
         "examples": "Balance >= 0, every FK valid, every request has one ID",
         "stack_levels": ["static-analysis", "production-behavior"],
@@ -69,6 +73,7 @@ FAMILIES = [
         "slug": "adversarial",
         "num": "05",
         "name": "Adversarial",
+        "icon": "✖",
         "question": "Can we make our evidence of correctness fail?",
         "examples": "Fuzzing, mutation testing, fault injection, chaos",
         "stack_levels": ["property-metamorphic", "mutation-testing"],
@@ -77,6 +82,7 @@ FAMILIES = [
         "slug": "runtime",
         "num": "06",
         "name": "Runtime",
+        "icon": "○",
         "question": "What is it actually doing?",
         "examples": "Logs, traces, metrics, profiles, high-cardinality events",
         "stack_levels": ["production-behavior"],
@@ -85,6 +91,7 @@ FAMILIES = [
         "slug": "change",
         "num": "07",
         "name": "Change",
+        "icon": "→",
         "question": "What did this change actually affect?",
         "examples": "Diff coverage, API compatibility, canary, shadow traffic",
         "stack_levels": ["canary-shadow"],
@@ -93,6 +100,7 @@ FAMILIES = [
         "slug": "architecture",
         "num": "08",
         "name": "Architecture",
+        "icon": "▣",
         "question": "Is the system becoming harder to reason about?",
         "examples": "Dependency graphs, coupling, fitness functions, hotspots",
         "stack_levels": ["static-analysis"],
@@ -101,6 +109,7 @@ FAMILIES = [
         "slug": "evolution",
         "num": "09",
         "name": "Evolution",
+        "icon": "⟳",
         "question": "Does this look like changes that caused trouble before?",
         "examples": "Revert rate, regression rate, churn, incident correlation",
         "stack_levels": ["user-outcome"],
@@ -109,6 +118,7 @@ FAMILIES = [
         "slug": "comprehension",
         "num": "10",
         "name": "Human Comprehension",
+        "icon": "✔",
         "question": "Can another observer understand and challenge this?",
         "examples": "Review, explainability tests, documentation drift, onboarding",
         "stack_levels": [],
@@ -117,6 +127,7 @@ FAMILIES = [
         "slug": "ai-sensors",
         "num": "11",
         "name": "AI-Generated Code",
+        "icon": "✱",
         "question": "What evidence do we have that this change is safe?",
         "examples": "Agent sensor stacks, computational gates, independence",
         "stack_levels": [],
@@ -540,6 +551,7 @@ def html_header(nav_depth="", root_depth=""):
     <div class="search-box" data-root-depth="{root_depth}">
       <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
       <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="{nav_depth}catalog.html">Browse the catalog</a> or <a href="{nav_depth}categories.html">browse by category</a>.</p></noscript>
     </div>
   </header>"""
 
@@ -818,6 +830,7 @@ def generate_atlas_page(sensors, output_dir):
         matrix_rows += f"""        <div class="matrix-row">
           <div class="matrix-row-label">
             <span class="matrix-fam-num">{family['num']}</span>
+            <span class="matrix-fam-icon fam-{family['slug']}" aria-hidden="true">{family['icon']}</span>
             <a href="catalog.html#{family['slug']}" class="matrix-fam-name">{html.escape(family['name'])}</a>
           </div>
 """
@@ -966,11 +979,26 @@ def generate_atlas_page(sensors, output_dir):
           </a>
 """
 
-    dep_graph_svg = f"""      <svg class="dep-graph" viewBox="0 0 1120 920" role="img" aria-label="Family dependency graph">
+    dep_graph_svg = f"""      <svg class="dep-graph" viewBox="0 0 1120 920" role="img" aria-label="Family dependency graph: how sensor families lean on each other">
+        <title>Family dependency graph</title>
+        <desc>Arrows point from the family that leans to the family it leans on. {len(edge_sensors)} edges shown. See the text list below the graph for the full edge set.</desc>
 {edges_svg.rstrip()}
 {labels_svg.rstrip()}
 {nodes_svg.rstrip()}
       </svg>"""
+
+    # Text equivalent of the dependency graph for screen readers
+    edge_list = ""
+    for (src, tgt), sensor_titles in sorted(edge_sensors.items()):
+        src_name = FAMILY_BY_SLUG.get(src, {}).get("name", src)
+        tgt_name = FAMILY_BY_SLUG.get(tgt, {}).get("name", tgt)
+        edge_list += f'        <li>{html.escape(src_name)} leans on {html.escape(tgt_name)} via: {html.escape(", ".join(sorted(sensor_titles)))}</li>\n'
+    edge_list_html = f"""      <details class="sr-only">
+        <summary>Family dependency graph (text)</summary>
+        <ul>
+{edge_list.rstrip()}
+        </ul>
+      </details>"""
 
     # Family map
     family_map = ""
@@ -1045,6 +1073,7 @@ def generate_atlas_page(sensors, output_dir):
       <div class="dep-graph-wrapper">
 {dep_graph_svg}
       </div>
+{edge_list_html}
     </div>
   </div>"""
 
@@ -1137,7 +1166,7 @@ def generate_index_page(sensors, output_dir):
     def scatter_legend():
         keys = ""
         for f in FAMILIES:
-            keys += f"""          <span class="legend-key"><span class="legend-dot fam-{f['slug']}"></span>{html.escape(f['name'])}</span>
+            keys += f"""          <span class="legend-key"><span class="legend-dot fam-{f['slug']}" aria-hidden="true">{f['icon']}</span>{html.escape(f['name'])}</span>
 """
         return keys.rstrip()
 
@@ -1166,7 +1195,16 @@ def generate_index_page(sensors, output_dir):
         <div class="scatter-legend">
 {scatter_legend()}
         </div>
-      </div>"""
+      </div>
+      <details class="sr-only">
+        <summary>Sensor list (effort × efficacy)</summary>
+        <table>
+          <thead><tr><th>Sensor</th><th>Family</th><th>Effort (latency)</th><th>Efficacy (oracle)</th></tr></thead>
+          <tbody>
+{"".join(f'          <tr><td><a href="pages/sensors/{s["slug"]}.html">{html.escape(s["title"])}</a></td><td>{html.escape(FAMILY_BY_SLUG.get(s.get("family",""),{}).get("name",""))}</td><td>{html.escape(s.get("latency",""))}</td><td>{html.escape(s.get("oracle",""))}</td></tr>\n' for s in sensors)}
+          </tbody>
+        </table>
+      </details>"""
 
     body = f"""  <main>
     <section class="hero">
