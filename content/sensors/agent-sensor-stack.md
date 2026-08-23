@@ -65,7 +65,7 @@ it reaches production. The key principle is that the agent cannot self-certify
 | Scope | System-level |
 | Feedback latency | Varies by layer |
 | Actionability | Guiding — each layer tells the agent what failed |
-| Type | Predictive + Retrospective |
+| Type | Predictive + Retrospective (varies by layer) |
 
 ## What it cannot detect
 

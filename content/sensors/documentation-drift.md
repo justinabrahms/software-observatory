@@ -29,6 +29,23 @@ guides. Detecting drift requires comparing documented behavior to
 [observed behavior](observability-events.html) or [test
 assertions](example-based-tests.html).
 
+## How it's measured
+
+Drift is only *sensorable* when documentation is executable or generated:
+
+- **Doctests** (Python `doctest`, Rust doc tests) — code in docs that's
+  run as a test. If the docs drift, the test fails.
+- **Executable specs** — OpenAPI round-trip validation (does the schema
+  match the actual responses?), JSON Schema validation of examples,
+  Cucumber/Gherkin behavior specs.
+- **Generated docs** — rustdoc, godoc, TypeDoc where the docs are extracted
+  from the code itself. Drift is structurally impossible when the code *is*
+  the source of the docs.
+
+Prose docs drift silently and can only be caught by
+[independent review](independent-review.html) or by comparing documented
+behavior to [observed behavior](observability-events.html).
+
 ## Sensor properties
 
 | Property | Value |

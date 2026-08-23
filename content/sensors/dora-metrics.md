@@ -20,10 +20,13 @@ see_also:
 last_reviewed: 2026-08-23
 ---
 
-Deployment frequency, lead time for changes, change failure rate, time to
-restore. Four numbers about how changes have historically flowed through
-this organization — a sensor of delivery *pattern*, answering "does our
-recent past look like teams that ship safely?"
+Deployment frequency, lead time for changes, change failure rate,
+reliability, time to restore. Five numbers about how changes have
+historically flowed through this organization — a sensor of delivery
+*pattern*, answering "does our recent past look like teams that ship
+safely?" Reliability was added in DORA 2023 as the fifth metric, reflecting
+that stability is measured by whether the system meets its reliability
+targets, not just by how fast failures are fixed.
 
 ## Sensor properties
 

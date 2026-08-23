@@ -32,6 +32,30 @@ prose rules and computational gates is critical for [agentic
 coding](catalog.html#ai-sensors) — agents will skip prose rules if they
 can.
 
+## What a gate looks like
+
+```yaml
+# GitHub Actions: a required status check
+- name: Run tests
+  run: make test
+# If this fails, the PR cannot merge — the gate refuses to proceed.
+```
+
+A hard gate refuses to proceed: a required CI check that blocks merge, a
+pre-deploy hook that aborts on failure. A soft gate warns but allows
+override: a non-required check, a Slack notification. The distinction
+matters — soft gates are suggestions with ceremony; hard gates are
+controls.
+
+## The override problem
+
+Every gate has a bypass path. "I know, I know, just ship it." The gate's
+real strength is measured by how hard the bypass is: a one-click override
+is a soft gate regardless of what the config says. A gate that requires
+two-person approval, an audited ticket, and a 24-hour cooldown is a real
+gate. Computational gates fail when the bypass is itself computational and
+auditable — every override should leave a trail.
+
 ## Sensor properties
 
 | Property | Value |

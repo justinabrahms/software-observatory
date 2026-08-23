@@ -38,6 +38,24 @@ two serialization formats
 compiler vs interpreter
 ```
 
+## Where it shines
+
+Differential testing earned its reputation in domains where multiple
+independent implementations of the same spec exist:
+
+- **Compiler fuzzing**: Csmith generates random C programs, feeds them to
+  GCC, Clang, and MSVC, and flags disagreements. This found hundreds of
+  compiler bugs.
+- **Spec conformance**: TLS, JSON, and XML parser differential testing —
+  feed the same inputs to multiple parsers, flag disagreements. The JSON
+  parser differential testing work found conformance bugs in every major
+  parser.
+- **Database engines**: running the same SQL against Postgres, MySQL, and
+  SQLite and comparing results.
+
+In each case, you don't need to know the correct answer — you only need
+two implementations that *should* agree.
+
 ## Sensor properties
 
 | Property | Value |

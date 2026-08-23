@@ -28,6 +28,20 @@ discussions, and constraints that led to the current code. When provenance
 is lost, the code becomes untouchable — nobody knows whether it can be
 changed safely.
 
+## How it's recorded
+
+- **ADRs** (Architecture Decision Records, Michael Nygard's pattern) —
+  short documents capturing context, decision, and consequences. The
+  canonical technique.
+- **Commit conventions** — linking commits to issues, explaining *why*
+  not just *what* (Conventional Commits, referencing tickets).
+- **`git blame` / `git log -S`** — the fallback when no explicit provenance
+  was recorded. The archaeology tool of last resort.
+
+Provenance decays — an ADR from three years ago may explain why the code
+was *added* but not why it's *still there*. Periodic re-justification keeps
+provenance alive.
+
 ## Sensor properties
 
 | Property | Value |

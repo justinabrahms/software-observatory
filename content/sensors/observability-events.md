@@ -67,7 +67,7 @@ richer sensor.
 | Property | Value |
 |----------|-------|
 | Oracle strength | Medium — shows what happened, not whether it was correct |
-| Independence | High — production reality cannot be gamed by the producer |
+| Independence | High — production reality cannot be gamed by the test author (but the producer chose what to instrument) |
 | Scope | System-level |
 | Feedback latency | Seconds (real-time) |
 | Actionability | Exploratory — you query to find the signal |

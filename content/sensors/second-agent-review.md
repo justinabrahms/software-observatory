@@ -44,7 +44,14 @@ assumptions.
 
 ## What it cannot detect
 
-Two agents from the same model family may share blind spots. True
-independence requires different architectures, training data, or prompts.
+Two agents from the same model family share the same training distribution
+and will tend to agree on the same wrong answers — the "independence" is
+illusory if both agents have the same blind spots. True independence
+requires different model families, different training data, or different
+architectures. A second agent from the same model is better than nothing
+but is not the same as an independent evaluator.
+
 Also, agent review quality is unproven — it may miss problems that human
-review would catch.
+review would catch. Pair with [computational
+gates](computational-gates.html) for enforcement that doesn't depend on
+review quality.

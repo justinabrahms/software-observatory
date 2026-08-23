@@ -186,6 +186,7 @@ LATENCY_X = {
     "hours-seconds": 50,
     "days": 76,
     "weeks": 90,
+    "months": 95,
     "varies": 50,
 }
 ORACLE_Y = {
@@ -223,6 +224,7 @@ LATENCY_LABELS = {
     "hours-seconds": "h-s",
     "days": "d",
     "weeks": "w",
+    "months": "mo",
     "varies": "varies",
 }
 

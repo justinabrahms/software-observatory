@@ -6,7 +6,7 @@ family_num: "03"
 oracle: medium
 independence: high
 scope: system
-latency: weeks
+latency: months
 actionability: guiding
 type: retrospective
 stack_level: user-outcome
@@ -32,7 +32,7 @@ they catch the actual failures, judged after the fact?"
 | Oracle strength | Medium — classification of "should have caught" is judgment |
 | Independence | High — production failures cannot be gamed by the suite |
 | Scope | System |
-| Feedback latency | Weeks |
+| Feedback latency | Months |
 | Actionability | Guiding — points at the layers of the suite that leak |
 | Type | Retrospective |
 

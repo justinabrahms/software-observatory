@@ -26,8 +26,7 @@ last_reviewed: 2026-08-23
 Take `if user.is_admin: allow()` and mutate it to
 `if not user.is_admin: allow()`. If all your tests still pass, your tests did
 not actually establish the behavior you thought they established. Mutation
-testing is a sensor of test *sensitivity* rather than test *presence* — and
-it may be one of the most interesting sensors in the entire catalog.
+testing is a sensor of test *sensitivity* rather than test *presence*.
 
 ## The hierarchy of test evidence
 
@@ -84,4 +83,9 @@ Mutation testing cannot detect *missing behavior* — if the code never
 implements a feature, there's nothing to mutate. It also cannot detect
 [integration failures](catalog.html#behavioral) that emerge only when
 components are connected. And it is computationally expensive: each mutation
-is a full test run.
+is a full test run. Finally, mutation tools only generate the mutations
+their operators define — operator-level mutators miss whole classes of bugs
+(off-by-one in a loop bound, missing state transitions, logic that should
+exist but doesn't). A surviving-mutation rate of 0% doesn't mean the tests
+would catch every wrong implementation, only every wrong implementation the
+tool's operators can produce.
