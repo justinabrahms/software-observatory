@@ -160,6 +160,42 @@ for _stage in LIFECYCLE_STAGES:
     for _lvl in _stage["levels"]:
         STAGE_BY_LEVEL[_lvl] = _stage["slug"]
 
+# Scatter positions for the homepage effort/efficacy diagram, keyed by
+# confidence-stack layer slug. x = effort/latency (0=instant, 100=slow),
+# y = efficacy of the signal (0=suggestive, 100=definitive). Hand-tuned;
+# "source-text" is not a sensor and is intentionally absent.
+STACK_SCATTER = {
+    "compilation":          {"x": 4,  "y": 82},
+    "static-analysis":      {"x": 14, "y": 64},
+    "mutation-testing":     {"x": 46, "y": 78},
+    "property-metamorphic": {"x": 42, "y": 62},
+    "behavioral-tests":     {"x": 32, "y": 48},
+    "integration-tests":    {"x": 56, "y": 58},
+    "canary-shadow":        {"x": 66, "y": 50},
+    "production-behavior":  {"x": 82, "y": 42},
+    "user-outcome":         {"x": 94, "y": 92},
+}
+
+# Ordinal scales mapping sensor frontmatter onto the same axes
+LATENCY_X = {
+    "milliseconds": 6,
+    "seconds": 20,
+    "minutes": 42,
+    "minutes-hours": 56,
+    "hours": 62,
+    "hours-seconds": 50,
+    "days": 76,
+    "weeks": 90,
+    "varies": 50,
+}
+ORACLE_Y = {
+    "minimum": 14,
+    "low": 30,
+    "medium": 50,
+    "high": 72,
+    "maximum": 92,
+}
+
 # ── Oracle strength bar widths ──────────────────────────────────────────────
 
 ORACLE_WIDTHS = {
@@ -189,6 +225,26 @@ LATENCY_LABELS = {
     "weeks": "w",
     "varies": "varies",
 }
+
+# Full-word forms for display contexts where the abbreviation alone is opaque
+# (card badges). Defaults to the key itself with hyphens normalized to
+# en dashes; entries below only exist to reorder compound ranges.
+class _LatencyWords(dict):
+    def __missing__(self, key):
+        return key.replace("-", "–")
+
+LATENCY_WORDS = _LatencyWords({
+    "minutes-hours": "minutes–hours",
+    "hours-seconds": "seconds–hours",
+})
+
+
+def latency_badge_html(latency_key):
+    """Small latency badge with full-word text and a hover tooltip."""
+    word = LATENCY_WORDS[latency_key]
+    tip = f"How long it takes to get this feedback: {word}"
+    return (f'<span class="latency-badge" title="{html.escape(tip)}">'
+            f'<span class="sr-only">Feedback latency: </span>~{html.escape(word)}</span>')
 
 
 # ── Markdown rendering ──────────────────────────────────────────────────────
@@ -339,6 +395,61 @@ def resolve_see_also(see_also_ids, sensors_by_id, families_by_slug, pages_depth=
     return results
 
 
+def blurb_text(body_html, limit=200):
+    """Plain-text blurb from rendered body HTML.
+
+    Strips tags, decodes HTML entities (so callers can html.escape exactly
+    once), collapses whitespace to the first paragraph, and truncates at a
+    sentence boundary when the paragraph exceeds `limit` chars. Falls back
+    to a word boundary + ellipsis if no sentence ends in the window.
+    """
+    # First paragraph only: rendered markdown wraps each source paragraph in
+    # <p> tags, so split on paragraph boundaries rather than raw newlines
+    # (source lines are hard-wrapped and would otherwise cut mid-sentence).
+    text = re.sub(r"<[^>]+>", "", body_html)
+    paragraphs = re.split(r"\n\s*\n", text.strip())
+    first = " ".join(html.unescape(paragraphs[0]).split())
+    if len(first) <= limit:
+        return first
+    window = first[:limit]
+    ends = [m.end() for m in re.finditer(r"""[.!?]+["')\]]*(?=\s|$)""", window)]
+    if ends and ends[-1] >= limit // 2:
+        return window[:ends[-1]].rstrip()
+    return window.rsplit(" ", 1)[0].rstrip(",;:") + "…"
+
+
+def add_heading_ids(html_str, used_ids=None):
+    """Give <h2>/<h3> elements stable ids (slugified text) so they can be
+    deep-linked. Headings that already have an id are left alone.
+    `used_ids` tracks collisions across the whole page (a page body may be
+    assembled from several fragments, so callers should share one set)."""
+    if used_ids is None:
+        used_ids = set()
+
+    def slugify(text):
+        s = re.sub(r"<[^>]+>", "", text)
+        s = html.unescape(s).lower()
+        s = re.sub(r"[^a-z0-9]+", "-", s).strip("-")
+        return s or "section"
+
+    def replace(match):
+        tag, attrs, inner = match.group(1), match.group(2), match.group(3)
+        if 'id="' in attrs:
+            m = re.search(r'id="([^"]+)"', attrs)
+            if m:
+                used_ids.add(m.group(1))
+            return match.group(0)
+        base = slugify(inner)
+        slug, n = base, 2
+        while slug in used_ids:
+            slug = f"{base}-{n}"
+            n += 1
+        used_ids.add(slug)
+        return f'<{tag}{attrs} id="{slug}">{inner}</{tag}>'
+
+    return re.sub(r'<(h[23])([^>]*)>(.*?)</h[23]>', replace, html_str, flags=re.S)
+
+
 def oracle_dots_html(oracle_str):
     """Render the 5-dot oracle meter."""
     filled = {"maximum": 5, "high": 4, "medium": 3, "low": 2, "minimum": 1}.get(oracle_str, 0)
@@ -423,6 +534,8 @@ def html_footer(root_depth="", nav_depth=""):
 def html_page(title, body_content, root_depth="", nav_depth=""):
     """root_depth: relative path to site root (for css/js).
     nav_depth: relative path to pages/ (for nav links)."""
+    # Deep-linkable headings get ids before the page is assembled
+    body_content = add_heading_ids(body_content)
     return f"""{html_head(title, root_depth)}
 <body>
 {html_header(nav_depth, root_depth)}
@@ -583,24 +696,19 @@ def generate_catalog_page(sensors, output_dir):
         for s in fam_sensors:
             oracle_str = s.get("oracle", "low")
             oracle_d = oracle_dots_html(oracle_str)
-            lat = LATENCY_LABELS.get(s.get("latency", ""), s.get("latency", ""))
+            lat = latency_badge_html(s.get("latency", ""))
             title = s["title"]
             slug = s["slug"]
-
-            # Get first paragraph from body as blurb (strip HTML tags)
-            import re as re_mod
-            body_text = re_mod.sub(r'<[^>]+>', '', s.get("body_html", ""))
-            first_para = body_text.split("\n")[0][:200]
 
             cards += f"""          <article class="signal-card" onclick="window.location='sensors/{slug}.html'">
             <div class="signal-card-meta">
               <span class="tag tag-family">{html.escape(family['name'])}</span>
             </div>
             <h3 class="signal-card-title"><a href="sensors/{slug}.html" class="wikilink">{html.escape(title)}</a></h3>
-            <p class="signal-card-blurb">{html.escape(first_para)}</p>
+            <p class="signal-card-blurb">{html.escape(blurb_text(s.get('body_html', ''), 200))}</p>
             <div class="signal-card-footer">
               <span class="oracle-meter">{oracle_d} Oracle</span>
-              <span class="latency-badge">{html.escape(lat)}</span>
+              {lat}
             </div>
           </article>\n"""
 
@@ -941,22 +1049,89 @@ def generate_index_page(sensors, output_dir):
         fam = FAMILY_BY_SLUG.get(s.get("family", ""), {})
         recent_html += f"""        <li class="entry">
           <span class="entry-family">{html.escape(fam.get('name', ''))}</span>
-          <a href="pages/sensors/{s['slug']}.html" class="entry-title wikilink" style="border-bottom:none">{html.escape(s['title'])}</a>
-          <span class="entry-blurb">{html.escape(re.sub(r'<[^>]+>', '', s.get('body_html', '')).split(chr(10))[0][:120])}</span>
+          <a href="pages/sensors/{s['slug']}.html" class="entry-title wikilink">{html.escape(s['title'])}</a>
+          <span class="entry-blurb">{html.escape(blurb_text(s.get('body_html', ''), 140))}</span>
         </li>
 """
 
-    # Stack preview
-    stack_layers_html = ""
-    for layer in STACK_LAYERS:
-        cls = "stack-bottom" if layer["slug"] == "source-text" else ""
-        if layer["slug"] == "user-outcome":
-            cls = "stack-top"
-        stack_layers_html += f"""        <div class="stack-layer {cls}">
-          <span class="stack-label">{html.escape(layer['label'])}</span>
-          <span class="stack-desc">{html.escape(layer['desc'])}</span>
-        </div>
+    # Confidence scatter: effort/latency (x) against signal efficacy (y).
+    # Two datasets — stack layers (hand-positioned) and individual sensors
+    # (positioned from latency/oracle frontmatter, jittered to declutter).
+    def scatter_layer_points():
+        pts = ""
+        for layer in STACK_LAYERS:
+            pos = STACK_SCATTER.get(layer["slug"])
+            if not pos:
+                continue
+            pts += f"""          <a href="pages/atlas.html" class="scatter-point layer-point" style="left:{pos['x']}%;bottom:{pos['y']}%" data-label="{html.escape(layer['label'])}">
+            <span class="scatter-dot"></span>
+            <span class="scatter-tag">{html.escape(layer['label'])}</span>
+          </a>
 """
+        return pts.rstrip()
+
+    def scatter_sensor_points():
+        # Group by cell so overlapping sensors fan out deterministically
+        cells = {}
+        for s in sensors:
+            x = LATENCY_X.get(s.get("latency", ""), 50)
+            y = ORACLE_Y.get(s.get("oracle", ""), 50)
+            cells.setdefault((x, y), []).append(s)
+        pts = ""
+        for (x, y), members in cells.items():
+            n = len(members)
+            for i, s in enumerate(members):
+                # deterministic fan: hash the slug for a stable pseudo-random
+                # offset within a disc that grows with cell population
+                import math
+                h = int(hashlib.md5(s["slug"].encode()).hexdigest(), 16)
+                ang = (h % 360) * math.pi / 180
+                rad = 2.2 * math.sqrt(i / max(n - 1, 1)) if n > 1 else 0
+                spread = min(7, 1.5 + n * 0.55) if n > 1 else 0
+                dx = math.cos(ang) * spread * rad / 2.2
+                dy = math.sin(ang) * spread * rad / 2.2
+                fam = FAMILY_BY_SLUG.get(s.get("family", ""), {}).get("name", "")
+                fam_slug = s.get("family", "")
+                pts += f"""          <a href="pages/sensors/{s['slug']}.html" class="scatter-point sensor-point fam-{html.escape(fam_slug)}" style="left:{x + dx:.1f}%;bottom:{y + dy:.1f}%" data-label="{html.escape(s['title'])}" data-family="{html.escape(fam)}">
+            <span class="scatter-dot"></span>
+            <span class="scatter-tag">{html.escape(s['title'])}</span>
+          </a>
+"""
+        return pts.rstrip()
+
+    def scatter_legend():
+        keys = ""
+        for f in FAMILIES:
+            keys += f"""          <span class="legend-key"><span class="legend-dot fam-{f['slug']}"></span>{html.escape(f['name'])}</span>
+"""
+        return keys.rstrip()
+
+    scatter_html = f"""      <div class="scatter-toggle" role="group" aria-label="Scatter data">
+        <button type="button" class="scatter-toggle-btn active" data-scatter="layers">Layers</button>
+        <button type="button" class="scatter-toggle-btn" data-scatter="sensors">Sensors</button>
+      </div>
+      <div class="scatter-frame" data-scatter-mode="layers">
+        <div class="scatter-y-label">efficacy of the signal</div>
+        <div class="scatter-body">
+          <div class="scatter-y-ticks">
+            <span>definitive</span>
+            <span>suggestive</span>
+          </div>
+          <div class="scatter-plot">
+{scatter_layer_points()}
+{scatter_sensor_points()}
+          </div>
+        </div>
+        <div class="scatter-x-axis">
+          <span>instant · cheap</span>
+          <span>effort / latency →</span>
+          <span>slow · expensive</span>
+        </div>
+        <p class="scatter-hint">Hover a point to name it. Click to open the entry.</p>
+        <div class="scatter-legend">
+{scatter_legend()}
+        </div>
+      </div>"""
 
     body = f"""  <main>
     <section class="hero">
@@ -1040,15 +1215,15 @@ def generate_index_page(sensors, output_dir):
     </section>
 
     <section class="stack-preview" id="confidence-stack">
-      <h2 class="section-heading">The confidence stack</h2>
+      <h2 class="section-heading">The confidence landscape</h2>
       <p class="section-lede">
-        Sensors are not peers. They form a hierarchy — from the cheapest, most
-        certain signals at the bottom to the most expensive, most meaningful
-        signals at the top. Each layer depends on the layers below it.
+        Sensors are not a hierarchy. Each one trades <em>effort</em> — how long
+        you wait and how much it costs — against <em>efficacy</em>: how much the
+        signal can actually tell you. Compilation is instant and definitive about
+        validity; user outcomes are slow and definitive about everything that
+        matters. Most sensors live somewhere in between.
       </p>
-      <div class="stack-diagram">
-{stack_layers_html.rstrip()}
-      </div>
+{scatter_html}
       <div class="stack-cta">
         <a href="pages/atlas.html" class="btn btn-ghost">Open the atlas →</a>
       </div>

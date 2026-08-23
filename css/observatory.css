@@ -21,6 +21,20 @@
   --font-mono:   "JetBrains Mono", "SF Mono", "Fira Code", monospace;
   --max-width:   1200px;
   --reading:     680px;
+
+  /* Categorical palette for the 11 sensor families (scatter, future maps).
+     Hues spaced around the wheel, tuned to read on the dark background. */
+  --fam-structural:        #e5c07b;
+  --fam-behavioral:        #61afef;
+  --fam-test-effectiveness:#c678dd;
+  --fam-invariants:        #98c379;
+  --fam-adversarial:       #e06c75;
+  --fam-runtime:           #56b6c2;
+  --fam-change:            #d19a66;
+  --fam-architecture:      #abb2bf;
+  --fam-evolution:         #be8c66;
+  --fam-comprehension:     #7fb5d5;
+  --fam-ai-sensors:        #f0c674;
 }
 
 /* Reset & base */
@@ -417,6 +431,29 @@ a.wikilink:hover {
   font-weight: 500;
 }
 .entry-title:hover { color: var(--accent); }
+
+/* Deep-linkable headings: hover reveals a copy-jumplink icon */
+.heading-anchor {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: .5rem;
+  padding: .2rem;
+  border: none;
+  background: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  opacity: 0;
+  vertical-align: middle;
+  transition: opacity .15s ease, color .15s ease;
+}
+h2:hover .heading-anchor,
+h3:hover .heading-anchor,
+.heading-anchor:focus-visible {
+  opacity: 1;
+}
+.heading-anchor:hover { color: var(--accent); }
+.heading-anchor.copied { color: var(--signal); opacity: 1; }
 
 /* ── Footer ────────────────────────────────────────────────────────────── */
 .site-footer {
@@ -1199,44 +1236,223 @@ a.wikilink:hover {
   line-height: 1.5;
 }
 
-/* ── Homepage: confidence stack preview ─────────────────────────────────── */
-.stack-diagram {
-  max-width: 36rem;
+/* ── Homepage: confidence landscape scatter ─────────────────────────────── */
+.scatter-toggle {
+  display: flex;
+  justify-content: center;
+  gap: .4rem;
+  margin-bottom: 1rem;
+}
+.scatter-toggle-btn {
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  letter-spacing: .04em;
+  padding: .3rem .9rem;
+  background: var(--bg-card);
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.scatter-toggle-btn:hover { color: var(--text); border-color: var(--accent-soft); }
+.scatter-toggle-btn.active {
+  color: var(--accent);
+  border-color: var(--accent-soft);
+  background: var(--accent-glow);
+}
+.scatter-frame {
+  max-width: 52rem;
   margin: 0 auto;
 }
-.stack-layer {
-  padding: 1rem 1.5rem;
-  border: 1px solid var(--border);
-  border-bottom: none;
+.scatter-y-label {
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  color: var(--text-soft);
+  letter-spacing: .06em;
+  margin-bottom: .35rem;
+  margin-left: 3.2rem;
+}
+.scatter-y-label::before { content: "↑ "; color: var(--text-dim); }
+.scatter-body {
   display: flex;
-  align-items: baseline;
+  align-items: stretch;
+  gap: .5rem;
+}
+.scatter-y-ticks {
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  gap: 1rem;
-  background: var(--bg-card);
-  transition: border-color .2s, background .2s;
-}
-.stack-layer:hover {
-  border-color: var(--accent-soft);
-  background: var(--bg-elev);
-}
-.stack-layer:last-child { border-bottom: 1px solid var(--border); }
-.stack-top {
-  background: linear-gradient(135deg, var(--bg-card), var(--bg-soft));
-}
-.stack-bottom {
-  opacity: .6;
-}
-.stack-label {
-  font-family: var(--font-serif);
-  font-size: 1rem;
-  font-weight: 600;
-  white-space: nowrap;
-}
-.stack-desc {
-  font-size: .82rem;
+  align-items: flex-end;
+  width: 5rem;
+  padding: .15rem 0;
+  font-family: var(--font-mono);
+  font-size: .66rem;
   color: var(--text-dim);
-  text-align: right;
+  letter-spacing: .04em;
 }
+.scatter-plot {
+  position: relative;
+  flex: 1;
+  height: 24rem;
+  border-left: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border-soft);
+  background:
+    repeating-linear-gradient(to top, transparent 0 calc(25% - 1px), var(--border) calc(25% - 1px) 25%),
+    repeating-linear-gradient(to right, transparent 0 calc(25% - 1px), var(--border) calc(25% - 1px) 25%);
+  background-color: var(--bg-soft);
+  border-radius: 4px;
+}
+.scatter-x-axis {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  color: var(--text-dim);
+  letter-spacing: .06em;
+  margin-top: .5rem;
+  margin-left: 5.5rem;
+}
+.scatter-hint {
+  text-align: center;
+  font-size: .78rem;
+  color: var(--text-dim);
+  margin-top: .9rem;
+}
+/* family-color legend — only meaningful in sensors mode */
+.scatter-legend {
+  display: none;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .4rem 1.1rem;
+  margin-top: .8rem;
+  max-width: 44rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.scatter-frame[data-scatter-mode="sensors"] .scatter-legend { display: flex; }
+.legend-key {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  color: var(--text-dim);
+}
+.legend-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  display: inline-block;
+}
+.legend-dot.fam-structural        { background: var(--fam-structural); }
+.legend-dot.fam-behavioral        { background: var(--fam-behavioral); }
+.legend-dot.fam-test-effectiveness{ background: var(--fam-test-effectiveness); }
+.legend-dot.fam-invariants        { background: var(--fam-invariants); }
+.legend-dot.fam-adversarial       { background: var(--fam-adversarial); }
+.legend-dot.fam-runtime           { background: var(--fam-runtime); }
+.legend-dot.fam-change            { background: var(--fam-change); }
+.legend-dot.fam-architecture      { background: var(--fam-architecture); }
+.legend-dot.fam-evolution         { background: var(--fam-evolution); }
+.legend-dot.fam-comprehension     { background: var(--fam-comprehension); }
+.legend-dot.fam-ai-sensors        { background: var(--fam-ai-sensors); }
+.scatter-point {
+  position: absolute;
+  transform: translate(-50%, 50%);
+  display: block;
+  z-index: 1;
+}
+.scatter-dot {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+  transition: transform .15s ease;
+}
+.scatter-point:hover .scatter-dot { transform: scale(1.5); }
+.scatter-tag {
+  position: absolute;
+  left: 50%;
+  top: -1.5rem;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  color: var(--text);
+  background: var(--bg-elev);
+  border: 1px solid var(--border-soft);
+  padding: .1rem .4rem;
+  border-radius: 3px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .15s ease;
+}
+.scatter-point:hover .scatter-tag,
+.scatter-point:focus-visible .scatter-tag { opacity: 1; }
+
+/* Layers mode: always show labels, bigger dots */
+.scatter-frame[data-scatter-mode="layers"] .layer-point .scatter-dot {
+  width: 14px;
+  height: 14px;
+}
+.scatter-frame[data-scatter-mode="layers"] .layer-point .scatter-tag {
+  opacity: 1;
+  top: auto;
+  bottom: 1.1rem;
+  background: none;
+  border: none;
+  color: var(--text-soft);
+}
+.scatter-frame[data-scatter-mode="layers"] .layer-point:hover .scatter-tag { color: var(--accent); }
+.scatter-frame[data-scatter-mode="layers"] .sensor-point { display: none; }
+
+/* Sensors mode: dots colored by sensor family, labels on hover only */
+.scatter-frame[data-scatter-mode="sensors"] .layer-point { display: none; }
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point .scatter-dot {
+  width: 9px;
+  height: 9px;
+  background: var(--signal);
+}
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-structural .scatter-dot        { background: var(--fam-structural); }
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-behavioral .scatter-dot        { background: var(--fam-behavioral); }
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-test-effectiveness .scatter-dot{ background: var(--fam-test-effectiveness); }
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-invariants .scatter-dot        { background: var(--fam-invariants); }
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-adversarial .scatter-dot       { background: var(--fam-adversarial); }
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-runtime .scatter-dot           { background: var(--fam-runtime); }
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-change .scatter-dot            { background: var(--fam-change); }
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-architecture .scatter-dot      { background: var(--fam-architecture); }
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-evolution .scatter-dot         { background: var(--fam-evolution); }
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-comprehension .scatter-dot     { background: var(--fam-comprehension); }
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-ai-sensors .scatter-dot        { background: var(--fam-ai-sensors); }
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point { z-index: 0; }
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point:hover { z-index: 2; }
+/* legend hover dims other families and names the surviving dots */
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-dim .scatter-dot {
+  opacity: .18;
+}
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-spotlit .scatter-tag {
+  opacity: 1;
+  top: auto;
+  bottom: .85rem;
+  background: var(--bg);
+  border: none;
+  color: var(--text-soft);
+  font-size: .62rem;
+  padding: 0 .2rem;
+}
+/* dots near the top of the plot get their label below instead */
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-spotlit[style*="bottom:7"] .scatter-tag,
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-spotlit[style*="bottom:8"] .scatter-tag,
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-spotlit[style*="bottom:9"] .scatter-tag {
+  bottom: auto;
+  top: .85rem;
+}
+.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-spotlit:hover .scatter-tag {
+  color: var(--accent);
+}
+.legend-key { cursor: default; }
+.legend-key:hover { color: var(--text); }
+
 .stack-cta {
   text-align: center;
   margin-top: 2rem;
@@ -1314,6 +1530,7 @@ a.wikilink:hover {
 
 /* ── Homepage: recent entries (updated) ────────────────────────────────── */
 .entry {
+  position: relative;
   display: grid;
   grid-template-columns: 8rem 10rem 1fr;
   gap: 1rem;
@@ -1333,6 +1550,26 @@ a.wikilink:hover {
   font-family: var(--font-serif);
   font-size: 1.12rem;
   font-weight: 500;
+}
+/* The entry title is a stretched link: hovering anywhere on the row hovers
+   the link, so suppress the wikilink hover treatment (orange text + glow
+   box) and signal the row with its background instead. */
+.entry .entry-title.wikilink,
+.entry .entry-title.wikilink:hover {
+  border-bottom: none;
+  background: none;
+  color: var(--text);
+}
+.entry:hover .entry-title { color: var(--accent); }
+/* Keyboard focus: no hover, so mark the focused row explicitly */
+.entry:focus-within { background: var(--bg-card); }
+.entry:focus-within .entry-title { color: var(--accent); }
+/* ::after covers the whole row -> entire entry is clickable with native
+   link semantics (middle-click, focus, status-bar URL). */
+.entry-title::after {
+  content: "";
+  position: absolute;
+  inset: 0;
 }
 .entry-blurb {
   font-size: .88rem;
@@ -1395,109 +1632,27 @@ a.wikilink:hover {
   font-family: var(--font-mono);
   font-size: .72rem;
   color: var(--signal);
-  padding: .15rem .4rem;
+  padding: .15rem .45rem;
   background: var(--signal-soft);
   border-radius: 3px;
+  cursor: help;
+}
+
+/* Visually hidden but available to screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* ── Tag: family ────────────────────────────────────────────────────────── */
 .tag-family {
   border-color: var(--accent-soft);
   color: var(--accent);
-}
-
-/* ── Atlas: full stack diagram ──────────────────────────────────────────── */
-.stack-diagram-full {
-  max-width: 44rem;
-  margin: 2rem auto 4rem;
-}
-.stack-layer-full {
-  padding: 1.2rem 1.8rem;
-  border: 1px solid var(--border);
-  border-bottom: none;
-  background: var(--bg-card);
-  transition: border-color .2s, background .2s;
-}
-.stack-layer-full:hover {
-  border-color: var(--accent-soft);
-  background: var(--bg-elev);
-}
-.stack-layer-full:last-of-type { border-bottom: 1px solid var(--border); }
-.stack-layer-full.stack-top {
-  background: linear-gradient(135deg, var(--bg-card), var(--bg-soft));
-}
-.stack-layer-full.stack-bottom { opacity: .5; }
-.stack-layer-label {
-  font-family: var(--font-serif);
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: .3rem;
-}
-.stack-layer-desc {
-  font-size: .85rem;
-  color: var(--text-dim);
-  margin-bottom: .8rem;
-}
-.stack-layer-sensors {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .4rem;
-}
-.stack-sensor-chip {
-  font-family: var(--font-mono);
-  font-size: .74rem;
-  padding: .2rem .5rem;
-  border: 1px solid var(--border-soft);
-  border-radius: 3px;
-  color: var(--text-soft);
-  transition: all .2s;
-}
-.stack-sensor-chip:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: var(--accent-glow);
-}
-.stack-connector {
-  text-align: center;
-  color: var(--text-dim);
-  font-size: .8rem;
-  padding: .3rem 0;
-}
-
-/* Second axis */
-.second-axis {
-  margin: 4rem 0;
-  padding-top: 3rem;
-  border-top: 1px solid var(--border);
-}
-.axis-diagram {
-  max-width: 36rem;
-  margin: 0 auto;
-}
-.axis-layer {
-  padding: 1.2rem 1.8rem;
-  border: 1px solid var(--border);
-  border-bottom: none;
-  background: var(--bg-card);
-}
-.axis-layer:last-child { border-bottom: 1px solid var(--border); }
-.axis-label {
-  font-family: var(--font-serif);
-  font-size: 1.1rem;
-  font-weight: 600;
-  display: block;
-  margin-bottom: .3rem;
-}
-.axis-desc {
-  font-size: .82rem;
-  color: var(--text-dim);
-}
-.axis-desc .wikilink { color: var(--text-soft); }
-.axis-arrow {
-  text-align: center;
-  color: var(--text-dim);
-  font-size: .8rem;
-  padding: .3rem 0;
 }
 
 /* Family map */

@@ -23,6 +23,22 @@ Deps (`pyyaml`, `markdown`) are already installed in `.venv/` (gitignored).
 The `--watch` flag mentioned in the `build.py` docstring is **not
 implemented** — `sys.argv` is never parsed.
 
+## Deployment
+
+Live at https://softwareobservatory.com (apex + `www`). `make deploy`
+builds, then rsyncs the repo (minus sources and tooling) to
+`observer@abrah.ms:.` using `~/.ssh/softwareobservatory-deploy`.
+
+On the server (`moustachium`, 68.183.69.149), Caddy serves
+`/srv/softwareobservatory.com` for `softwareobservatory.com, www...` with a
+DNS-01 cert via the dnsimple plugin (token in `/etc/caddy/dnsimple.env`), so
+certs are issued without waiting on DNS propagation. The `observer` user's
+sole authorized key is pinned by `rrsync -wo /srv/softwareobservatory.com` —
+the same one-key-per-site pattern as the `sublayer` deploys — which is why
+the rsync destination is `.` rather than the absolute path. A/AAAA records
+live in the dnsimple zone `softwareobservatory.com` (account 44245); both
+point at 68.183.69.149.
+
 ## Driving a browser (style/visual work)
 
 Two working paths on this machine (system `apt` is blocked and Chromium
@@ -45,7 +61,7 @@ point the browser at `http://localhost:8000/`.
 
 ## Architecture
 
-Everything flows through `build.py` (~1150 lines). It is the entire CMS:
+Everything flows through `build.py` (~1500 lines). It is the entire CMS:
 
 1. `load_sensors()` parses every `content/sensors/*.md` (YAML frontmatter +
    markdown body) into a dict.
@@ -61,8 +77,11 @@ The `templates/` directory is **empty** — templates are f-strings inside
 per-page `body = f"""..."""` blocks). Do not look for Jinja.
 
 Shared site data (the 11 sensor families, confidence-stack layers, oracle
-bar widths, latency labels) are module-level constants at the top of
-`build.py`. Adding or renumbering a family means editing `FAMILIES` there.
+bar widths, latency labels, and the homepage scatter axes `STACK_SCATTER` /
+`LATENCY_X` / `ORACLE_Y`) are module-level constants at the top of
+`build.py`. Adding or renumbering a family means editing `FAMILIES` there
+— and adding a `--fam-<slug>` color token in `css/observatory.css`, which
+the homepage scatter legend and dots key off.
 
 ## Directory layout
 
@@ -73,7 +92,7 @@ bar widths, latency labels) are module-level constants at the top of
 | `content/pages/` | Empty; reserved. |
 | `index.html`, `pages/` | **Generated output** — committed, but overwritten by every build. |
 | `css/observatory.css` | Hand-written stylesheet (design tokens in `:root` at top). |
-| `js/main.js` | ~45 lines: catalog family filter + card keyboard a11y. No build step. |
+| `js/main.js` | No build step. Family filter, card a11y, header search dropdown, heading-jumplink copy buttons, homepage scatter toggle + legend isolation. |
 | `chat-w-gpt.md` | Original design brainstorm that seeded the taxonomy. Background reading only. |
 | `archive-NMUHEr/` | Untracked crush release tarball. Ignore. |
 
@@ -145,13 +164,21 @@ that gets this wrong.
 - `generate_index_page` hard-codes featured sensor `SO-003` (mutation
   testing) and the "recent entries" are just the first 6 sensors by
   filename sort — not actually sorted by date.
-- The catalog page's sensor blurb is the first line of the rendered body
-  with HTML tags stripped, truncated at 200 chars — keep the opening
-  sentence of each sensor self-contained.
+- The catalog page's sensor blurb comes from `blurb_text()`: first rendered
+  *paragraph* (not line — markdown source is hard-wrapped), tags stripped,
+  entities decoded, cut at a sentence boundary inside 200 chars with a
+  word-boundary ellipsis fallback. Keep the opening paragraph of each
+  sensor self-contained.
 - The atlas grid cell is keyed on `stack_level` (singular) matching
   `STACK_LAYERS` slugs exactly, which then fold into `LIFECYCLE_STAGES`
   columns via `STAGE_BY_LEVEL`; a typo yields a silently empty cell.
 - The atlas dependency graph derives edges from `see_also` references to
   family slugs (`change-family`, plain slugs like `adversarial`, or sensor
   IDs resolved to their family); only the strongest ~14 edges are drawn.
-- Search box in the header is decorative — no search is wired up.
+- Content headings (h2/h3 in the main column) get ids injected at build
+  time by `add_heading_ids()` inside `html_page`, slugified from the
+  heading text and de-duped per page. The hover "copy jumplink" icons in
+  `main.js` target a hard-coded selector list (`.section-heading`,
+  `.property-detail-title`, `.family-title`, `.featured-title`,
+  `.about-content h2`, `.signal-detail-body h2`) — extend both places when
+  adding a new content section type.

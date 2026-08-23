@@ -42,6 +42,82 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Deep-linkable headings: hovering a heading with an id shows a link icon;
+  // clicking it copies the jumplink (page URL + #anchor) to the clipboard.
+  const HEADING_LINK_SELECTOR = [
+    '.section-heading',
+    '.property-detail-title',
+    '.family-title',
+    '.featured-title',
+    '.about-content h2',
+    '.signal-detail-body h2',
+  ].map(s => s + '[id]').join(', ');
+
+  document.querySelectorAll(HEADING_LINK_SELECTOR).forEach(h => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'heading-anchor';
+    btn.title = 'Copy link to this section';
+    btn.setAttribute('aria-label', 'Copy link to this section');
+    btn.innerHTML = '<svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+      + '<path d="M6.5 9.5a3 3 0 0 0 4.2.2l2-2a3 3 0 0 0-4.2-4.2l-1.1 1.1"/>'
+      + '<path d="M9.5 6.5a3 3 0 0 0-4.2-.2l-2 2a3 3 0 0 0 4.2 4.2l1.1-1.1"/>'
+      + '</svg>';
+    btn.addEventListener('click', async e => {
+      e.preventDefault();
+      const url = location.origin === 'null' || location.protocol === 'file:'
+        ? location.href.split('#')[0] + '#' + h.id
+        : location.origin + location.pathname + '#' + h.id;
+      try {
+        await navigator.clipboard.writeText(url);
+      } catch {
+        // clipboard API unavailable (insecure context, denied) — fall back
+        const ta = document.createElement('textarea');
+        ta.value = url;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+      }
+      history.replaceState(null, '', '#' + h.id);
+      btn.classList.add('copied');
+      btn.title = 'Copied!';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.title = 'Copy link to this section';
+      }, 1200);
+    });
+    h.appendChild(btn);
+  });
+
+  // Confidence scatter: toggle between stack layers and individual sensors
+  const scatterFrame = document.querySelector('.scatter-frame');
+  if (scatterFrame) {
+    document.querySelectorAll('.scatter-toggle-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.scatter-toggle-btn')
+          .forEach(b => b.classList.toggle('active', b === btn));
+        scatterFrame.dataset.scatterMode = btn.dataset.scatter;
+      });
+    });
+
+    // Legend hover isolates one family's dots
+    const sensorPoints = Array.from(scatterFrame.querySelectorAll('.sensor-point'));
+    document.querySelectorAll('.scatter-legend .legend-key').forEach((key, i) => {
+      const slug = key.querySelector('.legend-dot').className.match(/fam-[\w-]+/)[0].slice(4);
+      key.addEventListener('mouseenter', () => {
+        sensorPoints.forEach(p => {
+          const match = p.classList.contains('fam-' + slug);
+          p.classList.toggle('fam-dim', !match);
+          p.classList.toggle('fam-spotlit', match);
+        });
+      });
+      key.addEventListener('mouseleave', () => {
+        sensorPoints.forEach(p => p.classList.remove('fam-dim', 'fam-spotlit'));
+      });
+    });
+  }
+
   // Search: fetch the build-time index, filter on input, render a dropdown
   const searchBox = document.querySelector('.search-box');
   if (searchBox) {
