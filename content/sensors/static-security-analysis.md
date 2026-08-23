@@ -2,7 +2,7 @@
 id: SO-014
 title: Static Security Analysis
 family: adversarial
-family_num: "05"
+family_num: '05'
 oracle: medium
 independence: high
 scope: codebase
@@ -11,13 +11,40 @@ actionability: blocking
 type: predictive
 stack_level: static-analysis
 categories:
-  - Adversarial
-  - Security
+- Adversarial
+- Security
 see_also:
-  - SO-005
-  - SO-005c
-  - SO-001c
+- SO-005
+- SO-005c
+- SO-001c
 last_reviewed: 2026-08-23
+references:
+- title: An Empirical Study on the Effectiveness of Security Code Review
+  year: 2013
+  tier: I
+  url: https://people.eecs.berkeley.edu/~daw/papers/coderev-essos13.pdf
+  kind: paper
+- title: Eliminating Memory Safety Vulnerabilities at the Source
+  year: 2024
+  tier: II
+  url: https://security.googleblog.com/2024/09/eliminating-memory-safety-vulnerabilities-Android.html
+  kind: paper
+- title: Semgrep
+  url: https://semgrep.dev
+  kind: tool
+  description: Multi-language static analysis with custom rules
+- title: CodeQL
+  url: https://codeql.github.com
+  kind: tool
+  description: Semantic code analysis engine by GitHub
+- title: Bandit
+  kind: tool
+  url: ''
+  description: Python security linter
+- title: brakeman
+  kind: tool
+  url: ''
+  description: Static security analysis for Rails
 ---
 
 Attacking the code before it runs. Taint tracking, dataflow analysis, and
@@ -51,18 +78,3 @@ dangerous sink — but the broader practice of application security
 exploit detection) deserves its own resources. See
 [OWASP](https://owasp.org) and the
 [CWE](https://cwe.mitre.org) for dedicated treatment.
-
-## Tooling
-
-- Semgrep
-- CodeQL
-- Bandit
-- brakeman
-
-## References
-
-- An Empirical Study on the Effectiveness of Security Code Review (2013, tier I) — https://people.eecs.berkeley.edu/~daw/papers/coderev-essos13.pdf
-- Eliminating Memory Safety Vulnerabilities at the Source (2024, tier II) — https://security.googleblog.com/2024/09/eliminating-memory-safety-vulnerabilities-Android.html
-
-- Semgrep: https://semgrep.dev
-- CodeQL: https://codeql.github.com

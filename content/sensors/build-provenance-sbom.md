@@ -2,7 +2,7 @@
 id: SO-014c
 title: Build Provenance & SBOM
 family: structural
-family_num: "01"
+family_num: '01'
 oracle: high
 independence: high
 scope: system
@@ -11,13 +11,40 @@ actionability: blocking
 type: retrospective
 stack_level: canary-shadow
 categories:
-  - Structural
-  - Supply Chain
+- Structural
+- Supply Chain
 see_also:
-  - SO-001
-  - SO-014
-  - SO-012b
+- SO-001
+- SO-014
+- SO-012b
 last_reviewed: 2026-08-23
+references:
+- title: 'Reproducible Builds: Increasing the Integrity of Software Supply Chains'
+  year: 2021
+  tier: II
+  url: https://arxiv.org/abs/2104.06020
+  kind: paper
+- title: License Incompatibilities in Software Ecosystems
+  year: 2022
+  tier: II
+  url: https://arxiv.org/abs/2203.01634
+  kind: paper
+- title: SLSA
+  url: https://slsa.dev
+  kind: tool
+  description: Supply chain security framework and attestation
+- title: Sigstore
+  url: https://sigstore.dev
+  kind: tool
+  description: Software supply chain signing
+- title: cosign
+  kind: tool
+  url: ''
+  description: Container signing tool
+- title: in-toto
+  kind: tool
+  url: ''
+  description: Software supply chain integrity framework
 ---
 
 Is the artifact you are about to deploy structurally the one your pipeline
@@ -52,18 +79,3 @@ practice of supply chain security (dependency vulnerabilities, artifact
 signing trust roots, runtime attestation, policy enforcement) deserves its
 own resources. See [SLSA](https://slsa.dev) and
 [Sigstore](https://sigstore.dev) for dedicated treatment.
-
-## Tooling
-
-- SLSA
-- cosign
-- Sigstore
-- in-toto
-
-## References
-
-- Reproducible Builds: Increasing the Integrity of Software Supply Chains (2021, tier II) — https://arxiv.org/abs/2104.06020
-- License Incompatibilities in Software Ecosystems (2022, tier II) — https://arxiv.org/abs/2203.01634
-
-- SLSA: https://slsa.dev
-- Sigstore: https://sigstore.dev

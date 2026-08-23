@@ -2,7 +2,7 @@
 id: SO-006
 title: Observability Events
 family: runtime
-family_num: 06
+family_num: 6
 oracle: medium
 independence: high
 scope: system
@@ -11,16 +11,44 @@ actionability: exploratory
 type: retrospective
 stack_level: production-behavior
 categories:
-  - Runtime
-  - High Cardinality
-  - Events
-  - Production Sensors
+- Runtime
+- High Cardinality
+- Events
+- Production Sensors
 see_also:
-  - SO-004
-  - change-family
-  - evolution-family
-  - ai-sensors
+- SO-004
+- change-family
+- evolution-family
+- ai-sensors
 last_reviewed: 2026-08-23
+references:
+- title: How to Fight Production Incidents? An Empirical Study on a Large-scale Cloud
+    Service
+  year: 2022
+  tier: II
+  url: https://acmsocc.org/2022/assets/slides/95.pdf
+  kind: paper
+- title: The Tail at Scale
+  year: 2013
+  tier: III
+  url: https://www.barroso.org/publications/TheTailAtScale.pdf
+  kind: paper
+- authors: Charity Majors et al.
+  title: Observability Engineering
+  year: 2022
+  kind: paper
+- title: OpenTelemetry
+  url: https://opentelemetry.io
+  kind: tool
+  description: Open-standard observability instrumentation
+- title: Honeycomb
+  kind: tool
+  url: ''
+  description: Observability platform for high-cardinality events
+- title: Lightstep
+  kind: tool
+  url: ''
+  description: Distributed tracing and observability
 ---
 
 Traditional monitoring says: *"CPU is 82%."* Observability says: *"Show me
@@ -79,18 +107,3 @@ Observability events tell you *what happened*, not *whether it was correct*.
 Determining correctness requires [invariants](runtime-invariants.html) layered
 on top of events. Events without invariants are raw data, not yet sensors of
 correctness.
-
-## Tooling
-
-- Honeycomb
-- Honeycomb
-- Lightstep
-- OpenTelemetry
-
-## References
-
-- How to Fight Production Incidents? An Empirical Study on a Large-scale Cloud Service (2022, tier II) — https://acmsocc.org/2022/assets/slides/95.pdf
-- The Tail at Scale (2013, tier III) — https://www.barroso.org/publications/TheTailAtScale.pdf
-
-- Charity Majors et al., 'Observability Engineering' (2022)
-- OpenTelemetry: https://opentelemetry.io

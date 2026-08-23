@@ -2,7 +2,7 @@
 id: SO-009c
 title: Incident Correlation
 family: evolution
-family_num: "09"
+family_num: 09
 oracle: medium
 independence: high
 scope: service
@@ -11,15 +11,39 @@ actionability: exploratory
 type: retrospective
 stack_level: user-outcome
 categories:
-  - Evolution
-  - Operational Risk
-  - Black-Box Sensors
+- Evolution
+- Operational Risk
+- Black-Box Sensors
 see_also:
-  - SO-009
-  - SO-009b
-  - SO-009d
-  - SO-006
+- SO-009
+- SO-009b
+- SO-009d
+- SO-006
 last_reviewed: 2026-08-23
+references:
+- title: How to Fight Production Incidents? An Empirical Study on a Large-scale Cloud
+    Service
+  year: 2022
+  tier: II
+  url: https://acmsocc.org/2022/assets/slides/95.pdf
+  kind: paper
+- title: Postmortem of database outage of January 31
+  year: 2017
+  tier: III
+  url: https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31/
+  kind: paper
+- title: Datadog
+  kind: tool
+  url: ''
+  description: Cloud monitoring and observability
+- title: Sentry
+  kind: tool
+  url: ''
+  description: Error tracking and crash reporting
+- title: Jira correlation
+  kind: tool
+  url: ''
+  description: Incident-to-commit correlation via Jira
 ---
 
 Which components correlate with production failures? A sensor of operational
@@ -45,16 +69,3 @@ are risk concentrations — places where the system is most likely to fail.
 Incident correlation can't tell you *why* a component fails — only that it
 does. Also depends on incident reporting quality: unreported incidents
 produce no signal.
-
-## Tooling
-
-- Datadog
-- Sentry
-- Jira correlation
-
-## References
-
-- How to Fight Production Incidents? An Empirical Study on a Large-scale Cloud Service (2022, tier II) — https://acmsocc.org/2022/assets/slides/95.pdf
-- Postmortem of database outage of January 31 (2017, tier III) — https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31/
-
-- https://www.sentry.io

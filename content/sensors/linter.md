@@ -2,7 +2,7 @@
 id: SO-001c
 title: Linter
 family: structural
-family_num: "01"
+family_num: '01'
 oracle: medium
 independence: high
 scope: module
@@ -11,13 +11,40 @@ actionability: guiding
 type: predictive
 stack_level: static-analysis
 categories:
-  - Structural
-  - Guiding Sensors
+- Structural
+- Guiding Sensors
 see_also:
-  - SO-001
-  - SO-001b
-  - SO-001d
+- SO-001
+- SO-001b
+- SO-001d
 last_reviewed: 2026-08-23
+references:
+- title: 'Gang of Eight: A Defect Taxonomy for Infrastructure as Code Scripts'
+  year: 2020
+  tier: II
+  url: https://akondrahman.github.io/files/papers/icse20_acid.pdf
+  kind: paper
+- title: 'The Seven Sins: Security Smells in Infrastructure as Code Scripts'
+  year: 2019
+  tier: II
+  url: https://akondrahman.github.io/files/papers/icse19_slic.pdf
+  kind: paper
+- title: ESLint
+  kind: tool
+  url: ''
+  description: Pluggable JavaScript/TypeScript linter
+- title: ruff
+  kind: tool
+  url: ''
+  description: Fast Python linter and formatter
+- title: golangci-lint
+  kind: tool
+  url: ''
+  description: Go linter aggregator
+- title: Semgrep
+  kind: tool
+  url: ''
+  description: Multi-language static analysis with custom rules
 ---
 
 Catches structural inconsistencies that are syntactically valid but
@@ -45,17 +72,3 @@ linter can be wrong; a compiler cannot.
 A linter cannot detect [behavioral correctness](catalog.html#behavioral) —
 it operates on syntax and patterns, not execution. It also produces false
 positives, which erodes its authority over time.
-
-## Tooling
-
-- ESLint
-- ruff
-- golangci-lint
-- Semgrep
-
-## References
-
-- Gang of Eight: A Defect Taxonomy for Infrastructure as Code Scripts (2020, tier II) — https://akondrahman.github.io/files/papers/icse20_acid.pdf
-- The Seven Sins: Security Smells in Infrastructure as Code Scripts (2019, tier II) — https://akondrahman.github.io/files/papers/icse19_slic.pdf
-
-- https://en.wikipedia.org/wiki/Lint_(software)

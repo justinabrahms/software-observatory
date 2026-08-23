@@ -2,7 +2,7 @@
 id: SO-005c
 title: Differential Testing
 family: adversarial
-family_num: "05"
+family_num: '05'
 oracle: high
 independence: high
 scope: function
@@ -11,13 +11,33 @@ actionability: guiding
 type: adversarial
 stack_level: property-metamorphic
 categories:
-  - Adversarial
-  - Oracle-Free
+- Adversarial
+- Oracle-Free
 see_also:
-  - SO-005
-  - SO-005b
-  - SO-005d
+- SO-005
+- SO-005b
+- SO-005d
 last_reviewed: 2026-08-23
+references:
+- title: 'Elle: Inferring Isolation Anomalies from Experimental Observations'
+  year: 2020
+  tier: II
+  url: https://arxiv.org/abs/2003.10554
+  kind: paper
+- title: Yang et al., 'Finding and Understanding Bugs in C Compilers' (2011, Csmith)
+  kind: other
+- title: SQLancer
+  url: https://github.com/sqlancer/sqlancer
+  kind: tool
+  description: Differential testing for SQL databases
+- title: Csmith
+  kind: tool
+  url: ''
+  description: Random C program generator for compiler testing
+- title: DifferentialFuzzer
+  kind: tool
+  url: ''
+  description: Differential fuzzing framework
 ---
 
 `implementation_A(input) == implementation_B(input)`. You don't know which is
@@ -71,16 +91,3 @@ two implementations that *should* agree.
 
 If both implementations share the same bug, differential testing won't find
 it. Also requires two implementations, which may not exist.
-
-## Tooling
-
-- Csmith
-- DifferentialFuzzer
-- SQLancer
-
-## References
-
-- Elle: Inferring Isolation Anomalies from Experimental Observations (2020, tier II) — https://arxiv.org/abs/2003.10554
-
-- Yang et al., 'Finding and Understanding Bugs in C Compilers' (2011, Csmith)
-- SQLancer: https://github.com/sqlancer/sqlancer

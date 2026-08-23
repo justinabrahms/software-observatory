@@ -2,7 +2,7 @@
 id: SO-011b
 title: Computational Gates
 family: ai-sensors
-family_num: "11"
+family_num: '11'
 oracle: maximum
 independence: maximum
 scope: system
@@ -11,14 +11,37 @@ actionability: guiding
 type: predictive
 stack_level: static-analysis
 categories:
-  - AI-Generated
-  - Computational Controls
-  - Maximum Oracle
+- AI-Generated
+- Computational Controls
+- Maximum Oracle
 see_also:
-  - SO-011
-  - SO-011c
-  - SO-011d
+- SO-011
+- SO-011c
+- SO-011d
 last_reviewed: 2026-08-23
+references:
+- title: 'Gender Shades: Intersectional Accuracy Disparities in Commercial Gender
+    Classification'
+  year: 2018
+  tier: I
+  url: http://proceedings.mlr.press/v81/buolamwini18a/buolamwini18a.pdf
+  kind: paper
+- title: GitHub Actions
+  kind: tool
+  url: ''
+  description: CI/CD workflow automation
+- title: GitLab CI
+  kind: tool
+  url: ''
+  description: GitLab's built-in CI/CD
+- title: Jenkins
+  kind: tool
+  url: ''
+  description: Extensible automation server
+- title: pre-commit hooks
+  kind: tool
+  url: ''
+  description: Pre-commit framework for git hooks
 ---
 
 An instruction saying "verify this" is weaker than a gate that literally
@@ -72,14 +95,3 @@ auditable — every override should leave a trail.
 A gate can only enforce what it's configured to check. A gate that doesn't
 exist can't block anything. The gap between "should be gated" and "is gated"
 is invisible.
-
-## Tooling
-
-- GitHub Actions
-- GitLab CI
-- Jenkins
-- pre-commit hooks
-
-## References
-
-- Gender Shades: Intersectional Accuracy Disparities in Commercial Gender Classification (2018, tier I) — http://proceedings.mlr.press/v81/buolamwini18a/buolamwini18a.pdf

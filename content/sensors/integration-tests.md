@@ -2,7 +2,7 @@
 id: SO-002c
 title: Integration Tests
 family: behavioral
-family_num: "02"
+family_num: '02'
 oracle: high
 independence: low
 scope: service
@@ -11,13 +11,41 @@ actionability: guiding
 type: predictive
 stack_level: integration-tests
 categories:
-  - Behavioral
-  - Integration
+- Behavioral
+- Integration
 see_also:
-  - SO-002
-  - SO-002b
-  - SO-002d
+- SO-002
+- SO-002b
+- SO-002d
 last_reviewed: 2026-08-23
+references:
+- title: Techniques for Improving Regression Testing in Continuous Integration Development
+    Environments
+  year: 2014
+  tier: I
+  url: https://cs.uwaterloo.ca/~m2nagapp/courses/CS846/1171/papers/elbaum_fse14.pdf
+  kind: paper
+- title: Taming Google-Scale Continuous Testing
+  year: 2017
+  tier: II
+  url: https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45861.pdf
+  kind: paper
+- title: pytest
+  kind: tool
+  url: ''
+  description: Python testing framework
+- title: JUnit
+  kind: tool
+  url: ''
+  description: Java testing framework
+- title: Testcontainers
+  kind: tool
+  url: ''
+  description: Integration testing with Docker containers
+- title: Docker Compose
+  kind: tool
+  url: ''
+  description: Multi-container orchestration for testing
 ---
 
 Does the thing work when connected to its actual dependencies? Catches
@@ -40,17 +68,3 @@ see — connection failures, serialization mismatches, timeout behavior.
 Integration tests with mock dependencies don't test the real integration.
 They test your assumptions about the real integration. [Contract
 tests](contract-tests.html) are a stronger sensor for boundary assumptions.
-
-## Tooling
-
-- pytest
-- JUnit
-- Testcontainers
-- Docker Compose
-
-## References
-
-- Techniques for Improving Regression Testing in Continuous Integration Development Environments (2014, tier I) — https://cs.uwaterloo.ca/~m2nagapp/courses/CS846/1171/papers/elbaum_fse14.pdf
-- Taming Google-Scale Continuous Testing (2017, tier II) — https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45861.pdf
-
-- https://martinfowler.com/articles/practical-test-pyramid.html

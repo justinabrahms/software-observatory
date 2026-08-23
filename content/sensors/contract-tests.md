@@ -2,7 +2,7 @@
 id: SO-002
 title: Contract Tests
 family: behavioral
-family_num: 02
+family_num: 2
 oracle: high
 independence: high
 scope: service-boundary
@@ -11,16 +11,45 @@ actionability: guiding
 type: predictive
 stack_level: integration-tests
 categories:
-  - Behavioral
-  - Boundary Assumptions
-  - Microservices
-  - Guiding Sensors
+- Behavioral
+- Boundary Assumptions
+- Microservices
+- Guiding Sensors
 see_also:
-  - SO-001
-  - SO-004
-  - change-family
-  - structural-family
+- SO-001
+- SO-004
+- change-family
+- structural-family
 last_reviewed: 2026-08-23
+references:
+- title: 'I Depended on You and You Broke Me: An Empirical Study of Manifesting Breaking
+    Changes in Client Packages'
+  year: 2023
+  tier: II
+  url: https://arxiv.org/abs/2301.04563
+  kind: paper
+- title: 'Design, Monitoring, and Testing of Microservices Systems: The Practitioners''
+    Perspective'
+  year: 2021
+  tier: II
+  url: https://arxiv.org/pdf/2108.03384
+  kind: paper
+- authors: Ian Robinson
+  title: Consumer-Driven Contracts
+  year: 2007
+  kind: paper
+- title: Pact
+  url: https://pact.io
+  kind: tool
+  description: Consumer-driven contract testing
+- title: Spring Cloud Contract
+  kind: tool
+  url: ''
+  description: Contract testing for Spring/JVM
+- title: Postman
+  kind: tool
+  url: ''
+  description: API testing and contract validation
 ---
 
 Does service A continue satisfying the assumptions of service B? Contract
@@ -75,17 +104,3 @@ response that has the right fields and types but contains wrong values will
 pass a contract test. They also cannot detect
 [integration failures](catalog.html#behavioral) that emerge from the
 *interaction* of correct components producing incorrect emergent behavior.
-
-## Tooling
-
-- Pact
-- Spring Cloud Contract
-- Postman
-
-## References
-
-- I Depended on You and You Broke Me: An Empirical Study of Manifesting Breaking Changes in Client Packages (2023, tier II) — https://arxiv.org/abs/2301.04563
-- Design, Monitoring, and Testing of Microservices Systems: The Practitioners' Perspective (2021, tier II) — https://arxiv.org/pdf/2108.03384
-
-- Ian Robinson, 'Consumer-Driven Contracts' (2007)
-- Pact: https://pact.io

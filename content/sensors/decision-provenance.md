@@ -2,7 +2,7 @@
 id: SO-010d
 title: Decision Provenance
 family: comprehension
-family_num: "10"
+family_num: '10'
 oracle: low
 independence: high
 scope: module
@@ -11,13 +11,33 @@ actionability: exploratory
 type: retrospective
 stack_level: static-analysis
 categories:
-  - Comprehension
-  - Archaeological Accessibility
+- Comprehension
+- Archaeological Accessibility
 see_also:
-  - SO-010
-  - SO-010b
-  - SO-010c
+- SO-010
+- SO-010b
+- SO-010c
 last_reviewed: 2026-08-23
+references:
+- authors: Michael Nygard
+  title: Documenting Architecture Decisions
+  year: 2017
+  kind: paper
+- title: ADR
+  url: https://adr.github.io
+  kind: tool
+- title: ADRs
+  kind: tool
+  url: ''
+  description: Architecture Decision Records
+- title: Conventional Commits
+  kind: tool
+  url: ''
+  description: Structured commit message specification
+- title: git blame
+  kind: tool
+  url: ''
+  description: Git history annotation per line
 ---
 
 Can you answer "why is this weird thing here?" A sensor of *archaeological
@@ -58,14 +78,3 @@ provenance alive.
 Decision provenance can only exist where decisions were *recorded*. Decisions
 made verbally, in deleted branches, or in private messages are invisible to
 this sensor.
-
-## Tooling
-
-- ADRs
-- Conventional Commits
-- git blame
-
-## References
-
-- Michael Nygard, 'Documenting Architecture Decisions' (2017)
-- ADR: https://adr.github.io

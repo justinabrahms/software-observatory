@@ -2,7 +2,7 @@
 id: SO-008d
 title: Boundary Sensors
 family: architecture
-family_num: "08"
+family_num: 08
 oracle: high
 independence: high
 scope: module
@@ -11,14 +11,31 @@ actionability: guiding
 type: predictive
 stack_level: static-analysis
 categories:
-  - Architecture
-  - Encapsulation
-  - Guiding Sensors
+- Architecture
+- Encapsulation
+- Guiding Sensors
 see_also:
-  - SO-008
-  - SO-008b
-  - SO-002
+- SO-008
+- SO-008b
+- SO-002
 last_reviewed: 2026-08-23
+references:
+- title: Istio
+  url: https://istio.io
+  kind: tool
+  description: Service mesh with traffic management and observability
+- title: Linkerd
+  kind: tool
+  url: ''
+  description: Lightweight Kubernetes service mesh
+- title: Cilium
+  kind: tool
+  url: ''
+  description: eBPF-based networking, observability, and security
+- title: eBPF tools
+  kind: tool
+  url: ''
+  description: Kernel-level observability tools
 ---
 
 "This package must not import that package." A sensor of *encapsulation* and
@@ -45,14 +62,3 @@ strength — a forbidden import is a definitive violation.
 Boundary sensors check structural boundaries, not [behavioral
 boundaries](contract-tests.html). A module can respect import boundaries
 while still violating encapsulation through shared mutable state.
-
-## Tooling
-
-- Istio
-- Linkerd
-- Cilium
-- eBPF tools
-
-## References
-
-- Istio: https://istio.io

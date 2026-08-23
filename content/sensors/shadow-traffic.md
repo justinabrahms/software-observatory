@@ -2,7 +2,7 @@
 id: SO-007b
 title: Shadow Traffic
 family: change
-family_num: "07"
+family_num: '07'
 oracle: high
 independence: high
 scope: system
@@ -11,13 +11,31 @@ actionability: guiding
 type: retrospective
 stack_level: canary-shadow
 categories:
-  - Change
-  - Deployment Safety
+- Change
+- Deployment Safety
 see_also:
-  - SO-007
-  - SO-007c
-  - SO-005c
+- SO-007
+- SO-007c
+- SO-005c
 last_reviewed: 2026-08-23
+references:
+- title: Development and Deployment at Facebook
+  year: 2013
+  tier: III
+  url: https://www.cs.huji.ac.il/w~feit/papers/FB13IC.pdf
+  kind: paper
+- title: Envoy shadow
+  kind: tool
+  url: ''
+  description: Envoy proxy shadow traffic mirroring
+- title: diffy
+  kind: tool
+  url: ''
+  description: Differential proxy for API testing
+- title: go-shadow
+  kind: tool
+  url: ''
+  description: Go HTTP shadow traffic proxy
 ---
 
 Run the new implementation against real inputs without affecting users. A
@@ -44,15 +62,3 @@ inputs.
 Shadow traffic can only compare what both versions produce. If both have
 the same bug, it won't be detected. Also, side effects (database writes,
 external calls) must be carefully isolated.
-
-## Tooling
-
-- Envoy shadow
-- diffy
-- go-shadow
-
-## References
-
-- Development and Deployment at Facebook (2013, tier III) — https://www.cs.huji.ac.il/w~feit/papers/FB13IC.pdf
-
-- https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/cluster/cluster#shadow

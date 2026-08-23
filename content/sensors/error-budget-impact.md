@@ -2,7 +2,7 @@
 id: SO-007d
 title: Error-Budget Impact
 family: change
-family_num: "07"
+family_num: '07'
 oracle: medium
 independence: high
 scope: system
@@ -11,14 +11,26 @@ actionability: guiding
 type: retrospective
 stack_level: user-outcome
 categories:
-  - Change
-  - SLO
-  - Production Sensors
+- Change
+- SLO
+- Production Sensors
 see_also:
-  - SO-007
-  - SO-007b
-  - evolution-family
+- SO-007
+- SO-007b
+- evolution-family
 last_reviewed: 2026-08-23
+references:
+- title: Google SRE Workbook
+  url: https://sre.google/workbook/error-budget/
+  kind: tool
+- title: SLO dashboards
+  kind: tool
+  url: ''
+  description: Service level objective tracking dashboards
+- title: error budget calculators
+  kind: tool
+  url: ''
+  description: Error budget tracking tools
 ---
 
 Did this change consume an abnormal amount of reliability budget? A sensor
@@ -45,12 +57,3 @@ that budget — connecting code changes to [user outcomes](catalog.html#evolutio
 Error-budget impact shows correlation between deployment and reliability
 degradation, but not causation. Other factors (traffic patterns, upstream
 failures) may contribute.
-
-## Tooling
-
-- SLO dashboards
-- error budget calculators
-
-## References
-
-- Google SRE Workbook: https://sre.google/workbook/error-budget/

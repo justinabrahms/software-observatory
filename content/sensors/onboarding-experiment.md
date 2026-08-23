@@ -2,7 +2,7 @@
 id: SO-010c
 title: Onboarding Experiment
 family: comprehension
-family_num: "10"
+family_num: '10'
 oracle: low
 independence: high
 scope: module
@@ -11,13 +11,25 @@ actionability: exploratory
 type: retrospective
 stack_level: static-analysis
 categories:
-  - Comprehension
-  - Knowledge Concentration
+- Comprehension
+- Knowledge Concentration
 see_also:
-  - SO-010
-  - SO-010b
-  - SO-010d
+- SO-010
+- SO-010b
+- SO-010d
 last_reviewed: 2026-08-23
+references:
+- title: Onboarding vs. Diversity, Productivity and Quality — Empirical Study of the
+    OpenStack Ecosystem
+  year: 2021
+  tier: II
+  url: https://doi.org/10.1109/ICSE43902.2021.00097
+  kind: paper
+- title: GitHub's Engineering Team Has Moved to Codespaces
+  year: 2021
+  tier: III
+  url: https://github.blog/engineering/infrastructure/githubs-engineering-team-moved-codespaces/
+  kind: paper
 ---
 
 How long does it take a competent engineer to safely modify this subsystem?
@@ -54,8 +66,3 @@ not reflect code quality at all. The methodology also matters:
 
 Treat the onboarding experiment as a structured protocol (same task, same
 seniority level, same prior-knowledge screening), not a one-off timer.
-
-## References
-
-- Onboarding vs. Diversity, Productivity and Quality — Empirical Study of the OpenStack Ecosystem (2021, tier II) — https://doi.org/10.1109/ICSE43902.2021.00097
-- GitHub's Engineering Team Has Moved to Codespaces (2021, tier III) — https://github.blog/engineering/infrastructure/githubs-engineering-team-moved-codespaces/

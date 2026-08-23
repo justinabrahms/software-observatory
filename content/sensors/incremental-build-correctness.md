@@ -2,7 +2,7 @@
 id: SO-014d
 title: Incremental Build Correctness
 family: change
-family_num: "07"
+family_num: '07'
 oracle: medium
 independence: high
 scope: codebase
@@ -11,13 +11,41 @@ actionability: guiding
 type: retrospective
 stack_level: static-analysis
 categories:
-  - Change
-  - Build Systems
+- Change
+- Build Systems
 see_also:
-  - SO-007b
-  - SO-014c
-  - SO-001
+- SO-007b
+- SO-014c
+- SO-001
 last_reviewed: 2026-08-23
+references:
+- title: 'Reproducible Builds: Increasing the Integrity of Software Supply Chains'
+  year: 2021
+  tier: II
+  url: https://arxiv.org/abs/2104.06020
+  kind: paper
+- title: An Empirical Analysis of Build Failures in the Continuous Integration Workflows
+    of Java-Based Open-Source Software
+  year: 2017
+  tier: II
+  url: https://dsg.tuwien.ac.at/team/trausch/pub/PID4727015.pdf
+  kind: paper
+- title: Bazel
+  url: https://bazel.build
+  kind: tool
+  description: Google's build system
+- title: Buck
+  kind: tool
+  url: ''
+  description: Meta's build system
+- title: Nix
+  kind: tool
+  url: ''
+  description: Reproducible build system and package manager
+- title: ccache
+  kind: tool
+  url: ''
+  description: Compiler cache for fast rebuilds
 ---
 
 Did the build system actually rebuild everything this change touched?
@@ -44,17 +72,3 @@ no graph captures (a shared constant edited in a header the graph treats as
 irrelevant). That class of surprise is what
 [API compatibility](api-compatibility.html) and
 [integration tests](integration-tests.html) exist for.
-
-## Tooling
-
-- Bazel
-- Buck
-- Nix
-- ccache
-
-## References
-
-- Reproducible Builds: Increasing the Integrity of Software Supply Chains (2021, tier II) — https://arxiv.org/abs/2104.06020
-- An Empirical Analysis of Build Failures in the Continuous Integration Workflows of Java-Based Open-Source Software (2017, tier II) — https://dsg.tuwien.ac.at/team/trausch/pub/PID4727015.pdf
-
-- Bazel: https://bazel.build

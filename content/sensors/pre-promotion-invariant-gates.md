@@ -2,7 +2,7 @@
 id: SO-013b
 title: Pre-Promotion Invariant Gates
 family: invariants
-family_num: "04"
+family_num: '04'
 oracle: high
 independence: high
 scope: system
@@ -11,13 +11,30 @@ actionability: blocking
 type: predictive
 stack_level: canary-shadow
 categories:
-  - Invariants
-  - Deployment Safety
+- Invariants
+- Deployment Safety
 see_also:
-  - SO-004
-  - SO-007
-  - SO-012b
+- SO-004
+- SO-007
+- SO-012b
 last_reviewed: 2026-08-23
+references:
+- title: OPA Gatekeeper
+  url: https://open-policy-agent.github.io/gatekeeper/
+  kind: tool
+  description: Kubernetes policy enforcement via Open Policy Agent
+- title: Kyverno
+  kind: tool
+  url: ''
+  description: Kubernetes-native policy management
+- title: Conftest
+  kind: tool
+  url: ''
+  description: Policy testing for structured data
+- title: HashiCorp Sentinel
+  kind: tool
+  url: ''
+  description: Policy-as-code for Terraform
 ---
 
 Invariants checked at the moment of promotion, before a change can reach
@@ -43,14 +60,3 @@ declared rule is violated.
 Violations of rules nobody declared, and rules whose declaration is wrong.
 The gate is only as good as the invariant list, which is why the list itself
 deserves [independent review](independent-review.html).
-
-## Tooling
-
-- OPA Gatekeeper
-- Kyverno
-- Conftest
-- HashiCorp Sentinel
-
-## References
-
-- OPA Gatekeeper: https://open-policy-agent.github.io/gatekeeper/

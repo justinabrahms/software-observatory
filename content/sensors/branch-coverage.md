@@ -2,7 +2,7 @@
 id: SO-003c-b
 title: Branch Coverage
 family: test-effectiveness
-family_num: "03"
+family_num: '03'
 oracle: low
 independence: low
 scope: function
@@ -11,13 +11,35 @@ actionability: guiding
 type: predictive
 stack_level: behavioral-tests
 categories:
-  - Test Effectiveness
-  - Coverage
+- Test Effectiveness
+- Coverage
 see_also:
-  - SO-003c
-  - SO-003
-  - SO-003b
+- SO-003c
+- SO-003
+- SO-003b
 last_reviewed: 2026-08-23
+references:
+- title: Coverage Is Not Strongly Correlated with Test Suite Effectiveness
+  year: 2014
+  tier: I
+  url: https://www.cs.ubc.ca/~rtholmes/papers/icse_2014.pdf
+  kind: paper
+- title: coverage.py
+  kind: tool
+  url: ''
+  description: Python code coverage measurement
+- title: Istanbul
+  kind: tool
+  url: ''
+  description: JavaScript code coverage
+- title: JaCoCo
+  kind: tool
+  url: ''
+  description: Java code coverage
+- title: gcov
+  kind: tool
+  url: ''
+  description: GCC code coverage
 ---
 
 Did we exercise both sides of decisions? Better than [line
@@ -44,16 +66,3 @@ the line containing the branch executes either way.
 Same limitations as [line coverage](line-coverage.html) — execution is not
 assertion. Branch coverage tells you the branch ran, not that the right
 thing happened when it did.
-
-## Tooling
-
-- coverage.py
-- Istanbul
-- JaCoCo
-- gcov
-
-## References
-
-- Coverage Is Not Strongly Correlated with Test Suite Effectiveness (2014, tier I) — https://www.cs.ubc.ca/~rtholmes/papers/icse_2014.pdf
-
-- https://martinfowler.com/bliki/TestCoverage.html

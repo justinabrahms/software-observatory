@@ -2,7 +2,7 @@
 id: SO-005
 title: Fuzzing
 family: adversarial
-family_num: 05
+family_num: 5
 oracle: high
 independence: high
 scope: function
@@ -11,15 +11,46 @@ actionability: guiding
 type: adversarial
 stack_level: property-metamorphic
 categories:
-  - Adversarial
-  - Robustness
-  - Input Space
-  - Guiding Sensors
+- Adversarial
+- Robustness
+- Input Space
+- Guiding Sensors
 see_also:
-  - SO-005b
-  - SO-003
-  - adversarial
+- SO-005b
+- SO-003
+- adversarial
 last_reviewed: 2026-08-23
+references:
+- title: Evaluating Fuzz Testing
+  year: 2018
+  tier: I
+  url: https://dl.acm.org/doi/10.1145/3243734.3243804
+  kind: paper
+- title: An Empirical Study of OSS-Fuzz Bugs
+  year: 2021
+  tier: II
+  url: https://arxiv.org/pdf/2103.11518
+  kind: paper
+- authors: Manes et al.
+  title: 'The Art, Science, and Engineering of Fuzzing: A Survey'
+  year: 2021
+  kind: paper
+- title: libFuzzer
+  url: https://llvm.org/docs/LibFuzzer.html
+  kind: tool
+  description: LLVM in-process fuzzer
+- title: cargo-fuzz
+  kind: tool
+  url: ''
+  description: Fuzzing for Rust
+- title: AFL++
+  kind: tool
+  url: ''
+  description: Coverage-guided fuzzer
+- title: CIFuzz
+  kind: tool
+  url: ''
+  description: Continuous fuzzing integration for CI
 ---
 
 What happens on inputs humans didn't think of? Fuzzing is a sensor of
@@ -66,18 +97,3 @@ Fuzzing with a crash oracle cannot detect *wrong but non-crashing* behavior.
 A function that returns the wrong answer without crashing will pass a fuzzer.
 For correctness properties, pair fuzzing with [property-based
 testing](metamorphic-testing.html) or [mutation testing](mutation-testing.html).
-
-## Tooling
-
-- libFuzzer
-- cargo-fuzz
-- AFL++
-- CIFuzz
-
-## References
-
-- Evaluating Fuzz Testing (2018, tier I) — https://dl.acm.org/doi/10.1145/3243734.3243804
-- An Empirical Study of OSS-Fuzz Bugs (2021, tier II) — https://arxiv.org/pdf/2103.11518
-
-- Manes et al., 'The Art, Science, and Engineering of Fuzzing: A Survey' (2021)
-- libFuzzer: https://llvm.org/docs/LibFuzzer.html

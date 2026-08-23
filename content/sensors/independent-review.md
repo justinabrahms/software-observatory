@@ -2,7 +2,7 @@
 id: SO-010
 title: Independent Review
 family: comprehension
-family_num: "10"
+family_num: '10'
 oracle: medium
 independence: medium
 scope: module
@@ -11,13 +11,40 @@ actionability: guiding
 type: predictive
 stack_level: static-analysis
 categories:
-  - Comprehension
-  - Epistemic Accessibility
+- Comprehension
+- Epistemic Accessibility
 see_also:
-  - SO-010b
-  - SO-010c
-  - SO-010d
+- SO-010b
+- SO-010c
+- SO-010d
 last_reviewed: 2026-08-23
+references:
+- title: An Empirical Study on the Effectiveness of Security Code Review
+  year: 2013
+  tier: I
+  url: https://people.eecs.berkeley.edu/~daw/papers/coderev-essos13.pdf
+  kind: paper
+- title: 'The Cost of Interrupted Work: More Speed and Stress'
+  year: 2008
+  tier: I
+  url: https://ics.uci.edu/~gmark/chi08-mark.pdf
+  kind: paper
+- authors: Fagan
+  title: Design and Code Inspections to Reduce Errors
+  year: 1976
+  kind: paper
+- title: GitHub PR review
+  kind: tool
+  url: ''
+  description: Pull request review on GitHub
+- title: Gerrit
+  kind: tool
+  url: ''
+  description: Web-based code review for Git
+- title: Reviewable
+  kind: tool
+  url: ''
+  description: Code review tool for GitHub PRs
 ---
 
 Can another engineer explain what this does? A sensor of *epistemic
@@ -45,16 +72,3 @@ and unclear logic.
 Review quality varies enormously with reviewer expertise, attention, and
 time. A rubber-stamp review provides no signal. Also, review can't catch
 problems in code the reviewer doesn't read carefully.
-
-## Tooling
-
-- GitHub PR review
-- Gerrit
-- Reviewable
-
-## References
-
-- An Empirical Study on the Effectiveness of Security Code Review (2013, tier I) — https://people.eecs.berkeley.edu/~daw/papers/coderev-essos13.pdf
-- The Cost of Interrupted Work: More Speed and Stress (2008, tier I) — https://ics.uci.edu/~gmark/chi08-mark.pdf
-
-- Fagan, 'Design and Code Inspections to Reduce Errors' (1976)

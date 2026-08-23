@@ -606,6 +606,64 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
     # Categories
     categories = sensor.get("categories", [])
 
+    # References (structured frontmatter)
+    references = sensor.get("references", [])
+    refs_html = ""
+    if references:
+        tools = [r for r in references if r.get("kind") == "tool"]
+        papers = [r for r in references if r.get("kind") == "paper"]
+        others = [r for r in references if r.get("kind") not in ("tool", "paper")]
+
+        sections = []
+
+        if papers:
+            items = ""
+            for r in papers:
+                parts = []
+                if r.get("url"):
+                    parts.append(f'<a href="{html.escape(r["url"])}" class="wikilink">{html.escape(r["title"])}</a>')
+                else:
+                    parts.append(html.escape(r["title"]))
+                meta_parts = []
+                if r.get("authors"):
+                    meta_parts.append(r["authors"])
+                if r.get("year"):
+                    meta_parts.append(str(r["year"]))
+                if r.get("tier"):
+                    meta_parts.append(f"tier {r['tier']}")
+                if r.get("venue"):
+                    meta_parts.append(r["venue"])
+                if meta_parts:
+                    parts.append(f'<span class="ref-meta">{html.escape(" · ".join(meta_parts))}</span>')
+                items += f"          <li>{' — '.join(parts)}</li>\n"
+            sections.append(f'        <h3 class="references-subheading">Papers</h3>\n        <ul class="reference-list">\n{items.rstrip()}\n        </ul>')
+
+        if tools:
+            items = ""
+            for r in tools:
+                title = html.escape(r["title"])
+                if r.get("url"):
+                    title = f'<a href="{html.escape(r["url"])}" class="wikilink">{title}</a>'
+                desc = f'<span class="ref-desc">{html.escape(r["description"])}</span>' if r.get("description") else ""
+                items += f"          <li><span class=\"ref-title\">{title}</span>{desc}</li>\n"
+            sections.append(f'        <h3 class="references-subheading">Tooling</h3>\n        <ul class="reference-list reference-tools">\n{items.rstrip()}\n        </ul>')
+
+        if others:
+            items = ""
+            for r in others:
+                title = html.escape(r["title"])
+                if r.get("url"):
+                    title = f'<a href="{html.escape(r["url"])}" class="wikilink">{title}</a>'
+                meta_parts = []
+                if r.get("year"):
+                    meta_parts.append(str(r["year"]))
+                if meta_parts:
+                    title += f' <span class="ref-meta">{html.escape(" · ".join(meta_parts))}</span>'
+                items += f"          <li>{title}</li>\n"
+            sections.append(f'        <h3 class="references-subheading">Further reading</h3>\n        <ul class="reference-list">\n{items.rstrip()}\n        </ul>')
+
+        refs_html = f'        <h2>References</h2>\n' + "\n".join(sections)
+
     # See-also grid HTML
     see_also_html = ""
     if see_also_items:
@@ -688,6 +746,8 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
         {see_also_html}
 
 {cat_html}
+
+{refs_html}
       </div>
     </article>
 

@@ -2,7 +2,7 @@
 id: SO-003b
 title: Diff Coverage
 family: test-effectiveness
-family_num: 03
+family_num: 3
 oracle: low
 independence: medium
 scope: diff
@@ -11,15 +11,33 @@ actionability: guiding
 type: predictive
 stack_level: behavioral-tests
 categories:
-  - Test Effectiveness
-  - Change
-  - Coverage
-  - Agentic Coding
+- Test Effectiveness
+- Change
+- Coverage
+- Agentic Coding
 see_also:
-  - SO-003
-  - change-family
-  - ai-sensors
+- SO-003
+- change-family
+- ai-sensors
 last_reviewed: 2026-08-23
+references:
+- title: State of Mutation Testing at Google
+  year: 2018
+  tier: III
+  url: https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/46584.pdf
+  kind: paper
+- title: diff-cover
+  kind: tool
+  url: ''
+  description: Coverage for changed lines only
+- title: Codecov
+  kind: tool
+  url: ''
+  description: Hosted code coverage reporting
+- title: Coveralls
+  kind: tool
+  url: ''
+  description: Hosted code coverage reporting
 ---
 
 You don't necessarily care whether some 15-year-old module has 43% coverage.
@@ -73,15 +91,3 @@ Diff coverage cannot tell you whether the tests that *ran* the changed code
 actually *asserted* anything about its correctness. A line can execute
 without any test verifying its output. It also says nothing about
 [untested behavior](mutation-testing.html) that the tests don't cover.
-
-## Tooling
-
-- diff-cover
-- Codecov
-- Coveralls
-
-## References
-
-- State of Mutation Testing at Google (2018, tier III) — https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/46584.pdf
-
-- https://docs.codecov.com/docs/commit-coverage

@@ -2,7 +2,7 @@
 id: SO-013
 title: Statically Checked Invariants
 family: invariants
-family_num: "04"
+family_num: '04'
 oracle: high
 independence: high
 scope: module
@@ -11,13 +11,37 @@ actionability: blocking
 type: predictive
 stack_level: static-analysis
 categories:
-  - Invariants
-  - Formal Methods
+- Invariants
+- Formal Methods
 see_also:
-  - SO-004
-  - SO-012
-  - SO-001d
+- SO-004
+- SO-012
+- SO-001d
 last_reviewed: 2026-08-23
+references:
+- title: How Amazon Web Services Uses Formal Methods
+  year: 2015
+  tier: III
+  url: https://cacm.acm.org/research/how-amazon-web-services-uses-formal-methods/
+  kind: paper
+- authors: Leino
+  title: Dafny
+  year: 2010
+  kind: paper
+  url: ''
+  description: Verification-aware programming language
+- title: Liquid Haskell
+  url: https://ucsd-progsys.github.io/liquidhaskell/
+  kind: tool
+  description: Haskell refinement type checking
+- title: Frama-C
+  kind: tool
+  url: ''
+  description: Static analysis and verification for C
+- title: JML
+  kind: tool
+  url: ''
+  description: Java Modeling Language for behavioral interface specifications
 ---
 
 Invariants the compiler refuses to let you violate: Dafny `invariant`
@@ -43,17 +67,3 @@ Invariants that were never written down, and invariants whose statement is
 wrong. The gap between "the invariant holds" and "the invariant is the one
 the business needs" is exactly what [business invariants](business-invariants.html)
 measure from the other direction.
-
-## Tooling
-
-- Dafny
-- Frama-C
-- JML
-- Liquid Haskell
-
-## References
-
-- How Amazon Web Services Uses Formal Methods (2015, tier III) — https://cacm.acm.org/research/how-amazon-web-services-uses-formal-methods/
-
-- Leino, 'Dafny' (2010)
-- Liquid Haskell: https://ucsd-progsys.github.io/liquidhaskell/

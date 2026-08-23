@@ -2,7 +2,7 @@
 id: SO-007
 title: Canary Analysis
 family: change
-family_num: "07"
+family_num: '07'
 oracle: high
 independence: high
 scope: system
@@ -11,14 +11,41 @@ actionability: guiding
 type: retrospective
 stack_level: canary-shadow
 categories:
-  - Change
-  - Deployment Safety
+- Change
+- Deployment Safety
 see_also:
-  - SO-007b
-  - SO-007c
-  - SO-007d
-  - SO-005c
+- SO-007b
+- SO-007c
+- SO-007d
+- SO-005c
 last_reviewed: 2026-08-23
+references:
+- title: Exploring Statistical Change Point Detection Techniques for Performance Anomaly
+    Detection at Mozilla
+  year: 2026
+  tier: I
+  url: https://arxiv.org/abs/2606.18377
+  kind: paper
+- title: Holistic Configuration Management at Facebook
+  year: 2015
+  tier: III
+  url: https://sigops.org/s/conferences/sosp/2015/current/2015-Monterey/printable/008-tang.pdf
+  kind: paper
+- title: Netflix Kayenta
+  url: https://github.com/spinnaker/kayenta
+  kind: tool
+- title: Kayenta
+  kind: tool
+  url: ''
+  description: Netflix's automated canary analysis
+- title: Argo Rollouts
+  kind: tool
+  url: ''
+  description: Kubernetes progressive delivery
+- title: Flagger
+  kind: tool
+  url: ''
+  description: Kubernetes progressive delivery and canary
 ---
 
 Does the new version behave differently from the old version? A sensor of
@@ -44,16 +71,3 @@ version and compares its behavior to the old. If error rates, latency, or
 Canary analysis can only detect differences in metrics you're measuring.
 Unknown unknowns require [high-cardinality events](observability-events.html)
 to investigate after the fact.
-
-## Tooling
-
-- Kayenta
-- Argo Rollouts
-- Flagger
-
-## References
-
-- Exploring Statistical Change Point Detection Techniques for Performance Anomaly Detection at Mozilla (2026, tier I) — https://arxiv.org/abs/2606.18377
-- Holistic Configuration Management at Facebook (2015, tier III) — https://sigops.org/s/conferences/sosp/2015/current/2015-Monterey/printable/008-tang.pdf
-
-- Netflix Kayenta: https://github.com/spinnaker/kayenta

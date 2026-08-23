@@ -2,7 +2,7 @@
 id: SO-003
 title: Mutation Testing
 family: test-effectiveness
-family_num: 03
+family_num: 3
 oracle: high
 independence: medium
 scope: function
@@ -11,16 +11,47 @@ actionability: guiding
 type: adversarial
 stack_level: mutation-testing
 categories:
-  - Test Effectiveness
-  - Adversarial
-  - Test Sensitivity
-  - Guiding Sensors
+- Test Effectiveness
+- Adversarial
+- Test Sensitivity
+- Guiding Sensors
 see_also:
-  - SO-003b
-  - behavioral-family
-  - SO-005
-  - SO-005b
+- SO-003b
+- behavioral-family
+- SO-005
+- SO-005b
 last_reviewed: 2026-08-23
+references:
+- title: Coverage Is Not Strongly Correlated with Test Suite Effectiveness
+  year: 2014
+  tier: I
+  url: https://www.cs.ubc.ca/~rtholmes/papers/icse_2014.pdf
+  kind: paper
+- title: Are Mutants a Valid Substitute for Real Faults in Software Testing?
+  year: 2014
+  tier: I
+  url: https://homes.cs.washington.edu/~rjust/publ/mutants_real_faults_fse_2014.pdf
+  kind: paper
+- authors: Jia & Harman
+  title: An Analysis and Survey of the Development of Mutation Testing
+  year: 2011
+  kind: paper
+- title: Stryker
+  url: https://stryker-mutator.io
+  kind: tool
+  description: Mutation testing for JavaScript/TypeScript
+- title: mutmut
+  kind: tool
+  url: ''
+  description: Mutation testing for Python
+- title: PIT
+  kind: tool
+  url: ''
+  description: Mutation testing for Java/JVM
+- title: cargo-mutants
+  kind: tool
+  url: ''
+  description: Mutation testing for Rust
 ---
 
 Take `if user.is_admin: allow()` and mutate it to
@@ -89,18 +120,3 @@ their operators define — operator-level mutators miss whole classes of bugs
 exist but doesn't). A surviving-mutation rate of 0% doesn't mean the tests
 would catch every wrong implementation, only every wrong implementation the
 tool's operators can produce.
-
-## Tooling
-
-- Stryker
-- mutmut
-- PIT
-- cargo-mutants
-
-## References
-
-- Coverage Is Not Strongly Correlated with Test Suite Effectiveness (2014, tier I) — https://www.cs.ubc.ca/~rtholmes/papers/icse_2014.pdf
-- Are Mutants a Valid Substitute for Real Faults in Software Testing? (2014, tier I) — https://homes.cs.washington.edu/~rjust/publ/mutants_real_faults_fse_2014.pdf
-
-- Jia & Harman, 'An Analysis and Survey of the Development of Mutation Testing' (2011)
-- Stryker: https://stryker-mutator.io

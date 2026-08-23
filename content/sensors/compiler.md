@@ -2,7 +2,7 @@
 id: SO-001b
 title: Compiler
 family: structural
-family_num: "01"
+family_num: '01'
 oracle: maximum
 independence: maximum
 scope: module
@@ -11,14 +11,33 @@ actionability: guiding
 type: predictive
 stack_level: compilation
 categories:
-  - Structural
-  - Syntactic Validity
-  - Maximum Oracle
+- Structural
+- Syntactic Validity
+- Maximum Oracle
 see_also:
-  - SO-001
-  - SO-001c
-  - SO-001d
+- SO-001
+- SO-001c
+- SO-001d
 last_reviewed: 2026-08-23
+references:
+- title: 'Aho et al., ''Compilers: Principles, Techniques, and Tools'''
+  kind: other
+- title: GCC
+  kind: tool
+  url: ''
+  description: GNU Compiler Collection
+- title: Clang
+  kind: tool
+  url: ''
+  description: LLVM C/C++/ObjC compiler
+- title: rustc
+  kind: tool
+  url: ''
+  description: The Rust compiler
+- title: tsc
+  kind: tool
+  url: ''
+  description: TypeScript compiler with type checking
 ---
 
 The cheapest and most certain sensor. Is this thing even a valid inhabitant
@@ -46,14 +65,3 @@ A compiler cannot detect [logical errors](mutation-testing.html) — a function
 that compiles perfectly but returns the wrong answer. It also cannot detect
 [architectural problems](catalog.html#architecture) or [runtime
 behavior](observability-events.html).
-
-## Tooling
-
-- GCC
-- Clang
-- rustc
-- tsc
-
-## References
-
-- Aho et al., 'Compilers: Principles, Techniques, and Tools'

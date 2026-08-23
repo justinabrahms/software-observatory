@@ -2,7 +2,7 @@
 id: SO-009d
 title: Time-to-Repair
 family: evolution
-family_num: "09"
+family_num: 09
 oracle: medium
 independence: high
 scope: module
@@ -11,14 +11,30 @@ actionability: exploratory
 type: retrospective
 stack_level: user-outcome
 categories:
-  - Evolution
-  - Maintainability
-  - Black-Box Sensors
+- Evolution
+- Maintainability
+- Black-Box Sensors
 see_also:
-  - SO-009
-  - SO-009b
-  - SO-009c
+- SO-009
+- SO-009b
+- SO-009c
 last_reviewed: 2026-08-23
+references:
+- title: DORA
+  url: https://dora.dev
+  kind: tool
+- title: Jira
+  kind: tool
+  url: ''
+  description: Project and issue tracking
+- title: Linear
+  kind: tool
+  url: ''
+  description: Issue tracking for product teams
+- title: incident.io
+  kind: tool
+  url: ''
+  description: Incident management and response platform
 ---
 
 When this component breaks, how long does it take to restore? A sensor of
@@ -45,13 +61,3 @@ difficult.
 Time-to-repair conflates code difficulty with operational factors (on-call
 response time, deployment latency, test suite duration). A long repair time
 may not reflect code quality at all.
-
-## Tooling
-
-- Jira
-- Linear
-- incident.io
-
-## References
-
-- DORA: https://dora.dev

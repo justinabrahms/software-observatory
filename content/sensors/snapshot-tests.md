@@ -2,7 +2,7 @@
 id: SO-002d
 title: Snapshot Tests
 family: behavioral
-family_num: "02"
+family_num: '02'
 oracle: medium
 independence: low
 scope: function
@@ -11,13 +11,26 @@ actionability: guiding
 type: predictive
 stack_level: behavioral-tests
 categories:
-  - Behavioral
-  - Drift Detection
+- Behavioral
+- Drift Detection
 see_also:
-  - SO-002b
-  - SO-002c
-  - SO-003
+- SO-002b
+- SO-002c
+- SO-003
 last_reviewed: 2026-08-23
+references:
+- title: Jest snapshot
+  kind: tool
+  url: ''
+  description: Snapshot testing for JavaScript
+- title: Vitest
+  kind: tool
+  url: ''
+  description: Vite-native testing framework with snapshots
+- title: instanbul
+  kind: tool
+  url: ''
+  description: JavaScript code coverage
 ---
 
 Did observable output change? Not "is it correct" but "did it change" — a
@@ -44,13 +57,3 @@ without intention.
 Snapshot tests can't tell you whether the *original* snapshot was correct.
 They only detect *change*, not *correctness*. Also prone to "approve all"
 fatigue when outputs are large.
-
-## Tooling
-
-- Jest snapshot
-- Vitest
-- instanbul
-
-## References
-
-- https://jestjs.io/docs/snapshot-testing

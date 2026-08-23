@@ -2,7 +2,7 @@
 id: SO-006d
 title: Resource Telemetry
 family: runtime
-family_num: "06"
+family_num: '06'
 oracle: low
 independence: high
 scope: system
@@ -11,13 +11,30 @@ actionability: exploratory
 type: retrospective
 stack_level: production-behavior
 categories:
-  - Runtime
-  - Monitoring
+- Runtime
+- Monitoring
 see_also:
-  - SO-006
-  - SO-006b
-  - SO-006c
+- SO-006
+- SO-006b
+- SO-006c
 last_reviewed: 2026-08-23
+references:
+- title: Prometheus
+  url: https://prometheus.io
+  kind: tool
+  description: Metrics collection and alerting
+- title: Datadog
+  kind: tool
+  url: ''
+  description: Cloud monitoring and observability
+- title: Grafana
+  kind: tool
+  url: ''
+  description: Metrics visualization and dashboards
+- title: CloudWatch
+  kind: tool
+  url: ''
+  description: AWS monitoring and metrics
 ---
 
 CPU, memory, IO, network, GC, queues. Traditional monitoring — useful but
@@ -46,14 +63,3 @@ Resource telemetry cannot tell you *why* resources are consumed or *which*
 requests are responsible. It shows aggregate state, not per-execution
 reality. This is why [observability events](observability-events.html) are a
 strictly richer sensor.
-
-## Tooling
-
-- Prometheus
-- Datadog
-- Grafana
-- CloudWatch
-
-## References
-
-- Prometheus: https://prometheus.io

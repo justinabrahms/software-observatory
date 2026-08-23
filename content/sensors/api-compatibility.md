@@ -2,7 +2,7 @@
 id: SO-007c
 title: API Compatibility
 family: change
-family_num: "07"
+family_num: '07'
 oracle: high
 independence: high
 scope: service
@@ -11,13 +11,42 @@ actionability: guiding
 type: predictive
 stack_level: integration-tests
 categories:
-  - Change
-  - Boundary Assumptions
+- Change
+- Boundary Assumptions
 see_also:
-  - SO-002
-  - SO-007
-  - SO-007d
+- SO-002
+- SO-007
+- SO-007d
 last_reviewed: 2026-08-23
+references:
+- title: 'I Depended on You and You Broke Me: An Empirical Study of Manifesting Breaking
+    Changes in Client Packages'
+  year: 2023
+  tier: II
+  url: https://arxiv.org/abs/2301.04563
+  kind: paper
+- title: Breaking Bad? Semantic Versioning and Impact of Breaking Changes in Maven
+    Central
+  year: 2022
+  tier: II
+  url: https://arxiv.org/abs/2110.07889
+  kind: paper
+- title: revapi
+  url: https://revapi.org
+  kind: tool
+  description: API compatibility checking for JVM
+- title: Akka
+  kind: tool
+  url: ''
+  description: Actor framework for JVM concurrency
+- title: grpcurl
+  kind: tool
+  url: ''
+  description: gRPC command-line client
+- title: openapi-diff
+  kind: tool
+  url: ''
+  description: OpenAPI spec diff tool
 ---
 
 Did externally observable contracts change? A sensor of *boundary stability*
@@ -44,17 +73,3 @@ between versions."
 API compatibility checks the *shape* of the interface, not the
 *behavioral meaning*. A response with the same fields and types but
 different semantics will pass compatibility checks.
-
-## Tooling
-
-- Akka
-- grpcurl
-- openapi-diff
-- revapi
-
-## References
-
-- I Depended on You and You Broke Me: An Empirical Study of Manifesting Breaking Changes in Client Packages (2023, tier II) — https://arxiv.org/abs/2301.04563
-- Breaking Bad? Semantic Versioning and Impact of Breaking Changes in Maven Central (2022, tier II) — https://arxiv.org/abs/2110.07889
-
-- revapi: https://revapi.org

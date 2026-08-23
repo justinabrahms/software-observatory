@@ -2,7 +2,7 @@
 id: SO-005b
 title: Metamorphic Testing
 family: adversarial
-family_num: 05
+family_num: 5
 oracle: high
 independence: high
 scope: function
@@ -11,16 +11,42 @@ actionability: guiding
 type: adversarial
 stack_level: property-metamorphic
 categories:
-  - Adversarial
-  - Oracle-Free
-  - Metamorphic Relations
-  - Guiding Sensors
+- Adversarial
+- Oracle-Free
+- Metamorphic Relations
+- Guiding Sensors
 see_also:
-  - SO-005
-  - SO-003
-  - adversarial
-  - invariants
+- SO-005
+- SO-003
+- adversarial
+- invariants
 last_reviewed: 2026-08-23
+references:
+- title: An Empirical Evaluation of Property-Based Testing in Python
+  year: 2025
+  tier: I
+  url: https://cseweb.ucsd.edu/~mcoblenz/assets/pdf/OOPSLA_2025_PBT.pdf
+  kind: paper
+- authors: Chen et al.
+  title: 'Metamorphic Testing: A New Approach for Generating Next Test Cases'
+  year: 1998
+  kind: paper
+- title: Hypothesis
+  url: https://hypothesis.readthedocs.io
+  kind: tool
+  description: Property-based testing for Python
+- title: QuickCheck
+  kind: tool
+  url: ''
+  description: Property-based testing for Haskell
+- title: fast-check
+  kind: tool
+  url: ''
+  description: Property-based testing for TypeScript
+- title: test.check
+  kind: tool
+  url: ''
+  description: Property-based testing for Clojure
 ---
 
 You don't know the answer, but you know *how the answer should change*. This
@@ -69,17 +95,3 @@ Metamorphic testing can only check relations you *know*. If a function has
 no obvious metamorphic relations, this sensor has nothing to test. It also
 cannot detect [missing behavior](mutation-testing.html) — if a feature is
 absent, there's no function to check relations on.
-
-## Tooling
-
-- Hypothesis
-- QuickCheck
-- fast-check
-- test.check
-
-## References
-
-- An Empirical Evaluation of Property-Based Testing in Python (2025, tier I) — https://cseweb.ucsd.edu/~mcoblenz/assets/pdf/OOPSLA_2025_PBT.pdf
-
-- Chen et al., 'Metamorphic Testing: A New Approach for Generating Next Test Cases' (1998)
-- Hypothesis: https://hypothesis.readthedocs.io

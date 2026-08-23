@@ -2,7 +2,7 @@
 id: SO-008b
 title: Architecture Fitness Functions
 family: architecture
-family_num: "08"
+family_num: 08
 oracle: high
 independence: high
 scope: system
@@ -11,14 +11,27 @@ actionability: guiding
 type: predictive
 stack_level: static-analysis
 categories:
-  - Architecture
-  - Boundary Sensors
-  - Guiding Sensors
+- Architecture
+- Boundary Sensors
+- Guiding Sensors
 see_also:
-  - SO-008
-  - SO-008c
-  - SO-008d
+- SO-008
+- SO-008c
+- SO-008d
 last_reviewed: 2026-08-23
+references:
+- title: ArchUnit
+  url: https://www.archunit.org
+  kind: tool
+  description: Architecture testing for Java
+- title: NetArchTest
+  kind: tool
+  url: ''
+  description: .NET architecture rules testing
+- title: dependency-cruiser
+  kind: tool
+  url: ''
+  description: JavaScript/TypeScript dependency analysis
 ---
 
 `frontend -> application -> domain -> infrastructure`, and fail if `domain
@@ -45,13 +58,3 @@ dependency forming. They turn architectural rules from prose into
 
 Fitness functions only check rules you've *codified*. Implicit architectural
 rules that haven't been expressed as functions are invisible to this sensor.
-
-## Tooling
-
-- ArchUnit
-- NetArchTest
-- dependency-cruiser
-
-## References
-
-- ArchUnit: https://www.archunit.org

@@ -2,7 +2,7 @@
 id: SO-001
 title: Type Checker
 family: structural
-family_num: 01
+family_num: 1
 oracle: maximum
 independence: maximum
 scope: module
@@ -11,16 +11,43 @@ actionability: guiding
 type: predictive
 stack_level: static-analysis
 categories:
-  - Structural
-  - Syntactic Validity
-  - Guiding Sensors
-  - Maximum Oracle
+- Structural
+- Syntactic Validity
+- Guiding Sensors
+- Maximum Oracle
 see_also:
-  - SO-003
-  - SO-001b
-  - SO-004
-  - atlas
+- SO-003
+- SO-001b
+- SO-004
+- atlas
 last_reviewed: 2026-08-23
+references:
+- title: 'To Type or Not to Type: Quantifying Detectable Bugs in JavaScript'
+  year: 2017
+  tier: I
+  url: https://www.microsoft.com/en-us/research/wp-content/uploads/2017/09/gao2017javascript.pdf
+  kind: paper
+- title: Eliminating Memory Safety Vulnerabilities at the Source
+  year: 2024
+  tier: II
+  url: https://security.googleblog.com/2024/09/eliminating-memory-safety-vulnerabilities-Android.html
+  kind: paper
+- authors: Luca Cardelli
+  title: Type Systems
+  year: 2004
+  kind: paper
+- title: Rust compiler
+  kind: tool
+  url: ''
+- title: TypeScript
+  kind: tool
+  url: ''
+- title: Mypy
+  kind: tool
+  url: ''
+- title: pyright
+  kind: tool
+  url: ''
 ---
 
 A Rust compiler saying `expected Option<Foo>, found Foo` is vastly more useful
@@ -68,18 +95,3 @@ Types measure a particular class of *structural inconsistency*. They cannot
 detect *logical errors* — a function that type-checks perfectly but returns
 the wrong answer. They cannot detect *runtime behavior*. They cannot tell
 you whether the system produces the *intended result for users*.
-
-## Tooling
-
-- Rust compiler
-- TypeScript
-- Mypy
-- pyright
-
-## References
-
-- To Type or Not to Type: Quantifying Detectable Bugs in JavaScript (2017, tier I) — https://www.microsoft.com/en-us/research/wp-content/uploads/2017/09/gao2017javascript.pdf
-- Eliminating Memory Safety Vulnerabilities at the Source (2024, tier II) — https://security.googleblog.com/2024/09/eliminating-memory-safety-vulnerabilities-Android.html
-
-- Luca Cardelli, 'Type Systems' (2004)
-- https://en.wikipedia.org/wiki/Type_system

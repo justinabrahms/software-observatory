@@ -2,7 +2,7 @@
 id: SO-009
 title: Revert Rate
 family: evolution
-family_num: "09"
+family_num: 09
 oracle: medium
 independence: high
 scope: module
@@ -11,14 +11,27 @@ actionability: exploratory
 type: retrospective
 stack_level: user-outcome
 categories:
-  - Evolution
-  - Black-Box Sensors
-  - Maintainability
+- Evolution
+- Black-Box Sensors
+- Maintainability
 see_also:
-  - SO-009b
-  - SO-009c
-  - SO-009d
+- SO-009b
+- SO-009c
+- SO-009d
 last_reviewed: 2026-08-23
+references:
+- title: git log
+  kind: tool
+  url: ''
+  description: Git commit history
+- title: git-quick-stats
+  kind: tool
+  url: ''
+  description: Git history analysis script
+- title: CodeScene
+  kind: tool
+  url: ''
+  description: Code analysis predicting technical debt from behavioral code
 ---
 
 How often does this area get reverted? A *black-box sensor* of
@@ -47,13 +60,3 @@ or misunderstood requirements.
 Revert rate can't tell you *why* changes are reverted. It identifies
 where attention is needed, not what the fix is. Also misses problems that
 were fixed forward rather than reverted.
-
-## Tooling
-
-- git log
-- git-quick-stats
-- CodeScene
-
-## References
-
-- https://github.com/erikbern/git-quick-stats

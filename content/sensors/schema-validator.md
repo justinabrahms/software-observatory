@@ -2,7 +2,7 @@
 id: SO-001d
 title: Schema Validator
 family: structural
-family_num: "01"
+family_num: '01'
 oracle: high
 independence: high
 scope: service
@@ -11,14 +11,47 @@ actionability: guiding
 type: predictive
 stack_level: static-analysis
 categories:
-  - Structural
-  - Boundary Assumptions
-  - Guiding Sensors
+- Structural
+- Boundary Assumptions
+- Guiding Sensors
 see_also:
-  - SO-001
-  - SO-001c
-  - SO-002
+- SO-001
+- SO-001c
+- SO-002
 last_reviewed: 2026-08-23
+references:
+- title: 'Detecting Data Errors: Where are we and what needs to be done?'
+  year: 2016
+  tier: I
+  url: https://www.vldb.org/pvldb/vol9/p993-abedjan.pdf
+  kind: paper
+- title: 'Failing Loudly: An Empirical Study of Methods for Detecting Dataset Shift'
+  year: 2019
+  tier: I
+  url: https://arxiv.org/pdf/1810.11953
+  kind: paper
+- title: OpenAPI Specification
+  url: https://spec.openapis.org
+  kind: tool
+- title: Kubernetes Admission Controllers
+  url: https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/
+  kind: tool
+- title: OpenAPI Validator
+  kind: tool
+  url: ''
+  description: Validate APIs against OpenAPI specs
+- title: Terraform plan
+  kind: tool
+  url: ''
+  description: Infrastructure-as-code plan preview
+- title: kubectl admission
+  kind: tool
+  url: ''
+  description: Kubernetes admission controllers
+- title: sqlfluff
+  kind: tool
+  url: ''
+  description: SQL linter and formatter
 ---
 
 Structural coherence at the boundary of the system. OpenAPI/GraphQL schema
@@ -46,18 +79,3 @@ the contract? Does this infrastructure definition resolve?
 Schema validation cannot detect whether a valid request produces the
 correct [behavioral result](catalog.html#behavioral). It checks shape, not
 meaning.
-
-## Tooling
-
-- OpenAPI Validator
-- Terraform plan
-- kubectl admission
-- sqlfluff
-
-## References
-
-- Detecting Data Errors: Where are we and what needs to be done? (2016, tier I) — https://www.vldb.org/pvldb/vol9/p993-abedjan.pdf
-- Failing Loudly: An Empirical Study of Methods for Detecting Dataset Shift (2019, tier I) — https://arxiv.org/pdf/1810.11953
-
-- OpenAPI Specification: https://spec.openapis.org
-- Kubernetes Admission Controllers: https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/

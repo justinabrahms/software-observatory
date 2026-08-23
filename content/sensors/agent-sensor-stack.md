@@ -2,7 +2,7 @@
 id: SO-011
 title: Agent Sensor Stack
 family: ai-sensors
-family_num: "11"
+family_num: '11'
 oracle: high
 independence: high
 scope: system
@@ -11,14 +11,26 @@ actionability: guiding
 type: predictive
 stack_level: canary-shadow
 categories:
-  - AI-Generated
-  - Agent Safety
+- AI-Generated
+- Agent Safety
 see_also:
-  - SO-001
-  - SO-003
-  - SO-006
-  - SO-007
+- SO-001
+- SO-003
+- SO-006
+- SO-007
 last_reviewed: 2026-08-23
+references:
+- title: 'Gender Shades: Intersectional Accuracy Disparities in Commercial Gender
+    Classification'
+  year: 2018
+  tier: I
+  url: http://proceedings.mlr.press/v81/buolamwini18a/buolamwini18a.pdf
+  kind: paper
+- title: 'Failing Loudly: An Empirical Study of Methods for Detecting Dataset Shift'
+  year: 2019
+  tier: I
+  url: https://arxiv.org/pdf/1810.11953
+  kind: paper
 ---
 
 An agent should be surrounded by sensors. And crucially: the agent doesn't
@@ -72,8 +84,3 @@ it reaches production. The key principle is that the agent cannot self-certify
 The stack is only as strong as its weakest layer. If the agent writes the
 tests (low independence), the test layer provides no real signal. See
 [producer-evaluator separation](producer-evaluator-separation.html).
-
-## References
-
-- Gender Shades: Intersectional Accuracy Disparities in Commercial Gender Classification (2018, tier I) — http://proceedings.mlr.press/v81/buolamwini18a/buolamwini18a.pdf
-- Failing Loudly: An Empirical Study of Methods for Detecting Dataset Shift (2019, tier I) — https://arxiv.org/pdf/1810.11953

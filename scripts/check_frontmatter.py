@@ -150,6 +150,25 @@ def main():
         if sid and see_also and sid in see_also:
             errors.append(f"{loc}: see_also references its own id '{sid}' (self-loop)")
 
+        references = meta.get("references", []) or []
+        if not isinstance(references, list):
+            errors.append(f"{loc}: references must be a list, got {type(references).__name__}")
+        else:
+            VALID_KINDS = {"paper", "tool", "blog", "spec", "book", "other"}
+            VALID_TIERS = {"I", "II", "III", "IV"}
+            for i, ref in enumerate(references):
+                if not isinstance(ref, dict):
+                    errors.append(f"{loc}: references[{i}] must be a dict, got {type(ref).__name__}")
+                    continue
+                if not ref.get("title"):
+                    errors.append(f"{loc}: references[{i}] missing 'title'")
+                kind = ref.get("kind", "")
+                if kind and kind not in VALID_KINDS:
+                    errors.append(f"{loc}: references[{i}] kind '{kind}' not in {sorted(VALID_KINDS)}")
+                tier = ref.get("tier", "")
+                if tier and tier not in VALID_TIERS:
+                    errors.append(f"{loc}: references[{i}] tier '{tier}' not in {sorted(VALID_TIERS)}")
+
     if errors:
         print(f"{len(errors)} frontmatter error(s) found:")
         for e in errors:

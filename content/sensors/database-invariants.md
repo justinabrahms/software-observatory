@@ -2,7 +2,7 @@
 id: SO-004b
 title: Database Invariants
 family: invariants
-family_num: "04"
+family_num: '04'
 oracle: high
 independence: high
 scope: system
@@ -11,14 +11,41 @@ actionability: guiding
 type: retrospective
 stack_level: production-behavior
 categories:
-  - Invariants
-  - Referential Integrity
-  - Runtime Sensors
+- Invariants
+- Referential Integrity
+- Runtime Sensors
 see_also:
-  - SO-004
-  - SO-004c
-  - SO-006
+- SO-004
+- SO-004c
+- SO-006
 last_reviewed: 2026-08-23
+references:
+- title: 'Detecting Data Errors: Where are we and what needs to be done?'
+  year: 2016
+  tier: I
+  url: https://www.vldb.org/pvldb/vol9/p993-abedjan.pdf
+  kind: paper
+- title: 'Jepsen: MongoDB 4.2.6'
+  year: 2020
+  tier: II
+  url: https://jepsen.io/analyses/mongodb-4.2.6
+  kind: paper
+- title: DB constraints
+  kind: tool
+  url: ''
+  description: Database-level CHECK/FOREIGN KEY constraints
+- title: CHECK constraints
+  kind: tool
+  url: ''
+  description: SQL CHECK constraints
+- title: foreign keys
+  kind: tool
+  url: ''
+  description: Database referential integrity constraints
+- title: pg_constraint
+  kind: tool
+  url: ''
+  description: PostgreSQL constraint catalog
 ---
 
 Every foreign key refers to an existing object. Every request has exactly
@@ -47,17 +74,3 @@ Only properties expressible as database constraints. Business rules
 ("a successful payment implies an order eventually becomes paid") require
 [runtime invariants](runtime-invariants.html) checked against [event
 streams](observability-events.html).
-
-## Tooling
-
-- DB constraints
-- CHECK constraints
-- foreign keys
-- pg_constraint
-
-## References
-
-- Detecting Data Errors: Where are we and what needs to be done? (2016, tier I) — https://www.vldb.org/pvldb/vol9/p993-abedjan.pdf
-- Jepsen: MongoDB 4.2.6 (2020, tier II) — https://jepsen.io/analyses/mongodb-4.2.6
-
-- https://www.postgresql.org/docs/current/ddl-constraints.html

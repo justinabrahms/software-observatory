@@ -2,7 +2,7 @@
 id: SO-008
 title: Dependency Graph
 family: architecture
-family_num: "08"
+family_num: 08
 oracle: low
 independence: high
 scope: system
@@ -11,14 +11,41 @@ actionability: exploratory
 type: predictive
 stack_level: static-analysis
 categories:
-  - Architecture
-  - Coupling
-  - Dependency Analysis
+- Architecture
+- Coupling
+- Dependency Analysis
 see_also:
-  - SO-008b
-  - SO-008c
-  - SO-008d
+- SO-008b
+- SO-008c
+- SO-008d
 last_reviewed: 2026-08-23
+references:
+- title: A Novel Approach for Estimating Truck Factors
+  year: 2016
+  tier: II
+  url: https://arxiv.org/pdf/1604.06766
+  kind: paper
+- title: Do Developers Update Their Library Dependencies?
+  year: 2017
+  tier: II
+  url: https://arxiv.org/abs/1709.04621
+  kind: paper
+- title: dependency-cruiser
+  url: https://github.com/sverweij/dependency-cruiser
+  kind: tool
+  description: JavaScript/TypeScript dependency analysis
+- title: import-linter
+  kind: tool
+  url: ''
+  description: Python import linting and boundary enforcement
+- title: madge
+  kind: tool
+  url: ''
+  description: JavaScript dependency graph and circular dependency detection
+- title: dependency-graph
+  kind: tool
+  url: ''
+  description: Gradle dependency graph plugin
 ---
 
 Fan-in, fan-out, cycles, dependency depth, unstable dependencies. A sensor
@@ -45,17 +72,3 @@ risk factors.
 The dependency graph shows structural coupling, not *behavioral* coupling —
 modules that change together for reasons the graph can't see. That requires
 [change coupling](catalog.html#evolution) analysis.
-
-## Tooling
-
-- dependency-cruiser
-- import-linter
-- madge
-- dependency-graph
-
-## References
-
-- A Novel Approach for Estimating Truck Factors (2016, tier II) — https://arxiv.org/pdf/1604.06766
-- Do Developers Update Their Library Dependencies? (2017, tier II) — https://arxiv.org/abs/1709.04621
-
-- dependency-cruiser: https://github.com/sverweij/dependency-cruiser

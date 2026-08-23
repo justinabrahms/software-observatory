@@ -2,7 +2,7 @@
 id: SO-004
 title: Runtime Invariants
 family: invariants
-family_num: 04
+family_num: 4
 oracle: high
 independence: high
 scope: system
@@ -11,16 +11,43 @@ actionability: guiding
 type: retrospective
 stack_level: production-behavior
 categories:
-  - Invariants
-  - Domain Correctness
-  - Runtime Sensors
-  - Black-Box Sensors
+- Invariants
+- Domain Correctness
+- Runtime Sensors
+- Black-Box Sensors
 see_also:
-  - SO-001
-  - SO-006
-  - adversarial
-  - behavioral-family
+- SO-001
+- SO-006
+- adversarial
+- behavioral-family
 last_reviewed: 2026-08-23
+references:
+- title: 'Detecting Data Errors: Where are we and what needs to be done?'
+  year: 2016
+  tier: I
+  url: https://www.vldb.org/pvldb/vol9/p993-abedjan.pdf
+  kind: paper
+- title: 'AddressSanitizer: A Fast Address Sanity Checker'
+  year: 2012
+  tier: III
+  url: https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/37752.pdf
+  kind: paper
+- authors: Hoare
+  title: An Axiomatic Basis for Computer Programming
+  year: 1969
+  kind: paper
+- title: assertpy
+  kind: tool
+  url: ''
+  description: Python fluent assertion library
+- title: pytest-check
+  kind: tool
+  url: ''
+  description: Non-blocking assertions for pytest
+- title: Hypothesis invariants
+  kind: tool
+  url: ''
+  description: Using Hypothesis for invariant checking
 ---
 
 You don't need to know how the payment service works. You can observe:
@@ -68,16 +95,3 @@ Runtime invariants can only check properties you *thought to specify*. They
 don't find unknown unknowns — that's what [observability
 events](observability-events.html) are for. They also can't tell you *why*
 an invariant was violated, only that it was.
-
-## Tooling
-
-- assertpy
-- pytest-check
-- Hypothesis invariants
-
-## References
-
-- Detecting Data Errors: Where are we and what needs to be done? (2016, tier I) — https://www.vldb.org/pvldb/vol9/p993-abedjan.pdf
-- AddressSanitizer: A Fast Address Sanity Checker (2012, tier III) — https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/37752.pdf
-
-- Hoare, 'An Axiomatic Basis for Computer Programming' (1969)

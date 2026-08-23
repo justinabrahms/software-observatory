@@ -2,7 +2,7 @@
 id: SO-002b
 title: Example-Based Tests
 family: behavioral
-family_num: "02"
+family_num: '02'
 oracle: high
 independence: low
 scope: function
@@ -11,13 +11,45 @@ actionability: guiding
 type: predictive
 stack_level: behavioral-tests
 categories:
-  - Behavioral
-  - Guiding Sensors
+- Behavioral
+- Guiding Sensors
 see_also:
-  - SO-002c
-  - SO-002d
-  - SO-003
+- SO-002c
+- SO-002d
+- SO-003
 last_reviewed: 2026-08-23
+references:
+- title: Techniques for Improving Regression Testing in Continuous Integration Development
+    Environments
+  year: 2014
+  tier: I
+  url: https://cs.uwaterloo.ca/~m2nagapp/courses/CS846/1171/papers/elbaum_fse14.pdf
+  kind: paper
+- title: On the Effectiveness of the Test-First Approach to Programming
+  year: 2005
+  tier: I
+  url: https://www.cs.unm.edu/~joel/cs351/paper/IEEE-Effectiveness_of_Test-First_Approach_to_Programming.pdf
+  kind: paper
+- authors: Beizer
+  title: Software Testing Techniques
+  year: 1990
+  kind: paper
+- title: pytest
+  kind: tool
+  url: ''
+  description: Python testing framework
+- title: Jest
+  kind: tool
+  url: ''
+  description: JavaScript testing framework
+- title: JUnit
+  kind: tool
+  url: ''
+  description: Java testing framework
+- title: Go testing
+  kind: tool
+  url: ''
+  description: Go's built-in testing package
 ---
 
 Given X, expect Y. The fundamental behavioral sensor.
@@ -48,17 +80,3 @@ the author thought to test. [Mutation testing](mutation-testing.html) and
 Missing behavior, untested edge cases, and [integration
 failures](contract-tests.html) that emerge only when components are
 connected.
-
-## Tooling
-
-- pytest
-- Jest
-- JUnit
-- Go testing
-
-## References
-
-- Techniques for Improving Regression Testing in Continuous Integration Development Environments (2014, tier I) — https://cs.uwaterloo.ca/~m2nagapp/courses/CS846/1171/papers/elbaum_fse14.pdf
-- On the Effectiveness of the Test-First Approach to Programming (2005, tier I) — https://www.cs.unm.edu/~joel/cs351/paper/IEEE-Effectiveness_of_Test-First_Approach_to_Programming.pdf
-
-- Beizer, 'Software Testing Techniques' (1990)

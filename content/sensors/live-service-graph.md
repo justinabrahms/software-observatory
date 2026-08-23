@@ -2,7 +2,7 @@
 id: SO-015c
 title: Live Service Graph Discovery
 family: architecture
-family_num: "08"
+family_num: 08
 oracle: high
 independence: high
 scope: system
@@ -11,13 +11,30 @@ actionability: guiding
 type: retrospective
 stack_level: production-behavior
 categories:
-  - Architecture
-  - Production
+- Architecture
+- Production
 see_also:
-  - SO-008b
-  - SO-006c
-  - SO-006
+- SO-008b
+- SO-006c
+- SO-006
 last_reviewed: 2026-08-23
+references:
+- title: Istio
+  url: https://istio.io
+  kind: tool
+  description: Service mesh with traffic management and observability
+- title: Linkerd
+  kind: tool
+  url: ''
+  description: Lightweight Kubernetes service mesh
+- title: Kiali
+  kind: tool
+  url: ''
+  description: Service mesh observability for Istio
+- title: Hubble
+  kind: tool
+  url: ''
+  description: eBPF-based network observability for Kubernetes
 ---
 
 The declared architecture says service A never calls service C. The live
@@ -43,14 +60,3 @@ Edges that are legitimate but unwise, and edges that exist only under rare
 load patterns not yet observed. The discovered graph is a lower bound on the
 real one; [boundary sensors](boundary-sensors.html) enforce the upper bound
 at build time, and the two are strongest together.
-
-## Tooling
-
-- Istio
-- Linkerd
-- Kiali
-- Hubble
-
-## References
-
-- Istio: https://istio.io

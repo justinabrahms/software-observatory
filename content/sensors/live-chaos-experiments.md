@@ -2,7 +2,7 @@
 id: SO-014b
 title: Live Chaos Experiments
 family: adversarial
-family_num: "05"
+family_num: '05'
 oracle: high
 independence: maximum
 scope: system
@@ -11,13 +11,34 @@ actionability: guiding
 type: retrospective
 stack_level: production-behavior
 categories:
-  - Adversarial
-  - Resilience
+- Adversarial
+- Resilience
 see_also:
-  - SO-005c
-  - SO-006c
-  - SO-004b
+- SO-005c
+- SO-006c
+- SO-004b
 last_reviewed: 2026-08-23
+references:
+- title: Automating Chaos Experiments in Production
+  year: 2019
+  tier: IV
+  url: https://arxiv.org/abs/1905.04648
+  kind: paper
+- title: Chaos Engineering
+  url: https://principlesofchaos.org
+  kind: tool
+- title: Chaos Mesh
+  kind: tool
+  url: ''
+  description: Kubernetes chaos engineering platform
+- title: Gremlin
+  kind: tool
+  url: ''
+  description: Managed chaos engineering service
+- title: Litmus
+  kind: tool
+  url: ''
+  description: Cloud-native chaos engineering
 ---
 
 Fault injection against the running production system: kill a node, sever a
@@ -44,15 +65,3 @@ exceeds the experiment's safety limits. The most dangerous production
 conditions are precisely the ones a responsible chaos program refuses to
 create — those remain observable only through
 [incident correlation](incident-correlation.html) after nature provides them.
-
-## Tooling
-
-- Chaos Mesh
-- Gremlin
-- Litmus
-
-## References
-
-- Automating Chaos Experiments in Production (2019, tier IV) — https://arxiv.org/abs/1905.04648
-
-- Chaos Engineering: https://principlesofchaos.org

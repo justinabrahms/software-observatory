@@ -2,7 +2,7 @@
 id: SO-015b
 title: DORA Metrics
 family: evolution
-family_num: "09"
+family_num: 09
 oracle: medium
 independence: high
 scope: organization
@@ -11,13 +11,39 @@ actionability: guiding
 type: retrospective
 stack_level: canary-shadow
 categories:
-  - Evolution
-  - Delivery Performance
+- Evolution
+- Delivery Performance
 see_also:
-  - SO-009
-  - SO-009b
-  - SO-009d
+- SO-009
+- SO-009b
+- SO-009d
 last_reviewed: 2026-08-23
+references:
+- title: 'Accelerate: State of DevOps 2019'
+  year: 2019
+  tier: II
+  url: https://dora.dev/research/2019/dora-report/2019-dora-accelerate-state-of-devops-report.pdf
+  kind: paper
+- title: 2017 State of DevOps Report
+  year: 2017
+  tier: II
+  url: https://dora.dev/research/2017/2017-state-of-devops-report.pdf
+  kind: paper
+- title: DORA
+  url: https://dora.dev
+  kind: tool
+- authors: Forsgren et al.
+  title: Accelerate
+  year: 2018
+  kind: paper
+- title: DORA survey
+  kind: tool
+  url: ''
+  description: DORA research assessment survey
+- title: DevOps Research Assessment
+  kind: tool
+  url: ''
+  description: DORA's four-metric assessment tool
 ---
 
 Deployment frequency, lead time for changes, change failure rate,
@@ -46,16 +72,3 @@ stage; understanding it requires [decision provenance](decision-provenance.html)
 and [incident correlation](incident-correlation.html). And like all metrics
 that become targets, they invite gaming — deployment frequency can be raised
 by shipping trivia.
-
-## Tooling
-
-- DORA survey
-- DevOps Research Assessment
-
-## References
-
-- Accelerate: State of DevOps 2019 (2019, tier II) — https://dora.dev/research/2019/dora-report/2019-dora-accelerate-state-of-devops-report.pdf
-- 2017 State of DevOps Report (2017, tier II) — https://dora.dev/research/2017/2017-state-of-devops-report.pdf
-
-- DORA: https://dora.dev
-- Forsgren et al., 'Accelerate' (2018)

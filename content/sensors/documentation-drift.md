@@ -2,7 +2,7 @@
 id: SO-010b
 title: Documentation Drift
 family: comprehension
-family_num: "10"
+family_num: '10'
 oracle: low
 independence: high
 scope: module
@@ -11,13 +11,35 @@ actionability: exploratory
 type: retrospective
 stack_level: static-analysis
 categories:
-  - Comprehension
-  - Documentation
+- Comprehension
+- Documentation
 see_also:
-  - SO-010
-  - SO-010c
-  - SO-010d
+- SO-010
+- SO-010c
+- SO-010d
 last_reviewed: 2026-08-23
+references:
+- title: 'A First Look at the Deprecation of RESTful APIs: An Empirical Study'
+  year: 2020
+  tier: II
+  url: https://arxiv.org/abs/2008.12808
+  kind: paper
+- title: doctest
+  kind: tool
+  url: ''
+  description: Python doctest module
+- title: rustdoc
+  kind: tool
+  url: ''
+  description: Rust documentation generator with doc tests
+- title: TypeDoc
+  kind: tool
+  url: ''
+  description: TypeScript API documentation generator
+- title: OpenAPI round-trip
+  kind: tool
+  url: ''
+  description: Validate OpenAPI spec against actual API responses
 ---
 
 Does documentation still predict behavior? A sensor of the gap between what
@@ -61,16 +83,3 @@ behavior to [observed behavior](observability-events.html).
 
 Documentation drift can only be detected where documentation exists.
 Undocumented behavior is invisible to this sensor.
-
-## Tooling
-
-- doctest
-- rustdoc
-- TypeDoc
-- OpenAPI round-trip
-
-## References
-
-- A First Look at the Deprecation of RESTful APIs: An Empirical Study (2020, tier II) — https://arxiv.org/abs/2008.12808
-
-- https://docs.python.org/3/library/doctest.html

@@ -2,7 +2,7 @@
 id: SO-003c
 title: Line Coverage
 family: test-effectiveness
-family_num: "03"
+family_num: '03'
 oracle: low
 independence: low
 scope: line
@@ -11,13 +11,40 @@ actionability: guiding
 type: predictive
 stack_level: behavioral-tests
 categories:
-  - Test Effectiveness
-  - Coverage
+- Test Effectiveness
+- Coverage
 see_also:
-  - SO-003c-b
-  - SO-003
-  - SO-003b
+- SO-003c-b
+- SO-003
+- SO-003b
 last_reviewed: 2026-08-23
+references:
+- title: Coverage Is Not Strongly Correlated with Test Suite Effectiveness
+  year: 2014
+  tier: I
+  url: https://www.cs.ubc.ca/~rtholmes/papers/icse_2014.pdf
+  kind: paper
+- title: Does Mutation Testing Improve Testing Practices?
+  year: 2021
+  tier: I
+  url: https://homes.cs.washington.edu/~rjust/publ/mutation_testing_practices_icse_2021.pdf
+  kind: paper
+- title: coverage.py
+  kind: tool
+  url: ''
+  description: Python code coverage measurement
+- title: Istanbul
+  kind: tool
+  url: ''
+  description: JavaScript code coverage
+- title: JaCoCo
+  kind: tool
+  url: ''
+  description: Java code coverage
+- title: gcov
+  kind: tool
+  url: ''
+  description: GCC code coverage
 ---
 
 Did we execute this line? Useful but weak. A project can have 90% line
@@ -43,17 +70,3 @@ not the same thing.
 Whether the code that *executed* was actually *asserted on*. A line can
 execute without any test verifying its output. This is why coverage alone
 is a [weak oracle](mutation-testing.html).
-
-## Tooling
-
-- coverage.py
-- Istanbul
-- JaCoCo
-- gcov
-
-## References
-
-- Coverage Is Not Strongly Correlated with Test Suite Effectiveness (2014, tier I) — https://www.cs.ubc.ca/~rtholmes/papers/icse_2014.pdf
-- Does Mutation Testing Improve Testing Practices? (2021, tier I) — https://homes.cs.washington.edu/~rjust/publ/mutation_testing_practices_icse_2021.pdf
-
-- https://martinfowler.com/bliki/TestCoverage.html
