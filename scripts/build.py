@@ -1452,10 +1452,44 @@ def generate_about_page(output_dir):
 
     <h2>Contributing</h2>
     <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat.
+      The Observatory is meant to be an open reference, and the field should
+      be able to correct it. The catalog applies a producer-evaluator
+      principle to itself: the author shouldn't be the only evaluator.
+      Independent review of the content is welcome and explicitly invited.
+    </p>
+    <p>
+      The best way to contribute right now:
+    </p>
+    <ul>
+      <li>
+        <strong>File an issue</strong> at the
+        <a href="https://github.com/justinabrahms/software-observatory/issues"
+        class="wikilink">GitHub tracker</a> for a factual error, a missing
+        sensor, a taxonomy challenge, or a depth gap.
+      </li>
+      <li>
+        <strong>Open a pull request</strong> with a new or revised
+        <code>content/sensors/*.md</code>. Keep the opening paragraph
+        self-contained; match the frontmatter shape in
+        <a href="https://github.com/justinabrahms/software-observatory/blob/main/CONTRIBUTING.md"
+        class="wikilink">CONTRIBUTING.md</a>; run the build and the link
+        checker before submitting.
+      </li>
+      <li>
+        <strong>Propose a family change</strong> (adding, renumbering, or
+        reclassifying a family) via an issue first — these touch
+        <code>FAMILIES</code> in <code>build.py</code> and the color tokens
+        in <code>css/observatory.css</code>, so they're worth discussing
+        before the work.
+      </li>
+    </ul>
+    <p>
+      See
+      <a href="https://github.com/justinabrahms/software-observatory/blob/main/CONTRIBUTING.md"
+      class="wikilink">CONTRIBUTING.md</a>
+      in the repository for the full guide — frontmatter shape, the
+      relative-link gotcha, build and link-check commands, and style
+      conventions.
     </p>
 
     <h2>License</h2>
