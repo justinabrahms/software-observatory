@@ -60,15 +60,32 @@
         </div>
       </div>
       <div class="hero-visual" aria-hidden="true">
-        <div class="ring ring-1"></div>
-        <div class="ring ring-2"></div>
-        <div class="ring ring-3"></div>
-        <div class="ring ring-4"></div>
-        <div class="ring-dot dot-1"></div>
-        <div class="ring-dot dot-2"></div>
-        <div class="ring-dot dot-3"></div>
-        <div class="ring-dot dot-4"></div>
-        <div class="ring-dot dot-5"></div>
+        <svg viewBox="0 0 400 400" class="hero-instruments">
+          <!-- the opaque artifact -->
+          <circle cx="200" cy="200" r="52" class="art-body" />
+          <circle cx="200" cy="200" r="52" class="art-rim" />
+          <!-- instruments: sight-lines at different depths -->
+          <!-- near, penetrating (static analysis) -->
+          <line x1="90" y1="90" x2="176" y2="176" class="sight deep" />
+          <circle cx="90" cy="90" r="5" class="instr" />
+          <!-- near, penetrating (types) -->
+          <line x1="310" y1="80" x2="230" y2="172" class="sight deep" />
+          <circle cx="310" cy="80" r="5" class="instr" />
+          <!-- mid, surface (tests) -->
+          <line x1="330" y1="230" x2="252" y2="212" class="sight mid" />
+          <circle cx="330" cy="230" r="5" class="instr" />
+          <!-- mid, surface (behavioral) -->
+          <line x1="70" y1="250" x2="148" y2="222" class="sight mid" />
+          <circle cx="70" cy="250" r="5" class="instr" />
+          <!-- far, glancing (production) -->
+          <line x1="250" y1="355" x2="222" y2="252" class="sight far" />
+          <circle cx="250" cy="355" r="5" class="instr far-instr" />
+          <!-- very far, glancing (user outcome) -->
+          <line x1="60" y1="40" x2="120" y2="120" class="sight farthest" stroke-dasharray="3 5" />
+          <circle cx="60" cy="40" r="4" class="instr far-instr" />
+          <line x1="360" y1="330" x2="290" y2="285" class="sight farthest" stroke-dasharray="3 5" />
+          <circle cx="360" cy="330" r="4" class="instr far-instr" />
+        </svg>
       </div>
     </section>
 
