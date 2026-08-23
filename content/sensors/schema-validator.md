@@ -79,3 +79,11 @@ the contract? Does this infrastructure definition resolve?
 Schema validation cannot detect whether a valid request produces the
 correct [behavioral result](catalog.html#behavioral). It checks shape, not
 meaning.
+
+Oracle strength varies significantly by sub-technique. A Terraform `plan`
+is a near-perfect oracle of what will be applied — it shows the exact diff
+the infrastructure will undergo. An OpenAPI schema is a weaker oracle of
+runtime behavior — the schema can be valid while the implementation
+violates it. Kubernetes admission control sits in between. The "High"
+rating above reflects the strong end of this range; for schema-as-document
+validation, expect closer to medium.

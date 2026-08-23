@@ -140,7 +140,16 @@ jobs:
 
       - name: Publish CLI to npm
         working-directory: cli
-        # OIDC trusted publishing: npm exchanges the job's id-token, so no
-        # long-lived secret is stored. Requires the package on npmjs.com to
-        # list this repo + workflow as a trusted publisher (already configured).
-        run: npm publish --provenance
+        # Skip if the version in package.json already exists on npm.
+        # npm rejects republishing the same version with E403.
+        run: |
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          PUBLISHED=$(npm view softwareobservatory version 2>/dev/null || echo "none")
+          if [ "$PKG_VERSION" = "$PUBLISHED" ]; then
+            echo "Version $PKG_VERSION already published — skipping"
+          else
+            # OIDC trusted publishing: npm exchanges the job's id-token, so no
+            # long-lived secret is stored. Requires the package on npmjs.com to
+            # list this repo + workflow as a trusted publisher (already configured).
+            npm publish --provenance
+          fi

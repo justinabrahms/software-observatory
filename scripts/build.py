@@ -1372,9 +1372,8 @@ def generate_index_page(sensors, output_dir):
         Take <code>if user.is_admin: allow()</code> and mutate it to
         <code>if not user.is_admin: allow()</code>. If all your tests still
         pass, your tests did not actually establish the behavior you thought
-        they established. Mutation testing is a sensor of test
-        <em>sensitivity</em> rather than test <em>presence</em> — and it may
-        be one of the most interesting sensors in the entire catalog.
+        you established. Mutation testing is a sensor of test
+        <em>sensitivity</em> rather than test <em>presence</em>.
       </p>
       <div class="featured-cta">
         <a href="pages/sensors/{featured['slug']}.html">Read the full entry →</a>
@@ -1465,6 +1464,27 @@ def generate_framework_page(sensors, output_dir):
         because high complexity doesn't prove anything is wrong — it just
         suggests increased risk.
       </p>
+      <div class="callout">
+        <strong>Mutation's oracle is derivative.</strong> A mutation score of
+        9/10 is bounded by the test assertions underneath it — mutation testing
+        only detects mutations that the test suite's oracle would catch. The
+        9/10 reflects the test assertion's oracle, applied to a perturbation.
+      </div>
+      <div class="callout">
+        <strong>Code review's score depends on independence.</strong> A
+        reviewer who wrote the code is ~2/10 (they share the author's blind
+        spots); a stranger is ~7/10. The 6/10 is an average that hides the
+        independence dimension — see below.
+      </div>
+      <div class="callout">
+        <strong>"Type checker" spans a range.</strong> Structural type systems
+        (TypeScript) catch a limited class of mismatches. Ownership and
+        lifetime types (Rust) catch memory-safety bugs the compiler refuses
+        to allow. Refinement types and SMT-backed verifiers (Dafny) can prove
+        full correctness properties — the solver either confirms the
+        invariant or produces a counterexample. The 10/10 applies to the
+        strong end of that spectrum.
+      </div>
     </section>
 
     <section class="property-detail">

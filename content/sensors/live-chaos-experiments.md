@@ -47,6 +47,12 @@ region, corrupt a fraction of messages, and watch whether
 not hypothetical, and the environment is not a staging cluster wearing a
 costume.
 
+Live chaos is the *deployment pattern* — running [fault
+injection](fault-injection.html) (the technique) against production with
+real traffic. The two are distinct sensors: fault injection tests
+resilience hypothetically in staging; live chaos tests it against the real
+system, where unknown failure modes are the ones that actually hurt.
+
 ## Sensor properties
 
 | Property | Value |

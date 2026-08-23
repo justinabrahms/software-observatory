@@ -63,6 +63,13 @@ when dependencies fail. It operates at the system level, not the function
 level — you're testing the emergent behavior of distributed components
 under stress.
 
+Fault injection is the *technique*; [live chaos
+experiments](live-chaos-experiments.html) is the *deployment pattern* of
+running that technique against production. The distinction matters: fault
+injection in staging tests resilience hypothetically; live chaos tests it
+against the real system, with real traffic, where the failure modes you
+didn't model are the ones that actually hurt you.
+
 ## Sensor properties
 
 | Property | Value |
