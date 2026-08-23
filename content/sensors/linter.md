@@ -4,10 +4,13 @@ title: Linter
 family: structural
 family_num: '01'
 oracle: medium
+oracle_note: 'suggestions, not facts'
 independence: high
+independence_note: 'external to the code'
 scope: module
 latency: milliseconds
 actionability: guiding
+actionability_note: 'shows the exact line and rule'
 type: predictive
 stack_level: static-analysis
 categories:
@@ -56,16 +59,25 @@ checking](type-checker.html) — it catches things the compiler won't (unused
 variables, unreachable code, style violations) but with less authority. A
 linter can be wrong; a compiler cannot.
 
-## Sensor properties
+## How it gets gamed
 
-| Property | Value |
-|----------|-------|
-| Oracle strength | Medium — suggestions, not facts |
-| Independence | High — external to the code |
-| Scope | Module-level |
-| Feedback latency | Milliseconds |
-| Actionability | Guiding — shows the exact line and rule |
-| Type | Predictive |
+Linter authority is a budget, and it can be spent:
+
+- **Disable, don't fix.** `# noqa`, `// eslint-disable-line`, and rule
+  exclusions in config turn findings into noise by decree. A rising ratio
+  of suppressions to findings is the sensor telling you it is being
+  overridden.
+- **Rule-set erosion.** Teams start with a strict preset, then loosen one
+  rule per fight until the linter agrees with everything. The linter still
+  "passes" while detecting less.
+- **Style-only drift.** If every enabled rule is stylistic, the linter
+  becomes a formatting tax with no correctness value, which trains people
+  to ignore it. The fix is the opposite of loosening: promote rules that
+  catch real bug classes (unreachable code, unused results, suspicious
+  comparisons) and demote the purely cosmetic ones.
+
+The meta-signal is the suppression count. Track it like a metric, not a
+lint error.
 
 ## What it cannot detect
 

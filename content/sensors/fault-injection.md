@@ -4,10 +4,13 @@ title: Fault Injection
 family: adversarial
 family_num: '05'
 oracle: medium
+oracle_note: 'depends on what invariants you check'
 independence: high
+independence_note: 'failures are injected externally'
 scope: system
 latency: minutes
 actionability: guiding
+actionability_note: 'shows which invariant broke under which failure'
 type: adversarial
 stack_level: canary-shadow
 categories:
@@ -55,6 +58,36 @@ Kill a node. Drop a network connection. Inject latency. A sensor of
 *resilience* — does the system continue to satisfy its
 [invariants](runtime-invariants.html) under partial failure?
 
+## In practice
+
+A fault-injection reading is one experiment run: the fault that was
+injected, the steady-state hypothesis it was tested against, and the
+verdict per invariant. From a Chaos Mesh run against staging:
+
+```text
+experiment: kill primary replica, payments-db namespace
+hypothesis: p99 checkout latency stays under 400 ms; no writes are lost
+duration:   10m (2m ramp, 5m fault, 3m recovery)
+
+  invariant                      before    during    verdict
+  checkout p99 < 400 ms          212 ms    385 ms    PASS
+  zero lost writes               0         2         FAIL
+  failover completes             n/a       41 s      PASS
+```
+
+Reading it well:
+
+1. **The verdict is only as good as the invariants.** A run that passes
+   with weak or missing checks proves nothing. Confirm the oracle was
+   watching before trusting the green.
+2. **Inject at realistic magnitude.** A 50 ms latency injection when the
+   real dependency takes 2 s pauses tests the timeout config, not the
+   failure.
+3. **Every FAIL is a finding.** File it with the exact fault and the
+   invariant it broke, not as tribal knowledge.
+4. **One survived fault is not resilience.** Repeat across faults and
+   escalate from single to compound failures.
+
 ## Chaos as a sensor
 
 Fault injection (chaos engineering) is an adversarial sensor that tests
@@ -70,16 +103,40 @@ injection in staging tests resilience hypothetically; live chaos tests it
 against the real system, with real traffic, where the failure modes you
 didn't model are the ones that actually hurt you.
 
-## Sensor properties
+## How it gets gamed
 
-| Property | Value |
-|----------|-------|
-| Oracle strength | Medium — depends on what invariants you check |
-| Independence | High — failures are injected externally |
-| Scope | System-level |
-| Feedback latency | Minutes |
-| Actionability | Guiding — shows which invariant broke under which failure |
-| Type | Adversarial |
+- **Shrink the blast radius to zero.** Injecting only trivial faults
+  (kill one stateless replica, drop 1% of packets) keeps every run green
+  while the dangerous coupling stays untested. A chaos program with a
+  100% pass rate is either very resilient or very timid.
+- **Aim at the redundant path.** Targeting only the components with known
+  failover produces passes by construction.
+- **Rerun the stale script.** The same three experiment definitions for
+  years while the system changes around them; the sensor reads history,
+  not the current architecture.
+- **Schedule for quiet hours.** Runs only during maintenance windows
+  never see the system under load, which is when real failures happen.
+
+The meta-signal is the experiment catalog's growth: new failure modes
+injected per quarter versus reruns of old ones.
+
+## Response playbook
+
+When an experiment breaks an invariant:
+
+1. **File the failure as a defect.** Record the exact fault, the
+   invariant that broke, and the observed deviation. "System is fragile"
+   is not actionable; "replica loss loses writes for 30 s" is.
+2. **Reproduce in staging before fixing.** Confirm the finding is real
+   and separate resilience gaps from environment artifacts.
+3. **Read the blast radius.** The secondary symptoms in the report
+   usually name the actual weakness: the retry storm, the missing
+   timeout, the single consumer lagging.
+4. **Fix the weakest coupling first.** Usually a missing timeout, an
+   unbounded retry, or a hidden hard dependency. Then re-run the same
+   experiment to prove the fix.
+5. **Escalate gradually.** Only widen to compound faults once single
+   faults pass.
 
 ## What it cannot detect
 

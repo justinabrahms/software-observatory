@@ -4,10 +4,13 @@ title: Canary Analysis
 family: change
 family_num: '07'
 oracle: high
+oracle_note: 'divergence on real traffic is strong evidence'
 independence: high
+independence_note: 'production behavior cannot be gamed'
 scope: system
 latency: minutes
 actionability: guiding
+actionability_note: 'shows which metrics diverged'
 type: retrospective
 stack_level: canary-shadow
 categories:
@@ -55,16 +58,43 @@ Canary analysis routes a small percentage of production traffic to the new
 version and compares its behavior to the old. If error rates, latency, or
 [invariant violations](runtime-invariants.html) diverge, the canary fails.
 
-## Sensor properties
+## In practice
 
-| Property | Value |
-|----------|-------|
-| Oracle strength | High — divergence on real traffic is strong evidence |
-| Independence | High — production behavior cannot be gamed |
-| Scope | System-level |
-| Feedback latency | Minutes |
-| Actionability | Guiding — shows which metrics diverged |
-| Type | Retrospective |
+A canary reading is a side-by-side comparison of the same metric across two
+populations, usually scored into a single pass/fail verdict rather than
+eyeballed per metric:
+
+| Metric | Baseline (v2.40.7) | Canary (v2.41.0, 5% traffic) | Deviance | Verdict |
+|--------|--------------------|------------------------------|----------|---------|
+| Error rate | 0.12% | 0.84% | 7.0x | FAIL |
+| p99 latency | 212 ms | 231 ms | +9% | pass |
+| Success rate | 99.88% | 99.16% | -0.72 pp | FAIL |
+| CPU | 0.41 cores | 0.43 cores | +5% | pass |
+| **Overall score** | | | | **42 / 100 — ROLLBACK** |
+
+Reading it well requires four habits:
+
+1. **Compare, don't threshold.** "Error rate 0.84%" means nothing on its
+   own; the baseline at 0.12% is what makes it a signal. A canary judged
+   against an absolute bar silently passes when everything degrades
+   together.
+2. **Set a threshold of deviance before the canary runs.** Every metric
+   needs a tolerance band — p99 within 10%, error rate within 2x, CPU
+   within 20% — decided in advance and written into the analysis config.
+   Without it, the verdict is a vibe: is a 9% latency bump a regression or
+   a Tuesday? Pre-set thresholds also stop the post-hoc rationalization
+   that a failing canary is "close enough."
+3. **Know which metrics are allowed to move.** Latency within the noise
+   band is normal churn. Error rate and invariant violations are not. If
+   the score weights treat them alike, noise drowns the real divergences.
+4. **Match the populations.** The canary and baseline must see comparable
+   traffic. Comparing a canary that only handles new signups against a
+   baseline serving the whole fleet reads drift into routing, and the
+   "drift" is the routing.
+
+The verdict is only as good as the metrics underneath it, which is why the
+canary is downstream of the [observability work](observability-events.html)
+rather than a replacement for it.
 
 ## What it cannot detect
 

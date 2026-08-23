@@ -8,7 +8,8 @@ Node CLI/MCP server in `cli/` (published to npm as `softwareobservatory`).
 ## Commands
 
 - **Build:** `.venv/bin/python scripts/build.py` — reads `content/sensors/*.md`,
-  regenerates `index.html`, `pages/*.html`, `pages/sensors/*.html`,
+  regenerates `index.html`, `<section>/index.html` (catalog, atlas, framework,
+  glossary, about, contact, privacy, categories), `sensors/<slug>/index.html`,
   `search-index.json`, **and `cli/data/sensors.json`** (via
   `scripts/export_cli_data.py`) in place at the repo root. Site output is
   gitignored; `cli/data/sensors.json` is **committed** so the npm package can
@@ -99,7 +100,8 @@ the homepage scatter legend and dots key off.
 | `cli/` | Zero-dependency Node CLI + MCP server (npm package `softwareobservatory`). `bin/softwareobservatory.mjs` is the entry; `lib/core.mjs` holds query logic; `lib/mcp.mjs` is the stdio JSON-RPC server; `data/sensors.json` is committed build output. |
 | `content/sensors/*.md` | Source of truth for sensor entries (YAML frontmatter). |
 | `content/pages/` | Empty; reserved. |
-| `index.html`, `pages/`, `search-index.json` | **Generated output** — gitignored, overwritten by every build; deploys ship it from the working tree. |
+| `.gitignore` note | `pages/` entry retained for historical output; new layout dirs (`catalog/`, `sensors/`, …) are also ignored. |
+| `index.html`, `catalog/`, `atlas/`, `sensors/`, `search-index.json` | **Generated output** — gitignored, overwritten by every build; deploys ship it from the working tree. |
 | `css/observatory.css` | Hand-written stylesheet (design tokens in `:root` at top). |
 | `js/main.js` | No build step. Family filter, card a11y, header search dropdown, heading-jumplink copy buttons, homepage scatter toggle + legend isolation. |
 | `archive-NMUHEr/` | Untracked crush release tarball. Ignore. |
@@ -107,7 +109,7 @@ the homepage scatter legend and dots key off.
 ## Adding a sensor (the main workflow)
 
 1. Create `content/sensors/<slug>.md`. The filename stem becomes the URL
-   slug (`pages/sensors/<slug>.html`).
+   slug (`/sensors/<slug>/`).
 2. Fill in frontmatter — see any existing entry (e.g.
    `content/sensors/linter.md`) for the shape:
 
@@ -136,20 +138,19 @@ the homepage scatter legend and dots key off.
 
 ### Relative-link gotcha
 
-Markdown bodies are rendered once and reused at different directory depths.
-`fix_link_depths()` prefixes relative `href`s with `../` for files living
-in `pages/` (catalog.html, atlas.html, ...), but **bare filenames matching
-a sensor slug are left alone** — they are sibling links that resolve inside
-`pages/sensors/`. So: `[type checker](type-checker.html)` for a sibling,
-`[catalog](catalog.html#behavioral)` for a catalog section. Root-relative
-and absolute URLs are left alone. `check_links.py` will catch any link
-that gets this wrong.
+Markdown bodies link by **bare filename**: `[type checker](type-checker.html)`
+for a sibling sensor, `[catalog](catalog.html#behavioral)` for a catalog
+section. `fix_link_depths()` rewrites these to **site-absolute URLs**
+(`/sensors/type-checker/`, `/catalog/#behavioral`) at render time, so every
+page emits absolute links regardless of its own depth. Unrecognized targets
+are left alone and `check_links.py` will flag them.
 
 ## Conventions
 
-- **Generated files are gitignored.** `index.html`, `pages/`, and
-  `search-index.json` are build output; run the build locally to preview,
-  and `make deploy` rsyncs the freshly built working tree.
+- **Generated files are gitignored.** `index.html`, the section directories
+  (`catalog/`, `atlas/`, …), `sensors/`, and `search-index.json` are build
+  output; run the build locally to preview, and `make deploy` rsyncs the
+  freshly built working tree.
 - **HTML style:** 2-space indent, double quotes, CSS custom properties
   (`var(--accent)` etc.) for all colors; design tokens live in `:root` at
   the top of `css/observatory.css`. Dark theme, Fraunces/Inter/JetBrains

@@ -4,10 +4,13 @@ title: Dependency Graph
 family: architecture
 family_num: 08
 oracle: low
+oracle_note: 'coupling is a risk factor, not a bug'
 independence: high
+independence_note: 'graph is computed from the code'
 scope: system
 latency: seconds
 actionability: exploratory
+actionability_note: 'shows the graph, you interpret it'
 type: predictive
 stack_level: static-analysis
 categories:
@@ -56,16 +59,65 @@ other transitively, cycles that create tight coupling, dependencies on
 unstable (frequently changing) modules. None of these are bugs — but they're
 risk factors.
 
-## Sensor properties
+## In practice
 
-| Property | Value |
-|----------|-------|
-| Oracle strength | Low — coupling is a risk factor, not a bug |
-| Independence | High — graph is computed from the code |
-| Scope | System-level |
-| Feedback latency | Seconds |
-| Actionability | Exploratory — shows the graph, you interpret it |
-| Type | Predictive |
+The reading is a list of edges plus a few numbers, often surfaced by
+an import-boundary tool refusing an edge:
+
+```
+import-linter: forbidden import detected
+  src/api/views.py -> src/db/session
+  contract "api must not import db internals": BROKEN (1 violation)
+
+dependency-cruiser: circular
+  src/auth/token.ts -> src/auth/session.ts -> src/auth/token.ts
+```
+
+| Metric | Reading | Read as |
+|--------|---------|---------|
+| Fan-in | 47 modules import `util.ts` | Blast radius of any change to it |
+| Fan-out | `checkout.ts` imports 31 modules | Fragility: any of them can break it |
+| Cycles | auth <-> session | Coupling that blocks separate testing |
+| Instability | 9 changes to `core.py` this quarter | Every dependent pays churn tax |
+
+The numbers are not verdicts; they are the inputs to a judgment about
+where change will be expensive. Read the graph against recent change
+history, because a stable hub is cheap and a churning hub is a
+bottleneck, and the graph alone cannot tell them apart. Treat a
+single module with high fan-in and high instability as the highest-
+priority refactoring target in the codebase.
+
+## Response playbook
+
+When the graph reads badly:
+
+1. **Find the one edge that matters most.** The highest-risk edge is
+   the one into the most-changed module with the widest fan-in, not
+   the one that looks worst in the diagram.
+2. **Break cycles at the import level first.** Move the shared type
+   or interface into a leaf module so both sides depend on it and
+   not on each other.
+3. **Introduce a boundary rule while the graph still obeys it,**
+   then make it blocking: the boundary can only be enforced from a
+   position of compliance.
+4. **Track the metric, not the diagram.** Fan-in of hot modules and
+   cycle count are cheap to trend; re-rendering the whole graph is
+   theater.
+
+## How it gets gamed
+
+- **Boundary exceptions.** An import-linter exemption list that
+  grows faster than the violations it was created to clear, until
+  the rule is a museum of grandfathered breaks.
+- **Lazy-import laundering.** Importing the forbidden module inside
+  a function body so the static graph never sees the edge. The
+  coupling remains; only its visibility is removed.
+- **Diagram theater.** Producing a beautiful architecture diagram
+  from the graph on the day of review and never diffing it against
+  the code again.
+
+The meta-signal is exemptions per quarter: if the exception list
+grows while the rule count is flat, the sensor is being spent.
 
 ## What it cannot detect
 

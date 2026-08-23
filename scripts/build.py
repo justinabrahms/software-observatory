@@ -30,6 +30,14 @@ OUTPUT_DIR = SITE_ROOT
 CSS_DIR = SITE_ROOT / "css"
 JS_DIR = SITE_ROOT / "js"
 
+# Section pages rendered as clean directory URLs: /catalog/ -> catalog/index.html.
+# Markdown bodies link these by bare filename (catalog.html#behavioral), and
+# fix_link_depths rewrites them using this set.
+SECTION_PAGES = {
+    "catalog", "atlas", "framework", "glossary", "about",
+    "contact", "privacy", "categories",
+}
+
 # ── Sensor family metadata ──────────────────────────────────────────────────
 
 FAMILIES = [
@@ -240,15 +248,15 @@ LATENCY_LABELS = {
 }
 
 # Full-word forms for display contexts where the abbreviation alone is opaque
-# (card badges). Defaults to the key itself with hyphens normalized to
-# en dashes; entries below only exist to reorder compound ranges.
+# (card badges, sensor page sidebar). Defaults to the key itself with hyphens
+# spelled out as "to"; entries below only exist to reorder compound ranges.
 class _LatencyWords(dict):
     def __missing__(self, key):
-        return key.replace("-", "–")
+        return key.replace("-", " to ")
 
 LATENCY_WORDS = _LatencyWords({
-    "minutes-hours": "minutes–hours",
-    "hours-seconds": "seconds–hours",
+    "minutes-hours": "minutes to hours",
+    "hours-seconds": "seconds to hours",
 })
 
 
@@ -260,6 +268,14 @@ def latency_badge_html(latency_key):
             f'<span class="sr-only">Feedback latency: </span>~{html.escape(word)}</span>')
 
 
+def note_hover_html(note):
+    """A small (?) marker whose hover text carries extra color for a property."""
+    if not note:
+        return ""
+    return (f' <span class="prop-note" title="{html.escape(note)}" '
+            f'aria-label="{html.escape(note)}">(?)</span>')
+
+
 # ── Markdown rendering ──────────────────────────────────────────────────────
 
 def render_markdown(text):
@@ -269,17 +285,15 @@ def render_markdown(text):
 
 
 def fix_link_depths(html_str, pages_depth="", sensor_slugs=()):
-    """Fix relative URLs in rendered markdown HTML for the current page depth.
-
-    pages_depth is the relative path to pages/ from the current page.
-    For pages/*.html, pages_depth="" (links like catalog.html are correct).
-    For pages/sensors/*.html, pages_depth="../" (links to other files in
-    pages/ need ../ prefix).
+    """Rewrite relative URLs in rendered markdown HTML to site-absolute URLs.
 
     Sensor markdown links to sibling sensors by bare filename
-    (type-checker.html) — those resolve inside pages/sensors/ and must NOT
-    be prefixed. Links to catalog.html, atlas.html, etc. DO need the prefix.
-    sensor_slugs is the set of sensor URL slugs used to tell them apart.
+    (type-checker.html) and to section pages the same way (catalog.html,
+    atlas.html). All pages now live at clean directory URLs
+    (/sensors/<slug>/, /catalog/, ...) and every generated link is
+    site-absolute, so this rewrites those bare filenames to their absolute
+    destinations. pages_depth is accepted for signature compatibility but
+    ignored.
 
     Also adds a class to inline <a> tags so they get link styling.
     """
@@ -297,19 +311,20 @@ def fix_link_depths(html_str, pages_depth="", sensor_slugs=()):
 
     html_str = re.sub(r'<a(?![^>]*class=)[^>]*>', add_link_class, html_str)
 
-    if not pages_depth:
-        return html_str
-
     def fix_href(match):
         full = match.group(0)
         url = match.group(1)
-        if url.startswith(('http://', 'https://', '#', 'mailto:')):
+        if url.startswith(('http://', 'https://', '#', 'mailto:', '/')):
             return full
-        # Bare sibling-sensor filenames stay unprefixed
-        stem = url.split("#")[0].removesuffix(".html")
-        if "/" not in url and stem in sensor_slugs:
-            return full
-        return f'href="{pages_depth}{url}"'
+        path, _, frag = url.partition("#")
+        stem = path.removesuffix(".html")
+        if "/" not in path and stem in sensor_slugs:
+            dest = f"/sensors/{stem}/"
+        elif "/" not in path and stem in SECTION_PAGES:
+            dest = f"/{stem}/"
+        else:
+            return full  # unrecognized; leave for the link checker to flag
+        return f'href="{dest}{"#" + frag if frag else ""}"'
 
     html_str = re.sub(r'href="([^"]+)"', fix_href, html_str)
 
@@ -349,7 +364,7 @@ def load_sensors():
         meta, body = parse_frontmatter(filepath)
         slug = filepath.stem
         meta["slug"] = slug
-        meta["body_html"] = fix_link_depths(render_markdown(body), pages_depth="../", sensor_slugs=sensor_slugs)
+        meta["body_html"] = fix_link_depths(render_markdown(body), sensor_slugs=sensor_slugs)
         meta["filename"] = str(filepath)
         sensors.append(meta)
 
@@ -377,9 +392,9 @@ def compute_backlinks(sensors):
     return backlinks
 
 
-def resolve_see_also(see_also_ids, sensors_by_id, families_by_slug, pages_depth=""):
+def resolve_see_also(see_also_ids, sensors_by_id, families_by_slug):
     """Resolve see_also IDs to objects with title, slug, family, url.
-    pages_depth: relative path to pages/ (e.g. '' for pages/, '../' for pages/sensors/)."""
+    All urls are site-absolute."""
     results = []
     for ref in see_also_ids:
         if ref in sensors_by_id:
@@ -388,7 +403,7 @@ def resolve_see_also(see_also_ids, sensors_by_id, families_by_slug, pages_depth=
                 "title": s["title"],
                 "family": FAMILY_BY_SLUG.get(s.get("family", ""), {}).get("name", ""),
                 "family_slug": s.get("family", ""),
-                "url": f"{pages_depth}sensors/{s['slug']}.html",
+                "url": f"/sensors/{s['slug']}/",
             })
         elif ref in families_by_slug:
             f = families_by_slug[ref]
@@ -396,14 +411,14 @@ def resolve_see_also(see_also_ids, sensors_by_id, families_by_slug, pages_depth=
                 "title": f["name"],
                 "family": "Family",
                 "family_slug": f["slug"],
-                "url": f"{pages_depth}catalog.html#{f['slug']}",
+                "url": f"/catalog/#{f['slug']}",
             })
         elif ref == "atlas":
             results.append({
                 "title": "Confidence Stack",
                 "family": "Atlas",
                 "family_slug": "atlas",
-                "url": f"{pages_depth}atlas.html",
+                "url": "/atlas/",
             })
     return results
 
@@ -485,8 +500,8 @@ def independence_dots_html(ind_str):
 
 # ── HTML templates ──────────────────────────────────────────────────────────
 
-def html_head(title, depth="", canonical="", json_ld=""):
-    """depth is '' for root, '../' for pages/, '../../' for pages/sensors/"""
+def html_head(title, canonical="", json_ld=""):
+    """canonical is a site-relative path like 'catalog/' ('' for the root)."""
     canonical_link = ""
     if canonical:
         canonical_link = f'\n  <link rel="canonical" href="{SITE_URL}/{canonical}">'
@@ -514,23 +529,23 @@ def html_head(title, depth="", canonical="", json_ld=""):
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{depth}css/observatory.css">
+  <link rel="stylesheet" href="/css/observatory.css">
   <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="{SITE_URL}/rss.xml">{json_ld_block}
 </head>"""
 
 
-def html_header(nav_depth="", root_depth=""):
-    """nav_depth: relative path to pages/. root_depth: relative path to site root."""
+def html_header():
+    """Site header with nav. All links are site-absolute."""
     nav_items = [
-        ("catalog.html", "Catalog"),
-        ("atlas.html", "Atlas"),
-        ("framework.html", "Framework"),
-        ("glossary.html", "Glossary"),
-        ("about.html", "About"),
+        ("/catalog/", "Catalog"),
+        ("/atlas/", "Atlas"),
+        ("/framework/", "Framework"),
+        ("/glossary/", "Glossary"),
+        ("/about/", "About"),
     ]
-    nav_html = "\n".join(f'      <a href="{nav_depth}{href}">{label}</a>' for href, label in nav_items)
+    nav_html = "\n".join(f'      <a href="{href}">{label}</a>' for href, label in nav_items)
     return f"""  <header class="site-header">
-    <a href="{root_depth}index.html" class="logo">
+    <a href="/" class="logo">
       <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
         <!-- brass spyglass on a small tripod, angled up to the right -->
         <g transform="rotate(-30 16 16)">
@@ -548,36 +563,34 @@ def html_header(nav_depth="", root_depth=""):
     <nav class="primary-nav">
 {nav_html}
     </nav>
-    <div class="search-box" data-root-depth="{root_depth}">
+    <div class="search-box">
       <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
       <div class="search-results" hidden></div>
-      <noscript><p class="search-noscript"><a href="{nav_depth}catalog.html">Browse the catalog</a> or <a href="{nav_depth}categories.html">browse by category</a>.</p></noscript>
+      <noscript><p class="search-noscript"><a href="/catalog/">Browse the catalog</a> or <a href="/categories/">browse by category</a>.</p></noscript>
     </div>
   </header>"""
 
 
-def html_footer(root_depth="", nav_depth=""):
+def html_footer():
     return f"""  <footer class="site-footer">
     <div class="footer-inner">
       <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
-      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="{nav_depth}about.html">About</a> · <span class="license-badge">CC BY-NC-SA 4.0</span></p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/about/">About</a> · <span class="license-badge">CC BY-NC-SA 4.0</span></p>
     </div>
   </footer>"""
 
 
-def html_page(title, body_content, root_depth="", nav_depth="", canonical="", json_ld=""):
-    """root_depth: relative path to site root (for css/js).
-    nav_depth: relative path to pages/ (for nav links).
-    canonical: path-relative URL for the canonical link (e.g. 'pages/about.html').
+def html_page(title, body_content, canonical="", json_ld=""):
+    """canonical: site-relative URL for the canonical link (e.g. 'about/').
     json_ld: JSON-LD string to inject as a script block in <head>."""
     # Deep-linkable headings get ids before the page is assembled
     body_content = add_heading_ids(body_content)
-    return f"""{html_head(title, root_depth, canonical=canonical, json_ld=json_ld)}
+    return f"""{html_head(title, canonical=canonical, json_ld=json_ld)}
 <body>
-{html_header(nav_depth, root_depth)}
+{html_header()}
 {body_content}
-{html_footer(root_depth, nav_depth)}
-  <script src="{root_depth}js/main.js"></script>
+{html_footer()}
+  <script src="/js/main.js"></script>
 </body>
 </html>"""
 
@@ -586,20 +599,19 @@ def html_page(title, body_content, root_depth="", nav_depth="", canonical="", js
 
 def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, output_dir):
     """Generate a single sensor detail page."""
-    depth = "../../"  # pages/sensors/*.html
     family = FAMILY_BY_SLUG.get(sensor.get("family", ""), {})
     family_name = family.get("name", sensor.get("family", ""))
     family_slug = family.get("slug", "")
 
-    # Resolve see_also (sensor pages are in pages/sensors/, so pages/ is ../)
-    see_also_items = resolve_see_also(sensor.get("see_also", []), sensors_by_id, families_by_slug, pages_depth="../")
+    # Resolve see_also (all urls site-absolute)
+    see_also_items = resolve_see_also(sensor.get("see_also", []), sensors_by_id, families_by_slug)
 
     # Resolve backlinks
     backlink_items = []
     for bl in backlinks.get(sensor["id"], []):
         backlink_items.append({
             "title": bl["from_title"],
-            "url": f"{bl['from_slug']}.html",
+            "url": f"/sensors/{bl['from_slug']}/",
             "context": bl["context"],
         })
 
@@ -686,10 +698,10 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
             # Link to family section if it matches a family slug
             fam = FAMILY_BY_SLUG.get(cat.lower().replace(" ", "-"), {})
             if fam:
-                cat_links += f'          <a href="../catalog.html#{fam["slug"]}" class="cat-link">{html.escape(cat)}</a>\n'
+                cat_links += f'          <a href="/catalog/#{fam["slug"]}" class="cat-link">{html.escape(cat)}</a>\n'
             else:
                 cat_slug = re.sub(r"[^a-z0-9]+", "-", cat.lower()).strip("-")
-                cat_links += f'          <a href="../categories.html#{cat_slug}" class="cat-link">{html.escape(cat)}</a>\n'
+                cat_links += f'          <a href="/categories/#{cat_slug}" class="cat-link">{html.escape(cat)}</a>\n'
         cat_html = f"""        <div class="entry-categories">
           <span class="cat-label">Categories:</span>
 {cat_links.rstrip()}
@@ -716,10 +728,10 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
         for cat in categories:
             fam = FAMILY_BY_SLUG.get(cat.lower().replace(" ", "-"), {})
             if fam:
-                url = f"../catalog.html#{fam['slug']}"
+                url = f"/catalog/#{fam['slug']}"
             else:
                 cat_slug = re.sub(r"[^a-z0-9]+", "-", cat.lower()).strip("-")
-                url = f"../categories.html#{cat_slug}"
+                url = f"/categories/#{cat_slug}"
             items += f'          <li><a href="{url}">Category: {html.escape(cat)}</a></li>\n'
         cat_sidebar_html = f"""      <div class="sidebar-box">
         <h3 class="sidebar-heading">Related categories</h3>
@@ -730,7 +742,7 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
 
     body = f"""  <div class="wiki-layout">
     <article class="signal-detail">
-      <p class="breadcrumb"><a href="../catalog.html">Catalog</a> › <a href="../catalog.html#{family_slug}">{html.escape(family_name)}</a> › {html.escape(sensor['title'])}</p>
+      <p class="breadcrumb"><a href="/catalog/">Catalog</a> › <a href="/catalog/#{family_slug}">{html.escape(family_name)}</a> › {html.escape(sensor['title'])}</p>
 
       <header class="signal-detail-header">
         <h1 class="signal-detail-title">{html.escape(sensor['title'])}</h1>
@@ -756,13 +768,13 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
       <div class="sidebar-box">
         <h3 class="sidebar-heading">Sensor properties</h3>
         <dl class="meta-list">
-          <dt>Family</dt>           <dd><a href="../catalog.html#{family_slug}" class="wikilink">{html.escape(family_name)}</a></dd>
-          <dt>Oracle</dt>          <dd>{html.escape(sensor.get('oracle', '').title())}</dd>
-          <dt>Independence</dt>     <dd>{html.escape(sensor.get('independence', '').title())}</dd>
-          <dt>Scope</dt>           <dd>{html.escape(sensor.get('scope', '').replace('-', ' ').title())}</dd>
-          <dt>Latency</dt>         <dd>{html.escape(LATENCY_LABELS.get(sensor.get('latency', ''), sensor.get('latency', '')))}</dd>
-          <dt>Actionability</dt>   <dd>{html.escape(sensor.get('actionability', '').title())}</dd>
-          <dt>Type</dt>             <dd>{html.escape(sensor.get('type', '').title())}</dd>
+          <dt>Family</dt>           <dd><a href="/catalog/#{family_slug}" class="wikilink">{html.escape(family_name)}</a></dd>
+          <dt>Oracle</dt>          <dd>{html.escape(sensor.get('oracle', '').title())}{note_hover_html(sensor.get('oracle_note'))}</dd>
+          <dt>Independence</dt>     <dd>{html.escape(sensor.get('independence', '').title())}{note_hover_html(sensor.get('independence_note'))}</dd>
+          <dt>Scope</dt>           <dd>{html.escape(sensor.get('scope', '').replace('-', ' ').title())}{note_hover_html(sensor.get('scope_note'))}</dd>
+          <dt>Latency</dt>         <dd>{html.escape(LATENCY_WORDS[sensor.get('latency', '')].capitalize())}{note_hover_html(sensor.get('latency_note'))}</dd>
+          <dt>Actionability</dt>   <dd>{html.escape(sensor.get('actionability', '').title())}{note_hover_html(sensor.get('actionability_note'))}</dd>
+          <dt>Type</dt>             <dd>{html.escape(sensor.get('type', '').title())}{note_hover_html(sensor.get('type_note'))}</dd>
           <dt>Entry ID</dt>        <dd>{html.escape(sensor.get('id', ''))}</dd>
           <dt>Reviewed</dt>        <dd>{html.escape(str(sensor.get('last_reviewed', ''))[:7])}</dd>
         </dl>
@@ -772,8 +784,8 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
     </aside>
   </div>"""
 
-    page_html = html_page(f"{sensor['title']}", body, root_depth="../../", nav_depth="../", canonical=f"pages/sensors/{sensor['slug']}.html")
-    out_path = output_dir / "pages" / "sensors" / f"{sensor['slug']}.html"
+    page_html = html_page(f"{sensor['title']}", body, canonical=f"sensors/{sensor['slug']}/")
+    out_path = output_dir / "sensors" / sensor["slug"] / "index.html"
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w") as f:
         f.write(page_html)
@@ -781,7 +793,6 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
 
 def generate_catalog_page(sensors, output_dir):
     """Generate the catalog page with all 11 families."""
-    depth = "../"
 
     # Group sensors by family
     by_family = {}
@@ -804,12 +815,12 @@ def generate_catalog_page(sensors, output_dir):
             title = s["title"]
             slug = s["slug"]
 
-            cards += f"""          <article class="signal-card" onclick="window.location='sensors/{slug}.html'">
+            cards += f"""          <article class="signal-card" onclick="window.location='/sensors/{slug}/'">
             <div class="signal-card-meta">
               <span class="tag tag-family">{html.escape(family['name'])}</span>
               <span class="tag tag-type">{html.escape(s.get('type', '').title())}</span>
             </div>
-            <h3 class="signal-card-title"><a href="sensors/{slug}.html" class="wikilink">{html.escape(title)}</a></h3>
+            <h3 class="signal-card-title"><a href="/sensors/{slug}/" class="wikilink">{html.escape(title)}</a></h3>
             <p class="signal-card-blurb">{html.escape(blurb_text(s.get('body_html', ''), 200))}</p>
             <div class="signal-card-footer">
               <span class="oracle-meter">{oracle_d} Oracle</span>
@@ -844,7 +855,7 @@ def generate_catalog_page(sensors, output_dir):
     <p class="eyebrow">The Catalog</p>
     <h1 class="page-title">Sensor Catalog</h1>
     <p class="page-lede">
-      A catalog of <a href="glossary.html#epistemic-sensor" class="wikilink">epistemic sensors</a> — the
+      A catalog of <a href="/glossary/#epistemic-sensor" class="wikilink">epistemic sensors</a> — the
       observable signals that increase our confidence that a system is correct,
       maintainable, and behaving as intended. Organized into eleven families.
       Each entry documents what the sensor can detect, what it cannot detect,
@@ -868,8 +879,9 @@ def generate_catalog_page(sensors, output_dir):
     </div>
   </div>"""
 
-    page_html = html_page("Sensor Catalog", body, root_depth="../", nav_depth="", canonical="pages/catalog.html")
-    out_path = output_dir / "pages" / "catalog.html"
+    page_html = html_page("Sensor Catalog", body, canonical="catalog/")
+    out_path = output_dir / "catalog" / "index.html"
+    out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w") as f:
         f.write(page_html)
 
@@ -877,7 +889,6 @@ def generate_catalog_page(sensors, output_dir):
 def generate_atlas_page(sensors, output_dir):
     """Generate the atlas page: a family x lifecycle-stage grid, plus a
     dependency map of how families lean on each other."""
-    depth = "../"
 
     # Group sensors by family
     by_family = {}
@@ -894,7 +905,7 @@ def generate_atlas_page(sensors, output_dir):
           <div class="matrix-row-label">
             <span class="matrix-fam-num">{family['num']}</span>
             <span class="matrix-fam-icon fam-{family['slug']}" aria-hidden="true">{family['icon']}</span>
-            <a href="catalog.html#{family['slug']}" class="matrix-fam-name">{html.escape(family['name'])}</a>
+            <a href="/catalog/#{family['slug']}" class="matrix-fam-name">{html.escape(family['name'])}</a>
           </div>
 """
 
@@ -908,7 +919,7 @@ def generate_atlas_page(sensors, output_dir):
             if cell_sensors:
                 chips = ""
                 for s in cell_sensors:
-                    chips += f'<a href="sensors/{s["slug"]}.html" class="matrix-chip">{html.escape(s["title"])}</a>\n'
+                    chips += f'<a href="/sensors/{s["slug"]}/" class="matrix-chip">{html.escape(s["title"])}</a>\n'
                 matrix_rows += f"""          <div class="matrix-cell has-sensors">
             {chips.rstrip()}
           </div>
@@ -1036,7 +1047,7 @@ def generate_atlas_page(sensors, output_dir):
         anchor = "start" if x > cx + 10 else ("end" if x < cx - 10 else "middle")
         lx = x + (16 if anchor == "start" else (-16 if anchor == "end" else 0))
         ly = y + (-18 if y < cy - 10 else (28 if y > cy + 10 else 4))
-        nodes_svg += f"""          <a href="catalog.html#{f['slug']}" class="dep-node" data-family="{f['slug']}">
+        nodes_svg += f"""          <a href="/catalog/#{f['slug']}" class="dep-node" data-family="{f['slug']}">
             <circle cx="{x:.1f}" cy="{y:.1f}" r="9" class="dep-node-dot" />
             <text class="dep-node-label" x="{lx:.1f}" y="{ly:.1f}" text-anchor="{anchor}">{html.escape(f['name'])}</text>
           </a>
@@ -1066,7 +1077,7 @@ def generate_atlas_page(sensors, output_dir):
     # Family map
     family_map = ""
     for f in FAMILIES:
-        family_map += f"""        <a href="catalog.html#{f['slug']}" class="family-map-card">
+        family_map += f"""        <a href="/catalog/#{f['slug']}" class="family-map-card">
           <span class="fam-num">{f['num']}</span>
           <span class="fam-name">{html.escape(f['name'])}</span>
           <span class="fam-q">"{html.escape(f['question'])}"</span>
@@ -1079,12 +1090,12 @@ def generate_atlas_page(sensors, output_dir):
       <h1 class="page-title">Sensor Atlas</h1>
       <p class="page-lede">
         A navigational map of the sensor landscape. Each row is a
-        <a href="catalog.html" class="wikilink">sensor family</a> — a question
+        <a href="/catalog/" class="wikilink">sensor family</a> — a question
         you're asking about the system. Each column is a stage of the software
         lifecycle — <em>when</em> the signal becomes available, from authoring
         the code on the left to observing real-world outcomes on the right.
         For the narrative version of how evidence accumulates, see the
-        <a href="../index.html#confidence-stack" class="wikilink">confidence stack</a>.
+        <a href="/#confidence-stack" class="wikilink">confidence stack</a>.
       </p>
     </section>
 
@@ -1140,15 +1151,15 @@ def generate_atlas_page(sensors, output_dir):
     </div>
   </div>"""
 
-    page_html = html_page("Sensor Atlas", body, root_depth="../", nav_depth="", canonical="pages/atlas.html")
-    out_path = output_dir / "pages" / "atlas.html"
+    page_html = html_page("Sensor Atlas", body, canonical="atlas/")
+    out_path = output_dir / "atlas" / "index.html"
+    out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w") as f:
         f.write(page_html)
 
 
 def generate_index_page(sensors, output_dir):
     """Generate the homepage."""
-    depth = ""
 
     # Featured sensor
     featured = next((s for s in sensors if s["id"] == "SO-003"), sensors[0] if sensors else None)
@@ -1157,7 +1168,7 @@ def generate_index_page(sensors, output_dir):
     # Families grid
     families_grid = ""
     for f in FAMILIES:
-        families_grid += f"""        <a href="pages/catalog.html#{f['slug']}" class="family-card">
+        families_grid += f"""        <a href="/catalog/#{f['slug']}" class="family-card">
           <span class="family-num">{f['num']}</span>
           <h3 class="family-name">{html.escape(f['name'])}</h3>
           <p class="family-question">"{html.escape(f['question'])}"</p>
@@ -1176,7 +1187,7 @@ def generate_index_page(sensors, output_dir):
         fam = FAMILY_BY_SLUG.get(s.get("family", ""), {})
         recent_html += f"""        <li class="entry">
           <span class="entry-family">{html.escape(fam.get('name', ''))}</span>
-          <a href="pages/sensors/{s['slug']}.html" class="entry-title wikilink">{html.escape(s['title'])}</a>
+          <a href="/sensors/{s['slug']}/" class="entry-title wikilink">{html.escape(s['title'])}</a>
           <span class="entry-blurb">{html.escape(blurb_text(s.get('body_html', ''), 140))}</span>
         </li>
 """
@@ -1190,7 +1201,7 @@ def generate_index_page(sensors, output_dir):
             pos = STACK_SCATTER.get(layer["slug"])
             if not pos:
                 continue
-            pts += f"""          <a href="pages/atlas.html" class="scatter-point layer-point" style="left:{pos['x']}%;bottom:{pos['y']}%" data-label="{html.escape(layer['label'])}">
+            pts += f"""          <a href="/atlas/" class="scatter-point layer-point" style="left:{pos['x']}%;bottom:{pos['y']}%" data-label="{html.escape(layer['label'])}">
             <span class="scatter-dot"></span>
             <span class="scatter-tag">{html.escape(layer['label'])}</span>
           </a>
@@ -1220,7 +1231,7 @@ def generate_index_page(sensors, output_dir):
                 fam = FAMILY_BY_SLUG.get(s.get("family", ""), {}).get("name", "")
                 fam_slug = s.get("family", "")
                 fam_icon = FAMILY_BY_SLUG.get(fam_slug, {}).get("icon", "")
-                pts += f"""          <a href="pages/sensors/{s['slug']}.html" class="scatter-point sensor-point fam-{html.escape(fam_slug)}" style="left:{x + dx:.1f}%;bottom:{y + dy:.1f}%" data-label="{html.escape(s['title'])}" data-family="{html.escape(fam)}">
+                pts += f"""          <a href="/sensors/{s['slug']}/" class="scatter-point sensor-point fam-{html.escape(fam_slug)}" style="left:{x + dx:.1f}%;bottom:{y + dy:.1f}%" data-label="{html.escape(s['title'])}" data-family="{html.escape(fam)}">
             <span class="scatter-dot" aria-hidden="true">{fam_icon}</span>
             <span class="scatter-tag">{html.escape(s['title'])}</span>
           </a>
@@ -1265,7 +1276,7 @@ def generate_index_page(sensors, output_dir):
         <table>
           <thead><tr><th>Sensor</th><th>Family</th><th>Effort (latency)</th><th>Efficacy (oracle)</th></tr></thead>
           <tbody>
-{"".join(f'          <tr><td><a href="pages/sensors/{s["slug"]}.html">{html.escape(s["title"])}</a></td><td>{html.escape(FAMILY_BY_SLUG.get(s.get("family",""),{}).get("name",""))}</td><td>{html.escape(s.get("latency",""))}</td><td>{html.escape(s.get("oracle",""))}</td></tr>\n' for s in sensors)}
+{"".join(f'          <tr><td><a href="/sensors/{s["slug"]}/">{html.escape(s["title"])}</a></td><td>{html.escape(FAMILY_BY_SLUG.get(s.get("family",""),{}).get("name",""))}</td><td>{html.escape(s.get("latency",""))}</td><td>{html.escape(s.get("oracle",""))}</td></tr>\n' for s in sensors)}
           </tbody>
         </table>
       </details>"""
@@ -1282,14 +1293,14 @@ def generate_index_page(sensors, output_dir):
         <p class="hero-lede">
           Software is increasingly an opaque artifact. We cannot — and often
           do not want to — fully understand every implementation. The Software
-          Observatory is a catalog of <a href="pages/catalog.html" class="wikilink">epistemic sensors</a>:
+          Observatory is a catalog of <a href="/catalog/" class="wikilink">epistemic sensors</a>:
           the observable signals that reduce uncertainty about whether a system
           is correct, maintainable, and behaving as intended. Not "code quality
           metrics." Measurement instruments pointed at different failure modes.
         </p>
         <div class="hero-actions">
-          <a href="pages/catalog.html" class="btn btn-primary">Browse the catalog →</a>
-          <a href="pages/atlas.html" class="btn btn-ghost">Open the atlas</a>
+          <a href="/catalog/" class="btn btn-primary">Browse the catalog →</a>
+          <a href="/atlas/" class="btn btn-ghost">Open the atlas</a>
         </div>
       </div>
       <div class="hero-visual" aria-hidden="true">
@@ -1326,11 +1337,11 @@ def generate_index_page(sensors, output_dir):
       <blockquote class="big-quote">
         <p>
           No single sensor measures correctness. Coverage measures execution.
-          <a href="pages/sensors/mutation-testing.html" class="wikilink">Mutation testing</a> measures
-          test sensitivity. <a href="pages/sensors/type-checker.html" class="wikilink">Types</a> measure
+          <a href="/sensors/mutation-testing/" class="wikilink">Mutation testing</a> measures
+          test sensitivity. <a href="/sensors/type-checker/" class="wikilink">Types</a> measure
           a particular class of structural inconsistency.
-          <a href="pages/sensors/contract-tests.html" class="wikilink">Contracts</a> measure boundary
-          assumptions. <a href="pages/sensors/observability-events.html" class="wikilink">Observability</a>
+          <a href="/sensors/contract-tests/" class="wikilink">Contracts</a> measure boundary
+          assumptions. <a href="/sensors/observability-events/" class="wikilink">Observability</a>
           measures what actually happened and preserves enough dimensionality
           to investigate unknown unknowns.
         </p>
@@ -1366,7 +1377,7 @@ def generate_index_page(sensors, output_dir):
       </p>
 {scatter_html}
       <div class="stack-cta">
-        <a href="pages/atlas.html" class="btn btn-ghost">Open the atlas →</a>
+        <a href="/atlas/" class="btn btn-ghost">Open the atlas →</a>
       </div>
     </section>
 
@@ -1375,7 +1386,7 @@ def generate_index_page(sensors, output_dir):
         <span class="tag tag-family">{html.escape(featured_family.get('name', ''))}</span>
         <span class="tag tag-confidence">High oracle strength</span>
       </div>
-      <h2 class="featured-title"><a href="pages/sensors/{featured['slug']}.html" class="wikilink" style="border-bottom:none">{html.escape(featured['title'])}</a></h2>
+      <h2 class="featured-title"><a href="/sensors/{featured['slug']}/" class="wikilink" style="border-bottom:none">{html.escape(featured['title'])}</a></h2>
       <p class="featured-blurb">
         Take <code>if user.is_admin: allow()</code> and mutate it to
         <code>if not user.is_admin: allow()</code>. If all your tests still
@@ -1384,7 +1395,7 @@ def generate_index_page(sensors, output_dir):
         <em>sensitivity</em> rather than test <em>presence</em>.
       </p>
       <div class="featured-cta">
-        <a href="pages/sensors/{featured['slug']}.html">Read the full entry →</a>
+        <a href="/sensors/{featured['slug']}/">Read the full entry →</a>
       </div>
     </section>
 
@@ -1416,15 +1427,15 @@ def generate_index_page(sensors, output_dir):
         },
     }, indent=2)
 
-    page_html = html_page("Software Observatory", body, root_depth="", nav_depth="pages/", canonical="", json_ld=website_ld)
+    page_html = html_page("Software Observatory", body, canonical="", json_ld=website_ld)
     out_path = output_dir / "index.html"
+    out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w") as f:
         f.write(page_html)
 
 
 def generate_framework_page(sensors, output_dir):
     """Generate the framework page."""
-    depth = "../"
 
     body = f"""  <section class="page-header">
     <p class="eyebrow">The Framework</p>
@@ -1578,15 +1589,15 @@ def generate_framework_page(sensors, output_dir):
     </section>
   </div>"""
 
-    page_html = html_page("Framework", body, root_depth="../", nav_depth="", canonical="pages/framework.html")
-    out_path = output_dir / "pages" / "framework.html"
+    page_html = html_page("Framework", body, canonical="framework/")
+    out_path = output_dir / "framework" / "index.html"
+    out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w") as f:
         f.write(page_html)
 
 
 def generate_about_page(output_dir):
     """Generate the about page."""
-    depth = "../"
 
     body = """  <section class="page-header">
     <p class="eyebrow">About</p>
@@ -1601,7 +1612,7 @@ def generate_about_page(output_dir):
   <div class="about-content">
     <h2>The problem</h2>
     <p>
-      Software is increasingly an <a href="glossary.html#opaque-artifact" class="wikilink">opaque
+      Software is increasingly an <a href="/glossary/#opaque-artifact" class="wikilink">opaque
       artifact</a>. We cannot — and increasingly do not want to — fully
       understand every implementation. Code is produced by agents, by teams
       we'll never meet, by systems that span services we don't own. The
@@ -1613,20 +1624,20 @@ def generate_about_page(output_dir):
     <h2>Epistemic sensors, not quality metrics</h2>
     <p>
       We would not call these "quality metrics." We'd call them
-      <a href="catalog.html" class="wikilink">epistemic sensors</a>. Their
+      <a href="/catalog/" class="wikilink">epistemic sensors</a>. Their
       job is to reduce uncertainty about a system that we cannot — or
       increasingly do not want to — fully understand.
     </p>
 
     <h2>The framework</h2>
     <p>
-      The catalog is organized into <a href="catalog.html" class="wikilink">eleven
+      The catalog is organized into <a href="/catalog/" class="wikilink">eleven
       families</a> of sensors, each asking a different question about the
       system. Every sensor is characterized along
-      <a href="framework.html" class="wikilink">six dimensions</a>:
+      <a href="/framework/" class="wikilink">six dimensions</a>:
       oracle strength, independence, scope, feedback latency,
       actionability, and predictive vs retrospective. The
-      <a href="atlas.html" class="wikilink">atlas</a> arranges them as a
+      <a href="/atlas/" class="wikilink">atlas</a> arranges them as a
       navigational matrix — families on one axis, confidence stack layers
       on the other.
     </p>
@@ -1716,8 +1727,9 @@ def generate_about_page(output_dir):
     </p>
   </div>"""
 
-    page_html = html_page("About", body, root_depth="../", nav_depth="", canonical="pages/about.html")
-    out_path = output_dir / "pages" / "about.html"
+    page_html = html_page("About", body, canonical="about/")
+    out_path = output_dir / "about" / "index.html"
+    out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w") as f:
         f.write(page_html)
 
@@ -1765,8 +1777,9 @@ def generate_contact_page(output_dir):
     </p>
   </div>"""
 
-    page_html = html_page("Contact", body, root_depth="../", nav_depth="", canonical="pages/contact.html")
-    out_path = output_dir / "pages" / "contact.html"
+    page_html = html_page("Contact", body, canonical="contact/")
+    out_path = output_dir / "contact" / "index.html"
+    out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w") as f:
         f.write(page_html)
 
@@ -1825,8 +1838,9 @@ def generate_privacy_page(output_dir):
     </p>
   </div>"""
 
-    page_html = html_page("Privacy", body, root_depth="../", nav_depth="", canonical="pages/privacy.html")
-    out_path = output_dir / "pages" / "privacy.html"
+    page_html = html_page("Privacy", body, canonical="privacy/")
+    out_path = output_dir / "privacy" / "index.html"
+    out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w") as f:
         f.write(page_html)
 
@@ -1834,7 +1848,7 @@ def generate_privacy_page(output_dir):
 # ── Main ────────────────────────────────────────────────────────────────────
 
 def generate_glossary_page(output_dir):
-    """Generate pages/glossary.html: definitions of the core vocabulary used
+    """Generate the glossary page: definitions of the core vocabulary used
     across the site, cross-linked to the framework and catalog."""
 
     entries = [
@@ -1847,7 +1861,7 @@ def generate_glossary_page(output_dir):
          "testing is a sensor of test sensitivity; observability events are "
          "sensors of what actually happened. Each sensor measures one thing — "
          "no single sensor measures correctness. The catalog is organized into "
-         '<a href="catalog.html" class="wikilink">eleven families</a> of '
+         '<a href="/catalog/" class="wikilink">eleven families</a> of '
          "epistemic sensor, each asking a different question about the system."),
         ("opaque-artifact",
          "Opaque artifact",
@@ -1865,14 +1879,14 @@ def generate_glossary_page(output_dir):
          "— the implementation cannot argue with it. A test assertion is a "
          "strong oracle for the specific case it checks. A complexity metric "
          "is a weak oracle — high complexity doesn't prove anything is wrong. "
-         '<a href="framework.html" class="wikilink">Oracle strength</a> is one '
+         '<a href="/framework/" class="wikilink">Oracle strength</a> is one '
          "of the six dimensions every sensor is characterized along."),
         ("oracle-strength",
          "Oracle strength",
          "How confidently a sensor knows that something is wrong. The scale "
          "runs from maximum (a compiler error — the code cannot argue) to low "
          "(a complexity metric — it suggests risk but proves nothing). See the "
-         '<a href="framework.html" class="wikilink">framework page</a> for the '
+         '<a href="/framework/" class="wikilink">framework page</a> for the '
          "full ranking."),
         ("independence",
          "Independence",
@@ -1882,15 +1896,15 @@ def generate_glossary_page(output_dir):
          "the code cannot talk its way past a type error. Independence is "
          "especially important for AI-generated code: the producer and the "
          "evaluator should be separated wherever possible. See "
-         '<a href="framework.html" class="wikilink">the framework</a> and '
-         '<a href="sensors/producer-evaluator-separation.html" class="wikilink">'
+         '<a href="/framework/" class="wikilink">the framework</a> and '
+         '<a href="/sensors/producer-evaluator-separation/" class="wikilink">'
          "producer-evaluator separation</a>."),
         ("scope",
          "Scope",
          "What level of the system the sensor tells you about: a single line, "
          "a function, a module, a service, the whole system, or a user journey. "
          "A type checker has function-level scope; observability events have "
-         'system-level scope. See <a href="framework.html" class="wikilink">'
+         'system-level scope. See <a href="/framework/" class="wikilink">'
          "the framework</a>."),
         ("feedback-latency",
          "Feedback latency",
@@ -1898,12 +1912,12 @@ def generate_glossary_page(output_dir):
          "milliseconds; an escaped-defect-rate sensor reports in months. "
          "Latency determines where in the lifecycle a sensor is useful — you "
          "can't gate a merge on a signal that takes weeks. See "
-         '<a href="framework.html" class="wikilink">the framework</a>.'),
+         '<a href="/framework/" class="wikilink">the framework</a>.'),
         ("actionability",
          "Actionability",
          "Whether a sensor merely flags a problem or tells you what to fix. A "
          "guiding sensor doesn't just say \"bad\" — it tells the agent what to "
-         'do next. See <a href="framework.html" class="wikilink">the framework</a>.'),
+         'do next. See <a href="/framework/" class="wikilink">the framework</a>.'),
         ("guiding-sensor",
          "Guiding sensor",
          "A sensor whose feedback directs the next action, not just whether "
@@ -1918,13 +1932,13 @@ def generate_glossary_page(output_dir):
          "error before merge) or \"this looks like things that became wrong "
          "before\" (retrospective — revert rate, incident correlation). "
          'Predictive sensors gate; retrospective sensors warn. See '
-         '<a href="framework.html" class="wikilink">the framework</a>.'),
+         '<a href="/framework/" class="wikilink">the framework</a>.'),
         ("producer-evaluator-separation",
          "Producer-evaluator separation",
          "The principle that the thing producing the code should not be the "
          "thing evaluating it. A model writing <code>tests/</code> is allowed to "
          "write tests that make itself pass. Independence is the dimension that "
-         'captures this; see <a href="sensors/producer-evaluator-separation.html" '
+         'captures this; see <a href="/sensors/producer-evaluator-separation/" '
          'class="wikilink">the entry</a>.'),
         ("computational-gate",
          "Computational gate",
@@ -1932,14 +1946,14 @@ def generate_glossary_page(output_dir):
          "command succeeds — not a prose rule that says \"verify this.\" An "
          "instruction is weaker than a gate; a gate is weaker than a gate with "
          "no bypass path. See "
-         '<a href="sensors/computational-gates.html" class="wikilink">the entry</a>.'),
+         '<a href="/sensors/computational-gates/" class="wikilink">the entry</a>.'),
         ("confidence-stack",
          "Confidence stack",
          "The layers of evidence that accumulate as code moves from authoring "
          "to production: compilation, types, tests, mutation, integration, "
          "canary, production events, outcomes. No single layer is sufficient; "
          "the combination constrains uncertainty from multiple directions. "
-         'The <a href="atlas.html" class="wikilink">atlas</a> arranges the '
+         'The <a href="/atlas/" class="wikilink">atlas</a> arranges the '
          "stack as a navigational matrix."),
         ("metamorphic-testing",
          "Metamorphic testing",
@@ -1948,7 +1962,7 @@ def generate_glossary_page(output_dir):
          "<code>f(x) == f(-x)</code> for a square root, then "
          "<code>sqrt(4) == sqrt(-4)</code> must hold. You don't need an oracle; "
          "you need a relation. See "
-         '<a href="sensors/metamorphic-testing.html" class="wikilink">the entry</a>.'),
+         '<a href="/sensors/metamorphic-testing/" class="wikilink">the entry</a>.'),
         ("high-cardinality",
          "High cardinality",
          "A property of observability events: each event carries enough "
@@ -1956,14 +1970,14 @@ def generate_glossary_page(output_dir):
          "that you can slice the data along dimensions you didn't know you'd "
          "need. The opposite of pre-aggregated metrics, which answer only "
          "predetermined questions. See "
-         '<a href="sensors/observability-events.html" class="wikilink">the entry</a>.'),
+         '<a href="/sensors/observability-events/" class="wikilink">the entry</a>.'),
         ("agent-sensor-stack",
          "Agent sensor stack",
          "The confidence stack applied to AI-generated code: each layer is a "
          "gate the agent's output must pass before it reaches production. The "
          "key principle is that the agent cannot self-certify — the sensors "
          "declare success. See "
-         '<a href="sensors/agent-sensor-stack.html" class="wikilink">the entry</a>.'),
+         '<a href="/sensors/agent-sensor-stack/" class="wikilink">the entry</a>.'),
     ]
 
     sections = ""
@@ -1988,14 +2002,15 @@ def generate_glossary_page(output_dir):
 {sections.rstrip()}
   </div>"""
 
-    page_html = html_page("Glossary", body, root_depth="../", nav_depth="", canonical="pages/glossary.html")
-    out_path = output_dir / "pages" / "glossary.html"
+    page_html = html_page("Glossary", body, canonical="glossary/")
+    out_path = output_dir / "glossary" / "index.html"
+    out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w") as f:
         f.write(page_html)
 
 
 def generate_categories_page(sensors, output_dir):
-    """Generate pages/categories.html: an index of all non-family categories
+    """Generate the categories page: an index of all non-family categories
     with the sensors in each, anchorable by slug."""
     # Collect non-family categories (family-matching ones already link to
     # the catalog, so we only list categories that have no family match).
@@ -2013,7 +2028,7 @@ def generate_categories_page(sensors, output_dir):
         cat_slug = re.sub(r"[^a-z0-9]+", "-", cat.lower()).strip("-")
         items = ""
         for s in sorted(cats[cat], key=lambda x: x["title"]):
-            items += f'        <li><a href="sensors/{s["slug"]}.html">{html.escape(s["title"])}</a></li>\n'
+            items += f'        <li><a href="/sensors/{s["slug"]}/">{html.escape(s["title"])}</a></li>\n'
         sections += f"""      <section class="category-section">
         <h2 class="category-title" id="{cat_slug}">{html.escape(cat)}</h2>
         <ul class="category-sensor-list">
@@ -2027,7 +2042,7 @@ def generate_categories_page(sensors, output_dir):
     <h1 class="page-title">Sensor Categories</h1>
     <p class="page-lede">
       Cross-cutting tags that span sensor families. Family-level categories
-      link to the <a href="catalog.html" class="wikilink">catalog</a>; the
+      link to the <a href="/catalog/" class="wikilink">catalog</a>; the
       tags below collect sensors across families that share a theme.
     </p>
   </section>
@@ -2036,8 +2051,9 @@ def generate_categories_page(sensors, output_dir):
 {sections.rstrip()}
   </div>"""
 
-    page_html = html_page("Sensor Categories", body, root_depth="../", nav_depth="", canonical="pages/categories.html")
-    out_path = output_dir / "pages" / "categories.html"
+    page_html = html_page("Sensor Categories", body, canonical="categories/")
+    out_path = output_dir / "categories" / "index.html"
+    out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w") as f:
         f.write(page_html)
 
@@ -2052,7 +2068,7 @@ def generate_search_index(sensors, output_dir):
             "title": f["name"],
             "kind": "family",
             "family": f["name"],
-            "url": f"pages/catalog.html#{f['slug']}",
+            "url": f"/catalog/#{f['slug']}",
             "blurb": f["question"],
         })
     for s in sensors:
@@ -2062,7 +2078,7 @@ def generate_search_index(sensors, output_dir):
             "title": s["title"],
             "kind": "sensor",
             "family": fam.get("name", ""),
-            "url": f"pages/sensors/{s['slug']}.html",
+            "url": f"/sensors/{s['slug']}/",
             "blurb": blurb,
         })
     with open(output_dir / "search-index.json", "w") as f:
@@ -2076,17 +2092,17 @@ def generate_sitemap(sensors, output_dir):
     """Write sitemap.xml listing every indexable URL."""
     urls = [
         ("", ""),
-        ("pages/catalog.html", ""),
-        ("pages/atlas.html", ""),
-        ("pages/framework.html", ""),
-        ("pages/about.html", ""),
-        ("pages/contact.html", ""),
-        ("pages/privacy.html", ""),
-        ("pages/glossary.html", ""),
-        ("pages/categories.html", ""),
+        ("catalog/", ""),
+        ("atlas/", ""),
+        ("framework/", ""),
+        ("about/", ""),
+        ("contact/", ""),
+        ("privacy/", ""),
+        ("glossary/", ""),
+        ("categories/", ""),
     ]
     for s in sensors:
-        urls.append((f"pages/sensors/{s['slug']}.html", ""))
+        urls.append((f"sensors/{s['slug']}/", ""))
     lines = ['<?xml version="1.0" encoding="UTF-8"?>',
              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for path, _ in urls:
@@ -2123,8 +2139,8 @@ def generate_rss(sensors, output_dir):
         blurb = re.sub(r"<[^>]+>", "", s.get("body_html", "")).split("\n")[0][:200]
         items += f"""    <item>
       <title>{html.escape(s['title'])}</title>
-      <link>{SITE_URL}/pages/sensors/{s['slug']}.html</link>
-      <guid>{SITE_URL}/pages/sensors/{s['slug']}.html</guid>
+      <link>{SITE_URL}/sensors/{s['slug']}/</link>
+      <guid>{SITE_URL}/sensors/{s['slug']}/</guid>
       <description>{html.escape(blurb)}</description>
       <category>{html.escape(fam.get('name', ''))}</category>
     </item>
@@ -2157,12 +2173,12 @@ def generate_404(output_dir):
   <div class="about-content">
     <h2>Find your way</h2>
     <ul>
-      <li><a href="index.html" class="wikilink">Homepage</a> — the thesis and the confidence landscape</li>
-      <li><a href="pages/catalog.html" class="wikilink">Sensor catalog</a> — all 56 sensors across 11 families</li>
-      <li><a href="pages/atlas.html" class="wikilink">Sensor atlas</a> — families arranged by lifecycle stage</li>
-      <li><a href="pages/framework.html" class="wikilink">Framework</a> — the six dimensions every sensor is characterized along</li>
-      <li><a href="pages/glossary.html" class="wikilink">Glossary</a> — definitions of the core vocabulary</li>
-      <li><a href="pages/categories.html" class="wikilink">Categories</a> — cross-cutting tags that span families</li>
+      <li><a href="/" class="wikilink">Homepage</a> — the thesis and the confidence landscape</li>
+      <li><a href="/catalog/" class="wikilink">Sensor catalog</a> — all 56 sensors across 11 families</li>
+      <li><a href="/atlas/" class="wikilink">Sensor atlas</a> — families arranged by lifecycle stage</li>
+      <li><a href="/framework/" class="wikilink">Framework</a> — the six dimensions every sensor is characterized along</li>
+      <li><a href="/glossary/" class="wikilink">Glossary</a> — definitions of the core vocabulary</li>
+      <li><a href="/categories/" class="wikilink">Categories</a> — cross-cutting tags that span families</li>
     </ul>
     <h2>For agents</h2>
     <p>
@@ -2171,7 +2187,7 @@ def generate_404(output_dir):
       Agent instructions: <a href="llms.txt">/llms.txt</a>.
     </p>
   </div>"""
-    page_html = html_page("Not found", body, root_depth="", nav_depth="pages/")
+    page_html = html_page("Not found", body, canonical="404.html")
     with open(output_dir / "404.html", "w") as f:
         f.write(page_html)
 
@@ -2205,11 +2221,11 @@ def generate_llms_txt(sensors, output_dir):
         "",
         "## How to navigate",
         "",
-        "- Catalog: /pages/catalog.html — all 56 sensors organized by family",
-        "- Atlas: /pages/atlas.html — families arranged as a matrix by lifecycle stage",
-        "- Framework: /pages/framework.html — the six dimensions",
-        "- Glossary: /pages/glossary.html — definitions of core terms (oracle, independence, epistemic sensor, etc.)",
-        "- Individual entries: /pages/sensors/<slug>.html (e.g. /pages/sensors/mutation-testing.html)",
+        "- Catalog: /catalog/ — all 56 sensors organized by family",
+        "- Atlas: /atlas/ — families arranged as a matrix by lifecycle stage",
+        "- Framework: /framework/ — the six dimensions",
+        "- Glossary: /glossary/ — definitions of core terms (oracle, independence, epistemic sensor, etc.)",
+        "- Individual entries: /sensors/<slug>/ (e.g. /sensors/mutation-testing/)",
         "",
         "## Machine-readable surfaces",
         "",
@@ -2221,7 +2237,7 @@ def generate_llms_txt(sensors, output_dir):
         "",
     ]
     for f in FAMILIES:
-        lines.append(f"- {f['name']}: {f['question']} (see /pages/catalog.html#{f['slug']})")
+        lines.append(f"- {f['name']}: {f['question']} (see /catalog/#{f['slug']})")
     lines.append("")
     with open(output_dir / "llms.txt", "w") as f:
         f.write("\n".join(lines))
@@ -2242,7 +2258,15 @@ def main():
         print(f"  {sid}: {len(bls)} backlinks")
 
     output_dir = OUTPUT_DIR
-    (output_dir / "pages" / "sensors").mkdir(parents=True, exist_ok=True)
+
+    # Remove stale output from the old /pages/*.html layout
+    stale_pages = output_dir / "pages"
+    if stale_pages.exists():
+        shutil.rmtree(stale_pages)
+    for stale in ("index.html",):
+        pass  # index.html is still the root output, regenerated below
+
+    (output_dir / "sensors").mkdir(parents=True, exist_ok=True)
 
     print("Generating search index...")
     generate_search_index(sensors, output_dir)
@@ -2267,7 +2291,6 @@ def main():
     print("  llms.txt")
 
     # Copy markdown sources for content negotiation (Accept: text/markdown)
-    import shutil
     md_dir = output_dir / "md" / "sensors"
     md_dir.mkdir(parents=True, exist_ok=True)
     for filepath in sorted((CONTENT_DIR / "sensors").glob("*.md")):
@@ -2279,32 +2302,32 @@ def main():
     print("  index.html")
 
     generate_catalog_page(sensors, output_dir)
-    print("  pages/catalog.html")
+    print("  catalog/")
 
     generate_atlas_page(sensors, output_dir)
-    print("  pages/atlas.html")
+    print("  atlas/")
 
     generate_framework_page(sensors, output_dir)
-    print("  pages/framework.html")
+    print("  framework/")
 
     generate_about_page(output_dir)
-    print("  pages/about.html")
+    print("  about/")
 
     generate_contact_page(output_dir)
-    print("  pages/contact.html")
+    print("  contact/")
 
     generate_privacy_page(output_dir)
-    print("  pages/privacy.html")
+    print("  privacy/")
 
     generate_glossary_page(output_dir)
-    print("  pages/glossary.html")
+    print("  glossary/")
 
     generate_categories_page(sensors, output_dir)
-    print("  pages/categories.html")
+    print("  categories/")
 
     for sensor in sensors:
         generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, output_dir)
-        print(f"  pages/sensors/{sensor['slug']}.html")
+        print(f"  sensors/{sensor['slug']}/")
 
     print("Exporting CLI dataset...")
     import export_cli_data

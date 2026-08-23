@@ -4,11 +4,17 @@ title: Runtime Invariants
 family: invariants
 family_num: 4
 oracle: high
+oracle_note: 'a violation is definitive evidence of a bug'
 independence: high
+independence_note: 'observes the system from outside'
 scope: system
+scope_note: 'domain level'
 latency: hours-seconds
+latency_note: 'batch to real-time'
 actionability: guiding
+actionability_note: "17 payments have no order transition"
 type: retrospective
+type_note: 'detects violations after they occur'
 stack_level: production-behavior
 categories:
 - Invariants
@@ -78,16 +84,78 @@ different cost point and latency.
 > the implementation. You don't need to read the code. You need to observe
 > the event stream and ask: does this invariant hold?
 
-## Sensor properties
+## In practice
 
-| Property | Value |
-|----------|-------|
-| Oracle strength | High — a violation is definitive evidence of a bug |
-| Independence | High — observes the system from outside |
-| Scope | System-level (domain-level) |
-| Feedback latency | Hours (batch) to seconds (real-time) |
-| Actionability | Guiding — "17 payments have no order transition" |
-| Type | Retrospective — detects violations after they occur |
+A reading is a violation event from the checker watching the event
+stream, naming the invariant, the count, and enough keys to investigate:
+
+```
+INVARIANT VIOLATION  payments_reconcile
+rule:     every successful payment implies an order transition to paid
+window:   2026-08-19T00:00Z .. 2026-08-19T06:00Z
+violated: 17 of 5213 payments (0.33%)
+sample:   payment_id=p_9f2c order_id=o_1187 (no transition)
+          payment_id=p_9f31 order_id=o_1202 (no transition)
+```
+
+Three habits for reading it well:
+
+- **Read the denominator first.** Seventeen violations is an incident
+  if the window held two hundred payments and noise if it held five
+  million. The rate, not the count, decides urgency.
+- **Sample keys are for tracing, not counting.** The listed IDs lead
+  into traces and logs where the cause lives; the count tells you the
+  size. Neither answers alone.
+- **A silent invariant is a broken one.** If the checker has not
+  reported in its expected window, assume it stopped reading the
+  stream before assuming the system got correct. The feed it depends
+  on is the [observability events](observability-events.html) layer.
+
+## How it gets gamed
+
+Invariants are checked by software, and software is configured by the
+same people shipping the changes they check:
+
+- **Silence the alert, keep the rule.** The checker still runs and the
+  dashboard still updates, but nobody is paged. The violation count
+  climbs in a tab nobody opens.
+- **Narrow the scope.** The check now excludes a tenant, a region, or
+  a time window where it "fires too often," and the excluded slice is
+  exactly where the risky change lives.
+- **Loosen the threshold.** Seventeen violations becomes "violation
+  rate above 1%," which passes, and the bar keeps rising as the
+  system degrades.
+- **Fix the symptom, not the write.** Violating rows get scrubbed
+  before the nightly check runs. The invariant passes; the cause is
+  still writing bad data.
+
+The meta-signal is the violation rate before any exclusion, kept next
+to the size of the exclusion list. If exclusions grow while the rate
+falls, the sensor is being tuned out of existence.
+
+## Response playbook
+
+When an invariant violation fires:
+
+1. **Triage by the denominator, not the count.** Seventeen violations
+   out of two hundred payments is a stop-the-world event; out of five
+   million it is a ticket. Compute the rate before paging anyone.
+2. **Trace the sample keys.** The listed IDs lead into traces, logs,
+   and the event stream. Follow one end-to-end before generalizing;
+   the first sample usually reveals the mechanism, and the mechanism
+   tells you whether the remaining violations share a cause.
+3. **Determine whether the write path is still open.** If the cause
+   is a running deploy or a batch job in flight, stop it. An
+   invariant that fires while the cause keeps writing will keep
+   firing; investigate the backlog after the tap is closed.
+4. **Reconcile the affected records.** Once the cause is stopped,
+   decide which violations are repairable in place and which need
+   manual review. Mark the unrepaired ones so the next invariant run
+   does not re-alert on them forever.
+5. **Write the failing case into the test suite.** The production
+   violation is a specification. The same invariant, checked against
+   recorded events, belongs in CI so the next version fails before it
+   ships.
 
 ## What it cannot detect
 

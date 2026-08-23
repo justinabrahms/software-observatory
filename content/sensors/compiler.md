@@ -4,10 +4,13 @@ title: Compiler
 family: structural
 family_num: '01'
 oracle: maximum
+oracle_note: 'the implementation cannot argue'
 independence: maximum
+independence_note: 'the compiler is external to the code'
 scope: module
 latency: milliseconds
 actionability: guiding
+actionability_note: 'exact error location and message'
 type: predictive
 stack_level: compilation
 categories:
@@ -48,16 +51,46 @@ module structure, and produces an artifact. If the compiler fails, no
 downstream sensor can run. This makes it the foundation of the [confidence
 stack](atlas.html): every other sensor assumes compilation succeeded.
 
-## Sensor properties
+## In practice
 
-| Property | Value |
-|----------|-------|
-| Oracle strength | Maximum — the implementation cannot argue |
-| Independence | Maximum — the compiler is external to the code |
-| Scope | Module-level |
-| Feedback latency | Milliseconds |
-| Actionability | Guiding — exact error location and message |
-| Type | Predictive |
+A compiler reading is the most direct verdict in the catalog: pass
+produces an artifact, fail produces a diagnostic pinned to a file,
+line, and column. There is no score to interpret and no threshold to
+set.
+
+```
+error[E0308]: mismatched types
+  --> src/invoice.rs:42:12
+   |
+42 |     return total_with_tax;
+   |            ^^^^^^^^^^^^^^ expected `u64`, found `f64`
+
+error: could not compile `billing` (lib) due to 1 previous error
+```
+
+Two habits keep the reading honest. Fix diagnostics in the order they
+appear, because one bad signature can cascade into dozens of
+downstream errors, and clearing the first one is cheaper than
+triaging the avalanche. And treat warnings as debts due now: an
+unused result or an unreachable arm is the compiler downgrading a
+verdict it could have made hard, and a codebase that ignores warnings
+is training everyone to ignore errors too.
+
+## Response playbook
+
+When the compiler fires, the response is mechanical:
+
+1. **Read the first error, not the last.** Later diagnostics are
+   often consequences of the first failure. Fix, recompile, re-read.
+2. **Trust the diagnostic over your memory of the code.** The
+   compiler read the file you actually wrote, not the one you
+   intended.
+3. **If the message contradicts the source, rebuild clean.** Stale
+   incremental state is the usual cause; clear the build cache and
+   compile from scratch before suspecting the toolchain.
+4. **Never silence the message to pass the build.** A cast, an
+   `unsafe` block, or a suppression attribute converts a
+   maximum-oracle verdict into a deferred bug.
 
 ## What it cannot detect
 

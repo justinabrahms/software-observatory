@@ -123,11 +123,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (searchBox) {
     const input = searchBox.querySelector('.search-input');
     const results = searchBox.querySelector('.search-results');
-    const rootDepth = searchBox.dataset.rootDepth || '';
     let index = null;
     let activeIdx = -1;
 
-    fetch(rootDepth + 'search-index.json')
+    fetch('/search-index.json')
       .then(r => r.json())
       .then(data => { index = data; })
       .catch(() => {});
@@ -140,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
       results.innerHTML = items.map((item, i) => `
-        <a class="search-result${i === activeIdx ? ' active' : ''}" href="${rootDepth}${item.url}">
+        <a class="search-result${i === activeIdx ? ' active' : ''}" href="${item.url}">
           <div class="search-result-title">${item.title}</div>
           <div class="search-result-meta">${item.kind === 'family' ? 'Family' : item.family}</div>
           ${item.blurb ? `<div class="search-result-blurb">${item.blurb}</div>` : ''}

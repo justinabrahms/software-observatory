@@ -4,11 +4,15 @@ title: Type Checker
 family: structural
 family_num: 1
 oracle: maximum
+oracle_note: 'a type error is a fact, not an opinion'
 independence: maximum
+independence_note: 'the implementation cannot game the compiler'
 scope: module
 latency: milliseconds
 actionability: guiding
+actionability_note: 'tells you exactly what''s wrong and where'
 type: predictive
+type_note: 'catches errors before runtime'
 stack_level: static-analysis
 categories:
 - Structural
@@ -78,16 +82,43 @@ artifact. This makes them the baseline of the [confidence stack](atlas.html).
 > need a bare `Foo`, probably unwrap it or change the return type." That's
 > actionability.
 
-## Sensor properties
+## In practice
 
-| Property | Value |
-|----------|-------|
-| Oracle strength | Maximum — a type error is a fact, not an opinion |
-| Independence | Maximum — the implementation cannot game the compiler |
-| Scope | Module-level |
-| Feedback latency | Milliseconds |
-| Actionability | Guiding — tells you exactly what's wrong and where |
-| Type | Predictive — catches errors before runtime |
+A type-checker reading is a diagnostic naming both sides of a
+mismatch, which is what makes it actionable rather than merely
+negative:
+
+```
+checkout.py:87: error: Argument 1 to "apply_discount" has
+  incompatible type "float"; expected "Decimal"  [arg-type]
+Found 1 error in 1 file (checked 214 source files)
+```
+
+In a gradual type system the reading is only as strong as the checked
+surface: mypy over an `Any`-riddled codebase, or `tsc` with
+`strict: false`, reports a subset of the truth. Read the diagnostic
+together with the coverage of the checker itself. And when the
+message names two types that look identical, suspect two distinct
+types with the same name from different modules, or a generic
+parameter that failed to unify. The checker is precise about this;
+the reader usually is not.
+
+## Response playbook
+
+When the checker fires, the response is a decision, not a reflex:
+
+1. **Fix at the source of the mismatch, not at its symptom.** If a
+   wrong value propagated through five call sites, correcting the
+   producer deletes all five errors at once.
+2. **If the type is wrong, change the type; if the code is wrong,
+   change the code.** Both are legitimate. Guessing which without
+   checking the intent is how type errors get "fixed" by casts.
+3. **Reach for a cast or `ignore` only after the first two fail,**
+   and treat each one as a reviewable artifact. A cast is the
+   author asserting the checker lacks information it actually has.
+4. **Tighten the checker after every real catch.** A bug the checker
+   missed is an argument for a stricter mode or a narrower type, not
+   for moving on.
 
 ## What it cannot detect
 

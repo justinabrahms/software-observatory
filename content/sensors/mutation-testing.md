@@ -4,11 +4,15 @@ title: Mutation Testing
 family: test-effectiveness
 family_num: 3
 oracle: high
+oracle_note: 'a surviving mutation is strong evidence of a test gap'
 independence: medium
+independence_note: 'the test author writes the tests being evaluated'
 scope: function
 latency: minutes-hours
 actionability: guiding
+actionability_note: 'shows the exact untested mutation'
 type: adversarial
+type_note: 'it actively tries to make tests fail'
 stack_level: mutation-testing
 categories:
 - Test Effectiveness
@@ -97,16 +101,76 @@ if user.is_admin: deny()         # flipped outcome
 > to detection — is the foundation of test effectiveness as a distinct
 > category from test presence.
 
-## Sensor properties
+## In practice
 
-| Property | Value |
-|----------|-------|
-| Oracle strength | High — a surviving mutation is strong evidence of a test gap |
-| Independence | Medium — the test author writes the tests being evaluated |
-| Scope | Function-level |
-| Feedback latency | Minutes to hours |
-| Actionability | Guiding — shows the exact untested mutation |
-| Type | Adversarial — it actively tries to make tests fail |
+The reading is a report that classifies every mutant, and the
+classification is the signal:
+
+| Outcome | Count | What it means |
+|---------|-------|---------------|
+| Killed | 118 | Some test failed against the mutant |
+| Survived | 12 | No test noticed the changed behavior |
+| Timeout | 4 | The mutant made a test hang: detected |
+| No coverage | 8 | The code never ran under any test |
+
+```
+142 mutants: 118 killed, 12 survived, 4 timed out, 8 no coverage
+Mutation score: 83.1%
+```
+
+Reading it well:
+
+1. **Read survivors as a prioritized gap list.** Each survivor is a
+   behavior the suite lets change without noticing, named by file and
+   line. In code that matters, a survivor is a missing assertion, not
+   a statistic.
+2. **Know what counts as detected.** Timeouts are kills: the suite
+   noticed the mutant by hanging. No-coverage mutants are a coverage
+   question wearing a mutation costume, and belong with the coverage
+   reading rather than the score.
+3. **Treat the threshold as a floor, not a target.** An 80% gate says
+   the suite has minimum sensitivity; it does not say the remaining
+   fifth is safe. A survivor in a critical path is worth killing even
+   when the score already passes.
+4. **Compare scores per module, not in aggregate.** A project-wide
+   number averages a careful module with a careless one. The
+   module-level breakdown is where the reading lives.
+
+## How it gets gamed
+
+- **Exempt the hard files.** Excluding slow or messy modules from
+  the mutation run keeps the score and removes the reading. The
+  excluded files are usually the ones that need the sensor most.
+- **Mark survivors as equivalent.** Labeling a live mutant
+  "equivalent" closes the finding without killing it. Some mutants
+  are truly equivalent; a rising exemption rate is a budget being
+  spent.
+- **Kill mutants with weak tests.** A new test that runs the mutated
+  line but asserts nothing about it is effort that moves no score.
+  The assertion must depend on the mutated behavior.
+- **Move the threshold after missing it.** Lowering the gate when
+  the score falls converts a gate into a decoration.
+
+The meta-signal is the equivalent-mutant exemption rate. Track it; it
+is the mutation-score version of a lint suppression.
+
+## Response playbook
+
+When mutants survive:
+
+1. **Treat each survivor as a named gap.** The report gives file,
+   line, and the mutated expression. That is a specification for a
+   missing assertion, not a statistic to average away.
+2. **Add the assertion the mutant demands.** If negating a condition
+   survives, no test depends on that condition. Write the test that
+   does, using the mutant as the spec.
+3. **Prioritize by blast radius.** Survivors in input validation,
+   billing, and access control come first. Survivors in log
+   formatting can wait, and some deserve the exemption they get.
+4. **Re-run against the same mutant set.** A score that moves while
+   the mutants underneath change is two readings from two different
+   sensors. Pin the operator set and the file list before comparing
+   runs.
 
 ## What it cannot detect
 

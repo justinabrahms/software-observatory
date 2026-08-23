@@ -4,11 +4,15 @@ title: Contract Tests
 family: behavioral
 family_num: 2
 oracle: high
+oracle_note: 'a contract violation is a definite bug'
 independence: high
+independence_note: 'consumer defines the contract'
 scope: service-boundary
 latency: minutes
 actionability: guiding
+actionability_note: 'shows exactly which contract clause was violated'
 type: predictive
+type_note: 'catches breaking changes before deployment'
 stack_level: integration-tests
 categories:
 - Behavioral
@@ -86,16 +90,72 @@ deploy independently.
 > of what type checkers are at the module level: both enforce structural
 > promises, but at different scopes and different feedback latencies.
 
-## Sensor properties
+## In practice
 
-| Property | Value |
-|----------|-------|
-| Oracle strength | High — a contract violation is a definite bug |
-| Independence | High when consumer-driven — consumer defines the contract |
-| Scope | Service-boundary-level |
-| Feedback latency | Minutes |
-| Actionability | Guiding — shows exactly which contract clause was violated |
-| Type | Predictive — catches breaking changes before deployment |
+A reading is a pact verification failure that names the broken clause
+and the consumer it belongs to:
+
+```
+Verifying a pact between Orders (consumer) and Billing (provider)
+
+  A request for invoice 42
+    GET /invoices/42
+      returns a response which
+        has status code 200
+        includes headers
+          "Content-Type" with value "application/json"  FAILED
+            actual value: "text/html"
+        has a matching body                             FAILED
+          $.amount: expected number, got string
+
+2 interactions, 2 failures
+```
+
+Reading it well:
+
+1. **Read the clause, not just the red.** Status, header, and body
+   failures have different owners and different fixes. The clause
+   names which promise broke.
+2. **The failure belongs to the change, not the expectation.** The
+   consumer stated its assumption first; the provider moved. The fix
+   direction is usually to hold the provider to the promise, not to
+   relax the expectation.
+3. **A passing pact is one-directional evidence.** It says the
+   provider honors the recorded expectations. It does not say the
+   expectations are complete: a consumer that never wrote a pact is
+   a gap the sensor cannot see.
+
+## How it gets gamed
+
+- **Delete or weaken the pact.** Removing an expectation the
+  provider now violates turns red to green without fixing the
+  provider. The consumer still holds the old assumption, so the
+  breakage moves from the report to production.
+- **Verify against a stub.** Running the provider side of a pact
+  against a mock instead of the real service passes the check and
+  tests nothing.
+- **Let pacts go stale.** A pact not re-verified after a provider
+  change is an assumption wearing a check mark.
+
+The meta-signal is the pact count per consumer over time. A pact file
+that shrinks after a failure is the sensor being overridden.
+
+## Response playbook
+
+When a contract test fails:
+
+1. **Read the broken clause.** Status, header, and body failures
+   have different owners. The clause names which promise broke and
+   which consumer depends on it.
+2. **Assume the provider is wrong until shown otherwise.** The
+   consumer stated its assumption before the provider changed. The
+   default fix is restoring the promise, not relaxing the pact.
+3. **If the consumer is wrong, change both sides together.** Update
+   the pact and the consumer in the same change, so the window where
+   neither matches is zero.
+4. **Check the other consumers.** A broken clause usually breaks
+   every consumer that holds it. The report names one; the pact
+   broker lists the rest.
 
 ## What it cannot detect
 

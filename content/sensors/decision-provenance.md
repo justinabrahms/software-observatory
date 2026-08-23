@@ -4,10 +4,13 @@ title: Decision Provenance
 family: comprehension
 family_num: '10'
 oracle: low
+oracle_note: 'missing provenance is a risk factor'
 independence: high
+independence_note: 'history is independent of current code'
 scope: module
 latency: days
 actionability: exploratory
+actionability_note: 'shows whether provenance exists'
 type: retrospective
 stack_level: static-analysis
 categories:
@@ -48,6 +51,49 @@ discussions, and constraints that led to the current code. When provenance
 is lost, the code becomes untouchable — nobody knows whether it can be
 changed safely.
 
+## In practice
+
+The reading is an attempted reconstruction: pick a line of code that
+looks wrong, and trace how far back the "why" survives. A real attempt
+on one suspicious rounding rule:
+
+```text
+$ git blame -L 412,412 src/billing/pricing.py
+9f3c2ab (dana 2023-06-14) rate = round_half_even(rate, 6)
+
+$ git log -S round_half_even --oneline -- src/billing/pricing.py
+9f3c2ab fix: banker's rounding for cross-border rates
+1b7e0aa initial pricing module
+
+$ git show 9f3c2ab --stat | tail -1
+ 3 files changed, 9 insertions(+), 2 deletions(-)
+
+$ ls docs/adr/ | grep -i round
+(no match)
+```
+
+| Question | Source checked | Answer found |
+|----------|----------------|--------------|
+| What does this line do? | code | yes |
+| When did it change? | git log | yes |
+| Why banker's rounding? | commit subject only | partial |
+| What was rejected instead? | nowhere | no |
+| Is the reason still valid? | nobody knows | no |
+
+Reading it well:
+
+1. **Provenance is a gradient, not a bit.** "Commit subject says why"
+   is weak provenance; an ADR with rejected alternatives is strong.
+   Grade what you find, do not score it binary.
+2. **The reconstruction is the measurement.** If it took an hour of
+   digging and three tools to answer one why-question, that cost is
+   the reading, and every future change to this code pays it again.
+3. **Follow links in both directions.** An ADR that nobody links from
+   the code is as good as missing; a comment that names its ADR is the
+   whole point.
+4. **Age matters.** Provenance answers why code was added; a separate
+   question is why it is still there. Old records need re-justification.
+
 ## How it's recorded
 
 - **ADRs** (Architecture Decision Records, Michael Nygard's pattern) —
@@ -62,16 +108,45 @@ Provenance decays — an ADR from three years ago may explain why the code
 was *added* but not why it's *still there*. Periodic re-justification keeps
 provenance alive.
 
-## Sensor properties
+## How it gets gamed
 
-| Property | Value |
-|----------|-------|
-| Oracle strength | Low — missing provenance is a risk factor |
-| Independence | High — history is independent of current code |
-| Scope | Module-level |
-| Feedback latency | Days |
-| Actionability | Exploratory — shows whether provenance exists |
-| Type | Retrospective |
+- **Retroactive ADRs.** The decision is made, shipped, and debated; the
+  ADR is written weeks later to justify what already exists. The record
+  reads clean, but its context section is rationalization and its
+  alternatives were never seriously weighed.
+- **Template-filler records.** "Context: we needed a queue. Decision:
+  use Kafka." An ADR that fills every section while saying nothing
+  passes any count-based dashboard and explains nothing.
+- **Record far from the code.** The decision lives in a wiki, a deck,
+  or a channel the code never links to; provenance technically exists
+  and is practically unrecoverable.
+- **Squash away the discussion.** Squash-merging a long debate into a
+  one-line commit deletes the very record this sensor reads; the PR
+  body becomes the sole artifact, and it is rarely written for
+  archaeologists.
+
+The meta-signal is the rejected-alternatives section: ADRs with none
+were almost certainly written after the decision.
+
+## Response playbook
+
+When a reconstruction attempt comes back empty:
+
+1. **Exhaust the artifacts before asking a person.** `git blame`,
+   `git log -S`, linked tickets, and PR search take twenty minutes and
+   sometimes beat tribal memory.
+2. **Ask the author, then write it down.** If the answer lives in a
+   person's head, capture it as an ADR or a code comment the same day;
+   otherwise the next dig pays the full cost again.
+3. **Mark the gap explicitly.** If nobody knows why the code is there,
+   say so at the site: "reason lost, do not change without re-deriving
+   the invariant." An honest unknown beats a confident guess.
+4. **Require the why at the gate.** PR templates that demand a linked
+   ticket or rationale, enforced in review, stop new gaps from forming
+   at zero cost.
+5. **Re-justify old ADRs periodically.** Walk the ADR log once a year;
+   each record gets reaffirmed, superseded, or retired. Provenance
+   that is never revisited rots into mythology.
 
 ## What it cannot detect
 

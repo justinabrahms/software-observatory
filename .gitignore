@@ -4,6 +4,15 @@ __pycache__/
 archive-*/
 
 pages/
+sensors/
+catalog/
+atlas/
+framework/
+about/
+contact/
+privacy/
+glossary/
+categories/
 TODO.md
 chat-w-gpt.md
 index.html

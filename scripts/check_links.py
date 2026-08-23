@@ -22,7 +22,10 @@ from pathlib import Path
 from urllib.parse import urlparse, urldefrag
 
 SITE_ROOT = Path(__file__).resolve().parent.parent
-HTML_GLOBS = ["index.html", "pages/**/*.html"]
+HTML_GLOBS = ["index.html", "404.html", "catalog/**/*.html", "sensors/**/*.html",
+              "atlas/**/*.html", "framework/**/*.html", "about/**/*.html",
+              "contact/**/*.html", "privacy/**/*.html", "glossary/**/*.html",
+              "categories/**/*.html"]
 
 SKIP_SCHEMES = ("mailto:", "tel:", "javascript:", "data:")
 
@@ -78,7 +81,16 @@ def check_internal(pages):
             elif url.startswith(("http://", "https://", "//")):
                 continue
             else:
-                target = (page.parent / url).resolve()
+                # Directory-style URLs (/catalog/, /sensors/<slug>/) resolve
+                # to index.html inside the directory.
+                resolved = url
+                if resolved.startswith("/"):
+                    resolved = resolved.lstrip("/")
+                    target = (SITE_ROOT / resolved).resolve()
+                else:
+                    target = (page.parent / resolved).resolve()
+                if target.is_dir():
+                    target = target / "index.html"
                 try:
                     target.relative_to(SITE_ROOT.resolve())
                 except ValueError:

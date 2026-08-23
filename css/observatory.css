@@ -1092,6 +1092,16 @@ a.wikilink:hover {
 .meta-list dd:not(:last-child) {
   border-bottom: 1px solid var(--border);
 }
+.prop-note {
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  color: var(--text-dim);
+  cursor: help;
+  margin-left: .15rem;
+}
+.prop-note:hover, .prop-note:focus {
+  color: var(--accent);
+}
 
 /* Backlinks */
 .backlink-list { list-style: none; margin: 0; }

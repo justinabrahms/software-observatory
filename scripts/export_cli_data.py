@@ -103,7 +103,7 @@ def export():
                 "see_also_ids": ref_ids,
                 "see_also_families": ref_families,
                 "see_also_pages": ref_pages,
-                "url_path": "pages/sensors/%s.html" % sensor["slug"],
+                "url_path": "sensors/%s/" % sensor["slug"],
             }
         )
     out_sensors.sort(key=lambda s: (family_index(s["family"]), s["slug"]))

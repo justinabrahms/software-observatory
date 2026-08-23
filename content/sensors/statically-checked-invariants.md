@@ -4,10 +4,14 @@ title: Statically Checked Invariants
 family: invariants
 family_num: '04'
 oracle: high
+oracle_note: 'a discharged proof obligation is definitive for its claim'
 independence: high
+independence_note: 'the prover is outside the code'
 scope: module
 latency: milliseconds
+latency_note: 'milliseconds to minutes'
 actionability: blocking
+actionability_note: 'the build fails'
 type: predictive
 stack_level: static-analysis
 categories:
@@ -50,16 +54,44 @@ clauses, Frama-C annotations, JML specs, type-level witnesses like
 checked by a live system against live data, these are proved once, at build
 time, for all possible executions.
 
-## Sensor properties
+## In practice
 
-| Property | Value |
-|----------|-------|
-| Oracle strength | High — a discharged proof obligation is definitive for its claim |
-| Independence | High — the prover is outside the code |
-| Scope | Module |
-| Feedback latency | Milliseconds to minutes |
-| Actionability | Blocking — the build fails |
-| Type | Predictive |
+The reading is the same as a [type-checker](type-checker.html) error,
+raised against a property of the program instead of a type:
+
+```
+src/Queue.hs:23:1: Error: Liquid Type Mismatch
+  Invariant `size q >= 0` could not be proved
+  Counter-example: `q` after `dequeue (mkQueue [])`
+```
+
+Or, at the type level: a compiler that refuses `head []` because the
+list's type carries a proof of non-emptiness. Either way the verdict
+arrives at build time, once, for all possible executions, and a
+counter-example when the checker can find one.
+
+The counter-example is the part to read first: it is the smallest
+state that violates the invariant, and it usually says immediately
+whether the invariant is wrong or the code is. An invariant that is
+right but unprovable without a helper lemma produces the same message
+as one the code genuinely breaks, so the triage question is "which of
+my two claims is false?" not "how do I make the message stop."
+
+## Response playbook
+
+When an invariant fails to discharge:
+
+1. **Read the counter-example first.** It is the minimal violating
+   state, and it settles most triage in one look.
+2. **If the code is wrong, fix the code; if the invariant is wrong,
+   fix the statement.** A proof of the wrong invariant is worse than
+   no proof, because it creates false confidence.
+3. **If both are right, supply the lemma.** Proofs that fail for lack
+   of an intermediate step go through once the step is written down.
+4. **Demote only what cannot be proved.** An invariant that resists
+   the prover can still run as a
+   [runtime invariant](runtime-invariants.html) on every execution,
+   and it should.
 
 ## What it cannot detect
 
