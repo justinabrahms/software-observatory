@@ -1340,20 +1340,26 @@ a.wikilink:hover {
   color: var(--text-dim);
 }
 .legend-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  display: inline-block;
+  width: 14px; height: 14px; border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  line-height: 1;
+  margin-right: .3rem;
+  background: transparent;
 }
-.legend-dot.fam-structural        { background: var(--fam-structural); }
-.legend-dot.fam-behavioral        { background: var(--fam-behavioral); }
-.legend-dot.fam-test-effectiveness{ background: var(--fam-test-effectiveness); }
-.legend-dot.fam-invariants        { background: var(--fam-invariants); }
-.legend-dot.fam-adversarial       { background: var(--fam-adversarial); }
-.legend-dot.fam-runtime           { background: var(--fam-runtime); }
-.legend-dot.fam-change            { background: var(--fam-change); }
-.legend-dot.fam-architecture      { background: var(--fam-architecture); }
-.legend-dot.fam-evolution         { background: var(--fam-evolution); }
-.legend-dot.fam-comprehension     { background: var(--fam-comprehension); }
-.legend-dot.fam-ai-sensors        { background: var(--fam-ai-sensors); }
+.legend-dot.fam-structural        { color: var(--fam-structural); }
+.legend-dot.fam-behavioral        { color: var(--fam-behavioral); }
+.legend-dot.fam-test-effectiveness{ color: var(--fam-test-effectiveness); }
+.legend-dot.fam-invariants        { color: var(--fam-invariants); }
+.legend-dot.fam-adversarial       { color: var(--fam-adversarial); }
+.legend-dot.fam-runtime           { color: var(--fam-runtime); }
+.legend-dot.fam-change            { color: var(--fam-change); }
+.legend-dot.fam-architecture      { color: var(--fam-architecture); }
+.legend-dot.fam-evolution         { color: var(--fam-evolution); }
+.legend-dot.fam-comprehension     { color: var(--fam-comprehension); }
+.legend-dot.fam-ai-sensors        { color: var(--fam-ai-sensors); }
 .scatter-point {
   position: absolute;
   transform: translate(-50%, 50%);
