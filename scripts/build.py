@@ -531,6 +531,8 @@ def html_head(title, canonical="", json_ld=""):
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/observatory.css">
   <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="{SITE_URL}/rss.xml">{json_ld_block}
+  <script data-goatcounter="https://stats.softwareobservatory.com/count"
+          async src="https://stats.softwareobservatory.com/count.js"></script>
 </head>"""
 
 
@@ -1791,19 +1793,24 @@ def generate_privacy_page(output_dir):
     <h1 class="page-title">Privacy</h1>
     <p class="page-lede">
       The Software Observatory is a static website. It collects no personal
-      data and runs no analytics.
+      data and uses privacy-respecting, cookieless analytics.
     </p>
   </section>
 
   <div class="about-content">
     <h2>What we collect</h2>
     <p>
-      Nothing. The site is a collection of static HTML, CSS, and JavaScript
-      files served by Caddy. There are no cookies, no tracking pixels, no
-      analytics scripts, no forms, and no backend database. The server logs
-      standard request metadata (IP address, request path, timestamp) for
-      operational purposes — diagnosing abuse and misconfiguration — but
-      these logs are not shared, sold, or used to build profiles of visitors.
+      Aggregate visit statistics only. The site uses
+      <a href="https://www.goatcounter.com" class="wikilink">GoatCounter</a>,
+      a self-hosted, open-source analytics tool running on the same server
+      as the site (stats.softwareobservatory.com). It records page views,
+      referrers, country, browser, and screen size. It sets no cookies,
+      stores no IP addresses, and cannot track you across sites or across
+      visits. There are no forms and no backend database behind the site
+      itself. The server logs standard request metadata (IP address, request
+      path, timestamp) for operational purposes — diagnosing abuse and
+      misconfiguration — but these logs are not shared, sold, or used to
+      build profiles of visitors.
     </p>
 
     <h2>Third-party resources</h2>
@@ -1826,9 +1833,8 @@ def generate_privacy_page(output_dir):
 
     <h2>Changes</h2>
     <p>
-      If the site ever adds analytics, comments, or any other data-collecting
-      feature, this page will be updated to describe it before the feature
-      ships.
+      If the site ever adds comments or any other data-collecting feature,
+      this page will be updated to describe it before the feature ships.
     </p>
 
     <h2>Contact</h2>
