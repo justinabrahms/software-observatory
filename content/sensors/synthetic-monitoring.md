@@ -51,4 +51,7 @@ to script; the long tail of user behavior is the domain of
 
 ## References
 
+- Meaningful Availability (2020, tier III) — https://www.usenix.org/system/files/nsdi20-paper-hauer.pdf
+- Monitoring Distributed Systems (SRE Book, ch. 6) (2016, tier IV) — https://sre.google/sre-book/monitoring-distributed-systems/
+
 - Checkly: https://checklyhq.com

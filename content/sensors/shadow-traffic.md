@@ -53,4 +53,6 @@ external calls) must be carefully isolated.
 
 ## References
 
+- Development and Deployment at Facebook (2013, tier III) — https://www.cs.huji.ac.il/w~feit/papers/FB13IC.pdf
+
 - https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/cluster/cluster#shadow

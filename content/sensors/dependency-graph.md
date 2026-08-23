@@ -55,4 +55,7 @@ modules that change together for reasons the graph can't see. That requires
 
 ## References
 
+- A Novel Approach for Estimating Truck Factors (2016, tier II) — https://arxiv.org/pdf/1604.06766
+- Do Developers Update Their Library Dependencies? (2017, tier II) — https://arxiv.org/abs/1709.04621
+
 - dependency-cruiser: https://github.com/sverweij/dependency-cruiser

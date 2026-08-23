@@ -50,4 +50,6 @@ sufficient for almost nothing else.
 
 ## References
 
+- Software Engineering at Google, ch. 11: Testing Overview (2020, tier IV) — https://abseil.io/resources/swe-book/html/ch11.html
+
 - https://martinfowler.com/bliki/SelfTestingCode.html

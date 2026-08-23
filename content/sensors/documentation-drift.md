@@ -71,4 +71,6 @@ Undocumented behavior is invisible to this sensor.
 
 ## References
 
+- A First Look at the Deprecation of RESTful APIs: An Empirical Study (2020, tier II) — https://arxiv.org/abs/2008.12808
+
 - https://docs.python.org/3/library/doctest.html

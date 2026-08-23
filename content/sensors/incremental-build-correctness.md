@@ -54,4 +54,7 @@ irrelevant). That class of surprise is what
 
 ## References
 
+- Reproducible Builds: Increasing the Integrity of Software Supply Chains (2021, tier II) — https://arxiv.org/abs/2104.06020
+- An Empirical Analysis of Build Failures in the Continuous Integration Workflows of Java-Based Open-Source Software (2017, tier II) — https://dsg.tuwien.ac.at/team/trausch/pub/PID4727015.pdf
+
 - Bazel: https://bazel.build

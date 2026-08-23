@@ -53,5 +53,7 @@ measure from the other direction.
 
 ## References
 
+- How Amazon Web Services Uses Formal Methods (2015, tier III) — https://cacm.acm.org/research/how-amazon-web-services-uses-formal-methods/
+
 - Leino, 'Dafny' (2010)
 - Liquid Haskell: https://ucsd-progsys.github.io/liquidhaskell/

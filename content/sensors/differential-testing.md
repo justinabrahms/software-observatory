@@ -80,5 +80,7 @@ it. Also requires two implementations, which may not exist.
 
 ## References
 
+- Elle: Inferring Isolation Anomalies from Experimental Observations (2020, tier II) — https://arxiv.org/abs/2003.10554
+
 - Yang et al., 'Finding and Understanding Bugs in C Compilers' (2011, Csmith)
 - SQLancer: https://github.com/sqlancer/sqlancer

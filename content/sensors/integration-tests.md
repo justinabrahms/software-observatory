@@ -50,4 +50,7 @@ tests](contract-tests.html) are a stronger sensor for boundary assumptions.
 
 ## References
 
+- Techniques for Improving Regression Testing in Continuous Integration Development Environments (2014, tier I) — https://cs.uwaterloo.ca/~m2nagapp/courses/CS846/1171/papers/elbaum_fse14.pdf
+- Taming Google-Scale Continuous Testing (2017, tier II) — https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45861.pdf
+
 - https://martinfowler.com/articles/practical-test-pyramid.html

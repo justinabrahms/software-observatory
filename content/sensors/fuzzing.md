@@ -76,5 +76,8 @@ testing](metamorphic-testing.html) or [mutation testing](mutation-testing.html).
 
 ## References
 
+- Evaluating Fuzz Testing (2018, tier I) — https://dl.acm.org/doi/10.1145/3243734.3243804
+- An Empirical Study of OSS-Fuzz Bugs (2021, tier II) — https://arxiv.org/pdf/2103.11518
+
 - Manes et al., 'The Art, Science, and Engineering of Fuzzing: A Survey' (2021)
 - libFuzzer: https://llvm.org/docs/LibFuzzer.html

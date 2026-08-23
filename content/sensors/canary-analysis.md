@@ -53,4 +53,7 @@ to investigate after the fact.
 
 ## References
 
+- Exploring Statistical Change Point Detection Techniques for Performance Anomaly Detection at Mozilla (2026, tier I) — https://arxiv.org/abs/2606.18377
+- Holistic Configuration Management at Facebook (2015, tier III) — https://sigops.org/s/conferences/sosp/2015/current/2015-Monterey/printable/008-tang.pdf
+
 - Netflix Kayenta: https://github.com/spinnaker/kayenta

@@ -61,5 +61,8 @@ exploit detection) deserves its own resources. See
 
 ## References
 
+- An Empirical Study on the Effectiveness of Security Code Review (2013, tier I) — https://people.eecs.berkeley.edu/~daw/papers/coderev-essos13.pdf
+- Eliminating Memory Safety Vulnerabilities at the Source (2024, tier II) — https://security.googleblog.com/2024/09/eliminating-memory-safety-vulnerabilities-Android.html
+
 - Semgrep: https://semgrep.dev
 - CodeQL: https://codeql.github.com

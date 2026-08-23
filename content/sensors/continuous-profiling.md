@@ -54,4 +54,7 @@ A function that consumes 40% of CPU may be doing the wrong thing efficiently.
 
 ## References
 
+- Exploring Statistical Change Point Detection Techniques for Performance Anomaly Detection at Mozilla (2026, tier I) — https://arxiv.org/abs/2606.18377
+- FBDetect: Catching Tiny Performance Regressions at Hyperscale through In-Production Monitoring (2024, tier III) — https://tangchq74.github.io/FBDetect-SOSP24.pdf
+
 - https://github.com/google/pprof

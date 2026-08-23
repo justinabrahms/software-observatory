@@ -56,4 +56,7 @@ the attention should fix.
 
 ## References
 
+- A Novel Approach for Estimating Truck Factors (2016, tier II) — https://arxiv.org/pdf/1604.06766
+- Don't Touch My Code! Examining the Effects of Ownership on Software Quality (2011, tier II) — https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/bird2011dtm.pdf
+
 - Adam Tornhill, 'Your Code as a Crime Scene' (2015)

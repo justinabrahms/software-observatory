@@ -55,4 +55,7 @@ positives, which erodes its authority over time.
 
 ## References
 
+- Gang of Eight: A Defect Taxonomy for Infrastructure as Code Scripts (2020, tier II) — https://akondrahman.github.io/files/papers/icse20_acid.pdf
+- The Seven Sins: Security Smells in Infrastructure as Code Scripts (2019, tier II) — https://akondrahman.github.io/files/papers/icse19_slic.pdf
+
 - https://en.wikipedia.org/wiki/Lint_(software)

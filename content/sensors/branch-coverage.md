@@ -54,4 +54,6 @@ thing happened when it did.
 
 ## References
 
+- Coverage Is Not Strongly Correlated with Test Suite Effectiveness (2014, tier I) — https://www.cs.ubc.ca/~rtholmes/papers/icse_2014.pdf
+
 - https://martinfowler.com/bliki/TestCoverage.html

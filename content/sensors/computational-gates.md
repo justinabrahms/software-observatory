@@ -79,3 +79,7 @@ is invisible.
 - GitLab CI
 - Jenkins
 - pre-commit hooks
+
+## References
+
+- Gender Shades: Intersectional Accuracy Disparities in Commercial Gender Classification (2018, tier I) — http://proceedings.mlr.press/v81/buolamwini18a/buolamwini18a.pdf

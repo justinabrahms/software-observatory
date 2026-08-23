@@ -54,4 +54,7 @@ different semantics will pass compatibility checks.
 
 ## References
 
+- I Depended on You and You Broke Me: An Empirical Study of Manifesting Breaking Changes in Client Packages (2023, tier II) — https://arxiv.org/abs/2301.04563
+- Breaking Bad? Semantic Versioning and Impact of Breaking Changes in Maven Central (2022, tier II) — https://arxiv.org/abs/2110.07889
+
 - revapi: https://revapi.org

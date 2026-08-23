@@ -79,5 +79,7 @@ absent, there's no function to check relations on.
 
 ## References
 
+- An Empirical Evaluation of Property-Based Testing in Python (2025, tier I) — https://cseweb.ucsd.edu/~mcoblenz/assets/pdf/OOPSLA_2025_PBT.pdf
+
 - Chen et al., 'Metamorphic Testing: A New Approach for Generating Next Test Cases' (1998)
 - Hypothesis: https://hypothesis.readthedocs.io

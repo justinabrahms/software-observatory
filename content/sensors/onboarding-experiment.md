@@ -54,3 +54,8 @@ not reflect code quality at all. The methodology also matters:
 
 Treat the onboarding experiment as a structured protocol (same task, same
 seniority level, same prior-knowledge screening), not a one-off timer.
+
+## References
+
+- Onboarding vs. Diversity, Productivity and Quality — Empirical Study of the OpenStack Ecosystem (2021, tier II) — https://doi.org/10.1109/ICSE43902.2021.00097
+- GitHub's Engineering Team Has Moved to Codespaces (2021, tier III) — https://github.blog/engineering/infrastructure/githubs-engineering-team-moved-codespaces/

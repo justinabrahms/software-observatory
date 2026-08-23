@@ -54,4 +54,7 @@ problems in code the reviewer doesn't read carefully.
 
 ## References
 
+- An Empirical Study on the Effectiveness of Security Code Review (2013, tier I) — https://people.eecs.berkeley.edu/~daw/papers/coderev-essos13.pdf
+- The Cost of Interrupted Work: More Speed and Stress (2008, tier I) — https://ics.uci.edu/~gmark/chi08-mark.pdf
+
 - Fagan, 'Design and Code Inspections to Reduce Errors' (1976)

@@ -78,5 +78,8 @@ you whether the system produces the *intended result for users*.
 
 ## References
 
+- To Type or Not to Type: Quantifying Detectable Bugs in JavaScript (2017, tier I) — https://www.microsoft.com/en-us/research/wp-content/uploads/2017/09/gao2017javascript.pdf
+- Eliminating Memory Safety Vulnerabilities at the Source (2024, tier II) — https://security.googleblog.com/2024/09/eliminating-memory-safety-vulnerabilities-Android.html
+
 - Luca Cardelli, 'Type Systems' (2004)
 - https://en.wikipedia.org/wiki/Type_system

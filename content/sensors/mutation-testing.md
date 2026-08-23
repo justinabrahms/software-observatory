@@ -99,5 +99,8 @@ tool's operators can produce.
 
 ## References
 
+- Coverage Is Not Strongly Correlated with Test Suite Effectiveness (2014, tier I) — https://www.cs.ubc.ca/~rtholmes/papers/icse_2014.pdf
+- Are Mutants a Valid Substitute for Real Faults in Software Testing? (2014, tier I) — https://homes.cs.washington.edu/~rjust/publ/mutants_real_faults_fse_2014.pdf
+
 - Jia & Harman, 'An Analysis and Survey of the Development of Mutation Testing' (2011)
 - Stryker: https://stryker-mutator.io

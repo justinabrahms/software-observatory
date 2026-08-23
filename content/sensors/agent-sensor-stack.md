@@ -72,3 +72,8 @@ it reaches production. The key principle is that the agent cannot self-certify
 The stack is only as strong as its weakest layer. If the agent writes the
 tests (low independence), the test layer provides no real signal. See
 [producer-evaluator separation](producer-evaluator-separation.html).
+
+## References
+
+- Gender Shades: Intersectional Accuracy Disparities in Commercial Gender Classification (2018, tier I) — http://proceedings.mlr.press/v81/buolamwini18a/buolamwini18a.pdf
+- Failing Loudly: An Empirical Study of Methods for Detecting Dataset Shift (2019, tier I) — https://arxiv.org/pdf/1810.11953

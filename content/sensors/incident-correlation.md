@@ -54,4 +54,7 @@ produce no signal.
 
 ## References
 
+- How to Fight Production Incidents? An Empirical Study on a Large-scale Cloud Service (2022, tier II) — https://acmsocc.org/2022/assets/slides/95.pdf
+- Postmortem of database outage of January 31 (2017, tier III) — https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31/
+
 - https://www.sentry.io

@@ -84,5 +84,8 @@ pass a contract test. They also cannot detect
 
 ## References
 
+- I Depended on You and You Broke Me: An Empirical Study of Manifesting Breaking Changes in Client Packages (2023, tier II) — https://arxiv.org/abs/2301.04563
+- Design, Monitoring, and Testing of Microservices Systems: The Practitioners' Perspective (2021, tier II) — https://arxiv.org/pdf/2108.03384
+
 - Ian Robinson, 'Consumer-Driven Contracts' (2007)
 - Pact: https://pact.io

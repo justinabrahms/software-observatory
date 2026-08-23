@@ -56,5 +56,8 @@ meaning.
 
 ## References
 
+- Detecting Data Errors: Where are we and what needs to be done? (2016, tier I) — https://www.vldb.org/pvldb/vol9/p993-abedjan.pdf
+- Failing Loudly: An Empirical Study of Methods for Detecting Dataset Shift (2019, tier I) — https://arxiv.org/pdf/1810.11953
+
 - OpenAPI Specification: https://spec.openapis.org
 - Kubernetes Admission Controllers: https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/

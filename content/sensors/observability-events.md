@@ -89,5 +89,8 @@ correctness.
 
 ## References
 
+- How to Fight Production Incidents? An Empirical Study on a Large-scale Cloud Service (2022, tier II) — https://acmsocc.org/2022/assets/slides/95.pdf
+- The Tail at Scale (2013, tier III) — https://www.barroso.org/publications/TheTailAtScale.pdf
+
 - Charity Majors et al., 'Observability Engineering' (2022)
 - OpenTelemetry: https://opentelemetry.io

@@ -52,4 +52,7 @@ is the denominator; behavioral evidence still has to come from
 
 ## References
 
+- Holistic Configuration Management at Facebook (2015, tier III) — https://sigops.org/s/conferences/sosp/2015/current/2015-Monterey/printable/008-tang.pdf
+- Development and Deployment at Facebook (2013, tier III) — https://www.cs.huji.ac.il/w~feit/papers/FB13IC.pdf
+
 - Feature flags: https://martinfowler.com/articles/feature-toggles.html

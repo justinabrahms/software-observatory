@@ -62,5 +62,8 @@ own resources. See [SLSA](https://slsa.dev) and
 
 ## References
 
+- Reproducible Builds: Increasing the Integrity of Software Supply Chains (2021, tier II) — https://arxiv.org/abs/2104.06020
+- License Incompatibilities in Software Ecosystems (2022, tier II) — https://arxiv.org/abs/2203.01634
+
 - SLSA: https://slsa.dev
 - Sigstore: https://sigstore.dev

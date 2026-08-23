@@ -57,4 +57,6 @@ correctness signal.
 
 ## References
 
+- The Tail at Scale (2013, tier III) — https://www.barroso.org/publications/TheTailAtScale.pdf
+
 - Dapper paper: https://research.google/pubs/pub36356/

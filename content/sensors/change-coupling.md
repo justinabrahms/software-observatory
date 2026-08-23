@@ -54,4 +54,7 @@ structural coupling.
 
 ## References
 
+- Organizational Volatility and its Effects on Software Defects (2010, tier II) — https://mockus.org/papers/orgQuality-slides.pdf
+- 2017 State of DevOps Report (2017, tier II) — https://dora.dev/research/2017/2017-state-of-devops-report.pdf
+
 - Adam Tornhill, 'Your Code as a Crime Scene' (2015)

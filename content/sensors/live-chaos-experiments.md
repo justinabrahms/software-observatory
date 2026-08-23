@@ -53,4 +53,6 @@ create — those remain observable only through
 
 ## References
 
+- Automating Chaos Experiments in Production (2019, tier IV) — https://arxiv.org/abs/1905.04648
+
 - Chaos Engineering: https://principlesofchaos.org

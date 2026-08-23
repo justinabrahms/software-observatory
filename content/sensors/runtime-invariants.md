@@ -77,4 +77,7 @@ an invariant was violated, only that it was.
 
 ## References
 
+- Detecting Data Errors: Where are we and what needs to be done? (2016, tier I) — https://www.vldb.org/pvldb/vol9/p993-abedjan.pdf
+- AddressSanitizer: A Fast Address Sanity Checker (2012, tier III) — https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/37752.pdf
+
 - Hoare, 'An Axiomatic Basis for Computer Programming' (1969)

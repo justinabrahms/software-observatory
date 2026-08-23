@@ -82,4 +82,6 @@ without any test verifying its output. It also says nothing about
 
 ## References
 
+- State of Mutation Testing at Google (2018, tier III) — https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/46584.pdf
+
 - https://docs.codecov.com/docs/commit-coverage

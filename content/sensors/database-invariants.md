@@ -57,4 +57,7 @@ streams](observability-events.html).
 
 ## References
 
+- Detecting Data Errors: Where are we and what needs to be done? (2016, tier I) — https://www.vldb.org/pvldb/vol9/p993-abedjan.pdf
+- Jepsen: MongoDB 4.2.6 (2020, tier II) — https://jepsen.io/analyses/mongodb-4.2.6
+
 - https://www.postgresql.org/docs/current/ddl-constraints.html

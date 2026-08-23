@@ -56,5 +56,7 @@ and [property testing](fuzzing.html).
 
 ## References
 
+- How Amazon Web Services Uses Formal Methods (2015, tier III) — https://cacm.acm.org/research/how-amazon-web-services-uses-formal-methods/
+
 - Leino, 'Dafny: An Automatic Program Verifier' (2010)
 - Dafny: https://dafny.org

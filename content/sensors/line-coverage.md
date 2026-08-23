@@ -53,4 +53,7 @@ is a [weak oracle](mutation-testing.html).
 
 ## References
 
+- Coverage Is Not Strongly Correlated with Test Suite Effectiveness (2014, tier I) — https://www.cs.ubc.ca/~rtholmes/papers/icse_2014.pdf
+- Does Mutation Testing Improve Testing Practices? (2021, tier I) — https://homes.cs.washington.edu/~rjust/publ/mutation_testing_practices_icse_2021.pdf
+
 - https://martinfowler.com/bliki/TestCoverage.html

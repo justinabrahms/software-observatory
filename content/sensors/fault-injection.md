@@ -59,4 +59,7 @@ failure modes (cascading failures from unexpected coupling) require
 
 ## References
 
+- Elle: Inferring Isolation Anomalies from Experimental Observations (2020, tier II) — https://arxiv.org/abs/2003.10554
+- Jepsen: MongoDB 4.2.6 (2020, tier II) — https://jepsen.io/analyses/mongodb-4.2.6
+
 - Chaos Engineering: https://principlesofchaos.org

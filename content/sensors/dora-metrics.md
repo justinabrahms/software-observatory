@@ -54,5 +54,8 @@ by shipping trivia.
 
 ## References
 
+- Accelerate: State of DevOps 2019 (2019, tier II) — https://dora.dev/research/2019/dora-report/2019-dora-accelerate-state-of-devops-report.pdf
+- 2017 State of DevOps Report (2017, tier II) — https://dora.dev/research/2017/2017-state-of-devops-report.pdf
+
 - DORA: https://dora.dev
 - Forsgren et al., 'Accelerate' (2018)

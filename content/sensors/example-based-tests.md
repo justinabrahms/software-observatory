@@ -58,4 +58,7 @@ connected.
 
 ## References
 
+- Techniques for Improving Regression Testing in Continuous Integration Development Environments (2014, tier I) — https://cs.uwaterloo.ca/~m2nagapp/courses/CS846/1171/papers/elbaum_fse14.pdf
+- On the Effectiveness of the Test-First Approach to Programming (2005, tier I) — https://www.cs.unm.edu/~joel/cs351/paper/IEEE-Effectiveness_of_Test-First_Approach_to_Programming.pdf
+
 - Beizer, 'Software Testing Techniques' (1990)
