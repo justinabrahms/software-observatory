@@ -480,21 +480,24 @@ def html_head(title, depth="", canonical="", json_ld=""):
     json_ld_block = ""
     if json_ld:
         json_ld_block = f'\n  <script type="application/ld+json">\n{json_ld}\n  </script>'
+    full_title = title if title == "Software Observatory" else f"{title} — Software Observatory"
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{html.escape(title)} — Software Observatory</title>
+  <title>{html.escape(full_title)}</title>
   <meta name="description" content="A catalog of epistemic sensors for software correctness — the observable signals that reduce uncertainty about whether a system is correct, maintainable, and behaving as intended.">{canonical_link}
   <meta property="og:type" content="website">
-  <meta property="og:title" content="{html.escape(title)} — Software Observatory">
+  <meta property="og:title" content="{html.escape(full_title)}">
   <meta property="og:description" content="A catalog of epistemic sensors for software correctness.">
   <meta property="og:url" content="{SITE_URL}/{canonical}">
+  <meta property="og:image" content="{SITE_URL}/og.png">
   <meta property="og:site_name" content="Software Observatory">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="{html.escape(title)} — Software Observatory">
+  <meta name="twitter:title" content="{html.escape(full_title)}">
   <meta name="twitter:description" content="A catalog of epistemic sensors for software correctness.">
+  <meta name="twitter:image" content="{SITE_URL}/og.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -1577,6 +1580,115 @@ def generate_about_page(output_dir):
         f.write(page_html)
 
 
+def generate_contact_page(output_dir):
+    """Generate the contact page."""
+    body = """  <section class="page-header">
+    <p class="eyebrow">Contact</p>
+    <h1 class="page-title">Contact</h1>
+    <p class="page-lede">
+      The Software Observatory is maintained by Justin Abrahms. The best
+      way to reach out depends on what you need.
+    </p>
+  </section>
+
+  <div class="about-content">
+    <h2>Errors and gaps in the catalog</h2>
+    <p>
+      If you've found a factual error, a missing sensor, a taxonomy challenge,
+      or a depth gap, the best path is the
+      <a href="https://github.com/justinabrahms/software-observatory/issues"
+      class="wikilink">GitHub issue tracker</a>. That keeps the discussion
+      public and linkable, and it's where the work gets tracked.
+    </p>
+
+    <h2>Contributions</h2>
+    <p>
+      Pull requests are welcome — see
+      <a href="https://github.com/justinabrahms/software-observatory/blob/main/CONTRIBUTING.md"
+      class="wikilink">CONTRIBUTING.md</a> for the frontmatter shape, the
+      relative-link gotcha, and the build and link-check commands.
+    </p>
+
+    <h2>Direct contact</h2>
+    <p>
+      For anything that doesn't fit an issue or a PR:
+    </p>
+    <ul>
+      <li><a href="mailto:justin@abrah.ms" class="wikilink">justin@abrah.ms</a> — email</li>
+      <li><a href="https://bsky.app/profile/justin.abrah.ms" class="wikilink">@justin.abrah.ms on Bluesky</a></li>
+      <li><a href="https://github.com/justinabrahms" class="wikilink">github.com/justinabrahms</a></li>
+    </ul>
+    <p>
+      The Observatory is a personal project; response times may vary.
+    </p>
+  </div>"""
+
+    page_html = html_page("Contact", body, root_depth="../", nav_depth="", canonical="pages/contact.html")
+    out_path = output_dir / "pages" / "contact.html"
+    with open(out_path, "w") as f:
+        f.write(page_html)
+
+
+def generate_privacy_page(output_dir):
+    """Generate the privacy page."""
+    body = """  <section class="page-header">
+    <p class="eyebrow">Privacy</p>
+    <h1 class="page-title">Privacy</h1>
+    <p class="page-lede">
+      The Software Observatory is a static website. It collects no personal
+      data and runs no analytics.
+    </p>
+  </section>
+
+  <div class="about-content">
+    <h2>What we collect</h2>
+    <p>
+      Nothing. The site is a collection of static HTML, CSS, and JavaScript
+      files served by Caddy. There are no cookies, no tracking pixels, no
+      analytics scripts, no forms, and no backend database. The server logs
+      standard request metadata (IP address, request path, timestamp) for
+      operational purposes — diagnosing abuse and misconfiguration — but
+      these logs are not shared, sold, or used to build profiles of visitors.
+    </p>
+
+    <h2>Third-party resources</h2>
+    <p>
+      The site loads fonts from
+      <a href="https://fonts.google.com" class="wikilink">Google Fonts</a>.
+      Google may collect request metadata (IP address, referer) when your
+      browser fetches the stylesheet. This is governed by
+      <a href="https://policies.google.com/privacy" class="wikilink">Google's
+      privacy policy</a>, not this one.
+    </p>
+
+    <h2>GitHub</h2>
+    <p>
+      The source code lives on
+      <a href="https://github.com/justinabrahms/software-observatory"
+      class="wikilink">GitHub</a>. If you file an issue or open a pull
+      request, GitHub processes your contribution under its own terms.
+    </p>
+
+    <h2>Changes</h2>
+    <p>
+      If the site ever adds analytics, comments, or any other data-collecting
+      feature, this page will be updated to describe it before the feature
+      ships.
+    </p>
+
+    <h2>Contact</h2>
+    <p>
+      Questions about this policy: <a href="mailto:justin@abrah.ms"
+      class="wikilink">justin@abrah.ms</a>.
+    </p>
+  </div>"""
+
+    page_html = html_page("Privacy", body, root_depth="../", nav_depth="", canonical="pages/privacy.html")
+    out_path = output_dir / "pages" / "privacy.html"
+    with open(out_path, "w") as f:
+        f.write(page_html)
+
+
 # ── Main ────────────────────────────────────────────────────────────────────
 
 def generate_glossary_page(output_dir):
@@ -1826,6 +1938,8 @@ def generate_sitemap(sensors, output_dir):
         ("pages/atlas.html", ""),
         ("pages/framework.html", ""),
         ("pages/about.html", ""),
+        ("pages/contact.html", ""),
+        ("pages/privacy.html", ""),
         ("pages/glossary.html", ""),
         ("pages/categories.html", ""),
     ]
@@ -1892,6 +2006,12 @@ def main():
 
     generate_about_page(output_dir)
     print("  pages/about.html")
+
+    generate_contact_page(output_dir)
+    print("  pages/contact.html")
+
+    generate_privacy_page(output_dir)
+    print("  pages/privacy.html")
 
     generate_glossary_page(output_dir)
     print("  pages/glossary.html")
