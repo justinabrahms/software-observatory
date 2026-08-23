@@ -26,15 +26,15 @@ references:
   kind: paper
 - title: Envoy shadow
   kind: tool
-  url: ''
+  url: https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/cluster/cluster#shadow
   description: Envoy proxy shadow traffic mirroring
 - title: diffy
   kind: tool
-  url: ''
+  url: https://github.com/twitter/diffy
   description: Differential proxy for API testing
 - title: go-shadow
   kind: tool
-  url: ''
+  url: https://github.com/fortytw2/go-shadow
   description: Go HTTP shadow traffic proxy
 ---
 

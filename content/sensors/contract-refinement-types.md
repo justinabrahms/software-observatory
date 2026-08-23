@@ -34,15 +34,15 @@ references:
   description: Verification-aware programming language
 - title: Frama-C
   kind: tool
-  url: ''
+  url: https://frama-c.com
   description: Static analysis and verification for C
 - title: JML
   kind: tool
-  url: ''
+  url: https://www.openjml.org
   description: Java Modeling Language for behavioral interface specifications
 - title: Rust typestate
   kind: tool
-  url: ''
+  url: https://docs.rust-embedded.org/book/static-guarantees/typestate-programming.html
   description: Rust's type system encoding program states
 ---
 

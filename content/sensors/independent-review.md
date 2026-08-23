@@ -35,15 +35,15 @@ references:
   kind: paper
 - title: GitHub PR review
   kind: tool
-  url: ''
+  url: https://docs.github.com/pull-requests
   description: Pull request review on GitHub
 - title: Gerrit
   kind: tool
-  url: ''
+  url: https://www.gerritcodereview.com
   description: Web-based code review for Git
 - title: Reviewable
   kind: tool
-  url: ''
+  url: https://reviewable.io
   description: Code review tool for GitHub PRs
 ---
 

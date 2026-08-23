@@ -38,16 +38,16 @@ references:
   kind: paper
 - title: Rust compiler
   kind: tool
-  url: ''
+  url: https://www.rust-lang.org
 - title: TypeScript
   kind: tool
-  url: ''
+  url: https://www.typescriptlang.org
 - title: Mypy
   kind: tool
-  url: ''
+  url: https://mypy-lang.org
 - title: pyright
   kind: tool
-  url: ''
+  url: https://github.com/microsoft/pyright
 ---
 
 A Rust compiler saying `expected Option<Foo>, found Foo` is vastly more useful

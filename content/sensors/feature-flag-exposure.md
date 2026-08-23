@@ -34,19 +34,19 @@ references:
   kind: tool
 - title: LaunchDarkly
   kind: tool
-  url: ''
+  url: https://launchdarkly.com
   description: Feature management platform
 - title: Statsig
   kind: tool
-  url: ''
+  url: https://www.statsig.com
   description: Experimentation and feature flag platform
 - title: GrowthBook
   kind: tool
-  url: ''
+  url: https://www.growthbook.io
   description: Open-source feature flagging and A/B testing
 - title: Unleash
   kind: tool
-  url: ''
+  url: https://www.getunleash.io
   description: Open-source feature flag management
 ---
 

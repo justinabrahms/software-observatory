@@ -32,11 +32,11 @@ references:
   description: Differential testing for SQL databases
 - title: Csmith
   kind: tool
-  url: ''
+  url: https://embed.cs.utah.edu/csmith
   description: Random C program generator for compiler testing
 - title: DifferentialFuzzer
   kind: tool
-  url: ''
+  url: https://github.com/jfmagiero/differentialfuzzer
   description: Differential fuzzing framework
 ---
 

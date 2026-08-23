@@ -31,19 +31,19 @@ references:
   kind: tool
 - title: OpenTelemetry
   kind: tool
-  url: ''
+  url: https://opentelemetry.io
   description: Open-standard observability instrumentation
 - title: Jaeger
   kind: tool
-  url: ''
+  url: https://www.jaegertracing.io
   description: Distributed tracing backend
 - title: Zipkin
   kind: tool
-  url: ''
+  url: https://zipkin.io
   description: Distributed tracing system
 - title: Tempo
   kind: tool
-  url: ''
+  url: https://grafana.com/oss/tempo
   description: Grafana-backed distributed tracing
 ---
 

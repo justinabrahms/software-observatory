@@ -38,19 +38,19 @@ references:
   kind: tool
 - title: OpenAPI Validator
   kind: tool
-  url: ''
+  url: https://validator.swagger.io
   description: Validate APIs against OpenAPI specs
 - title: Terraform plan
   kind: tool
-  url: ''
+  url: https://developer.hashicorp.com/terraform/cli/commands/plan
   description: Infrastructure-as-code plan preview
 - title: kubectl admission
   kind: tool
-  url: ''
+  url: https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/
   description: Kubernetes admission controllers
 - title: sqlfluff
   kind: tool
-  url: ''
+  url: https://www.sqlfluff.com
   description: SQL linter and formatter
 ---
 

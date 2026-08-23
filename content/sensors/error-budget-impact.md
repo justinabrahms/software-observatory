@@ -25,11 +25,11 @@ references:
   kind: tool
 - title: SLO dashboards
   kind: tool
-  url: ''
+  url: https://sre.google/workbook/alerting-on-slos/
   description: Service level objective tracking dashboards
 - title: error budget calculators
   kind: tool
-  url: ''
+  url: https://sre.google/workbook/error-budget/
   description: Error budget tracking tools
 ---
 

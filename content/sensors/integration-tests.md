@@ -32,19 +32,19 @@ references:
   kind: paper
 - title: pytest
   kind: tool
-  url: ''
+  url: https://docs.pytest.org
   description: Python testing framework
 - title: JUnit
   kind: tool
-  url: ''
+  url: https://junit.org
   description: Java testing framework
 - title: Testcontainers
   kind: tool
-  url: ''
+  url: https://www.testcontainers.org
   description: Integration testing with Docker containers
 - title: Docker Compose
   kind: tool
-  url: ''
+  url: https://docs.docker.com/compose
   description: Multi-container orchestration for testing
 ---
 

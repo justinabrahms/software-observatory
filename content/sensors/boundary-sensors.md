@@ -26,15 +26,15 @@ references:
   description: Service mesh with traffic management and observability
 - title: Linkerd
   kind: tool
-  url: ''
+  url: https://linkerd.io
   description: Lightweight Kubernetes service mesh
 - title: Cilium
   kind: tool
-  url: ''
+  url: https://cilium.io
   description: eBPF-based networking, observability, and security
 - title: eBPF tools
   kind: tool
-  url: ''
+  url: https://ebpf.io
   description: Kernel-level observability tools
 ---
 

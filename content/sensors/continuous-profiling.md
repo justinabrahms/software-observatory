@@ -34,19 +34,19 @@ references:
   kind: paper
 - title: Pyroscope
   kind: tool
-  url: ''
+  url: https://pyroscope.io
   description: Continuous profiling platform
 - title: pprof
   kind: tool
-  url: ''
+  url: https://github.com/google/pprof
   description: Go profiling tool
 - title: Parca
   kind: tool
-  url: ''
+  url: https://www.parca.dev
   description: Continuous profiling for Kubernetes
 - title: Datadog Profiler
   kind: tool
-  url: ''
+  url: https://docs.datadoghq.com/profiler
   description: Always-on profiling in Datadog
 ---
 

@@ -37,15 +37,15 @@ references:
   description: Property-based testing for Python
 - title: QuickCheck
   kind: tool
-  url: ''
+  url: https://hackage.haskell.org/package/QuickCheck
   description: Property-based testing for Haskell
 - title: fast-check
   kind: tool
-  url: ''
+  url: https://fast-check.dev
   description: Property-based testing for TypeScript
 - title: test.check
   kind: tool
-  url: ''
+  url: https://github.com/clojure/test.check
   description: Property-based testing for Clojure
 ---
 

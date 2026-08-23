@@ -36,15 +36,15 @@ references:
   description: JavaScript/TypeScript dependency analysis
 - title: import-linter
   kind: tool
-  url: ''
+  url: https://import-linter.readthedocs.io
   description: Python import linting and boundary enforcement
 - title: madge
   kind: tool
-  url: ''
+  url: https://github.com/pahen/madge
   description: JavaScript dependency graph and circular dependency detection
 - title: dependency-graph
   kind: tool
-  url: ''
+  url: https://github.com/jfrog/dependency-graph
   description: Gradle dependency graph plugin
 ---
 

@@ -26,15 +26,15 @@ references:
   kind: paper
 - title: smoke-tester
   kind: tool
-  url: ''
+  url: https://github.com/symonk/smoke-tester
   description: Simple HTTP smoke testing
 - title: curl-based smoke tests
   kind: tool
-  url: ''
+  url: https://curl.se
   description: Basic HTTP endpoint checks via curl
 - title: k6 smoke
   kind: tool
-  url: ''
+  url: https://k6.io
   description: Smoke testing with k6 load testing tool
 ---
 

@@ -43,11 +43,11 @@ references:
   description: Open-standard observability instrumentation
 - title: Honeycomb
   kind: tool
-  url: ''
+  url: https://www.honeycomb.io
   description: Observability platform for high-cardinality events
 - title: Lightstep
   kind: tool
-  url: ''
+  url: https://lightstep.com
   description: Distributed tracing and observability
 ---
 

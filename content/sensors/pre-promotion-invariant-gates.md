@@ -25,15 +25,15 @@ references:
   description: Kubernetes policy enforcement via Open Policy Agent
 - title: Kyverno
   kind: tool
-  url: ''
+  url: https://kyverno.io
   description: Kubernetes-native policy management
 - title: Conftest
   kind: tool
-  url: ''
+  url: https://www.conftest.dev
   description: Policy testing for structured data
 - title: HashiCorp Sentinel
   kind: tool
-  url: ''
+  url: https://developer.hashicorp.com/sentinel
   description: Policy-as-code for Terraform
 ---
 

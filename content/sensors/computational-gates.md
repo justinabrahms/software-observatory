@@ -28,19 +28,19 @@ references:
   kind: paper
 - title: GitHub Actions
   kind: tool
-  url: ''
+  url: https://docs.github.com/actions
   description: CI/CD workflow automation
 - title: GitLab CI
   kind: tool
-  url: ''
+  url: https://docs.gitlab.com/ee/ci/
   description: GitLab's built-in CI/CD
 - title: Jenkins
   kind: tool
-  url: ''
+  url: https://www.jenkins.io
   description: Extensible automation server
 - title: pre-commit hooks
   kind: tool
-  url: ''
+  url: https://pre-commit.com
   description: Pre-commit framework for git hooks
 ---
 

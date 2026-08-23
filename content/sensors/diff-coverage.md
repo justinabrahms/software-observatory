@@ -28,15 +28,15 @@ references:
   kind: paper
 - title: diff-cover
   kind: tool
-  url: ''
+  url: https://github.com/Bachmann123/diff-cover
   description: Coverage for changed lines only
 - title: Codecov
   kind: tool
-  url: ''
+  url: https://about.codecov.io
   description: Hosted code coverage reporting
 - title: Coveralls
   kind: tool
-  url: ''
+  url: https://coveralls.io
   description: Hosted code coverage reporting
 ---
 

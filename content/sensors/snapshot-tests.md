@@ -21,15 +21,15 @@ last_reviewed: 2026-08-23
 references:
 - title: Jest snapshot
   kind: tool
-  url: ''
+  url: https://jestjs.io/docs/snapshot-testing
   description: Snapshot testing for JavaScript
 - title: Vitest
   kind: tool
-  url: ''
+  url: https://vitest.dev
   description: Vite-native testing framework with snapshots
 - title: instanbul
   kind: tool
-  url: ''
+  url: https://istanbul.js.org
   description: JavaScript code coverage
 ---
 

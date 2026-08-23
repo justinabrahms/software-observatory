@@ -39,11 +39,11 @@ references:
   description: Semantic code analysis engine by GitHub
 - title: Bandit
   kind: tool
-  url: ''
+  url: https://bandit.readthedocs.io
   description: Python security linter
 - title: brakeman
   kind: tool
-  url: ''
+  url: https://brakemanscanner.org
   description: Static security analysis for Rails
 ---
 

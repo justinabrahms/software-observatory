@@ -37,11 +37,11 @@ references:
   kind: paper
 - title: CodeScene
   kind: tool
-  url: ''
+  url: https://codescene.com
   description: Code analysis predicting technical debt from behavioral code
 - title: git-quick-stats
   kind: tool
-  url: ''
+  url: https://github.com/arzzen/git-quick-stats
   description: Git history analysis script
 ---
 

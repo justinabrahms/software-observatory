@@ -38,11 +38,11 @@ references:
   kind: paper
 - title: DORA survey
   kind: tool
-  url: ''
+  url: https://dora.dev
   description: DORA research assessment survey
 - title: DevOps Research Assessment
   kind: tool
-  url: ''
+  url: https://dora.dev/research/
   description: DORA's four-metric assessment tool
 ---
 

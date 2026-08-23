@@ -36,15 +36,15 @@ references:
   kind: tool
 - title: Kayenta
   kind: tool
-  url: ''
+  url: https://github.com/spinnaker/kayenta
   description: Netflix's automated canary analysis
 - title: Argo Rollouts
   kind: tool
-  url: ''
+  url: https://argoproj.github.io/rollouts
   description: Kubernetes progressive delivery
 - title: Flagger
   kind: tool
-  url: ''
+  url: https://flagger.app
   description: Kubernetes progressive delivery and canary
 ---
 

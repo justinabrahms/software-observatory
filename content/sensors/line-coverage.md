@@ -31,19 +31,19 @@ references:
   kind: paper
 - title: coverage.py
   kind: tool
-  url: ''
+  url: https://coverage.readthedocs.io
   description: Python code coverage measurement
 - title: Istanbul
   kind: tool
-  url: ''
+  url: https://istanbul.js.org
   description: JavaScript code coverage
 - title: JaCoCo
   kind: tool
-  url: ''
+  url: https://www.jacoco.org
   description: Java code coverage
 - title: gcov
   kind: tool
-  url: ''
+  url: https://gcc.gnu.org/onlinedocs/gcc/Gcov.html
   description: GCC code coverage
 ---
 

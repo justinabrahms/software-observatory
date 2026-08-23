@@ -165,6 +165,8 @@ def main():
                 kind = ref.get("kind", "")
                 if kind and kind not in VALID_KINDS:
                     errors.append(f"{loc}: references[{i}] kind '{kind}' not in {sorted(VALID_KINDS)}")
+                if kind == "tool" and not ref.get("url"):
+                    errors.append(f"{loc}: references[{i}] tool '{ref.get('title', '?')}' missing 'url'")
                 tier = ref.get("tier", "")
                 if tier and tier not in VALID_TIERS:
                     errors.append(f"{loc}: references[{i}] tier '{tier}' not in {sorted(VALID_TIERS)}")

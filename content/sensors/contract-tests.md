@@ -44,11 +44,11 @@ references:
   description: Consumer-driven contract testing
 - title: Spring Cloud Contract
   kind: tool
-  url: ''
+  url: https://spring.io/projects/spring-cloud-contract
   description: Contract testing for Spring/JVM
 - title: Postman
   kind: tool
-  url: ''
+  url: https://www.postman.com
   description: API testing and contract validation
 ---
 

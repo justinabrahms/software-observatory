@@ -25,15 +25,15 @@ references:
   description: Metrics collection and alerting
 - title: Datadog
   kind: tool
-  url: ''
+  url: https://www.datadoghq.com
   description: Cloud monitoring and observability
 - title: Grafana
   kind: tool
-  url: ''
+  url: https://grafana.com
   description: Metrics visualization and dashboards
 - title: CloudWatch
   kind: tool
-  url: ''
+  url: https://aws.amazon.com/cloudwatch
   description: AWS monitoring and metrics
 ---
 

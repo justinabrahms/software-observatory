@@ -36,11 +36,11 @@ references:
   description: Haskell refinement type checking
 - title: Frama-C
   kind: tool
-  url: ''
+  url: https://frama-c.com
   description: Static analysis and verification for C
 - title: JML
   kind: tool
-  url: ''
+  url: https://www.openjml.org
   description: Java Modeling Language for behavioral interface specifications
 ---
 

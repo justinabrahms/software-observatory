@@ -38,15 +38,15 @@ references:
   kind: paper
 - title: assertpy
   kind: tool
-  url: ''
+  url: https://github.com/assertpy/assertpy
   description: Python fluent assertion library
 - title: pytest-check
   kind: tool
-  url: ''
+  url: https://github.com/fgaz/pytest-check
   description: Non-blocking assertions for pytest
 - title: Hypothesis invariants
   kind: tool
-  url: ''
+  url: https://hypothesis.readthedocs.io/en/latest/quick-guide.html
   description: Using Hypothesis for invariant checking
 ---
 

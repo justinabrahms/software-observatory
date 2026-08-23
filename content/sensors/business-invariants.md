@@ -26,11 +26,11 @@ references:
   description: Python data quality testing
 - title: Soda
   kind: tool
-  url: ''
+  url: https://docs.soda.io
   description: Data quality testing and monitoring
 - title: dbt tests
   kind: tool
-  url: ''
+  url: https://docs.getdbt.com/docs/build/tests
   description: Data transformation testing
 ---
 

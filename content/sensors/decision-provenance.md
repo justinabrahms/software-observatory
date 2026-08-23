@@ -28,15 +28,15 @@ references:
   kind: tool
 - title: ADRs
   kind: tool
-  url: ''
+  url: https://adr.github.io
   description: Architecture Decision Records
 - title: Conventional Commits
   kind: tool
-  url: ''
+  url: https://www.conventionalcommits.org
   description: Structured commit message specification
 - title: git blame
   kind: tool
-  url: ''
+  url: https://git-scm.com/docs/git-blame
   description: Git history annotation per line
 ---
 

@@ -35,19 +35,19 @@ references:
   kind: tool
 - title: Chaos Mesh
   kind: tool
-  url: ''
+  url: https://chaos-mesh.org
   description: Kubernetes chaos engineering platform
 - title: Gremlin
   kind: tool
-  url: ''
+  url: https://www.gremlin.com
   description: Managed chaos engineering service
 - title: Litmus
   kind: tool
-  url: ''
+  url: https://litmuschaos.io
   description: Cloud-native chaos engineering
 - title: Chaos Monkey
   kind: tool
-  url: ''
+  url: https://github.com/Netflix/chaosmonkey
   description: Netflix's instance termination service
 ---
 

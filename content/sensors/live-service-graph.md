@@ -25,15 +25,15 @@ references:
   description: Service mesh with traffic management and observability
 - title: Linkerd
   kind: tool
-  url: ''
+  url: https://linkerd.io
   description: Lightweight Kubernetes service mesh
 - title: Kiali
   kind: tool
-  url: ''
+  url: https://kiali.io
   description: Service mesh observability for Istio
 - title: Hubble
   kind: tool
-  url: ''
+  url: https://github.com/cilium/hubble
   description: eBPF-based network observability for Kubernetes
 ---
 

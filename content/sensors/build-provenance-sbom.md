@@ -39,11 +39,11 @@ references:
   description: Software supply chain signing
 - title: cosign
   kind: tool
-  url: ''
+  url: https://github.com/sigstore/cosign
   description: Container signing tool
 - title: in-toto
   kind: tool
-  url: ''
+  url: https://in-toto.io
   description: Software supply chain integrity framework
 ---
 

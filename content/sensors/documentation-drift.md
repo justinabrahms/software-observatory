@@ -26,19 +26,19 @@ references:
   kind: paper
 - title: doctest
   kind: tool
-  url: ''
+  url: https://docs.python.org/3/library/doctest.html
   description: Python doctest module
 - title: rustdoc
   kind: tool
-  url: ''
+  url: https://doc.rust-lang.org/rustdoc
   description: Rust documentation generator with doc tests
 - title: TypeDoc
   kind: tool
-  url: ''
+  url: https://typedoc.org
   description: TypeScript API documentation generator
 - title: OpenAPI round-trip
   kind: tool
-  url: ''
+  url: https://swagger.io/tools/swagger-validator
   description: Validate OpenAPI spec against actual API responses
 ---
 

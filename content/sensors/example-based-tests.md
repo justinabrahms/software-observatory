@@ -36,19 +36,19 @@ references:
   kind: paper
 - title: pytest
   kind: tool
-  url: ''
+  url: https://docs.pytest.org
   description: Python testing framework
 - title: Jest
   kind: tool
-  url: ''
+  url: https://jestjs.io
   description: JavaScript testing framework
 - title: JUnit
   kind: tool
-  url: ''
+  url: https://junit.org
   description: Java testing framework
 - title: Go testing
   kind: tool
-  url: ''
+  url: https://pkg.go.dev/testing
   description: Go's built-in testing package
 ---
 

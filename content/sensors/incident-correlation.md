@@ -34,15 +34,15 @@ references:
   kind: paper
 - title: Datadog
   kind: tool
-  url: ''
+  url: https://www.datadoghq.com
   description: Cloud monitoring and observability
 - title: Sentry
   kind: tool
-  url: ''
+  url: https://sentry.io
   description: Error tracking and crash reporting
 - title: Jira correlation
   kind: tool
-  url: ''
+  url: https://support.atlassian.com/jira-software-cloud/docs/what-is-issue-linking/
   description: Incident-to-commit correlation via Jira
 ---
 

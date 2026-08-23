@@ -35,15 +35,15 @@ references:
   description: Synthetic monitoring as code
 - title: k6
   kind: tool
-  url: ''
+  url: https://k6.io
   description: Open-source load testing tool
 - title: Pingdom
   kind: tool
-  url: ''
+  url: https://www.pingdom.com
   description: Uptime and performance monitoring
 - title: Datadog Synthetic
   kind: tool
-  url: ''
+  url: https://docs.datadoghq.com/synthetic_monitoring
   description: Synthetic monitoring in Datadog
 ---
 

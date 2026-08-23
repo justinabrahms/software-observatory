@@ -31,19 +31,19 @@ references:
   kind: paper
 - title: ESLint
   kind: tool
-  url: ''
+  url: https://eslint.org
   description: Pluggable JavaScript/TypeScript linter
 - title: ruff
   kind: tool
-  url: ''
+  url: https://docs.astral.sh/ruff
   description: Fast Python linter and formatter
 - title: golangci-lint
   kind: tool
-  url: ''
+  url: https://golangci-lint.run
   description: Go linter aggregator
 - title: Semgrep
   kind: tool
-  url: ''
+  url: https://semgrep.dev
   description: Multi-language static analysis with custom rules
 ---
 

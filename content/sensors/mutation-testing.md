@@ -42,15 +42,15 @@ references:
   description: Mutation testing for JavaScript/TypeScript
 - title: mutmut
   kind: tool
-  url: ''
+  url: https://mutmut.readthedocs.io
   description: Mutation testing for Python
 - title: PIT
   kind: tool
-  url: ''
+  url: https://pitest.org
   description: Mutation testing for Java/JVM
 - title: cargo-mutants
   kind: tool
-  url: ''
+  url: https://github.com/sourcefrog/cargo-mutants
   description: Mutation testing for Rust
 ---
 

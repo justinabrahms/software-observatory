@@ -25,15 +25,15 @@ references:
   kind: tool
 - title: Jira
   kind: tool
-  url: ''
+  url: https://www.atlassian.com/software/jira
   description: Project and issue tracking
 - title: Linear
   kind: tool
-  url: ''
+  url: https://linear.app
   description: Issue tracking for product teams
 - title: incident.io
   kind: tool
-  url: ''
+  url: https://incident.io
   description: Incident management and response platform
 ---
 

@@ -37,15 +37,15 @@ references:
   description: API compatibility checking for JVM
 - title: Akka
   kind: tool
-  url: ''
+  url: https://akka.io
   description: Actor framework for JVM concurrency
 - title: grpcurl
   kind: tool
-  url: ''
+  url: https://github.com/fullstorydev/grpcurl
   description: gRPC command-line client
 - title: openapi-diff
   kind: tool
-  url: ''
+  url: https://github.com/OpenAPITools/openapi-diff
   description: OpenAPI spec diff tool
 ---
 

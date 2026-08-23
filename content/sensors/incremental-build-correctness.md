@@ -36,15 +36,15 @@ references:
   description: Google's build system
 - title: Buck
   kind: tool
-  url: ''
+  url: https://buck.build
   description: Meta's build system
 - title: Nix
   kind: tool
-  url: ''
+  url: https://nixos.org
   description: Reproducible build system and package manager
 - title: ccache
   kind: tool
-  url: ''
+  url: https://ccache.dev
   description: Compiler cache for fast rebuilds
 ---
 

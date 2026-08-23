@@ -32,19 +32,19 @@ references:
   kind: paper
 - title: DB constraints
   kind: tool
-  url: ''
+  url: https://www.postgresql.org/docs/current/ddl-constraints.html
   description: Database-level CHECK/FOREIGN KEY constraints
 - title: CHECK constraints
   kind: tool
-  url: ''
+  url: https://www.postgresql.org/docs/current/ddl-constraints.html#ddl-constraints-check-constraints
   description: SQL CHECK constraints
 - title: foreign keys
   kind: tool
-  url: ''
+  url: https://www.postgresql.org/docs/current/tutorial-fk.html
   description: Database referential integrity constraints
 - title: pg_constraint
   kind: tool
-  url: ''
+  url: https://www.postgresql.org/docs/current/catalog-pg-constraint.html
   description: PostgreSQL constraint catalog
 ---
 

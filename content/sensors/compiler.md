@@ -24,19 +24,19 @@ references:
   kind: other
 - title: GCC
   kind: tool
-  url: ''
+  url: https://gcc.gnu.org
   description: GNU Compiler Collection
 - title: Clang
   kind: tool
-  url: ''
+  url: https://clang.llvm.org
   description: LLVM C/C++/ObjC compiler
 - title: rustc
   kind: tool
-  url: ''
+  url: https://www.rust-lang.org
   description: The Rust compiler
 - title: tsc
   kind: tool
-  url: ''
+  url: https://www.typescriptlang.org
   description: TypeScript compiler with type checking
 ---
 

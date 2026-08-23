@@ -22,15 +22,15 @@ last_reviewed: 2026-08-23
 references:
 - title: git log
   kind: tool
-  url: ''
+  url: https://git-scm.com/docs/git-log
   description: Git commit history
 - title: git-quick-stats
   kind: tool
-  url: ''
+  url: https://github.com/arzzen/git-quick-stats
   description: Git history analysis script
 - title: CodeScene
   kind: tool
-  url: ''
+  url: https://codescene.com
   description: Code analysis predicting technical debt from behavioral code
 ---
 

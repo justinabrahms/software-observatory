@@ -41,15 +41,15 @@ references:
   description: LLVM in-process fuzzer
 - title: cargo-fuzz
   kind: tool
-  url: ''
+  url: https://rust-fuzz.github.io/book/cargo-fuzz.html
   description: Fuzzing for Rust
 - title: AFL++
   kind: tool
-  url: ''
+  url: https://github.com/AFLplusplus/AFLplusplus
   description: Coverage-guided fuzzer
 - title: CIFuzz
   kind: tool
-  url: ''
+  url: https://github.com/AdaLogics/fuzz-introspector
   description: Continuous fuzzing integration for CI
 ---
 

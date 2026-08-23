@@ -26,11 +26,11 @@ references:
   description: Architecture testing for Java
 - title: NetArchTest
   kind: tool
-  url: ''
+  url: https://github.com/BenMorris/NetArchTest
   description: .NET architecture rules testing
 - title: dependency-cruiser
   kind: tool
-  url: ''
+  url: https://github.com/sverweij/dependency-cruiser
   description: JavaScript/TypeScript dependency analysis
 ---
 
