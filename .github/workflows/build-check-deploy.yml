@@ -132,6 +132,12 @@ jobs:
           # a placeholder NODE_AUTH_TOKEN into .npmrc, which makes npm publish
           # use token auth instead of OIDC trusted publishing (and fail E404).
 
+      - name: Upgrade npm for trusted publishing
+        # Node 22's bundled npm (10.x) predates OIDC trusted publishing, which
+        # needs npm >= 11.5.1. Without this the publish falls back to
+        # interactive login and fails ENEEDAUTH.
+        run: npm install -g npm@^11.5.1
+
       - name: Publish CLI to npm
         working-directory: cli
         # OIDC trusted publishing: npm exchanges the job's id-token, so no
