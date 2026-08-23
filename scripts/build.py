@@ -594,7 +594,8 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
             if fam:
                 cat_links += f'          <a href="../catalog.html#{fam["slug"]}" class="cat-link">{html.escape(cat)}</a>\n'
             else:
-                cat_links += f'          <a href="#" class="cat-link">{html.escape(cat)}</a>\n'
+                cat_slug = re.sub(r"[^a-z0-9]+", "-", cat.lower()).strip("-")
+                cat_links += f'          <a href="../categories.html#{cat_slug}" class="cat-link">{html.escape(cat)}</a>\n'
         cat_html = f"""        <div class="entry-categories">
           <span class="cat-label">Categories:</span>
 {cat_links.rstrip()}
@@ -620,7 +621,11 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
         items = ""
         for cat in categories:
             fam = FAMILY_BY_SLUG.get(cat.lower().replace(" ", "-"), {})
-            url = f"../catalog.html#{fam['slug']}" if fam else "#"
+            if fam:
+                url = f"../catalog.html#{fam['slug']}"
+            else:
+                cat_slug = re.sub(r"[^a-z0-9]+", "-", cat.lower()).strip("-")
+                url = f"../categories.html#{cat_slug}"
             items += f'          <li><a href="{url}">Category: {html.escape(cat)}</a></li>\n'
         cat_sidebar_html = f"""      <div class="sidebar-box">
         <h3 class="sidebar-heading">Related categories</h3>
@@ -1530,6 +1535,54 @@ def generate_about_page(output_dir):
 
 # ── Main ────────────────────────────────────────────────────────────────────
 
+def generate_categories_page(sensors, output_dir):
+    """Generate pages/categories.html: an index of all non-family categories
+    with the sensors in each, anchorable by slug."""
+    # Collect non-family categories (family-matching ones already link to
+    # the catalog, so we only list categories that have no family match).
+    cats = {}
+    for s in sensors:
+        for cat in s.get("categories", []):
+            fam = FAMILY_BY_SLUG.get(cat.lower().replace(" ", "-"), {})
+            if fam:
+                continue
+            cats.setdefault(cat, []).append(s)
+
+    # Build sections, sorted by category name
+    sections = ""
+    for cat in sorted(cats):
+        cat_slug = re.sub(r"[^a-z0-9]+", "-", cat.lower()).strip("-")
+        items = ""
+        for s in sorted(cats[cat], key=lambda x: x["title"]):
+            items += f'        <li><a href="sensors/{s["slug"]}.html">{html.escape(s["title"])}</a></li>\n'
+        sections += f"""      <section class="category-section">
+        <h2 class="category-title" id="{cat_slug}">{html.escape(cat)}</h2>
+        <ul class="category-sensor-list">
+{items.rstrip()}
+        </ul>
+      </section>
+"""
+
+    body = f"""  <section class="page-header">
+    <p class="eyebrow">Categories</p>
+    <h1 class="page-title">Sensor Categories</h1>
+    <p class="page-lede">
+      Cross-cutting tags that span sensor families. Family-level categories
+      link to the <a href="catalog.html" class="wikilink">catalog</a>; the
+      tags below collect sensors across families that share a theme.
+    </p>
+  </section>
+
+  <div class="about-content">
+{sections.rstrip()}
+  </div>"""
+
+    page_html = html_page("Sensor Categories", body, root_depth="../", nav_depth="")
+    out_path = output_dir / "pages" / "categories.html"
+    with open(out_path, "w") as f:
+        f.write(page_html)
+
+
 def generate_search_index(sensors, output_dir):
     """Write search-index.json: title, family, url, and plain-text blurb
     for every sensor, plus an entry per family."""
@@ -1557,6 +1610,40 @@ def generate_search_index(sensors, output_dir):
         json.dump(entries, f, indent=1)
 
 
+SITE_URL = "https://softwareobservatory.com"
+
+
+def generate_sitemap(sensors, output_dir):
+    """Write sitemap.xml listing every indexable URL."""
+    urls = [
+        ("", ""),
+        ("pages/catalog.html", ""),
+        ("pages/atlas.html", ""),
+        ("pages/framework.html", ""),
+        ("pages/about.html", ""),
+        ("pages/categories.html", ""),
+    ]
+    for s in sensors:
+        urls.append((f"pages/sensors/{s['slug']}.html", ""))
+    lines = ['<?xml version="1.0" encoding="UTF-8"?>',
+             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    for path, _ in urls:
+        loc = f"{SITE_URL}/{path}" if path else SITE_URL
+        lines.append("  <url>")
+        lines.append(f"    <loc>{loc}</loc>")
+        lines.append("  </url>")
+    lines.append("</urlset>")
+    with open(output_dir / "sitemap.xml", "w") as f:
+        f.write("\n".join(lines) + "\n")
+
+
+def generate_robots(output_dir):
+    """Write robots.txt pointing at the sitemap."""
+    content = f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n"
+    with open(output_dir / "robots.txt", "w") as f:
+        f.write(content)
+
+
 def main():
     print("Loading sensors...")
     sensors = load_sensors()
@@ -1578,6 +1665,12 @@ def main():
     generate_search_index(sensors, output_dir)
     print("  search-index.json")
 
+    print("Generating sitemap and robots...")
+    generate_sitemap(sensors, output_dir)
+    print("  sitemap.xml")
+    generate_robots(output_dir)
+    print("  robots.txt")
+
     print("Generating pages...")
     generate_index_page(sensors, output_dir)
     print("  index.html")
@@ -1593,6 +1686,9 @@ def main():
 
     generate_about_page(output_dir)
     print("  pages/about.html")
+
+    generate_categories_page(sensors, output_dir)
+    print("  pages/categories.html")
 
     for sensor in sensors:
         generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, output_dir)
