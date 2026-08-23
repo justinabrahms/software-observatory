@@ -245,6 +245,7 @@ a.wikilink:hover {
 /* Hero visual — concentric observatory rings */
 .hero-visual {
   position: relative;
+  width: 100%;
   aspect-ratio: 1;
   max-width: 360px;
   margin-left: auto;
