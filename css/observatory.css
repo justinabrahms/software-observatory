@@ -592,13 +592,11 @@ a.wikilink:hover {
   font-style: italic;
   color: var(--text);
 }
-.signal-detail-body blockquote p { margin: 0; }
-  color: var(--text);
-}
+.signal-detail-body blockquote p { margin: 0; color: var(--text); }
 
 /* ── Atlas page — matrix ────────────────────────────────────────────────── */
 .atlas-container {
-  max-width: 960px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 2rem 2rem 5rem;
 }
@@ -615,13 +613,10 @@ a.wikilink:hover {
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--bg-card);
-  max-width: 960px;
-  margin-left: auto;
-  margin-right: auto;
 }
 .atlas-matrix {
   display: grid;
-  grid-template-columns: 140px repeat(10, minmax(72px, 1fr));
+  grid-template-columns: 150px repeat(10, minmax(96px, 1fr));
   width: 100%;
 }
 .matrix-header-row {
@@ -707,7 +702,10 @@ a.wikilink:hover {
   border-radius: 3px;
   color: var(--text);
   transition: all .2s;
-  white-space: nowrap;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.35;
+  max-width: 100%;
   text-decoration: none;
 }
 .matrix-chip:hover {
