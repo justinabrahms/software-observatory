@@ -75,12 +75,12 @@ a.wikilink:hover {
   letter-spacing: -.01em;
 }
 .logo-mark {
-  font-size: 1.4rem;
   color: var(--accent);
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   transition: transform .8s ease;
 }
-.logo:hover .logo-mark { transform: rotate(180deg); }
+.logo:hover .logo-mark { transform: rotate(-12deg); }
 .primary-nav {
   display: flex;
   gap: 2rem;
@@ -446,13 +446,13 @@ a.wikilink:hover {
   border-left: 3px solid var(--accent-soft);
   border-radius: 8px;
   padding: 1.8rem;
-  transition: border-color .25s, transform .25s;
+  transition: border-color .25s, box-shadow .25s;
   cursor: pointer;
 }
 .signal-card:hover {
   border-color: var(--accent-soft);
   border-left-color: var(--accent);
-  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .35);
 }
 .signal-card-meta {
   display: flex;
@@ -616,7 +616,7 @@ a.wikilink:hover {
 }
 .atlas-matrix {
   display: grid;
-  grid-template-columns: 150px repeat(10, minmax(96px, 1fr));
+  grid-template-columns: 170px repeat(5, minmax(150px, 1fr));
   width: 100%;
 }
 .matrix-header-row {
@@ -630,11 +630,8 @@ a.wikilink:hover {
 .matrix-col-header {
   border-bottom: 1px solid var(--border);
   border-right: 1px solid var(--border-soft);
-  padding: .5rem .2rem;
+  padding: .7rem .4rem;
   text-align: center;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  height: 90px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -642,9 +639,10 @@ a.wikilink:hover {
 .matrix-col-header:last-child { border-right: none; }
 .col-label {
   font-family: var(--font-mono);
-  font-size: .68rem;
+  font-size: .72rem;
   color: var(--text-dim);
-  letter-spacing: .03em;
+  letter-spacing: .06em;
+  text-transform: uppercase;
   white-space: nowrap;
 }
 .matrix-row {
@@ -678,7 +676,7 @@ a.wikilink:hover {
 .matrix-cell {
   border-right: 1px solid var(--border-soft);
   border-bottom: 1px solid var(--border-soft);
-  padding: .4rem .3rem;
+  padding: .5rem .6rem;
   min-height: 2.5rem;
   display: flex;
   flex-direction: column;
@@ -733,6 +731,82 @@ a.wikilink:hover {
   font-size: .76rem;
   color: var(--text-dim);
   text-align: right;
+}
+
+/* Family dependency graph */
+.dep-map-section {
+  margin: 2rem 0 3rem;
+}
+.dep-map-lede {
+  color: var(--text-soft);
+  max-width: 44rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+.dep-graph-wrapper {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+.dep-graph {
+  display: block;
+  width: 100%;
+  min-width: 640px;
+  height: auto;
+}
+.dep-edge {
+  fill: none;
+  stroke: var(--accent-soft);
+  stroke-width: 1.5;
+}
+.dep-arrowhead {
+  fill: var(--accent-soft);
+  transition: opacity .25s;
+}
+.dep-graph.focus-active .dep-arrowhead.dim {
+  opacity: .05;
+}
+.dep-edge-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  fill: var(--text-dim);
+  paint-order: stroke;
+  stroke: var(--bg-card);
+  stroke-width: 4px;
+}
+.dep-node-dot {
+  fill: var(--bg-elev);
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  transition: fill .2s;
+}
+.dep-node:hover .dep-node-dot {
+  fill: var(--accent-glow);
+}
+.dep-node-label {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-weight: 600;
+  fill: var(--text);
+}
+.dep-node, .dep-edge, .dep-edge-strong, .dep-edge-label {
+  transition: opacity .25s;
+}
+.dep-graph.focus-active .dep-node.dim {
+  opacity: .12;
+}
+.dep-graph.focus-active .dep-edge.dim,
+.dep-graph.focus-active .dep-edge-strong.dim {
+  opacity: .05;
+}
+.dep-graph.focus-active .dep-edge-label.dim {
+  opacity: 0;
+}
+.dep-graph.focus-active .dep-edge:not(.dim),
+.dep-graph.focus-active .dep-edge-strong:not(.dim) {
+  opacity: 1;
 }
 
 /* Old atlas SVG (deprecated, keeping for reference) */
@@ -1080,7 +1154,6 @@ a.wikilink:hover {
 }
 .stack-layer:last-child { border-bottom: 1px solid var(--border); }
 .stack-top {
-  border-color: var(--accent-soft);
   background: linear-gradient(135deg, var(--bg-card), var(--bg-soft));
 }
 .stack-bottom {
@@ -1284,7 +1357,6 @@ a.wikilink:hover {
 }
 .stack-layer-full:last-of-type { border-bottom: 1px solid var(--border); }
 .stack-layer-full.stack-top {
-  border-color: var(--accent-soft);
   background: linear-gradient(135deg, var(--bg-card), var(--bg-soft));
 }
 .stack-layer-full.stack-bottom { opacity: .5; }

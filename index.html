@@ -12,7 +12,18 @@
 <body>
   <header class="site-header">
     <a href="index.html" class="logo">
-      <span class="logo-mark">◐</span>
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/>
+          <line x1="17" y1="24" x2="12" y2="28"/>
+          <line x1="17" y1="24" x2="22" y2="28"/>
+        </g>
+      </svg></span>
       <span class="logo-text">Software&nbsp;Observatory</span>
     </a>
     <nav class="primary-nav">
@@ -155,7 +166,7 @@
       </div>
     </section>
 
-    <section class="stack-preview">
+    <section class="stack-preview" id="confidence-stack">
       <h2 class="section-heading">The confidence stack</h2>
       <p class="section-lede">
         Sensors are not peers. They form a hierarchy — from the cheapest, most
@@ -252,14 +263,14 @@
           <span class="entry-blurb">Did we exercise both sides of decisions? Better than line</span>
         </li>
         <li class="entry">
+          <span class="entry-family">Structural</span>
+          <a href="pages/sensors/build-provenance-sbom.html" class="entry-title wikilink" style="border-bottom:none">Build Provenance &amp; SBOM</a>
+          <span class="entry-blurb">Is the artifact you are about to deploy structurally the one your pipeline</span>
+        </li>
+        <li class="entry">
           <span class="entry-family">Invariants</span>
           <a href="pages/sensors/business-invariants.html" class="entry-title wikilink" style="border-bottom:none">Business Invariants</a>
           <span class="entry-blurb">A successful payment implies an order eventually becomes paid.</span>
-        </li>
-        <li class="entry">
-          <span class="entry-family">Change</span>
-          <a href="pages/sensors/canary-analysis.html" class="entry-title wikilink" style="border-bottom:none">Canary Analysis</a>
-          <span class="entry-blurb">Does the new version behave differently from the old version? A sensor of</span>
         </li>
       </ul>
     </section>

@@ -92,7 +92,9 @@ bar widths, latency labels) are module-level constants at the top of
    actionability: guiding
    type: predictive
    stack_level: static-analysis  # must match a STACK_LAYERS slug or the
-                                 # sensor won't appear in the atlas matrix
+                                 # sensor won't appear in the atlas grid;
+                                 # each slug maps to a LIFECYCLE_STAGES
+                                 # column via STAGE_BY_LEVEL
    categories: [...]     # display-only; a category matching a family slug
                          # (case-insensitive, spaces→hyphens) links to it
    see_also: [SO-001, ...]       # sensor IDs; family slugs and the literal
@@ -142,6 +144,10 @@ and absolute URLs are left alone.
 - The catalog page's sensor blurb is the first line of the rendered body
   with HTML tags stripped, truncated at 200 chars — keep the opening
   sentence of each sensor self-contained.
-- The atlas matrix cell is keyed on `stack_level` (singular) matching
-  `STACK_LAYERS` slugs exactly; a typo yields a silently empty cell.
+- The atlas grid cell is keyed on `stack_level` (singular) matching
+  `STACK_LAYERS` slugs exactly, which then fold into `LIFECYCLE_STAGES`
+  columns via `STAGE_BY_LEVEL`; a typo yields a silently empty cell.
+- The atlas dependency graph derives edges from `see_also` references to
+  family slugs (`change-family`, plain slugs like `adversarial`, or sensor
+  IDs resolved to their family); only the strongest ~14 edges are drawn.
 - Search box in the header is decorative — no search is wired up.

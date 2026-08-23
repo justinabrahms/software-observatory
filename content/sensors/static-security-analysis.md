@@ -1,0 +1,44 @@
+---
+id: SO-014
+title: Static Security Analysis
+family: adversarial
+family_num: "05"
+oracle: medium
+independence: high
+scope: codebase
+latency: minutes
+actionability: blocking
+type: predictive
+stack_level: static-analysis
+categories:
+  - Adversarial
+  - Security
+see_also:
+  - SO-005
+  - SO-005c
+  - SO-001c
+---
+
+Attacking the code before it runs. Taint tracking, dataflow analysis, and
+pattern-based scanners (Semgrep, CodeQL) ask: "is there any path through
+this program where an adversary's input reaches a dangerous sink?" A sensor
+of exploitable structure, not of known-bad strings.
+
+## Sensor properties
+
+| Property | Value |
+|----------|-------|
+| Oracle strength | Medium — findings need triage; false positives are the tax |
+| Independence | High — the analysis does not trust the code's own intentions |
+| Scope | Codebase |
+| Feedback latency | Minutes |
+| Actionability | Blocking when wired into CI |
+| Type | Predictive |
+
+## What it cannot detect
+
+Vulnerabilities in the composition of services, in configuration, or in the
+dependencies' runtime behavior — those belong to
+[fault injection](fault-injection.html) and live chaos. And a clean scan
+says nothing about attacks that arrive through valid inputs:
+[fuzzing](fuzzing.html) covers that side.
