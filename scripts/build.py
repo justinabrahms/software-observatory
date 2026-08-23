@@ -503,7 +503,8 @@ def html_head(title, depth="", canonical="", json_ld=""):
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{depth}css/observatory.css">{json_ld_block}
+  <link rel="stylesheet" href="{depth}css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="{SITE_URL}/rss.xml">{json_ld_block}
 </head>"""
 
 
@@ -1966,6 +1967,127 @@ def generate_robots(output_dir):
         f.write(content)
 
 
+def generate_rss(sensors, output_dir):
+    """Write rss.xml — a feed of all sensor entries, newest first."""
+    import datetime
+    sorted_sensors = sorted(
+        sensors,
+        key=lambda s: s.get("last_reviewed", ""),
+        reverse=True,
+    )
+    pub_date = datetime.datetime.now(datetime.timezone.utc).strftime(
+        "%a, %d %b %Y %H:%M:%S +0000"
+    )
+    items = ""
+    for s in sorted_sensors:
+        fam = FAMILY_BY_SLUG.get(s.get("family", ""), {})
+        blurb = re.sub(r"<[^>]+>", "", s.get("body_html", "")).split("\n")[0][:200]
+        items += f"""    <item>
+      <title>{html.escape(s['title'])}</title>
+      <link>{SITE_URL}/pages/sensors/{s['slug']}.html</link>
+      <guid>{SITE_URL}/pages/sensors/{s['slug']}.html</guid>
+      <description>{html.escape(blurb)}</description>
+      <category>{html.escape(fam.get('name', ''))}</category>
+    </item>
+"""
+    feed = f"""<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Software Observatory</title>
+    <link>{SITE_URL}</link>
+    <description>A catalog of epistemic sensors for software correctness.</description>
+    <language>en</language>
+    <lastBuildDate>{pub_date}</lastBuildDate>
+{items.rstrip()}
+  </channel>
+</rss>"""
+    with open(output_dir / "rss.xml", "w") as f:
+        f.write(feed)
+
+
+def generate_404(output_dir):
+    """Write 404.html with recovery links for agents and humans."""
+    body = """  <section class="page-header">
+    <p class="eyebrow">404</p>
+    <h1 class="page-title">Not found</h1>
+    <p class="page-lede">
+      This page doesn't exist. Here's where to look instead:
+    </p>
+  </section>
+
+  <div class="about-content">
+    <h2>Find your way</h2>
+    <ul>
+      <li><a href="index.html" class="wikilink">Homepage</a> — the thesis and the confidence landscape</li>
+      <li><a href="pages/catalog.html" class="wikilink">Sensor catalog</a> — all 56 sensors across 11 families</li>
+      <li><a href="pages/atlas.html" class="wikilink">Sensor atlas</a> — families arranged by lifecycle stage</li>
+      <li><a href="pages/framework.html" class="wikilink">Framework</a> — the six dimensions every sensor is characterized along</li>
+      <li><a href="pages/glossary.html" class="wikilink">Glossary</a> — definitions of the core vocabulary</li>
+      <li><a href="pages/categories.html" class="wikilink">Categories</a> — cross-cutting tags that span families</li>
+    </ul>
+    <h2>For agents</h2>
+    <p>
+      Sitemap: <a href="sitemap.xml">/sitemap.xml</a> — all indexable URLs.
+      Machine-readable catalog: <a href="search-index.json">/search-index.json</a>.
+      Agent instructions: <a href="llms.txt">/llms.txt</a>.
+    </p>
+  </div>"""
+    page_html = html_page("Not found", body, root_depth="", nav_depth="pages/")
+    with open(output_dir / "404.html", "w") as f:
+        f.write(page_html)
+
+
+def generate_llms_txt(sensors, output_dir):
+    """Write llms.txt — agent-readable summary with when-to-use guidance."""
+    lines = [
+        "# Software Observatory",
+        "",
+        "> A catalog of epistemic sensors for software correctness — the observable signals that reduce uncertainty about whether a system is correct, maintainable, and behaving as intended.",
+        "",
+        "The Software Observatory catalogs the signals we can observe about software, characterizes each along six dimensions (oracle strength, independence, scope, feedback latency, actionability, predictive vs retrospective), and arranges them into eleven families.",
+        "",
+        "## When to use this",
+        "",
+        "Use this catalog when a user asks:",
+        "- What tests to add for a new codebase or feature",
+        "- How to evaluate AI-generated code (agent safety, producer-evaluator separation, computational gates)",
+ "- What 'observability' means in practice vs. traditional monitoring",
+ "- For a taxonomy of software quality signals / verification techniques",
+ "- What the difference is between coverage, mutation testing, and property-based testing",
+ "- How to set up a CI pipeline that actually catches bugs (computational gates, not prose rules)",
+ "- What sensors to combine for a greenfield project, a regulated industry, or a legacy rescue",
+ "",
+        "## When NOT to use this",
+        "",
+        "Do not use this catalog for:",
+        "- Language-specific syntax questions (use the language's own docs)",
+        "- Tool configuration details (link to the tool's own docs; this catalog names tools but doesn't configure them)",
+        "- Framework-specific testing setup (e.g. how to configure Jest; use the Jest docs)",
+        "",
+        "## How to navigate",
+        "",
+        "- Catalog: /pages/catalog.html — all 56 sensors organized by family",
+        "- Atlas: /pages/atlas.html — families arranged as a matrix by lifecycle stage",
+        "- Framework: /pages/framework.html — the six dimensions",
+        "- Glossary: /pages/glossary.html — definitions of core terms (oracle, independence, epistemic sensor, etc.)",
+        "- Individual entries: /pages/sensors/<slug>.html (e.g. /pages/sensors/mutation-testing.html)",
+        "",
+        "## Machine-readable surfaces",
+        "",
+        "- Sitemap: /sitemap.xml",
+        "- Search index: /search-index.json (title, family, url, blurb per sensor)",
+        "- RSS: /rss.xml",
+        "",
+        "## Sensor families",
+        "",
+    ]
+    for f in FAMILIES:
+        lines.append(f"- {f['name']}: {f['question']} (see /pages/catalog.html#{f['slug']})")
+    lines.append("")
+    with open(output_dir / "llms.txt", "w") as f:
+        f.write("\n".join(lines))
+
+
 def main():
     print("Loading sensors...")
     sensors = load_sensors()
@@ -1992,6 +2114,26 @@ def main():
     print("  sitemap.xml")
     generate_robots(output_dir)
     print("  robots.txt")
+
+    print("Generating RSS feed...")
+    generate_rss(sensors, output_dir)
+    print("  rss.xml")
+
+    print("Generating 404 page...")
+    generate_404(output_dir)
+    print("  404.html")
+
+    print("Generating llms.txt...")
+    generate_llms_txt(sensors, output_dir)
+    print("  llms.txt")
+
+    # Copy markdown sources for content negotiation (Accept: text/markdown)
+    import shutil
+    md_dir = output_dir / "md" / "sensors"
+    md_dir.mkdir(parents=True, exist_ok=True)
+    for filepath in sorted((CONTENT_DIR / "sensors").glob("*.md")):
+        shutil.copy2(filepath, md_dir / filepath.name)
+    print("  md/sensors/*.md (for content negotiation)")
 
     print("Generating pages...")
     generate_index_page(sensors, output_dir)
