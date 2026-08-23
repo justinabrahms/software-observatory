@@ -24,7 +24,7 @@ import yaml
 import markdown
 
 
-SITE_ROOT = Path(__file__).parent
+SITE_ROOT = Path(__file__).resolve().parent.parent
 CONTENT_DIR = SITE_ROOT / "content"
 OUTPUT_DIR = SITE_ROOT
 CSS_DIR = SITE_ROOT / "css"
@@ -1518,6 +1518,7 @@ def main():
         print(f"  {sid}: {len(bls)} backlinks")
 
     output_dir = OUTPUT_DIR
+    (output_dir / "pages" / "sensors").mkdir(parents=True, exist_ok=True)
 
     print("Generating search index...")
     generate_search_index(sensors, output_dir)

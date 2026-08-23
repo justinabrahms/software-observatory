@@ -21,7 +21,7 @@ import urllib.error
 from pathlib import Path
 from urllib.parse import urlparse, urldefrag
 
-SITE_ROOT = Path(__file__).parent
+SITE_ROOT = Path(__file__).resolve().parent.parent
 HTML_GLOBS = ["index.html", "pages/**/*.html"]
 
 SKIP_SCHEMES = ("mailto:", "tel:", "javascript:", "data:")

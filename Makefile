@@ -1,10 +1,10 @@
 .PHONY: build deploy check serve
 
 build:
-	.venv/bin/python build.py
+	.venv/bin/python scripts/build.py
 
 check:
-	.venv/bin/python check_links.py
+	.venv/bin/python scripts/check_links.py
 
 # Publish to the observer@abrah.ms deploy slot. The `observer` user's only
 # authorized key is pinned by `rrsync -wo` to /srv/softwareobservatory.com,
@@ -18,11 +18,9 @@ deploy: build
 	  --exclude='content/' \
 	  --exclude='templates/' \
 	  --exclude='archive-*/' \
-	  --exclude='build.py' \
-	  --exclude='check_links.py' \
+	  --exclude='scripts/' \
 	  --exclude='Makefile' \
-	  --exclude='TODO.md' \
-	  --exclude='chat-w-gpt.md' \
+	  --exclude='.gitignore' \
 	  --exclude='AGENTS.md' \
 	  ./ observer@abrah.ms:.
 	@echo "Deployed to https://softwareobservatory.com"

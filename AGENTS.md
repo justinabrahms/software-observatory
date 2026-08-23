@@ -6,12 +6,12 @@ tests, no CI — one Python generator script plus hand-written CSS/JS.
 
 ## Commands
 
-- **Build:** `.venv/bin/python build.py` — reads `content/sensors/*.md`,
+- **Build:** `.venv/bin/python scripts/build.py` — reads `content/sensors/*.md`,
   regenerates `index.html`, `pages/*.html`, `pages/sensors/*.html`, and
   `search-index.json` **in place at the repo root** (generated files are
-  committed to git). System `python3` is missing the `markdown` module;
-  always use `.venv/bin/python`.
-- **Link check:** `.venv/bin/python check_links.py` — validates internal
+  gitignored; `make deploy` ships them from the working tree). System
+  `python3` is missing the `markdown` module; always use `.venv/bin/python`.
+- **Link check:** `.venv/bin/python scripts/check_links.py` — validates internal
   links and `#anchors` across all generated HTML, exits 1 on breakage
   (CI-gateable). `--external` also HEADs outbound links (needs network).
 - **Preview:** `python3 -m http.server` from the repo root, then open
@@ -20,7 +20,7 @@ tests, no CI — one Python generator script plus hand-written CSS/JS.
   generated HTML.
 
 Deps (`pyyaml`, `markdown`) are already installed in `.venv/` (gitignored).
-The `--watch` flag mentioned in the `build.py` docstring is **not
+The `--watch` flag mentioned in the `scripts/build.py` docstring is **not
 implemented** — `sys.argv` is never parsed.
 
 ## Deployment
@@ -87,13 +87,13 @@ the homepage scatter legend and dots key off.
 
 | Path | Role |
 |------|------|
-| `build.py` | The whole generator. Templates + data + logic in one file. |
+| `scripts/build.py` | The whole generator. Templates + data + logic in one file. |
+| `scripts/check_links.py` | Internal link/anchor validator over the generated HTML. |
 | `content/sensors/*.md` | Source of truth for sensor entries (YAML frontmatter). |
 | `content/pages/` | Empty; reserved. |
-| `index.html`, `pages/` | **Generated output** — committed, but overwritten by every build. |
+| `index.html`, `pages/`, `search-index.json` | **Generated output** — gitignored, overwritten by every build; deploys ship it from the working tree. |
 | `css/observatory.css` | Hand-written stylesheet (design tokens in `:root` at top). |
 | `js/main.js` | No build step. Family filter, card a11y, header search dropdown, heading-jumplink copy buttons, homepage scatter toggle + legend isolation. |
-| `chat-w-gpt.md` | Original design brainstorm that seeded the taxonomy. Background reading only. |
 | `archive-NMUHEr/` | Untracked crush release tarball. Ignore. |
 
 ## Adding a sensor (the main workflow)
@@ -122,7 +122,7 @@ the homepage scatter legend and dots key off.
    see_also: [SO-001, ...]       # sensor IDs; family slugs and the literal
                                  # "atlas" also resolve (see resolve_see_also)
    ```
-3. Run `.venv/bin/python build.py`. A `family` with no matching entry in
+3. Run `.venv/bin/python scripts/build.py`. A `family` with no matching entry in
    `FAMILIES` silently drops the sensor off the catalog and atlas pages
    (the detail page still generates) — check build output counts.
 
@@ -139,9 +139,9 @@ that gets this wrong.
 
 ## Conventions
 
-- **Generated files are committed.** After running the build, expect
-  `index.html` and `pages/` to show as modified — commit them together
-  with the content change.
+- **Generated files are gitignored.** `index.html`, `pages/`, and
+  `search-index.json` are build output; run the build locally to preview,
+  and `make deploy` rsyncs the freshly built working tree.
 - **HTML style:** 2-space indent, double quotes, CSS custom properties
   (`var(--accent)` etc.) for all colors; design tokens live in `:root` at
   the top of `css/observatory.css`. Dark theme, Fraunces/Inter/JetBrains
