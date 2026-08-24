@@ -4,35 +4,37 @@ title: Integration Tests
 family: behavioral
 family_num: '02'
 oracle: high
-oracle_note: 'failure means the integration is broken'
+oracle_note: failure means the integration is broken
 independence: low
-independence_note: 'same team writes code and tests'
+independence_note: same team writes code and tests
 scope: service
 latency: minutes
 actionability: guiding
-actionability_note: 'shows which integration point failed'
+actionability_note: shows which integration point failed
 type: predictive
 stack_level: integration-tests
 categories:
 - Behavioral
-- Integration
 see_also:
 - SO-002
 - SO-002b
 - SO-002d
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
-- title: Techniques for Improving Regression Testing in Continuous Integration Development
-    Environments
+- title: Techniques for Improving Regression Testing in Continuous Integration Development Environments
   year: 2014
   tier: I
   url: https://cs.uwaterloo.ca/~m2nagapp/courses/CS846/1171/papers/elbaum_fse14.pdf
   kind: paper
+  authors: Sebastian Elbaum, Gregg Rothermel, John Penix
+  venue: FSE 2014 (ESEC/FSE), Hong Kong
 - title: Taming Google-Scale Continuous Testing
   year: 2017
   tier: II
   url: https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45861.pdf
   kind: paper
+  authors: Atif Memon, Zebao Gao, Bao Nguyen, Sanjeev Dhanda, Eric Nickell, Rob Siemborski, John Micco
+  venue: ICSE 2017, Software Engineering in Practice (SEIP)
 - title: pytest
   kind: tool
   url: https://docs.pytest.org

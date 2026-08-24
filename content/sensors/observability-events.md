@@ -4,44 +4,46 @@ title: Observability Events
 family: runtime
 family_num: 6
 oracle: medium
-oracle_note: 'shows what happened, not whether it was correct'
+oracle_note: shows what happened, not whether it was correct
 independence: high
-independence_note: 'production reality cannot be gamed by the test author (but the producer chose what to instrument)'
+independence_note: production reality cannot be gamed by the test author (but the producer chose what to instrument)
 scope: system
 latency: seconds
-latency_note: 'real-time'
+latency_note: real-time
 actionability: exploratory
-actionability_note: 'you query to find the signal'
+actionability_note: you query to find the signal
 type: retrospective
-type_note: 'what actually happened'
+type_note: what actually happened
 stack_level: production-behavior
 categories:
 - Runtime
-- High Cardinality
-- Events
 - Production Sensors
 see_also:
 - SO-004
 - change-family
 - evolution-family
 - ai-sensors
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
-- title: How to Fight Production Incidents? An Empirical Study on a Large-scale Cloud
-    Service
+- title: How to Fight Production Incidents? An Empirical Study on a Large-scale Cloud Service
   year: 2022
   tier: II
   url: https://acmsocc.org/2022/assets/slides/95.pdf
   kind: paper
+  authors: Supriyo Ghosh, Manish Shetty, Chetan Bansal, Suman Nath
+  venue: ACM SoCC '22
 - title: The Tail at Scale
   year: 2013
   tier: III
   url: https://www.barroso.org/publications/TheTailAtScale.pdf
   kind: paper
+  authors: Jeffrey Dean, Luiz André Barroso
+  venue: Communications of the ACM 56(2)
 - authors: Charity Majors et al.
   title: Observability Engineering
   year: 2022
   kind: paper
+  tier: IV
 - title: OpenTelemetry
   url: https://opentelemetry.io
   kind: tool

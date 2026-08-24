@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-08-24T06:19:25Z",
+  "generated_at": "2026-08-24T16:55:55Z",
   "site": "https://softwareobservatory.com",
   "families": [
     {
@@ -102,8 +102,8 @@
         "family_num": "01",
         "oracle": "high",
         "oracle_note": "hash equality is unambiguous",
-        "independence": "high",
-        "independence_note": "the attestation comes from the builder, not the deployer",
+        "independence": "medium",
+        "independence_note": "the builder attests its own output; a compromised builder signs faithfully",
         "scope": "system",
         "scope_note": "the whole artifact",
         "latency": "minutes",
@@ -112,24 +112,27 @@
         "type": "retrospective",
         "stack_level": "canary-shadow",
         "categories": [
-          "Structural",
-          "Supply Chain"
+          "Structural"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Reproducible Builds: Increasing the Integrity of Software Supply Chains",
             "year": 2021,
             "tier": "II",
             "url": "https://arxiv.org/abs/2104.06020",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Chris Lamb, Stefano Zacchiroli",
+            "venue": "arXiv preprint; later IEEE Software 39 (2022) 62-70"
           },
           {
             "title": "License Incompatibilities in Software Ecosystems",
             "year": 2022,
             "tier": "II",
             "url": "https://arxiv.org/abs/2203.01634",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Rolf-Helge Pfeiffer",
+            "venue": "arXiv 2203.01634"
           },
           {
             "title": "SLSA",
@@ -438,7 +441,7 @@
           "Syntactic Validity",
           "Maximum Oracle"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Aho et al., 'Compilers: Principles, Techniques, and Tools'",
@@ -688,24 +691,27 @@
         "type": "predictive",
         "stack_level": "static-analysis",
         "categories": [
-          "Structural",
-          "Guiding Sensors"
+          "Structural"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Gang of Eight: A Defect Taxonomy for Infrastructure as Code Scripts",
             "year": 2020,
             "tier": "II",
             "url": "https://akondrahman.github.io/files/papers/icse20_acid.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Akond Rahman, Effat Farhana, Chris Parnin, Laurie Williams",
+            "venue": "ICSE 2020"
           },
           {
             "title": "The Seven Sins: Security Smells in Infrastructure as Code Scripts",
             "year": 2019,
             "tier": "II",
             "url": "https://akondrahman.github.io/files/papers/icse19_slic.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Akond Rahman, Chris Parnin, Laurie Williams",
+            "venue": "ICSE 2019"
           },
           {
             "title": "ESLint",
@@ -907,24 +913,27 @@
         "stack_level": "static-analysis",
         "categories": [
           "Structural",
-          "Boundary Assumptions",
-          "Guiding Sensors"
+          "Boundary Assumptions"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Detecting Data Errors: Where are we and what needs to be done?",
             "year": 2016,
             "tier": "I",
             "url": "https://www.vldb.org/pvldb/vol9/p993-abedjan.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Ziawasch Abedjan, Xu Chu, Dong Deng, Raul Castro Fernandez, Ihab F. Ilyas, Mourad Ouzzani, Paolo Papotti, Michael Stonebraker, Nan Tang",
+            "venue": "PVLDB 9(12)"
           },
           {
             "title": "Failing Loudly: An Empirical Study of Methods for Detecting Dataset Shift",
             "year": 2019,
             "tier": "I",
             "url": "https://arxiv.org/pdf/1810.11953",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Stephan Rabanser, Stephan Günnemann, Zachary C. Lipton",
+            "venue": "NeurIPS 2019"
           },
           {
             "title": "OpenAPI Specification",
@@ -1201,30 +1210,34 @@
         "categories": [
           "Structural",
           "Syntactic Validity",
-          "Guiding Sensors",
           "Maximum Oracle"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "To Type or Not to Type: Quantifying Detectable Bugs in JavaScript",
             "year": 2017,
             "tier": "I",
             "url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2017/09/gao2017javascript.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Zheng Gao, Christian Bird, Earl T. Barr",
+            "venue": "ICSE 2017"
           },
           {
             "title": "Eliminating Memory Safety Vulnerabilities at the Source",
             "year": 2024,
             "tier": "II",
             "url": "https://security.googleblog.com/2024/09/eliminating-memory-safety-vulnerabilities-Android.html",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Google Security Blog, Android team",
+            "venue": "Google Security Blog"
           },
           {
             "authors": "Luca Cardelli",
             "title": "Type Systems",
             "year": 2004,
-            "kind": "paper"
+            "kind": "paper",
+            "tier": "IV"
           },
           {
             "title": "Rust compiler",
@@ -1520,23 +1533,25 @@
         "type": "predictive",
         "stack_level": "static-analysis",
         "categories": [
-          "Behavioral",
-          "Design by Contract"
+          "Behavioral"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "How Amazon Web Services Uses Formal Methods",
             "year": 2015,
             "tier": "III",
             "url": "https://cacm.acm.org/research/how-amazon-web-services-uses-formal-methods/",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Chris Newcombe, Tim Rath, Fan Zhang, Bogdan Munteanu, Marc Brooker, Michael Deardeuff",
+            "venue": "Communications of the ACM 58(4)"
           },
           {
             "authors": "Leino",
             "title": "Dafny: An Automatic Program Verifier",
             "year": 2010,
-            "kind": "paper"
+            "kind": "paper",
+            "tier": "IV"
           },
           {
             "title": "Dafny",
@@ -1824,7 +1839,7 @@
         "oracle_note": "a contract violation is a definite bug",
         "independence": "high",
         "independence_note": "consumer defines the contract",
-        "scope": "service-boundary",
+        "scope": "service",
         "latency": "minutes",
         "actionability": "guiding",
         "actionability_note": "shows exactly which contract clause was violated",
@@ -1833,31 +1848,34 @@
         "stack_level": "integration-tests",
         "categories": [
           "Behavioral",
-          "Boundary Assumptions",
-          "Microservices",
-          "Guiding Sensors"
+          "Boundary Assumptions"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "I Depended on You and You Broke Me: An Empirical Study of Manifesting Breaking Changes in Client Packages",
             "year": 2023,
             "tier": "II",
             "url": "https://arxiv.org/abs/2301.04563",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Suhaib Mujahid, Diego Elias Costa, Rabe Abdalkareem, Emad Shihab and others",
+            "venue": "ACM TOSEM"
           },
           {
             "title": "Design, Monitoring, and Testing of Microservices Systems: The Practitioners' Perspective",
             "year": 2021,
             "tier": "II",
             "url": "https://arxiv.org/pdf/2108.03384",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Muhammad Waseem, Peng Liang, Mojtaba Shahin, Amleto Di Salle, Gastón Márquez",
+            "venue": "arXiv preprint, submitted to the Journal of Systems and Software"
           },
           {
             "authors": "Ian Robinson",
             "title": "Consumer-Driven Contracts",
             "year": 2007,
-            "kind": "paper"
+            "kind": "paper",
+            "tier": "IV"
           },
           {
             "title": "Pact",
@@ -1877,7 +1895,8 @@
             "url": "https://www.postman.com",
             "description": "API testing and contract validation"
           }
-        ]
+        ],
+        "scope_note": "between services, at their boundaries"
       },
       "body_html": "<p>Does service A continue satisfying the assumptions of service B? Contract\ntests are a sensor of <em>boundary assumptions</em> — the implicit agreements\nbetween independent components about what the interface between them\npromises.</p>\n<h2>Contracts measure boundary assumptions</h2>\n<p>A <em>contract</em> is a specification of what one component promises to provide\nand what another component is allowed to assume. Contract tests verify that\nboth sides of the boundary continue to honor these promises as the system\nevolves.</p>\n<pre><code># Consumer-driven contract\nService B (consumer) defines:\n  &quot;I expect GET /users/{id} to return\n   { id: int, name: string, active: bool }&quot;\n\nService A (provider) must satisfy:\n  its response matches this shape\n  the field types are correct\n  the endpoint exists and responds\n</code></pre>\n<p>The sensor detects <em>breaking changes</em> — when a provider modifies its API in\na way that violates the assumptions its consumers depend on. This is\nparticularly powerful in microservice architectures where independent teams\ndeploy independently.</p>\n<blockquote>\n<p>Contracts measure boundary assumptions. Types measure a particular class\nof structural inconsistency. Contract tests are the boundary-level version\nof what type checkers are at the module level: both enforce structural\npromises, but at different scopes and different feedback latencies.</p>\n</blockquote>\n<h2>In practice</h2>\n<p>A reading is a pact verification failure that names the broken clause\nand the consumer it belongs to:</p>\n<pre><code>Verifying a pact between Orders (consumer) and Billing (provider)\n\n  A request for invoice 42\n    GET /invoices/42\n      returns a response which\n        has status code 200\n        includes headers\n          &quot;Content-Type&quot; with value &quot;application/json&quot;  FAILED\n            actual value: &quot;text/html&quot;\n        has a matching body                             FAILED\n          $.amount: expected number, got string\n\n2 interactions, 2 failures\n</code></pre>\n<p>Reading it well:</p>\n<ol>\n<li><strong>Read the clause, not just the red.</strong> Status, header, and body\n   failures have different owners and different fixes. The clause\n   names which promise broke.</li>\n<li><strong>The failure belongs to the change, not the expectation.</strong> The\n   consumer stated its assumption first; the provider moved. The fix\n   direction is usually to hold the provider to the promise, not to\n   relax the expectation.</li>\n<li><strong>A passing pact is one-directional evidence.</strong> It says the\n   provider honors the recorded expectations. It does not say the\n   expectations are complete: a consumer that never wrote a pact is\n   a gap the sensor cannot see.</li>\n</ol>\n<h2>How it gets gamed</h2>\n<ul>\n<li><strong>Delete or weaken the pact.</strong> Removing an expectation the\n  provider now violates turns red to green without fixing the\n  provider. The consumer still holds the old assumption, so the\n  breakage moves from the report to production.</li>\n<li><strong>Verify against a stub.</strong> Running the provider side of a pact\n  against a mock instead of the real service passes the check and\n  tests nothing.</li>\n<li><strong>Let pacts go stale.</strong> A pact not re-verified after a provider\n  change is an assumption wearing a check mark.</li>\n</ul>\n<p>The meta-signal is the pact count per consumer over time. A pact file\nthat shrinks after a failure is the sensor being overridden.</p>\n<h2>Response playbook</h2>\n<p>When a contract test fails:</p>\n<ol>\n<li><strong>Read the broken clause.</strong> Status, header, and body failures\n   have different owners. The clause names which promise broke and\n   which consumer depends on it.</li>\n<li><strong>Assume the provider is wrong until shown otherwise.</strong> The\n   consumer stated its assumption before the provider changed. The\n   default fix is restoring the promise, not relaxing the pact.</li>\n<li><strong>If the consumer is wrong, change both sides together.</strong> Update\n   the pact and the consumer in the same change, so the window where\n   neither matches is zero.</li>\n<li><strong>Check the other consumers.</strong> A broken clause usually breaks\n   every consumer that holds it. The report names one; the pact\n   broker lists the rest.</li>\n</ol>\n<h2>What it cannot detect</h2>\n<p>Contract tests verify the <em>shape</em> of communication, not its <em>meaning</em>. A\nresponse that has the right fields and types but contains wrong values will\npass a contract test. They also cannot detect\n<a class=\"body-link\" href=\"/catalog/#behavioral\">integration failures</a> that emerge from the\n<em>interaction</em> of correct components producing incorrect emergent behavior.</p>",
       "body_text": "Does service A continue satisfying the assumptions of service B? Contract tests are a sensor of boundary assumptions — the implicit agreements between independent components about what the interface between them promises. Contracts measure boundary assumptions A contract is a specification of what one component promises to provide and what another component is allowed to assume. Contract tests verify that both sides of the boundary continue to honor these promises as the system evolves. # Consumer-driven contract Service B (consumer) defines: \"I expect GET /users/{id} to return { id: int, name: string, active: bool }\" Service A (provider) must satisfy: its response matches this shape the field types are correct the endpoint exists and responds The sensor detects breaking changes — when a provider modifies its API in a way that violates the assumptions its consumers depend on. This is particularly powerful in microservice architectures where independent teams deploy independently. Contracts measure boundary assumptions. Types measure a particular class of structural inconsistency. Contract tests are the boundary-level version of what type checkers are at the module level: both enforce structural promises, but at different scopes and different feedback latencies. In practice A reading is a pact verification failure that names the broken clause and the consumer it belongs to: Verifying a pact between Orders (consumer) and Billing (provider) A request for invoice 42 GET /invoices/42 returns a response which has status code 200 includes headers \"Content-Type\" with value \"application/json\" FAILED actual value: \"text/html\" has a matching body FAILED $.amount: expected number, got string 2 interactions, 2 failures Reading it well: Read the clause, not just the red. Status, header, and body failures have different owners and different fixes. The clause names which promise broke. The failure belongs to the change, not the expectation. The consumer stated its assumption first; the provider moved. The fix direction is usually to hold the provider to the promise, not to relax the expectation. A passing pact is one-directional evidence. It says the provider honors the recorded expectations. It does not say the expectations are complete: a consumer that never wrote a pact is a gap the sensor cannot see. How it gets gamed Delete or weaken the pact. Removing an expectation the provider now violates turns red to green without fixing the provider. The consumer still holds the old assumption, so the breakage moves from the report to production. Verify against a stub. Running the provider side of a pact against a mock instead of the real service passes the check and tests nothing. Let pacts go stale. A pact not re-verified after a provider change is an assumption wearing a check mark. The meta-signal is the pact count per consumer over time. A pact file that shrinks after a failure is the sensor being overridden. Response playbook When a contract test fails: Read the broken clause. Status, header, and body failures have different owners. The clause names which promise broke and which consumer depends on it. Assume the provider is wrong until shown otherwise. The consumer stated its assumption before the provider changed. The default fix is restoring the promise, not relaxing the pact. If the consumer is wrong, change both sides together. Update the pact and the consumer in the same change, so the window where neither matches is zero. Check the other consumers. A broken clause usually breaks every consumer that holds it. The report names one; the pact broker lists the rest. What it cannot detect Contract tests verify the shape of communication, not its meaning . A response that has the right fields and types but contains wrong values will pass a contract test. They also cannot detect integration failures that emerge from the interaction of correct components producing incorrect emergent behavior.",
@@ -2177,30 +2196,34 @@
         "type": "predictive",
         "stack_level": "behavioral-tests",
         "categories": [
-          "Behavioral",
-          "Guiding Sensors"
+          "Behavioral"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Techniques for Improving Regression Testing in Continuous Integration Development Environments",
             "year": 2014,
             "tier": "I",
             "url": "https://cs.uwaterloo.ca/~m2nagapp/courses/CS846/1171/papers/elbaum_fse14.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Sebastian Elbaum, Gregg Rothermel, John Penix",
+            "venue": "FSE 2014 (ESEC/FSE), Hong Kong"
           },
           {
             "title": "On the Effectiveness of the Test-First Approach to Programming",
             "year": 2005,
             "tier": "I",
             "url": "https://www.cs.unm.edu/~joel/cs351/paper/IEEE-Effectiveness_of_Test-First_Approach_to_Programming.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Hakan Erdogmus, Maurizio Morisio, Marco Torchiano",
+            "venue": "IEEE TSE 31(1)"
           },
           {
             "authors": "Beizer",
             "title": "Software Testing Techniques",
             "year": 1990,
-            "kind": "paper"
+            "kind": "paper",
+            "tier": "IV"
           },
           {
             "title": "pytest",
@@ -2493,24 +2516,27 @@
         "type": "predictive",
         "stack_level": "integration-tests",
         "categories": [
-          "Behavioral",
-          "Integration"
+          "Behavioral"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Techniques for Improving Regression Testing in Continuous Integration Development Environments",
             "year": 2014,
             "tier": "I",
             "url": "https://cs.uwaterloo.ca/~m2nagapp/courses/CS846/1171/papers/elbaum_fse14.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Sebastian Elbaum, Gregg Rothermel, John Penix",
+            "venue": "FSE 2014 (ESEC/FSE), Hong Kong"
           },
           {
             "title": "Taming Google-Scale Continuous Testing",
             "year": 2017,
             "tier": "II",
             "url": "https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45861.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Atif Memon, Zebao Gao, Bao Nguyen, Sanjeev Dhanda, Eric Nickell, Rob Siemborski, John Micco",
+            "venue": "ICSE 2017, Software Engineering in Practice (SEIP)"
           },
           {
             "title": "pytest",
@@ -2784,7 +2810,7 @@
         "oracle_note": "\"alive\" is a weak claim, but a true one",
         "independence": "high",
         "independence_note": "exercises the real deployed artifact end to end",
-        "scope": "system",
+        "scope": "user-journey",
         "latency": "seconds",
         "actionability": "blocking",
         "actionability_note": "a failed smoke test halts the rollout",
@@ -2794,14 +2820,16 @@
           "Behavioral",
           "Deployment Safety"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Software Engineering at Google, ch. 11: Testing Overview",
             "year": 2020,
             "tier": "IV",
             "url": "https://abseil.io/resources/swe-book/html/ch11.html",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Adam Bender; eds. Titus Winters, Tom Manshreck, Hyrum Wright",
+            "venue": "O'Reilly Media"
           },
           {
             "title": "smoke-tester",
@@ -2821,7 +2849,8 @@
             "url": "https://k6.io",
             "description": "Smoke testing with k6 load testing tool"
           }
-        ]
+        ],
+        "scope_note": "critical user paths through the deployed system"
       },
       "body_html": "<p>The cheapest behavioral check against a live deployment: hit <code>/health</code>,\ncreate one record, read it back, delete it. If any step fails, roll back.\nSmoke tests answer &ldquo;is the deployed system alive enough to behave at all?&rdquo;\nbefore <a class=\"body-link\" href=\"/sensors/canary-analysis/\">canary analysis</a> has enough traffic to judge.</p>\n<h2>In practice</h2>\n<p>A reading is a short checklist run against the freshly deployed\nartifact, one line per vital sign:</p>\n<pre><code>$ smoke https://staging.example.com\n  GET    /health            200   41ms  ok\n  POST   /records           201   87ms  ok\n  GET    /records/8f3a      200   33ms  ok\n  DELETE /records/8f3a      204   52ms  ok\n4/4 passed in 0.9s\n</code></pre>\n<p>The same run, failing:</p>\n<pre><code>  GET    /health            200   39ms  ok\n  POST   /records           500  102ms  FAIL\n  GET    /records/8f3a      404   28ms  FAIL (depends on POST)\n  DELETE /records/8f3a      skipped\n1/4 passed. ROLLBACK.\n</code></pre>\n<p>Reading it well:</p>\n<ol>\n<li><strong>A failed smoke test is a blocking verdict, not a triage item.</strong>\n   The whole point of the sensor is that it runs before real traffic\n   arrives. Debating the failure while the rollout continues defeats\n   it.</li>\n<li><strong>Rule out the harness once, then trust the reading.</strong> Bad\n   credentials or a wrong URL produce the same red line as a broken\n   deployment. Re-run once; two consecutive failures are the\n   artifact.</li>\n<li><strong>Do not read more into a pass than it contains.</strong> Four green\n   lines mean the system is alive on four paths. They say nothing\n   about scale, correctness, or the other paths.</li>\n</ol>\n<h2>How it gets gamed</h2>\n<ul>\n<li><strong>Shrink the checklist.</strong> Removing the failing endpoint from the\n  smoke set turns the sensor into a decoration. The smoke test now\n  passes and says less.</li>\n<li><strong>Point at the wrong target.</strong> A smoke run against staging while\n  production stays old, or against a cached edge, produces green\n  readings about a system nobody is serving.</li>\n<li><strong>Loosen the verdict.</strong> Turning a failed check into a warning\n  keeps the run and discards the gate. The rollout proceeds on the\n  same evidence, minus the evidence.</li>\n</ul>\n<p>The meta-signal is the check count over time. A smoke suite that\nshrinks after failures is being gamed.</p>\n<h2>Response playbook</h2>\n<p>When a smoke test fails:</p>\n<ol>\n<li><strong>Stop the rollout.</strong> The sensor exists to run before real\n   traffic arrives; debating the failure while the deploy continues\n   defeats the point of it.</li>\n<li><strong>Rule out the harness once.</strong> Bad credentials, a wrong URL, and\n   a downed test runner produce the same red line as a broken\n   artifact. Re-run once; two consecutive failures are the artifact.</li>\n<li><strong>Roll back, then diagnose.</strong> Restore the known-good version\n   before investigating. The smoke test is a blocking verdict by\n   design; the post-mortem is for after, not instead.</li>\n<li><strong>Capture what the failing check returned.</strong> The status code,\n   the body, and the response time are the reading. Without them,\n   the post-mortem reconstructs from memory.</li>\n</ol>\n<h2>What it cannot detect</h2>\n<p>Anything that requires real load, real data shapes, or real user behavior.\nA smoke test passing is necessary for the deployment to proceed and\nsufficient for almost nothing else.</p>",
       "body_text": "The cheapest behavioral check against a live deployment: hit /health , create one record, read it back, delete it. If any step fails, roll back. Smoke tests answer “is the deployed system alive enough to behave at all?” before canary analysis has enough traffic to judge. In practice A reading is a short checklist run against the freshly deployed artifact, one line per vital sign: $ smoke https://staging.example.com GET /health 200 41ms ok POST /records 201 87ms ok GET /records/8f3a 200 33ms ok DELETE /records/8f3a 204 52ms ok 4/4 passed in 0.9s The same run, failing: GET /health 200 39ms ok POST /records 500 102ms FAIL GET /records/8f3a 404 28ms FAIL (depends on POST) DELETE /records/8f3a skipped 1/4 passed. ROLLBACK. Reading it well: A failed smoke test is a blocking verdict, not a triage item. The whole point of the sensor is that it runs before real traffic arrives. Debating the failure while the rollout continues defeats it. Rule out the harness once, then trust the reading. Bad credentials or a wrong URL produce the same red line as a broken deployment. Re-run once; two consecutive failures are the artifact. Do not read more into a pass than it contains. Four green lines mean the system is alive on four paths. They say nothing about scale, correctness, or the other paths. How it gets gamed Shrink the checklist. Removing the failing endpoint from the smoke set turns the sensor into a decoration. The smoke test now passes and says less. Point at the wrong target. A smoke run against staging while production stays old, or against a cached edge, produces green readings about a system nobody is serving. Loosen the verdict. Turning a failed check into a warning keeps the run and discards the gate. The rollout proceeds on the same evidence, minus the evidence. The meta-signal is the check count over time. A smoke suite that shrinks after failures is being gamed. Response playbook When a smoke test fails: Stop the rollout. The sensor exists to run before real traffic arrives; debating the failure while the deploy continues defeats the point of it. Rule out the harness once. Bad credentials, a wrong URL, and a downed test runner produce the same red line as a broken artifact. Re-run once; two consecutive failures are the artifact. Roll back, then diagnose. Restore the known-good version before investigating. The smoke test is a blocking verdict by design; the post-mortem is for after, not instead. Capture what the failing check returned. The status code, the body, and the response time are the reading. Without them, the post-mortem reconstructs from memory. What it cannot detect Anything that requires real load, real data shapes, or real user behavior. A smoke test passing is necessary for the deployment to proceed and sufficient for almost nothing else.",
@@ -3068,10 +3097,9 @@
         "type": "predictive",
         "stack_level": "behavioral-tests",
         "categories": [
-          "Behavioral",
-          "Drift Detection"
+          "Behavioral"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Jest snapshot",
@@ -3328,7 +3356,7 @@
         "oracle_note": "a failed checkout flow is unambiguous",
         "independence": "high",
         "independence_note": "runs outside the system, against its public surface",
-        "scope": "system",
+        "scope": "user-journey",
         "latency": "minutes",
         "actionability": "guiding",
         "actionability_note": "the failing step localizes the breakage",
@@ -3336,23 +3364,27 @@
         "stack_level": "production-behavior",
         "categories": [
           "Behavioral",
-          "Production"
+          "Production Sensors"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Meaningful Availability",
             "year": 2020,
             "tier": "III",
             "url": "https://www.usenix.org/system/files/nsdi20-paper-hauer.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Tamás Hauer, Philipp Hoffmann, John Lunney, Dan Ardelean, Amer Diwan",
+            "venue": "USENIX NSDI '20"
           },
           {
             "title": "Monitoring Distributed Systems (SRE Book, ch. 6)",
             "year": 2016,
             "tier": "IV",
             "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Rob Ewaschuk, Betsy Beyer",
+            "venue": "Site Reliability Engineering, O'Reilly"
           },
           {
             "title": "Checkly",
@@ -3378,7 +3410,8 @@
             "url": "https://docs.datadoghq.com/synthetic_monitoring",
             "description": "Synthetic monitoring in Datadog"
           }
-        ]
+        ],
+        "scope_note": "scripted end-to-end user flows"
       },
       "body_html": "<p>Scripted user flows run against the production system around the clock:\nlog in, search, add to cart, check out. Synthetic monitoring is a behavioral\ntest suite whose environment is the real world, giving you a baseline answer\nto &ldquo;does it do what we expect?&rdquo; even when no user happens to be asking.</p>\n<h2>In practice</h2>\n<p>A typical reading is a failed check, step by step:</p>\n<pre><code>CHECK checkout-flow FAILED  run 14:35 UTC  vantage fra-1\n  step 1  GET  /login            200   312ms  ok\n  step 2  POST /login            200   428ms  ok\n  step 3  GET  /search?q=kettle  200   391ms  ok\n  step 4  POST /cart             500  2104ms  FAILED\n  step 5  POST /checkout         ---  skipped\n</code></pre>\n<table>\n<thead>\n<tr>\n<th>Vantage</th>\n<th>Result</th>\n<th>Failing step</th>\n<th>p95 latency</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>fra-1</td>\n<td>FAIL</td>\n<td>POST /cart (500)</td>\n<td>2104 ms</td>\n</tr>\n<tr>\n<td>iad-1</td>\n<td>FAIL</td>\n<td>POST /cart (500)</td>\n<td>1980 ms</td>\n</tr>\n<tr>\n<td>sin-1</td>\n<td>PASS</td>\n<td></td>\n<td>412 ms</td>\n</tr>\n</tbody>\n</table>\n<p>Reading it well:</p>\n<ul>\n<li><strong>Read the step, not the check name.</strong> &ldquo;checkout-flow failed&rdquo; is a\n  headline; &ldquo;step 4, POST /cart, 500&rdquo; is a lead. The failing step is the\n  localization the sensor exists to give.</li>\n<li><strong>One failure is a question, three is a signal.</strong> Checks hit real\n  infrastructure and flake. Confirmation avoids paging on a blip, but\n  retries tuned high enough to always pass have silenced the sensor.</li>\n<li><strong>Separate target failure from probe failure.</strong> Expired test\n  credentials, a blocked agent IP, and a stale selector all look like\n  the system failing. The error body usually says which.</li>\n<li><strong>Suspect a check that always passes.</strong> Assertions weaken over time; a\n  five-year-old check that has never failed may no longer be checking\n  anything.</li>\n</ul>\n<h2>How it gets gamed</h2>\n<p>Synthetics are owned by the teams that ship the flows, so they can be\ntuned to pass:</p>\n<ul>\n<li><strong>Checks tuned to green.</strong> Slow assertions get wider timeouts, flaky\n  steps get more retries, and the check that used to fail in 2 seconds\n  now passes in 40. The monitor still &ldquo;works&rdquo;; it just stopped sensing.</li>\n<li><strong>Silence as maintenance.</strong> A failing check gets snoozed &ldquo;until the\n  deploy lands,&rdquo; then the snooze gets extended, then forgotten. Muted\n  checks are the sensor&rsquo;s off switch.</li>\n<li><strong>Testing the happy path only.</strong> Checks that avoid the paths where bugs\n  live, or that run only from the best-connected region, report a green\n  board over a real degradation elsewhere.</li>\n<li><strong>Credential theater.</strong> Expired test credentials make the check fail\n  for reasons that have nothing to do with the system; after a while\n  everyone learns to ignore check failures, real or not.</li>\n</ul>\n<p>The meta-signal is the check pass rate over months. A fleet of checks\nthat has not failed in a year, on a system that has had incidents in the\nsame year, is a sensor that has been tuned silent.</p>\n<h2>Response playbook</h2>\n<p>When a synthetic check fails:</p>\n<ol>\n<li><strong>Confirm the failure.</strong> Re-run the check, or wait for the next\n   scheduled run if it is minutes away. One failure is a question; two\n   consecutive failures are a signal. Do not page on a single blip, and\n   do not tune the retry count high enough to make this step meaningless.</li>\n<li><strong>Rule out the probe.</strong> Check whether the failure is in the target or\n   in the test itself: expired credentials, blocked agent IPs, a stale\n   selector, a provider outage at the vantage point. The failing step&rsquo;s\n   error body usually says which.</li>\n<li><strong>Measure the blast radius.</strong> Check the same flow from other vantage\n   points and check real-user metrics for the same endpoint. If only one\n   region fails, suspect network or regional infrastructure; if all fail,\n   suspect the service.</li>\n<li><strong>Correlate with recent changes.</strong> Overlay the failure time with\n   deploys and config changes. A check that fails within minutes of a\n   deploy is a <a class=\"body-link\" href=\"/sensors/canary-analysis/\">canary</a> that caught something, and\n   the deploy owner is the next person to talk to.</li>\n<li><strong>Keep the check armed after the fix.</strong> Do not mute the check while\n   investigating; that is how suppression starts. If the check is truly\n   broken, fix the check in the same PR as the incident, and record why.</li>\n</ol>\n<h2>What it cannot detect</h2>\n<p>Behavior outside the scripted paths. Synthetics cover the flows you thought\nto script; the long tail of user behavior is the domain of\n<a class=\"body-link\" href=\"/sensors/observability-events/\">observability events</a> and real-user monitoring.</p>",
       "body_text": "Scripted user flows run against the production system around the clock: log in, search, add to cart, check out. Synthetic monitoring is a behavioral test suite whose environment is the real world, giving you a baseline answer to “does it do what we expect?” even when no user happens to be asking. In practice A typical reading is a failed check, step by step: CHECK checkout-flow FAILED run 14:35 UTC vantage fra-1 step 1 GET /login 200 312ms ok step 2 POST /login 200 428ms ok step 3 GET /search?q=kettle 200 391ms ok step 4 POST /cart 500 2104ms FAILED step 5 POST /checkout --- skipped Vantage Result Failing step p95 latency fra-1 FAIL POST /cart (500) 2104 ms iad-1 FAIL POST /cart (500) 1980 ms sin-1 PASS 412 ms Reading it well: Read the step, not the check name. “checkout-flow failed” is a headline; “step 4, POST /cart, 500” is a lead. The failing step is the localization the sensor exists to give. One failure is a question, three is a signal. Checks hit real infrastructure and flake. Confirmation avoids paging on a blip, but retries tuned high enough to always pass have silenced the sensor. Separate target failure from probe failure. Expired test credentials, a blocked agent IP, and a stale selector all look like the system failing. The error body usually says which. Suspect a check that always passes. Assertions weaken over time; a five-year-old check that has never failed may no longer be checking anything. How it gets gamed Synthetics are owned by the teams that ship the flows, so they can be tuned to pass: Checks tuned to green. Slow assertions get wider timeouts, flaky steps get more retries, and the check that used to fail in 2 seconds now passes in 40. The monitor still “works”; it just stopped sensing. Silence as maintenance. A failing check gets snoozed “until the deploy lands,” then the snooze gets extended, then forgotten. Muted checks are the sensor’s off switch. Testing the happy path only. Checks that avoid the paths where bugs live, or that run only from the best-connected region, report a green board over a real degradation elsewhere. Credential theater. Expired test credentials make the check fail for reasons that have nothing to do with the system; after a while everyone learns to ignore check failures, real or not. The meta-signal is the check pass rate over months. A fleet of checks that has not failed in a year, on a system that has had incidents in the same year, is a sensor that has been tuned silent. Response playbook When a synthetic check fails: Confirm the failure. Re-run the check, or wait for the next scheduled run if it is minutes away. One failure is a question; two consecutive failures are a signal. Do not page on a single blip, and do not tune the retry count high enough to make this step meaningless. Rule out the probe. Check whether the failure is in the target or in the test itself: expired credentials, blocked agent IPs, a stale selector, a provider outage at the vantage point. The failing step’s error body usually says which. Measure the blast radius. Check the same flow from other vantage points and check real-user metrics for the same endpoint. If only one region fails, suspect network or regional infrastructure; if all fail, suspect the service. Correlate with recent changes. Overlay the failure time with deploys and config changes. A check that fails within minutes of a deploy is a canary that caught something, and the deploy owner is the next person to talk to. Keep the check armed after the fix. Do not mute the check while investigating; that is how suppression starts. If the check is truly broken, fix the check in the same PR as the incident, and record why. What it cannot detect Behavior outside the scripted paths. Synthetics cover the flows you thought to script; the long tail of user behavior is the domain of observability events and real-user monitoring.",
@@ -3698,14 +3731,16 @@
           "Test Effectiveness",
           "Coverage"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Coverage Is Not Strongly Correlated with Test Suite Effectiveness",
             "year": 2014,
             "tier": "I",
             "url": "https://www.cs.ubc.ca/~rtholmes/papers/icse_2014.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Laura Inozemtseva, Reid Holmes",
+            "venue": "ICSE 2014"
           },
           {
             "title": "coverage.py",
@@ -4019,8 +4054,8 @@
         "oracle_note": "execution ≠ correctness",
         "independence": "medium",
         "independence_note": "the test author writes the tests",
-        "scope": "diff",
-        "scope_note": "change-scoped",
+        "scope": "line",
+        "scope_note": "changed lines in the diff",
         "latency": "minutes",
         "actionability": "guiding",
         "actionability_note": "shows exactly which changed lines lack coverage",
@@ -4030,17 +4065,18 @@
         "categories": [
           "Test Effectiveness",
           "Change",
-          "Coverage",
-          "Agentic Coding"
+          "Coverage"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "State of Mutation Testing at Google",
             "year": 2018,
             "tier": "III",
             "url": "https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/46584.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Goran Petrović, Marko Ivanković",
+            "venue": "ICSE-SEIP 2018"
           },
           {
             "title": "diff-cover",
@@ -4383,10 +4419,9 @@
         "type": "retrospective",
         "stack_level": "user-outcome",
         "categories": [
-          "Test Effectiveness",
-          "Quality Outcomes"
+          "Test Effectiveness"
         ],
-        "last_reviewed": "2026-08-23"
+        "last_reviewed": "2026-08-24"
       },
       "body_html": "<p>Of the bugs that reached users, which ones should the test suite have\ncaught? Escaped defect rate is the slowest and most honest measure of test\neffectiveness: not &ldquo;would the tests catch a hypothetical mutant?&rdquo; but &ldquo;did\nthey catch the actual failures, judged after the fact?&rdquo;</p>\n<h2>Response playbook</h2>\n<p>When the rate rises, the move is classification, not blame:</p>\n<ol>\n<li><strong>Triage by layer.</strong> For each escaped defect, ask which sensor should\n   have caught it. A null-reference crash is a <a class=\"body-link\" href=\"/sensors/type-checker/\">type\n   checker</a> miss. A wrong total is a missing\n   <a class=\"body-link\" href=\"/sensors/integration-tests/\">behavioral test</a>. A slow query that only\n   surfaced in production is a <a class=\"body-link\" href=\"/sensors/continuous-profiling/\">profiling</a> gap.</li>\n<li><strong>Add the sensor, then the test.</strong> If a class of defect keeps escaping,\n   the suite has a structural hole that one more hand-written test will\n   not fill. Repeat escapes of the same class — two injections in a\n   quarter — mean the right sensor, here <a class=\"body-link\" href=\"/sensors/static-security-analysis/\">static security\n   analysis</a>, belongs in the pipeline.</li>\n<li><strong>Require a regression test before the fix.</strong> Every escaped defect is a\n   free test case: the production failure is the specification.</li>\n<li><strong>Do not manage to the number.</strong> The rate lags by months and the\n   classification is judgment. Optimizing it directly produces re-labeling,\n   not better sensors. Pair it with <a class=\"body-link\" href=\"/sensors/mutation-testing/\">mutation\n   testing</a> as the fast leading indicator.</li>\n</ol>\n<h2>What it cannot detect</h2>\n<p>Defects nobody reported, and defects attributed to the wrong cause. It also\nlags badly: it tells you about the suite you had, not the suite you have.\nPair it with <a class=\"body-link\" href=\"/sensors/mutation-testing/\">mutation testing</a> for a fast proxy and\nwith <a class=\"body-link\" href=\"/sensors/incident-correlation/\">incident correlation</a> for the cost side.</p>",
       "body_text": "Of the bugs that reached users, which ones should the test suite have caught? Escaped defect rate is the slowest and most honest measure of test effectiveness: not “would the tests catch a hypothetical mutant?” but “did they catch the actual failures, judged after the fact?” Response playbook When the rate rises, the move is classification, not blame: Triage by layer. For each escaped defect, ask which sensor should have caught it. A null-reference crash is a type checker miss. A wrong total is a missing behavioral test . A slow query that only surfaced in production is a profiling gap. Add the sensor, then the test. If a class of defect keeps escaping, the suite has a structural hole that one more hand-written test will not fill. Repeat escapes of the same class — two injections in a quarter — mean the right sensor, here static security analysis , belongs in the pipeline. Require a regression test before the fix. Every escaped defect is a free test case: the production failure is the specification. Do not manage to the number. The rate lags by months and the classification is judgment. Optimizing it directly produces re-labeling, not better sensors. Pair it with mutation testing as the fast leading indicator. What it cannot detect Defects nobody reported, and defects attributed to the wrong cause. It also lags badly: it tells you about the suite you had, not the suite you have. Pair it with mutation testing for a fast proxy and with incident correlation for the cost side.",
@@ -4562,21 +4597,25 @@
           "Test Effectiveness",
           "Coverage"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Coverage Is Not Strongly Correlated with Test Suite Effectiveness",
             "year": 2014,
             "tier": "I",
             "url": "https://www.cs.ubc.ca/~rtholmes/papers/icse_2014.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Laura Inozemtseva, Reid Holmes",
+            "venue": "ICSE 2014"
           },
           {
             "title": "Does Mutation Testing Improve Testing Practices?",
             "year": 2021,
             "tier": "I",
             "url": "https://homes.cs.washington.edu/~rjust/publ/mutation_testing_practices_icse_2021.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Goran Petrović, Marko Ivanković, Gordon Fraser, René Just",
+            "venue": "ICSE 2021"
           },
           {
             "title": "coverage.py",
@@ -4876,36 +4915,39 @@
         "latency": "minutes-hours",
         "actionability": "guiding",
         "actionability_note": "shows the exact untested mutation",
-        "type": "adversarial",
+        "type": "predictive",
         "type_note": "it actively tries to make tests fail",
         "stack_level": "mutation-testing",
         "categories": [
           "Test Effectiveness",
-          "Adversarial",
-          "Test Sensitivity",
-          "Guiding Sensors"
+          "Adversarial"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Coverage Is Not Strongly Correlated with Test Suite Effectiveness",
             "year": 2014,
             "tier": "I",
             "url": "https://www.cs.ubc.ca/~rtholmes/papers/icse_2014.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Laura Inozemtseva, Reid Holmes",
+            "venue": "ICSE 2014"
           },
           {
             "title": "Are Mutants a Valid Substitute for Real Faults in Software Testing?",
             "year": 2014,
             "tier": "I",
             "url": "https://homes.cs.washington.edu/~rjust/publ/mutants_real_faults_fse_2014.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "René Just, Darioush Jalali, Laura Inozemtseva, Michael D. Ernst, Reid Holmes, Gordon Fraser",
+            "venue": "FSE 2014"
           },
           {
             "authors": "Jia & Harman",
             "title": "An Analysis and Survey of the Development of Mutation Testing",
             "year": 2011,
-            "kind": "paper"
+            "kind": "paper",
+            "tier": "IV"
           },
           {
             "title": "Stryker",
@@ -5300,7 +5342,7 @@
           "Domain Correctness",
           "Black-Box Sensors"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Great Expectations",
@@ -5626,24 +5668,27 @@
         "stack_level": "production-behavior",
         "categories": [
           "Invariants",
-          "Referential Integrity",
-          "Runtime Sensors"
+          "Production Sensors"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Detecting Data Errors: Where are we and what needs to be done?",
             "year": 2016,
             "tier": "I",
             "url": "https://www.vldb.org/pvldb/vol9/p993-abedjan.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Ziawasch Abedjan, Xu Chu, Dong Deng, Raul Castro Fernandez, Ihab F. Ilyas, Mourad Ouzzani, Paolo Papotti, Michael Stonebraker, Nan Tang",
+            "venue": "PVLDB 9(12)"
           },
           {
             "title": "Jepsen: MongoDB 4.2.6",
             "year": 2020,
             "tier": "II",
             "url": "https://jepsen.io/analyses/mongodb-4.2.6",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Kyle Kingsbury (Jepsen)",
+            "venue": "jepsen.io analyses"
           },
           {
             "title": "DB constraints",
@@ -5986,7 +6031,7 @@
           "Invariants",
           "Deployment Safety"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "OPA Gatekeeper",
@@ -6307,8 +6352,8 @@
         "family_num": 4,
         "oracle": "high",
         "oracle_note": "a violation is definitive evidence of a bug",
-        "independence": "high",
-        "independence_note": "observes the system from outside",
+        "independence": "medium",
+        "independence_note": "assertions are written by the same author, but run against production reality",
         "scope": "system",
         "scope_note": "domain level",
         "latency": "hours-seconds",
@@ -6321,30 +6366,35 @@
         "categories": [
           "Invariants",
           "Domain Correctness",
-          "Runtime Sensors",
+          "Production Sensors",
           "Black-Box Sensors"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Detecting Data Errors: Where are we and what needs to be done?",
             "year": 2016,
             "tier": "I",
             "url": "https://www.vldb.org/pvldb/vol9/p993-abedjan.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Ziawasch Abedjan, Xu Chu, Dong Deng, Raul Castro Fernandez, Ihab F. Ilyas, Mourad Ouzzani, Paolo Papotti, Michael Stonebraker, Nan Tang",
+            "venue": "PVLDB 9(12)"
           },
           {
             "title": "AddressSanitizer: A Fast Address Sanity Checker",
             "year": 2012,
             "tier": "III",
             "url": "https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/37752.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Konstantin Serebryany, Derek Bruening, Alexander Potapenko, Dmitry Vyukov",
+            "venue": "USENIX ATC '12"
           },
           {
             "authors": "Hoare",
             "title": "An Axiomatic Basis for Computer Programming",
             "year": 1969,
-            "kind": "paper"
+            "kind": "paper",
+            "tier": "IV"
           },
           {
             "title": "assertpy",
@@ -6713,17 +6763,18 @@
         "type": "predictive",
         "stack_level": "static-analysis",
         "categories": [
-          "Invariants",
-          "Formal Methods"
+          "Invariants"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "How Amazon Web Services Uses Formal Methods",
             "year": 2015,
             "tier": "III",
             "url": "https://cacm.acm.org/research/how-amazon-web-services-uses-formal-methods/",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Chris Newcombe, Tim Rath, Fan Zhang, Bogdan Munteanu, Marc Brooker, Michael Deardeuff",
+            "venue": "Communications of the ACM 58(4)"
           },
           {
             "authors": "Leino",
@@ -6731,7 +6782,8 @@
             "year": 2010,
             "kind": "paper",
             "url": "",
-            "description": "Verification-aware programming language"
+            "description": "Verification-aware programming language",
+            "tier": "IV"
           },
           {
             "title": "Liquid Haskell",
@@ -6939,20 +6991,22 @@
         "latency": "minutes-hours",
         "actionability": "guiding",
         "actionability_note": "shows the divergent inputs and outputs",
-        "type": "adversarial",
+        "type": "predictive",
         "stack_level": "property-metamorphic",
         "categories": [
           "Adversarial",
           "Oracle-Free"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Elle: Inferring Isolation Anomalies from Experimental Observations",
             "year": 2020,
             "tier": "II",
             "url": "https://arxiv.org/abs/2003.10554",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Kyle Kingsbury, Peter Alvaro",
+            "venue": "arXiv 2003.10554"
           },
           {
             "title": "Yang et al., 'Finding and Understanding Bugs in C Compilers' (2011, Csmith)",
@@ -7306,28 +7360,31 @@
         "latency": "minutes",
         "actionability": "guiding",
         "actionability_note": "shows which invariant broke under which failure",
-        "type": "adversarial",
+        "type": "predictive",
         "stack_level": "canary-shadow",
         "categories": [
           "Adversarial",
-          "Resilience",
-          "Chaos Engineering"
+          "Resilience"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Elle: Inferring Isolation Anomalies from Experimental Observations",
             "year": 2020,
             "tier": "II",
             "url": "https://arxiv.org/abs/2003.10554",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Kyle Kingsbury, Peter Alvaro",
+            "venue": "arXiv 2003.10554"
           },
           {
             "title": "Jepsen: MongoDB 4.2.6",
             "year": 2020,
             "tier": "II",
             "url": "https://jepsen.io/analyses/mongodb-4.2.6",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Kyle Kingsbury (Jepsen)",
+            "venue": "jepsen.io analyses"
           },
           {
             "title": "Chaos Engineering",
@@ -7647,36 +7704,38 @@
         "latency": "minutes-hours",
         "actionability": "guiding",
         "actionability_note": "provides the exact input that triggers the failure",
-        "type": "adversarial",
+        "type": "predictive",
         "type_note": "actively tries to break the system",
         "stack_level": "property-metamorphic",
         "categories": [
-          "Adversarial",
-          "Robustness",
-          "Input Space",
-          "Guiding Sensors"
+          "Adversarial"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Evaluating Fuzz Testing",
             "year": 2018,
             "tier": "I",
             "url": "https://dl.acm.org/doi/10.1145/3243734.3243804",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "George Klees, Andrew Ruef, Benji Cooper, Shiyi Wei, Michael Hicks",
+            "venue": "ACM CCS 2018"
           },
           {
             "title": "An Empirical Study of OSS-Fuzz Bugs",
             "year": 2021,
             "tier": "II",
             "url": "https://arxiv.org/pdf/2103.11518",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Zhen Yu Ding, Claire Le Goues",
+            "venue": "MSR 2021"
           },
           {
             "authors": "Manes et al.",
             "title": "The Art, Science, and Engineering of Fuzzing: A Survey",
             "year": 2021,
-            "kind": "paper"
+            "kind": "paper",
+            "tier": "IV"
           },
           {
             "title": "libFuzzer",
@@ -8011,14 +8070,16 @@
           "Adversarial",
           "Resilience"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Automating Chaos Experiments in Production",
             "year": 2019,
             "tier": "IV",
             "url": "https://arxiv.org/abs/1905.04648",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Ali Basiri, Lorin Hochstein, Nora Jones, Haley Tucker",
+            "venue": "ICSE-SEIP 2019"
           },
           {
             "title": "Chaos Engineering",
@@ -8300,29 +8361,30 @@
         "latency": "minutes",
         "actionability": "guiding",
         "actionability_note": "shows which relation was violated",
-        "type": "adversarial",
+        "type": "predictive",
         "type_note": "explores input perturbations",
         "stack_level": "property-metamorphic",
         "categories": [
           "Adversarial",
-          "Oracle-Free",
-          "Metamorphic Relations",
-          "Guiding Sensors"
+          "Oracle-Free"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "An Empirical Evaluation of Property-Based Testing in Python",
             "year": 2025,
             "tier": "I",
             "url": "https://cseweb.ucsd.edu/~mcoblenz/assets/pdf/OOPSLA_2025_PBT.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Savitha Ravi, Michael Coblenz",
+            "venue": "Proc. ACM Program. Lang. (OOPSLA2)"
           },
           {
             "authors": "Chen et al.",
             "title": "Metamorphic Testing: A New Approach for Generating Next Test Cases",
             "year": 1998,
-            "kind": "paper"
+            "kind": "paper",
+            "tier": "IV"
           },
           {
             "title": "Hypothesis",
@@ -8606,30 +8668,33 @@
         "oracle_note": "findings need triage; false positives are the tax",
         "independence": "high",
         "independence_note": "the analysis does not trust the code's own intentions",
-        "scope": "codebase",
+        "scope": "system",
         "latency": "minutes",
         "actionability": "blocking",
         "type": "predictive",
         "stack_level": "static-analysis",
         "categories": [
-          "Adversarial",
-          "Security"
+          "Adversarial"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "An Empirical Study on the Effectiveness of Security Code Review",
             "year": 2013,
             "tier": "I",
             "url": "https://people.eecs.berkeley.edu/~daw/papers/coderev-essos13.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Anne Edmundson, Brian Holtkamp, Emanuel Rivera, Matthew Finifter, Adrian Mettler, David Wagner",
+            "venue": "ESSoS 2013"
           },
           {
             "title": "Eliminating Memory Safety Vulnerabilities at the Source",
             "year": 2024,
             "tier": "II",
             "url": "https://security.googleblog.com/2024/09/eliminating-memory-safety-vulnerabilities-Android.html",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Google Security Blog, Android team",
+            "venue": "Google Security Blog"
           },
           {
             "title": "Semgrep",
@@ -8655,7 +8720,8 @@
             "url": "https://brakemanscanner.org",
             "description": "Static security analysis for Rails"
           }
-        ]
+        ],
+        "scope_note": "the whole codebase"
       },
       "body_html": "<p>Attacking the code before it runs. Taint tracking, dataflow analysis, and\npattern-based scanners (Semgrep, CodeQL) ask: &ldquo;is there any path through\nthis program where an adversary&rsquo;s input reaches a dangerous sink?&rdquo; A sensor\nof exploitable structure, not of known-bad strings.</p>\n<h2>In practice</h2>\n<p>A scanner reading is a source-to-sink path with a severity attached,\nnot a bare pattern match:</p>\n<pre><code>semgrep --config p/owasp-top-ten src/\nsrc/api/search.py:31: Possible SQL injection (high)\n  query = &quot;SELECT * FROM items WHERE name = '%s'&quot; % request.args[&quot;q&quot;]\n  taint: request.args[&quot;q&quot;] -&gt; cursor.execute(query)\n</code></pre>\n<p>The value is the path. The finding is not &ldquo;this string looks\ndangerous&rdquo; but &ldquo;input from here reaches that sink through these\nlines,&rdquo; and the reading takes minutes because the intermediate steps\nare printed.</p>\n<p>Severity is the scanner&rsquo;s estimate, not the exploitability. A high\nfinding behind an authenticated, sanitized code path may matter less\nthan a medium one on an anonymous endpoint, and the scanner knows\nneither the auth model nor the traffic. Which is why triage reads the\npath first and the badge second, and why the same finding can be a\nblocker in one service and a note in another.</p>\n<h2>Response playbook</h2>\n<p>When the scanner fires:</p>\n<ol>\n<li><strong>Trace the full path before judging severity.</strong> The scanner shows\n   the chain; confirm whether anything in between already\n   sanitizes, authenticates, or bounds the input.</li>\n<li><strong>If reachable, fix at the sink.</strong> Parameterized queries,\n   escaping APIs, allowlists. Point fixes outlive pattern fixes.</li>\n<li><strong>If unreachable, record why.</strong> A one-line justification at the\n   finding site keeps the next reviewer from redoing the triage.</li>\n<li><strong>Fix the class, then add the rule.</strong> If the sink exists in ten\n   other places, the scanner&rsquo;s job is to find all ten; wire that\n   rule into CI as blocking before the next one ships.</li>\n<li><strong>Treat untriaged findings as broken builds.</strong> A backlog of\n   undated security findings is a queue that never drains.</li>\n</ol>\n<h2>How it gets gamed</h2>\n<ul>\n<li><strong>Severity downgrade by triage.</strong> Marking a finding &ldquo;won&rsquo;t fix&rdquo;\n  with a one-word justification is the cheapest override available\n  to a reviewer. The meta-signal is the ratio of suppressed to\n  confirmed findings, and the age of the suppressed ones.</li>\n<li><strong>Baseline erosion.</strong> Freezing the finding count in a baseline\n  file and only failing on new ones, while the baseline quietly\n  grows forever because &ldquo;old findings are someone else&rsquo;s problem.&rdquo;</li>\n<li><strong>Rule-set narrowing.</strong> Disabling taint rules because they are\n  noisy and keeping only the pattern matches, which detect the\n  least of the three.</li>\n<li><strong>Scanner shopping.</strong> Running the tool that finds the fewest\n  issues in review and calling it &ldquo;our SAST.&rdquo;</li>\n</ul>\n<h2>What it cannot detect</h2>\n<p>Vulnerabilities in the composition of services, in configuration, or in the\ndependencies&rsquo; runtime behavior — those belong to\n<a class=\"body-link\" href=\"/sensors/fault-injection/\">fault injection</a> and live chaos. And a clean scan\nsays nothing about attacks that arrive through valid inputs:\n<a class=\"body-link\" href=\"/sensors/fuzzing/\">fuzzing</a> covers that side.</p>\n<p>Security is a deeper topic than this catalog covers. SAST is one sensor in\nthe adversarial family — it asks whether an adversary&rsquo;s input can reach a\ndangerous sink — but the broader practice of application security\n(threat modeling, penetration testing, dependency vulnerabilities, runtime\nexploit detection) deserves its own resources. See\n<a class=\"body-link\" href=\"https://owasp.org\">OWASP</a> and the\n<a class=\"body-link\" href=\"https://cwe.mitre.org\">CWE</a> for dedicated treatment.</p>",
       "body_text": "Attacking the code before it runs. Taint tracking, dataflow analysis, and pattern-based scanners (Semgrep, CodeQL) ask: “is there any path through this program where an adversary’s input reaches a dangerous sink?” A sensor of exploitable structure, not of known-bad strings. In practice A scanner reading is a source-to-sink path with a severity attached, not a bare pattern match: semgrep --config p/owasp-top-ten src/ src/api/search.py:31: Possible SQL injection (high) query = \"SELECT * FROM items WHERE name = '%s'\" % request.args[\"q\"] taint: request.args[\"q\"] -> cursor.execute(query) The value is the path. The finding is not “this string looks dangerous” but “input from here reaches that sink through these lines,” and the reading takes minutes because the intermediate steps are printed. Severity is the scanner’s estimate, not the exploitability. A high finding behind an authenticated, sanitized code path may matter less than a medium one on an anonymous endpoint, and the scanner knows neither the auth model nor the traffic. Which is why triage reads the path first and the badge second, and why the same finding can be a blocker in one service and a note in another. Response playbook When the scanner fires: Trace the full path before judging severity. The scanner shows the chain; confirm whether anything in between already sanitizes, authenticates, or bounds the input. If reachable, fix at the sink. Parameterized queries, escaping APIs, allowlists. Point fixes outlive pattern fixes. If unreachable, record why. A one-line justification at the finding site keeps the next reviewer from redoing the triage. Fix the class, then add the rule. If the sink exists in ten other places, the scanner’s job is to find all ten; wire that rule into CI as blocking before the next one ships. Treat untriaged findings as broken builds. A backlog of undated security findings is a queue that never drains. How it gets gamed Severity downgrade by triage. Marking a finding “won’t fix” with a one-word justification is the cheapest override available to a reviewer. The meta-signal is the ratio of suppressed to confirmed findings, and the age of the suppressed ones. Baseline erosion. Freezing the finding count in a baseline file and only failing on new ones, while the baseline quietly grows forever because “old findings are someone else’s problem.” Rule-set narrowing. Disabling taint rules because they are noisy and keeping only the pattern matches, which detect the least of the three. Scanner shopping. Running the tool that finds the fewest issues in review and calling it “our SAST.” What it cannot detect Vulnerabilities in the composition of services, in configuration, or in the dependencies’ runtime behavior — those belong to fault injection and live chaos. And a clean scan says nothing about attacks that arrive through valid inputs: fuzzing covers that side. Security is a deeper topic than this catalog covers. SAST is one sensor in the adversarial family — it asks whether an adversary’s input can reach a dangerous sink — but the broader practice of application security (threat modeling, penetration testing, dependency vulnerabilities, runtime exploit detection) deserves its own resources. See OWASP and the CWE for dedicated treatment.",
@@ -8969,24 +9035,27 @@
         "stack_level": "production-behavior",
         "categories": [
           "Runtime",
-          "Profiling",
           "Production Sensors"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Exploring Statistical Change Point Detection Techniques for Performance Anomaly Detection at Mozilla",
             "year": 2026,
             "tier": "I",
             "url": "https://arxiv.org/abs/2606.18377",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Mohamed Bilel Besbes, Gregory Mierzwinski, Suhaib Mujahid, Philipp Leitner, Alexander Serebrenik, Dave Hunt, Diego Elias Costa",
+            "venue": "arXiv preprint"
           },
           {
             "title": "FBDetect: Catching Tiny Performance Regressions at Hyperscale through In-Production Monitoring",
             "year": 2024,
             "tier": "III",
             "url": "https://tangchq74.github.io/FBDetect-SOSP24.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Dong Young Yoon, Yang Wang, Miao Yu, Elvis Huang, Juan Ignacio Jones, Abhinay Kukkadapu, Osman Kocas, Jonathan Wiepert, Kapil Goenka, Sherry Chen, Yanjun Lin, Zhihui Huang, Jocelyn Kong, Michael Chow, Chunqiang Tang",
+            "venue": "SOSP '24"
           },
           {
             "title": "Pyroscope",
@@ -9300,17 +9369,18 @@
         "stack_level": "production-behavior",
         "categories": [
           "Runtime",
-          "Traces",
           "Production Sensors"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "The Tail at Scale",
             "year": 2013,
             "tier": "III",
             "url": "https://www.barroso.org/publications/TheTailAtScale.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Jeffrey Dean, Luiz André Barroso",
+            "venue": "Communications of the ACM 56(2)"
           },
           {
             "title": "Dapper paper",
@@ -9608,31 +9678,34 @@
         "stack_level": "production-behavior",
         "categories": [
           "Runtime",
-          "High Cardinality",
-          "Events",
           "Production Sensors"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "How to Fight Production Incidents? An Empirical Study on a Large-scale Cloud Service",
             "year": 2022,
             "tier": "II",
             "url": "https://acmsocc.org/2022/assets/slides/95.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Supriyo Ghosh, Manish Shetty, Chetan Bansal, Suman Nath",
+            "venue": "ACM SoCC '22"
           },
           {
             "title": "The Tail at Scale",
             "year": 2013,
             "tier": "III",
             "url": "https://www.barroso.org/publications/TheTailAtScale.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Jeffrey Dean, Luiz André Barroso",
+            "venue": "Communications of the ACM 56(2)"
           },
           {
             "authors": "Charity Majors et al.",
             "title": "Observability Engineering",
             "year": 2022,
-            "kind": "paper"
+            "kind": "paper",
+            "tier": "IV"
           },
           {
             "title": "OpenTelemetry",
@@ -10018,10 +10091,9 @@
         "type": "retrospective",
         "stack_level": "production-behavior",
         "categories": [
-          "Runtime",
-          "Monitoring"
+          "Runtime"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Prometheus",
@@ -10345,21 +10417,25 @@
           "Change",
           "Boundary Assumptions"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "I Depended on You and You Broke Me: An Empirical Study of Manifesting Breaking Changes in Client Packages",
             "year": 2023,
             "tier": "II",
             "url": "https://arxiv.org/abs/2301.04563",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Suhaib Mujahid, Diego Elias Costa, Rabe Abdalkareem, Emad Shihab and others",
+            "venue": "ACM TOSEM"
           },
           {
             "title": "Breaking Bad? Semantic Versioning and Impact of Breaking Changes in Maven Central",
             "year": 2022,
             "tier": "II",
             "url": "https://arxiv.org/abs/2110.07889",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Lina Ochoa, Thomas Degueule, Jean-Rémy Falleri, Jurgen Vinju",
+            "venue": "Empirical Software Engineering 27"
           },
           {
             "title": "revapi",
@@ -10624,21 +10700,25 @@
           "Change",
           "Deployment Safety"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Exploring Statistical Change Point Detection Techniques for Performance Anomaly Detection at Mozilla",
             "year": 2026,
             "tier": "I",
             "url": "https://arxiv.org/abs/2606.18377",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Mohamed Bilel Besbes, Gregory Mierzwinski, Suhaib Mujahid, Philipp Leitner, Alexander Serebrenik, Dave Hunt, Diego Elias Costa",
+            "venue": "arXiv preprint"
           },
           {
             "title": "Holistic Configuration Management at Facebook",
             "year": 2015,
             "tier": "III",
             "url": "https://sigops.org/s/conferences/sosp/2015/current/2015-Monterey/printable/008-tang.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Chunqiang Tang, Thawan Kooburat, Pradeep Venkatachalam, Akshay Chander, Zhe Wen, Aravind Narayanan, Patrick Dowell, Robert Karl",
+            "venue": "SOSP '15"
           },
           {
             "title": "Netflix Kayenta",
@@ -10868,10 +10948,9 @@
         "stack_level": "user-outcome",
         "categories": [
           "Change",
-          "SLO",
           "Production Sensors"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Google SRE Workbook",
@@ -11193,23 +11272,27 @@
         "stack_level": "production-behavior",
         "categories": [
           "Change",
-          "Production"
+          "Production Sensors"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Holistic Configuration Management at Facebook",
             "year": 2015,
             "tier": "III",
             "url": "https://sigops.org/s/conferences/sosp/2015/current/2015-Monterey/printable/008-tang.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Chunqiang Tang, Thawan Kooburat, Pradeep Venkatachalam, Akshay Chander, Zhe Wen, Aravind Narayanan, Patrick Dowell, Robert Karl",
+            "venue": "SOSP '15"
           },
           {
             "title": "Development and Deployment at Facebook",
             "year": 2013,
             "tier": "III",
             "url": "https://www.cs.huji.ac.il/w~feit/papers/FB13IC.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Dror G. Feitelson, Eitan Frachtenberg, Kent L. Beck",
+            "venue": "IEEE Internet Computing 17(4)"
           },
           {
             "title": "Feature flags",
@@ -11492,31 +11575,34 @@
         "oracle_note": "divergence between declared and actual rebuild sets is meaningful but noisy",
         "independence": "high",
         "independence_note": "measures the build system, which the change author does not control",
-        "scope": "codebase",
+        "scope": "system",
         "latency": "minutes",
         "actionability": "guiding",
         "actionability_note": "points at the under-declared dependency edge",
         "type": "retrospective",
         "stack_level": "static-analysis",
         "categories": [
-          "Change",
-          "Build Systems"
+          "Change"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Reproducible Builds: Increasing the Integrity of Software Supply Chains",
             "year": 2021,
             "tier": "II",
             "url": "https://arxiv.org/abs/2104.06020",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Chris Lamb, Stefano Zacchiroli",
+            "venue": "arXiv preprint; later IEEE Software 39 (2022) 62-70"
           },
           {
             "title": "An Empirical Analysis of Build Failures in the Continuous Integration Workflows of Java-Based Open-Source Software",
             "year": 2017,
             "tier": "II",
             "url": "https://dsg.tuwien.ac.at/team/trausch/pub/PID4727015.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Thomas Rausch, Waldemar Hummer, Philipp Leitner, Stefan Schulte",
+            "venue": "MSR 2017"
           },
           {
             "title": "Bazel",
@@ -11542,7 +11628,8 @@
             "url": "https://ccache.dev",
             "description": "Compiler cache for fast rebuilds"
           }
-        ]
+        ],
+        "scope_note": "the whole codebase's build graph"
       },
       "body_html": "<p>Did the build system actually rebuild everything this change touched?\nIncremental builds and remote caches save hours, and silently shipping a\nstale artifact is the price when the dependency graph they trust is wrong.\nThis sensor compares what the change <em>should</em> have invalidated against what\nthe build <em>did</em> invalidate.</p>\n<h2>In practice</h2>\n<p>The reading is a set difference between two lists: every target the\nchange should have invalidated, and every target the build actually\nrebuilt. When they match, the incremental graph is telling the truth.</p>\n<pre><code>change:    edit src/render/theme.css\nexpected:  [pages/home.html, pages/about.html, pages/docs.html]\nrebuilt:   [pages/home.html]\nmissing:   [pages/about.html, pages/docs.html]\nverdict:   STALE: 2 targets shipped without rebuild\n</code></pre>\n<p>The verdict only exists because of the counterfactual: the same\nchange through a clean build. That is the reference the sensor is\ncompared against, so &ldquo;clean rebuild on CI matched, incremental on a\ndeveloper machine did not&rdquo; is itself a finding, not a coincidence.</p>\n<p>The reading habit that matters: when a behavior change ships without a\nrebuild record, check the graph before checking the code. Stale\nartifacts masquerade as caching bugs, flaky behavior, and &ldquo;works on\nmy machine,&rdquo; and the distinguishing fact is always whether the target\nthat changed state was in the rebuilt set.</p>\n<h2>Response playbook</h2>\n<p>When the rebuild set comes up short:</p>\n<ol>\n<li><strong>Reproduce with a clean build.</strong> If the clean build fixes the\n   symptom, staleness is confirmed and the graph is the culprit.</li>\n<li><strong>Find the undeclared edge.</strong> Walk from the edited file to the\n   stale target; the missing declaration is usually a generated\n   file, a header, or a config read at runtime but not at build\n   time.</li>\n<li><strong>Declare the dependency; do not script around it.</strong> A clean\n   build on every CI run papers over the hole and burns the hours\n   the cache was built to save.</li>\n<li><strong>Add the stale target to the regression set</strong> so the next\n   undeclared edge fails the same check instead of shipping.</li>\n</ol>\n<h2>How it gets gamed</h2>\n<ul>\n<li><strong>Manual cache busting.</strong> Touching files or bumping fake hashes to\n  force a rebuild, instead of fixing the dependency declaration. The\n  graph stays wrong; the workaround becomes load-bearing.</li>\n<li><strong>Clean builds by decree.</strong> &ldquo;Just run clean&rdquo; as the sanctioned fix\n  converts a correctness bug into a permanent performance tax and\n  hides the sensor entirely.</li>\n<li><strong>Undeclared inputs rationalized.</strong> Files read at build time that\n  the manifest never lists, because declaring them was &ldquo;too\n  invasive.&rdquo; Every one is a future stale artifact.</li>\n</ul>\n<p>The meta-signal is cache-hit correctness: sampled rebuilds whose\noutputs differ from the cached artifact they replaced.</p>\n<h2>What it cannot detect</h2>\n<p>Changes whose <em>semantic</em> effect exceeds their declared dependencies in ways\nno graph captures (a shared constant edited in a header the graph treats as\nirrelevant). That class of surprise is what\n<a class=\"body-link\" href=\"/sensors/api-compatibility/\">API compatibility</a> and\n<a class=\"body-link\" href=\"/sensors/integration-tests/\">integration tests</a> exist for.</p>",
       "body_text": "Did the build system actually rebuild everything this change touched? Incremental builds and remote caches save hours, and silently shipping a stale artifact is the price when the dependency graph they trust is wrong. This sensor compares what the change should have invalidated against what the build did invalidate. In practice The reading is a set difference between two lists: every target the change should have invalidated, and every target the build actually rebuilt. When they match, the incremental graph is telling the truth. change: edit src/render/theme.css expected: [pages/home.html, pages/about.html, pages/docs.html] rebuilt: [pages/home.html] missing: [pages/about.html, pages/docs.html] verdict: STALE: 2 targets shipped without rebuild The verdict only exists because of the counterfactual: the same change through a clean build. That is the reference the sensor is compared against, so “clean rebuild on CI matched, incremental on a developer machine did not” is itself a finding, not a coincidence. The reading habit that matters: when a behavior change ships without a rebuild record, check the graph before checking the code. Stale artifacts masquerade as caching bugs, flaky behavior, and “works on my machine,” and the distinguishing fact is always whether the target that changed state was in the rebuilt set. Response playbook When the rebuild set comes up short: Reproduce with a clean build. If the clean build fixes the symptom, staleness is confirmed and the graph is the culprit. Find the undeclared edge. Walk from the edited file to the stale target; the missing declaration is usually a generated file, a header, or a config read at runtime but not at build time. Declare the dependency; do not script around it. A clean build on every CI run papers over the hole and burns the hours the cache was built to save. Add the stale target to the regression set so the next undeclared edge fails the same check instead of shipping. How it gets gamed Manual cache busting. Touching files or bumping fake hashes to force a rebuild, instead of fixing the dependency declaration. The graph stays wrong; the workaround becomes load-bearing. Clean builds by decree. “Just run clean” as the sanctioned fix converts a correctness bug into a permanent performance tax and hides the sensor entirely. Undeclared inputs rationalized. Files read at build time that the manifest never lists, because declaring them was “too invasive.” Every one is a future stale artifact. The meta-signal is cache-hit correctness: sampled rebuilds whose outputs differ from the cached artifact they replaced. What it cannot detect Changes whose semantic effect exceeds their declared dependencies in ways no graph captures (a shared constant edited in a header the graph treats as irrelevant). That class of surprise is what API compatibility and integration tests exist for.",
@@ -11798,14 +11885,16 @@
           "Change",
           "Deployment Safety"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Development and Deployment at Facebook",
             "year": 2013,
             "tier": "III",
             "url": "https://www.cs.huji.ac.il/w~feit/papers/FB13IC.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Dror G. Feitelson, Eitan Frachtenberg, Kent L. Beck",
+            "venue": "IEEE Internet Computing 17(4)"
           },
           {
             "title": "Envoy shadow",
@@ -12129,10 +12218,9 @@
         "stack_level": "static-analysis",
         "categories": [
           "Architecture",
-          "Encapsulation",
-          "Guiding Sensors"
+          "Boundary Sensors"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Istio",
@@ -12431,25 +12519,27 @@
         "type": "predictive",
         "stack_level": "static-analysis",
         "categories": [
-          "Architecture",
-          "Coupling",
-          "Dependency Analysis"
+          "Architecture"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "A Novel Approach for Estimating Truck Factors",
             "year": 2016,
             "tier": "II",
             "url": "https://arxiv.org/pdf/1604.06766",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Guilherme Avelino, Leonardo Passos, Andre Hora, Marco Tulio Valente",
+            "venue": "arXiv 1604.06766 (companion to ICPC 2016)"
           },
           {
             "title": "Do Developers Update Their Library Dependencies?",
             "year": 2017,
             "tier": "II",
             "url": "https://arxiv.org/abs/1709.04621",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Raula Gaikovina Kula, Daniel M. German, Ali Ouni, Takashi Ishio, Katsuro Inoue",
+            "venue": "Empirical Software Engineering"
           },
           {
             "title": "dependency-cruiser",
@@ -12732,10 +12822,9 @@
         "stack_level": "static-analysis",
         "categories": [
           "Architecture",
-          "Boundary Sensors",
-          "Guiding Sensors"
+          "Boundary Sensors"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "ArchUnit",
@@ -13044,31 +13133,34 @@
         "type": "retrospective",
         "stack_level": "static-analysis",
         "categories": [
-          "Architecture",
-          "Complexity",
-          "Risk Concentration"
+          "Architecture"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "A Novel Approach for Estimating Truck Factors",
             "year": 2016,
             "tier": "II",
             "url": "https://arxiv.org/pdf/1604.06766",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Guilherme Avelino, Leonardo Passos, Andre Hora, Marco Tulio Valente",
+            "venue": "arXiv 1604.06766 (companion to ICPC 2016)"
           },
           {
             "title": "Don't Touch My Code! Examining the Effects of Ownership on Software Quality",
             "year": 2011,
             "tier": "II",
             "url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/bird2011dtm.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Christian Bird, Nachiappan Nagappan, Brendan Murphy, Harald Gall, Premkumar Devanbu",
+            "venue": "ESEC/FSE '11"
           },
           {
             "authors": "Adam Tornhill",
             "title": "Your Code as a Crime Scene",
             "year": 2015,
-            "kind": "paper"
+            "kind": "paper",
+            "tier": "IV"
           },
           {
             "title": "CodeScene",
@@ -13399,9 +13491,9 @@
         "stack_level": "production-behavior",
         "categories": [
           "Architecture",
-          "Production"
+          "Production Sensors"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Istio",
@@ -13670,30 +13762,34 @@
         "stack_level": "static-analysis",
         "categories": [
           "Evolution",
-          "Hidden Coupling",
           "Black-Box Sensors"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Organizational Volatility and its Effects on Software Defects",
             "year": 2010,
             "tier": "II",
             "url": "https://mockus.org/papers/orgQuality-slides.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Audris Mockus",
+            "venue": "FSE 2010"
           },
           {
             "title": "2017 State of DevOps Report",
             "year": 2017,
             "tier": "II",
             "url": "https://dora.dev/research/2017/2017-state-of-devops-report.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Nicole Forsgren, Jez Humble, Gene Kim, Alanna Brown, Nigel Kersten",
+            "venue": "Puppet + DORA"
           },
           {
             "authors": "Adam Tornhill",
             "title": "Your Code as a Crime Scene",
             "year": 2015,
-            "kind": "paper"
+            "kind": "paper",
+            "tier": "IV"
           },
           {
             "title": "CodeScene",
@@ -13993,31 +14089,34 @@
         "oracle_note": "the metrics proxy safety; they are not safety",
         "independence": "high",
         "independence_note": "derived from deployment and incident records, not self-report",
-        "scope": "organization",
+        "scope": "system",
         "latency": "days",
         "actionability": "guiding",
         "actionability_note": "tells you which stage of the pipeline to distrust",
         "type": "retrospective",
         "stack_level": "canary-shadow",
         "categories": [
-          "Evolution",
-          "Delivery Performance"
+          "Evolution"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Accelerate: State of DevOps 2019",
             "year": 2019,
             "tier": "II",
             "url": "https://dora.dev/research/2019/dora-report/2019-dora-accelerate-state-of-devops-report.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Nicole Forsgren, Dustin Smith, Jez Humble, Jessie Frazelle",
+            "venue": "DORA / Google Cloud"
           },
           {
             "title": "2017 State of DevOps Report",
             "year": 2017,
             "tier": "II",
             "url": "https://dora.dev/research/2017/2017-state-of-devops-report.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Nicole Forsgren, Jez Humble, Gene Kim, Alanna Brown, Nigel Kersten",
+            "venue": "Puppet + DORA"
           },
           {
             "title": "DORA",
@@ -14028,7 +14127,8 @@
             "authors": "Forsgren et al.",
             "title": "Accelerate",
             "year": 2018,
-            "kind": "paper"
+            "kind": "paper",
+            "tier": "I"
           },
           {
             "title": "DORA survey",
@@ -14042,7 +14142,8 @@
             "url": "https://dora.dev/research/",
             "description": "DORA's four-metric assessment tool"
           }
-        ]
+        ],
+        "scope_note": "organization-level delivery performance"
       },
       "body_html": "<p>Deployment frequency, lead time for changes, change failure rate,\nreliability, time to restore. Five numbers about how changes have\nhistorically flowed through this organization — a sensor of delivery\n<em>pattern</em>, answering &ldquo;does our recent past look like teams that ship\nsafely?&rdquo; Reliability was added in DORA 2023 as the fifth metric, reflecting\nthat stability is measured by whether the system meets its reliability\ntargets, not just by how fast failures are fixed.</p>\n<h2>In practice</h2>\n<p>The reading is a dashboard of the five numbers over a trailing window,\ncompared against the team&rsquo;s own history rather than an industry table:</p>\n<table>\n<thead>\n<tr>\n<th>Metric</th>\n<th>Last quarter</th>\n<th>This quarter</th>\n<th>Trend</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>Deploy frequency</td>\n<td>14 / week</td>\n<td>6 / week</td>\n<td>down</td>\n</tr>\n<tr>\n<td>Lead time for changes</td>\n<td>36 hours</td>\n<td>61 hours</td>\n<td>up (worse)</td>\n</tr>\n<tr>\n<td>Change failure rate</td>\n<td>4%</td>\n<td>11%</td>\n<td>up (worse)</td>\n</tr>\n<tr>\n<td>Time to restore</td>\n<td>45 minutes</td>\n<td>3 hours</td>\n<td>up (worse)</td>\n</tr>\n<tr>\n<td>Reliability target met</td>\n<td>yes</td>\n<td>no</td>\n<td>worse</td>\n</tr>\n</tbody>\n</table>\n<p>Reading it well:</p>\n<ol>\n<li><strong>Read the five together.</strong> Deployment frequency falling alone might\n   be a deliberate pause; falling alongside rising failure rate and\n   lead time is a pipeline in trouble. One number is an anecdote, five\n   are a pattern.</li>\n<li><strong>Compare against the team&rsquo;s own baseline.</strong> Industry quartiles\n   tell you what other teams do, not what changed here. The trend line\n   is the signal.</li>\n<li><strong>Distrust flat perfection.</strong> Metrics that never move usually mean\n   the instrumentation is stale or the definitions quietly widened.</li>\n<li><strong>Follow a bad number to its records.</strong> The dashboard locates the\n   quarter; the deploy log and incident timeline explain it.</li>\n</ol>\n<h2>How it gets gamed</h2>\n<p>DORA metrics are classically gameable, because every one of them can be\nmoved without moving the underlying delivery health:</p>\n<ul>\n<li><strong>Batch deploys to inflate frequency.</strong> Shipping twenty small commits\n  as one &ldquo;deploy&rdquo; or splitting one change into ten trivial ones; the\n  frequency number moves either way, depending on which direction\n  flatters the dashboard.</li>\n<li><strong>Cherry-pick easy deploys.</strong> Counting only the low-risk service\n  whose pipeline is mature, while the painful path everyone actually\n  uses goes unmeasured.</li>\n<li><strong>Close incidents early.</strong> Marking an incident resolved when the page\n  stops, not when users are unaffected, buys time-to-restore without\n  restoring anything.</li>\n<li><strong>Redefine failure downward.</strong> If only rollbacks count as failures,\n  teams hotfix forward and the change failure rate falls by definition.</li>\n<li><strong>Tighten the reliability denominator.</strong> Meeting a target is easy\n  when the target was quietly negotiated down after the quarter\n  started.</li>\n</ul>\n<p>The meta-signal is definitional drift: log the metric definitions and\nthe counting rules alongside the numbers, and treat any unannounced\nchange to them as a finding in itself.</p>\n<h2>Response playbook</h2>\n<p>When the dashboard degrades:</p>\n<ol>\n<li><strong>Verify the definitions first.</strong> Before acting, confirm the numbers\n   were computed the same way as last quarter. Half of all &ldquo;sudden&rdquo;\n   DORA regressions are a pipeline or counting change, not a delivery\n   change.</li>\n<li><strong>Trace the lead-time increase stage by stage.</strong> Split lead time\n   into review, build, test, and deploy waits; the longest stage is\n   the one to attack, and it is almost never the one people guess.</li>\n<li><strong>Correlate failure rate with incident records.</strong> Use <a class=\"body-link\" href=\"/sensors/incident-correlation/\">incident\n   correlation</a> to see whether failures are\n   clustering in one service or one change type before prescribing a\n   fix.</li>\n<li><strong>Lower batch size, not ambition.</strong> If deploys are failing more,\n   ship smaller changes with <a class=\"body-link\" href=\"/sensors/canary-analysis/\">canary analysis</a>\n   in front of them; do not add another approval gate, which raises\n   lead time and failure rate together.</li>\n<li><strong>Re-measure after one quarter.</strong> The dashboard lags; give any fix a\n   full window before judging it, and say so when the numbers are\n   reported.</li>\n</ol>\n<h2>What it cannot detect</h2>\n<p>The cause of a bad number. DORA metrics locate the problem in time and\nstage; understanding it requires <a class=\"body-link\" href=\"/sensors/decision-provenance/\">decision provenance</a>\nand <a class=\"body-link\" href=\"/sensors/incident-correlation/\">incident correlation</a>. And like all metrics\nthat become targets, they invite gaming — deployment frequency can be raised\nby shipping trivia.</p>",
       "body_text": "Deployment frequency, lead time for changes, change failure rate, reliability, time to restore. Five numbers about how changes have historically flowed through this organization — a sensor of delivery pattern , answering “does our recent past look like teams that ship safely?” Reliability was added in DORA 2023 as the fifth metric, reflecting that stability is measured by whether the system meets its reliability targets, not just by how fast failures are fixed. In practice The reading is a dashboard of the five numbers over a trailing window, compared against the team’s own history rather than an industry table: Metric Last quarter This quarter Trend Deploy frequency 14 / week 6 / week down Lead time for changes 36 hours 61 hours up (worse) Change failure rate 4% 11% up (worse) Time to restore 45 minutes 3 hours up (worse) Reliability target met yes no worse Reading it well: Read the five together. Deployment frequency falling alone might be a deliberate pause; falling alongside rising failure rate and lead time is a pipeline in trouble. One number is an anecdote, five are a pattern. Compare against the team’s own baseline. Industry quartiles tell you what other teams do, not what changed here. The trend line is the signal. Distrust flat perfection. Metrics that never move usually mean the instrumentation is stale or the definitions quietly widened. Follow a bad number to its records. The dashboard locates the quarter; the deploy log and incident timeline explain it. How it gets gamed DORA metrics are classically gameable, because every one of them can be moved without moving the underlying delivery health: Batch deploys to inflate frequency. Shipping twenty small commits as one “deploy” or splitting one change into ten trivial ones; the frequency number moves either way, depending on which direction flatters the dashboard. Cherry-pick easy deploys. Counting only the low-risk service whose pipeline is mature, while the painful path everyone actually uses goes unmeasured. Close incidents early. Marking an incident resolved when the page stops, not when users are unaffected, buys time-to-restore without restoring anything. Redefine failure downward. If only rollbacks count as failures, teams hotfix forward and the change failure rate falls by definition. Tighten the reliability denominator. Meeting a target is easy when the target was quietly negotiated down after the quarter started. The meta-signal is definitional drift: log the metric definitions and the counting rules alongside the numbers, and treat any unannounced change to them as a finding in itself. Response playbook When the dashboard degrades: Verify the definitions first. Before acting, confirm the numbers were computed the same way as last quarter. Half of all “sudden” DORA regressions are a pipeline or counting change, not a delivery change. Trace the lead-time increase stage by stage. Split lead time into review, build, test, and deploy waits; the longest stage is the one to attack, and it is almost never the one people guess. Correlate failure rate with incident records. Use incident correlation to see whether failures are clustering in one service or one change type before prescribing a fix. Lower batch size, not ambition. If deploys are failing more, ship smaller changes with canary analysis in front of them; do not add another approval gate, which raises lead time and failure rate together. Re-measure after one quarter. The dashboard lags; give any fix a full window before judging it, and say so when the numbers are reported. What it cannot detect The cause of a bad number. DORA metrics locate the problem in time and stage; understanding it requires decision provenance and incident correlation . And like all metrics that become targets, they invite gaming — deployment frequency can be raised by shipping trivia.",
@@ -14367,24 +14468,27 @@
         "stack_level": "user-outcome",
         "categories": [
           "Evolution",
-          "Operational Risk",
           "Black-Box Sensors"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "How to Fight Production Incidents? An Empirical Study on a Large-scale Cloud Service",
             "year": 2022,
             "tier": "II",
             "url": "https://acmsocc.org/2022/assets/slides/95.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Supriyo Ghosh, Manish Shetty, Chetan Bansal, Suman Nath",
+            "venue": "ACM SoCC '22"
           },
           {
             "title": "Postmortem of database outage of January 31",
             "year": 2017,
             "tier": "III",
             "url": "https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31/",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "GitLab Inc.",
+            "venue": "GitLab engineering blog"
           },
           {
             "title": "Datadog",
@@ -14690,7 +14794,7 @@
           "Black-Box Sensors",
           "Maintainability"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "git log",
@@ -15029,7 +15133,7 @@
           "Maintainability",
           "Black-Box Sensors"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "DORA",
@@ -15349,16 +15453,16 @@
         "type": "retrospective",
         "stack_level": "static-analysis",
         "categories": [
-          "Comprehension",
-          "Archaeological Accessibility"
+          "Comprehension"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "authors": "Michael Nygard",
             "title": "Documenting Architecture Decisions",
             "year": 2017,
-            "kind": "paper"
+            "kind": "paper",
+            "tier": "IV"
           },
           {
             "title": "ADR",
@@ -15751,17 +15855,18 @@
         "type": "retrospective",
         "stack_level": "static-analysis",
         "categories": [
-          "Comprehension",
-          "Documentation"
+          "Comprehension"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "A First Look at the Deprecation of RESTful APIs: An Empirical Study",
             "year": 2020,
             "tier": "II",
             "url": "https://arxiv.org/abs/2008.12808",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Jerin Yasmin, Yuan Tian, Jinqiu Yang",
+            "venue": "arXiv 2008.12808"
           },
           {
             "title": "doctest",
@@ -16113,8 +16218,8 @@
         "family_num": "10",
         "oracle": "medium",
         "oracle_note": "subjective, but disagreement is signal",
-        "independence": "medium",
-        "independence_note": "reviewer is independent of author",
+        "independence": "high",
+        "independence_note": "a human stranger does not share the author's blind spots",
         "scope": "module",
         "latency": "hours",
         "actionability": "guiding",
@@ -16122,30 +16227,34 @@
         "type": "predictive",
         "stack_level": "static-analysis",
         "categories": [
-          "Comprehension",
-          "Epistemic Accessibility"
+          "Comprehension"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "An Empirical Study on the Effectiveness of Security Code Review",
             "year": 2013,
             "tier": "I",
             "url": "https://people.eecs.berkeley.edu/~daw/papers/coderev-essos13.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Anne Edmundson, Brian Holtkamp, Emanuel Rivera, Matthew Finifter, Adrian Mettler, David Wagner",
+            "venue": "ESSoS 2013"
           },
           {
             "title": "The Cost of Interrupted Work: More Speed and Stress",
             "year": 2008,
             "tier": "I",
             "url": "https://ics.uci.edu/~gmark/chi08-mark.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Gloria Mark, Daniela Gudith, Ulrich Klocke",
+            "venue": "CHI 2008"
           },
           {
             "authors": "Fagan",
             "title": "Design and Code Inspections to Reduce Errors",
             "year": 1976,
-            "kind": "paper"
+            "kind": "paper",
+            "tier": "II"
           },
           {
             "title": "GitHub PR review",
@@ -16479,24 +16588,27 @@
         "type": "retrospective",
         "stack_level": "static-analysis",
         "categories": [
-          "Comprehension",
-          "Knowledge Concentration"
+          "Comprehension"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Onboarding vs. Diversity, Productivity and Quality — Empirical Study of the OpenStack Ecosystem",
             "year": 2021,
             "tier": "II",
             "url": "https://doi.org/10.1109/ICSE43902.2021.00097",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Armstrong Foundjem, Ellis E. Eghan, Bram Adams",
+            "venue": "ICSE 2021 (IEEE/ACM)"
           },
           {
             "title": "GitHub's Engineering Team Has Moved to Codespaces",
             "year": 2021,
             "tier": "III",
             "url": "https://github.blog/engineering/infrastructure/githubs-engineering-team-moved-codespaces/",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Cory Wilkerson",
+            "venue": "GitHub Engineering Blog"
           }
         ]
       },
@@ -16803,8 +16915,8 @@
         "family_num": "11",
         "oracle": "high",
         "oracle_note": "the combined stack is strong",
-        "independence": "high",
-        "independence_note": "if producer and evaluator are separated",
+        "independence": "medium",
+        "independence_note": "the stack is only as independent as its most coupled member",
         "scope": "system",
         "latency": "varies",
         "latency_note": "varies by layer",
@@ -16817,21 +16929,25 @@
           "AI-Generated",
           "Agent Safety"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Gender Shades: Intersectional Accuracy Disparities in Commercial Gender Classification",
             "year": 2018,
             "tier": "I",
             "url": "http://proceedings.mlr.press/v81/buolamwini18a/buolamwini18a.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Joy Buolamwini, Timnit Gebru",
+            "venue": "PMLR 81 / FAT* 2018"
           },
           {
             "title": "Failing Loudly: An Empirical Study of Methods for Detecting Dataset Shift",
             "year": 2019,
             "tier": "I",
             "url": "https://arxiv.org/pdf/1810.11953",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Stephan Rabanser, Stephan Günnemann, Zachary C. Lipton",
+            "venue": "NeurIPS 2019"
           }
         ]
       },
@@ -17075,17 +17191,18 @@
         "stack_level": "static-analysis",
         "categories": [
           "AI-Generated",
-          "Computational Controls",
           "Maximum Oracle"
         ],
-        "last_reviewed": "2026-08-23",
+        "last_reviewed": "2026-08-24",
         "references": [
           {
             "title": "Gender Shades: Intersectional Accuracy Disparities in Commercial Gender Classification",
             "year": 2018,
             "tier": "I",
             "url": "http://proceedings.mlr.press/v81/buolamwini18a/buolamwini18a.pdf",
-            "kind": "paper"
+            "kind": "paper",
+            "authors": "Joy Buolamwini, Timnit Gebru",
+            "venue": "PMLR 81 / FAT* 2018"
           },
           {
             "title": "GitHub Actions",
@@ -17463,10 +17580,9 @@
         "stack_level": "behavioral-tests",
         "categories": [
           "AI-Generated",
-          "Independence",
           "Agent Safety"
         ],
-        "last_reviewed": "2026-08-23"
+        "last_reviewed": "2026-08-24"
       },
       "body_html": "<p>A model writing <code>tests/</code> is allowed to write tests that make itself pass.\nThe producer and evaluator should be separated wherever possible.</p>\n<h2>The core problem</h2>\n<p>When an agent writes both the code and the tests, the tests have low\n<a class=\"body-link\" href=\"/framework/\">independence</a>. The agent can write tests that pass on its\nimplementation regardless of correctness. This is the fundamental weakness of\n<a class=\"body-link\" href=\"/sensors/example-based-tests/\">example-based tests</a> and <a class=\"body-link\" href=\"/sensors/line-coverage/\">line\ncoverage</a> when applied to AI-generated code.</p>\n<h2>Solutions</h2>\n<ul>\n<li><strong>Separate authors</strong>: human writes tests, agent writes code (or vice versa)</li>\n<li><strong>Separate models</strong>: different agents write code and tests</li>\n<li><strong>Separate time</strong>: tests written before the implementation (TDD-style),\n  so the test author can&rsquo;t tailor tests to the implementation</li>\n<li><strong>Separate origin</strong>: tests generated by a different tool — a\n  <a class=\"body-link\" href=\"/sensors/metamorphic-testing/\">property-based</a> generator, a\n  <a class=\"body-link\" href=\"/sensors/fuzzing/\">fuzzer</a>, or a <a class=\"body-link\" href=\"/sensors/mutation-testing/\">mutation tester</a> —\n  where the <em>sensor itself</em> generates the adversarial input, not the code\n  author</li>\n<li><strong>Separate org</strong>: external audit, red team, or a third-party conformance\n  suite</li>\n<li><strong>Use independence-strong sensors</strong>: <a class=\"body-link\" href=\"/sensors/mutation-testing/\">mutation testing</a>\n  and <a class=\"body-link\" href=\"/sensors/fuzzing/\">fuzzing</a> have higher independence because the <em>sensor\n  itself</em> generates the adversarial input, not the code author</li>\n</ul>\n<h2>In practice</h2>\n<p>The principle cashes out as a check on who authored the artifacts that\ngrade a change. A concrete reading compares authors across the\npipeline:</p>\n<table>\n<thead>\n<tr>\n<th>Artifact</th>\n<th>Author</th>\n<th>Independence</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>implementation diff</td>\n<td>agent A, session 412</td>\n<td>n/a, the subject</td>\n</tr>\n<tr>\n<td>unit tests covering the diff</td>\n<td>agent A, session 412</td>\n<td>compromised</td>\n</tr>\n<tr>\n<td>integration suite</td>\n<td>human, written 2026-03-11</td>\n<td>independent</td>\n</tr>\n<tr>\n<td>review verdict</td>\n<td>agent B, different model family</td>\n<td>independent</td>\n</tr>\n<tr>\n<td>mutation score</td>\n<td>generated by the tooling</td>\n<td>independent</td>\n</tr>\n</tbody>\n</table>\n<p>The second row is the finding: the agent being tested wrote the tests.\nEvery verdict downstream of that row inherits the weakness.</p>\n<p>Reading it well:</p>\n<ul>\n<li><strong>Audit authorship, not just verdicts.</strong> Green tests from a\n  compromised author are not evidence. Ask who, or which session,\n  produced each artifact before trusting its result.</li>\n<li><strong>Time counts as separation.</strong> Tests written before the\n  implementation cannot be tailored to it. Tests authored minutes\n  after the code they cover, in the same session, are a paraphrase of\n  the code.</li>\n<li><strong>Prefer sensors that grade themselves.</strong> <a class=\"body-link\" href=\"/sensors/mutation-testing/\">Mutation\n  testing</a> and <a class=\"body-link\" href=\"/sensors/fuzzing/\">fuzzing</a>\n  generate their own adversarial input, so there is no author to\n  compromise. Where separation is hard to arrange, reach for those.</li>\n</ul>\n<h2>How it gets gamed</h2>\n<p>Separation is a property of who wrote what, and that property is easy\nto fake:</p>\n<ul>\n<li><strong>Same-session tests.</strong> The agent writes the implementation, then\n  writes the tests in the same session with the implementation in\n  context. The tests are a paraphrase of the code, and they pass by\n  construction.</li>\n<li><strong>Self-review under a new name.</strong> The reviewing &ldquo;agent&rdquo; receives the\n  producer&rsquo;s diff and the producer&rsquo;s rationale in one prompt. The\n  separation is nominal; the context is shared.</li>\n<li><strong>Teaching to the mutation.</strong> If the same agent sees the mutation\n  tester&rsquo;s failures and then edits the suite, it can write tests that\n  kill every mutant by asserting on the current behavior, including\n  the wrong parts. The score rises; correctness does not.</li>\n<li><strong>Waiver as policy.</strong> &ldquo;The agent may write tests when no human is\n  available&rdquo; quietly becomes the default state, and the separation\n  exists only on paper.</li>\n</ul>\n<p>The meta-signal is authorship metadata per artifact: which session\nwrote the code, which wrote the tests, which reviewed. If the metadata\nis missing, assume the worst case. Separation you cannot verify is\nseparation you do not have.</p>\n<h2>Response playbook</h2>\n<p>When an audit finds the producer grading itself:</p>\n<ol>\n<li><strong>Re-author the compromised artifact.</strong> If the producer wrote the\n   tests, the tests do not count. Have a different session, model, or\n   human write them from the specification, not from the\n   implementation.</li>\n<li><strong>Re-run the affected gates from the re-authored artifact.</strong> A\n   green suite that ran against compromised tests is not evidence.\n   The verdict only regains meaning once the inputs are independent.</li>\n<li><strong>Record authorship metadata for every artifact.</strong> Which session\n   wrote the code, which wrote the tests, which reviewed. Without\n   this record, separation is a claim you cannot check.</li>\n<li><strong>Move the check into the pipeline.</strong> Authorship separation is\n   easy to violate and easy to forget. Make the pipeline refuse to\n   run a gate whose inputs were authored by the subject of the gate.</li>\n<li><strong>Prefer self-grading sensors where separation is hard.</strong> If the\n   workflow cannot reliably keep producer and evaluator apart, lean\n   on <a class=\"body-link\" href=\"/sensors/mutation-testing/\">mutation testing</a> and\n   <a class=\"body-link\" href=\"/sensors/fuzzing/\">fuzzing</a>, which generate their own adversarial\n   input. The sensor grades the code; there is no author to\n   compromise.</li>\n</ol>\n<h2>What it cannot detect</h2>\n<p>Producer-evaluator separation is a principle, not a sensor itself. It must\nbe operationalized through specific sensors that have structural independence\nbuilt in.</p>",
       "body_text": "A model writing tests/ is allowed to write tests that make itself pass. The producer and evaluator should be separated wherever possible. The core problem When an agent writes both the code and the tests, the tests have low independence . The agent can write tests that pass on its implementation regardless of correctness. This is the fundamental weakness of example-based tests and line coverage when applied to AI-generated code. Solutions Separate authors : human writes tests, agent writes code (or vice versa) Separate models : different agents write code and tests Separate time : tests written before the implementation (TDD-style), so the test author can’t tailor tests to the implementation Separate origin : tests generated by a different tool — a property-based generator, a fuzzer , or a mutation tester — where the sensor itself generates the adversarial input, not the code author Separate org : external audit, red team, or a third-party conformance suite Use independence-strong sensors : mutation testing and fuzzing have higher independence because the sensor itself generates the adversarial input, not the code author In practice The principle cashes out as a check on who authored the artifacts that grade a change. A concrete reading compares authors across the pipeline: Artifact Author Independence implementation diff agent A, session 412 n/a, the subject unit tests covering the diff agent A, session 412 compromised integration suite human, written 2026-03-11 independent review verdict agent B, different model family independent mutation score generated by the tooling independent The second row is the finding: the agent being tested wrote the tests. Every verdict downstream of that row inherits the weakness. Reading it well: Audit authorship, not just verdicts. Green tests from a compromised author are not evidence. Ask who, or which session, produced each artifact before trusting its result. Time counts as separation. Tests written before the implementation cannot be tailored to it. Tests authored minutes after the code they cover, in the same session, are a paraphrase of the code. Prefer sensors that grade themselves. Mutation testing and fuzzing generate their own adversarial input, so there is no author to compromise. Where separation is hard to arrange, reach for those. How it gets gamed Separation is a property of who wrote what, and that property is easy to fake: Same-session tests. The agent writes the implementation, then writes the tests in the same session with the implementation in context. The tests are a paraphrase of the code, and they pass by construction. Self-review under a new name. The reviewing “agent” receives the producer’s diff and the producer’s rationale in one prompt. The separation is nominal; the context is shared. Teaching to the mutation. If the same agent sees the mutation tester’s failures and then edits the suite, it can write tests that kill every mutant by asserting on the current behavior, including the wrong parts. The score rises; correctness does not. Waiver as policy. “The agent may write tests when no human is available” quietly becomes the default state, and the separation exists only on paper. The meta-signal is authorship metadata per artifact: which session wrote the code, which wrote the tests, which reviewed. If the metadata is missing, assume the worst case. Separation you cannot verify is separation you do not have. Response playbook When an audit finds the producer grading itself: Re-author the compromised artifact. If the producer wrote the tests, the tests do not count. Have a different session, model, or human write them from the specification, not from the implementation. Re-run the affected gates from the re-authored artifact. A green suite that ran against compromised tests is not evidence. The verdict only regains meaning once the inputs are independent. Record authorship metadata for every artifact. Which session wrote the code, which wrote the tests, which reviewed. Without this record, separation is a claim you cannot check. Move the check into the pipeline. Authorship separation is easy to violate and easy to forget. Make the pipeline refuse to run a gate whose inputs were authored by the subject of the gate. Prefer self-grading sensors where separation is hard. If the workflow cannot reliably keep producer and evaluator apart, lean on mutation testing and fuzzing , which generate their own adversarial input. The sensor grades the code; there is no author to compromise. What it cannot detect Producer-evaluator separation is a principle, not a sensor itself. It must be operationalized through specific sensors that have structural independence built in.",
@@ -17752,8 +17868,8 @@
         "family_num": "11",
         "oracle": "medium",
         "oracle_note": "depends on reviewer agent capability",
-        "independence": "high",
-        "independence_note": "separate agent, separate context",
+        "independence": "low",
+        "independence_note": "shared training data limits independence; different model families help",
         "scope": "module",
         "latency": "minutes",
         "actionability": "guiding",
@@ -17764,7 +17880,7 @@
           "AI-Generated",
           "Agent Safety"
         ],
-        "last_reviewed": "2026-08-23"
+        "last_reviewed": "2026-08-24"
       },
       "body_html": "<p>An independent agent reviews the first agent&rsquo;s output. A sensor that applies\n<em>adversarial pressure</em> to AI-generated code without human-in-the-loop\nlatency.</p>\n<p>Second-agent review is the <a class=\"body-link\" href=\"/sensors/independent-review/\">independent review</a>\npattern applied to AI: a different model (or different session, different\nprompt) examines the code and attempts to find problems. The independence is\nstructural — the second agent didn&rsquo;t write the code and has different\nassumptions.</p>\n<h2>In practice</h2>\n<p>A reading is the reviewer agent&rsquo;s structured verdict, produced from the\ndiff alone:</p>\n<pre><code>verdict: changes_requested\nfindings:\n  - severity: blocking\n    file: src/checkout/retry.py\n    claim: backoff doubles past the 30 s cap; the cap is checked\n      before the multiply. repro: six retries from a cold start.\n  - severity: question\n    file: migrations/0042_drop_legacy_id.sql\n    claim: batch/ship.py still selects orders.legacy_id; unclear\n      which change lands first.\n</code></pre>\n<p>The useful parts are the falsifiable claims: a file, a behavior, and a\nway to check it. Findings that only say &ldquo;this looks suspicious&rdquo; are\nnoise, from an agent or a human.</p>\n<p>Reading it well:</p>\n<ul>\n<li><strong>Discount agreement with the author&rsquo;s rationale.</strong> The reviewer\n  should never see the producer&rsquo;s summary before the review. If it\n  did, treat the verdict as contaminated. See <a class=\"body-link\" href=\"/sensors/producer-evaluator-separation/\">producer-evaluator\n  separation</a>.</li>\n<li><strong>Verify blocking findings mechanically.</strong> An agent&rsquo;s claim about a\n  cap or a race is a hypothesis until a test reproduces it. Verdicts\n  are cheap to produce, so they should be cheap to check.</li>\n<li><strong>Same-family reviewers undercount correlated errors.</strong> Two models\n  from the same lineage share blind spots, so an absent finding is\n  weaker evidence than a present one. Reserve <a class=\"body-link\" href=\"/sensors/computational-gates/\">computational\n  gates</a> for what must not slip.</li>\n</ul>\n<h2>How it gets gamed</h2>\n<p>The sensor is a model, and models are configured:</p>\n<ul>\n<li><strong>Same-family reviewer.</strong> Producer and reviewer come from one model\n  line, share the same training blind spots, and agree on the same\n  wrong answer. The review is a mirror, not a second opinion.</li>\n<li><strong>Prompt capture.</strong> The reviewer is handed the producer&rsquo;s rationale\n  before the diff, and reviews the explanation instead of the code.\n  Verdicts then correlate with the author&rsquo;s confidence, not the\n  change&rsquo;s quality.</li>\n<li><strong>Rubber-stamp prompting.</strong> &ldquo;Be concise; only flag clear bugs&rdquo;\n  produces reviews that flag nothing. The prompt is a dial, and it is\n  pointed at green.</li>\n<li><strong>Verdict laundering.</strong> Agents trade roles, or the same session\n  reviews its own output under a second name. Structurally this is\n  self-review with extra steps.</li>\n</ul>\n<p>The meta-signal is the reviewer&rsquo;s finding rate. A reviewer that finds\nnothing, ever, across hundreds of changes, is not excellent; it is\ncaptured or misconfigured.</p>\n<h2>Response playbook</h2>\n<p>When the reviewer agent flags the change:</p>\n<ol>\n<li><strong>Verify blocking findings mechanically.</strong> The reviewer&rsquo;s claim\n   about a cap, a race, or a missing check is a hypothesis. Write the\n   reproducing test before accepting or dismissing it; a second\n   agent&rsquo;s confidence is not evidence.</li>\n<li><strong>Check what the reviewer saw.</strong> If the reviewer prompt included\n   the producer&rsquo;s rationale, treat the verdict as contaminated and\n   re-run the review from the diff alone. The independence is in the\n   context, not the model.</li>\n<li><strong>Route questions back as tasks.</strong> A finding like &ldquo;unclear which\n   change lands first&rdquo; is a dependency the reviewer could not verify.\n   Turn it into a concrete check: run the migration against a copy of\n   the schema, or search for the column&rsquo;s readers.</li>\n<li><strong>Do not let agreement end the review.</strong> A reviewer that agrees\n   with the producer on everything is either excellent or captured,\n   and captured is more common. Spot-check a sample of approved\n   changes with a different model family.</li>\n<li><strong>Escalate repeated finding classes to a computational gate.</strong> If\n   the same kind of finding keeps appearing across reviews, the\n   review layer is doing detection work that belongs in a <a class=\"body-link\" href=\"/sensors/type-checker/\">type\n   checker</a>, a <a class=\"body-link\" href=\"/sensors/linter/\">linter</a>, or a test.\n   Move the check left.</li>\n</ol>\n<h2>What it cannot detect</h2>\n<p>Two agents from the same model family share the same training distribution\nand will tend to agree on the same wrong answers — the &ldquo;independence&rdquo; is\nillusory if both agents have the same blind spots. True independence\nrequires different model families, different training data, or different\narchitectures. A second agent from the same model is better than nothing\nbut is not the same as an independent evaluator.</p>\n<p>Also, agent review quality is unproven — it may miss problems that human\nreview would catch. Pair with <a class=\"body-link\" href=\"/sensors/computational-gates/\">computational\ngates</a> for enforcement that doesn&rsquo;t depend on\nreview quality.</p>",
       "body_text": "An independent agent reviews the first agent’s output. A sensor that applies adversarial pressure to AI-generated code without human-in-the-loop latency. Second-agent review is the independent review pattern applied to AI: a different model (or different session, different prompt) examines the code and attempts to find problems. The independence is structural — the second agent didn’t write the code and has different assumptions. In practice A reading is the reviewer agent’s structured verdict, produced from the diff alone: verdict: changes_requested findings: - severity: blocking file: src/checkout/retry.py claim: backoff doubles past the 30 s cap; the cap is checked before the multiply. repro: six retries from a cold start. - severity: question file: migrations/0042_drop_legacy_id.sql claim: batch/ship.py still selects orders.legacy_id; unclear which change lands first. The useful parts are the falsifiable claims: a file, a behavior, and a way to check it. Findings that only say “this looks suspicious” are noise, from an agent or a human. Reading it well: Discount agreement with the author’s rationale. The reviewer should never see the producer’s summary before the review. If it did, treat the verdict as contaminated. See producer-evaluator separation . Verify blocking findings mechanically. An agent’s claim about a cap or a race is a hypothesis until a test reproduces it. Verdicts are cheap to produce, so they should be cheap to check. Same-family reviewers undercount correlated errors. Two models from the same lineage share blind spots, so an absent finding is weaker evidence than a present one. Reserve computational gates for what must not slip. How it gets gamed The sensor is a model, and models are configured: Same-family reviewer. Producer and reviewer come from one model line, share the same training blind spots, and agree on the same wrong answer. The review is a mirror, not a second opinion. Prompt capture. The reviewer is handed the producer’s rationale before the diff, and reviews the explanation instead of the code. Verdicts then correlate with the author’s confidence, not the change’s quality. Rubber-stamp prompting. “Be concise; only flag clear bugs” produces reviews that flag nothing. The prompt is a dial, and it is pointed at green. Verdict laundering. Agents trade roles, or the same session reviews its own output under a second name. Structurally this is self-review with extra steps. The meta-signal is the reviewer’s finding rate. A reviewer that finds nothing, ever, across hundreds of changes, is not excellent; it is captured or misconfigured. Response playbook When the reviewer agent flags the change: Verify blocking findings mechanically. The reviewer’s claim about a cap, a race, or a missing check is a hypothesis. Write the reproducing test before accepting or dismissing it; a second agent’s confidence is not evidence. Check what the reviewer saw. If the reviewer prompt included the producer’s rationale, treat the verdict as contaminated and re-run the review from the diff alone. The independence is in the context, not the model. Route questions back as tasks. A finding like “unclear which change lands first” is a dependency the reviewer could not verify. Turn it into a concrete check: run the migration against a copy of the schema, or search for the column’s readers. Do not let agreement end the review. A reviewer that agrees with the producer on everything is either excellent or captured, and captured is more common. Spot-check a sample of approved changes with a different model family. Escalate repeated finding classes to a computational gate. If the same kind of finding keeps appearing across reviews, the review layer is doing detection work that belongs in a type checker , a linter , or a test. Move the check left. What it cannot detect Two agents from the same model family share the same training distribution and will tend to agree on the same wrong answers — the “independence” is illusory if both agents have the same blind spots. True independence requires different model families, different training data, or different architectures. A second agent from the same model is better than nothing but is not the same as an independent evaluator. Also, agent review quality is unproven — it may miss problems that human review would catch. Pair with computational gates for enforcement that doesn’t depend on review quality.",

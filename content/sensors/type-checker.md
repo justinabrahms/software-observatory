@@ -4,42 +4,46 @@ title: Type Checker
 family: structural
 family_num: 1
 oracle: maximum
-oracle_note: 'a type error is a fact, not an opinion'
+oracle_note: a type error is a fact, not an opinion
 independence: maximum
-independence_note: 'the implementation cannot game the compiler'
+independence_note: the implementation cannot game the compiler
 scope: module
 latency: milliseconds
 actionability: guiding
-actionability_note: 'tells you exactly what''s wrong and where'
+actionability_note: tells you exactly what's wrong and where
 type: predictive
-type_note: 'catches errors before runtime'
+type_note: catches errors before runtime
 stack_level: static-analysis
 categories:
 - Structural
 - Syntactic Validity
-- Guiding Sensors
 - Maximum Oracle
 see_also:
 - SO-003
 - SO-001b
 - SO-004
 - atlas
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: 'To Type or Not to Type: Quantifying Detectable Bugs in JavaScript'
   year: 2017
   tier: I
   url: https://www.microsoft.com/en-us/research/wp-content/uploads/2017/09/gao2017javascript.pdf
   kind: paper
+  authors: Zheng Gao, Christian Bird, Earl T. Barr
+  venue: ICSE 2017
 - title: Eliminating Memory Safety Vulnerabilities at the Source
   year: 2024
   tier: II
   url: https://security.googleblog.com/2024/09/eliminating-memory-safety-vulnerabilities-Android.html
   kind: paper
+  authors: Google Security Blog, Android team
+  venue: Google Security Blog
 - authors: Luca Cardelli
   title: Type Systems
   year: 2004
   kind: paper
+  tier: IV
 - title: Rust compiler
   kind: tool
   url: https://www.rust-lang.org

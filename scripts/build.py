@@ -640,15 +640,15 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
                     parts.append(html.escape(r["title"]))
                 meta_parts = []
                 if r.get("authors"):
-                    meta_parts.append(r["authors"])
+                    meta_parts.append(html.escape(r["authors"]))
                 if r.get("year"):
-                    meta_parts.append(str(r["year"]))
+                    meta_parts.append(html.escape(str(r["year"])))
                 if r.get("tier"):
-                    meta_parts.append(f"tier {r['tier']}")
+                    meta_parts.append(f'<a href="/framework/#evidence-tiers" class="wikilink">tier {html.escape(str(r["tier"]))}</a>')
                 if r.get("venue"):
-                    meta_parts.append(r["venue"])
+                    meta_parts.append(html.escape(r["venue"]))
                 if meta_parts:
-                    parts.append(f'<span class="ref-meta">{html.escape(" · ".join(meta_parts))}</span>')
+                    parts.append(f'<span class="ref-meta">{" · ".join(meta_parts)}</span>')
                 items += f"          <li>{' — '.join(parts)}</li>\n"
             sections.append(f'        <h3 class="references-subheading">Papers</h3>\n        <ul class="reference-list">\n{items.rstrip()}\n        </ul>')
 
@@ -1178,12 +1178,15 @@ def generate_index_page(sensors, output_dir):
         </a>
 """
 
-    # Recent entries — sorted by last_reviewed date, descending
-    recent_sensors = sorted(
-        sensors,
-        key=lambda s: s.get("last_reviewed", ""),
-        reverse=True,
-    )[:6]
+    # Featured entries — one per family for the first six families, so the
+    # selection is deterministic and spread across the catalog rather than
+    # masquerading as "recently reviewed" when all review dates are identical.
+    featured_slugs = [
+        "type-checker", "mutation-testing", "fuzzing",
+        "observability-events", "independent-review", "canary-analysis",
+    ]
+    sensors_by_slug = {s["slug"]: s for s in sensors}
+    recent_sensors = [sensors_by_slug[s] for s in featured_slugs if s in sensors_by_slug]
     recent_html = ""
     for s in recent_sensors:
         fam = FAMILY_BY_SLUG.get(s.get("family", ""), {})
@@ -1402,7 +1405,7 @@ def generate_index_page(sensors, output_dir):
     </section>
 
     <section class="recent">
-      <h2 class="section-heading">Recently reviewed</h2>
+      <h2 class="section-heading">Start here</h2>
       <ul class="entry-list">
 {recent_html.rstrip()}
       </ul>
@@ -1558,10 +1561,16 @@ def generate_framework_page(sensors, output_dir):
       <h2 class="property-detail-title">Actionability</h2>
       <p class="property-detail-question">Does it merely say "bad" or does it tell you what to fix?</p>
       <p>
-        This is where guiding sensors become particularly interesting. A
-        guiding sensor doesn't just flag a problem — it tells the agent what
-        to do next. In Böckeler's framing, the interesting frontier is sensors
-        where the feedback itself directs the next action.
+        Three values, in order of how much the feedback directs the next action:
+      </p>
+      <div class="scope-ladder">
+        <div class="scope-rung">Blocking <span class="scope-desc">A binary gate: pass or fail. The pipeline stops on failure, but the sensor does not say what to fix — a compiler error, a failing invariant gate, a smoke test that halts a rollout.</span></div>
+        <div class="scope-rung">Exploratory <span class="scope-desc">A signal to investigate, not a verdict. It narrows where to look but prescribes nothing — a hotspot, a trace, a coverage gap on unchanged lines.</span></div>
+        <div class="scope-rung">Guiding <span class="scope-desc">The feedback itself directs the next action. A mutation report shows the exact untested mutation; a linter diagnostic names the rule and the fix; a type error points at the expression and the expected type.</span></div>
+      </div>
+      <p>
+        In Böckeler's framing, the interesting frontier is guiding sensors,
+        where the feedback itself tells the agent what to do next.
       </p>
     </section>
 
@@ -1587,6 +1596,29 @@ def generate_framework_page(sensors, output_dir):
         before they ship; retrospective sensors tell you where the bugs came
         from. Both matter — a sensor stack with only predictive sensors has
         no feedback loop; one with only retrospective sensors has no gate.
+      </p>
+    </section>
+
+    <section class="property-detail">
+      <span class="property-detail-num">07</span>
+      <h2 class="property-detail-title">Evidence tiers</h2>
+      <p class="property-detail-question">How much should you trust the research behind a sensor?</p>
+      <p>
+        Paper references in each entry carry an evidence tier (I–IV) that
+        grades the <em>study</em>, never the claim. The tiers come from the
+        <a href="https://github.com/justinabrahms/quality-lab" class="wikilink">quality-lab</a>
+        evidence rubric:
+      </p>
+      <div class="scope-ladder">
+        <div class="scope-rung">Tier I <span class="scope-desc">Controlled experiment or large-N study with a comparison group.</span></div>
+        <div class="scope-rung">Tier II <span class="scope-desc">Observational study on production data, no control group.</span></div>
+        <div class="scope-rung">Tier III <span class="scope-desc">Single-organization case study or engineering report, with numbers.</span></div>
+        <div class="scope-rung">Tier IV <span class="scope-desc">Argument or experience report — not measured. Admitted, but rendered visibly as unmeasured.</span></div>
+      </div>
+      <p>
+        A tier IV entry is not a dismissal — some genuinely good practices
+        sit at tier IV forever. The tier tells you what kind of evidence
+        backs the claim, so you can weigh it accordingly.
       </p>
     </section>
   </div>"""
@@ -1921,9 +1953,24 @@ def generate_glossary_page(output_dir):
          '<a href="/framework/" class="wikilink">the framework</a>.'),
         ("actionability",
          "Actionability",
-         "Whether a sensor merely flags a problem or tells you what to fix. A "
-         "guiding sensor doesn't just say \"bad\" — it tells the agent what to "
-         'do next. See <a href="/framework/" class="wikilink">the framework</a>.'),
+         "Whether a sensor merely flags a problem or tells you what to fix. "
+         "Three values: <strong>blocking</strong> — a binary gate that halts "
+         "the pipeline (compiler error, invariant gate); "
+         "<strong>exploratory</strong> — a signal to investigate that narrows "
+         "where to look but prescribes nothing (hotspot, trace, coverage gap); "
+         "<strong>guiding</strong> — the feedback itself directs the next "
+         "action (mutation report shows the untested mutation, linter names "
+         'the rule and fix). See <a href="/framework/" class="wikilink">'
+         "the framework</a>."),
+        ("evidence-tier",
+         "Evidence tier",
+         "A grade (I–IV) assigned to each paper reference, describing the "
+         "<em>study</em> rather than the claim. Tier I: controlled experiment "
+         "or large-N study with a comparison group. Tier II: observational "
+         "study on production data, no control group. Tier III: "
+         "single-organization case study or engineering report with numbers. "
+         "Tier IV: argument or experience report — not measured. See "
+         '<a href="/framework/#evidence-tiers" class="wikilink">the framework</a>.'),
         ("guiding-sensor",
          "Guiding sensor",
          "A sensor whose feedback directs the next action, not just whether "

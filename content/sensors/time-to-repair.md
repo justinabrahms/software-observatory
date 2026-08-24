@@ -4,13 +4,13 @@ title: Time-to-Repair
 family: evolution
 family_num: 09
 oracle: medium
-oracle_note: 'long repair time correlates with complexity'
+oracle_note: long repair time correlates with complexity
 independence: high
-independence_note: 'measured from incident records'
+independence_note: measured from incident records
 scope: module
 latency: weeks
 actionability: exploratory
-actionability_note: 'shows where repair is slow'
+actionability_note: shows where repair is slow
 type: retrospective
 stack_level: user-outcome
 categories:
@@ -21,7 +21,7 @@ see_also:
 - SO-009
 - SO-009b
 - SO-009c
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: DORA
   url: https://dora.dev

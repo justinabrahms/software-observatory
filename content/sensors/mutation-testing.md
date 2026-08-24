@@ -4,42 +4,45 @@ title: Mutation Testing
 family: test-effectiveness
 family_num: 3
 oracle: high
-oracle_note: 'a surviving mutation is strong evidence of a test gap'
+oracle_note: a surviving mutation is strong evidence of a test gap
 independence: medium
-independence_note: 'the test author writes the tests being evaluated'
+independence_note: the test author writes the tests being evaluated
 scope: function
 latency: minutes-hours
 actionability: guiding
-actionability_note: 'shows the exact untested mutation'
-type: adversarial
-type_note: 'it actively tries to make tests fail'
+actionability_note: shows the exact untested mutation
+type: predictive
+type_note: it actively tries to make tests fail
 stack_level: mutation-testing
 categories:
 - Test Effectiveness
 - Adversarial
-- Test Sensitivity
-- Guiding Sensors
 see_also:
 - SO-003b
 - behavioral-family
 - SO-005
 - SO-005b
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: Coverage Is Not Strongly Correlated with Test Suite Effectiveness
   year: 2014
   tier: I
   url: https://www.cs.ubc.ca/~rtholmes/papers/icse_2014.pdf
   kind: paper
+  authors: Laura Inozemtseva, Reid Holmes
+  venue: ICSE 2014
 - title: Are Mutants a Valid Substitute for Real Faults in Software Testing?
   year: 2014
   tier: I
   url: https://homes.cs.washington.edu/~rjust/publ/mutants_real_faults_fse_2014.pdf
   kind: paper
+  authors: René Just, Darioush Jalali, Laura Inozemtseva, Michael D. Ernst, Reid Holmes, Gordon Fraser
+  venue: FSE 2014
 - authors: Jia & Harman
   title: An Analysis and Survey of the Development of Mutation Testing
   year: 2011
   kind: paper
+  tier: IV
 - title: Stryker
   url: https://stryker-mutator.io
   kind: tool

@@ -6,11 +6,11 @@ family_num: '02'
 oracle: medium
 oracle_note: '"alive" is a weak claim, but a true one'
 independence: high
-independence_note: 'exercises the real deployed artifact end to end'
-scope: system
+independence_note: exercises the real deployed artifact end to end
+scope: user-journey
 latency: seconds
 actionability: blocking
-actionability_note: 'a failed smoke test halts the rollout'
+actionability_note: a failed smoke test halts the rollout
 type: retrospective
 stack_level: canary-shadow
 categories:
@@ -20,13 +20,15 @@ see_also:
 - SO-002c
 - SO-007
 - SO-013b
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: 'Software Engineering at Google, ch. 11: Testing Overview'
   year: 2020
   tier: IV
   url: https://abseil.io/resources/swe-book/html/ch11.html
   kind: paper
+  authors: Adam Bender; eds. Titus Winters, Tom Manshreck, Hyrum Wright
+  venue: O'Reilly Media
 - title: smoke-tester
   kind: tool
   url: https://github.com/symonk/smoke-tester
@@ -39,6 +41,7 @@ references:
   kind: tool
   url: https://k6.io
   description: Smoke testing with k6 load testing tool
+scope_note: critical user paths through the deployed system
 ---
 
 The cheapest behavioral check against a live deployment: hit `/health`,

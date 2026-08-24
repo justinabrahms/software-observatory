@@ -4,23 +4,22 @@ title: Resource Telemetry
 family: runtime
 family_num: '06'
 oracle: low
-oracle_note: 'aggregate state, not causation'
+oracle_note: aggregate state, not causation
 independence: high
-independence_note: 'production reality'
+independence_note: production reality
 scope: system
 latency: seconds
 actionability: exploratory
-actionability_note: 'but low dimensionality limits investigation'
+actionability_note: but low dimensionality limits investigation
 type: retrospective
 stack_level: production-behavior
 categories:
 - Runtime
-- Monitoring
 see_also:
 - SO-006
 - SO-006b
 - SO-006c
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: Prometheus
   url: https://prometheus.io

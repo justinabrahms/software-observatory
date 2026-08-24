@@ -4,14 +4,14 @@ title: Revert Rate
 family: evolution
 family_num: 09
 oracle: medium
-oracle_note: 'reversion correlates with problems'
+oracle_note: reversion correlates with problems
 independence: high
-independence_note: 'computed from git history'
+independence_note: computed from git history
 scope: module
 latency: days
-latency_note: 'days to weeks'
+latency_note: days to weeks
 actionability: exploratory
-actionability_note: 'shows the pattern, you investigate'
+actionability_note: shows the pattern, you investigate
 type: retrospective
 stack_level: user-outcome
 categories:
@@ -22,7 +22,7 @@ see_also:
 - SO-009b
 - SO-009c
 - SO-009d
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: git log
   kind: tool

@@ -4,35 +4,38 @@ title: Schema Validator
 family: structural
 family_num: '01'
 oracle: high
-oracle_note: 'schema violations are definitive'
+oracle_note: schema violations are definitive
 independence: high
-independence_note: 'schema is external to the implementation'
+independence_note: schema is external to the implementation
 scope: service
 latency: seconds
 actionability: guiding
-actionability_note: 'shows which field violates which constraint'
+actionability_note: shows which field violates which constraint
 type: predictive
 stack_level: static-analysis
 categories:
 - Structural
 - Boundary Assumptions
-- Guiding Sensors
 see_also:
 - SO-001
 - SO-001c
 - SO-002
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: 'Detecting Data Errors: Where are we and what needs to be done?'
   year: 2016
   tier: I
   url: https://www.vldb.org/pvldb/vol9/p993-abedjan.pdf
   kind: paper
+  authors: Ziawasch Abedjan, Xu Chu, Dong Deng, Raul Castro Fernandez, Ihab F. Ilyas, Mourad Ouzzani, Paolo Papotti, Michael Stonebraker, Nan Tang
+  venue: PVLDB 9(12)
 - title: 'Failing Loudly: An Empirical Study of Methods for Detecting Dataset Shift'
   year: 2019
   tier: I
   url: https://arxiv.org/pdf/1810.11953
   kind: paper
+  authors: Stephan Rabanser, Stephan Günnemann, Zachary C. Lipton
+  venue: NeurIPS 2019
 - title: OpenAPI Specification
   url: https://spec.openapis.org
   kind: tool

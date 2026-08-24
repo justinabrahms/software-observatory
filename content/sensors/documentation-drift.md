@@ -4,29 +4,30 @@ title: Documentation Drift
 family: comprehension
 family_num: '10'
 oracle: low
-oracle_note: 'drift is a risk factor, not a bug'
+oracle_note: drift is a risk factor, not a bug
 independence: high
-independence_note: 'docs and code are independent artifacts'
+independence_note: docs and code are independent artifacts
 scope: module
 latency: days
 actionability: exploratory
-actionability_note: 'shows the gap'
+actionability_note: shows the gap
 type: retrospective
 stack_level: static-analysis
 categories:
 - Comprehension
-- Documentation
 see_also:
 - SO-010
 - SO-010c
 - SO-010d
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: 'A First Look at the Deprecation of RESTful APIs: An Empirical Study'
   year: 2020
   tier: II
   url: https://arxiv.org/abs/2008.12808
   kind: paper
+  authors: Jerin Yasmin, Yuan Tian, Jinqiu Yang
+  venue: arXiv 2008.12808
 - title: doctest
   kind: tool
   url: https://docs.python.org/3/library/doctest.html

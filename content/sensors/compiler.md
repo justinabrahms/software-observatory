@@ -4,13 +4,13 @@ title: Compiler
 family: structural
 family_num: '01'
 oracle: maximum
-oracle_note: 'the implementation cannot argue'
+oracle_note: the implementation cannot argue
 independence: maximum
-independence_note: 'the compiler is external to the code'
+independence_note: the compiler is external to the code
 scope: module
 latency: milliseconds
 actionability: guiding
-actionability_note: 'exact error location and message'
+actionability_note: exact error location and message
 type: predictive
 stack_level: compilation
 categories:
@@ -21,7 +21,7 @@ see_also:
 - SO-001
 - SO-001c
 - SO-001d
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: 'Aho et al., ''Compilers: Principles, Techniques, and Tools'''
   kind: other

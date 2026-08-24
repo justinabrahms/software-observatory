@@ -4,33 +4,34 @@ title: Diff Coverage
 family: test-effectiveness
 family_num: 3
 oracle: low
-oracle_note: 'execution ≠ correctness'
+oracle_note: execution ≠ correctness
 independence: medium
-independence_note: 'the test author writes the tests'
-scope: diff
-scope_note: 'change-scoped'
+independence_note: the test author writes the tests
+scope: line
+scope_note: changed lines in the diff
 latency: minutes
 actionability: guiding
-actionability_note: 'shows exactly which changed lines lack coverage'
+actionability_note: shows exactly which changed lines lack coverage
 type: predictive
-type_note: 'catches untested changes before deployment'
+type_note: catches untested changes before deployment
 stack_level: behavioral-tests
 categories:
 - Test Effectiveness
 - Change
 - Coverage
-- Agentic Coding
 see_also:
 - SO-003
 - change-family
 - ai-sensors
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: State of Mutation Testing at Google
   year: 2018
   tier: III
   url: https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/46584.pdf
   kind: paper
+  authors: Goran Petrović, Marko Ivanković
+  venue: ICSE-SEIP 2018
 - title: diff-cover
   kind: tool
   url: https://github.com/Bachmann123/diff-cover

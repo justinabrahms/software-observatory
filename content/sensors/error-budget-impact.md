@@ -4,24 +4,23 @@ title: Error-Budget Impact
 family: change
 family_num: '07'
 oracle: medium
-oracle_note: 'budget burn is correlated, not causal'
+oracle_note: budget burn is correlated, not causal
 independence: high
-independence_note: 'production measurements'
+independence_note: production measurements
 scope: system
 latency: hours
 actionability: guiding
-actionability_note: "this deployment burned 30% of the monthly budget"
+actionability_note: this deployment burned 30% of the monthly budget
 type: retrospective
 stack_level: user-outcome
 categories:
 - Change
-- SLO
 - Production Sensors
 see_also:
 - SO-007
 - SO-007b
 - evolution-family
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: Google SRE Workbook
   url: https://sre.google/workbook/error-budget/

@@ -4,32 +4,32 @@ title: Computational Gates
 family: ai-sensors
 family_num: '11'
 oracle: maximum
-oracle_note: 'a gate is a fact, not a suggestion'
+oracle_note: a gate is a fact, not a suggestion
 independence: maximum
-independence_note: 'the gate is external to the agent'
+independence_note: the gate is external to the agent
 scope: system
 latency: seconds
-latency_note: 'gate execution time'
+latency_note: gate execution time
 actionability: guiding
-actionability_note: 'the gate tells you exactly what failed'
+actionability_note: the gate tells you exactly what failed
 type: predictive
 stack_level: static-analysis
 categories:
 - AI-Generated
-- Computational Controls
 - Maximum Oracle
 see_also:
 - SO-011
 - SO-011c
 - SO-011d
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
-- title: 'Gender Shades: Intersectional Accuracy Disparities in Commercial Gender
-    Classification'
+- title: 'Gender Shades: Intersectional Accuracy Disparities in Commercial Gender Classification'
   year: 2018
   tier: I
   url: http://proceedings.mlr.press/v81/buolamwini18a/buolamwini18a.pdf
   kind: paper
+  authors: Joy Buolamwini, Timnit Gebru
+  venue: PMLR 81 / FAT* 2018
 - title: GitHub Actions
   kind: tool
   url: https://docs.github.com/actions

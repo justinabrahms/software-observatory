@@ -4,34 +4,38 @@ title: Synthetic Monitoring
 family: behavioral
 family_num: '02'
 oracle: high
-oracle_note: 'a failed checkout flow is unambiguous'
+oracle_note: a failed checkout flow is unambiguous
 independence: high
-independence_note: 'runs outside the system, against its public surface'
-scope: system
+independence_note: runs outside the system, against its public surface
+scope: user-journey
 latency: minutes
 actionability: guiding
-actionability_note: 'the failing step localizes the breakage'
+actionability_note: the failing step localizes the breakage
 type: retrospective
 stack_level: production-behavior
 categories:
 - Behavioral
-- Production
+- Production Sensors
 see_also:
 - SO-006c
 - SO-007
 - SO-012b
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: Meaningful Availability
   year: 2020
   tier: III
   url: https://www.usenix.org/system/files/nsdi20-paper-hauer.pdf
   kind: paper
+  authors: Tamás Hauer, Philipp Hoffmann, John Lunney, Dan Ardelean, Amer Diwan
+  venue: USENIX NSDI '20
 - title: Monitoring Distributed Systems (SRE Book, ch. 6)
   year: 2016
   tier: IV
   url: https://sre.google/sre-book/monitoring-distributed-systems/
   kind: paper
+  authors: Rob Ewaschuk, Betsy Beyer
+  venue: Site Reliability Engineering, O'Reilly
 - title: Checkly
   url: https://checklyhq.com
   kind: tool
@@ -48,6 +52,7 @@ references:
   kind: tool
   url: https://docs.datadoghq.com/synthetic_monitoring
   description: Synthetic monitoring in Datadog
+scope_note: scripted end-to-end user flows
 ---
 
 Scripted user flows run against the production system around the clock:

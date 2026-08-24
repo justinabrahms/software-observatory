@@ -4,35 +4,37 @@ title: Incremental Build Correctness
 family: change
 family_num: '07'
 oracle: medium
-oracle_note: 'divergence between declared and actual rebuild sets is meaningful but noisy'
+oracle_note: divergence between declared and actual rebuild sets is meaningful but noisy
 independence: high
-independence_note: 'measures the build system, which the change author does not control'
-scope: codebase
+independence_note: measures the build system, which the change author does not control
+scope: system
 latency: minutes
 actionability: guiding
-actionability_note: 'points at the under-declared dependency edge'
+actionability_note: points at the under-declared dependency edge
 type: retrospective
 stack_level: static-analysis
 categories:
 - Change
-- Build Systems
 see_also:
 - SO-007b
 - SO-014c
 - SO-001
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: 'Reproducible Builds: Increasing the Integrity of Software Supply Chains'
   year: 2021
   tier: II
   url: https://arxiv.org/abs/2104.06020
   kind: paper
-- title: An Empirical Analysis of Build Failures in the Continuous Integration Workflows
-    of Java-Based Open-Source Software
+  authors: Chris Lamb, Stefano Zacchiroli
+  venue: arXiv preprint; later IEEE Software 39 (2022) 62-70
+- title: An Empirical Analysis of Build Failures in the Continuous Integration Workflows of Java-Based Open-Source Software
   year: 2017
   tier: II
   url: https://dsg.tuwien.ac.at/team/trausch/pub/PID4727015.pdf
   kind: paper
+  authors: Thomas Rausch, Waldemar Hummer, Philipp Leitner, Stefan Schulte
+  venue: MSR 2017
 - title: Bazel
   url: https://bazel.build
   kind: tool
@@ -49,6 +51,7 @@ references:
   kind: tool
   url: https://ccache.dev
   description: Compiler cache for fast rebuilds
+scope_note: the whole codebase's build graph
 ---
 
 Did the build system actually rebuild everything this change touched?

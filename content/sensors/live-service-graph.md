@@ -4,23 +4,23 @@ title: Live Service Graph Discovery
 family: architecture
 family_num: 08
 oracle: high
-oracle_note: 'observed traffic is not arguable'
+oracle_note: observed traffic is not arguable
 independence: high
-independence_note: 'collected outside the services themselves'
+independence_note: collected outside the services themselves
 scope: system
 latency: minutes
 actionability: guiding
-actionability_note: 'shows exactly which edge appeared that shouldn''t exist'
+actionability_note: shows exactly which edge appeared that shouldn't exist
 type: retrospective
 stack_level: production-behavior
 categories:
 - Architecture
-- Production
+- Production Sensors
 see_also:
 - SO-008b
 - SO-006c
 - SO-006
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: Istio
   url: https://istio.io

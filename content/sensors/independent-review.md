@@ -4,38 +4,42 @@ title: Independent Review
 family: comprehension
 family_num: '10'
 oracle: medium
-oracle_note: 'subjective, but disagreement is signal'
-independence: medium
-independence_note: 'reviewer is independent of author'
+oracle_note: subjective, but disagreement is signal
+independence: high
+independence_note: a human stranger does not share the author's blind spots
 scope: module
 latency: hours
 actionability: guiding
-actionability_note: 'reviewer asks "what does this do?"'
+actionability_note: reviewer asks "what does this do?"
 type: predictive
 stack_level: static-analysis
 categories:
 - Comprehension
-- Epistemic Accessibility
 see_also:
 - SO-010b
 - SO-010c
 - SO-010d
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: An Empirical Study on the Effectiveness of Security Code Review
   year: 2013
   tier: I
   url: https://people.eecs.berkeley.edu/~daw/papers/coderev-essos13.pdf
   kind: paper
+  authors: Anne Edmundson, Brian Holtkamp, Emanuel Rivera, Matthew Finifter, Adrian Mettler, David Wagner
+  venue: ESSoS 2013
 - title: 'The Cost of Interrupted Work: More Speed and Stress'
   year: 2008
   tier: I
   url: https://ics.uci.edu/~gmark/chi08-mark.pdf
   kind: paper
+  authors: Gloria Mark, Daniela Gudith, Ulrich Klocke
+  venue: CHI 2008
 - authors: Fagan
   title: Design and Code Inspections to Reduce Errors
   year: 1976
   kind: paper
+  tier: II
 - title: GitHub PR review
   kind: tool
   url: https://docs.github.com/pull-requests

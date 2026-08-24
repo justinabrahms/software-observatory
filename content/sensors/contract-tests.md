@@ -4,44 +4,45 @@ title: Contract Tests
 family: behavioral
 family_num: 2
 oracle: high
-oracle_note: 'a contract violation is a definite bug'
+oracle_note: a contract violation is a definite bug
 independence: high
-independence_note: 'consumer defines the contract'
-scope: service-boundary
+independence_note: consumer defines the contract
+scope: service
 latency: minutes
 actionability: guiding
-actionability_note: 'shows exactly which contract clause was violated'
+actionability_note: shows exactly which contract clause was violated
 type: predictive
-type_note: 'catches breaking changes before deployment'
+type_note: catches breaking changes before deployment
 stack_level: integration-tests
 categories:
 - Behavioral
 - Boundary Assumptions
-- Microservices
-- Guiding Sensors
 see_also:
 - SO-001
 - SO-004
 - change-family
 - structural-family
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
-- title: 'I Depended on You and You Broke Me: An Empirical Study of Manifesting Breaking
-    Changes in Client Packages'
+- title: 'I Depended on You and You Broke Me: An Empirical Study of Manifesting Breaking Changes in Client Packages'
   year: 2023
   tier: II
   url: https://arxiv.org/abs/2301.04563
   kind: paper
-- title: 'Design, Monitoring, and Testing of Microservices Systems: The Practitioners''
-    Perspective'
+  authors: Suhaib Mujahid, Diego Elias Costa, Rabe Abdalkareem, Emad Shihab and others
+  venue: ACM TOSEM
+- title: 'Design, Monitoring, and Testing of Microservices Systems: The Practitioners'' Perspective'
   year: 2021
   tier: II
   url: https://arxiv.org/pdf/2108.03384
   kind: paper
+  authors: Muhammad Waseem, Peng Liang, Mojtaba Shahin, Amleto Di Salle, Gastón Márquez
+  venue: arXiv preprint, submitted to the Journal of Systems and Software
 - authors: Ian Robinson
   title: Consumer-Driven Contracts
   year: 2007
   kind: paper
+  tier: IV
 - title: Pact
   url: https://pact.io
   kind: tool
@@ -54,6 +55,7 @@ references:
   kind: tool
   url: https://www.postman.com
   description: API testing and contract validation
+scope_note: between services, at their boundaries
 ---
 
 Does service A continue satisfying the assumptions of service B? Contract

@@ -4,14 +4,14 @@ title: Business Invariants
 family: invariants
 family_num: '04'
 oracle: high
-oracle_note: 'a violation means the business is broken'
+oracle_note: a violation means the business is broken
 independence: high
-independence_note: 'observes outcomes, not implementation'
+independence_note: observes outcomes, not implementation
 scope: system
-scope_note: 'domain level'
+scope_note: domain level
 latency: hours
 actionability: guiding
-actionability_note: "17 payments have no order transition"
+actionability_note: 17 payments have no order transition
 type: retrospective
 stack_level: user-outcome
 categories:
@@ -22,7 +22,7 @@ see_also:
 - SO-004
 - SO-004b
 - SO-006
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: Great Expectations
   url: https://greatexpectations.io

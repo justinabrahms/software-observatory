@@ -4,42 +4,44 @@ title: Fuzzing
 family: adversarial
 family_num: 5
 oracle: high
-oracle_note: 'high for crashes, lower for correctness'
+oracle_note: high for crashes, lower for correctness
 independence: high
-independence_note: 'inputs are generated independently of the implementation'
+independence_note: inputs are generated independently of the implementation
 scope: function
-scope_note: 'usually function level'
+scope_note: usually function level
 latency: minutes-hours
 actionability: guiding
-actionability_note: 'provides the exact input that triggers the failure'
-type: adversarial
-type_note: 'actively tries to break the system'
+actionability_note: provides the exact input that triggers the failure
+type: predictive
+type_note: actively tries to break the system
 stack_level: property-metamorphic
 categories:
 - Adversarial
-- Robustness
-- Input Space
-- Guiding Sensors
 see_also:
 - SO-005b
 - SO-003
 - adversarial
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: Evaluating Fuzz Testing
   year: 2018
   tier: I
   url: https://dl.acm.org/doi/10.1145/3243734.3243804
   kind: paper
+  authors: George Klees, Andrew Ruef, Benji Cooper, Shiyi Wei, Michael Hicks
+  venue: ACM CCS 2018
 - title: An Empirical Study of OSS-Fuzz Bugs
   year: 2021
   tier: II
   url: https://arxiv.org/pdf/2103.11518
   kind: paper
+  authors: Zhen Yu Ding, Claire Le Goues
+  venue: MSR 2021
 - authors: Manes et al.
   title: 'The Art, Science, and Engineering of Fuzzing: A Survey'
   year: 2021
   kind: paper
+  tier: IV
 - title: libFuzzer
   url: https://llvm.org/docs/LibFuzzer.html
   kind: tool

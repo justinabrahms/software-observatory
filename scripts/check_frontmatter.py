@@ -36,7 +36,8 @@ VALID_ORACLES = set(ORACLE_WIDTHS.keys())
 VALID_INDEPENDENCE = set(INDEPENDENCE_DOTS.keys())
 VALID_LATENCIES = set(LATENCY_LABELS.keys())
 VALID_ACTIONABILITY = {"blocking", "exploratory", "guiding"}
-VALID_TYPES = {"predictive", "retrospective", "adversarial"}
+VALID_TYPES = {"predictive", "retrospective"}
+VALID_SCOPES = {"line", "function", "module", "service", "system", "user-journey"}
 
 REQUIRED_FIELDS = [
     "id", "title", "family", "oracle", "independence",
@@ -121,6 +122,12 @@ def main():
         if action and action not in VALID_ACTIONABILITY:
             errors.append(
                 f"{loc}: actionability '{action}' not in {sorted(VALID_ACTIONABILITY)}"
+            )
+
+        scope = meta.get("scope", "")
+        if scope and scope not in VALID_SCOPES:
+            errors.append(
+                f"{loc}: scope '{scope}' not in {sorted(VALID_SCOPES)}"
             )
 
         stype = meta.get("type", "")

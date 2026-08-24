@@ -4,13 +4,13 @@ title: API Compatibility
 family: change
 family_num: '07'
 oracle: high
-oracle_note: 'breaking changes are definitive'
+oracle_note: breaking changes are definitive
 independence: high
-independence_note: 'schema/contract is external'
+independence_note: schema/contract is external
 scope: service
 latency: seconds
 actionability: guiding
-actionability_note: 'shows which API surface changed'
+actionability_note: shows which API surface changed
 type: predictive
 stack_level: integration-tests
 categories:
@@ -20,20 +20,22 @@ see_also:
 - SO-002
 - SO-007
 - SO-007d
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
-- title: 'I Depended on You and You Broke Me: An Empirical Study of Manifesting Breaking
-    Changes in Client Packages'
+- title: 'I Depended on You and You Broke Me: An Empirical Study of Manifesting Breaking Changes in Client Packages'
   year: 2023
   tier: II
   url: https://arxiv.org/abs/2301.04563
   kind: paper
-- title: Breaking Bad? Semantic Versioning and Impact of Breaking Changes in Maven
-    Central
+  authors: Suhaib Mujahid, Diego Elias Costa, Rabe Abdalkareem, Emad Shihab and others
+  venue: ACM TOSEM
+- title: Breaking Bad? Semantic Versioning and Impact of Breaking Changes in Maven Central
   year: 2022
   tier: II
   url: https://arxiv.org/abs/2110.07889
   kind: paper
+  authors: Lina Ochoa, Thomas Degueule, Jean-Rémy Falleri, Jurgen Vinju
+  venue: Empirical Software Engineering 27
 - title: revapi
   url: https://revapi.org
   kind: tool

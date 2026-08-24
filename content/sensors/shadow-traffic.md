@@ -4,13 +4,13 @@ title: Shadow Traffic
 family: change
 family_num: '07'
 oracle: high
-oracle_note: 'divergence on real inputs is strong evidence'
+oracle_note: divergence on real inputs is strong evidence
 independence: high
-independence_note: 'production inputs'
+independence_note: production inputs
 scope: system
 latency: minutes
 actionability: guiding
-actionability_note: 'shows divergent requests and responses'
+actionability_note: shows divergent requests and responses
 type: retrospective
 stack_level: canary-shadow
 categories:
@@ -20,13 +20,15 @@ see_also:
 - SO-007
 - SO-007c
 - SO-005c
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: Development and Deployment at Facebook
   year: 2013
   tier: III
   url: https://www.cs.huji.ac.il/w~feit/papers/FB13IC.pdf
   kind: paper
+  authors: Dror G. Feitelson, Eitan Frachtenberg, Kent L. Beck
+  venue: IEEE Internet Computing 17(4)
 - title: Envoy shadow
   kind: tool
   url: https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/cluster/cluster#shadow

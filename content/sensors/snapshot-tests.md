@@ -4,23 +4,22 @@ title: Snapshot Tests
 family: behavioral
 family_num: '02'
 oracle: medium
-oracle_note: 'change is detected, correctness is not'
+oracle_note: change is detected, correctness is not
 independence: low
-independence_note: 'same author creates the snapshot'
+independence_note: same author creates the snapshot
 scope: function
 latency: seconds
 actionability: guiding
-actionability_note: 'shows the diff between old and new output'
+actionability_note: shows the diff between old and new output
 type: predictive
 stack_level: behavioral-tests
 categories:
 - Behavioral
-- Drift Detection
 see_also:
 - SO-002b
 - SO-002c
 - SO-003
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: Jest snapshot
   kind: tool

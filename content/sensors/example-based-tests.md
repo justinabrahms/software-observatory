@@ -4,39 +4,42 @@ title: Example-Based Tests
 family: behavioral
 family_num: '02'
 oracle: high
-oracle_note: 'assertion failure is definitive'
+oracle_note: assertion failure is definitive
 independence: low
-independence_note: 'same author writes code and tests'
+independence_note: same author writes code and tests
 scope: function
 latency: seconds
 actionability: guiding
-actionability_note: 'shows expected vs actual'
+actionability_note: shows expected vs actual
 type: predictive
 stack_level: behavioral-tests
 categories:
 - Behavioral
-- Guiding Sensors
 see_also:
 - SO-002c
 - SO-002d
 - SO-003
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
-- title: Techniques for Improving Regression Testing in Continuous Integration Development
-    Environments
+- title: Techniques for Improving Regression Testing in Continuous Integration Development Environments
   year: 2014
   tier: I
   url: https://cs.uwaterloo.ca/~m2nagapp/courses/CS846/1171/papers/elbaum_fse14.pdf
   kind: paper
+  authors: Sebastian Elbaum, Gregg Rothermel, John Penix
+  venue: FSE 2014 (ESEC/FSE), Hong Kong
 - title: On the Effectiveness of the Test-First Approach to Programming
   year: 2005
   tier: I
   url: https://www.cs.unm.edu/~joel/cs351/paper/IEEE-Effectiveness_of_Test-First_Approach_to_Programming.pdf
   kind: paper
+  authors: Hakan Erdogmus, Maurizio Morisio, Marco Torchiano
+  venue: IEEE TSE 31(1)
 - authors: Beizer
   title: Software Testing Techniques
   year: 1990
   kind: paper
+  tier: IV
 - title: pytest
   kind: tool
   url: https://docs.pytest.org

@@ -4,44 +4,49 @@ title: Runtime Invariants
 family: invariants
 family_num: 4
 oracle: high
-oracle_note: 'a violation is definitive evidence of a bug'
-independence: high
-independence_note: 'observes the system from outside'
+oracle_note: a violation is definitive evidence of a bug
+independence: medium
+independence_note: assertions are written by the same author, but run against production reality
 scope: system
-scope_note: 'domain level'
+scope_note: domain level
 latency: hours-seconds
-latency_note: 'batch to real-time'
+latency_note: batch to real-time
 actionability: guiding
-actionability_note: "17 payments have no order transition"
+actionability_note: 17 payments have no order transition
 type: retrospective
-type_note: 'detects violations after they occur'
+type_note: detects violations after they occur
 stack_level: production-behavior
 categories:
 - Invariants
 - Domain Correctness
-- Runtime Sensors
+- Production Sensors
 - Black-Box Sensors
 see_also:
 - SO-001
 - SO-006
 - adversarial
 - behavioral-family
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: 'Detecting Data Errors: Where are we and what needs to be done?'
   year: 2016
   tier: I
   url: https://www.vldb.org/pvldb/vol9/p993-abedjan.pdf
   kind: paper
+  authors: Ziawasch Abedjan, Xu Chu, Dong Deng, Raul Castro Fernandez, Ihab F. Ilyas, Mourad Ouzzani, Paolo Papotti, Michael Stonebraker, Nan Tang
+  venue: PVLDB 9(12)
 - title: 'AddressSanitizer: A Fast Address Sanity Checker'
   year: 2012
   tier: III
   url: https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/37752.pdf
   kind: paper
+  authors: Konstantin Serebryany, Derek Bruening, Alexander Potapenko, Dmitry Vyukov
+  venue: USENIX ATC '12
 - authors: Hoare
   title: An Axiomatic Basis for Computer Programming
   year: 1969
   kind: paper
+  tier: IV
 - title: assertpy
   kind: tool
   url: https://github.com/assertpy/assertpy

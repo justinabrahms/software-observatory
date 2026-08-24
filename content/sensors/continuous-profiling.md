@@ -4,37 +4,38 @@ title: Continuous Profiling
 family: runtime
 family_num: '06'
 oracle: medium
-oracle_note: 'shows where resources go, not whether it''s correct'
+oracle_note: shows where resources go, not whether it's correct
 independence: high
-independence_note: 'production samples'
+independence_note: production samples
 scope: system
 latency: seconds
 actionability: exploratory
-actionability_note: 'you profile to find bottlenecks'
+actionability_note: you profile to find bottlenecks
 type: retrospective
 stack_level: production-behavior
 categories:
 - Runtime
-- Profiling
 - Production Sensors
 see_also:
 - SO-006
 - SO-006b
 - SO-006d
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
-- title: Exploring Statistical Change Point Detection Techniques for Performance Anomaly
-    Detection at Mozilla
+- title: Exploring Statistical Change Point Detection Techniques for Performance Anomaly Detection at Mozilla
   year: 2026
   tier: I
   url: https://arxiv.org/abs/2606.18377
   kind: paper
-- title: 'FBDetect: Catching Tiny Performance Regressions at Hyperscale through In-Production
-    Monitoring'
+  authors: Mohamed Bilel Besbes, Gregory Mierzwinski, Suhaib Mujahid, Philipp Leitner, Alexander Serebrenik, Dave Hunt, Diego Elias Costa
+  venue: arXiv preprint
+- title: 'FBDetect: Catching Tiny Performance Regressions at Hyperscale through In-Production Monitoring'
   year: 2024
   tier: III
   url: https://tangchq74.github.io/FBDetect-SOSP24.pdf
   kind: paper
+  authors: Dong Young Yoon, Yang Wang, Miao Yu, Elvis Huang, Juan Ignacio Jones, Abhinay Kukkadapu, Osman Kocas, Jonathan Wiepert, Kapil Goenka, Sherry Chen, Yanjun Lin, Zhihui Huang, Jocelyn Kong, Michael Chow, Chunqiang Tang
+  venue: SOSP '24
 - title: Pyroscope
   kind: tool
   url: https://pyroscope.io

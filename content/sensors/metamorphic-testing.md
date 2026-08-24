@@ -4,37 +4,38 @@ title: Metamorphic Testing
 family: adversarial
 family_num: 5
 oracle: high
-oracle_note: 'relation violations are definitive'
+oracle_note: relation violations are definitive
 independence: high
-independence_note: 'relations are independent of implementation'
+independence_note: relations are independent of implementation
 scope: function
 latency: minutes
 actionability: guiding
-actionability_note: 'shows which relation was violated'
-type: adversarial
-type_note: 'explores input perturbations'
+actionability_note: shows which relation was violated
+type: predictive
+type_note: explores input perturbations
 stack_level: property-metamorphic
 categories:
 - Adversarial
 - Oracle-Free
-- Metamorphic Relations
-- Guiding Sensors
 see_also:
 - SO-005
 - SO-003
 - adversarial
 - invariants
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: An Empirical Evaluation of Property-Based Testing in Python
   year: 2025
   tier: I
   url: https://cseweb.ucsd.edu/~mcoblenz/assets/pdf/OOPSLA_2025_PBT.pdf
   kind: paper
+  authors: Savitha Ravi, Michael Coblenz
+  venue: Proc. ACM Program. Lang. (OOPSLA2)
 - authors: Chen et al.
   title: 'Metamorphic Testing: A New Approach for Generating Next Test Cases'
   year: 1998
   kind: paper
+  tier: IV
 - title: Hypothesis
   url: https://hypothesis.readthedocs.io
   kind: tool

@@ -4,35 +4,38 @@ title: Database Invariants
 family: invariants
 family_num: '04'
 oracle: high
-oracle_note: 'constraint violation is definitive'
+oracle_note: constraint violation is definitive
 independence: high
-independence_note: 'database enforces, not the application'
+independence_note: database enforces, not the application
 scope: system
 latency: minutes
 actionability: guiding
-actionability_note: 'shows which constraint was violated'
+actionability_note: shows which constraint was violated
 type: retrospective
 stack_level: production-behavior
 categories:
 - Invariants
-- Referential Integrity
-- Runtime Sensors
+- Production Sensors
 see_also:
 - SO-004
 - SO-004c
 - SO-006
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: 'Detecting Data Errors: Where are we and what needs to be done?'
   year: 2016
   tier: I
   url: https://www.vldb.org/pvldb/vol9/p993-abedjan.pdf
   kind: paper
+  authors: Ziawasch Abedjan, Xu Chu, Dong Deng, Raul Castro Fernandez, Ihab F. Ilyas, Mourad Ouzzani, Paolo Papotti, Michael Stonebraker, Nan Tang
+  venue: PVLDB 9(12)
 - title: 'Jepsen: MongoDB 4.2.6'
   year: 2020
   tier: II
   url: https://jepsen.io/analyses/mongodb-4.2.6
   kind: paper
+  authors: Kyle Kingsbury (Jepsen)
+  venue: jepsen.io analyses
 - title: DB constraints
   kind: tool
   url: https://www.postgresql.org/docs/current/ddl-constraints.html

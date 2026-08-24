@@ -4,9 +4,9 @@ title: Pre-Promotion Invariant Gates
 family: invariants
 family_num: '04'
 oracle: high
-oracle_note: 'the rule either holds for this change or it does not'
+oracle_note: the rule either holds for this change or it does not
 independence: high
-independence_note: 'enforced by the pipeline, not the team shipping the change'
+independence_note: enforced by the pipeline, not the team shipping the change
 scope: system
 latency: minutes
 actionability: blocking
@@ -19,7 +19,7 @@ see_also:
 - SO-004
 - SO-007
 - SO-012b
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: OPA Gatekeeper
   url: https://open-policy-agent.github.io/gatekeeper/

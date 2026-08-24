@@ -4,36 +4,38 @@ title: Statically Checked Invariants
 family: invariants
 family_num: '04'
 oracle: high
-oracle_note: 'a discharged proof obligation is definitive for its claim'
+oracle_note: a discharged proof obligation is definitive for its claim
 independence: high
-independence_note: 'the prover is outside the code'
+independence_note: the prover is outside the code
 scope: module
 latency: milliseconds
-latency_note: 'milliseconds to minutes'
+latency_note: milliseconds to minutes
 actionability: blocking
-actionability_note: 'the build fails'
+actionability_note: the build fails
 type: predictive
 stack_level: static-analysis
 categories:
 - Invariants
-- Formal Methods
 see_also:
 - SO-004
 - SO-012
 - SO-001d
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: How Amazon Web Services Uses Formal Methods
   year: 2015
   tier: III
   url: https://cacm.acm.org/research/how-amazon-web-services-uses-formal-methods/
   kind: paper
+  authors: Chris Newcombe, Tim Rath, Fan Zhang, Bogdan Munteanu, Marc Brooker, Michael Deardeuff
+  venue: Communications of the ACM 58(4)
 - authors: Leino
   title: Dafny
   year: 2010
   kind: paper
   url: ''
   description: Verification-aware programming language
+  tier: IV
 - title: Liquid Haskell
   url: https://ucsd-progsys.github.io/liquidhaskell/
   kind: tool

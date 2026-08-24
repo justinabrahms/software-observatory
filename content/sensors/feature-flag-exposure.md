@@ -4,34 +4,38 @@ title: Feature Flag Exposure Telemetry
 family: change
 family_num: '07'
 oracle: high
-oracle_note: 'evaluation events are direct records of what each request saw'
+oracle_note: evaluation events are direct records of what each request saw
 independence: high
-independence_note: 'emitted by the flag infrastructure, not the feature code'
+independence_note: emitted by the flag infrastructure, not the feature code
 scope: system
 latency: seconds
 actionability: guiding
-actionability_note: 'tells you the true exposure of a change'
+actionability_note: tells you the true exposure of a change
 type: retrospective
 stack_level: production-behavior
 categories:
 - Change
-- Production
+- Production Sensors
 see_also:
 - SO-007
 - SO-006c
 - SO-012c
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: Holistic Configuration Management at Facebook
   year: 2015
   tier: III
   url: https://sigops.org/s/conferences/sosp/2015/current/2015-Monterey/printable/008-tang.pdf
   kind: paper
+  authors: Chunqiang Tang, Thawan Kooburat, Pradeep Venkatachalam, Akshay Chander, Zhe Wen, Aravind Narayanan, Patrick Dowell, Robert Karl
+  venue: SOSP '15
 - title: Development and Deployment at Facebook
   year: 2013
   tier: III
   url: https://www.cs.huji.ac.il/w~feit/papers/FB13IC.pdf
   kind: paper
+  authors: Dror G. Feitelson, Eitan Frachtenberg, Kent L. Beck
+  venue: IEEE Internet Computing 17(4)
 - title: Feature flags
   url: https://martinfowler.com/articles/feature-toggles.html
   kind: tool

@@ -4,35 +4,37 @@ title: Onboarding Experiment
 family: comprehension
 family_num: '10'
 oracle: low
-oracle_note: 'onboarding time correlates with complexity'
+oracle_note: onboarding time correlates with complexity
 independence: high
-independence_note: 'measured from external engineers'
+independence_note: measured from external engineers
 scope: module
 latency: weeks
 actionability: exploratory
-actionability_note: 'shows where onboarding is slow'
+actionability_note: shows where onboarding is slow
 type: retrospective
 stack_level: static-analysis
 categories:
 - Comprehension
-- Knowledge Concentration
 see_also:
 - SO-010
 - SO-010b
 - SO-010d
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
-- title: Onboarding vs. Diversity, Productivity and Quality — Empirical Study of the
-    OpenStack Ecosystem
+- title: Onboarding vs. Diversity, Productivity and Quality — Empirical Study of the OpenStack Ecosystem
   year: 2021
   tier: II
   url: https://doi.org/10.1109/ICSE43902.2021.00097
   kind: paper
+  authors: Armstrong Foundjem, Ellis E. Eghan, Bram Adams
+  venue: ICSE 2021 (IEEE/ACM)
 - title: GitHub's Engineering Team Has Moved to Codespaces
   year: 2021
   tier: III
   url: https://github.blog/engineering/infrastructure/githubs-engineering-team-moved-codespaces/
   kind: paper
+  authors: Cory Wilkerson
+  venue: GitHub Engineering Blog
 ---
 
 How long does it take a competent engineer to safely modify this subsystem?

@@ -4,31 +4,32 @@ title: Distributed Traces
 family: runtime
 family_num: '06'
 oracle: medium
-oracle_note: 'shows what happened, not whether it was correct'
+oracle_note: shows what happened, not whether it was correct
 independence: high
-independence_note: 'production reality'
+independence_note: production reality
 scope: system
 latency: seconds
 actionability: exploratory
-actionability_note: 'you trace to find the signal'
+actionability_note: you trace to find the signal
 type: retrospective
 stack_level: production-behavior
 categories:
 - Runtime
-- Traces
 - Production Sensors
 see_also:
 - SO-006
 - SO-006c
 - SO-006d
 - change-family
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: The Tail at Scale
   year: 2013
   tier: III
   url: https://www.barroso.org/publications/TheTailAtScale.pdf
   kind: paper
+  authors: Jeffrey Dean, Luiz André Barroso
+  venue: Communications of the ACM 56(2)
 - title: Dapper paper
   url: https://research.google/pubs/pub36356/
   kind: tool

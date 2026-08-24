@@ -4,14 +4,14 @@ title: Differential Testing
 family: adversarial
 family_num: '05'
 oracle: high
-oracle_note: 'disagreement is definitive evidence of a bug'
+oracle_note: disagreement is definitive evidence of a bug
 independence: high
-independence_note: 'two independent implementations'
+independence_note: two independent implementations
 scope: function
 latency: minutes-hours
 actionability: guiding
-actionability_note: 'shows the divergent inputs and outputs'
-type: adversarial
+actionability_note: shows the divergent inputs and outputs
+type: predictive
 stack_level: property-metamorphic
 categories:
 - Adversarial
@@ -20,13 +20,15 @@ see_also:
 - SO-005
 - SO-005b
 - SO-005d
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: 'Elle: Inferring Isolation Anomalies from Experimental Observations'
   year: 2020
   tier: II
   url: https://arxiv.org/abs/2003.10554
   kind: paper
+  authors: Kyle Kingsbury, Peter Alvaro
+  venue: arXiv 2003.10554
 - title: Yang et al., 'Finding and Understanding Bugs in C Compilers' (2011, Csmith)
   kind: other
 - title: SQLancer

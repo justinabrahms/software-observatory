@@ -4,24 +4,23 @@ title: Architecture Fitness Functions
 family: architecture
 family_num: 08
 oracle: high
-oracle_note: 'a violation is definitive'
+oracle_note: a violation is definitive
 independence: high
-independence_note: 'rules are external to the code'
+independence_note: rules are external to the code
 scope: system
 latency: seconds
 actionability: guiding
-actionability_note: 'shows which rule was violated and where'
+actionability_note: shows which rule was violated and where
 type: predictive
 stack_level: static-analysis
 categories:
 - Architecture
 - Boundary Sensors
-- Guiding Sensors
 see_also:
 - SO-008
 - SO-008c
 - SO-008d
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: ArchUnit
   url: https://www.archunit.org

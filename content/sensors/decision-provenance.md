@@ -4,28 +4,28 @@ title: Decision Provenance
 family: comprehension
 family_num: '10'
 oracle: low
-oracle_note: 'missing provenance is a risk factor'
+oracle_note: missing provenance is a risk factor
 independence: high
-independence_note: 'history is independent of current code'
+independence_note: history is independent of current code
 scope: module
 latency: days
 actionability: exploratory
-actionability_note: 'shows whether provenance exists'
+actionability_note: shows whether provenance exists
 type: retrospective
 stack_level: static-analysis
 categories:
 - Comprehension
-- Archaeological Accessibility
 see_also:
 - SO-010
 - SO-010b
 - SO-010c
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - authors: Michael Nygard
   title: Documenting Architecture Decisions
   year: 2017
   kind: paper
+  tier: IV
 - title: ADR
   url: https://adr.github.io
   kind: tool

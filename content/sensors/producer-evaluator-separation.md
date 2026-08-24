@@ -2,27 +2,26 @@
 id: SO-011c
 title: Producer-Evaluator Separation
 family: ai-sensors
-family_num: "11"
+family_num: '11'
 oracle: high
-oracle_note: 'independence violation is a risk'
+oracle_note: independence violation is a risk
 independence: maximum
-independence_note: 'the concept *is* independence'
+independence_note: the concept *is* independence
 scope: system
 latency: varies
 actionability: guiding
-actionability_note: 'identifies where independence is violated'
+actionability_note: identifies where independence is violated
 type: predictive
 stack_level: behavioral-tests
 categories:
-  - AI-Generated
-  - Independence
-  - Agent Safety
+- AI-Generated
+- Agent Safety
 see_also:
-  - SO-011
-  - SO-011b
-  - SO-011d
-  - SO-003
-last_reviewed: 2026-08-23
+- SO-011
+- SO-011b
+- SO-011d
+- SO-003
+last_reviewed: '2026-08-24'
 ---
 
 A model writing `tests/` is allowed to write tests that make itself pass.

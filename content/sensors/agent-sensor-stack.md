@@ -4,16 +4,16 @@ title: Agent Sensor Stack
 family: ai-sensors
 family_num: '11'
 oracle: high
-oracle_note: 'the combined stack is strong'
-independence: high
-independence_note: 'if producer and evaluator are separated'
+oracle_note: the combined stack is strong
+independence: medium
+independence_note: the stack is only as independent as its most coupled member
 scope: system
 latency: varies
-latency_note: 'varies by layer'
+latency_note: varies by layer
 actionability: guiding
-actionability_note: 'each layer tells the agent what failed'
+actionability_note: each layer tells the agent what failed
 type: predictive
-type_note: 'predictive and retrospective, varies by layer'
+type_note: predictive and retrospective, varies by layer
 stack_level: canary-shadow
 categories:
 - AI-Generated
@@ -23,19 +23,22 @@ see_also:
 - SO-003
 - SO-006
 - SO-007
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
-- title: 'Gender Shades: Intersectional Accuracy Disparities in Commercial Gender
-    Classification'
+- title: 'Gender Shades: Intersectional Accuracy Disparities in Commercial Gender Classification'
   year: 2018
   tier: I
   url: http://proceedings.mlr.press/v81/buolamwini18a/buolamwini18a.pdf
   kind: paper
+  authors: Joy Buolamwini, Timnit Gebru
+  venue: PMLR 81 / FAT* 2018
 - title: 'Failing Loudly: An Empirical Study of Methods for Detecting Dataset Shift'
   year: 2019
   tier: I
   url: https://arxiv.org/pdf/1810.11953
   kind: paper
+  authors: Stephan Rabanser, Stephan Günnemann, Zachary C. Lipton
+  venue: NeurIPS 2019
 ---
 
 An agent should be surrounded by sensors. And crucially: the agent doesn't

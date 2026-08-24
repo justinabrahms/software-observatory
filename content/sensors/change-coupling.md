@@ -4,40 +4,44 @@ title: Change Coupling
 family: evolution
 family_num: 09
 oracle: medium
-oracle_note: 'coupling correlates with risk'
+oracle_note: coupling correlates with risk
 independence: high
-independence_note: 'computed from git history'
+independence_note: computed from git history
 scope: system
 latency: days
 actionability: exploratory
-actionability_note: 'shows the coupling clusters'
+actionability_note: shows the coupling clusters
 type: retrospective
 stack_level: static-analysis
 categories:
 - Evolution
-- Hidden Coupling
 - Black-Box Sensors
 see_also:
 - SO-009
 - SO-009c
 - SO-009d
 - SO-008
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: Organizational Volatility and its Effects on Software Defects
   year: 2010
   tier: II
   url: https://mockus.org/papers/orgQuality-slides.pdf
   kind: paper
+  authors: Audris Mockus
+  venue: FSE 2010
 - title: 2017 State of DevOps Report
   year: 2017
   tier: II
   url: https://dora.dev/research/2017/2017-state-of-devops-report.pdf
   kind: paper
+  authors: Nicole Forsgren, Jez Humble, Gene Kim, Alanna Brown, Nigel Kersten
+  venue: Puppet + DORA
 - authors: Adam Tornhill
   title: Your Code as a Crime Scene
   year: 2015
   kind: paper
+  tier: IV
 - title: CodeScene
   kind: tool
   url: https://codescene.com

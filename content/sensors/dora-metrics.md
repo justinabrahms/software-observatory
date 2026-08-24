@@ -4,34 +4,37 @@ title: DORA Metrics
 family: evolution
 family_num: 09
 oracle: medium
-oracle_note: 'the metrics proxy safety; they are not safety'
+oracle_note: the metrics proxy safety; they are not safety
 independence: high
-independence_note: 'derived from deployment and incident records, not self-report'
-scope: organization
+independence_note: derived from deployment and incident records, not self-report
+scope: system
 latency: days
 actionability: guiding
-actionability_note: 'tells you which stage of the pipeline to distrust'
+actionability_note: tells you which stage of the pipeline to distrust
 type: retrospective
 stack_level: canary-shadow
 categories:
 - Evolution
-- Delivery Performance
 see_also:
 - SO-009
 - SO-009b
 - SO-009d
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: 'Accelerate: State of DevOps 2019'
   year: 2019
   tier: II
   url: https://dora.dev/research/2019/dora-report/2019-dora-accelerate-state-of-devops-report.pdf
   kind: paper
+  authors: Nicole Forsgren, Dustin Smith, Jez Humble, Jessie Frazelle
+  venue: DORA / Google Cloud
 - title: 2017 State of DevOps Report
   year: 2017
   tier: II
   url: https://dora.dev/research/2017/2017-state-of-devops-report.pdf
   kind: paper
+  authors: Nicole Forsgren, Jez Humble, Gene Kim, Alanna Brown, Nigel Kersten
+  venue: Puppet + DORA
 - title: DORA
   url: https://dora.dev
   kind: tool
@@ -39,6 +42,7 @@ references:
   title: Accelerate
   year: 2018
   kind: paper
+  tier: I
 - title: DORA survey
   kind: tool
   url: https://dora.dev
@@ -47,6 +51,7 @@ references:
   kind: tool
   url: https://dora.dev/research/
   description: DORA's four-metric assessment tool
+scope_note: organization-level delivery performance
 ---
 
 Deployment frequency, lead time for changes, change failure rate,

@@ -2,25 +2,24 @@
 id: SO-012d
 title: Escaped Defect Rate
 family: test-effectiveness
-family_num: "03"
+family_num: '03'
 oracle: medium
-oracle_note: 'classification of "should have caught" is judgment'
+oracle_note: classification of "should have caught" is judgment
 independence: high
-independence_note: 'production failures cannot be gamed by the suite'
+independence_note: production failures cannot be gamed by the suite
 scope: system
 latency: months
 actionability: guiding
-actionability_note: 'points at the layers of the suite that leak'
+actionability_note: points at the layers of the suite that leak
 type: retrospective
 stack_level: user-outcome
 categories:
-  - Test Effectiveness
-  - Quality Outcomes
+- Test Effectiveness
 see_also:
-  - SO-003
-  - SO-009c
-  - SO-012c
-last_reviewed: 2026-08-23
+- SO-003
+- SO-009c
+- SO-012c
+last_reviewed: '2026-08-24'
 ---
 
 Of the bugs that reached users, which ones should the test suite have

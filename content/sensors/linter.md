@@ -4,34 +4,37 @@ title: Linter
 family: structural
 family_num: '01'
 oracle: medium
-oracle_note: 'suggestions, not facts'
+oracle_note: suggestions, not facts
 independence: high
-independence_note: 'external to the code'
+independence_note: external to the code
 scope: module
 latency: milliseconds
 actionability: guiding
-actionability_note: 'shows the exact line and rule'
+actionability_note: shows the exact line and rule
 type: predictive
 stack_level: static-analysis
 categories:
 - Structural
-- Guiding Sensors
 see_also:
 - SO-001
 - SO-001b
 - SO-001d
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: 'Gang of Eight: A Defect Taxonomy for Infrastructure as Code Scripts'
   year: 2020
   tier: II
   url: https://akondrahman.github.io/files/papers/icse20_acid.pdf
   kind: paper
+  authors: Akond Rahman, Effat Farhana, Chris Parnin, Laurie Williams
+  venue: ICSE 2020
 - title: 'The Seven Sins: Security Smells in Infrastructure as Code Scripts'
   year: 2019
   tier: II
   url: https://akondrahman.github.io/files/papers/icse19_slic.pdf
   kind: paper
+  authors: Akond Rahman, Chris Parnin, Laurie Williams
+  venue: ICSE 2019
 - title: ESLint
   kind: tool
   url: https://eslint.org

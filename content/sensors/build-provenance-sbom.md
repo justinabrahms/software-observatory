@@ -4,35 +4,38 @@ title: Build Provenance & SBOM
 family: structural
 family_num: '01'
 oracle: high
-oracle_note: 'hash equality is unambiguous'
-independence: high
-independence_note: 'the attestation comes from the builder, not the deployer'
+oracle_note: hash equality is unambiguous
+independence: medium
+independence_note: the builder attests its own output; a compromised builder signs faithfully
 scope: system
-scope_note: 'the whole artifact'
+scope_note: the whole artifact
 latency: minutes
 actionability: blocking
-actionability_note: 'an unattested artifact does not ship'
+actionability_note: an unattested artifact does not ship
 type: retrospective
 stack_level: canary-shadow
 categories:
 - Structural
-- Supply Chain
 see_also:
 - SO-001
 - SO-014
 - SO-012b
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: 'Reproducible Builds: Increasing the Integrity of Software Supply Chains'
   year: 2021
   tier: II
   url: https://arxiv.org/abs/2104.06020
   kind: paper
+  authors: Chris Lamb, Stefano Zacchiroli
+  venue: arXiv preprint; later IEEE Software 39 (2022) 62-70
 - title: License Incompatibilities in Software Ecosystems
   year: 2022
   tier: II
   url: https://arxiv.org/abs/2203.01634
   kind: paper
+  authors: Rolf-Helge Pfeiffer
+  venue: arXiv 2203.01634
 - title: SLSA
   url: https://slsa.dev
   kind: tool

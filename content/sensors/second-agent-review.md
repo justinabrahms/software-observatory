@@ -2,26 +2,26 @@
 id: SO-011d
 title: Second-Agent Review
 family: ai-sensors
-family_num: "11"
+family_num: '11'
 oracle: medium
-oracle_note: 'depends on reviewer agent capability'
-independence: high
-independence_note: 'separate agent, separate context'
+oracle_note: depends on reviewer agent capability
+independence: low
+independence_note: shared training data limits independence; different model families help
 scope: module
 latency: minutes
 actionability: guiding
-actionability_note: 'reviewer agent reports specific issues'
+actionability_note: reviewer agent reports specific issues
 type: predictive
 stack_level: static-analysis
 categories:
-  - AI-Generated
-  - Agent Safety
+- AI-Generated
+- Agent Safety
 see_also:
-  - SO-011
-  - SO-011b
-  - SO-011c
-  - SO-010
-last_reviewed: 2026-08-23
+- SO-011
+- SO-011b
+- SO-011c
+- SO-010
+last_reviewed: '2026-08-24'
 ---
 
 An independent agent reviews the first agent's output. A sensor that applies

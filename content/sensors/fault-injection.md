@@ -4,35 +4,38 @@ title: Fault Injection
 family: adversarial
 family_num: '05'
 oracle: medium
-oracle_note: 'depends on what invariants you check'
+oracle_note: depends on what invariants you check
 independence: high
-independence_note: 'failures are injected externally'
+independence_note: failures are injected externally
 scope: system
 latency: minutes
 actionability: guiding
-actionability_note: 'shows which invariant broke under which failure'
-type: adversarial
+actionability_note: shows which invariant broke under which failure
+type: predictive
 stack_level: canary-shadow
 categories:
 - Adversarial
 - Resilience
-- Chaos Engineering
 see_also:
 - SO-004
 - SO-005
 - change-family
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: 'Elle: Inferring Isolation Anomalies from Experimental Observations'
   year: 2020
   tier: II
   url: https://arxiv.org/abs/2003.10554
   kind: paper
+  authors: Kyle Kingsbury, Peter Alvaro
+  venue: arXiv 2003.10554
 - title: 'Jepsen: MongoDB 4.2.6'
   year: 2020
   tier: II
   url: https://jepsen.io/analyses/mongodb-4.2.6
   kind: paper
+  authors: Kyle Kingsbury (Jepsen)
+  venue: jepsen.io analyses
 - title: Chaos Engineering
   url: https://principlesofchaos.org
   kind: tool

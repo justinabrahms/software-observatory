@@ -4,13 +4,13 @@ title: Canary Analysis
 family: change
 family_num: '07'
 oracle: high
-oracle_note: 'divergence on real traffic is strong evidence'
+oracle_note: divergence on real traffic is strong evidence
 independence: high
-independence_note: 'production behavior cannot be gamed'
+independence_note: production behavior cannot be gamed
 scope: system
 latency: minutes
 actionability: guiding
-actionability_note: 'shows which metrics diverged'
+actionability_note: shows which metrics diverged
 type: retrospective
 stack_level: canary-shadow
 categories:
@@ -21,19 +21,22 @@ see_also:
 - SO-007c
 - SO-007d
 - SO-005c
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
-- title: Exploring Statistical Change Point Detection Techniques for Performance Anomaly
-    Detection at Mozilla
+- title: Exploring Statistical Change Point Detection Techniques for Performance Anomaly Detection at Mozilla
   year: 2026
   tier: I
   url: https://arxiv.org/abs/2606.18377
   kind: paper
+  authors: Mohamed Bilel Besbes, Gregory Mierzwinski, Suhaib Mujahid, Philipp Leitner, Alexander Serebrenik, Dave Hunt, Diego Elias Costa
+  venue: arXiv preprint
 - title: Holistic Configuration Management at Facebook
   year: 2015
   tier: III
   url: https://sigops.org/s/conferences/sosp/2015/current/2015-Monterey/printable/008-tang.pdf
   kind: paper
+  authors: Chunqiang Tang, Thawan Kooburat, Pradeep Venkatachalam, Akshay Chander, Zhe Wen, Aravind Narayanan, Patrick Dowell, Robert Karl
+  venue: SOSP '15
 - title: Netflix Kayenta
   url: https://github.com/spinnaker/kayenta
   kind: tool

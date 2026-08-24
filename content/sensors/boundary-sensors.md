@@ -4,24 +4,23 @@ title: Boundary Sensors
 family: architecture
 family_num: 08
 oracle: high
-oracle_note: 'a boundary violation is definitive'
+oracle_note: a boundary violation is definitive
 independence: high
-independence_note: 'rules are external to the code'
+independence_note: rules are external to the code
 scope: module
 latency: seconds
 actionability: guiding
-actionability_note: 'shows exactly which import violates the boundary'
+actionability_note: shows exactly which import violates the boundary
 type: predictive
 stack_level: static-analysis
 categories:
 - Architecture
-- Encapsulation
-- Guiding Sensors
+- Boundary Sensors
 see_also:
 - SO-008
 - SO-008b
 - SO-002
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: Istio
   url: https://istio.io

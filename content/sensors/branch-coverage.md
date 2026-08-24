@@ -4,13 +4,13 @@ title: Branch Coverage
 family: test-effectiveness
 family_num: '03'
 oracle: low
-oracle_note: 'execution is not correctness'
+oracle_note: execution is not correctness
 independence: low
-independence_note: 'same author writes tests'
+independence_note: same author writes tests
 scope: function
 latency: seconds
 actionability: guiding
-actionability_note: 'shows which branches weren''t exercised'
+actionability_note: shows which branches weren't exercised
 type: predictive
 stack_level: behavioral-tests
 categories:
@@ -20,13 +20,15 @@ see_also:
 - SO-003c
 - SO-003
 - SO-003b
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: Coverage Is Not Strongly Correlated with Test Suite Effectiveness
   year: 2014
   tier: I
   url: https://www.cs.ubc.ca/~rtholmes/papers/icse_2014.pdf
   kind: paper
+  authors: Laura Inozemtseva, Reid Holmes
+  venue: ICSE 2014
 - title: coverage.py
   kind: tool
   url: https://coverage.readthedocs.io

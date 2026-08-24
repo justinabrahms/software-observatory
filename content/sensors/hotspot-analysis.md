@@ -4,40 +4,43 @@ title: Hotspot Analysis
 family: architecture
 family_num: 08
 oracle: low
-oracle_note: 'a hotspot is a risk indicator, not a bug'
+oracle_note: a hotspot is a risk indicator, not a bug
 independence: high
-independence_note: 'computed from git and metrics'
+independence_note: computed from git and metrics
 scope: module
 latency: minutes
 actionability: exploratory
-actionability_note: 'shows the heat map'
+actionability_note: shows the heat map
 type: retrospective
 stack_level: static-analysis
 categories:
 - Architecture
-- Complexity
-- Risk Concentration
 see_also:
 - SO-008
 - SO-008b
 - SO-008d
 - evolution-family
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: A Novel Approach for Estimating Truck Factors
   year: 2016
   tier: II
   url: https://arxiv.org/pdf/1604.06766
   kind: paper
+  authors: Guilherme Avelino, Leonardo Passos, Andre Hora, Marco Tulio Valente
+  venue: arXiv 1604.06766 (companion to ICPC 2016)
 - title: Don't Touch My Code! Examining the Effects of Ownership on Software Quality
   year: 2011
   tier: II
   url: https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/bird2011dtm.pdf
   kind: paper
+  authors: Christian Bird, Nachiappan Nagappan, Brendan Murphy, Harald Gall, Premkumar Devanbu
+  venue: ESEC/FSE '11
 - authors: Adam Tornhill
   title: Your Code as a Crime Scene
   year: 2015
   kind: paper
+  tier: IV
 - title: CodeScene
   kind: tool
   url: https://codescene.com

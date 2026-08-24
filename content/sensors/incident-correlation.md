@@ -4,37 +4,39 @@ title: Incident Correlation
 family: evolution
 family_num: 09
 oracle: medium
-oracle_note: 'correlation, not causation'
+oracle_note: correlation, not causation
 independence: high
-independence_note: 'incident data is external to the code'
+independence_note: incident data is external to the code
 scope: service
 latency: weeks
 actionability: exploratory
-actionability_note: 'shows the correlation pattern'
+actionability_note: shows the correlation pattern
 type: retrospective
 stack_level: user-outcome
 categories:
 - Evolution
-- Operational Risk
 - Black-Box Sensors
 see_also:
 - SO-009
 - SO-009b
 - SO-009d
 - SO-006
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
-- title: How to Fight Production Incidents? An Empirical Study on a Large-scale Cloud
-    Service
+- title: How to Fight Production Incidents? An Empirical Study on a Large-scale Cloud Service
   year: 2022
   tier: II
   url: https://acmsocc.org/2022/assets/slides/95.pdf
   kind: paper
+  authors: Supriyo Ghosh, Manish Shetty, Chetan Bansal, Suman Nath
+  venue: ACM SoCC '22
 - title: Postmortem of database outage of January 31
   year: 2017
   tier: III
   url: https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31/
   kind: paper
+  authors: GitLab Inc.
+  venue: GitLab engineering blog
 - title: Datadog
   kind: tool
   url: https://www.datadoghq.com

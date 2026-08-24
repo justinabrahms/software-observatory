@@ -4,14 +4,14 @@ title: Live Chaos Experiments
 family: adversarial
 family_num: '05'
 oracle: high
-oracle_note: 'the system either survived the real failure or it did not'
+oracle_note: the system either survived the real failure or it did not
 independence: maximum
-independence_note: 'the attack comes from outside the system under test'
+independence_note: the attack comes from outside the system under test
 scope: system
 latency: hours
-latency_note: 'scheduled experiments, observation windows'
+latency_note: scheduled experiments, observation windows
 actionability: guiding
-actionability_note: 'tells you which failure mode is unhandled'
+actionability_note: tells you which failure mode is unhandled
 type: retrospective
 stack_level: production-behavior
 categories:
@@ -21,13 +21,15 @@ see_also:
 - SO-005c
 - SO-006c
 - SO-004b
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: Automating Chaos Experiments in Production
   year: 2019
   tier: IV
   url: https://arxiv.org/abs/1905.04648
   kind: paper
+  authors: Ali Basiri, Lorin Hochstein, Nora Jones, Haley Tucker
+  venue: ICSE-SEIP 2019
 - title: Chaos Engineering
   url: https://principlesofchaos.org
   kind: tool

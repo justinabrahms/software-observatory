@@ -4,33 +4,36 @@ title: Static Security Analysis
 family: adversarial
 family_num: '05'
 oracle: medium
-oracle_note: 'findings need triage; false positives are the tax'
+oracle_note: findings need triage; false positives are the tax
 independence: high
-independence_note: 'the analysis does not trust the code''s own intentions'
-scope: codebase
+independence_note: the analysis does not trust the code's own intentions
+scope: system
 latency: minutes
 actionability: blocking
 type: predictive
 stack_level: static-analysis
 categories:
 - Adversarial
-- Security
 see_also:
 - SO-005
 - SO-005c
 - SO-001c
-last_reviewed: 2026-08-23
+last_reviewed: '2026-08-24'
 references:
 - title: An Empirical Study on the Effectiveness of Security Code Review
   year: 2013
   tier: I
   url: https://people.eecs.berkeley.edu/~daw/papers/coderev-essos13.pdf
   kind: paper
+  authors: Anne Edmundson, Brian Holtkamp, Emanuel Rivera, Matthew Finifter, Adrian Mettler, David Wagner
+  venue: ESSoS 2013
 - title: Eliminating Memory Safety Vulnerabilities at the Source
   year: 2024
   tier: II
   url: https://security.googleblog.com/2024/09/eliminating-memory-safety-vulnerabilities-Android.html
   kind: paper
+  authors: Google Security Blog, Android team
+  venue: Google Security Blog
 - title: Semgrep
   url: https://semgrep.dev
   kind: tool
@@ -47,6 +50,7 @@ references:
   kind: tool
   url: https://brakemanscanner.org
   description: Static security analysis for Rails
+scope_note: the whole codebase
 ---
 
 Attacking the code before it runs. Taint tracking, dataflow analysis, and
