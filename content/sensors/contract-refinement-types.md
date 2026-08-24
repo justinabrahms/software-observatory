@@ -1,8 +1,8 @@
 ---
 id: SO-012
 title: Contract & Refinement Types
-family: behavioral
-family_num: '02'
+family: structural
+family_num: '01'
 oracle: high
 oracle_note: a proof is the strongest oracle short of running the system
 independence: high
@@ -14,11 +14,13 @@ actionability_note: a failed contract stops the build
 type: predictive
 stack_level: static-analysis
 categories:
-- Behavioral
+- Structural
 see_also:
+- SO-001
 - SO-001d
 - SO-002
 - SO-005
+- structural
 last_reviewed: '2026-08-24'
 references:
 - title: How Amazon Web Services Uses Formal Methods
