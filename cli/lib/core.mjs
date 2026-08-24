@@ -110,7 +110,7 @@ export function suggestSensors(question, { limit = 5 } = {}) {
     for (const term of terms) {
       if (title.includes(term)) score += 6;
       if (familyText.includes(term)) score += 2;
-      if (sensor.body_text.includes(term)) score += 1;
+      if (sensor.body_text.toLowerCase().includes(term)) score += 1;
     }
     if (score > 0) scored.push({ sensor, score });
   }
@@ -119,7 +119,7 @@ export function suggestSensors(question, { limit = 5 } = {}) {
   const seenFamilies = new Set();
   return scored.slice(0, limit).map(({ sensor, score }) => {
     const matched = terms.filter(
-      (t) => sensor.title.toLowerCase().includes(t) || sensor.body_text.includes(t)
+      (t) => sensor.title.toLowerCase().includes(t) || sensor.body_text.toLowerCase().includes(t)
     );
     const firstOfFamily = !seenFamilies.has(sensor.family);
     seenFamilies.add(sensor.family);

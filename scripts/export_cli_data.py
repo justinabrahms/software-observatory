@@ -37,10 +37,13 @@ def family_index(family_slug):
 
 
 def to_search_text(body_html):
-    """Flatten rendered body HTML to plain lowercase text for substring search."""
+    """Flatten rendered body HTML to plain text (case preserved).
+
+    Callers lowercase at comparison time; keeping the original case lets
+    the CLI render readable entry text instead of a downcased blob."""
     text = HTML_TAG_RE.sub(" ", body_html)
     text = html.unescape(text)
-    return WHITESPACE_RE.sub(" ", text).strip().lower()
+    return WHITESPACE_RE.sub(" ", text).strip()
 
 
 def tokenize(*parts):
@@ -99,7 +102,7 @@ def export():
                 "frontmatter": extra_frontmatter,
                 "body_html": sensor.get("body_html", ""),
                 "body_text": body_text,
-                "tokens": tokenize(sensor.get("id", ""), sensor["slug"], body_text),
+                "tokens": tokenize(sensor.get("id", ""), sensor["slug"], body_text.lower()),
                 "see_also_ids": ref_ids,
                 "see_also_families": ref_families,
                 "see_also_pages": ref_pages,

@@ -79,19 +79,19 @@ function searchSensors(terms) {
   const needle = terms.join(" ").toLowerCase();
   if (!needle) return [];
   return loadData().sensors.filter(
-    (s) => s.title.toLowerCase().includes(needle) || s.body_text.includes(needle)
+    (s) => s.title.toLowerCase().includes(needle) || s.body_text.toLowerCase().includes(needle)
   );
 }
 
 function scoreSearch(sensor, needle) {
   let score = 0;
   if (sensor.title.toLowerCase().includes(needle)) score += 10;
-  const occurrences = sensor.body_text.split(needle).length - 1;
+  const occurrences = sensor.body_text.toLowerCase().split(needle).length - 1;
   return score + Math.min(occurrences, 5);
 }
 
 function snippet(sensor, needle) {
-  const index = sensor.body_text.indexOf(needle);
+  const index = sensor.body_text.toLowerCase().indexOf(needle);
   if (index === -1) return sensor.body_text.slice(0, 120).trim() + "...";
   const start = Math.max(0, index - 60);
   const end = Math.min(sensor.body_text.length, index + needle.length + 60);
