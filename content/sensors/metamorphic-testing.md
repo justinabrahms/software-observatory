@@ -69,7 +69,7 @@ f(x) == f(shuffle(x))                 # order-independence
 
 # Numeric examples:
 abs(x) == abs(-x)                     # sign-independence
-sqrt(x) * sqrt(x) == x                 # inverse
+abs(x) + abs(y) == abs(x + y)          # triangle inequality
 max(x, y) == max(y, x)                # commutativity
 ```
 
