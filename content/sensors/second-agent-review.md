@@ -7,6 +7,7 @@ oracle: medium
 oracle_note: depends on reviewer agent capability
 independence: low
 independence_note: shared training data limits independence; different model families help
+provisional: the field has not settled model-correlation effects
 scope: module
 latency: minutes
 actionability: guiding

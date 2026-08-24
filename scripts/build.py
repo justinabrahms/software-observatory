@@ -274,6 +274,16 @@ def note_hover_html(note):
             f'aria-label="{html.escape(note)}">(?)</span>')
 
 
+def provisional_note_html(note):
+    """A visible inline hedge rendered in the sidebar under the scalar it
+    qualifies. Used for claims the field has not settled (e.g. model
+    correlation effects on second-agent-review independence)."""
+    if not note:
+        return ""
+    return ('\n          <dd class="provisional-note">Provisional — '
+            f'{html.escape(note)}</dd>')
+
+
 # ── Markdown rendering ──────────────────────────────────────────────────────
 
 def render_markdown(text):
@@ -771,7 +781,7 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
         <dl class="meta-list">
           <dt>Family</dt>           <dd><a href="/catalog/#{family_slug}" class="wikilink">{html.escape(family_name)}</a></dd>
           <dt>Oracle</dt>          <dd>{html.escape(sensor.get('oracle', '').title())}{note_hover_html(sensor.get('oracle_note'))}</dd>
-          <dt>Independence</dt>     <dd>{html.escape(sensor.get('independence', '').title())}{note_hover_html(sensor.get('independence_note'))}</dd>
+          <dt>Independence</dt>     <dd>{html.escape(sensor.get('independence', '').title())}{note_hover_html(sensor.get('independence_note'))}</dd>{provisional_note_html(sensor.get('provisional'))}
           <dt>Scope</dt>           <dd>{html.escape(sensor.get('scope', '').replace('-', ' ').title())}{note_hover_html(sensor.get('scope_note'))}</dd>
           <dt>Latency</dt>         <dd>{html.escape(LATENCY_WORDS[sensor.get('latency', '')].capitalize())}{note_hover_html(sensor.get('latency_note'))}</dd>
           <dt>Actionability</dt>   <dd>{html.escape(sensor.get('actionability', '').title())}{note_hover_html(sensor.get('actionability_note'))}</dd>
