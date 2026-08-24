@@ -1350,7 +1350,7 @@ def generate_index_page(sensors, output_dir):
     <section class="core-insight">
       <blockquote class="big-quote">
         <p>
-          No single sensor measures correctness. Coverage measures execution.
+          <a href="/glossary/#no-single-sensor" class="wikilink">No single sensor measures correctness</a>. Coverage measures execution.
           <a href="/sensors/mutation-testing/" class="wikilink">Mutation testing</a> measures
           test sensitivity. <a href="/sensors/type-checker/" class="wikilink">Types</a> measure
           a particular class of structural inconsistency.
@@ -1464,8 +1464,8 @@ def generate_framework_page(sensors, output_dir):
   <div class="framework-content">
     <div class="framework-intro">
       <p>
-        The important thing is that no single sensor measures
-        <em>correctness</em>. Each sensor measures one thing. Coverage
+        The important thing is that <a href="/glossary/#no-single-sensor" class="wikilink">no single sensor measures
+        <em>correctness</em></a>. Each sensor measures one thing. Coverage
         measures execution. Mutation measures test sensitivity. Types measure
         a particular class of structural inconsistency. Contracts measure
         boundary assumptions. Observability measures what actually happened
@@ -1894,7 +1894,7 @@ def generate_glossary_page(output_dir):
          "system. A compiler is a sensor of structural validity; mutation "
          "testing is a sensor of test sensitivity; observability events are "
          "sensors of what actually happened. Each sensor measures one thing — "
-         "no single sensor measures correctness. The catalog is organized into "
+         '<a href="/glossary/#no-single-sensor" class="wikilink">no single sensor measures correctness</a>. The catalog is organized into '
          f'<a href="/catalog/" class="wikilink">{len(FAMILIES)} families</a> of '
          "epistemic sensor, each asking a different question about the system."),
         ("opaque-artifact",
@@ -2004,15 +2004,23 @@ def generate_glossary_page(output_dir):
          "<code>sqrt(4) == sqrt(-4)</code> must hold. You don't need an oracle; "
          "you need a relation. See "
          '<a href="/sensors/metamorphic-testing/" class="wikilink">the entry</a>.'),
-        ("high-cardinality",
-         "High cardinality",
-         "A property of observability events: each event carries enough "
-         "distinct fields (user_id, cart_id, order_id, deployment, git_sha) "
-         "that you can slice the data along dimensions you didn't know you'd "
-         "need. The opposite of pre-aggregated metrics, which answer only "
-         "predetermined questions. See "
-          '<a href="/sensors/observability-events/" class="wikilink">the entry</a>.'),
-    ]
+         ("high-cardinality",
+          "High cardinality",
+          "A property of observability events: each event carries enough "
+          "distinct fields (user_id, cart_id, order_id, deployment, git_sha) "
+          "that you can slice the data along dimensions you didn't know you'd "
+          "need. The opposite of pre-aggregated metrics, which answer only "
+          "predetermined questions. See "
+           '<a href="/sensors/observability-events/" class="wikilink">the entry</a>.'),
+         ("no-single-sensor",
+          "No single sensor measures correctness",
+          "A refrain that recurs across the homepage, the framework, and "
+          "this glossary — deliberately. The repetition is the point: the "
+          "Observatory's central claim is that correctness is not a scalar "
+          "any one sensor measures, and stating it once would understate "
+          "it. Each occurrence links back here so a reader who notices the "
+          "repetition can verify it is intentional."),
+     ]
 
     sections = ""
     for slug, term, definition in entries:
