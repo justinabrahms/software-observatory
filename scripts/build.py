@@ -785,7 +785,7 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
 
 
 def generate_catalog_page(sensors, output_dir):
-    """Generate the catalog page with all 10 families."""
+    """Generate the catalog page with all families."""
 
     # Group sensors by family
     by_family = {}
@@ -850,7 +850,7 @@ def generate_catalog_page(sensors, output_dir):
     <p class="page-lede">
       A catalog of <a href="/glossary/#epistemic-sensor" class="wikilink">epistemic sensors</a> — the
       observable signals that increase our confidence that a system is correct,
-      maintainable, and behaving as intended. Organized into ten families.
+      maintainable, and behaving as intended. Organized into {len(FAMILIES)} families.
       Each entry documents what the sensor can detect, what it cannot detect,
       how easily it can be gamed, and what evidence it produces.
     </p>
@@ -1120,7 +1120,7 @@ def generate_atlas_page(sensors, output_dir):
 
     <!-- Family map -->
     <div class="family-map-section">
-      <h2 class="section-heading">Eleven families at a glance</h2>
+      <h2 class="section-heading">{len(FAMILIES)} families at a glance</h2>
       <div class="family-map-grid">
 {family_map.rstrip()}
       </div>
@@ -1346,9 +1346,9 @@ def generate_index_page(sensors, output_dir):
     </section>
 
     <section class="families-section">
-      <h2 class="section-heading">Ten sensor families</h2>
+      <h2 class="section-heading">{len(FAMILIES)} sensor families</h2>
       <p class="section-lede">
-        The catalog is organized into ten families, each asking a different
+        The catalog is organized into {len(FAMILIES)} families, each asking a different
         question about the system. Together, they form a mesh of independent
         evidence — no single sensor is sufficient, but the combination
         constrains uncertainty from multiple directions.
@@ -1623,7 +1623,7 @@ def generate_framework_page(sensors, output_dir):
 def generate_about_page(output_dir):
     """Generate the about page."""
 
-    body = """  <section class="page-header">
+    body = f"""  <section class="page-header">
     <p class="eyebrow">About</p>
     <h1 class="page-title">About the Observatory</h1>
     <p class="page-lede">
@@ -1655,7 +1655,7 @@ def generate_about_page(output_dir):
 
     <h2>The framework</h2>
     <p>
-      The catalog is organized into <a href="/catalog/" class="wikilink">eleven
+      The catalog is organized into <a href="/catalog/" class="wikilink">{len(FAMILIES)}
       families</a> of sensors, each asking a different question about the
       system. Every sensor is characterized along
       <a href="/framework/" class="wikilink">six dimensions</a>:
@@ -1889,7 +1889,7 @@ def generate_glossary_page(output_dir):
          "testing is a sensor of test sensitivity; observability events are "
          "sensors of what actually happened. Each sensor measures one thing — "
          "no single sensor measures correctness. The catalog is organized into "
-         '<a href="/catalog/" class="wikilink">ten families</a> of '
+         f'<a href="/catalog/" class="wikilink">{len(FAMILIES)} families</a> of '
          "epistemic sensor, each asking a different question about the system."),
         ("opaque-artifact",
          "Opaque artifact",
@@ -2182,9 +2182,9 @@ def generate_rss(sensors, output_dir):
         f.write(feed)
 
 
-def generate_404(output_dir):
+def generate_404(sensors, output_dir):
     """Write 404.html with recovery links for agents and humans."""
-    body = """  <section class="page-header">
+    body = f"""  <section class="page-header">
     <p class="eyebrow">404</p>
     <h1 class="page-title">Not found</h1>
     <p class="page-lede">
@@ -2196,7 +2196,7 @@ def generate_404(output_dir):
     <h2>Find your way</h2>
     <ul>
       <li><a href="/" class="wikilink">Homepage</a> — the thesis and the confidence landscape</li>
-      <li><a href="/catalog/" class="wikilink">Sensor catalog</a> — all 53 sensors across 10 families</li>
+      <li><a href="/catalog/" class="wikilink">Sensor catalog</a> — all {len(sensors)} sensors across {len(FAMILIES)} families</li>
       <li><a href="/atlas/" class="wikilink">Sensor atlas</a> — families arranged by lifecycle stage</li>
       <li><a href="/framework/" class="wikilink">Framework</a> — the six dimensions every sensor is characterized along</li>
       <li><a href="/glossary/" class="wikilink">Glossary</a> — definitions of the core vocabulary</li>
@@ -2221,7 +2221,7 @@ def generate_llms_txt(sensors, output_dir):
         "",
         "> A catalog of epistemic sensors for software correctness — the observable signals that reduce uncertainty about whether a system is correct, maintainable, and behaving as intended.",
         "",
-        "The Software Observatory catalogs the signals we can observe about software, characterizes each along six dimensions (oracle strength, independence, scope, feedback latency, actionability, predictive vs retrospective), and arranges them into ten families.",
+        f"The Software Observatory catalogs the signals we can observe about software, characterizes each along six dimensions (oracle strength, independence, scope, feedback latency, actionability, predictive vs retrospective), and arranges them into {len(FAMILIES)} families.",
         "",
         "## When to use this",
         "",
@@ -2243,7 +2243,7 @@ def generate_llms_txt(sensors, output_dir):
         "",
         "## How to navigate",
         "",
-        "- Catalog: /catalog/ — all 53 sensors organized by family",
+        f"- Catalog: /catalog/ — all {len(sensors)} sensors organized by family",
         "- Atlas: /atlas/ — families arranged as a matrix by lifecycle stage",
         "- Framework: /framework/ — the six dimensions",
         "- Glossary: /glossary/ — definitions of core terms (oracle, independence, epistemic sensor, etc.)",
@@ -2263,6 +2263,35 @@ def generate_llms_txt(sensors, output_dir):
     lines.append("")
     with open(output_dir / "llms.txt", "w") as f:
         f.write("\n".join(lines))
+
+
+def assert_family_count(output_dir):
+    """Scan generated HTML for prose family-count strings and fail the build
+    if any digit-based count disagrees with len(FAMILIES).
+
+    Catches drift where a page hard-codes "N families" instead of computing
+    the count from the FAMILIES data structure.
+    """
+    import re
+    expected = len(FAMILIES)
+    pattern = re.compile(r"(\d+)\s+families?", re.IGNORECASE)
+    mismatches = []
+    for html_path in output_dir.rglob("*.html"):
+        try:
+            text = html_path.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError):
+            continue
+        for m in pattern.finditer(text):
+            found = int(m.group(1))
+            if found != expected:
+                mismatches.append((html_path.name, m.group(0)))
+    if mismatches:
+        details = "; ".join(f"{name}: {snippet!r}" for name, snippet in mismatches)
+        raise AssertionError(
+            f"Family-count drift: FAMILIES has {expected} entries but generated "
+            f"HTML says otherwise — {details}. Compute the count from "
+            f"len(FAMILIES) instead of hard-coding it."
+        )
 
 
 def main():
@@ -2305,7 +2334,7 @@ def main():
     print("  rss.xml")
 
     print("Generating 404 page...")
-    generate_404(output_dir)
+    generate_404(sensors, output_dir)
     print("  404.html")
 
     print("Generating llms.txt...")
@@ -2355,6 +2384,10 @@ def main():
     import export_cli_data
     export_cli_data.export()
     print("  cli/data/sensors.json")
+
+    print("Checking family-count consistency...")
+    assert_family_count(output_dir)
+    print("  OK")
 
     print("Done.")
 

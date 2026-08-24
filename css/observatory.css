@@ -22,7 +22,7 @@
   --max-width:   1200px;
   --reading:     680px;
 
-  /* Categorical palette for the 11 sensor families (scatter, future maps).
+  /* Categorical palette for the sensor families (scatter, future maps).
      Hues spaced around the wheel, tuned to read on the dark background. */
   --fam-structural:        #e5c07b;
   --fam-behavioral:        #61afef;
@@ -34,7 +34,6 @@
   --fam-architecture:      #abb2bf;
   --fam-evolution:         #be8c66;
   --fam-comprehension:     #7fb5d5;
-  --fam-ai-sensors:        #f0c674;
 }
 
 /* Reset & base */
@@ -1196,7 +1195,7 @@ a.wikilink:hover {
   color: var(--text);
 }
 
-/* ── Homepage: eleven families grid ─────────────────────────────────────── */
+/* ── Homepage: families grid ─────────────────────────────────────── */
 .families-section,
 .stack-preview,
 .properties-preview {
@@ -1383,7 +1382,6 @@ a.wikilink:hover {
 .legend-dot.fam-architecture      { color: var(--fam-architecture); }
 .legend-dot.fam-evolution         { color: var(--fam-evolution); }
 .legend-dot.fam-comprehension     { color: var(--fam-comprehension); }
-.legend-dot.fam-ai-sensors        { color: var(--fam-ai-sensors); }
 .scatter-point {
   position: absolute;
   transform: translate(-50%, 50%);
@@ -1459,7 +1457,6 @@ a.wikilink:hover {
 .scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-architecture .scatter-dot      { color: var(--fam-architecture); }
 .scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-evolution .scatter-dot         { color: var(--fam-evolution); }
 .scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-comprehension .scatter-dot     { color: var(--fam-comprehension); }
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-ai-sensors .scatter-dot        { color: var(--fam-ai-sensors); }
 .scatter-frame[data-scatter-mode="sensors"] .sensor-point { z-index: 0; }
 .scatter-frame[data-scatter-mode="sensors"] .sensor-point:hover { z-index: 2; }
 /* legend hover dims other families and names the surviving dots */
