@@ -129,7 +129,7 @@ FAMILIES = [
         "icon": "✔",
         "question": "Can another observer understand and challenge this?",
         "examples": "Review, explainability tests, documentation drift, onboarding",
-        "stack_levels": [],
+        "stack_levels": ["static-analysis", "behavioral-tests", "production-behavior", "user-outcome"],
     },
 ]
 

@@ -12,7 +12,7 @@ latency: days
 actionability: exploratory
 actionability_note: shows the gap
 type: retrospective
-stack_level: static-analysis
+stack_level: production-behavior
 categories:
 - Comprehension
 see_also:

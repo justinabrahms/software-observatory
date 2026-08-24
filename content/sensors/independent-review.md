@@ -12,7 +12,7 @@ latency: hours
 actionability: guiding
 actionability_note: reviewer asks "what does this do?"
 type: predictive
-stack_level: static-analysis
+stack_level: behavioral-tests
 categories:
 - Comprehension
 see_also:

@@ -12,7 +12,7 @@ latency: weeks
 actionability: exploratory
 actionability_note: shows where onboarding is slow
 type: retrospective
-stack_level: static-analysis
+stack_level: user-outcome
 categories:
 - Comprehension
 see_also:

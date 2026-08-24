@@ -12,7 +12,7 @@ latency: minutes
 actionability: guiding
 actionability_note: reviewer agent reports specific issues
 type: predictive
-stack_level: static-analysis
+stack_level: behavioral-tests
 categories:
 - Agent Safety
 see_also:
