@@ -91,7 +91,7 @@ check("mcp handshake, tools/list, and tools/call", () => {
   const sensor = JSON.parse(byId.get(3).result.content[0].text);
   if (sensor.slug !== "fuzzing") throw new Error("get_sensor returned wrong sensor");
   const families = JSON.parse(byId.get(4).result.contents[0].text);
-  if (!Array.isArray(families) || families.length !== 11) throw new Error("families resource broken");
+  if (!Array.isArray(families) || families.length !== 10) throw new Error("families resource broken");
 });
 
 check("unknown command exits nonzero", () => {

@@ -1,8 +1,8 @@
 ---
 id: SO-011d
 title: Second-Agent Review
-family: ai-sensors
-family_num: '11'
+family: comprehension
+family_num: '10'
 oracle: medium
 oracle_note: depends on reviewer agent capability
 independence: low
@@ -14,12 +14,8 @@ actionability_note: reviewer agent reports specific issues
 type: predictive
 stack_level: static-analysis
 categories:
-- AI-Generated
 - Agent Safety
 see_also:
-- SO-011
-- SO-011b
-- SO-011c
 - SO-010
 last_reviewed: '2026-08-24'
 ---
@@ -60,15 +56,14 @@ Reading it well:
 
 - **Discount agreement with the author's rationale.** The reviewer
   should never see the producer's summary before the review. If it
-  did, treat the verdict as contaminated. See [producer-evaluator
-  separation](producer-evaluator-separation.html).
+  did, treat the verdict as contaminated.
 - **Verify blocking findings mechanically.** An agent's claim about a
   cap or a race is a hypothesis until a test reproduces it. Verdicts
   are cheap to produce, so they should be cheap to check.
 - **Same-family reviewers undercount correlated errors.** Two models
   from the same lineage share blind spots, so an absent finding is
-  weaker evidence than a present one. Reserve [computational
-  gates](computational-gates.html) for what must not slip.
+  weaker evidence than a present one. Pair with mechanical gates
+  for what must not slip.
 
 ## How it gets gamed
 
@@ -128,6 +123,5 @@ architectures. A second agent from the same model is better than nothing
 but is not the same as an independent evaluator.
 
 Also, agent review quality is unproven — it may miss problems that human
-review would catch. Pair with [computational
-gates](computational-gates.html) for enforcement that doesn't depend on
-review quality.
+review would catch. Pair with mechanical gates for enforcement that
+doesn't depend on review quality.

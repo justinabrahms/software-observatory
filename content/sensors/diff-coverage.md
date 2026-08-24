@@ -22,7 +22,6 @@ categories:
 see_also:
 - SO-003
 - change-family
-- ai-sensors
 last_reviewed: '2026-08-24'
 references:
 - title: State of Mutation Testing at Google
@@ -51,7 +50,7 @@ You care: *did the code I just changed have evidence attached to it?*
 
 ## The question that matters for agentic coding
 
-Diff coverage is extremely useful for [agentic coding](catalog.html#ai-sensors).
+Diff coverage is extremely useful for agentic coding.
 The question isn't "is the codebase healthy?" It's:
 
 ```

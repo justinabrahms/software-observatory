@@ -131,15 +131,6 @@ FAMILIES = [
         "examples": "Review, explainability tests, documentation drift, onboarding",
         "stack_levels": [],
     },
-    {
-        "slug": "ai-sensors",
-        "num": "11",
-        "name": "AI-Generated Code",
-        "icon": "✱",
-        "question": "What evidence do we have that this change is safe?",
-        "examples": "Agent sensor stacks, computational gates, independence",
-        "stack_levels": [],
-    },
 ]
 
 FAMILY_BY_SLUG = {f["slug"]: f for f in FAMILIES}
@@ -794,7 +785,7 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
 
 
 def generate_catalog_page(sensors, output_dir):
-    """Generate the catalog page with all 11 families."""
+    """Generate the catalog page with all 10 families."""
 
     # Group sensors by family
     by_family = {}
@@ -859,7 +850,7 @@ def generate_catalog_page(sensors, output_dir):
     <p class="page-lede">
       A catalog of <a href="/glossary/#epistemic-sensor" class="wikilink">epistemic sensors</a> — the
       observable signals that increase our confidence that a system is correct,
-      maintainable, and behaving as intended. Organized into eleven families.
+      maintainable, and behaving as intended. Organized into ten families.
       Each entry documents what the sensor can detect, what it cannot detect,
       how easily it can be gamed, and what evidence it produces.
     </p>
@@ -1355,9 +1346,9 @@ def generate_index_page(sensors, output_dir):
     </section>
 
     <section class="families-section">
-      <h2 class="section-heading">Eleven sensor families</h2>
+      <h2 class="section-heading">Ten sensor families</h2>
       <p class="section-lede">
-        The catalog is organized into eleven families, each asking a different
+        The catalog is organized into ten families, each asking a different
         question about the system. Together, they form a mesh of independent
         evidence — no single sensor is sufficient, but the combination
         constrains uncertainty from multiple directions.
@@ -1898,7 +1889,7 @@ def generate_glossary_page(output_dir):
          "testing is a sensor of test sensitivity; observability events are "
          "sensors of what actually happened. Each sensor measures one thing — "
          "no single sensor measures correctness. The catalog is organized into "
-         '<a href="/catalog/" class="wikilink">eleven families</a> of '
+         '<a href="/catalog/" class="wikilink">ten families</a> of '
          "epistemic sensor, each asking a different question about the system."),
         ("opaque-artifact",
          "Opaque artifact",
@@ -1930,12 +1921,12 @@ def generate_glossary_page(output_dir):
          "Whether the thing being evaluated can manipulate the sensor. A model "
          "writing <code>tests/</code> is allowed to write tests that make itself "
          "pass — that's low independence. A compiler is maximum independence — "
-         "the code cannot talk its way past a type error. Independence is "
-         "especially important for AI-generated code: the producer and the "
-         "evaluator should be separated wherever possible. See "
-         '<a href="/framework/" class="wikilink">the framework</a> and '
-         '<a href="/sensors/producer-evaluator-separation/" class="wikilink">'
-         "producer-evaluator separation</a>."),
+          "the code cannot talk its way past a type error. Independence is "
+          "especially important for AI-generated code: the producer and the "
+          "evaluator should be separated wherever possible. See "
+          '<a href="/framework/" class="wikilink">the framework</a> and '
+          '<a href="/sensors/second-agent-review/" class="wikilink">'
+          "second-agent review</a>."),
         ("scope",
          "Scope",
          "What level of the system the sensor tells you about: a single line, "
@@ -1985,21 +1976,7 @@ def generate_glossary_page(output_dir):
          "before\" (retrospective — revert rate, incident correlation). "
          'Predictive sensors gate; retrospective sensors warn. See '
          '<a href="/framework/" class="wikilink">the framework</a>.'),
-        ("producer-evaluator-separation",
-         "Producer-evaluator separation",
-         "The principle that the thing producing the code should not be the "
-         "thing evaluating it. A model writing <code>tests/</code> is allowed to "
-         "write tests that make itself pass. Independence is the dimension that "
-         'captures this; see <a href="/sensors/producer-evaluator-separation/" '
-         'class="wikilink">the entry</a>.'),
-        ("computational-gate",
-         "Computational gate",
-         "A control that literally refuses to proceed unless a verification "
-         "command succeeds — not a prose rule that says \"verify this.\" An "
-         "instruction is weaker than a gate; a gate is weaker than a gate with "
-         "no bypass path. See "
-         '<a href="/sensors/computational-gates/" class="wikilink">the entry</a>.'),
-        ("confidence-stack",
+         ("confidence-stack",
          "Confidence stack",
          "The layers of evidence that accumulate as code moves from authoring "
          "to production: compilation, types, tests, mutation, integration, "
@@ -2022,14 +1999,7 @@ def generate_glossary_page(output_dir):
          "that you can slice the data along dimensions you didn't know you'd "
          "need. The opposite of pre-aggregated metrics, which answer only "
          "predetermined questions. See "
-         '<a href="/sensors/observability-events/" class="wikilink">the entry</a>.'),
-        ("agent-sensor-stack",
-         "Agent sensor stack",
-         "The confidence stack applied to AI-generated code: each layer is a "
-         "gate the agent's output must pass before it reaches production. The "
-         "key principle is that the agent cannot self-certify — the sensors "
-         "declare success. See "
-         '<a href="/sensors/agent-sensor-stack/" class="wikilink">the entry</a>.'),
+          '<a href="/sensors/observability-events/" class="wikilink">the entry</a>.'),
     ]
 
     sections = ""
@@ -2226,7 +2196,7 @@ def generate_404(output_dir):
     <h2>Find your way</h2>
     <ul>
       <li><a href="/" class="wikilink">Homepage</a> — the thesis and the confidence landscape</li>
-      <li><a href="/catalog/" class="wikilink">Sensor catalog</a> — all 56 sensors across 11 families</li>
+      <li><a href="/catalog/" class="wikilink">Sensor catalog</a> — all 53 sensors across 10 families</li>
       <li><a href="/atlas/" class="wikilink">Sensor atlas</a> — families arranged by lifecycle stage</li>
       <li><a href="/framework/" class="wikilink">Framework</a> — the six dimensions every sensor is characterized along</li>
       <li><a href="/glossary/" class="wikilink">Glossary</a> — definitions of the core vocabulary</li>
@@ -2251,17 +2221,17 @@ def generate_llms_txt(sensors, output_dir):
         "",
         "> A catalog of epistemic sensors for software correctness — the observable signals that reduce uncertainty about whether a system is correct, maintainable, and behaving as intended.",
         "",
-        "The Software Observatory catalogs the signals we can observe about software, characterizes each along six dimensions (oracle strength, independence, scope, feedback latency, actionability, predictive vs retrospective), and arranges them into eleven families.",
+        "The Software Observatory catalogs the signals we can observe about software, characterizes each along six dimensions (oracle strength, independence, scope, feedback latency, actionability, predictive vs retrospective), and arranges them into ten families.",
         "",
         "## When to use this",
         "",
         "Use this catalog when a user asks:",
         "- What tests to add for a new codebase or feature",
-        "- How to evaluate AI-generated code (agent safety, producer-evaluator separation, computational gates)",
+        "- How to evaluate AI-generated code (second-agent review, independence, mechanical gates)",
  "- What 'observability' means in practice vs. traditional monitoring",
  "- For a taxonomy of software quality signals / verification techniques",
  "- What the difference is between coverage, mutation testing, and property-based testing",
- "- How to set up a CI pipeline that actually catches bugs (computational gates, not prose rules)",
+ "- How to set up a CI pipeline that actually catches bugs (mechanical gates, not prose rules)",
  "- What sensors to combine for a greenfield project, a regulated industry, or a legacy rescue",
  "",
         "## When NOT to use this",
@@ -2273,7 +2243,7 @@ def generate_llms_txt(sensors, output_dir):
         "",
         "## How to navigate",
         "",
-        "- Catalog: /catalog/ — all 56 sensors organized by family",
+        "- Catalog: /catalog/ — all 53 sensors organized by family",
         "- Atlas: /atlas/ — families arranged as a matrix by lifecycle stage",
         "- Framework: /framework/ — the six dimensions",
         "- Glossary: /glossary/ — definitions of core terms (oracle, independence, epistemic sensor, etc.)",

@@ -91,8 +91,7 @@ budget is a policy number, and policy is where the gaming happens:
 
 The meta-signal is the SLO change history. Every relaxation of a target
 or redefinition of an error class should be reviewed like a rule change
-to a [computational gate](computational-gates.html), because that is
-what it is.
+to a computational gate, because that is what it is.
 
 ## Response playbook
 

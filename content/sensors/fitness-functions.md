@@ -43,7 +43,7 @@ Architecture fitness functions are executable assertions about the structure
 of the code. They fail when the architecture violates a rule: a domain layer
 importing infrastructure, a service bypassing its API, a forbidden
 dependency forming. They turn architectural rules from prose into
-[computational gates](catalog.html#ai-sensors).
+computational gates.
 
 ## In practice
 
