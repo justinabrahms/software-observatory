@@ -187,6 +187,13 @@ STACK_SCATTER = {
 }
 
 # Ordinal scales mapping sensor frontmatter onto the same axes
+TIER_LABELS = {
+    "I":   "controlled study",
+    "II":  "observational study",
+    "III": "case study",
+    "IV":  "argument",
+}
+
 LATENCY_X = {
     "milliseconds": 6,
     "seconds": 20,
@@ -635,7 +642,8 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
                 if r.get("year"):
                     meta_parts.append(html.escape(str(r["year"])))
                 if r.get("tier"):
-                    meta_parts.append(f'<a href="/framework/#evidence-tiers" class="wikilink">tier {html.escape(str(r["tier"]))}</a>')
+                    tier_label = TIER_LABELS.get(str(r["tier"]).upper(), str(r["tier"]))
+                    meta_parts.append(html.escape(tier_label))
                 if r.get("venue"):
                     meta_parts.append(html.escape(r["venue"]))
                 if meta_parts:
@@ -1586,28 +1594,6 @@ def generate_framework_page(sensors, output_dir):
         no feedback loop; one with only retrospective sensors has no gate.
       </p>
     </section>
-
-    <section class="property-detail">
-      <span class="property-detail-num">07</span>
-      <h2 class="property-detail-title">Evidence tiers</h2>
-      <p class="property-detail-question">How much should you trust the research behind a sensor?</p>
-      <p>
-        Paper references in each entry carry an evidence tier (I–IV) that
-        grades the <em>study</em>, never the claim. The tiers come from an
-        internal evidence rubric:
-      </p>
-      <div class="scope-ladder">
-        <div class="scope-rung">Tier I <span class="scope-desc">Controlled experiment or large-N study with a comparison group.</span></div>
-        <div class="scope-rung">Tier II <span class="scope-desc">Observational study on production data, no control group.</span></div>
-        <div class="scope-rung">Tier III <span class="scope-desc">Single-organization case study or engineering report, with numbers.</span></div>
-        <div class="scope-rung">Tier IV <span class="scope-desc">Argument or experience report — not measured. Admitted, but rendered visibly as unmeasured.</span></div>
-      </div>
-      <p>
-        A tier IV entry is not a dismissal — some genuinely good practices
-        sit at tier IV forever. The tier tells you what kind of evidence
-        backs the claim, so you can weigh it accordingly.
-      </p>
-    </section>
   </div>"""
 
     page_html = html_page("Framework", body, canonical="framework/")
@@ -1950,14 +1936,17 @@ def generate_glossary_page(output_dir):
          'the rule and fix). See <a href="/framework/" class="wikilink">'
          "the framework</a>."),
         ("evidence-tier",
-         "Evidence tier",
-         "A grade (I–IV) assigned to each paper reference, describing the "
-         "<em>study</em> rather than the claim. Tier I: controlled experiment "
-         "or large-N study with a comparison group. Tier II: observational "
-         "study on production data, no control group. Tier III: "
-         "single-organization case study or engineering report with numbers. "
-         "Tier IV: argument or experience report — not measured. See "
-         '<a href="/framework/#evidence-tiers" class="wikilink">the framework</a>.'),
+         "Evidence label",
+         "A label assigned to each paper reference, describing the "
+         "<em>study</em> rather than the claim: <strong>controlled "
+         "study</strong> (controlled experiment or large-N study with a "
+         "comparison group), <strong>observational study</strong> "
+         "(observational study on production data, no control group), "
+         "<strong>case study</strong> (single-organization case study or "
+         "engineering report with numbers), <strong>argument</strong> "
+         "(experience report — not measured, but rendered visibly as "
+         "unmeasured). The label tells you what kind of evidence backs "
+         "the claim, so you can weigh it accordingly."),
         ("guiding-sensor",
          "Guiding sensor",
          "A sensor whose feedback directs the next action, not just whether "
