@@ -101,8 +101,8 @@ FAMILIES = [
         "name": "Change",
         "icon": "→",
         "question": "What did this change actually affect?",
-        "examples": "API compatibility, canary, shadow traffic, error budget",
-        "stack_levels": ["canary-shadow"],
+        "examples": "API compatibility, canary, shadow traffic, error budget, A/B testing",
+        "stack_levels": ["canary-shadow", "user-outcome"],
     },
     {
         "slug": "architecture",
