@@ -1464,32 +1464,29 @@ def generate_framework_page(sensors, output_dir):
       <h2 class="property-detail-title">Oracle strength</h2>
       <p class="property-detail-question">How confidently does it know that something is wrong?</p>
       <div class="property-bars">
-        <div class="bar-row"><span class="bar-label">compiler error</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-pct">10/10</span></div>
-        <div class="bar-row"><span class="bar-label">type error</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-pct">10/10</span></div>
-        <div class="bar-row"><span class="bar-label">test assertion</span><div class="bar-track"><div class="bar-fill" style="width:90%"></div></div><span class="bar-pct">9/10</span></div>
-        <div class="bar-row"><span class="bar-label">mutation</span><div class="bar-track"><div class="bar-fill" style="width:90%"></div></div><span class="bar-pct">9/10</span></div>
-        <div class="bar-row"><span class="bar-label">linter</span><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div><span class="bar-pct">8/10</span></div>
-        <div class="bar-row"><span class="bar-label">coverage</span><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div><span class="bar-pct">4/10</span></div>
-        <div class="bar-row"><span class="bar-label">complexity</span><div class="bar-track"><div class="bar-fill" style="width:20%"></div></div><span class="bar-pct">2/10</span></div>
-        <div class="bar-row"><span class="bar-label">code review</span><div class="bar-track"><div class="bar-fill" style="width:60%"></div></div><span class="bar-pct">6/10</span></div>
+        <div class="bar-row"><span class="bar-label">compiler error</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-pct">maximum</span></div>
+        <div class="bar-row"><span class="bar-label">type error</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-pct">maximum</span></div>
+        <div class="bar-row"><span class="bar-label">test assertion</span><div class="bar-track"><div class="bar-fill" style="width:90%"></div></div><span class="bar-pct">high</span></div>
+        <div class="bar-row"><span class="bar-label">mutation</span><div class="bar-track"><div class="bar-fill" style="width:90%"></div></div><span class="bar-pct">high</span></div>
+        <div class="bar-row"><span class="bar-label">linter</span><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div><span class="bar-pct">medium</span></div>
+        <div class="bar-row"><span class="bar-label">coverage</span><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div><span class="bar-pct">low</span></div>
+        <div class="bar-row"><span class="bar-label">complexity</span><div class="bar-track"><div class="bar-fill" style="width:20%"></div></div><span class="bar-pct">minimum</span></div>
+        <div class="bar-row"><span class="bar-label">code review</span><div class="bar-track"><div class="bar-fill" style="width:60%"></div></div><span class="bar-pct">medium</span></div>
       </div>
       <p>
         A compiler has maximum oracle strength because the implementation
-        cannot argue with it. A complexity metric has low oracle strength
-        because high complexity doesn't prove anything is wrong — it just
-        suggests increased risk.
+        cannot argue with it. A complexity metric has minimum oracle
+        strength because high complexity doesn't prove anything is wrong —
+        it just suggests increased risk. The scale is ordinal (minimum →
+        low → medium → high → maximum): a sensor two rungs up is stronger,
+        not "twice as strong."
       </p>
       <div class="callout">
-        <strong>Mutation's oracle is derivative.</strong> A mutation score of
-        9/10 is bounded by the test assertions underneath it — mutation testing
-        only detects mutations that the test suite's oracle would catch. The
-        9/10 reflects the test assertion's oracle, applied to a perturbation.
-      </div>
-      <div class="callout">
-        <strong>Code review's score depends on independence.</strong> A
-        reviewer who wrote the code is ~2/10 (they share the author's blind
-        spots); a stranger is ~7/10. The 6/10 is an average that hides the
-        independence dimension — see below.
+        <strong>Mutation's oracle is derivative.</strong> Mutation testing's
+        high oracle is bounded by the test assertions underneath it — it
+        only detects mutations that the test suite's oracle would catch.
+        The strength reflects the test assertion's oracle, applied to a
+        perturbation.
       </div>
       <div class="callout">
         <strong>"Type checker" spans a range.</strong> Structural type systems
@@ -1497,8 +1494,8 @@ def generate_framework_page(sensors, output_dir):
         lifetime types (Rust) catch memory-safety bugs the compiler refuses
         to allow. Refinement types and SMT-backed verifiers (Dafny) can prove
         full correctness properties — the solver either confirms the
-        invariant or produces a counterexample. The 10/10 applies to the
-        strong end of that spectrum.
+        invariant or produces a counterexample. The maximum rating applies
+        to the strong end of that spectrum.
       </div>
     </section>
 
