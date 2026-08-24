@@ -51,11 +51,37 @@ references:
   kind: tool
   url: https://docs.docker.com/compose
   description: Multi-container orchestration for testing
+- title: Playwright
+  kind: tool
+  url: https://playwright.dev
+  description: Browser automation for end-to-end tests
+- title: Cypress
+  kind: tool
+  url: https://www.cypress.io
+  description: Browser-based end-to-end testing
+- title: Selenium
+  kind: tool
+  url: https://www.selenium.dev
+  description: Browser automation for end-to-end tests
 ---
 
 Does the thing work when connected to its actual dependencies? Catches
 failures that [unit tests](example-based-tests.html) structurally cannot
 see — connection failures, serialization mismatches, timeout behavior.
+
+## UI and end-to-end tests
+
+UI tests and end-to-end (E2E) tests are integration tests pointed at
+the user-facing boundary. A Selenium or Playwright suite that drives a
+browser against a staging stack is asking the same question — does it
+work when connected to its real dependencies — at one more layer of
+the stack. The catalog folds them here rather than giving them a
+separate entry because the sensor is the same: the failure mode
+(boundary mismatch, environment dependency, flakiness from timing)
+is the same, and the gaming (mock away the browser, mark flakes
+expected, run nightly) is the same. A UI test against a mocked API
+is an integration test of the mock's good manners, just as a backend
+integration test against a stubbed database is.
 
 ## In practice
 
