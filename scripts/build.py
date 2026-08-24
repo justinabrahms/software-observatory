@@ -83,7 +83,7 @@ FAMILIES = [
         "name": "Adversarial",
         "icon": "✖",
         "question": "Can we make our evidence of correctness fail?",
-        "examples": "Fuzzing, mutation testing, fault injection, chaos",
+        "examples": "Fuzzing, fault injection, chaos, metamorphic testing",
         "stack_levels": ["property-metamorphic", "mutation-testing"],
     },
     {
@@ -101,7 +101,7 @@ FAMILIES = [
         "name": "Change",
         "icon": "→",
         "question": "What did this change actually affect?",
-        "examples": "Diff coverage, API compatibility, canary, shadow traffic",
+        "examples": "API compatibility, canary, shadow traffic, error budget",
         "stack_levels": ["canary-shadow"],
     },
     {
@@ -2294,6 +2294,44 @@ def assert_family_count(output_dir):
         )
 
 
+def assert_family_examples(sensors):
+    """Warn if a family's `examples` string names a sensor owned by a
+    different family.
+
+    Each family's examples list should be accurate to its rows. The check
+    matches comma-separated example tokens against sensor titles
+    (case-insensitive, either side subsumes the other) and flags tokens
+    that resolve to a sensor in another family.
+    """
+    # Map lowercased sensor title -> family slug
+    title_to_family = {}
+    for s in sensors:
+        title_to_family[s["title"].lower()] = s.get("family", "")
+    warnings = []
+    for fam in FAMILIES:
+        fam_slug = fam["slug"]
+        examples = fam.get("examples", "")
+        for token in (t.strip().lower() for t in examples.split(",")):
+            if not token:
+                continue
+            for title, owner in title_to_family.items():
+                # Match only on exact (case-insensitive) token == title, so
+                # generic words like "contract" don't false-match "Contract
+                # & Refinement Types" when they mean "Contract Tests".
+                if token == title:
+                    if owner and owner != fam_slug:
+                        warnings.append(
+                            f'family {fam_slug!r} examples name '
+                            f'{token!r} but sensor {title!r} is owned by '
+                            f'family {owner!r}'
+                        )
+    if warnings:
+        print("  WARNING: family examples / ownership mismatches:")
+        for w in warnings:
+            print(f"    {w}")
+        print("  (Fix the examples list in FAMILIES or reassign the sensor.)")
+
+
 def main():
     print("Loading sensors...")
     sensors = load_sensors()
@@ -2388,6 +2426,9 @@ def main():
     print("Checking family-count consistency...")
     assert_family_count(output_dir)
     print("  OK")
+
+    print("Checking family examples / ownership...")
+    assert_family_examples(sensors)
 
     print("Done.")
 
