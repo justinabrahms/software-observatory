@@ -1585,11 +1585,24 @@ def generate_framework_page(sensors, output_dir):
       <h2 class="property-detail-title">Predictive vs retrospective</h2>
       <p class="property-detail-question">"This is wrong" or "this looks like things that became wrong before"?</p>
       <p>
-        Predictive sensors gate: they tell you something is wrong before the
-        code ships — a compiler error, a failed test, a mutation that
-        survives. Retrospective sensors warn: they tell you that past changes
-        look like changes that caused trouble before — revert rate, incident
-        correlation, escaped defect rate.
+        Predictive sensors fire before the code ships — a compiler error, a
+        failed test, a mutation that survives. Retrospective sensors fire
+        after — they tell you that past changes look like changes that
+        caused trouble before: revert rate, incident correlation, escaped
+        defect rate.
+      </p>
+      <p>
+        This dimension is <em>when</em> the signal arrives, not <em>what
+        kind</em> of feedback it gives. That is a separate axis —
+        <a href="#actionability">actionability</a>: blocking, exploratory,
+        guiding. The two are correlated but not the same: most predictive
+        sensors gate (a compiler error blocks the build), and most
+        retrospective sensors warn (revert rate is a signal, not a gate).
+        But the correlation is not a rule. <em>Build provenance &amp;
+        SBOM</em> is retrospective — it fires after the build — and
+        <em>blocking</em>: an unattested artifact does not ship. A
+        retrospective sensor can gate; a predictive sensor can merely warn.
+        Read the two dimensions independently.
       </p>
       <p>
         You don't need to understand <code>FooManagerFactoryImpl</code>. You
@@ -1967,10 +1980,13 @@ def generate_glossary_page(output_dir):
          "Böckeler's \"guides &amp; sensors\" framing."),
         ("predictive-vs-retrospective",
          "Predictive vs retrospective",
-         "Whether the sensor says \"this is wrong\" (predictive — a compiler "
-         "error before merge) or \"this looks like things that became wrong "
-         "before\" (retrospective — revert rate, incident correlation). "
-         'Predictive sensors gate; retrospective sensors warn. See '
+         "Whether the sensor fires before the code ships (predictive — a "
+         "compiler error before merge) or after (retrospective — revert "
+         "rate, incident correlation). This is <em>when</em> the signal "
+         "arrives, not <em>what kind</em> of feedback it gives — that is "
+         "actionability. The two are correlated but not the same: a "
+         "retrospective sensor can still gate (build provenance blocks an "
+         "unattested artifact). See "
          '<a href="/framework/" class="wikilink">the framework</a>.'),
          ("confidence-stack",
          "Confidence stack",
