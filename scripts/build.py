@@ -200,7 +200,7 @@ LATENCY_X = {
     "minutes": 42,
     "minutes-hours": 56,
     "hours": 62,
-    "hours-seconds": 50,
+    "seconds-hours": 68,
     "days": 76,
     "weeks": 90,
     "months": 95,
@@ -238,7 +238,7 @@ LATENCY_LABELS = {
     "minutes": "m",
     "minutes-hours": "m-h",
     "hours": "h",
-    "hours-seconds": "h-s",
+    "seconds-hours": "s-h",
     "days": "d",
     "weeks": "w",
     "months": "mo",
@@ -254,7 +254,7 @@ class _LatencyWords(dict):
 
 LATENCY_WORDS = _LatencyWords({
     "minutes-hours": "minutes to hours",
-    "hours-seconds": "seconds to hours",
+    "seconds-hours": "seconds to hours",
 })
 
 

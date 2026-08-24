@@ -9,7 +9,7 @@ independence: medium
 independence_note: assertions are written by the same author, but run against production reality
 scope: system
 scope_note: domain level
-latency: hours-seconds
+latency: seconds-hours
 latency_note: batch to real-time
 actionability: guiding
 actionability_note: 17 payments have no order transition
