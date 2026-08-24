@@ -170,8 +170,8 @@ for _stage in LIFECYCLE_STAGES:
     for _lvl in _stage["levels"]:
         STAGE_BY_LEVEL[_lvl] = _stage["slug"]
 
-# Scatter positions for the homepage effort/efficacy diagram, keyed by
-# confidence-stack layer slug. x = effort/latency (0=instant, 100=slow),
+# Scatter positions for the homepage latency/efficacy diagram, keyed by
+# confidence-stack layer slug. x = feedback latency (0=instant, 100=slow),
 # y = efficacy of the signal (0=suggestive, 100=definitive). Hand-tuned;
 # "source-text" is not a sensor and is intentionally absent.
 STACK_SCATTER = {
@@ -1188,7 +1188,7 @@ def generate_index_page(sensors, output_dir):
         </li>
 """
 
-    # Confidence scatter: effort/latency (x) against signal efficacy (y).
+    # Confidence scatter: feedback latency (x) against signal efficacy (y).
     # Two datasets — stack layers (hand-positioned) and individual sensors
     # (positioned from latency/oracle frontmatter, jittered to declutter).
     def scatter_layer_points():
@@ -1258,9 +1258,9 @@ def generate_index_page(sensors, output_dir):
           </div>
         </div>
         <div class="scatter-x-axis">
-          <span>instant · cheap</span>
-          <span>effort / latency →</span>
-          <span>slow · expensive</span>
+          <span>instant</span>
+          <span>feedback latency →</span>
+          <span>slow</span>
         </div>
         <p class="scatter-hint">Hover a point to name it. Click to open the entry.</p>
         <div class="scatter-legend">
@@ -1268,9 +1268,9 @@ def generate_index_page(sensors, output_dir):
         </div>
       </div>
       <details class="sr-only">
-        <summary>Sensor list (effort × efficacy)</summary>
+        <summary>Sensor list (latency × efficacy)</summary>
         <table>
-          <thead><tr><th>Sensor</th><th>Family</th><th>Effort (latency)</th><th>Efficacy (oracle)</th></tr></thead>
+          <thead><tr><th>Sensor</th><th>Family</th><th>Feedback latency</th><th>Efficacy (oracle)</th></tr></thead>
           <tbody>
 {"".join(f'          <tr><td><a href="/sensors/{s["slug"]}/">{html.escape(s["title"])}</a></td><td>{html.escape(FAMILY_BY_SLUG.get(s.get("family",""),{}).get("name",""))}</td><td>{html.escape(s.get("latency",""))}</td><td>{html.escape(s.get("oracle",""))}</td></tr>\n' for s in sensors)}
           </tbody>
@@ -1365,11 +1365,11 @@ def generate_index_page(sensors, output_dir):
         sensors — no "best" sensor. But each <em>dimension</em> (oracle
         strength, latency, scope) is a partial order, and the atlas's
         left-to-right axis is <em>time</em>, not quality. Each one trades
-        <em>effort</em> — how long you wait and how much it costs — against
-        <em>efficacy</em>: how much the signal can actually tell you.
-        Compilation is instant and definitive about validity; user outcomes
-        are slow and definitive about everything that matters. Most sensors
-        live somewhere in between.
+        <em>feedback latency</em> — how long you wait for the signal —
+        against <em>efficacy</em>: how much the signal can actually tell
+        you. Compilation is instant and definitive about validity; user
+        outcomes are slow and definitive about everything that matters. Most
+        sensors live somewhere in between.
       </p>
 {scatter_html}
       <div class="stack-cta">
