@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-08-24T17:06:23Z",
+  "generated_at": "2026-08-24T18:06:44Z",
   "site": "https://softwareobservatory.com",
   "families": [
     {
@@ -2832,12 +2832,6 @@
             "venue": "O'Reilly Media"
           },
           {
-            "title": "smoke-tester",
-            "kind": "tool",
-            "url": "https://github.com/symonk/smoke-tester",
-            "description": "Simple HTTP smoke testing"
-          },
-          {
             "title": "curl-based smoke tests",
             "kind": "tool",
             "url": "https://curl.se",
@@ -3407,7 +3401,7 @@
           {
             "title": "Datadog Synthetic",
             "kind": "tool",
-            "url": "https://docs.datadoghq.com/synthetic_monitoring",
+            "url": "https://docs.datadoghq.com/synthetics/",
             "description": "Synthetic monitoring in Datadog"
           }
         ],
@@ -3737,7 +3731,7 @@
             "title": "Coverage Is Not Strongly Correlated with Test Suite Effectiveness",
             "year": 2014,
             "tier": "I",
-            "url": "https://www.cs.ubc.ca/~rtholmes/papers/icse_2014.pdf",
+            "url": "https://www.cs.ubc.ca/~rtholmes/papers/icse_2014_inozemtseva.pdf",
             "kind": "paper",
             "authors": "Laura Inozemtseva, Reid Holmes",
             "venue": "ICSE 2014"
@@ -4081,7 +4075,7 @@
           {
             "title": "diff-cover",
             "kind": "tool",
-            "url": "https://github.com/Bachmann123/diff-cover",
+            "url": "https://github.com/Bachmann1234/diff_cover",
             "description": "Coverage for changed lines only"
           },
           {
@@ -4603,7 +4597,7 @@
             "title": "Coverage Is Not Strongly Correlated with Test Suite Effectiveness",
             "year": 2014,
             "tier": "I",
-            "url": "https://www.cs.ubc.ca/~rtholmes/papers/icse_2014.pdf",
+            "url": "https://www.cs.ubc.ca/~rtholmes/papers/icse_2014_inozemtseva.pdf",
             "kind": "paper",
             "authors": "Laura Inozemtseva, Reid Holmes",
             "venue": "ICSE 2014"
@@ -4928,7 +4922,7 @@
             "title": "Coverage Is Not Strongly Correlated with Test Suite Effectiveness",
             "year": 2014,
             "tier": "I",
-            "url": "https://www.cs.ubc.ca/~rtholmes/papers/icse_2014.pdf",
+            "url": "https://www.cs.ubc.ca/~rtholmes/papers/icse_2014_inozemtseva.pdf",
             "kind": "paper",
             "authors": "Laura Inozemtseva, Reid Holmes",
             "venue": "ICSE 2014"
@@ -6405,13 +6399,13 @@
           {
             "title": "pytest-check",
             "kind": "tool",
-            "url": "https://github.com/fgaz/pytest-check",
+            "url": "https://github.com/okken/pytest-check",
             "description": "Non-blocking assertions for pytest"
           },
           {
             "title": "Hypothesis invariants",
             "kind": "tool",
-            "url": "https://hypothesis.readthedocs.io/en/latest/quick-guide.html",
+            "url": "https://hypothesis.readthedocs.io/en/latest/quickstart.html",
             "description": "Using Hypothesis for invariant checking"
           }
         ]
@@ -7023,12 +7017,6 @@
             "kind": "tool",
             "url": "https://embed.cs.utah.edu/csmith",
             "description": "Random C program generator for compiler testing"
-          },
-          {
-            "title": "DifferentialFuzzer",
-            "kind": "tool",
-            "url": "https://github.com/jfmagiero/differentialfuzzer",
-            "description": "Differential fuzzing framework"
           }
         ]
       },
@@ -9718,12 +9706,6 @@
             "kind": "tool",
             "url": "https://www.honeycomb.io",
             "description": "Observability platform for high-cardinality events"
-          },
-          {
-            "title": "Lightstep",
-            "kind": "tool",
-            "url": "https://lightstep.com",
-            "description": "Distributed tracing and observability"
           }
         ]
       },
@@ -10954,7 +10936,7 @@
         "references": [
           {
             "title": "Google SRE Workbook",
-            "url": "https://sre.google/workbook/error-budget/",
+            "url": "https://sre.google/workbook/error-budget-policy/",
             "kind": "tool"
           },
           {
@@ -10966,7 +10948,7 @@
           {
             "title": "error budget calculators",
             "kind": "tool",
-            "url": "https://sre.google/workbook/error-budget/",
+            "url": "https://sre.google/workbook/error-budget-policy/",
             "description": "Error budget tracking tools"
           }
         ]
@@ -11907,12 +11889,6 @@
             "kind": "tool",
             "url": "https://github.com/twitter/diffy",
             "description": "Differential proxy for API testing"
-          },
-          {
-            "title": "go-shadow",
-            "kind": "tool",
-            "url": "https://github.com/fortytw2/go-shadow",
-            "description": "Go HTTP shadow traffic proxy"
           }
         ]
       },
@@ -12562,7 +12538,7 @@
           {
             "title": "dependency-graph",
             "kind": "tool",
-            "url": "https://github.com/jfrog/dependency-graph",
+            "url": "https://github.com/gradle/github-dependency-graph-gradle-plugin",
             "description": "Gradle dependency graph plugin"
           }
         ]
@@ -13167,12 +13143,6 @@
             "kind": "tool",
             "url": "https://codescene.com",
             "description": "Code analysis predicting technical debt from behavioral code"
-          },
-          {
-            "title": "crux",
-            "kind": "tool",
-            "url": "https://github.com/mauricio/crux",
-            "description": "Code complexity analysis tool"
           },
           {
             "title": "git-quick-stats",
@@ -14505,7 +14475,7 @@
           {
             "title": "Jira correlation",
             "kind": "tool",
-            "url": "https://support.atlassian.com/jira-software-cloud/docs/what-is-issue-linking/",
+            "url": "https://support.atlassian.com/jira-cloud-administration/docs/configure-issue-linking/",
             "description": "Incident-to-commit correlation via Jira"
           }
         ]
@@ -15889,7 +15859,7 @@
           {
             "title": "OpenAPI round-trip",
             "kind": "tool",
-            "url": "https://swagger.io/tools/swagger-validator",
+            "url": "https://editor.swagger.io/",
             "description": "Validate OpenAPI spec against actual API responses"
           }
         ]

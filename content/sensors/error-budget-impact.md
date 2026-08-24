@@ -23,7 +23,7 @@ see_also:
 last_reviewed: '2026-08-24'
 references:
 - title: Google SRE Workbook
-  url: https://sre.google/workbook/error-budget/
+  url: https://sre.google/workbook/error-budget-policy/
   kind: tool
 - title: SLO dashboards
   kind: tool
@@ -31,7 +31,7 @@ references:
   description: Service level objective tracking dashboards
 - title: error budget calculators
   kind: tool
-  url: https://sre.google/workbook/error-budget/
+  url: https://sre.google/workbook/error-budget-policy/
   description: Error budget tracking tools
 ---
 

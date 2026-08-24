@@ -42,7 +42,7 @@ references:
   description: TypeScript API documentation generator
 - title: OpenAPI round-trip
   kind: tool
-  url: https://swagger.io/tools/swagger-validator
+  url: https://editor.swagger.io/
   description: Validate OpenAPI spec against actual API responses
 ---
 

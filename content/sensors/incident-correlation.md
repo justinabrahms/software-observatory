@@ -47,7 +47,7 @@ references:
   description: Error tracking and crash reporting
 - title: Jira correlation
   kind: tool
-  url: https://support.atlassian.com/jira-software-cloud/docs/what-is-issue-linking/
+  url: https://support.atlassian.com/jira-cloud-administration/docs/configure-issue-linking/
   description: Incident-to-commit correlation via Jira
 ---
 

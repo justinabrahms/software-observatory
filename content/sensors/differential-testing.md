@@ -39,10 +39,6 @@ references:
   kind: tool
   url: https://embed.cs.utah.edu/csmith
   description: Random C program generator for compiler testing
-- title: DifferentialFuzzer
-  kind: tool
-  url: https://github.com/jfmagiero/differentialfuzzer
-  description: Differential fuzzing framework
 ---
 
 `implementation_A(input) == implementation_B(input)`. You don't know which is

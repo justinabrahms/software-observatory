@@ -52,10 +52,6 @@ references:
   kind: tool
   url: https://www.honeycomb.io
   description: Observability platform for high-cardinality events
-- title: Lightstep
-  kind: tool
-  url: https://lightstep.com
-  description: Distributed tracing and observability
 ---
 
 Traditional monitoring says: *"CPU is 82%."* Observability says: *"Show me

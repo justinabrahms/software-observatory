@@ -34,7 +34,7 @@ references:
   venue: ICSE-SEIP 2018
 - title: diff-cover
   kind: tool
-  url: https://github.com/Bachmann123/diff-cover
+  url: https://github.com/Bachmann1234/diff_cover
   description: Coverage for changed lines only
 - title: Codecov
   kind: tool

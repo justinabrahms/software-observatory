@@ -49,7 +49,7 @@ references:
   description: JavaScript dependency graph and circular dependency detection
 - title: dependency-graph
   kind: tool
-  url: https://github.com/jfrog/dependency-graph
+  url: https://github.com/gradle/github-dependency-graph-gradle-plugin
   description: Gradle dependency graph plugin
 ---
 

@@ -37,10 +37,6 @@ references:
   kind: tool
   url: https://github.com/twitter/diffy
   description: Differential proxy for API testing
-- title: go-shadow
-  kind: tool
-  url: https://github.com/fortytw2/go-shadow
-  description: Go HTTP shadow traffic proxy
 ---
 
 Run the new implementation against real inputs without affecting users. A

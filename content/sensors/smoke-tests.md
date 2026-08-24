@@ -29,10 +29,6 @@ references:
   kind: paper
   authors: Adam Bender; eds. Titus Winters, Tom Manshreck, Hyrum Wright
   venue: O'Reilly Media
-- title: smoke-tester
-  kind: tool
-  url: https://github.com/symonk/smoke-tester
-  description: Simple HTTP smoke testing
 - title: curl-based smoke tests
   kind: tool
   url: https://curl.se

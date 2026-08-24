@@ -53,11 +53,11 @@ references:
   description: Python fluent assertion library
 - title: pytest-check
   kind: tool
-  url: https://github.com/fgaz/pytest-check
+  url: https://github.com/okken/pytest-check
   description: Non-blocking assertions for pytest
 - title: Hypothesis invariants
   kind: tool
-  url: https://hypothesis.readthedocs.io/en/latest/quick-guide.html
+  url: https://hypothesis.readthedocs.io/en/latest/quickstart.html
   description: Using Hypothesis for invariant checking
 ---
 

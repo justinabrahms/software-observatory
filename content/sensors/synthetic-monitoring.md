@@ -50,7 +50,7 @@ references:
   description: Uptime and performance monitoring
 - title: Datadog Synthetic
   kind: tool
-  url: https://docs.datadoghq.com/synthetic_monitoring
+  url: https://docs.datadoghq.com/synthetics/
   description: Synthetic monitoring in Datadog
 scope_note: scripted end-to-end user flows
 ---

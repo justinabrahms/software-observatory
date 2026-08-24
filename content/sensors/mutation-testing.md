@@ -27,7 +27,7 @@ references:
 - title: Coverage Is Not Strongly Correlated with Test Suite Effectiveness
   year: 2014
   tier: I
-  url: https://www.cs.ubc.ca/~rtholmes/papers/icse_2014.pdf
+  url: https://www.cs.ubc.ca/~rtholmes/papers/icse_2014_inozemtseva.pdf
   kind: paper
   authors: Laura Inozemtseva, Reid Holmes
   venue: ICSE 2014

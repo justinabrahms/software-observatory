@@ -1605,9 +1605,8 @@ def generate_framework_page(sensors, output_dir):
       <p class="property-detail-question">How much should you trust the research behind a sensor?</p>
       <p>
         Paper references in each entry carry an evidence tier (I–IV) that
-        grades the <em>study</em>, never the claim. The tiers come from the
-        <a href="https://github.com/justinabrahms/quality-lab" class="wikilink">quality-lab</a>
-        evidence rubric:
+        grades the <em>study</em>, never the claim. The tiers come from an
+        internal evidence rubric:
       </p>
       <div class="scope-ladder">
         <div class="scope-rung">Tier I <span class="scope-desc">Controlled experiment or large-N study with a comparison group.</span></div>
