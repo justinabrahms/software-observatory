@@ -849,7 +849,7 @@ def generate_catalog_page(sensors, output_dir):
     filter_families = ""
     for f in FAMILIES:
         count = len(by_family.get(f["slug"], []))
-        filter_families += f'          <li data-family="{f["slug"]}">{html.escape(f["name"])} <span class="count">{count}</span></li>\n'
+        filter_families += f'          <li><button type="button" data-family="{f["slug"]}" aria-pressed="false">{html.escape(f["name"])} <span class="count">{count}</span></button></li>\n'
 
     total = len(sensors)
 
@@ -870,7 +870,7 @@ def generate_catalog_page(sensors, output_dir):
       <div class="filter-group">
         <h3 class="filter-heading">Sensor Family</h3>
         <ul class="filter-list" id="family-filter">
-          <li class="active" data-family="all">All Families <span class="count">{total}</span></li>
+          <li><button type="button" class="active" data-family="all" aria-pressed="true">All Families <span class="count">{total}</span></button></li>
 {filter_families.rstrip()}
         </ul>
       </div>

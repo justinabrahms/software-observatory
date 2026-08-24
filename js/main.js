@@ -2,20 +2,24 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // Filter list active toggle (general)
-  document.querySelectorAll('.filter-list li').forEach(li => {
-    li.addEventListener('click', () => {
-      const siblings = li.closest('.filter-list').querySelectorAll('li');
-      siblings.forEach(s => s.classList.remove('active'));
-      li.classList.add('active');
+  document.querySelectorAll('.filter-list button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const siblings = btn.closest('.filter-list').querySelectorAll('button');
+      siblings.forEach(s => {
+        s.classList.remove('active');
+        s.setAttribute('aria-pressed', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
     });
   });
 
   // Catalog family filter
   const familyFilter = document.getElementById('family-filter');
   if (familyFilter) {
-    familyFilter.querySelectorAll('li').forEach(li => {
-      li.addEventListener('click', () => {
-        const family = li.dataset.family;
+    familyFilter.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const family = btn.dataset.family;
         const sections = document.querySelectorAll('.family-section');
         sections.forEach(section => {
           if (family === 'all' || section.dataset.family === family) {
@@ -101,20 +105,27 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // Legend hover isolates one family's dots
+    // Legend hover/focus isolates one family's dots
     const sensorPoints = Array.from(scatterFrame.querySelectorAll('.sensor-point'));
     document.querySelectorAll('.scatter-legend .legend-key').forEach((key, i) => {
       const slug = key.querySelector('.legend-dot').className.match(/fam-[\w-]+/)[0].slice(4);
-      key.addEventListener('mouseenter', () => {
+      key.setAttribute('tabindex', '0');
+      key.setAttribute('role', 'button');
+      key.setAttribute('aria-label', key.textContent.trim());
+      const isolate = () => {
         sensorPoints.forEach(p => {
           const match = p.classList.contains('fam-' + slug);
           p.classList.toggle('fam-dim', !match);
           p.classList.toggle('fam-spotlit', match);
         });
-      });
-      key.addEventListener('mouseleave', () => {
+      };
+      const reset = () => {
         sensorPoints.forEach(p => p.classList.remove('fam-dim', 'fam-spotlit'));
-      });
+      };
+      key.addEventListener('mouseenter', isolate);
+      key.addEventListener('mouseleave', reset);
+      key.addEventListener('focus', isolate);
+      key.addEventListener('blur', reset);
     });
   }
 
@@ -201,7 +212,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const edges = Array.from(depGraph.querySelectorAll('[data-src]'));
 
     nodes.forEach(node => {
-      node.addEventListener('mouseenter', () => {
+      node.setAttribute('tabindex', '0');
+      const isolate = () => {
         const fam = node.dataset.family;
         const neighbors = new Set([fam]);
         edges.forEach(e => {
@@ -214,12 +226,16 @@ document.addEventListener('DOMContentLoaded', () => {
           e.classList.toggle('dim', !connected);
         });
         depGraph.classList.add('focus-active');
-      });
-      node.addEventListener('mouseleave', () => {
+      };
+      const reset = () => {
         nodes.forEach(n => n.classList.remove('dim'));
         edges.forEach(e => e.classList.remove('dim'));
         depGraph.classList.remove('focus-active');
-      });
+      };
+      node.addEventListener('mouseenter', isolate);
+      node.addEventListener('mouseleave', reset);
+      node.addEventListener('focus', isolate);
+      node.addEventListener('blur', reset);
     });
   }
 });
