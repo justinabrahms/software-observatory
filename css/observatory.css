@@ -10,7 +10,7 @@
   --border-soft: #243044;
   --text:        #e8edf2;
   --text-soft:   #aab4c4;
-  --text-dim:    #7b8699;
+  --text-dim:    #8a96a8;
   --accent:      #d4a056;     /* antique gold */
   --accent-soft: #8a6d3b;
   --accent-glow: rgba(212,160,86,0.15);
@@ -32,8 +32,40 @@
   --fam-runtime:           #56b6c2;
   --fam-change:            #d19a66;
   --fam-architecture:      #abb2bf;
-  --fam-evolution:         #be8c66;
+  --fam-evolution:         #a37cc0;
   --fam-comprehension:     #7fb5d5;
+}
+
+/* Light theme — activated by the OS/browser preference. */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg:          #fafaf7;
+    --bg-soft:     #f3f3ee;
+    --bg-card:     #ffffff;
+    --bg-elev:     #f5f5f0;
+    --border:      #d8d6cf;
+    --border-soft: #c5c3bb;
+    --text:        #1a1a17;
+    --text-soft:   #4a4a45;
+    --text-dim:    #5c5c56;
+    --accent:      #9a6a1f;
+    --accent-soft: #b8893a;
+    --accent-glow: rgba(154,106,31,0.10);
+    --signal:      #2b6cb0;
+    --signal-soft: rgba(43,108,176,0.08);
+
+    /* Family palette tuned for the light background. */
+    --fam-structural:        #9a6a1f;
+    --fam-behavioral:        #2b6cb0;
+    --fam-test-effectiveness:#9333a0;
+    --fam-invariants:        #4a7a30;
+    --fam-adversarial:       #c0392b;
+    --fam-runtime:           #2a7a8a;
+    --fam-change:            #a55c2a;
+    --fam-architecture:      #5a5a55;
+    --fam-evolution:         #6b4a8a;
+    --fam-comprehension:     #4a7a9a;
+  }
 }
 
 /* Reset & base */
@@ -74,7 +106,7 @@ a.wikilink:hover {
   align-items: center;
   justify-content: space-between;
   padding: 1.1rem 2rem;
-  background: rgba(10,14,20,0.85);
+  background: var(--bg-soft);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
 }
@@ -241,7 +273,7 @@ a.wikilink:hover {
   color: var(--bg);
 }
 .btn-primary:hover {
-  background: #e0b470;
+  background: var(--accent-soft);
   color: var(--bg);
   transform: translateY(-1px);
   box-shadow: 0 6px 20px var(--accent-glow);
