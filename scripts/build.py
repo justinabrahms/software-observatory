@@ -7,7 +7,7 @@ pages using templates, computes backlinks from see_also references, and
 writes everything to the site root.
 
 Usage:
-    .venv/bin/python build.py [--watch]
+    .venv/bin/python build.py
 """
 
 import os
