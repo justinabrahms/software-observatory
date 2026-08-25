@@ -33,18 +33,22 @@ references:
   kind: publication
   authors: Chris Newcombe, Tim Rath, Fan Zhang, Bogdan Munteanu, Marc Brooker, Michael Deardeuff
   venue: Communications of the ACM 58(4)
-- title: 'TLA+ Model Checking Made Symbolic'
-  year: 2022
+- title: TLA+ Model Checking Made Symbolic
+  year: 2019
   tier: III
-  url: https://link.springer.com/chapter/10.1007/978-3-031-22465-5_8
+  url: https://dl.acm.org/doi/10.1145/3360549
   kind: publication
-  authors: Markus Kuppe
-- title: 'Practical Model Checking for Software'
-  year: 2023
+  authors: Igor Konnov, Jure Kukovec, Thanh-Hai Tran
+  venue: Proceedings of the ACM on Programming Languages 3 (OOPSLA)
+- title: The Model Checker SPIN
+  year: 1997
   tier: IV
-  url: ''
+  url: https://spinroot.com/spin/Doc/ieee97.pdf
   kind: publication
-  description: Spin, NuSMV, and the case for exhaustive state-space search in industry
+  authors: Gerard J. Holzmann
+  venue: IEEE Transactions on Software Engineering 23(5)
+  description: The design of an explicit-state checker and the case for exhaustive
+    state-space search
 - title: TLA+
   url: https://lamport.org/tla/tla.html
   kind: tool
@@ -83,18 +87,54 @@ enough to exhaust.
 ## In practice
 
 A reading is a counter-example trace — the minimal sequence of steps that
-reaches a state violating the property:
+reaches a state violating the property. The checker's console says only
+where it broke and where to look:
 
 ```
-APALACHE
-State 1: [ state = Idle, queue = <<>> ]
-State 2: [ state = Processing, queue = <<Req>> ]
-State 3: [ state = Processing, queue = <<>> ]  -- dequeued
-State 4: [ state = Done, queue = <<>> ]
-Violation: Invariant NoDoubleProcess at State 4
-  Action: ProcessTwice
-  The invariant 'at most one process per request' is violated.
+State 3: state invariant 0 violated.
+Check the counterexample in: _apalache-out/MCQueue.tla/counterexample1.tla
 ```
+
+The trace itself is the file, written as a runnable module — one
+definition per state, and the violating formula at the end:
+
+```
+---------------------------- MODULE counterexample ----------------------------
+
+EXTENDS MCQueue
+
+(* Initial state *)
+State0 ==
+processed = 0
+/\ queue = <<>>
+/\ state = "Idle"
+
+(* Transition 0 to State1 *)
+State1 ==
+processed = 0
+/\ queue = <<"Req">>
+/\ state = "Processing"
+
+(* Transition 1 to State2 *)
+State2 ==
+processed = 1
+/\ queue = <<>>
+/\ state = "Processing"
+
+(* Transition 2 to State3 *)
+State3 ==
+processed = 2
+/\ queue = <<>>
+/\ state = "Done"
+
+(* The following formula holds true in the last state and violates the invariant *)
+InvariantViolation == processed > 1
+
+================================================================================
+```
+
+The request was dequeued once and processed twice, and the trace names
+the transition that did it.
 
 The counter-example is the reading's value. A failing test tells you a
 case broke; a model-checker counter-example tells you the *exact sequence*
@@ -125,8 +165,11 @@ The checker cannot be gamed, but the model can be degraded:
   checker passes because it is exploring a simpler world than the one
   that ships.
 - **Over-abstract the state.** Collapse the state space until the
-  property trivially holds. A model with one state cannot violate a
-  liveness property.
+  safety properties hold vacuously: a model with one reachable state
+  has no bad state left to reach. Liveness does not collapse the same
+  way — a single state that stutters forever falsifies `[]<>P` — so an
+  over-abstracted model tends to go green on safety and red on
+  progress. That asymmetry is the tell.
 - **Check the happy path only.** Initialize the model with the inputs
   the author expected, not the inputs the system can receive.
 - **Verification off the merge path.** A model-checking job that runs

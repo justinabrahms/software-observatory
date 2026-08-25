@@ -29,11 +29,13 @@ references:
 - title: 'seL4: Formal Verification of an OS Kernel'
   year: 2009
   tier: III
-  url: https://trustworthy.systems/projects/TS/4.2.4/
+  url: https://trustworthy.systems/publications/nicta_full_text/1852.pdf
   kind: publication
-  authors: Gerwin Klein, Kevin Elphinstone, Gernot Heiser, et al.
+  authors: Gerwin Klein, Kevin Elphinstone, Gernot Heiser, June Andronick, David Cock,
+    Philip Derrin, Dhammika Elkaduwe, Kai Engelhardt, Rafal Kolanski, Michael Norrish,
+    Thomas Sewell, Harvey Tuch, Simon Winwood
   venue: SOSP 2009
-- title: 'The CompCert C Compiler'
+- title: Formal verification of a realistic compiler
   year: 2009
   tier: III
   url: https://xavierleroy.org/publi/compcert-CACM.pdf

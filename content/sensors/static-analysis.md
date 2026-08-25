@@ -23,20 +23,20 @@ see_also:
 - SO-014
 last_reviewed: '2026-08-24'
 references:
-- title: 'A Tale of Four Analyzers: A Comparison of Static Analysis Tools'
-  year: 2024
-  tier: II
-  url: https://arxiv.org/abs/2408.18510
+- title: 'How Many of All Bugs Do We Find? A Study of Static Bug Detectors'
+  year: 2018
+  tier: I
+  url: https://software-lab.org/publications/ase2018_static_bug_detectors_study.pdf
   kind: publication
-  authors: Patrick Ferris, Antoine Miné
-  venue: arXiv 2408.18510
-- title: 'A Large-Scale Study of Multiple-Injection Static Code Analyzers'
-  year: 2023
-  tier: II
-  url: https://arxiv.org/abs/2305.04033
+  authors: Andrew Habib, Michael Pradel
+  venue: ASE 2018
+- title: Lessons from Building Static Analysis Tools at Google
+  year: 2018
+  tier: III
+  url: https://research.google/pubs/lessons-from-building-static-analysis-tools-at-google/
   kind: publication
-  authors: Sven Amann, Florian Büsschers, Eric Bodden
-  venue: arXiv 2305.04033
+  authors: Caitlin Sadowski, Edward Aftandilian, Alex Eagle, Liam Miller-Cushon, Ciera Jaspan
+  venue: Communications of the ACM 61(4)
 - title: Infer
   url: https://fbinfer.com
   kind: tool
@@ -62,10 +62,11 @@ references:
 Pattern-matching and dataflow analysis over the source without executing it.
 Covers the space between a [linter](linter.html) (style and local patterns)
 and a [type checker](type-checker.html) (type soundness): null dereferences,
-unreachable code, resource leaks, taint flow, API misuse. The general-purpose
-static analyzer is the sensor most practitioners reach for first — it
-subsumes the linter's rule set and adds cross-function, path-sensitive
-reasoning the linter can't do.
+unreachable code, resource leaks, taint flow, API misuse. It subsumes
+neither neighbor: it carries no style rules and proves no types. And it is
+deployed more narrowly than both — a linter is a default, a dataflow
+analyzer is a decision. What it adds is the cross-function, path-sensitive
+reasoning neither one does.
 
 ## In practice
 
