@@ -32,20 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Signal card keyboard accessibility
-  document.querySelectorAll('.signal-card').forEach(card => {
-    if (card.getAttribute('onclick')) {
-      card.setAttribute('tabindex', '0');
-      card.setAttribute('role', 'link');
-      card.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          card.click();
-        }
-      });
-    }
-  });
-
   // Deep-linkable headings: hovering a heading with an id shows a link icon;
   // clicking it copies the jumplink (page URL + #anchor) to the clipboard.
   const HEADING_LINK_SELECTOR = [

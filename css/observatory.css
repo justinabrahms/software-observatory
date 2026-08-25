@@ -558,13 +558,15 @@ h3:hover .heading-anchor,
   gap: 1.5rem;
 }
 .signal-card {
+  display: block;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-left: 3px solid var(--accent-soft);
   border-radius: 8px;
   padding: 1.8rem;
   transition: border-color .25s, box-shadow .25s;
-  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
 }
 .signal-card:hover {
   border-color: var(--accent-soft);
@@ -986,14 +988,6 @@ a.wikilink:hover {
   border-bottom-color: var(--accent);
   background: var(--accent-glow);
 }
-/* Wikilinks inside signal-card titles */
-.signal-card-title a.wikilink {
-  border-bottom: none;
-}
-.signal-card-title a.wikilink:hover {
-  background: none;
-}
-
 /* See-also grid */
 .see-also-grid {
   display: grid;

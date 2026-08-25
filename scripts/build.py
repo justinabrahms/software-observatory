@@ -826,18 +826,18 @@ def generate_catalog_page(sensors, output_dir):
             title = s["title"]
             slug = s["slug"]
 
-            cards += f"""          <article class="signal-card" onclick="window.location='/sensors/{slug}/'">
+            cards += f"""          <a class="signal-card" href="/sensors/{slug}/">
             <div class="signal-card-meta">
               <span class="tag tag-family">{html.escape(family['name'])}</span>
               <span class="tag tag-type">{html.escape(s.get('type', '').title())}</span>
             </div>
-            <h3 class="signal-card-title"><a href="/sensors/{slug}/" class="wikilink">{html.escape(title)}</a></h3>
+            <h3 class="signal-card-title">{html.escape(title)}</h3>
             <p class="signal-card-blurb">{html.escape(blurb_text(s.get('body_html', ''), 200))}</p>
             <div class="signal-card-footer">
               <span class="oracle-meter">{oracle_d} Oracle</span>
               {lat}
             </div>
-          </article>\n"""
+          </a>\n"""
 
         sections_html += f"""      <section class="family-section" id="{family['slug']}" data-family="{family['slug']}">
         <div class="family-header">
