@@ -522,6 +522,7 @@ def html_head(title, canonical="", json_ld=""):
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <title>{html.escape(full_title)}</title>
   <meta name="description" content="A catalog of epistemic sensors for software correctness — the observable signals that reduce uncertainty about whether a system is correct, maintainable, and behaving as intended.">{canonical_link}
   <meta property="og:type" content="website">
