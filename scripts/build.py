@@ -423,7 +423,7 @@ def resolve_see_also(see_also_ids, sensors_by_id, families_by_slug):
             })
         elif ref == "atlas":
             results.append({
-                "title": "Confidence Stack",
+                "title": "Sensor Atlas",
                 "family": "Atlas",
                 "family_slug": "atlas",
                 "url": "/atlas/",
