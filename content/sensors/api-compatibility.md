@@ -27,7 +27,8 @@ references:
   tier: II
   url: https://arxiv.org/abs/2301.04563
   kind: publication
-  authors: Suhaib Mujahid, Diego Elias Costa, Rabe Abdalkareem, Emad Shihab and others
+  authors: Daniel Venturini, Filipe Roseiro Cogo, Ivanilton Polato, Marco A Gerosa, Igor
+    Scaliante Wiese
   venue: ACM TOSEM
 - title: Breaking Bad? Semantic Versioning and Impact of Breaking Changes in Maven Central
   year: 2022
@@ -40,10 +41,10 @@ references:
   url: https://revapi.org
   kind: tool
   description: API compatibility checking for JVM
-- title: Akka
+- title: MiMa
   kind: tool
-  url: https://akka.io
-  description: Actor framework for JVM concurrency
+  url: https://github.com/lightbend/mima
+  description: Binary compatibility checking for Scala/JVM libraries
 - title: grpcurl
   kind: tool
   url: https://github.com/fullstorydev/grpcurl

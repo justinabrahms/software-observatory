@@ -24,20 +24,21 @@ see_also:
 - runtime
 last_reviewed: '2026-08-24'
 references:
-- title: 'Workload Scaling: How to Simulate Traffic in Performance Tests'
-  year: 2023
-  tier: III
-  url: https://dl.acm.org/doi/10.1145/3578244
-  kind: publication
-  authors: Augusto Cunha, Giovanni Carrozza, Bogdan Ghit, Alexandru Iosup
-  venue: ICPE 2023
-- title: 'Performance Testing Practices in Production-Alike Environments'
-  year: 2022
+- title: A Survey on Load Testing of Large-Scale Software Systems
+  year: 2015
   tier: II
-  url: https://arxiv.org/abs/2208.05000
+  url: https://doi.org/10.1109/TSE.2015.2445340
   kind: publication
-  authors: Cor-Paul van der Sterr, Hadi Hemmati
-  venue: arXiv 2208.05000
+  authors: Zhen Ming Jiang, Ahmed E. Hassan
+  venue: IEEE Transactions on Software Engineering 41(11)
+- title: An Exploratory Study of the State of Practice of Performance Testing in
+    Java-Based Open Source Projects
+  year: 2017
+  tier: II
+  url: https://doi.org/10.1145/3030207.3030213
+  kind: publication
+  authors: Philipp Leitner, Cor-Paul Bezemer
+  venue: ICPE 2017
 - title: k6
   url: https://k6.io
   kind: tool

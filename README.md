@@ -21,18 +21,20 @@ am I asking?* and *when can I afford to learn the answer?*
 
 ## What's here
 
-- **[Catalog](https://softwareobservatory.com/pages/catalog.html)** — 56
+- **[Catalog](https://softwareobservatory.com/catalog/)** — 59
   sensor entries across ten families, each documenting what the sensor can
   detect, what it cannot, how easily it's gamed, and what evidence it
   produces.
-- **[Atlas](https://softwareobservatory.com/pages/atlas.html)** — the
+- **[Atlas](https://softwareobservatory.com/atlas/)** — the
   families arranged as a navigational matrix: family on one axis, lifecycle
   stage on the other. Empty cells are questions nobody has instrumented yet.
-- **[Framework](https://softwareobservatory.com/pages/framework.html)** —
+- **[Framework](https://softwareobservatory.com/framework/)** —
   the six dimensions every sensor is characterized along: oracle strength,
   independence, scope, feedback latency, actionability, predictive vs
   retrospective.
-- **[About](https://softwareobservatory.com/pages/about.html)** — the
+- **[Glossary](https://softwareobservatory.com/glossary/)** — definitions
+  of the core terms: oracle strength, independence, epistemic sensor.
+- **[About](https://softwareobservatory.com/about/)** — the
   thesis, inspirations, and how to contribute.
 
 ## Querying the catalog (CLI / agents)
@@ -55,21 +57,32 @@ client configuration.
 ## Repository layout
 
 ```
-content/sensors/*.md   Source of truth — one file per sensor (YAML frontmatter + markdown)
-scripts/build.py      The generator: templates, data, and logic in one file
-scripts/check_links.py Internal link/anchor validator over the generated HTML
+content/sensors/*.md       Source of truth — one file per sensor (YAML frontmatter + markdown)
+scripts/build.py           The generator: templates, data, and logic in one file
+scripts/check_links.py     Internal link/anchor validator over the generated HTML
+scripts/check_frontmatter.py Frontmatter schema validator over content/sensors/*.md
 scripts/export_cli_data.py Emits cli/data/sensors.json on every build
-cli/                  Node CLI + MCP server (npm: softwareobservatory)
-css/observatory.css    Hand-written stylesheet (design tokens in :root)
-js/main.js            No build step — filter, search dropdown, scatter, jumplinks
-index.html            Generated (gitignored)
-pages/                Generated (gitignored)
-search-index.json     Generated (gitignored)
+cli/                       Node CLI + MCP server (npm: softwareobservatory)
+css/observatory.css        Hand-written stylesheet (design tokens in :root)
+js/main.js                 No build step — filter, search dropdown, scatter, jumplinks
+templates/                 Page templates used by the generator
+
+Generated (all gitignored, all written in place at the repo root):
+index.html                 Homepage
+catalog/ atlas/ framework/ glossary/ about/ contact/ privacy/ categories/
+                           Section pages, one index.html each (clean URLs)
+sensors/<slug>/index.html  One page per sensor
+md/sensors/*.md            Markdown copies for Accept: text/markdown
+search-index.json sitemap.xml robots.txt rss.xml llms.txt 404.html
+cli/data/sensors.json      Catalog data for the npm package (committed, not gitignored)
 ```
 
-`index.html`, `pages/`, and `search-index.json` are **build output** —
-gitignored, overwritten by every build, and shipped from the working tree
-on deploy. Don't edit them by hand; edit the sources and rebuild.
+Everything in the "generated" block is **build output** — overwritten by
+every build and shipped from the working tree on deploy. Don't edit it by
+hand; edit the sources and rebuild. The older `pages/*.html` layout is
+retired: pages now live at clean directory URLs (`/catalog/`,
+`/sensors/<slug>/`), and the build deletes any stale `pages/` directory it
+finds.
 
 ## Build
 
@@ -80,9 +93,10 @@ pinned in `.venv/` (gitignored).
 .venv/bin/python scripts/build.py
 ```
 
-This reads `content/sensors/*.md` and regenerates `index.html`,
-`pages/*.html`, `pages/sensors/*.html`, and `search-index.json` in place at
-the repo root. System `python3` may be missing the `markdown` module — use
+This reads `content/sensors/*.md` and regenerates `index.html`, the section
+directories (`catalog/`, `atlas/`, ...), `sensors/<slug>/index.html`,
+`search-index.json`, and the other feed/metadata files in place at the repo
+root. System `python3` may be missing the `markdown` module — use
 the venv.
 
 ## Preview
@@ -112,7 +126,7 @@ host.
 ## Adding a sensor
 
 1. Create `content/sensors/<slug>.md`. The filename stem becomes the URL
-   slug (`pages/sensors/<slug>.html`).
+   slug (`/sensors/<slug>/`).
 2. Fill in the YAML frontmatter. See any existing entry (e.g.
    [`content/sensors/linter.md`](content/sensors/linter.md)) for the shape:
 
@@ -143,14 +157,13 @@ host.
 
 ### Relative-link gotcha
 
-Markdown bodies are rendered once and reused at different directory depths.
-`build.py` prefixes relative `href`s with `../` for files living in
-`pages/`, but **bare filenames matching a sensor slug are left alone** —
-they're sibling links that resolve inside `pages/sensors/`. So:
-`[type checker](type-checker.html)` for a sibling,
-`[catalog](catalog.html#behavioral)` for a catalog section. Root-relative
-and absolute URLs are left alone. `check_links.py` will catch any link that
-gets this wrong.
+Write links in markdown bodies as bare filenames: `[type
+checker](type-checker.html)` for another sensor,
+`[catalog](catalog.html#behavioral)` for a section page. `build.py`
+(`fix_link_depths`) rewrites those to their site-absolute clean URLs
+(`/sensors/type-checker/`, `/catalog/#behavioral`), so the same rendered
+body works at any depth. Root-relative and absolute URLs are left alone.
+`check_links.py` will catch any link that gets this wrong.
 
 ## Contributing
 
@@ -168,11 +181,55 @@ The catalog applies a producer-evaluator principle to itself: the author
 shouldn't be the only evaluator. Independent review of the content is
 welcome and explicitly invited.
 
+By opening a pull request you agree to license your contribution under the
+license that already covers the files you touched: MIT for code, CC BY-SA
+4.0 for catalog content. See [License](#license) below.
+
 ## License
 
-Site content is published under
-[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
-Code is under the license in the repository.
+This repository is dual-licensed. The split is by kind of file, not by
+directory accident:
+
+| What | License | File |
+|------|---------|------|
+| **Code** — `scripts/`, `cli/bin/`, `cli/lib/`, `cli/test/`, `css/`, `js/`, `templates/` | MIT (`MIT`) | [LICENSE-CODE](LICENSE-CODE) |
+| **Content & data** — `content/sensors/*.md`, the generated site prose, `md/`, `rss.xml`, `llms.txt`, and `cli/data/sensors.json` | CC BY-SA 4.0 (`CC-BY-SA-4.0`) | [LICENSE-CONTENT](LICENSE-CONTENT) |
+
+The code is MIT so it can be copied, vendored, and shipped without anyone
+asking a lawyer first — including by license scanners in corporate CI, which
+routinely block Creative Commons licenses on software. The catalog content
+stays under CC BY-SA 4.0: it is prose, and attribution should travel with it.
+
+The npm package `softwareobservatory` is MIT software that bundles CC BY-SA
+4.0 data at `data/sensors.json`. Querying the CLI or the MCP server carries no
+obligations; republishing the catalog content does.
+
+### Attribution
+
+Copy-paste this when you reuse the catalog content:
+
+> "Software Observatory" by [Justin Abrahms](https://justin.abrah.ms/),
+> <https://softwareobservatory.com>, licensed under [CC BY-SA
+> 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+
+Plain text:
+
+```
+"Software Observatory" by Justin Abrahms (https://softwareobservatory.com),
+licensed under CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/).
+```
+
+HTML:
+
+```html
+<a href="https://softwareobservatory.com">Software Observatory</a> by Justin
+Abrahms, licensed under <a
+href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.
+```
+
+ShareAlike means a work built on the catalog content is shared under CC BY-SA
+4.0 too. Quoting an entry, linking to a sensor page, or having an agent read
+the catalog to answer a question is not that — it is use, not redistribution.
 
 ## Acknowledgements
 

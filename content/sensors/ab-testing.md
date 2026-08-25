@@ -36,24 +36,24 @@ references:
 - title: 'Seven Rules of Thumb for Web Site Experimenters'
   year: 2014
   tier: II
-  url: https://exp-platform.com/Documents/2014%20sevenRulesOfThumbForWebSiteExperimenters.pdf
+  url: https://doi.org/10.1145/2623330.2623341
   kind: publication
-  authors: Ron Kohavi, Alex Deng, Brian Frasca, Roger Longbotham, Toby Walker, Ya Xu
+  authors: Ron Kohavi, Alex Deng, Roger Longbotham, Ya Xu
   venue: KDD 2014
 - title: 'Online Controlled Experiments at Large Scale'
   year: 2013
   tier: II
-  url: https://exp-platform.com/Documents/2013-04ExPincrementalityPaper.pdf
+  url: https://doi.org/10.1145/2487575.2488217
   kind: publication
-  authors: Alex Deng, Ya Xu, Ron Kohavi, Toby Walker
+  authors: Ron Kohavi, Alex Deng, Brian Frasca, Toby Walker, Ya Xu, Nils Pohlmann
   venue: KDD 2013
-- title: 'A/B Testing at Scale: An Experience Report'
+- title: 'Peeking at A/B Tests: Why It Matters, and What to Do About It'
   year: 2017
-  tier: III
-  url: https://www.microsoft.com/en-us/research/publication/ab-testing-scale-experience-report/
+  tier: II
+  url: https://doi.org/10.1145/3097983.3097992
   kind: publication
-  authors: Pavel Dmitriev, Somit Saha, Somit Goyal
-  venue: KDD 2017 Web Mining and Content Analytics
+  authors: Ramesh Johari, Pete Koomen, Leonid Pekelis, David Walsh
+  venue: KDD 2017
 - title: GrowthBook
   url: https://www.growthbook.io
   kind: tool

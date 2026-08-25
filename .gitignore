@@ -4,7 +4,10 @@ __pycache__/
 archive-*/
 
 pages/
-sensors/
+# Generated site output at the repo root. The leading slash is load-bearing:
+# a bare "sensors/" also matches content/sensors/, which silently ignored new
+# sensor files -- the most common contribution this repo can receive.
+/sensors/
 catalog/
 atlas/
 framework/
@@ -26,3 +29,16 @@ md/
 .link-cache.json
 *.TMP
 .opencode/
+
+# Agent scaffolding and scratch output. Untracked but unignored files are one
+# `git add -A` away from public history, and `make deploy`'s old deny-list was
+# one forgotten --exclude away from publishing them.
+.crush/
+scratch/
+results/
+abstract.md
+abstract.sh
+.opencode-review.md
+
+# Citation checker's TTL cache (see scripts/check_citations.py).
+.citation-cache.json

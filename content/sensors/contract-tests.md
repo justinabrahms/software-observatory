@@ -29,7 +29,8 @@ references:
   tier: II
   url: https://arxiv.org/abs/2301.04563
   kind: publication
-  authors: Suhaib Mujahid, Diego Elias Costa, Rabe Abdalkareem, Emad Shihab and others
+  authors: Daniel Venturini, Filipe Roseiro Cogo, Ivanilton Polato, Marco A Gerosa, Igor
+    Scaliante Wiese
   venue: ACM TOSEM
 - title: 'Design, Monitoring, and Testing of Microservices Systems: The Practitioners'' Perspective'
   year: 2021
@@ -37,12 +38,14 @@ references:
   url: https://arxiv.org/pdf/2108.03384
   kind: publication
   authors: Muhammad Waseem, Peng Liang, Mojtaba Shahin, Amleto Di Salle, Gastón Márquez
-  venue: arXiv preprint, submitted to the Journal of Systems and Software
-- authors: Ian Robinson
-  title: Consumer-Driven Contracts
-  year: 2007
-  kind: publication
+  venue: Journal of Systems and Software 182
+- title: 'Consumer-Driven Contracts: A Service Evolution Pattern'
+  year: 2006
   tier: IV
+  url: https://martinfowler.com/articles/consumerDrivenContracts.html
+  kind: publication
+  authors: Ian Robinson
+  venue: martinfowler.com
 - title: Pact
   url: https://pact.io
   kind: tool

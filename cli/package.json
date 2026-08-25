@@ -1,6 +1,6 @@
 {
   "name": "softwareobservatory",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Query the Software Observatory catalog of epistemic sensors for software correctness. Built for humans and agents: every command emits JSON with --json.",
   "keywords": [
     "observability",
@@ -17,7 +17,7 @@
     "url": "git+https://github.com/justinabrahms/software-observatory.git",
     "directory": "cli"
   },
-  "license": "CC-BY-SA-4.0",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "test": "node test/smoke.mjs"
@@ -33,7 +33,9 @@
     "bin/",
     "lib/",
     "data/",
-    "README.md"
+    "README.md",
+    "LICENSE-CODE",
+    "LICENSE-CONTENT"
   ],
   "engines": {
     "node": ">=18"

@@ -1,0 +1,27 @@
+Software Observatory is dual-licensed: the code under MIT, the catalog
+content and data under CC BY-SA 4.0.
+
+  Code            MIT                 see LICENSE-CODE
+  SPDX            MIT
+  Covers          scripts/, cli/bin/, cli/lib/, cli/test/, css/, js/,
+                  templates/, and the build tooling generally.
+
+  Content & data  CC BY-SA 4.0        see LICENSE-CONTENT
+  SPDX            CC-BY-SA-4.0
+  Covers          content/sensors/*.md, the prose and pages generated from
+                  them (the published site, md/, rss.xml, llms.txt), and the
+                  catalog data derived from them, including
+                  cli/data/sensors.json.
+
+The npm package `softwareobservatory` is MIT-licensed software that bundles
+CC BY-SA 4.0 data at data/sensors.json. Using the CLI or the MCP server
+imposes no obligations; republishing the catalog content requires attribution
+and ShareAlike.
+
+Attribution string for reuse of the content:
+
+  "Software Observatory" by Justin Abrahms (https://softwareobservatory.com),
+  licensed under CC BY-SA 4.0
+  (https://creativecommons.org/licenses/by-sa/4.0/).
+
+Copyright (c) 2026 Justin Abrahms

@@ -4,13 +4,29 @@ on:
   push:
     branches: [main]
   pull_request:
+  schedule:
+    # Weekly external-link audit, Mondays 06:17 UTC. Network checks are slow and
+    # flaky under PR load, so they are not on the push path; this job carries
+    # them and files an issue when links rot, so nobody has to remember to look.
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
 
 permissions:
   contents: read
   id-token: write # npm trusted publishing (OIDC) for the publish job
 
 jobs:
-  build:
+  # ---------------------------------------------------------------------------
+  # Every gate, in one job, cheapest and most diagnostic first. The steps invoke
+  # Makefile targets rather than scripts directly so that `make check` locally
+  # and CI cannot diverge — there is one definition of what each gate is.
+  #
+  # Ordering: the content-only checks run BEFORE the build. A frontmatter or
+  # citation error is a property of the content, not of the generated site, and
+  # reporting it in 2 seconds beats reporting it after a full build. The link
+  # check necessarily runs after, since it reads the generated HTML.
+  # ---------------------------------------------------------------------------
+  check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -25,17 +41,28 @@ jobs:
           python -m venv .venv
           .venv/bin/pip install pyyaml markdown
 
+      # Also asserts that content, build.py and scripts/vocabulary.py still
+      # agree on the reference-kind vocabulary. See check_vocabulary_drift().
+      - name: Check frontmatter and vocabulary
+        run: make check-frontmatter
+
+      - name: Check citations (offline)
+        run: make check-citations
+
       - name: Build
-        run: .venv/bin/python scripts/build.py
+        run: make build
 
-      - name: Check frontmatter
-        run: .venv/bin/python scripts/check_frontmatter.py
-
-      - name: Check links
-        run: .venv/bin/python scripts/check_links.py
+      - name: Check links (internal)
+        run: make check-links
 
       - name: Test CLI
-        run: node cli/test/smoke.mjs
+        run: make cli-test
+
+      # Fails if any top-level path is in neither the deploy allow-list nor the
+      # explicitly-private list, so a new directory cannot silently reach the
+      # public site or silently fail to.
+      - name: Check deploy manifest
+        run: make check-deploy
 
       - name: Upload built site
         if: github.event_name == 'push'
@@ -44,14 +71,24 @@ jobs:
           name: site
           path: |
             index.html
-            pages/
+            404.html
+            catalog/
+            atlas/
+            framework/
+            glossary/
+            about/
+            sensors/
             css/
             js/
+            og/
             search-index.json
+            sitemap.xml
+            rss.xml
+            llms.txt
           retention-days: 7
 
   deploy:
-    needs: build
+    needs: check
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
@@ -67,17 +104,10 @@ jobs:
           python -m venv .venv
           .venv/bin/pip install pyyaml markdown
 
-      - name: Build
-        run: .venv/bin/python scripts/build.py
-
-      - name: Check frontmatter
-        run: .venv/bin/python scripts/check_frontmatter.py
-
-      - name: Check links
-        run: .venv/bin/python scripts/check_links.py
-
-      - name: Test CLI
-        run: node cli/test/smoke.mjs
+      # NOTE: the gates are deliberately NOT repeated here. They ran in `check`
+      # on this same commit with this same code; re-running them doubled CI time
+      # and, more to the point, made the pipeline look like it had two
+      # independent opinions when it had one.
 
       - name: Configure SSH
         run: |
@@ -97,28 +127,16 @@ jobs:
           echo "abrah.ms ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDWwAzVcplm5TMfVqPvxIhmcGtahqbiKLyXUvnyvlJSG" >> ~/.ssh/known_hosts
           echo "abrah.ms ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDU6xfBzF9PGXM/Bks7K7MLeYMlk7vOX9hd2/2qdm42Dga0rgVdAsEpwGpp7dx8Q4veJQf8KJsdOTtMapfI9E5WcnIBnsjofRHIpKPk+wlF7anb0W+HiNcN3bheZALqafp0losjiKKY41T+SYDRuL9TOvk63sKP5FRUHCWyZo7OzqH2KvaVfM2VCuPK+SwVAFImaUfzru4z2/mO5IsKQYGbLewMVMnRJzv73DC8HWnTmBDPAuiiji1kvc2gMQ8m32tgKPXKzN3AZcN08zGMkY/Wm4fNjTkybQFcUW3gADCubYjj1q1BFNCLl9Yds8Bh00nN3WJMS5Vsl57qd9asIoirvtlnZN1QkCEqoRRLCsDkhpzJCYFVY5FAOllIHaOW3kKkVjEB7eq5CbJkwrDHnlOMKRP6PhECktisg+t/ff2EqU4VeHFEyWq+BeZa/2xjf5BMrS6muQ1PmoLpJUniEYfSemky63ntJ8kwcbYnS3Gijb0YLYvhmNozDNySjSWPH/c=" >> ~/.ssh/known_hosts
 
+      # `make deploy` runs check-deploy, builds, and rsyncs the ALLOW-LIST
+      # defined once in the Makefile. The workflow deliberately does not carry
+      # its own copy of the rsync rules: the previous deny-list existed in two
+      # places that had already drifted apart, and the union of what they forgot
+      # to exclude is what ended up on the public web server.
       - name: Deploy
-        run: |
-          rsync -avz --delete \
-            -e "ssh -i ~/.ssh/softwareobservatory-deploy" \
-            --exclude='.git/' \
-            --exclude='.venv/' \
-            --exclude='.github/' \
-            --exclude='content/' \
-            --exclude='templates/' \
-            --exclude='archive-*/' \
-            --exclude='scripts/' \
-            --exclude='cli/' \
-            --exclude='Makefile' \
-            --exclude='.gitignore' \
-            --exclude='AGENTS.md' \
-            --exclude='CONTRIBUTING.md' \
-            --exclude='README.md' \
-            --exclude='TODO.md' \
-            ./ observer@abrah.ms:.
+        run: make deploy
 
   publish-npm:
-    needs: build
+    needs: check
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
@@ -153,3 +171,102 @@ jobs:
             # list this repo + workflow as a trusted publisher (already configured).
             npm publish --provenance
           fi
+
+  # ---------------------------------------------------------------------------
+  # Weekly network audit. check_links.py --external has existed, worked, and
+  # never once run in CI; 295 external URLs were rotting with nothing watching.
+  # Link rot is not caused by a push, so gating pushes on it would only add
+  # flake — it is a background property of the corpus, and belongs on a timer
+  # with an issue as its output.
+  # ---------------------------------------------------------------------------
+  external-audit:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install pyyaml markdown
+
+      # The external checkers read the generated site, so it has to exist. The
+      # TTL caches (.link-cache.json / .citation-cache.json) are not restored
+      # between runs, so every scheduled run is a full, uncached sweep.
+      - name: Build
+        run: make build
+
+      - name: External link check
+        id: links
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          .venv/bin/python scripts/check_links.py --external --ttl 30 2>&1 | tee links.log
+
+      - name: External citation check
+        id: citations
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          .venv/bin/python scripts/check_citations.py --external --ttl 30 2>&1 | tee citations.log
+
+      - name: File an issue if anything rotted
+        if: steps.links.outcome == 'failure' || steps.citations.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          {
+            echo "The weekly external audit failed. Run: $RUN_URL"
+            echo
+            echo "| check | result |"
+            echo "| --- | --- |"
+            echo "| external links | ${{ steps.links.outcome }} |"
+            echo "| external citations | ${{ steps.citations.outcome }} |"
+            echo
+            echo '### check_links.py --external'
+            echo '```'
+            tail -c 20000 links.log 2>/dev/null || echo "(no output)"
+            echo '```'
+            echo
+            echo '### check_citations.py --external'
+            echo '```'
+            tail -c 20000 citations.log 2>/dev/null || echo "(no output)"
+            echo '```'
+          } > issue.md
+
+          # One rolling issue, not one per week. If last week's is still open,
+          # comment on it; a pile of near-identical issues is how a monitor
+          # trains people to ignore it.
+          EXISTING=$(gh issue list --label link-rot --state open \
+            --json number --jq '.[0].number // empty')
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body-file issue.md
+            echo "Commented on existing issue #$EXISTING"
+          else
+            gh label create link-rot \
+              --description "Automated weekly external link/citation audit" \
+              --color B60205 2>/dev/null || true
+            gh issue create \
+              --title "External link/citation audit failed ($(date -u +%Y-%m-%d))" \
+              --label link-rot \
+              --body-file issue.md
+          fi
+
+      # The steps above are continue-on-error so that both audits always run and
+      # the issue always gets filed; this makes the job itself go red so the
+      # scheduled run is visibly failing in the Actions list too.
+      - name: Reflect audit result in job status
+        if: steps.links.outcome == 'failure' || steps.citations.outcome == 'failure'
+        run: |
+          echo "External audit failed — see the link-rot issue."
+          exit 1

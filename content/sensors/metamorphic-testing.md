@@ -63,14 +63,14 @@ A metamorphic relation is a statement about how the output of a function
 should change when the input changes in a specific way:
 
 ```
-sort(sort(x))      == sort(x)          # idempotence
-encrypt(decrypt(x)) == x              # round-trip
-f(x) == f(shuffle(x))                 # order-independence
+sort(sort(x))       == sort(x)         # idempotence
+decrypt(encrypt(x)) == x               # round-trip
+sort(x) == sort(shuffle(x))            # order-independence
 
 # Numeric examples:
-abs(x) == abs(-x)                     # sign-independence
-abs(x) + abs(y) == abs(x + y)          # triangle inequality
-max(x, y) == max(y, x)                # commutativity
+abs(x) == abs(-x)                      # sign-independence
+abs(x + y) <= abs(x) + abs(y)          # triangle inequality
+max(x, y) == max(y, x)                 # commutativity
 ```
 
 You don't need to know what `sort(x)` returns. You just need to know that

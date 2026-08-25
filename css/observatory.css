@@ -49,7 +49,7 @@
     --text-soft:   #4a4a45;
     --text-dim:    #5c5c56;
     --accent:      #9a6a1f;
-    --accent-soft: #b8893a;
+    --accent-soft: #8a6229;   /* 5.20:1 on --bg, 5.44:1 on white */
     --accent-glow: rgba(154,106,31,0.10);
     --signal:      #2b6cb0;
     --signal-soft: rgba(43,108,176,0.08);
@@ -81,6 +81,32 @@ body {
   text-rendering: optimizeLegibility;
 }
 a { color: inherit; text-decoration: none; transition: color .2s ease; }
+
+/* Visible keyboard focus for every interactive control. --accent measures
+   7.92:1 against the dark background and 4.51:1 against the light one, both
+   well clear of the 3:1 WCAG 1.4.11 / 2.4.7 floor for a focus indicator. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+/* Skip-link styling. The markup does not emit one yet; when build.py adds
+   `<a href="#main" class="skip-link">Skip to content</a>` as the first child
+   of <body>, this makes it behave correctly. */
+.skip-link {
+  position: absolute;
+  left: .5rem;
+  top: -4rem;
+  z-index: 200;
+  padding: .6rem 1rem;
+  background: var(--bg-elev);
+  color: var(--text);
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  font-size: .9rem;
+  transition: top .15s ease;
+}
+.skip-link:focus { top: .5rem; }
 a:hover { color: var(--accent); }
 
 /* Inline body links — visible as links at rest */
@@ -105,6 +131,7 @@ a.wikilink:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1.25rem;
   padding: 1.1rem 2rem;
   background: var(--bg-soft);
   backdrop-filter: blur(12px);
@@ -128,6 +155,8 @@ a.wikilink:hover {
 .logo:hover .logo-mark { transform: rotate(-12deg); }
 .primary-nav {
   display: flex;
+  flex: 0 1 auto;
+  min-width: 0;
   gap: 2rem;
   font-size: .88rem;
   font-weight: 400;
@@ -145,7 +174,13 @@ a.wikilink:hover {
 .primary-nav a:hover::after { width: 100%; }
 .search-box {
   position: relative;
+  flex: 0 1 11rem;
+  min-width: 0;
+  transition: flex-basis .25s;
 }
+/* Grow on focus, but only into space the header actually has: flex-shrink
+   keeps the box inside the viewport instead of pushing the page wider. */
+.search-box:focus-within { flex-basis: 15rem; }
 .search-input {
   font-size: .82rem;
   color: var(--text);
@@ -154,13 +189,12 @@ a.wikilink:hover {
   border: 1px solid var(--border-soft);
   padding: .35rem .7rem;
   border-radius: 4px;
-  width: 11rem;
-  outline: none;
-  transition: border-color .2s, width .25s;
+  width: 100%;
+  min-width: 0;
+  transition: border-color .2s;
 }
 .search-input:focus {
-  border-color: var(--accent-soft);
-  width: 15rem;
+  border-color: var(--accent);
 }
 .search-input::placeholder { color: var(--text-dim); }
 .search-results {
@@ -168,6 +202,7 @@ a.wikilink:hover {
   top: calc(100% + 6px);
   right: 0;
   width: 22rem;
+  max-width: calc(100vw - 2rem);
   max-height: 24rem;
   overflow-y: auto;
   background: var(--bg-elev);
@@ -213,7 +248,19 @@ a.wikilink:hover {
   font-family: var(--font-mono);
   font-size: .76rem;
   color: var(--text-dim);
+  line-height: 1.5;
 }
+.search-empty-actions {
+  margin-top: .55rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem .5rem;
+}
+.search-empty-actions a {
+  color: var(--accent);
+  border-bottom: 1px solid var(--accent-soft);
+}
+.search-empty-actions a:hover { border-bottom-color: var(--accent); }
 
 /* ── Hero ──────────────────────────────────────────────────────────────── */
 .hero {
@@ -470,6 +517,8 @@ a.wikilink:hover {
   justify-content: center;
   margin-left: .5rem;
   padding: .2rem;
+  min-width: 24px;
+  min-height: 24px;
   border: none;
   background: none;
   color: var(--text-dim);
@@ -535,7 +584,10 @@ h3:hover .heading-anchor,
   margin: 0 auto;
   padding: 2rem;
   display: grid;
-  grid-template-columns: 240px 1fr;
+  /* minmax(0,...) instead of a bare 1fr: the default `min-width: min-content`
+     on a grid track let the card column's widest unbreakable child push the
+     whole page sideways between 861px and 1023px. */
+  grid-template-columns: 240px minmax(0, 1fr);
   gap: 3rem;
 }
 .filter-sidebar {
@@ -586,7 +638,7 @@ h3:hover .heading-anchor,
 }
 .signal-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.5rem;
 }
 .signal-card {
@@ -607,6 +659,7 @@ h3:hover .heading-anchor,
 }
 .signal-card-meta {
   display: flex;
+  flex-wrap: wrap;
   gap: .5rem;
   margin-bottom: 1rem;
 }
@@ -649,10 +702,14 @@ h3:hover .heading-anchor,
   gap: 3rem;
   align-items: start;
 }
+.wiki-layout > * { min-width: 0; }
 .wiki-layout .signal-detail {
   max-width: none;
   margin: 0;
   padding: 3rem 0 5rem;
+  /* without this the 1fr track is sized by the widest unwrappable child
+     (a `pre` diagram) and the whole page scrolls sideways */
+  min-width: 0;
 }
 .signal-detail .breadcrumb {
   font-family: var(--font-mono);
@@ -704,8 +761,9 @@ h3:hover .heading-anchor,
   line-height: 1.5;
   color: var(--text-soft);
   margin: 1.5rem 0;
-  white-space: pre-wrap;
-  word-break: break-word;
+  white-space: pre;
+  max-width: 100%;
+  overscroll-behavior-x: contain;
 }
 .signal-detail-body pre code {
   font-family: var(--font-mono);
@@ -1423,6 +1481,17 @@ a.wikilink:hover {
   display: block;
   z-index: 1;
 }
+/* The visible dot is 13-14px; this invisible pad lifts the pointer/touch
+   target to the 24px WCAG 2.5.8 minimum without changing the plot. */
+.scatter-point::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 24px;
+  height: 24px;
+  transform: translate(-50%, -50%);
+}
 .scatter-dot {
   display: flex;
   align-items: center;
@@ -2072,17 +2141,104 @@ a.wikilink:hover {
 
 /* ── Responsive ────────────────────────────────────────────────────────── */
 @media (max-width: 860px) {
-  .hero { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
+  /* The nav row costs the header ~26px; tighten the hero rhythm by more
+     than that so the title and both calls to action stay above the fold. */
+  .hero { grid-template-columns: 1fr; padding: 1.8rem 1.5rem 3rem; min-height: 0; }
   .hero-visual { display: none; }
+  .eyebrow { margin-bottom: 1rem; }
+  .hero-title { margin-bottom: 1.4rem; }
+  .hero-lede { margin-bottom: 1.8rem; }
   .pillars { grid-template-columns: 1fr; gap: 1.5rem; padding: 3rem 1.5rem; }
   .catalog-layout { grid-template-columns: 1fr; padding: 1.5rem; }
   .filter-sidebar { position: static; }
-  .signal-grid { grid-template-columns: 1fr; }
-  .primary-nav { display: none; }
+  .signal-grid { grid-template-columns: minmax(0, 1fr); }
+
+  /* ── Mobile navigation ───────────────────────────────────────────────
+     The nav used to be `display: none` here, which left a reader who
+     landed on a deep-linked sensor page with no route to the catalog or
+     the atlas at all. It now wraps onto its own full-bleed row under the
+     logo and scrolls horizontally when the five items do not fit. */
+  .site-header {
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: .75rem;
+    row-gap: .4rem;
+  }
+  .logo { flex: 0 1 auto; min-width: 0; gap: .45rem; font-size: 1.02rem; }
+  .primary-nav {
+    display: flex;
+    order: 3;
+    flex: 1 0 100%;
+    min-width: 0;
+    gap: 0;
+    justify-content: space-between;
+    font-size: .84rem;
+    /* full-bleed: cancel the header's horizontal and bottom padding so the
+       row runs edge to edge and the scroll affordance is obvious */
+    margin: 0 -1.5rem -1rem;
+    padding: 0 .6rem;
+    border-top: 1px solid var(--border);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .primary-nav::-webkit-scrollbar { display: none; }
+  .primary-nav a {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;          /* platform tap-target guideline */
+    padding: 0 .55rem;
+    white-space: nowrap;
+  }
+  .primary-nav a::after { left: .55rem; bottom: .55rem; }
+  .primary-nav a:hover::after { width: calc(100% - 1.1rem); }
+
+  /* Search: 16px or larger, or iOS Safari zooms the whole page on focus.
+     Fluid width so the header never exceeds the viewport. */
+  .search-box { flex: 1 1 7rem; min-width: 0; max-width: 16rem; }
+  .search-box:focus-within { flex-basis: 7rem; }
+  .search-input {
+    font-size: 16px;
+    padding: .4rem .6rem;
+    min-height: 38px;
+  }
+  .search-results {
+    width: calc(100vw - 3rem);
+    max-height: min(24rem, 60vh);
+  }
+
+  /* Scatter labels are centred on their dot, so points near the right edge
+     of the plot used to push the whole document sideways. Flip the far-right
+     ones to right-aligned and clip anything still hanging over. The literal
+     `left:8`/`left:9` match is the same style-attribute idiom the layers/
+     sensors rules already use; there are no 8.x% or 9.x% points. */
+  .scatter-point[style*="left:8"] .scatter-tag,
+  .scatter-point[style*="left:9"] .scatter-tag {
+    left: auto;
+    right: 0;
+    transform: none;
+  }
+  .scatter-frame { overflow-x: clip; }
+
+  /* Wide prose tables scroll rather than reflowing: like the `pre` blocks,
+     the column alignment is the content. `display: block` turns the table
+     itself into the scroll container -- the generated markup has no wrapper
+     element to hang it on. */
+  .signal-detail-body table {
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+
   .entry { grid-template-columns: 1fr; gap: .3rem; }
   .entry-family { display: none; }
   .about-content .contributors { grid-template-columns: 1fr; }
-  .site-header { padding: 1rem 1.5rem; }
+  .site-header { padding: .55rem 1.5rem 1rem; }
   .wiki-layout { grid-template-columns: 1fr; padding: 0 1.5rem; }
   .wiki-sidebar { position: static; padding-top: 0; }
   .see-also-grid { grid-template-columns: 1fr; }
@@ -2103,6 +2259,12 @@ a.wikilink:hover {
   .hero-title { font-size: 2rem; }
   .hero-actions { flex-direction: column; }
   .featured-signal { padding: 2rem 1.5rem; }
+  .site-header { padding: .55rem 1rem 1rem; }
+  .primary-nav { margin: 0 -1rem -1rem; }
+  .logo { font-size: .95rem; }
+  .logo-mark svg { width: 20px; height: 20px; }
+  .search-box { max-width: 11rem; }
+  .search-results { width: calc(100vw - 2rem); }
 }
 
 /* References section */
@@ -2123,6 +2285,7 @@ a.wikilink:hover {
   padding: .35rem 0;
   line-height: 1.5;
   color: var(--text-soft);
+  overflow-wrap: anywhere;
 }
 .reference-list li a {
   color: var(--text);
@@ -2133,7 +2296,8 @@ a.wikilink:hover {
 }
 .reference-tools li {
   display: flex;
-  gap: .6rem;
+  flex-wrap: wrap;
+  gap: 0 .6rem;
   align-items: baseline;
 }
 .ref-title {
