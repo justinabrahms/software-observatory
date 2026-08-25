@@ -23,6 +23,8 @@ from pathlib import Path
 import yaml
 import markdown
 
+from vocabulary import REFERENCE_KINDS_WITH_OWN_SECTION
+
 
 SITE_ROOT = Path(__file__).resolve().parent.parent
 CONTENT_DIR = SITE_ROOT / "content"
@@ -508,11 +510,77 @@ def independence_dots_html(ind_str):
 
 # ── HTML templates ──────────────────────────────────────────────────────────
 
-def html_head(title, canonical="", json_ld=""):
-    """canonical is a site-relative path like 'catalog/' ('' for the root)."""
+def og_card_items(sensors):
+    """The inputs each per-sensor OG card is rendered from (see gen_og.py)."""
+    return [
+        {
+            "slug": s["slug"],
+            "title": s.get("title", ""),
+            "family_slug": s.get("family", ""),
+            "family_name": FAMILY_BY_SLUG.get(s.get("family", ""), {}).get(
+                "name", s.get("family", "")
+            ),
+            "oracle": s.get("oracle", ""),
+            "independence": s.get("independence", ""),
+            "type": s.get("type", ""),
+            "id": s.get("id", ""),
+        }
+        for s in sensors
+    ]
+
+
+def sensor_og_image(slug):
+    """Absolute URL of a sensor's own OG card, or None if it hasn't been
+    rendered (missing browser, new entry on a machine without playwright) —
+    in which case the caller falls back to the site-wide card."""
+    if (SITE_ROOT / "og" / "cards" / f"{slug}.png").exists():
+        return f"{SITE_URL}/og/cards/{slug}.png"
+    return None
+
+
+def meta_description(text, limit=158):
+    """Squeeze `text` into a meta-description-sized string.
+
+    Search results and link unfurls cut around 155-160 characters, so trim to
+    a sentence boundary when there is a usable one and otherwise to a word
+    boundary with an ellipsis — never mid-word.
+    """
+    t = " ".join(str(text or "").split())
+    if len(t) <= limit:
+        return t
+    window = t[: limit + 1]
+    ends = [m.end() for m in re.finditer(r"""[.!?]+["')\]]*(?=\s|$)""", window)]
+    if ends and ends[-1] >= limit * 0.55:
+        return window[: ends[-1]].rstrip()
+    return window.rsplit(" ", 1)[0].rstrip(" ,;:—-") + "…"
+
+
+# Fallback description, used only if a page generator forgets to pass one.
+SITE_DESCRIPTION = (
+    "A catalog of epistemic sensors for software correctness — the observable "
+    "signals that reduce uncertainty about whether a system behaves as intended."
+)
+
+
+def html_head(title, canonical=None, json_ld="", description=None,
+              og_image=None, og_type="website"):
+    """canonical is a site-relative path like 'catalog/' ('' for the root);
+    pass None to omit the canonical link entirely.
+
+    description is this page's own meta/og/twitter description — every page
+    must supply one, or all of them share a single boilerplate string and no
+    shared link says anything about what it points at.
+
+    og_image is an absolute URL; defaults to the site-wide card. Relative
+    OG image paths are not reliably resolved by crawlers, so it is always
+    emitted absolute.
+    """
     canonical_link = ""
-    if canonical:
+    if canonical is not None:
         canonical_link = f'\n  <link rel="canonical" href="{SITE_URL}/{canonical}">'
+    desc = meta_description(description or SITE_DESCRIPTION)
+    desc_attr = html.escape(desc, quote=True)
+    image = og_image or f"{SITE_URL}/og.png"
     json_ld_block = ""
     if json_ld:
         json_ld_block = f'\n  <script type="application/ld+json">\n{json_ld}\n  </script>'
@@ -525,17 +593,19 @@ def html_head(title, canonical="", json_ld=""):
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <title>{html.escape(full_title)}</title>
-  <meta name="description" content="A catalog of epistemic sensors for software correctness — the observable signals that reduce uncertainty about whether a system is correct, maintainable, and behaving as intended.">{canonical_link}
-  <meta property="og:type" content="website">
+  <meta name="description" content="{desc_attr}">{canonical_link}
+  <meta property="og:type" content="{og_type}">
   <meta property="og:title" content="{html.escape(full_title)}">
-  <meta property="og:description" content="A catalog of epistemic sensors for software correctness.">
-  <meta property="og:url" content="{SITE_URL}/{canonical}">
-  <meta property="og:image" content="{SITE_URL}/og.png">
+  <meta property="og:description" content="{desc_attr}">
+  <meta property="og:url" content="{SITE_URL}/{canonical or ''}">
+  <meta property="og:image" content="{image}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta property="og:site_name" content="Software Observatory">
-  <meta name="twitter:card" content="summary">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{html.escape(full_title)}">
-  <meta name="twitter:description" content="A catalog of epistemic sensors for software correctness.">
-  <meta name="twitter:image" content="{SITE_URL}/og.png">
+  <meta name="twitter:description" content="{desc_attr}">
+  <meta name="twitter:image" content="{image}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -592,13 +662,23 @@ def html_footer():
   </footer>"""
 
 
-def html_page(title, body_content, canonical="", json_ld=""):
-    """canonical: site-relative URL for the canonical link (e.g. 'about/').
-    json_ld: JSON-LD string to inject as a script block in <head>."""
+def html_page(title, body_content, canonical=None, json_ld="", description=None,
+              og_image=None, og_type="website"):
+    """canonical: site-relative URL for the canonical link (e.g. 'about/');
+    '' is the site root, None omits the link.
+    json_ld: JSON-LD string to inject as a script block in <head>.
+    description: this page's own meta description (see html_head)."""
     # Deep-linkable headings get ids before the page is assembled
     body_content = add_heading_ids(body_content)
-    return f"""{html_head(title, canonical=canonical, json_ld=json_ld)}
+    # Every page needs exactly one <main id="main"> as the skip-link target and
+    # the document's main landmark. The index page emits its own; wrap the rest.
+    if "<main" not in body_content:
+        body_content = f'  <main id="main" tabindex="-1">\n{body_content}\n  </main>'
+    return f"""{html_head(title, canonical=canonical, json_ld=json_ld,
+                          description=description, og_image=og_image,
+                          og_type=og_type)}
 <body>
+  <a href="#main" class="skip-link">Skip to content</a>
 {html_header()}
 {body_content}
 {html_footer()}
@@ -636,7 +716,7 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
     if references:
         tools = [r for r in references if r.get("kind") == "tool"]
         papers = [r for r in references if r.get("kind") == "publication"]
-        others = [r for r in references if r.get("kind") not in ("tool", "publication")]
+        others = [r for r in references if r.get("kind") not in REFERENCE_KINDS_WITH_OWN_SECTION]
 
         sections = []
 
@@ -797,7 +877,17 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
     </aside>
   </div>"""
 
-    page_html = html_page(f"{sensor['title']}", body, canonical=f"sensors/{sensor['slug']}/")
+    # The catalog-card blurb is already a self-contained opening sentence
+    # about this sensor specifically — exactly what a search snippet or a
+    # Slack unfurl should say.
+    page_html = html_page(
+        f"{sensor['title']}",
+        body,
+        canonical=f"sensors/{sensor['slug']}/",
+        description=blurb_text(sensor.get("body_html", ""), 200),
+        og_image=sensor_og_image(sensor["slug"]),
+        og_type="article",
+    )
     out_path = output_dir / "sensors" / sensor["slug"] / "index.html"
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w") as f:
@@ -892,7 +982,14 @@ def generate_catalog_page(sensors, output_dir):
     </div>
   </div>"""
 
-    page_html = html_page("Sensor Catalog", body, canonical="catalog/")
+    page_html = html_page(
+        "Sensor Catalog", body, canonical="catalog/",
+        description=(
+            f"All {len(sensors)} epistemic sensors, grouped into the "
+            f"{len(FAMILIES)} families — what each one detects, what it "
+            "misses, and how strong its verdict is."
+        ),
+    )
     out_path = output_dir / "catalog" / "index.html"
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w") as f:
@@ -1164,7 +1261,14 @@ def generate_atlas_page(sensors, output_dir):
     </div>
   </div>"""
 
-    page_html = html_page("Sensor Atlas", body, canonical="atlas/")
+    page_html = html_page(
+        "Sensor Atlas", body, canonical="atlas/",
+        description=(
+            f"A map of the {len(FAMILIES)} sensor families against the "
+            "software lifecycle: which signals are available while you write "
+            "code, and which only appear in production."
+        ),
+    )
     out_path = output_dir / "atlas" / "index.html"
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w") as f:
@@ -1297,7 +1401,7 @@ def generate_index_page(sensors, output_dir):
         </table>
       </details>"""
 
-    body = f"""  <main>
+    body = f"""  <main id="main" tabindex="-1">
     <section class="hero">
       <div class="hero-inner">
         <p class="eyebrow">An industry resource</p>
@@ -1443,7 +1547,14 @@ def generate_index_page(sensors, output_dir):
         },
     }, indent=2)
 
-    page_html = html_page("Software Observatory", body, canonical="", json_ld=website_ld)
+    page_html = html_page(
+        "Software Observatory", body, canonical="", json_ld=website_ld,
+        description=(
+            f"{len(sensors)} epistemic sensors for software correctness: the "
+            "signals that tell you whether a system works, what each one can "
+            "detect, and what it cannot."
+        ),
+    )
     out_path = output_dir / "index.html"
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w") as f:
@@ -1621,7 +1732,14 @@ def generate_framework_page(sensors, output_dir):
     </section>
   </div>"""
 
-    page_html = html_page("Framework", body, canonical="framework/")
+    page_html = html_page(
+        "Framework", body, canonical="framework/",
+        description=(
+            "Six dimensions that characterize every sensor — oracle strength, "
+            "independence, scope, latency, actionability, and predictive vs "
+            "retrospective — and why ranking sensors is the wrong move."
+        ),
+    )
     out_path = output_dir / "framework" / "index.html"
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w") as f:
@@ -1759,7 +1877,14 @@ def generate_about_page(output_dir):
     </p>
   </div>"""
 
-    page_html = html_page("About", body, canonical="about/")
+    page_html = html_page(
+        "About", body, canonical="about/",
+        description=(
+            "Why the Observatory exists, who maintains it, how entries are "
+            "researched and cited, and how to propose a sensor the catalog "
+            "is missing."
+        ),
+    )
     out_path = output_dir / "about" / "index.html"
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w") as f:
@@ -1809,7 +1934,13 @@ def generate_contact_page(output_dir):
     </p>
   </div>"""
 
-    page_html = html_page("Contact", body, canonical="contact/")
+    page_html = html_page(
+        "Contact", body, canonical="contact/",
+        description=(
+            "How to reach the Observatory — corrections, missing sensors, "
+            "citations to add, and where to file each kind of change."
+        ),
+    )
     out_path = output_dir / "contact" / "index.html"
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w") as f:
@@ -1874,7 +2005,13 @@ def generate_privacy_page(output_dir):
     </p>
   </div>"""
 
-    page_html = html_page("Privacy", body, canonical="privacy/")
+    page_html = html_page(
+        "Privacy", body, canonical="privacy/",
+        description=(
+            "A static site with cookieless, self-hosted analytics: what is "
+            "counted, what is never collected, and what leaves your browser."
+        ),
+    )
     out_path = output_dir / "privacy" / "index.html"
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w") as f:
@@ -2001,10 +2138,10 @@ def generate_glossary_page(output_dir):
         ("metamorphic-testing",
          "Metamorphic testing",
          "A testing technique where you don't know the correct answer, but you "
-         "know how the answer should change when the input changes. If "
-         "<code>f(x) == f(-x)</code> for a square root, then "
-         "<code>sqrt(4) == sqrt(-4)</code> must hold. You don't need an oracle; "
-         "you need a relation. See "
+         "know how the answer should change when the input changes. You may not "
+         "know what <code>sqrt(2)</code> is, but you know "
+         "<code>sqrt(x * 4) == 2 * sqrt(x)</code> must hold. You don't need a "
+         "specified oracle; the relation is a partial one. See "
          '<a href="/sensors/metamorphic-testing/" class="wikilink">the entry</a>.'),
          ("high-cardinality",
           "High cardinality",
@@ -2046,7 +2183,14 @@ def generate_glossary_page(output_dir):
 {sections.rstrip()}
   </div>"""
 
-    page_html = html_page("Glossary", body, canonical="glossary/")
+    page_html = html_page(
+        "Glossary", body, canonical="glossary/",
+        description=(
+            "Definitions for the vocabulary the catalog runs on — epistemic "
+            "sensor, oracle, independence, actionability, flakiness, and the "
+            "rest, in one place."
+        ),
+    )
     out_path = output_dir / "glossary" / "index.html"
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w") as f:
@@ -2095,11 +2239,42 @@ def generate_categories_page(sensors, output_dir):
 {sections.rstrip()}
   </div>"""
 
-    page_html = html_page("Sensor Categories", body, canonical="categories/")
+    page_html = html_page(
+        "Sensor Categories", body, canonical="categories/",
+        description=(
+            "Cross-cutting tags that cut across the sensor families — find "
+            "every adversarial, mechanical, or production-only sensor in one "
+            "list."
+        ),
+    )
     out_path = output_dir / "categories" / "index.html"
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w") as f:
         f.write(page_html)
+
+
+SEARCH_STOPWORDS = frozenset("""
+the a an and or but if of to in on for with is are was were be been being it its
+this that these those as at by from not no you your we our they their he she his
+her can could would should will may might must do does did done have has had
+what which who when where why how all any both each few more most other some
+such only own same so than too very just now into out up down over under again
+""".split())
+
+
+def search_terms(body_html, min_len=3):
+    """Distinct lowercase words from a sensor body, for the search index.
+
+    A deduplicated term set covers the whole entry; a truncated prose prefix
+    only covers its opening, which is why searching 'flaky' or 'regression'
+    used to return nothing.
+    """
+    text = html.unescape(re.sub(r"<[^>]+>", " ", body_html or ""))
+    text = re.sub(r"[^A-Za-z0-9\s-]", " ", text).lower()
+    return {
+        w for w in text.split()
+        if len(w) >= min_len and w not in SEARCH_STOPWORDS and not w.isdigit()
+    }
 
 
 def generate_search_index(sensors, output_dir):
@@ -2118,12 +2293,24 @@ def generate_search_index(sensors, output_dir):
     for s in sensors:
         fam = FAMILY_BY_SLUG.get(s.get("family", ""), {})
         blurb = blurb_text(s.get("body_html", ""), limit=160)
+        # "text" and "keywords" exist so search can match words that appear in
+        # the body but not the title or blurb -- flaky, regression, performance.
+        # A deduplicated term set rather than a prose prefix: a prefix misses
+        # terms that appear late in the entry, which is most of them. Sorted so
+        # the output is deterministic. js/main.js escapes on render, so these
+        # stay unescaped here.
+        text = " ".join(sorted(search_terms(s.get("body_html", ""))))
+        keywords = " ".join(
+            list(s.get("categories", []) or []) + s["slug"].split("-")
+        ).lower()
         entries.append({
             "title": s["title"],
             "kind": "sensor",
             "family": fam.get("name", ""),
             "url": f"/sensors/{s['slug']}/",
             "blurb": blurb,
+            "keywords": keywords,
+            "text": text,
         })
     with open(output_dir / "search-index.json", "w") as f:
         json.dump(entries, f, indent=1, sort_keys=True)
@@ -2132,27 +2319,52 @@ def generate_search_index(sensors, output_dir):
 SITE_URL = "https://softwareobservatory.com"
 
 
-def generate_sitemap(sensors, output_dir):
-    """Write sitemap.xml listing every indexable URL."""
-    urls = [
-        ("", ""),
-        ("catalog/", ""),
-        ("atlas/", ""),
-        ("framework/", ""),
-        ("about/", ""),
-        ("contact/", ""),
-        ("privacy/", ""),
-        ("glossary/", ""),
-        ("categories/", ""),
-    ]
+def _iso_date(value):
+    """Normalize a frontmatter date (str or datetime.date) to YYYY-MM-DD, or
+    return None if it isn't one."""
+    text = str(value or "")[:10]
+    return text if re.fullmatch(r"\d{4}-\d{2}-\d{2}", text) else None
+
+
+def sitemap_lastmods(sensors):
+    """(per-sensor lastmod, site-wide lastmod).
+
+    Derived from each entry's `last_reviewed` frontmatter rather than from
+    file mtimes or wall-clock time: mtimes differ between a working copy and
+    a fresh CI checkout, and anything clock-derived would rewrite sitemap.xml
+    on every build (and re-upload it on every deploy). `last_reviewed` is
+    content, versioned with the entry, and is exactly the date a crawler
+    should re-check.
+
+    Section pages are aggregates of the catalog, so they carry the newest
+    entry date.
+    """
+    per_sensor = {}
     for s in sensors:
-        urls.append((f"sensors/{s['slug']}/", ""))
+        d = _iso_date(s.get("last_reviewed"))
+        if d:
+            per_sensor[s["slug"]] = d
+    site = max(per_sensor.values()) if per_sensor else None
+    return per_sensor, site
+
+
+def generate_sitemap(sensors, output_dir):
+    """Write sitemap.xml listing every indexable URL with a <lastmod>."""
+    per_sensor, site_lastmod = sitemap_lastmods(sensors)
+    urls = [(path, site_lastmod) for path in (
+        "", "catalog/", "atlas/", "framework/", "about/",
+        "contact/", "privacy/", "glossary/", "categories/",
+    )]
+    for s in sensors:
+        urls.append((f"sensors/{s['slug']}/", per_sensor.get(s["slug"], site_lastmod)))
     lines = ['<?xml version="1.0" encoding="UTF-8"?>',
              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for path, _ in urls:
+    for path, lastmod in urls:
         loc = f"{SITE_URL}/{path}" if path else SITE_URL
         lines.append("  <url>")
         lines.append(f"    <loc>{loc}</loc>")
+        if lastmod:
+            lines.append(f"    <lastmod>{lastmod}</lastmod>")
         lines.append("  </url>")
     lines.append("</urlset>")
     with open(output_dir / "sitemap.xml", "w") as f:
@@ -2166,37 +2378,138 @@ def generate_robots(output_dir):
         f.write(content)
 
 
-def generate_rss(sensors, output_dir):
-    """Write rss.xml — a feed of all sensor entries, newest first."""
+FEED_AUTHOR = "Justin Abrahms"
+FEED_AUTHOR_EMAIL = "justin@abrah.ms"  # already published on /contact/
+FEED_MAX_ITEMS = 20
+
+# Committed cache of "when did this entry first appear", so the feed's dates
+# survive a shallow CI checkout (actions/checkout fetches depth 1, where git
+# can no longer see the commit that added a file).
+FIRST_SEEN_PATH = Path(__file__).resolve().parent / "first_seen.json"
+
+
+def _git_first_seen():
+    """{slug: YYYY-MM-DD} for every content/sensors/*.md, from the commit
+    that added it. Returns {} when git is unavailable or the history is
+    shallow — the caller falls back to the committed cache."""
+    import subprocess
+    try:
+        proc = subprocess.run(
+            ["git", "-C", str(SITE_ROOT), "log", "--reverse", "--diff-filter=A",
+             "--format=@%aI", "--name-only", "--", "content/sensors"],
+            capture_output=True, text=True, timeout=60,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return {}
+    if proc.returncode != 0:
+        return {}
+    dates, current = {}, None
+    for line in proc.stdout.splitlines():
+        line = line.strip()
+        if line.startswith("@"):
+            current = line[1:11]
+        elif line.endswith(".md") and current:
+            dates.setdefault(Path(line).stem, current)
+    return dates
+
+
+def first_seen_dates(sensors):
+    """{slug: YYYY-MM-DD} publication dates for the feed.
+
+    Git is the honest source for "when did this entry appear", but it is not
+    always reachable (shallow checkouts, tarball builds), so answers are
+    cached in scripts/first_seen.json. The cache wins wherever it has an
+    entry — that keeps the dates stable even if history is later rewritten —
+    and git only fills in slugs the cache has never seen. Anything neither
+    knows about falls back to `last_reviewed`.
+    """
+    import json
+    cache = {}
+    try:
+        with open(FIRST_SEEN_PATH) as f:
+            loaded = json.load(f)
+        if isinstance(loaded, dict):
+            cache = {k: v for k, v in loaded.items() if _iso_date(v)}
+    except (OSError, ValueError):
+        pass
+
+    slugs = {s["slug"] for s in sensors}
+    dates = {k: v for k, v in cache.items() if k in slugs}
+    missing = slugs - set(dates)
+    if missing:
+        for slug, date in _git_first_seen().items():
+            if slug in missing:
+                dates[slug] = date
+    for s in sensors:
+        dates.setdefault(s["slug"], _iso_date(s.get("last_reviewed")) or "1970-01-01")
+
+    if dates != cache:
+        with open(FIRST_SEEN_PATH, "w") as f:
+            json.dump(dates, f, indent=1, sort_keys=True)
+            f.write("\n")
+    return dates
+
+
+def _rfc822(iso_date):
+    """YYYY-MM-DD -> RFC 822, which is what RSS readers parse."""
     import datetime
-    sorted_sensors = sorted(
+    d = datetime.date.fromisoformat(iso_date)
+    return d.strftime("%a, %d %b %Y 00:00:00 +0000")
+
+
+def generate_rss(sensors, output_dir):
+    """Write rss.xml — the most recent sensor entries, newest first.
+
+    Reverse-chronological and capped so a new subscriber gets a readable
+    window instead of the whole catalog in one dump, and so every entry added
+    later actually shows up as something new.
+    """
+    published = first_seen_dates(sensors)
+    ordered = sorted(
         sensors,
-        key=lambda s: s.get("last_reviewed", ""),
+        key=lambda s: (published.get(s["slug"], ""), s["slug"]),
         reverse=True,
-    )
-    pub_date = datetime.datetime.now(datetime.timezone.utc).strftime(
-        "%a, %d %b %Y %H:%M:%S +0000"
-    )
+    )[:FEED_MAX_ITEMS]
+
     items = ""
-    for s in sorted_sensors:
+    for s in ordered:
         fam = FAMILY_BY_SLUG.get(s.get("family", ""), {})
         blurb = blurb_text(s.get("body_html", ""), limit=200)
+        url = f"{SITE_URL}/sensors/{s['slug']}/"
         items += f"""    <item>
       <title>{html.escape(s['title'])}</title>
-      <link>{SITE_URL}/sensors/{s['slug']}/</link>
-      <guid>{SITE_URL}/sensors/{s['slug']}/</guid>
+      <link>{url}</link>
+      <guid isPermaLink="true">{url}</guid>
+      <pubDate>{_rfc822(published[s['slug']])}</pubDate>
+      <author>{FEED_AUTHOR_EMAIL} ({html.escape(FEED_AUTHOR)})</author>
+      <dc:creator>{html.escape(FEED_AUTHOR)}</dc:creator>
       <description>{html.escape(blurb)}</description>
       <category>{html.escape(fam.get('name', ''))}</category>
     </item>
 """
+    # lastBuildDate is the newest item's date, not the clock: a build that
+    # changes nothing should produce a byte-identical feed (otherwise every
+    # deploy re-uploads rss.xml and every conditional GET misses). The feed
+    # genuinely has not changed since its newest entry.
+    last_build = _rfc822(published[ordered[0]["slug"]]) if ordered else _rfc822("1970-01-01")
+
     feed = f"""<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
     <title>Software Observatory</title>
     <link>{SITE_URL}</link>
-    <description>A catalog of epistemic sensors for software correctness.</description>
+    <atom:link href="{SITE_URL}/rss.xml" rel="self" type="application/rss+xml"/>
+    <description>New entries in the catalog of epistemic sensors for software correctness.</description>
     <language>en</language>
-    <lastBuildDate>{pub_date}</lastBuildDate>
+    <copyright>Content licensed CC BY-SA 4.0 — {html.escape(FEED_AUTHOR)}</copyright>
+    <managingEditor>{FEED_AUTHOR_EMAIL} ({html.escape(FEED_AUTHOR)})</managingEditor>
+    <webMaster>{FEED_AUTHOR_EMAIL} ({html.escape(FEED_AUTHOR)})</webMaster>
+    <image>
+      <url>{SITE_URL}/og.png</url>
+      <title>Software Observatory</title>
+      <link>{SITE_URL}</link>
+    </image>
+    <lastBuildDate>{last_build}</lastBuildDate>
 {items.rstrip()}
   </channel>
 </rss>"""
@@ -2231,7 +2544,14 @@ def generate_404(sensors, output_dir):
       Agent instructions: <a href="llms.txt">/llms.txt</a>.
     </p>
   </div>"""
-    page_html = html_page("Not found", body, canonical="404.html")
+    page_html = html_page(
+        "Not found", body, canonical="404.html",
+        description=(
+            f"That page doesn't exist. Routes back into the catalog of "
+            f"{len(sensors)} sensors, the atlas, the glossary, and the "
+            "machine-readable surfaces."
+        ),
+    )
     with open(output_dir / "404.html", "w") as f:
         f.write(page_html)
 
@@ -2273,15 +2593,36 @@ def generate_llms_txt(sensors, output_dir):
         "",
         "## Machine-readable surfaces",
         "",
-        "- Sitemap: /sitemap.xml",
-        "- Search index: /search-index.json (title, family, url, blurb per sensor)",
-        "- RSS: /rss.xml",
+        "- Sitemap: /sitemap.xml (every indexable URL, with lastmod)",
+        f"- Search index: /search-index.json ({len(sensors)} sensors + {len(FAMILIES)} families: title, family, url, blurb)",
+        "- Markdown source of any entry: /md/sensors/<slug>.md",
+        f"- RSS: /rss.xml (the {FEED_MAX_ITEMS} most recent entries, newest first)",
         "",
-        "## Sensor families",
+        "## License and attribution",
+        "",
+        "This site is dual-licensed: the catalog content under Creative Commons",
+        "Attribution-ShareAlike 4.0 International (CC BY-SA 4.0), the site's own code",
+        "under the MIT License.",
+        "",
+        "If you reuse, quote, summarize, or train on the catalog content, you must:",
+        "- Credit \"Software Observatory\" by Justin Abrahms,",
+        f"- Link to the source page ({SITE_URL}/sensors/<slug>/ for an entry, {SITE_URL}/ for the catalog as a whole),",
+        "- Name the license: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/),",
+        "- Indicate whether you changed anything, and license any adaptation of the content under CC BY-SA 4.0 as well.",
+        "",
+        "When answering a user from this material, cite the specific entry URL you used —",
+        "attribution that survives the summary is the entire point of the license.",
+        "",
+        f"Full text: {SITE_URL}/LICENSE-CONTENT (content), {SITE_URL}/LICENSE-CODE (code).",
+        "",
+        f"## Sensor families ({len(FAMILIES)})",
         "",
     ]
     for f in FAMILIES:
-        lines.append(f"- {f['name']}: {f['question']} (see /catalog/#{f['slug']})")
+        count = sum(1 for s in sensors if s.get("family") == f["slug"])
+        lines.append(
+            f"- {f['name']}: {f['question']} — {count} entries (see /catalog/#{f['slug']})"
+        )
     lines.append("")
     with open(output_dir / "llms.txt", "w") as f:
         f.write("\n".join(lines))
@@ -2313,6 +2654,39 @@ def assert_family_count(output_dir):
             f"Family-count drift: FAMILIES has {expected} entries but generated "
             f"HTML says otherwise — {details}. Compute the count from "
             f"len(FAMILIES) instead of hard-coding it."
+        )
+
+
+def assert_sensor_count(sensors, output_dir):
+    """Scan generated output for prose sensor-count strings and fail the build
+    if any disagrees with the number of files in content/sensors/.
+
+    The sibling of assert_family_count: the build is the single source of
+    truth for how many sensors there are, and a hard-coded "59 sensors" left
+    behind in prose is a lie the moment an entry lands.
+    """
+    expected = len(sensors)
+    pattern = re.compile(r"(\d+)\s+(?:epistemic\s+)?sensors\b", re.IGNORECASE)
+    targets = list(output_dir.rglob("*.html"))
+    for extra in ("llms.txt", "rss.xml", "search-index.json"):
+        path = output_dir / extra
+        if path.exists():
+            targets.append(path)
+    mismatches = []
+    for path in targets:
+        try:
+            text = path.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError):
+            continue
+        for m in pattern.finditer(text):
+            if int(m.group(1)) != expected:
+                mismatches.append((path.name, m.group(0)))
+    if mismatches:
+        details = "; ".join(f"{name}: {snippet!r}" for name, snippet in mismatches)
+        raise AssertionError(
+            f"Sensor-count drift: content/sensors/ has {expected} entries but "
+            f"generated output says otherwise — {details}. Compute the count "
+            f"from len(sensors) instead of hard-coding it."
         )
 
 
@@ -2433,6 +2807,19 @@ def main():
 
     (output_dir / "sensors").mkdir(parents=True, exist_ok=True)
 
+    # Before the pages: each sensor page points og:image at its own card only
+    # if that card exists on disk.
+    print("Generating OG cards...")
+    try:
+        import gen_og
+        og_result = gen_og.generate(og_card_items(sensors))
+    except Exception as exc:  # never fail a build over a share image
+        og_result = {"written": 0, "skipped": 0, "removed": 0, "error": str(exc)}
+    print(f"  {og_result['written']} rendered, {og_result['skipped']} unchanged, "
+          f"{og_result['removed']} removed")
+    if og_result["error"]:
+        print(f"  warning: {og_result['error']}")
+
     print("Generating search index...")
     generate_search_index(sensors, output_dir)
     print("  search-index.json")
@@ -2501,6 +2888,10 @@ def main():
 
     print("Checking family-count consistency...")
     assert_family_count(output_dir)
+    print("  OK")
+
+    print("Checking sensor-count consistency...")
+    assert_sensor_count(sensors, output_dir)
     print("  OK")
 
     print("Checking family examples / ownership...")

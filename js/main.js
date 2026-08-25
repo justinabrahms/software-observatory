@@ -124,45 +124,161 @@ document.addEventListener('DOMContentLoaded', () => {
     let index = null;
     let activeIdx = -1;
 
+    if (!results.id) results.id = 'search-results';
+    results.setAttribute('role', 'listbox');
+    results.setAttribute('aria-label', 'Search results');
+    input.setAttribute('role', 'combobox');
+    input.setAttribute('aria-controls', results.id);
+    input.setAttribute('aria-autocomplete', 'list');
+    input.setAttribute('aria-expanded', 'false');
+
     fetch('/search-index.json')
       .then(r => r.json())
-      .then(data => { index = data; })
+      .then(data => { index = Array.isArray(data) ? data : []; })
       .catch(() => {});
 
+    // search-index.json is generated from content/sensors/*.md, which the
+    // README invites outside contributors to add to. Treat every field in it
+    // as untrusted: text goes through textContent, and href only ever gets a
+    // root-relative same-origin path (no javascript:, data:, or //host).
+    const SAFE_PATH = /^\/(?!\/)[A-Za-z0-9\-._~/%#?&=+,:@!$'()*;]*$/;
+    function safeHref(url) {
+      return typeof url === 'string' && SAFE_PATH.test(url) ? url : null;
+    }
+    function str(v) { return v == null ? '' : String(v); }
+
+    function escapeRe(t) { return t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+    // Match only at word starts. Substring matching made "AI" hit the "ai"
+    // inside "Time-to-Repair"; a word-start match still lets "test" find
+    // "testing" and "mutation" find "Mutation Testing".
+    const reCache = new Map();
+    function termRe(t) {
+      let re = reCache.get(t);
+      if (!re) {
+        re = new RegExp('(?:^|[^a-z0-9])' + escapeRe(t), 'i');
+        reCache.set(t, re);
+      }
+      return re;
+    }
+
+    function tokenize(q) {
+      return q.toLowerCase().split(/[^a-z0-9+#]+/).filter(Boolean);
+    }
+
+    // Per-term field weights: a title hit always outranks a blurb hit.
+    function scoreItem(item, terms) {
+      const title = str(item.title);
+      const lt = title.toLowerCase();
+      const fam = str(item.family);
+      const blurb = str(item.blurb);
+      const keywords = str(item.keywords);
+      const text = str(item.text);
+      const slug = str(item.url).replace(/[^A-Za-z0-9]+/g, ' ');
+      let score = 0;
+      let matched = 0;
+      for (const t of terms) {
+        const re = termRe(t);
+        let best = 0;
+        if (lt === t) best = 120;
+        else if (lt.startsWith(t)) best = 80;
+        else if (re.test(title)) best = 60;
+        else if (re.test(slug)) best = 45;
+        else if (re.test(fam)) best = 25;
+        else if (re.test(blurb)) best = 12;
+        else if (re.test(keywords)) best = 30;
+        else if (re.test(text)) best = 8;
+        if (best) { matched++; score += best; }
+      }
+      return { score: score, matched: matched };
+    }
+
+    function search(q) {
+      if (!index) return [];
+      const terms = tokenize(q);
+      if (!terms.length) return [];
+      const all = [];
+      for (const item of index) {
+        if (!safeHref(item.url)) continue;
+        const s = scoreItem(item, terms);
+        if (!s.matched) continue;
+        // whole query as a phrase in the title is the strongest signal
+        if (terms.length > 1 && termRe(q.trim()).test(str(item.title))) s.score += 40;
+        if (item.kind === 'family') s.score += 5;
+        all.push([s.matched, s.score, item]);
+      }
+      // Prefer rows matching every term; fall back to partial matches so a
+      // multi-word query degrades to something useful instead of nothing.
+      const strict = all.filter(r => r[0] === terms.length);
+      const pool = strict.length ? strict : all;
+      pool.sort((a, b) => b[1] - a[1] || str(a[2].title).localeCompare(str(b[2].title)));
+      return pool.slice(0, 8).map(r => r[2]);
+    }
+
+    function setExpanded(open) {
+      input.setAttribute('aria-expanded', open ? 'true' : 'false');
+      results.hidden = !open;
+    }
+
+    function emptyState(query) {
+      const wrap = document.createElement('div');
+      wrap.className = 'search-empty';
+      const line = document.createElement('p');
+      line.textContent = 'No sensors match “' + query + '”.';
+      const actions = document.createElement('p');
+      actions.className = 'search-empty-actions';
+      const a1 = document.createElement('a');
+      a1.href = '/catalog/';
+      a1.textContent = 'Browse all sensors';
+      const a2 = document.createElement('a');
+      a2.href = '/categories/';
+      a2.textContent = 'Browse by category';
+      actions.append(a1, document.createTextNode(' · '), a2);
+      wrap.append(line, actions);
+      return wrap;
+    }
+
     function render(items, query) {
-      if (!query) { results.hidden = true; return; }
+      results.textContent = '';
+      if (!query) { setExpanded(false); return; }
       if (!items.length) {
-        results.innerHTML = '<div class="search-empty">No matches</div>';
-        results.hidden = false;
+        results.append(emptyState(query));
+        setExpanded(true);
         return;
       }
-      results.innerHTML = items.map((item, i) => `
-        <a class="search-result${i === activeIdx ? ' active' : ''}" href="${item.url}">
-          <div class="search-result-title">${item.title}</div>
-          <div class="search-result-meta">${item.kind === 'family' ? 'Family' : item.family}</div>
-          ${item.blurb ? `<div class="search-result-blurb">${item.blurb}</div>` : ''}
-        </a>`).join('');
-      results.hidden = false;
+      items.forEach((item, i) => {
+        const a = document.createElement('a');
+        a.className = 'search-result' + (i === activeIdx ? ' active' : '');
+        a.setAttribute('role', 'option');
+        a.setAttribute('aria-selected', i === activeIdx ? 'true' : 'false');
+        a.href = safeHref(item.url);
+
+        const title = document.createElement('div');
+        title.className = 'search-result-title';
+        title.textContent = str(item.title);
+
+        const meta = document.createElement('div');
+        meta.className = 'search-result-meta';
+        meta.textContent = item.kind === 'family' ? 'Family' : str(item.family);
+
+        a.append(title, meta);
+
+        if (item.blurb) {
+          const blurb = document.createElement('div');
+          blurb.className = 'search-result-blurb';
+          blurb.textContent = str(item.blurb);
+          a.append(blurb);
+        }
+        results.append(a);
+      });
+      setExpanded(true);
     }
 
     function run() {
-      const q = input.value.trim().toLowerCase();
-      if (!q || !index) { render([], q); return; }
-      const scored = [];
-      for (const item of index) {
-        const title = item.title.toLowerCase();
-        const fam = (item.family || '').toLowerCase();
-        const blurb = (item.blurb || '').toLowerCase();
-        let score = -1;
-        if (title.startsWith(q)) score = 3;
-        else if (title.includes(q)) score = 2;
-        else if (fam.includes(q)) score = 1;
-        else if (blurb.includes(q)) score = 0;
-        if (score >= 0) scored.push([score, item]);
-      }
-      scored.sort((a, b) => b[0] - a[0] || a[1].title.localeCompare(b[1].title));
+      const q = input.value.trim();
       activeIdx = -1;
-      render(scored.slice(0, 8).map(s => s[1]), q);
+      if (!q || !index) { render([], q); return; }
+      render(search(q), q);
     }
 
     input.addEventListener('input', run);
@@ -176,19 +292,54 @@ document.addEventListener('DOMContentLoaded', () => {
         activeIdx = e.key === 'ArrowDown'
           ? (activeIdx + 1) % links.length
           : (activeIdx - 1 + links.length) % links.length;
-        links.forEach((l, i) => l.classList.toggle('active', i === activeIdx));
+        links.forEach((l, i) => {
+          l.classList.toggle('active', i === activeIdx);
+          l.setAttribute('aria-selected', i === activeIdx ? 'true' : 'false');
+        });
         links[activeIdx].scrollIntoView({ block: 'nearest' });
       } else if (e.key === 'Enter' && activeIdx >= 0 && links[activeIdx]) {
         e.preventDefault();
         window.location.href = links[activeIdx].href;
       } else if (e.key === 'Escape') {
-        results.hidden = true;
+        setExpanded(false);
         input.blur();
       }
     });
 
     document.addEventListener('click', e => {
-      if (!searchBox.contains(e.target)) results.hidden = true;
+      if (!searchBox.contains(e.target)) setExpanded(false);
+    });
+  }
+
+  // Code blocks and ASCII diagrams scroll horizontally rather than wrapping
+  // (wrapping destroys the column alignment the author drew). A scrollable
+  // region has to be keyboard-reachable — WCAG 2.1.1 — and the generated
+  // markup carries no tabindex, so add it here when it is actually needed.
+  const scrollables = document.querySelectorAll(
+    '.signal-detail-body pre, .signal-detail-body .code-block, .signal-detail-body table');
+  if (scrollables.length) {
+    const markScrollable = () => {
+      scrollables.forEach(el => {
+        if (el.scrollWidth > el.clientWidth + 1) {
+          el.setAttribute('tabindex', '0');
+          el.setAttribute('role', 'region');
+          if (!el.hasAttribute('aria-label')) {
+            el.setAttribute('aria-label', el.tagName === 'TABLE'
+              ? 'Table, scroll horizontally to read'
+              : 'Code block, scroll horizontally to read');
+          }
+        } else {
+          el.removeAttribute('tabindex');
+          el.removeAttribute('role');
+          el.removeAttribute('aria-label');
+        }
+      });
+    };
+    markScrollable();
+    let t;
+    window.addEventListener('resize', () => {
+      clearTimeout(t);
+      t = setTimeout(markScrollable, 150);
     });
   }
 

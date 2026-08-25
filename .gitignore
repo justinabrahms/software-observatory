@@ -4,7 +4,10 @@ __pycache__/
 archive-*/
 
 pages/
-sensors/
+# Generated site output at the repo root. The leading slash is load-bearing:
+# a bare "sensors/" also matches content/sensors/, which silently ignored new
+# sensor files -- the most common contribution this repo can receive.
+/sensors/
 catalog/
 atlas/
 framework/
