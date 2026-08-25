@@ -7,18 +7,27 @@ constants in build.py: family, oracle, independence, latency, stack_level,
 actionability, type, see_also, and id uniqueness. Exits 1 on any violation,
 so it can gate CI alongside check_links.py.
 
+It also runs a vocabulary drift check (see `check_vocabulary_drift` below and
+scripts/vocabulary.py) that asserts the three places a controlled vocabulary
+lives — this validator, the renderer in build.py, and the content itself —
+still agree. That check exists because commit 9b721ed renamed
+`kind: paper` -> `kind: publication` in content and in build.py but not here,
+and CI stayed red for three days.
+
 Usage:
-    .venv/bin/python scripts/check_frontmatter.py
+    .venv/bin/python scripts/check_frontmatter.py   # or: make check-frontmatter
 """
 
 import sys
 import glob
+from collections import Counter
 from pathlib import Path
 
 import yaml
 
 SITE_ROOT = Path(__file__).resolve().parent.parent
 SENSOR_DIR = SITE_ROOT / "content" / "sensors"
+BUILD_PY = SITE_ROOT / "scripts" / "build.py"
 
 sys.path.insert(0, str(SITE_ROOT / "scripts"))
 from build import (
@@ -29,15 +38,35 @@ from build import (
     ORACLE_WIDTHS,
     INDEPENDENCE_DOTS,
 )
+from vocabulary import (
+    ACTIONABILITY,
+    REFERENCE_KINDS,
+    REFERENCE_TIERS,
+    SCOPES,
+    SENSOR_TYPES,
+    imports_vocabulary,
+    kind_literals_in_source,
+)
 
+# Derived from build.py's own data structures: single-sourced by construction,
+# cannot drift.
 VALID_FAMILIES = {f["slug"] for f in FAMILIES}
 VALID_STACK_LEVELS = {s["slug"] for s in STACK_LAYERS}
 VALID_ORACLES = set(ORACLE_WIDTHS.keys())
 VALID_INDEPENDENCE = set(INDEPENDENCE_DOTS.keys())
 VALID_LATENCIES = set(LATENCY_LABELS.keys())
-VALID_ACTIONABILITY = {"blocking", "exploratory", "guiding"}
-VALID_TYPES = {"predictive", "retrospective"}
-VALID_SCOPES = {"line", "function", "module", "service", "system", "user-journey"}
+
+# Declared in scripts/vocabulary.py, the single source of truth for the
+# vocabularies build.py does not already carry a data structure for. These used
+# to be hand-copied literals here; that is what drifted.
+VALID_ACTIONABILITY = ACTIONABILITY
+VALID_TYPES = SENSOR_TYPES
+VALID_SCOPES = SCOPES
+VALID_KINDS = REFERENCE_KINDS
+VALID_TIERS = REFERENCE_TIERS
+
+# Where to send someone who hits a vocabulary error.
+VOCAB_HINT = "declare it in scripts/vocabulary.py if it is intentional"
 
 REQUIRED_FIELDS = [
     "id", "title", "family", "oracle", "independence",
@@ -56,9 +85,87 @@ def parse_frontmatter(filepath):
     return yaml.safe_load(parts[1]) or {}, parts[2].strip()
 
 
+def check_vocabulary_drift(used):
+    """Assert the renderer, this validator, and the content still agree.
+
+    Three independent copies of the reference-`kind` vocabulary have to match:
+    scripts/vocabulary.py (the declaration), build.py (the renderer), and
+    content/sensors/*.md (the corpus). Nothing bound them, so commit 9b721ed
+    renamed two of the three and CI was red for three days.
+
+    Two assertions close that loop, and either one alone catches that rename:
+
+      1. Renderer binding. Every string literal build.py compares against a
+         reference's `kind` must be a declared kind. A rename in build.py that
+         is not mirrored in vocabulary.py fails here; a rename in vocabulary.py
+         that is not mirrored in build.py fails here too, because build.py is
+         then still comparing against the old name.
+
+      2. Corpus attestation. Every kind used in content must be declared (that
+         is the per-file check above, which is what went red). The inverse —
+         a declared kind that no content uses — is reported as a WARNING, not
+         an error, because a vocabulary may legitimately run ahead of the
+         corpus. It is the signal that a rename left a dead name behind, which
+         is exactly the state `paper` was in.
+
+    Returns (errors, warnings).
+    """
+    errors = []
+    warnings = []
+
+    try:
+        rendered_kinds = kind_literals_in_source(BUILD_PY)
+    except (OSError, SyntaxError) as e:
+        errors.append(f"vocabulary: could not parse {BUILD_PY.name} to check kind literals: {e}")
+        rendered_kinds = set()
+
+    # If build.py imports its vocabulary from vocabulary.py, the binding is
+    # structural (a stale name is an ImportError) and the source probe is
+    # redundant. Otherwise the probe is the only binding there is, so finding
+    # zero `kind` comparisons means it has gone blind — fail rather than pass
+    # vacuously, which is how this control would quietly become decoration.
+    try:
+        bound_by_import = imports_vocabulary(BUILD_PY)
+    except (OSError, SyntaxError):
+        bound_by_import = False
+
+    if not rendered_kinds and not bound_by_import:
+        errors.append(
+            f"vocabulary: found no `kind` comparisons in {BUILD_PY.name} and no import "
+            "of scripts/vocabulary.py. Either the reference renderer was removed, or "
+            "kind_literals_in_source() in scripts/vocabulary.py no longer matches how "
+            "build.py filters references. Fix the probe, or bind build.py properly with "
+            "`from vocabulary import REFERENCE_KINDS` — do not delete this check."
+        )
+
+    for literal in sorted(rendered_kinds - REFERENCE_KINDS):
+        errors.append(
+            f"vocabulary: {BUILD_PY.name} renders reference kind '{literal}', which is "
+            f"not declared in scripts/vocabulary.py (declared: {sorted(REFERENCE_KINDS)}). "
+            "The renderer and the vocabulary have drifted apart."
+        )
+
+    unattested = sorted(REFERENCE_KINDS - set(used["kind"]))
+    if unattested:
+        warnings.append(
+            f"vocabulary: reference kind(s) {unattested} are declared in "
+            "scripts/vocabulary.py but used by no content file. If a rename left them "
+            "behind, delete them; if they are reserved for future use, leave them."
+        )
+
+    return errors, warnings
+
+
 def main():
     errors = []
     seen_ids = {}
+    used = {
+        "kind": Counter(),
+        "tier": Counter(),
+        "actionability": Counter(),
+        "type": Counter(),
+        "scope": Counter(),
+    }
 
     files = sorted(SENSOR_DIR.glob("*.md"))
     if not files:
@@ -119,18 +226,24 @@ def main():
             )
 
         action = meta.get("actionability", "")
+        if action:
+            used["actionability"][action] += 1
         if action and action not in VALID_ACTIONABILITY:
             errors.append(
                 f"{loc}: actionability '{action}' not in {sorted(VALID_ACTIONABILITY)}"
             )
 
         scope = meta.get("scope", "")
+        if scope:
+            used["scope"][scope] += 1
         if scope and scope not in VALID_SCOPES:
             errors.append(
                 f"{loc}: scope '{scope}' not in {sorted(VALID_SCOPES)}"
             )
 
         stype = meta.get("type", "")
+        if stype:
+            used["type"][stype] += 1
         if stype and stype not in VALID_TYPES:
             errors.append(
                 f"{loc}: type '{stype}' not in {sorted(VALID_TYPES)}"
@@ -161,8 +274,6 @@ def main():
         if not isinstance(references, list):
             errors.append(f"{loc}: references must be a list, got {type(references).__name__}")
         else:
-            VALID_KINDS = {"paper", "tool", "blog", "spec", "book", "other"}
-            VALID_TIERS = {"I", "II", "III", "IV"}
             for i, ref in enumerate(references):
                 if not isinstance(ref, dict):
                     errors.append(f"{loc}: references[{i}] must be a dict, got {type(ref).__name__}")
@@ -170,13 +281,29 @@ def main():
                 if not ref.get("title"):
                     errors.append(f"{loc}: references[{i}] missing 'title'")
                 kind = ref.get("kind", "")
+                if kind:
+                    used["kind"][kind] += 1
                 if kind and kind not in VALID_KINDS:
-                    errors.append(f"{loc}: references[{i}] kind '{kind}' not in {sorted(VALID_KINDS)}")
+                    errors.append(
+                        f"{loc}: references[{i}] kind '{kind}' not in "
+                        f"{sorted(VALID_KINDS)} — {VOCAB_HINT}"
+                    )
                 if kind == "tool" and not ref.get("url"):
                     errors.append(f"{loc}: references[{i}] tool '{ref.get('title', '?')}' missing 'url'")
                 tier = ref.get("tier", "")
+                if tier:
+                    used["tier"][tier] += 1
                 if tier and tier not in VALID_TIERS:
-                    errors.append(f"{loc}: references[{i}] tier '{tier}' not in {sorted(VALID_TIERS)}")
+                    errors.append(
+                        f"{loc}: references[{i}] tier '{tier}' not in "
+                        f"{sorted(VALID_TIERS)} — {VOCAB_HINT}"
+                    )
+
+    vocab_errors, vocab_warnings = check_vocabulary_drift(used)
+    errors.extend(vocab_errors)
+
+    for w in vocab_warnings:
+        print(f"WARNING: {w}")
 
     if errors:
         print(f"{len(errors)} frontmatter error(s) found:")
@@ -185,6 +312,10 @@ def main():
         return 1
 
     print(f"All {len(files)} sensor frontmatters OK.")
+    print(
+        "Vocabulary in sync: content, scripts/build.py and scripts/vocabulary.py "
+        f"agree on reference kinds {sorted(used['kind'])}."
+    )
     return 0
 
 
