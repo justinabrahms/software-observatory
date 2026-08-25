@@ -24,3 +24,5 @@ rss.xml
 llms.txt
 md/
 .link-cache.json
+*.TMP
+.opencode/
