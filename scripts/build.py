@@ -522,6 +522,7 @@ def html_head(title, canonical="", json_ld=""):
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <title>{html.escape(full_title)}</title>
   <meta name="description" content="A catalog of epistemic sensors for software correctness — the observable signals that reduce uncertainty about whether a system is correct, maintainable, and behaving as intended.">{canonical_link}
