@@ -16,13 +16,13 @@ The central question the catalog tries to organize:
 Software is increasingly an opaque artifact. We cannot — and often do not
 want to — fully understand every implementation. The Observatory catalogs
 the signals we *can* observe, characterizes each along six dimensions, and
-arranges them into eleven families so a reader can orient: *what question
+arranges them into ten families so a reader can orient: *what question
 am I asking?* and *when can I afford to learn the answer?*
 
 ## What's here
 
 - **[Catalog](https://softwareobservatory.com/pages/catalog.html)** — 56
-  sensor entries across eleven families, each documenting what the sensor can
+  sensor entries across ten families, each documenting what the sensor can
   detect, what it cannot, how easily it's gamed, and what evidence it
   produces.
 - **[Atlas](https://softwareobservatory.com/pages/atlas.html)** — the
@@ -171,7 +171,7 @@ welcome and explicitly invited.
 ## License
 
 Site content is published under
-[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 Code is under the license in the repository.
 
 ## Acknowledgements

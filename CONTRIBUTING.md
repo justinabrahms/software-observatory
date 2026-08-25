@@ -105,5 +105,5 @@ after editing.
 
 By contributing, you agree your content contributions will be licensed
 under
-[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/),
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/),
 the same license as the rest of the site content.

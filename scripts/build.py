@@ -587,7 +587,7 @@ def html_footer():
     return f"""  <footer class="site-footer">
     <div class="footer-inner">
       <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
-      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/about/">About</a> · <a href="/glossary/">Glossary</a> · <span class="license-badge">CC BY-NC-SA 4.0</span></p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/about/">About</a> · <a href="/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
     </div>
   </footer>"""
 
@@ -1752,10 +1752,10 @@ def generate_about_page(output_dir):
     <h2>License</h2>
     <p>
       All content on the Software Observatory is published under
-      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="wikilink">CC BY-NC-SA 4.0</a>.
-      You are free to share and adapt the material for non-commercial purposes,
-      provided you give appropriate credit and distribute contributions under
-      the same license.
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="wikilink">CC BY-SA 4.0</a>.
+      You are free to share and adapt the material for any purpose,
+      provided you give appropriate credit and distribute contributions
+      under the same license.
     </p>
   </div>"""
 

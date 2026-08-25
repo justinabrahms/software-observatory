@@ -17,7 +17,7 @@
     "url": "git+https://github.com/justinabrahms/software-observatory.git",
     "directory": "cli"
   },
-  "license": "CC-BY-NC-SA-4.0",
+  "license": "CC-BY-SA-4.0",
   "type": "module",
   "scripts": {
     "test": "node test/smoke.mjs"
