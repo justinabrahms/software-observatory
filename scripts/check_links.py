@@ -1,17 +1,19 @@
 """
 Link checker for the generated site.
 
-Checks internal links, anchors, and asset references in the committed
-HTML output (index.html, pages/**). External links are checked only with
---external (network required); internal checks are fully offline.
+Checks internal links, anchors, and asset references across all generated
+surfaces: HTML pages, content-negotiation markdown (md/sensors/*.md),
+llms.txt, rss.xml, and search-index.json. External links are checked only
+with --external (network required); internal checks are fully offline.
 
 External link checks use a TTL cache (default 90 days). A URL that was
 confirmed working within the cache lifetime is trusted without a network
 request; only expired entries are re-checked. The cache is keyed by URL
 (so a URL cited in multiple entries is fetched once) and stored in
-.link-cache.json at the site root. 403 and other 4xx responses that are
-not 404/410 are treated as "unknown" (not failures) because many sites
-block non-browser user agents.
+.link-cache.json at the site root. 403/401/429 are treated as "unknown"
+(not failures) because many academic publishers and CDNs block non-browser
+user agents — failing on 403 would be noise, not signal, for a catalog
+whose references are mostly academic PDFs.
 
 Usage:
     .venv/bin/python check_links.py            # internal only
@@ -37,6 +39,11 @@ HTML_GLOBS = ["index.html", "404.html", "catalog/**/*.html", "sensors/**/*.html"
               "atlas/**/*.html", "framework/**/*.html", "about/**/*.html",
               "contact/**/*.html", "privacy/**/*.html", "glossary/**/*.html",
               "categories/**/*.html"]
+# Non-HTML surfaces that also contain URLs.
+MD_GLOBS = ["md/sensors/*.md"]
+TEXT_SURFACES = ["llms.txt"]
+XML_SURFACES = ["rss.xml"]
+JSON_SURFACES = ["search-index.json"]
 
 SKIP_SCHEMES = ("mailto:", "tel:", "javascript:", "data:")
 # URLs that are infrastructure (preconnect hints, CDN origins) not content
@@ -67,16 +74,46 @@ class LinkCollector(html.parser.HTMLParser):
 
 
 def collect_pages():
+    """Collect all generated surfaces to scan for links."""
     pages = []
     for pattern in HTML_GLOBS:
         pages.extend(SITE_ROOT.glob(pattern))
+    for pattern in MD_GLOBS:
+        pages.extend(SITE_ROOT.glob(pattern))
+    for name in TEXT_SURFACES + XML_SURFACES + JSON_SURFACES:
+        p = SITE_ROOT / name
+        if p.exists():
+            pages.append(p)
     return sorted(set(pages))
 
 
 def parse_page(path):
-    parser = LinkCollector()
-    parser.feed(path.read_text(encoding="utf-8"))
-    return parser.links, parser.ids
+    """Extract links and ids from a page. HTML is parsed structurally;
+    markdown, text, XML, and JSON are scanned with regex for URLs."""
+    text = path.read_text(encoding="utf-8")
+    suffix = path.suffix.lower()
+
+    if suffix == ".html":
+        parser = LinkCollector()
+        parser.feed(text)
+        return parser.links, parser.ids
+
+    # Non-HTML surfaces: extract URLs (internal and external) but no ids.
+    links = []
+    if suffix == ".md":
+        # Markdown links: [text](url) and bare <url> autolinks.
+        links.extend(re.findall(r'\]\(([^)]+)\)', text))
+        links.extend(re.findall(r'<(https?://[^>]+)>', text))
+    elif suffix == ".json":
+        # JSON: "url": "value"
+        links.extend(re.findall(r'"url"\s*:\s*"([^"]+)"', text))
+    elif suffix in (".xml",):
+        # XML: <link>URL</link> and <loc>URL</loc>
+        links.extend(re.findall(r'<(?:link|loc)>([^<]+)</(?:link|loc)>', text))
+    elif suffix in (".txt",):
+        # Plain text: bare http(s) URLs
+        links.extend(re.findall(r'(https?://[^\s)>]+)', text))
+    return links, set()
 
 
 def check_internal(pages):
@@ -109,6 +146,14 @@ def check_internal(pages):
                     resolved = resolved.lstrip("/")
                     target = (SITE_ROOT / resolved).resolve()
                 else:
+                    # Markdown content-negotiation copies use bare-filename
+                    # .html links (e.g. "database-invariants.html",
+                    # "catalog.html") that the HTML build rewrites to
+                    # site-absolute URLs via fix_link_depths. These are a
+                    # known convention; skip them rather than flagging
+                    # false positives.
+                    if page.suffix == ".md":
+                        continue
                     target = (page.parent / resolved).resolve()
                 if target.is_dir():
                     target = target / "index.html"
