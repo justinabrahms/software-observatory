@@ -2124,7 +2124,7 @@ def generate_search_index(sensors, output_dir):
             "blurb": blurb,
         })
     with open(output_dir / "search-index.json", "w") as f:
-        json.dump(entries, f, indent=1)
+        json.dump(entries, f, indent=1, sort_keys=True)
 
 
 SITE_URL = "https://softwareobservatory.com"

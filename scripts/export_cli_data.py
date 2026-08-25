@@ -126,19 +126,36 @@ def export():
         for f in build.FAMILIES
     ]
 
-    document = {
-        "version": 1,
-        "generated_at": datetime.datetime.now(datetime.timezone.utc)
+    # Derive a deterministic "generated_at" from the content (newest
+    # last_reviewed date) so two builds of the same content produce
+    # identical output. A wall-clock timestamp would dirty the working
+    # tree on every build.
+    reviewed_dates = [
+        s.get("last_reviewed") for s in out_sensors
+        if s.get("frontmatter", {}).get("last_reviewed")
+    ]
+    # last_reviewed comes through as a date string in frontmatter
+    raw_dates = [
+        str(s.get("frontmatter", {}).get("last_reviewed", "")) for s in out_sensors
+    ]
+    newest = max((d for d in raw_dates if d), default="")
+    generated_at = f"{newest}T00:00:00Z" if newest else (
+        datetime.datetime.now(datetime.timezone.utc)
         .replace(microsecond=0)
         .isoformat()
-        .replace("+00:00", "Z"),
+        .replace("+00:00", "Z")
+    )
+
+    document = {
+        "version": 1,
+        "generated_at": generated_at,
         "site": build.SITE_URL,
         "families": families,
         "sensors": out_sensors,
     }
     os.makedirs(os.path.dirname(OUT_PATH), exist_ok=True)
     with open(OUT_PATH, "w", encoding="utf-8") as handle:
-        json.dump(document, handle, indent=2, ensure_ascii=False, default=json_default)
+        json.dump(document, handle, indent=2, ensure_ascii=False, default=json_default, sort_keys=True)
         handle.write("\n")
     return len(out_sensors), len(families)
 
