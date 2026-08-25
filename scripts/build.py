@@ -2115,7 +2115,7 @@ def generate_search_index(sensors, output_dir):
         })
     for s in sensors:
         fam = FAMILY_BY_SLUG.get(s.get("family", ""), {})
-        blurb = re.sub(r"<[^>]+>", "", s.get("body_html", "")).split("\n")[0][:160]
+        blurb = blurb_text(s.get("body_html", ""), limit=160)
         entries.append({
             "title": s["title"],
             "kind": "sensor",
@@ -2178,7 +2178,7 @@ def generate_rss(sensors, output_dir):
     items = ""
     for s in sorted_sensors:
         fam = FAMILY_BY_SLUG.get(s.get("family", ""), {})
-        blurb = re.sub(r"<[^>]+>", "", s.get("body_html", "")).split("\n")[0][:200]
+        blurb = blurb_text(s.get("body_html", ""), limit=200)
         items += f"""    <item>
       <title>{html.escape(s['title'])}</title>
       <link>{SITE_URL}/sensors/{s['slug']}/</link>
