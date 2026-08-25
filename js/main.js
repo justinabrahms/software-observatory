@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     '.featured-title',
     '.about-content h2',
     '.signal-detail-body h2',
+    '.glossary-term',
   ].map(s => s + '[id]').join(', ');
 
   document.querySelectorAll(HEADING_LINK_SELECTOR).forEach(h => {
