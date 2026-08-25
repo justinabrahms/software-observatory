@@ -2377,6 +2377,35 @@ def assert_see_also_resolves(sensors):
         )
 
 
+def assert_family_and_stack_level(sensors):
+    """Fail the build when a sensor's `family` or `stack_level` does not
+    match a known slug.
+
+    A typo in frontmatter silently drops the sensor off the catalog and
+    atlas (the detail page still generates, so check_links can't catch
+    it). This check surfaces the mismatch.
+    """
+    family_slugs = {f["slug"] for f in FAMILIES}
+    stack_slugs = {s["slug"] for s in STACK_LAYERS}
+    bad = []
+    for sensor in sensors:
+        fam = sensor.get("family", "")
+        if fam and fam not in family_slugs:
+            bad.append((sensor["id"], sensor["slug"], "family", fam))
+        lvl = sensor.get("stack_level", "")
+        if lvl and lvl not in stack_slugs:
+            bad.append((sensor["id"], sensor["slug"], "stack_level", lvl))
+    if bad:
+        details = "; ".join(
+            f"{sid} ({slug}): {field}={val!r}" for sid, slug, field, val in bad
+        )
+        raise AssertionError(
+            f"Unrecognized family/stack_level slugs — {details}. "
+            f"Valid families: {sorted(family_slugs)}. "
+            f"Valid stack levels: {sorted(stack_slugs)}."
+        )
+
+
 def main():
     print("Loading sensors...")
     sensors = load_sensors()
@@ -2477,6 +2506,10 @@ def main():
 
     print("Checking see_also resolution...")
     assert_see_also_resolves(sensors)
+    print("  OK")
+
+    print("Checking family / stack_level slugs...")
+    assert_family_and_stack_level(sensors)
     print("  OK")
 
     print("Done.")
