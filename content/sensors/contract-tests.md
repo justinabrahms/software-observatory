@@ -20,8 +20,8 @@ categories:
 see_also:
 - SO-001
 - SO-004
-- change-family
-- structural-family
+- change
+- structural
 last_reviewed: '2026-08-24'
 references:
 - title: 'I Depended on You and You Broke Me: An Empirical Study of Manifesting Breaking Changes in Client Packages'

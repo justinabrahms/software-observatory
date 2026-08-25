@@ -20,9 +20,9 @@ categories:
 - Production Sensors
 see_also:
 - SO-004
-- change-family
-- evolution-family
-- ai-sensors
+- change
+- evolution
+- comprehension
 last_reviewed: '2026-08-24'
 references:
 - title: How to Fight Production Incidents? An Empirical Study on a Large-scale Cloud Service

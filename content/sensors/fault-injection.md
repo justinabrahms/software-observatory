@@ -19,7 +19,7 @@ categories:
 see_also:
 - SO-004
 - SO-005
-- change-family
+- change
 last_reviewed: '2026-08-24'
 references:
 - title: 'Elle: Inferring Isolation Anomalies from Experimental Observations'

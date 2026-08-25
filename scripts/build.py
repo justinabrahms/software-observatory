@@ -2352,6 +2352,31 @@ def assert_family_examples(sensors):
         print("  (Fix the examples list in FAMILIES or reassign the sensor.)")
 
 
+def assert_see_also_resolves(sensors):
+    """Fail the build if any see_also token does not resolve to a sensor ID,
+    a family slug, or the literal 'atlas'.
+
+    Unresolved tokens are silently dropped by resolve_see_also; this check
+    surfaces them so dangling references don't accumulate.
+    """
+    sensors_by_id = {s["id"] for s in sensors}
+    family_slugs = {f["slug"] for f in FAMILIES}
+    unresolved = []
+    for sensor in sensors:
+        for ref in sensor.get("see_also", []):
+            if ref in sensors_by_id or ref in family_slugs or ref == "atlas":
+                continue
+            unresolved.append((sensor["id"], sensor["slug"], ref))
+    if unresolved:
+        details = "; ".join(
+            f"{sid} ({slug}): {ref!r}" for sid, slug, ref in unresolved
+        )
+        raise AssertionError(
+            f"Unresolved see_also tokens — {details}. Each see_also entry "
+            f"must be a sensor ID, a family slug, or the literal 'atlas'."
+        )
+
+
 def main():
     print("Loading sensors...")
     sensors = load_sensors()
@@ -2449,6 +2474,10 @@ def main():
 
     print("Checking family examples / ownership...")
     assert_family_examples(sensors)
+
+    print("Checking see_also resolution...")
+    assert_see_also_resolves(sensors)
+    print("  OK")
 
     print("Done.")
 

@@ -20,7 +20,7 @@ see_also:
 - SO-006
 - SO-006c
 - SO-006d
-- change-family
+- change
 last_reviewed: '2026-08-24'
 references:
 - title: The Tail at Scale

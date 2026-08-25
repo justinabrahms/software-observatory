@@ -19,7 +19,7 @@ categories:
 - Adversarial
 see_also:
 - SO-003b
-- behavioral-family
+- behavioral
 - SO-005
 - SO-005b
 last_reviewed: '2026-08-24'
