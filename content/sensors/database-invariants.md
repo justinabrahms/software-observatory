@@ -26,14 +26,14 @@ references:
   year: 2016
   tier: I
   url: https://www.vldb.org/pvldb/vol9/p993-abedjan.pdf
-  kind: paper
+  kind: publication
   authors: Ziawasch Abedjan, Xu Chu, Dong Deng, Raul Castro Fernandez, Ihab F. Ilyas, Mourad Ouzzani, Paolo Papotti, Michael Stonebraker, Nan Tang
   venue: PVLDB 9(12)
 - title: 'Jepsen: MongoDB 4.2.6'
   year: 2020
   tier: II
   url: https://jepsen.io/analyses/mongodb-4.2.6
-  kind: paper
+  kind: publication
   authors: Kyle Kingsbury (Jepsen)
   venue: jepsen.io analyses
 - title: DB constraints

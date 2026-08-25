@@ -27,7 +27,7 @@ references:
   year: 2019
   tier: IV
   url: https://arxiv.org/abs/1905.04648
-  kind: paper
+  kind: publication
   authors: Ali Basiri, Lorin Hochstein, Nora Jones, Haley Tucker
   venue: ICSE-SEIP 2019
 - title: Chaos Engineering

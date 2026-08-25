@@ -27,20 +27,20 @@ references:
   year: 2010
   tier: II
   url: https://mockus.org/papers/orgQuality-slides.pdf
-  kind: paper
+  kind: publication
   authors: Audris Mockus
   venue: FSE 2010
 - title: 2017 State of DevOps Report
   year: 2017
   tier: II
   url: https://dora.dev/research/2017/2017-state-of-devops-report.pdf
-  kind: paper
+  kind: publication
   authors: Nicole Forsgren, Jez Humble, Gene Kim, Alanna Brown, Nigel Kersten
   venue: Puppet + DORA
 - authors: Adam Tornhill
   title: Your Code as a Crime Scene
   year: 2015
-  kind: paper
+  kind: publication
   tier: IV
 - title: CodeScene
   kind: tool

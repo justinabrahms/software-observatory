@@ -28,13 +28,13 @@ references:
   year: 2025
   tier: I
   url: https://cseweb.ucsd.edu/~mcoblenz/assets/pdf/OOPSLA_2025_PBT.pdf
-  kind: paper
+  kind: publication
   authors: Savitha Ravi, Michael Coblenz
   venue: Proc. ACM Program. Lang. (OOPSLA2)
 - authors: Chen et al.
   title: 'Metamorphic Testing: A New Approach for Generating Next Test Cases'
   year: 1998
-  kind: paper
+  kind: publication
   tier: IV
 - title: Hypothesis
   url: https://hypothesis.readthedocs.io

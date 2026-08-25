@@ -26,14 +26,14 @@ references:
   year: 2015
   tier: III
   url: https://sigops.org/s/conferences/sosp/2015/current/2015-Monterey/printable/008-tang.pdf
-  kind: paper
+  kind: publication
   authors: Chunqiang Tang, Thawan Kooburat, Pradeep Venkatachalam, Akshay Chander, Zhe Wen, Aravind Narayanan, Patrick Dowell, Robert Karl
   venue: SOSP '15
 - title: Development and Deployment at Facebook
   year: 2013
   tier: III
   url: https://www.cs.huji.ac.il/w~feit/papers/FB13IC.pdf
-  kind: paper
+  kind: publication
   authors: Dror G. Feitelson, Eitan Frachtenberg, Kent L. Beck
   venue: IEEE Internet Computing 17(4)
 - title: Feature flags

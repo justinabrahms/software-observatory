@@ -29,20 +29,20 @@ references:
   year: 2017
   tier: I
   url: https://www.microsoft.com/en-us/research/wp-content/uploads/2017/09/gao2017javascript.pdf
-  kind: paper
+  kind: publication
   authors: Zheng Gao, Christian Bird, Earl T. Barr
   venue: ICSE 2017
 - title: Eliminating Memory Safety Vulnerabilities at the Source
   year: 2024
   tier: II
   url: https://security.googleblog.com/2024/09/eliminating-memory-safety-vulnerabilities-Android.html
-  kind: paper
+  kind: publication
   authors: Google Security Blog, Android team
   venue: Google Security Blog
 - authors: Luca Cardelli
   title: Type Systems
   year: 2004
-  kind: paper
+  kind: publication
   tier: IV
 - title: Rust compiler
   kind: tool

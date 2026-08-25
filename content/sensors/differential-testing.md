@@ -26,7 +26,7 @@ references:
   year: 2020
   tier: II
   url: https://arxiv.org/abs/2003.10554
-  kind: paper
+  kind: publication
   authors: Kyle Kingsbury, Peter Alvaro
   venue: arXiv 2003.10554
 - title: Yang et al., 'Finding and Understanding Bugs in C Compilers' (2011, Csmith)

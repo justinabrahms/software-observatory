@@ -26,7 +26,7 @@ references:
   year: 2013
   tier: III
   url: https://www.cs.huji.ac.il/w~feit/papers/FB13IC.pdf
-  kind: paper
+  kind: publication
   authors: Dror G. Feitelson, Eitan Frachtenberg, Kent L. Beck
   venue: IEEE Internet Computing 17(4)
 - title: Envoy shadow

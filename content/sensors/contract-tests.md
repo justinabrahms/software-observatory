@@ -28,20 +28,20 @@ references:
   year: 2023
   tier: II
   url: https://arxiv.org/abs/2301.04563
-  kind: paper
+  kind: publication
   authors: Suhaib Mujahid, Diego Elias Costa, Rabe Abdalkareem, Emad Shihab and others
   venue: ACM TOSEM
 - title: 'Design, Monitoring, and Testing of Microservices Systems: The Practitioners'' Perspective'
   year: 2021
   tier: II
   url: https://arxiv.org/pdf/2108.03384
-  kind: paper
+  kind: publication
   authors: Muhammad Waseem, Peng Liang, Mojtaba Shahin, Amleto Di Salle, Gastón Márquez
   venue: arXiv preprint, submitted to the Journal of Systems and Software
 - authors: Ian Robinson
   title: Consumer-Driven Contracts
   year: 2007
-  kind: paper
+  kind: publication
   tier: IV
 - title: Pact
   url: https://pact.io

@@ -27,14 +27,14 @@ references:
   year: 2024
   tier: II
   url: https://arxiv.org/abs/2408.18510
-  kind: paper
+  kind: publication
   authors: Patrick Ferris, Antoine Miné
   venue: arXiv 2408.18510
 - title: 'A Large-Scale Study of Multiple-Injection Static Code Analyzers'
   year: 2023
   tier: II
   url: https://arxiv.org/abs/2305.04033
-  kind: paper
+  kind: publication
   authors: Sven Amann, Florian Büsschers, Eric Bodden
   venue: arXiv 2305.04033
 - title: Infer

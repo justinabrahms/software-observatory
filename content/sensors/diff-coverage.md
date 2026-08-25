@@ -28,7 +28,7 @@ references:
   year: 2018
   tier: III
   url: https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/46584.pdf
-  kind: paper
+  kind: publication
   authors: Goran Petrović, Marko Ivanković
   venue: ICSE-SEIP 2018
 - title: diff-cover

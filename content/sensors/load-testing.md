@@ -28,14 +28,14 @@ references:
   year: 2023
   tier: III
   url: https://dl.acm.org/doi/10.1145/3578244
-  kind: paper
+  kind: publication
   authors: Augusto Cunha, Giovanni Carrozza, Bogdan Ghit, Alexandru Iosup
   venue: ICPE 2023
 - title: 'Performance Testing Practices in Production-Alike Environments'
   year: 2022
   tier: II
   url: https://arxiv.org/abs/2208.05000
-  kind: paper
+  kind: publication
   authors: Cor-Paul van der Sterr, Hadi Hemmati
   venue: arXiv 2208.05000
 - title: k6

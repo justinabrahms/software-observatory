@@ -25,14 +25,14 @@ references:
   year: 2021
   tier: II
   url: https://arxiv.org/abs/2104.06020
-  kind: paper
+  kind: publication
   authors: Chris Lamb, Stefano Zacchiroli
   venue: arXiv preprint; later IEEE Software 39 (2022) 62-70
 - title: An Empirical Analysis of Build Failures in the Continuous Integration Workflows of Java-Based Open-Source Software
   year: 2017
   tier: II
   url: https://dsg.tuwien.ac.at/team/trausch/pub/PID4727015.pdf
-  kind: paper
+  kind: publication
   authors: Thomas Rausch, Waldemar Hummer, Philipp Leitner, Stefan Schulte
   venue: MSR 2017
 - title: Bazel

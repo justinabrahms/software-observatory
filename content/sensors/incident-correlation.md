@@ -27,14 +27,14 @@ references:
   year: 2022
   tier: II
   url: https://acmsocc.org/2022/assets/slides/95.pdf
-  kind: paper
+  kind: publication
   authors: Supriyo Ghosh, Manish Shetty, Chetan Bansal, Suman Nath
   venue: ACM SoCC '22
 - title: Postmortem of database outage of January 31
   year: 2017
   tier: III
   url: https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31/
-  kind: paper
+  kind: publication
   authors: GitLab Inc.
   venue: GitLab engineering blog
 - title: Datadog

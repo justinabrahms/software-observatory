@@ -25,7 +25,7 @@ references:
   year: 2020
   tier: II
   url: https://arxiv.org/abs/2008.12808
-  kind: paper
+  kind: publication
   authors: Jerin Yasmin, Yuan Tian, Jinqiu Yang
   venue: arXiv 2008.12808
 - title: doctest

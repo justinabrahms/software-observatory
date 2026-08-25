@@ -27,7 +27,7 @@ references:
   year: 2013
   tier: III
   url: https://www.barroso.org/publications/TheTailAtScale.pdf
-  kind: paper
+  kind: publication
   authors: Jeffrey Dean, Luiz André Barroso
   venue: Communications of the ACM 56(2)
 - title: Dapper paper

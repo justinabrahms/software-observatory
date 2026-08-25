@@ -25,14 +25,14 @@ references:
   year: 2021
   tier: II
   url: https://doi.org/10.1109/ICSE43902.2021.00097
-  kind: paper
+  kind: publication
   authors: Armstrong Foundjem, Ellis E. Eghan, Bram Adams
   venue: ICSE 2021 (IEEE/ACM)
 - title: GitHub's Engineering Team Has Moved to Codespaces
   year: 2021
   tier: III
   url: https://github.blog/engineering/infrastructure/githubs-engineering-team-moved-codespaces/
-  kind: paper
+  kind: publication
   authors: Cory Wilkerson
   venue: GitHub Engineering Blog
 ---

@@ -30,28 +30,28 @@ references:
   year: 2020
   tier: II
   url: https://experimentguide.com
-  kind: paper
+  kind: publication
   authors: Ron Kohavi, Diane Tang, Ya Xu
   venue: Cambridge University Press
 - title: 'Seven Rules of Thumb for Web Site Experimenters'
   year: 2014
   tier: II
   url: https://exp-platform.com/Documents/2014%20sevenRulesOfThumbForWebSiteExperimenters.pdf
-  kind: paper
+  kind: publication
   authors: Ron Kohavi, Alex Deng, Brian Frasca, Roger Longbotham, Toby Walker, Ya Xu
   venue: KDD 2014
 - title: 'Online Controlled Experiments at Large Scale'
   year: 2013
   tier: II
   url: https://exp-platform.com/Documents/2013-04ExPincrementalityPaper.pdf
-  kind: paper
+  kind: publication
   authors: Alex Deng, Ya Xu, Ron Kohavi, Toby Walker
   venue: KDD 2013
 - title: 'A/B Testing at Scale: An Experience Report'
   year: 2017
   tier: III
   url: https://www.microsoft.com/en-us/research/publication/ab-testing-scale-experience-report/
-  kind: paper
+  kind: publication
   authors: Pavel Dmitriev, Somit Saha, Somit Goyal
   venue: KDD 2017 Web Mining and Content Analytics
 - title: GrowthBook

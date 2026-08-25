@@ -25,14 +25,14 @@ references:
   year: 2020
   tier: II
   url: https://akondrahman.github.io/files/papers/icse20_acid.pdf
-  kind: paper
+  kind: publication
   authors: Akond Rahman, Effat Farhana, Chris Parnin, Laurie Williams
   venue: ICSE 2020
 - title: 'The Seven Sins: Security Smells in Infrastructure as Code Scripts'
   year: 2019
   tier: II
   url: https://akondrahman.github.io/files/papers/icse19_slic.pdf
-  kind: paper
+  kind: publication
   authors: Akond Rahman, Chris Parnin, Laurie Williams
   venue: ICSE 2019
 - title: ESLint

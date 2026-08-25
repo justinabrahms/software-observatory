@@ -26,14 +26,14 @@ references:
   year: 2016
   tier: I
   url: https://www.vldb.org/pvldb/vol9/p993-abedjan.pdf
-  kind: paper
+  kind: publication
   authors: Ziawasch Abedjan, Xu Chu, Dong Deng, Raul Castro Fernandez, Ihab F. Ilyas, Mourad Ouzzani, Paolo Papotti, Michael Stonebraker, Nan Tang
   venue: PVLDB 9(12)
 - title: 'Failing Loudly: An Empirical Study of Methods for Detecting Dataset Shift'
   year: 2019
   tier: I
   url: https://arxiv.org/pdf/1810.11953
-  kind: paper
+  kind: publication
   authors: Stephan Rabanser, Stephan Günnemann, Zachary C. Lipton
   venue: NeurIPS 2019
 - title: OpenAPI Specification

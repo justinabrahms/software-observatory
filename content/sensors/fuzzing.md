@@ -27,20 +27,20 @@ references:
   year: 2018
   tier: I
   url: https://dl.acm.org/doi/10.1145/3243734.3243804
-  kind: paper
+  kind: publication
   authors: George Klees, Andrew Ruef, Benji Cooper, Shiyi Wei, Michael Hicks
   venue: ACM CCS 2018
 - title: An Empirical Study of OSS-Fuzz Bugs
   year: 2021
   tier: II
   url: https://arxiv.org/pdf/2103.11518
-  kind: paper
+  kind: publication
   authors: Zhen Yu Ding, Claire Le Goues
   venue: MSR 2021
 - authors: Manes et al.
   title: 'The Art, Science, and Engineering of Fuzzing: A Survey'
   year: 2021
-  kind: paper
+  kind: publication
   tier: IV
 - title: libFuzzer
   url: https://llvm.org/docs/LibFuzzer.html

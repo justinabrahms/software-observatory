@@ -633,8 +633,8 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
     refs_html = ""
     if references:
         tools = [r for r in references if r.get("kind") == "tool"]
-        papers = [r for r in references if r.get("kind") == "paper"]
-        others = [r for r in references if r.get("kind") not in ("tool", "paper")]
+        papers = [r for r in references if r.get("kind") == "publication"]
+        others = [r for r in references if r.get("kind") not in ("tool", "publication")]
 
         sections = []
 
@@ -659,7 +659,7 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
                 if meta_parts:
                     parts.append(f'<span class="ref-meta">{" · ".join(meta_parts)}</span>')
                 items += f"          <li>{' — '.join(parts)}</li>\n"
-            sections.append(f'        <h3 class="references-subheading">Papers</h3>\n        <ul class="reference-list">\n{items.rstrip()}\n        </ul>')
+            sections.append(f'        <h3 class="references-subheading">Publications</h3>\n        <ul class="reference-list">\n{items.rstrip()}\n        </ul>')
 
         if tools:
             items = ""
@@ -1960,7 +1960,7 @@ def generate_glossary_page(output_dir):
          "the framework</a>."),
         ("evidence-tier",
          "Evidence label",
-         "A label assigned to each paper reference, describing the "
+         "A label assigned to each publication reference, describing the "
          "<em>study</em> rather than the claim: <strong>controlled "
          "study</strong> (controlled experiment or large-N study with a "
          "comparison group), <strong>observational study</strong> "

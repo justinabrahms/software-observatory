@@ -26,7 +26,7 @@ references:
   year: 2020
   tier: IV
   url: https://abseil.io/resources/swe-book/html/ch11.html
-  kind: paper
+  kind: publication
   authors: Adam Bender; eds. Titus Winters, Tom Manshreck, Hyrum Wright
   venue: O'Reilly Media
 - title: curl-based smoke tests

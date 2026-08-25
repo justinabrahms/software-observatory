@@ -25,14 +25,14 @@ references:
   year: 2016
   tier: II
   url: https://arxiv.org/pdf/1604.06766
-  kind: paper
+  kind: publication
   authors: Guilherme Avelino, Leonardo Passos, Andre Hora, Marco Tulio Valente
   venue: arXiv 1604.06766 (companion to ICPC 2016)
 - title: Do Developers Update Their Library Dependencies?
   year: 2017
   tier: II
   url: https://arxiv.org/abs/1709.04621
-  kind: paper
+  kind: publication
   authors: Raula Gaikovina Kula, Daniel M. German, Ali Ouni, Takashi Ishio, Katsuro Inoue
   venue: Empirical Software Engineering
 - title: dependency-cruiser

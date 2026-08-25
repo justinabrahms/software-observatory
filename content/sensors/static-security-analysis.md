@@ -24,14 +24,14 @@ references:
   year: 2013
   tier: I
   url: https://people.eecs.berkeley.edu/~daw/papers/coderev-essos13.pdf
-  kind: paper
+  kind: publication
   authors: Anne Edmundson, Brian Holtkamp, Emanuel Rivera, Matthew Finifter, Adrian Mettler, David Wagner
   venue: ESSoS 2013
 - title: Eliminating Memory Safety Vulnerabilities at the Source
   year: 2024
   tier: II
   url: https://security.googleblog.com/2024/09/eliminating-memory-safety-vulnerabilities-Android.html
-  kind: paper
+  kind: publication
   authors: Google Security Blog, Android team
   venue: Google Security Blog
 - title: Semgrep

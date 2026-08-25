@@ -26,14 +26,14 @@ references:
   year: 2026
   tier: I
   url: https://arxiv.org/abs/2606.18377
-  kind: paper
+  kind: publication
   authors: Mohamed Bilel Besbes, Gregory Mierzwinski, Suhaib Mujahid, Philipp Leitner, Alexander Serebrenik, Dave Hunt, Diego Elias Costa
   venue: arXiv preprint
 - title: 'FBDetect: Catching Tiny Performance Regressions at Hyperscale through In-Production Monitoring'
   year: 2024
   tier: III
   url: https://tangchq74.github.io/FBDetect-SOSP24.pdf
-  kind: paper
+  kind: publication
   authors: Dong Young Yoon, Yang Wang, Miao Yu, Elvis Huang, Juan Ignacio Jones, Abhinay Kukkadapu, Osman Kocas, Jonathan Wiepert, Kapil Goenka, Sherry Chen, Yanjun Lin, Zhihui Huang, Jocelyn Kong, Michael Chow, Chunqiang Tang
   venue: SOSP '24
 - title: Pyroscope

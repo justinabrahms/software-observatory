@@ -25,14 +25,14 @@ references:
   year: 2014
   tier: I
   url: https://cs.uwaterloo.ca/~m2nagapp/courses/CS846/1171/papers/elbaum_fse14.pdf
-  kind: paper
+  kind: publication
   authors: Sebastian Elbaum, Gregg Rothermel, John Penix
   venue: FSE 2014 (ESEC/FSE), Hong Kong
 - title: Taming Google-Scale Continuous Testing
   year: 2017
   tier: II
   url: https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45861.pdf
-  kind: paper
+  kind: publication
   authors: Atif Memon, Zebao Gao, Bao Nguyen, Sanjeev Dhanda, Eric Nickell, Rob Siemborski, John Micco
   venue: ICSE 2017, Software Engineering in Practice (SEIP)
 - title: pytest

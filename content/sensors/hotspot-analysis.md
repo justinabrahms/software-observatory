@@ -26,20 +26,20 @@ references:
   year: 2016
   tier: II
   url: https://arxiv.org/pdf/1604.06766
-  kind: paper
+  kind: publication
   authors: Guilherme Avelino, Leonardo Passos, Andre Hora, Marco Tulio Valente
   venue: arXiv 1604.06766 (companion to ICPC 2016)
 - title: Don't Touch My Code! Examining the Effects of Ownership on Software Quality
   year: 2011
   tier: II
   url: https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/bird2011dtm.pdf
-  kind: paper
+  kind: publication
   authors: Christian Bird, Nachiappan Nagappan, Brendan Murphy, Harald Gall, Premkumar Devanbu
   venue: ESEC/FSE '11
 - authors: Adam Tornhill
   title: Your Code as a Crime Scene
   year: 2015
-  kind: paper
+  kind: publication
   tier: IV
 - title: CodeScene
   kind: tool

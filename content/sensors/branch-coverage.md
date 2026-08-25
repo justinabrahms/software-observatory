@@ -26,7 +26,7 @@ references:
   year: 2014
   tier: I
   url: https://www.cs.ubc.ca/~rtholmes/papers/icse_2014_inozemtseva.pdf
-  kind: paper
+  kind: publication
   authors: Laura Inozemtseva, Reid Holmes
   venue: ICSE 2014
 - title: coverage.py

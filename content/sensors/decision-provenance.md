@@ -24,7 +24,7 @@ references:
 - authors: Michael Nygard
   title: Documenting Architecture Decisions
   year: 2017
-  kind: paper
+  kind: publication
   tier: IV
 - title: ADR
   url: https://adr.github.io

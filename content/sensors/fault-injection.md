@@ -26,14 +26,14 @@ references:
   year: 2020
   tier: II
   url: https://arxiv.org/abs/2003.10554
-  kind: paper
+  kind: publication
   authors: Kyle Kingsbury, Peter Alvaro
   venue: arXiv 2003.10554
 - title: 'Jepsen: MongoDB 4.2.6'
   year: 2020
   tier: II
   url: https://jepsen.io/analyses/mongodb-4.2.6
-  kind: paper
+  kind: publication
   authors: Kyle Kingsbury (Jepsen)
   venue: jepsen.io analyses
 - title: Chaos Engineering

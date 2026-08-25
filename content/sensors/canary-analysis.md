@@ -27,14 +27,14 @@ references:
   year: 2026
   tier: I
   url: https://arxiv.org/abs/2606.18377
-  kind: paper
+  kind: publication
   authors: Mohamed Bilel Besbes, Gregory Mierzwinski, Suhaib Mujahid, Philipp Leitner, Alexander Serebrenik, Dave Hunt, Diego Elias Costa
   venue: arXiv preprint
 - title: Holistic Configuration Management at Facebook
   year: 2015
   tier: III
   url: https://sigops.org/s/conferences/sosp/2015/current/2015-Monterey/printable/008-tang.pdf
-  kind: paper
+  kind: publication
   authors: Chunqiang Tang, Thawan Kooburat, Pradeep Venkatachalam, Akshay Chander, Zhe Wen, Aravind Narayanan, Patrick Dowell, Robert Karl
   venue: SOSP '15
 - title: Netflix Kayenta

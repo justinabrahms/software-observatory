@@ -26,14 +26,14 @@ references:
   year: 2023
   tier: II
   url: https://arxiv.org/abs/2301.04563
-  kind: paper
+  kind: publication
   authors: Suhaib Mujahid, Diego Elias Costa, Rabe Abdalkareem, Emad Shihab and others
   venue: ACM TOSEM
 - title: Breaking Bad? Semantic Versioning and Impact of Breaking Changes in Maven Central
   year: 2022
   tier: II
   url: https://arxiv.org/abs/2110.07889
-  kind: paper
+  kind: publication
   authors: Lina Ochoa, Thomas Degueule, Jean-Rémy Falleri, Jurgen Vinju
   venue: Empirical Software Engineering 27
 - title: revapi

@@ -28,20 +28,20 @@ references:
   year: 2014
   tier: I
   url: https://www.cs.ubc.ca/~rtholmes/papers/icse_2014_inozemtseva.pdf
-  kind: paper
+  kind: publication
   authors: Laura Inozemtseva, Reid Holmes
   venue: ICSE 2014
 - title: Are Mutants a Valid Substitute for Real Faults in Software Testing?
   year: 2014
   tier: I
   url: https://homes.cs.washington.edu/~rjust/publ/mutants_real_faults_fse_2014.pdf
-  kind: paper
+  kind: publication
   authors: René Just, Darioush Jalali, Laura Inozemtseva, Michael D. Ernst, Reid Holmes, Gordon Fraser
   venue: FSE 2014
 - authors: Jia & Harman
   title: An Analysis and Survey of the Development of Mutation Testing
   year: 2011
-  kind: paper
+  kind: publication
   tier: IV
 - title: Stryker
   url: https://stryker-mutator.io

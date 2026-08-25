@@ -32,20 +32,20 @@ references:
   year: 2016
   tier: I
   url: https://www.vldb.org/pvldb/vol9/p993-abedjan.pdf
-  kind: paper
+  kind: publication
   authors: Ziawasch Abedjan, Xu Chu, Dong Deng, Raul Castro Fernandez, Ihab F. Ilyas, Mourad Ouzzani, Paolo Papotti, Michael Stonebraker, Nan Tang
   venue: PVLDB 9(12)
 - title: 'AddressSanitizer: A Fast Address Sanity Checker'
   year: 2012
   tier: III
   url: https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/37752.pdf
-  kind: paper
+  kind: publication
   authors: Konstantin Serebryany, Derek Bruening, Alexander Potapenko, Dmitry Vyukov
   venue: USENIX ATC '12
 - authors: Hoare
   title: An Axiomatic Basis for Computer Programming
   year: 1969
-  kind: paper
+  kind: publication
   tier: IV
 - title: assertpy
   kind: tool

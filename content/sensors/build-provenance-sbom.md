@@ -26,14 +26,14 @@ references:
   year: 2021
   tier: II
   url: https://arxiv.org/abs/2104.06020
-  kind: paper
+  kind: publication
   authors: Chris Lamb, Stefano Zacchiroli
   venue: arXiv preprint; later IEEE Software 39 (2022) 62-70
 - title: License Incompatibilities in Software Ecosystems
   year: 2022
   tier: II
   url: https://arxiv.org/abs/2203.01634
-  kind: paper
+  kind: publication
   authors: Rolf-Helge Pfeiffer
   venue: arXiv 2203.01634
 - title: SLSA

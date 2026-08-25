@@ -29,20 +29,20 @@ references:
   year: 2022
   tier: II
   url: https://acmsocc.org/2022/assets/slides/95.pdf
-  kind: paper
+  kind: publication
   authors: Supriyo Ghosh, Manish Shetty, Chetan Bansal, Suman Nath
   venue: ACM SoCC '22
 - title: The Tail at Scale
   year: 2013
   tier: III
   url: https://www.barroso.org/publications/TheTailAtScale.pdf
-  kind: paper
+  kind: publication
   authors: Jeffrey Dean, Luiz André Barroso
   venue: Communications of the ACM 56(2)
 - authors: Charity Majors et al.
   title: Observability Engineering
   year: 2022
-  kind: paper
+  kind: publication
   tier: IV
 - title: OpenTelemetry
   url: https://opentelemetry.io

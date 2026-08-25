@@ -28,14 +28,14 @@ references:
   year: 2025
   tier: I
   url: https://cseweb.ucsd.edu/~mcoblenz/assets/pdf/OOPSLA_2025_PBT.pdf
-  kind: paper
+  kind: publication
   authors: Savitha Ravi, Michael Coblenz
   venue: Proc. ACM Program. Lang. (OOPSLA2)
 - title: 'QuickCheck: A Lightweight Tool for Random Testing of Haskell Programs'
   year: 2000
   tier: I
   url: https://www.cs.tufts.edu/~nr/cs257/archive/john-hughes/quick.pdf
-  kind: paper
+  kind: publication
   authors: Koen Claessen, John Hughes
   venue: ACM SIGPLAN Notices
 - title: Hypothesis

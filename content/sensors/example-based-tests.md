@@ -25,20 +25,20 @@ references:
   year: 2014
   tier: I
   url: https://cs.uwaterloo.ca/~m2nagapp/courses/CS846/1171/papers/elbaum_fse14.pdf
-  kind: paper
+  kind: publication
   authors: Sebastian Elbaum, Gregg Rothermel, John Penix
   venue: FSE 2014 (ESEC/FSE), Hong Kong
 - title: On the Effectiveness of the Test-First Approach to Programming
   year: 2005
   tier: I
   url: https://www.cs.unm.edu/~joel/cs351/paper/IEEE-Effectiveness_of_Test-First_Approach_to_Programming.pdf
-  kind: paper
+  kind: publication
   authors: Hakan Erdogmus, Maurizio Morisio, Marco Torchiano
   venue: IEEE TSE 31(1)
 - authors: Beizer
   title: Software Testing Techniques
   year: 1990
-  kind: paper
+  kind: publication
   tier: IV
 - title: pytest
   kind: tool

@@ -27,13 +27,13 @@ references:
   year: 2015
   tier: III
   url: https://cacm.acm.org/research/how-amazon-web-services-uses-formal-methods/
-  kind: paper
+  kind: publication
   authors: Chris Newcombe, Tim Rath, Fan Zhang, Bogdan Munteanu, Marc Brooker, Michael Deardeuff
   venue: Communications of the ACM 58(4)
 - authors: Leino
   title: 'Dafny: An Automatic Program Verifier'
   year: 2010
-  kind: paper
+  kind: publication
   tier: IV
 - title: Dafny
   url: https://dafny.org

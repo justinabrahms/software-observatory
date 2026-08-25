@@ -26,14 +26,14 @@ references:
   year: 2020
   tier: III
   url: https://www.usenix.org/system/files/nsdi20-paper-hauer.pdf
-  kind: paper
+  kind: publication
   authors: Tamás Hauer, Philipp Hoffmann, John Lunney, Dan Ardelean, Amer Diwan
   venue: USENIX NSDI '20
 - title: Monitoring Distributed Systems (SRE Book, ch. 6)
   year: 2016
   tier: IV
   url: https://sre.google/sre-book/monitoring-distributed-systems/
-  kind: paper
+  kind: publication
   authors: Rob Ewaschuk, Betsy Beyer
   venue: Site Reliability Engineering, O'Reilly
 - title: Checkly
