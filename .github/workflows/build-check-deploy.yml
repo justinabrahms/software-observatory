@@ -20,11 +20,13 @@ on:
     - cron: "17 6 * * 1"
   workflow_dispatch:
 
-# A branch with an open PR would otherwise run `check` twice per push (once
-# for `push`, once for `pull_request`) and race. Group by workflow + ref so a
-# PR run and a same-ref branch run collapse into one concurrency group, and
-# cancel whichever run that group already had in flight — the new push always
-# supersedes it. `github.head_ref` is set only for `pull_request` events (and
+# Supersede an in-flight run when a newer commit lands on the same branch.
+#
+# This does NOT deduplicate the push/pull_request pair — that is handled at the
+# job level below, because cancelling one of them is the wrong tool: a
+# cancelled run reports as a FAILED check on the pull request, so every PR
+# would carry a red X from its own duplicate. Observed on PR #130: the push
+# run was cancelled correctly and `gh pr checks` reported `check fail 1s`. `github.head_ref` is set only for `pull_request` events (and
 # is the source branch there); it falls back for push, schedule and
 # workflow_dispatch.
 #
@@ -63,6 +65,19 @@ jobs:
   # runs after, since it reads the generated HTML.
   # ---------------------------------------------------------------------------
   check:
+    # Do the work exactly once per commit. `push` now covers every branch, so
+    # for a branch in this repo the push run is the one that matters and the
+    # pull_request run would be a byte-for-byte duplicate of it. Skipping it
+    # here is quiet — a skipped job is neutral on the PR, where a cancelled
+    # one is red.
+    #
+    # The condition deliberately still runs for pull_request events whose head
+    # repo is NOT this one: a fork's branch never produces a push event here,
+    # so `pull_request` is the only trigger that ever sees fork contributions.
+    # Dropping it entirely would leave every external PR untested.
+    if: >-
+      github.event_name != 'pull_request' ||
+      github.event.pull_request.head.repo.full_name != github.repository
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
