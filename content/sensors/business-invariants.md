@@ -22,7 +22,7 @@ see_also:
 - SO-004
 - SO-004b
 - SO-006
-last_reviewed: '2026-08-24'
+last_reviewed: '2026-08-26'
 references:
 - title: Great Expectations
   url: https://greatexpectations.io
@@ -39,8 +39,9 @@ references:
 ---
 
 A successful payment implies an order eventually becomes paid.
-`order.total == sum(line_items)`. These are *domain-level correctness*
-sensors that need no knowledge of the implementation.
+`order.total == subtotal + tax + shipping - discounts`. These are
+*domain-level correctness* sensors that need no knowledge of the
+implementation.
 
 Business invariants are the highest-level invariant sensor: they check
 whether the system is accomplishing its business purpose, not just whether
@@ -55,7 +56,7 @@ one row per invariant, each with a verdict:
 | Invariant | Window | Expected | Observed | Verdict |
 |-----------|--------|----------|----------|---------|
 | payment implies paid order | 24 h | 0 violations | 17 | FAIL |
-| order.total == sum(line_items) | 24 h | 0 violations | 0 | pass |
+| order.total == subtotal + tax + shipping - discounts | 24 h | 0 violations | 0 | pass |
 | refund <= original charge | 24 h | 0 violations | 3 | FAIL |
 | signup answered with welcome email within 1 h | 24 h | >= 99% | 97.1% | FAIL |
 
@@ -73,6 +74,11 @@ Reading it well:
   case. The delta is the signal.
 - **An empty row deserves suspicion.** An invariant that has never
   failed in six months is either very healthy or no longer running.
+- **A vague invariant passes for the wrong reason.** Every term has to
+  name a field someone can point at. "The order total is right" cannot
+  be checked, so whoever implements it picks a weaker reading —
+  usually the one that already holds — and the row passes without ever
+  having tested the promise you meant.
   Spot-check the query.
 
 ## How it gets gamed
