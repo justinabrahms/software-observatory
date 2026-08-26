@@ -164,7 +164,7 @@ def generate_glossary_page(output_dir):
     </section>
 """
 
-    body = f"""  <section class="page-header">
+    body = f"""  <section class="page-header page-header--reading">
     <p class="eyebrow">Glossary</p>
     <h1 class="page-title">Glossary</h1>
     <p class="page-lede">

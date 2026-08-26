@@ -8,7 +8,7 @@ from ..jsonld import breadcrumb_ld, framework_termset_ld, page_ld
 def generate_framework_page(sensors, output_dir):
     """Generate the framework page."""
 
-    body = f"""  <section class="page-header">
+    body = f"""  <section class="page-header page-header--reading">
     <p class="eyebrow">The Framework</p>
     <h1 class="page-title">Sensor Properties</h1>
     <p class="page-lede">

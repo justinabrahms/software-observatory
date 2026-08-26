@@ -6,7 +6,7 @@ from ..taxonomy import FAMILIES
 
 def generate_404(sensors, output_dir):
     """Write 404.html with recovery links for agents and humans."""
-    body = f"""  <section class="page-header">
+    body = f"""  <section class="page-header page-header--reading">
     <p class="eyebrow">404</p>
     <h1 class="page-title">Not found</h1>
     <p class="page-lede">

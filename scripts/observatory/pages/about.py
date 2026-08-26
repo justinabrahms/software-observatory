@@ -8,7 +8,7 @@ from ..taxonomy import FAMILIES
 def generate_about_page(output_dir):
     """Generate the about page."""
 
-    body = f"""  <section class="page-header">
+    body = f"""  <section class="page-header page-header--reading">
     <p class="eyebrow">About</p>
     <h1 class="page-title">About the Observatory</h1>
     <p class="page-lede">

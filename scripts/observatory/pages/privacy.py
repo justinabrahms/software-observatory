@@ -6,7 +6,7 @@ from ..jsonld import breadcrumb_ld, page_ld
 
 def generate_privacy_page(output_dir):
     """Generate the privacy page."""
-    body = """  <section class="page-header">
+    body = """  <section class="page-header page-header--reading">
     <p class="eyebrow">Privacy</p>
     <h1 class="page-title">Privacy</h1>
     <p class="page-lede">

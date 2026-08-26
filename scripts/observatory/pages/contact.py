@@ -6,7 +6,7 @@ from ..jsonld import breadcrumb_ld, page_ld
 
 def generate_contact_page(output_dir):
     """Generate the contact page."""
-    body = """  <section class="page-header">
+    body = """  <section class="page-header page-header--reading">
     <p class="eyebrow">Contact</p>
     <h1 class="page-title">Contact</h1>
     <p class="page-lede">

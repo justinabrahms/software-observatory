@@ -30,11 +30,6 @@
   --font-mono:   "JetBrains Mono", "SF Mono", "Fira Code", monospace;
   --max-width:   1200px;
   --reading:     680px;
-  /* Left edge of a --reading column, so it lines up with a --max-width
-     .page-header instead of centring itself independently. Both boxes are
-     border-box with 2rem padding, so matching the margin matches the text
-     edge. Clamped at 0: below --max-width the header is not centred either. */
-  --reading-indent: max(0px, calc((100% - var(--max-width)) / 2));
 
   /* Categorical palette for the sensor families (scatter, future maps).
      Hues spaced around the wheel, tuned to read on the dark background. */
@@ -594,6 +589,12 @@ h3:hover .heading-anchor,
   margin: 0 auto;
   padding: 4rem 2rem 2rem;
 }
+/* Pages whose entire body is a --reading column: about, glossary, framework,
+   privacy, contact, 404. The default --max-width header is correct where wide
+   content follows it (catalog, atlas, families) and wrong here, where it either
+   pushes the column off-centre or, matched to it, strands the whole page on the
+   left of a wide viewport. Narrow the header instead and let both centre. */
+.page-header--reading { max-width: var(--reading); }
 .page-title {
   font-family: var(--font-serif);
   font-size: clamp(2rem, 4vw, 3rem);
@@ -1052,7 +1053,7 @@ h3:hover .heading-anchor,
 /* ── About page ────────────────────────────────────────────────────────── */
 .about-content {
   max-width: var(--reading);
-  margin-inline: var(--reading-indent) auto;
+  margin: 0 auto;
   padding: 3rem 2rem 5rem;
 }
 .about-content h2 {
@@ -1894,7 +1895,7 @@ a.wikilink:hover {
 /* ── Framework page ─────────────────────────────────────────────────────── */
 .framework-content {
   max-width: var(--reading);
-  margin-inline: var(--reading-indent) auto;
+  margin: 0 auto;
   padding: 2rem 2rem 5rem;
 }
 .framework-intro {
