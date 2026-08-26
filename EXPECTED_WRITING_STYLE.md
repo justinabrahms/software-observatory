@@ -43,6 +43,19 @@ the numbers aren't comparable.
 > are pass/fail limits agreed in advance — using the example block's own
 > numbers.
 
+**Worked examples get read as specifications.** Someone will check the
+example against a system they actually run. An example that is merely
+illustrative — a formula that holds only in a stripped-down case — is a
+wrong claim, not a simplification.
+
+> *business-invariants:* `order.total == sum(line_items)` → "pedantic,
+> but is this total or subtotal?" It only holds for an order with no
+> tax, no shipping and no discounts, on a page arguing that domain
+> promises should be machine-checked.
+
+**When a reviewer's nitpick is the page's own subject, promote it.** The
+correction is worth more as a stated habit than as a silent fix.
+
 **Prefer the page's own example over an invented one.** If there is a
 sample reading on the page, argue from those numbers. It keeps the
 claim checkable and stops made-up figures from carrying the argument.
