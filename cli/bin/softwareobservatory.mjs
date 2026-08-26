@@ -9,6 +9,7 @@ import {
   findSensor,
   getRelated,
   listValues,
+  listFields,
   suggestSensors,
   stackCoverage,
 } from "../lib/core.mjs";
@@ -20,7 +21,7 @@ Usage: softwareobservatory [--json] [--plain] <command> [args]
 
 Commands:
   list [--family <slug>]        List sensors (all, or within one family)
-  families                      List the 11 sensor families
+  families                      List the sensor families
   get <id|slug|title>           Show one sensor in full, with related entries
   search <term...>              Substring search over titles and entry text
   values <field>                Distinct frontmatter values (oracle, latency, type, ...)
@@ -32,29 +33,225 @@ Commands:
   help                          This message
 
 Flags:
-  --json   Machine-readable output (full precision; stable for agents)
-  --plain  Force human-readable output (default when stdout is a TTY)
+  --json         Machine-readable output (full precision; stable for agents)
+  --plain        Force human-readable output (default when stdout is a TTY)
+  --help, -h     This message
+
+Unknown flags, unknown commands, missing flag values and stray arguments are
+errors (exit 1), never silently ignored. In JSON mode errors are written to
+stderr as JSON.
 `;
 
-function parseFlags(argv) {
-  const flags = { json: false, plain: false, family: null };
-  const rest = [];
-  for (let i = 0; i < argv.length; i += 1) {
-    const arg = argv[i];
-    if (arg === "--json") flags.json = true;
-    else if (arg === "--plain") flags.plain = true;
-    else if (arg === "--family") {
-      flags.family = argv[i + 1];
-      i += 1;
-    } else if (arg === "--help" || arg === "-h") {
-      flags.help = true;
-    } else {
-      rest.push(arg);
+const BOOLEAN_FLAGS = ["--json", "--plain", "--help", "-h"];
+const VALUE_FLAGS = ["--family"];
+const ALL_FLAGS = [...BOOLEAN_FLAGS, ...VALUE_FLAGS];
+
+// The contract for every command: which flags it accepts and how many
+// positional arguments it takes. Anything outside the contract is an error.
+// Silently dropping an argument -- which is how `list --familly structural`
+// came to return all 59 sensors and exit 0 -- is the failure mode this catalog
+// exists to warn about.
+const COMMANDS = {
+  list: { flags: ["--family"], min: 0, max: 0, usage: "list [--family <slug>]" },
+  families: { flags: [], min: 0, max: 0, usage: "families" },
+  get: { flags: [], min: 1, max: Infinity, usage: "get <id|slug|title>" },
+  search: { flags: [], min: 1, max: Infinity, usage: "search <term...>" },
+  values: { flags: [], min: 1, max: 1, usage: "values <field>" },
+  suggest: { flags: [], min: 1, max: Infinity, usage: "suggest <question...>" },
+  gaps: { flags: [], min: 1, max: Infinity, usage: "gaps <question...>" },
+  stack: { flags: [], min: 1, max: Infinity, usage: "stack <id,slug,...>" },
+  mcp: { flags: [], min: 0, max: 0, usage: "mcp" },
+  version: { flags: [], min: 0, max: 0, usage: "version" },
+  help: { flags: [], min: 0, max: 0, usage: "help" },
+};
+const COMMAND_NAMES = Object.keys(COMMANDS);
+
+function levenshtein(a, b) {
+  let previous = Array.from({ length: b.length + 1 }, (_, j) => j);
+  for (let i = 1; i <= a.length; i += 1) {
+    const current = [i];
+    for (let j = 1; j <= b.length; j += 1) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      current[j] = Math.min(previous[j] + 1, current[j - 1] + 1, previous[j - 1] + cost);
+    }
+    previous = current;
+  }
+  return previous[b.length];
+}
+
+// Nearest valid spelling, if there is one close enough to be worth offering.
+function nearest(word, candidates) {
+  let best = null;
+  let bestDistance = Infinity;
+  for (const candidate of candidates) {
+    const distance = levenshtein(word, candidate);
+    if (distance < bestDistance) {
+      bestDistance = distance;
+      best = candidate;
     }
   }
-  if (!process.stdout.isTTY) flags.json = true;
-  if (flags.plain) flags.json = false;
-  return { flags, rest };
+  return bestDistance <= (word.length <= 4 ? 1 : 2) ? best : null;
+}
+
+function hint(suggestion) {
+  return suggestion ? ` Did you mean '${suggestion}'?` : "";
+}
+
+// Errors go to stderr in both modes. In JSON mode they are machine-readable, so
+// an agent can parse the failure instead of parsing a valid-looking success.
+function fail(jsonMode, payload, message, { usage = false } = {}) {
+  if (jsonMode) {
+    process.stderr.write(JSON.stringify({ ...payload, message }) + "\n");
+  } else {
+    console.error(message);
+    if (usage) process.stderr.write("\n" + USAGE);
+  }
+  process.exit(1);
+}
+
+function parseArgv(argv) {
+  const flags = { json: false, plain: false, help: false, family: null };
+  const used = new Set();
+  const positionals = [];
+  const errors = [];
+  let literal = false;
+
+  for (let i = 0; i < argv.length; i += 1) {
+    const arg = argv[i];
+    if (literal) {
+      positionals.push(arg);
+      continue;
+    }
+    if (arg === "--") {
+      literal = true;
+      continue;
+    }
+    if (!arg.startsWith("-")) {
+      positionals.push(arg);
+      continue;
+    }
+
+    let name = arg;
+    let value = null;
+    if (arg.startsWith("--") && arg.includes("=")) {
+      const eq = arg.indexOf("=");
+      name = arg.slice(0, eq);
+      value = arg.slice(eq + 1);
+    }
+
+    if (!ALL_FLAGS.includes(name)) {
+      const guess = nearest(name, ALL_FLAGS);
+      errors.push({
+        error: "unknown flag",
+        flag: name,
+        did_you_mean: guess || undefined,
+        message: `Unknown flag '${name}'.${hint(guess)} Run 'softwareobservatory help' for usage.`,
+      });
+      continue;
+    }
+    if (used.has(name)) {
+      errors.push({
+        error: "repeated flag",
+        flag: name,
+        message: `Flag '${name}' was given more than once.`,
+      });
+      continue;
+    }
+    used.add(name);
+
+    if (BOOLEAN_FLAGS.includes(name)) {
+      if (value !== null) {
+        errors.push({
+          error: "unexpected flag value",
+          flag: name,
+          message: `Flag '${name}' does not take a value.`,
+        });
+        continue;
+      }
+      if (name === "--json") flags.json = true;
+      else if (name === "--plain") flags.plain = true;
+      else flags.help = true;
+      continue;
+    }
+
+    if (value === null) {
+      const next = argv[i + 1];
+      if (next === undefined || next.startsWith("-")) {
+        errors.push({
+          error: "missing flag value",
+          flag: name,
+          message: `Flag '${name}' requires a value, e.g. '${name} structural'.`,
+        });
+        continue;
+      }
+      value = next;
+      i += 1;
+    }
+    if (value === "") {
+      errors.push({
+        error: "missing flag value",
+        flag: name,
+        message: `Flag '${name}' requires a non-empty value.`,
+      });
+      continue;
+    }
+    if (name === "--family") flags.family = value;
+  }
+
+  return { flags, used, positionals, errors };
+}
+
+// Resolve argv into a validated (command, args, flags) triple, or exit 1.
+function resolveInvocation(argv) {
+  const { flags, used, positionals, errors } = parseArgv(argv);
+  const jsonMode = flags.plain ? false : flags.json || !process.stdout.isTTY;
+  const [command, ...args] = positionals;
+
+  if (flags.help) {
+    process.stdout.write(USAGE);
+    process.exit(0);
+  }
+  if (!command) {
+    process.stderr.write(USAGE);
+    process.exit(1);
+  }
+  if (flags.json && flags.plain) {
+    fail(jsonMode, { error: "conflicting flags", flags: ["--json", "--plain"] },
+      "Flags '--json' and '--plain' conflict; pass at most one.");
+  }
+  if (!Object.prototype.hasOwnProperty.call(COMMANDS, command)) {
+    const guess = nearest(command, COMMAND_NAMES);
+    fail(jsonMode, { error: "unknown command", command, did_you_mean: guess || undefined },
+      `Unknown command '${command}'.${hint(guess)}`, { usage: true });
+  }
+  const spec = COMMANDS[command];
+
+  if (errors.length > 0) {
+    const first = errors[0];
+    fail(jsonMode, { error: first.error, flag: first.flag, did_you_mean: first.did_you_mean }, first.message);
+  }
+
+  for (const flag of used) {
+    if (BOOLEAN_FLAGS.includes(flag)) continue;
+    if (!spec.flags.includes(flag)) {
+      const accepted = [...spec.flags, "--json", "--plain"].join(", ");
+      fail(jsonMode, { error: "flag not valid for command", flag, command, accepted_flags: [...spec.flags, "--json", "--plain"] },
+        `Flag '${flag}' is not valid for '${command}'. '${command}' accepts: ${accepted}.`);
+    }
+  }
+
+  if (args.length < spec.min) {
+    fail(jsonMode, { error: "missing argument", command, usage: `softwareobservatory ${spec.usage}` },
+      `Usage: softwareobservatory ${spec.usage}`);
+  }
+  if (args.length > spec.max) {
+    const extra = args[spec.max];
+    const guess = command === "list" && getFamily(extra) ? `--family ${extra}` : null;
+    fail(jsonMode, { error: "unexpected argument", command, argument: extra, did_you_mean: guess || undefined, usage: `softwareobservatory ${spec.usage}` },
+      `Unexpected argument '${extra}' for '${command}'.${hint(guess)} Usage: softwareobservatory ${spec.usage}`);
+  }
+
+  return { flags: { ...flags, json: jsonMode }, command, args };
 }
 
 function emit(flags, data, renderHuman) {
@@ -177,27 +374,31 @@ function humanStack(report) {
     console.log("\nStack levels: " + Object.keys(report.coverage.stack_levels).join(", "));
   }
   if (report.recommendations.length > 0) {
-    console.log("\nRecommendations:");
+    console.log("\nUncovered families (one example entry each, not a ranked pick):");
     for (const rec of report.recommendations) {
-      console.log(`  + ${rec.title} (${rec.id}) - ${rec.reason}`);
+      const family = getFamily(rec.family);
+      console.log(`  + ${family ? family.name : rec.family}: e.g. ${rec.title} (${rec.id})`);
+      if (rec.alternatives.length > 0) {
+        console.log(`      or any of: ${rec.alternatives.map((a) => `${a.title} (${a.id})`).join(", ")}`);
+      }
     }
+    console.log(`\nCoverage rule: ${report.composition_rule.description}`);
   }
 }
 
 function main() {
-  const { flags, rest } = parseFlags(process.argv.slice(2));
-  const [command, ...args] = rest;
-
-  if (flags.help || !command) {
-    process.stdout.write(USAGE);
-    process.exit(command ? 0 : 1);
-  }
+  const { flags, command, args } = resolveInvocation(process.argv.slice(2));
 
   switch (command) {
+    case "help": {
+      process.stdout.write(USAGE);
+      break;
+    }
     case "list": {
       if (flags.family && !getFamily(flags.family)) {
-        console.error(`Unknown family '${flags.family}'. Run 'families' to see valid slugs.`);
-        process.exit(1);
+        const guess = nearest(flags.family, listFamilies().map((f) => f.slug));
+        fail(flags.json, { error: "unknown family", family: flags.family, did_you_mean: guess || undefined },
+          `Unknown family '${flags.family}'.${hint(guess)} Run 'families' to see valid slugs.`);
       }
       const sensors = listSensors({ family: flags.family });
       emit(flags, sensors.map(sensorSummary), () => humanList(sensors));
@@ -208,14 +409,10 @@ function main() {
       break;
     }
     case "get": {
-      if (args.length === 0) {
-        console.error("Usage: softwareobservatory get <id|slug|title>");
-        process.exit(1);
-      }
-      const sensor = findSensor(args.join(" "));
+      const query = args.join(" ");
+      const sensor = findSensor(query);
       if (!sensor) {
-        console.error(`No sensor matches '${args.join(" ")}'.`);
-        process.exit(1);
+        fail(flags.json, { error: "no match", query }, `No sensor matches '${query}'.`);
       }
       const related = getRelated(sensor);
       emit(
@@ -244,20 +441,21 @@ function main() {
       break;
     }
     case "values": {
-      if (args.length === 0) {
-        console.error("Usage: softwareobservatory values <field>");
-        process.exit(1);
+      // An unknown field used to return an empty list and exit 0, which is
+      // indistinguishable from a field that genuinely has no values.
+      const field = args[0];
+      const fields = listFields();
+      if (!fields.includes(field)) {
+        const guess = nearest(field, fields);
+        fail(flags.json, { error: "unknown field", field, did_you_mean: guess || undefined, valid_fields: fields },
+          `Unknown field '${field}'.${hint(guess)} Valid fields: ${fields.join(", ")}.`);
       }
-      const values = listValues(args[0]);
-      emit(flags, { field: args[0], values }, () => values.forEach((v) => console.log(v)));
+      const values = listValues(field);
+      emit(flags, { field, values }, () => values.forEach((v) => console.log(v)));
       break;
     }
     case "suggest":
     case "gaps": {
-      if (args.length === 0) {
-        console.error(`Usage: softwareobservatory ${command} <question...>`);
-        process.exit(1);
-      }
       const results = suggestSensors(args.join(" "));
       const gapsOnly = command === "gaps";
       emit(
@@ -268,11 +466,11 @@ function main() {
       break;
     }
     case "stack": {
-      if (args.length === 0) {
-        console.error("Usage: softwareobservatory stack <id,slug,...>");
-        process.exit(1);
-      }
       const ids = args.join(" ").split(/[,\s]+/).filter(Boolean);
+      if (ids.length === 0) {
+        fail(flags.json, { error: "missing argument", command, usage: "softwareobservatory stack <id,slug,...>" },
+          "Usage: softwareobservatory stack <id,slug,...>");
+      }
       const report = stackCoverage(ids);
       emit(flags, report, () => humanStack(report));
       break;
@@ -293,10 +491,11 @@ function main() {
       );
       break;
     }
+    /* c8 ignore next 3 */
     default:
-      console.error(`Unknown command '${command}'.\n`);
-      process.stdout.write(USAGE);
-      process.exit(1);
+      // resolveInvocation rejects anything not in COMMANDS, so this is
+      // unreachable unless COMMANDS and this switch drift apart.
+      fail(flags.json, { error: "unimplemented command", command }, `Command '${command}' is declared but not implemented.`);
   }
 }
 
