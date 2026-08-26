@@ -19,6 +19,7 @@ see_also:
 - SO-002c
 - SO-002d
 - SO-003
+- SO-005e
 last_reviewed: '2026-08-24'
 references:
 - title: Techniques for Improving Regression Testing in Continuous Integration Development Environments
@@ -67,8 +68,10 @@ Fundamentally different from [coverage](diff-coverage.html): coverage says
 ## The weakness
 
 Example-based tests are only as good as the examples chosen. They test what
-the author thought to test. [Mutation testing](mutation-testing.html) and
-[metamorphic testing](metamorphic-testing.html) exist to find the gaps.
+the author thought to test. [Property-based
+testing](property-based-testing.html), [mutation
+testing](mutation-testing.html) and [metamorphic
+testing](metamorphic-testing.html) exist to find the gaps.
 
 ## In practice
 

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>Sensor Catalog — Software Observatory</title>
+  <meta name="description" content="All 5 epistemic sensors, grouped into the 10 families — what each one detects, what it misses, and how strong its verdict is.">
+  <link rel="canonical" href="https://softwareobservatory.com/catalog/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sensor Catalog — Software Observatory">
+  <meta property="og:description" content="All 5 epistemic sensors, grouped into the 10 families — what each one detects, what it misses, and how strong its verdict is.">
+  <meta property="og:url" content="https://softwareobservatory.com/catalog/">
+  <meta property="og:image" content="https://softwareobservatory.com/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sensor Catalog — Software Observatory">
+  <meta name="twitter:description" content="All 5 epistemic sensors, grouped into the 10 families — what each one detects, what it misses, and how strong its verdict is.">
+  <meta name="twitter:image" content="https://softwareobservatory.com/og.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="https://softwareobservatory.com/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "DefinedTermSet",
+      "@id": "https://softwareobservatory.com/catalog/#defined-term-set",
+      "name": "Software Observatory sensor catalog",
+      "description": "5 epistemic sensors for software correctness, grouped into 10 families.",
+      "url": "https://softwareobservatory.com/catalog/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "creator": {
+        "@type": "Person",
+        "@id": "https://softwareobservatory.com/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "publisher": {
+        "@id": "https://softwareobservatory.com/#organization"
+      },
+      "hasPart": [
+        {
+          "@id": "https://softwareobservatory.com/families/structural/#defined-term-set"
+        },
+        {
+          "@id": "https://softwareobservatory.com/families/behavioral/#defined-term-set"
+        },
+        {
+          "@id": "https://softwareobservatory.com/families/test-effectiveness/#defined-term-set"
+        },
+        {
+          "@id": "https://softwareobservatory.com/families/invariants/#defined-term-set"
+        }
+      ],
+      "hasDefinedTerm": [
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://softwareobservatory.com/sensors/alpha-probe/#term",
+          "name": "Alpha Probe",
+          "description": "Alpha Probe is a fixture entry. It exists to exercise the reference renderer with one reference of every declared kind, so that a change to the Publications / Tooling / Further reading bucketing…",
+          "termCode": "SO-T01",
+          "url": "https://softwareobservatory.com/sensors/alpha-probe/",
+          "inDefinedTermSet": {
+            "@id": "https://softwareobservatory.com/catalog/#defined-term-set"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://softwareobservatory.com/sensors/beta-signal/#term",
+          "name": "Beta Signal",
+          "description": "Beta Signal is the fixture entry that carries a fenced code block and a table, because both go through the markdown extensions (fenced_code, tables, smarty) and both have their own escaping behaviour.",
+          "termCode": "SO-T02",
+          "url": "https://softwareobservatory.com/sensors/beta-signal/",
+          "inDefinedTermSet": {
+            "@id": "https://softwareobservatory.com/catalog/#defined-term-set"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://softwareobservatory.com/sensors/gamma-unreviewed/#term",
+          "name": "Gamma Unreviewed",
+          "description": "Gamma Unreviewed deliberately carries no last_reviewed date, no see_also, no categories, no references, and none of the optional *_note fields.",
+          "termCode": "SO-T03",
+          "url": "https://softwareobservatory.com/sensors/gamma-unreviewed/",
+          "inDefinedTermSet": {
+            "@id": "https://softwareobservatory.com/catalog/#defined-term-set"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://softwareobservatory.com/sensors/epsilon-atlas/#term",
+          "name": "Epsilon Atlas Anchor",
+          "description": "A short opening paragraph, under the blurb limit, so the untruncated branch of the blurb extractor is exercised too.",
+          "termCode": "SO-T05",
+          "url": "https://softwareobservatory.com/sensors/epsilon-atlas/",
+          "inDefinedTermSet": {
+            "@id": "https://softwareobservatory.com/catalog/#defined-term-set"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://softwareobservatory.com/sensors/delta-escape/#term",
+          "name": "Delta & \u003c/script>\u003cimg src=x onerror=alert(1)>",
+          "description": "Delta is the escaping fixture. Its title, one reference title, one reference URL and one reference description all contain characters that must be entity-encoded on the way into HTML: \u003c, >, &, and a…",
+          "termCode": "SO-T04",
+          "url": "https://softwareobservatory.com/sensors/delta-escape/",
+          "inDefinedTermSet": {
+            "@id": "https://softwareobservatory.com/catalog/#defined-term-set"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://softwareobservatory.com/catalog/#itemlist",
+      "name": "Sensor Catalog",
+      "numberOfItems": 5,
+      "itemListOrder": "https://schema.org/ItemListUnordered",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Alpha Probe",
+          "url": "https://softwareobservatory.com/sensors/alpha-probe/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Beta Signal",
+          "url": "https://softwareobservatory.com/sensors/beta-signal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Gamma Unreviewed",
+          "url": "https://softwareobservatory.com/sensors/gamma-unreviewed/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Epsilon Atlas Anchor",
+          "url": "https://softwareobservatory.com/sensors/epsilon-atlas/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "name": "Delta & \u003c/script>\u003cimg src=x onerror=alert(1)>",
+          "url": "https://softwareobservatory.com/sensors/delta-escape/"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <script data-goatcounter="https://stats.softwareobservatory.com/count"
+          async src="https://stats.softwareobservatory.com/count.js"></script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/>
+          <line x1="17" y1="24" x2="12" y2="28"/>
+          <line x1="17" y1="24" x2="22" y2="28"/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/catalog/">Catalog</a>
+      <a href="/atlas/">Atlas</a>
+      <a href="/framework/">Framework</a>
+      <a href="/glossary/">Glossary</a>
+      <a href="/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/catalog/">Browse the catalog</a> or <a href="/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <section class="page-header">
+    <p class="eyebrow">The Catalog</p>
+    <h1 class="page-title">Sensor Catalog</h1>
+    <p class="page-lede">
+      A catalog of <a href="/glossary/#epistemic-sensor" class="wikilink">epistemic sensors</a> — the
+      observable signals that increase our confidence that a system is correct,
+      maintainable, and behaving as intended. Organized into 10 families.
+      Each entry documents what the sensor can detect, what it cannot detect,
+      how easily it can be gamed, and what evidence it produces.
+    </p>
+  </section>
+
+  <div class="catalog-layout">
+    <aside class="filter-sidebar">
+      <div class="filter-group">
+        <h3 class="filter-heading" id="sensor-family">Sensor Family</h3>
+        <ul class="filter-list" id="family-filter">
+          <li><button type="button" class="active" data-family="all" aria-pressed="true">All Families <span class="count">5</span></button></li>
+          <li><button type="button" data-family="structural" aria-pressed="false">Structural <span class="count">1</span></button></li>
+          <li><button type="button" data-family="behavioral" aria-pressed="false">Behavioral <span class="count">2</span></button></li>
+          <li><button type="button" data-family="test-effectiveness" aria-pressed="false">Test Effectiveness <span class="count">1</span></button></li>
+          <li><button type="button" data-family="invariants" aria-pressed="false">Invariants <span class="count">1</span></button></li>
+          <li><button type="button" data-family="adversarial" aria-pressed="false">Adversarial <span class="count">0</span></button></li>
+          <li><button type="button" data-family="runtime" aria-pressed="false">Runtime <span class="count">0</span></button></li>
+          <li><button type="button" data-family="change" aria-pressed="false">Change <span class="count">0</span></button></li>
+          <li><button type="button" data-family="architecture" aria-pressed="false">Architecture <span class="count">0</span></button></li>
+          <li><button type="button" data-family="evolution" aria-pressed="false">Evolution <span class="count">0</span></button></li>
+          <li><button type="button" data-family="comprehension" aria-pressed="false">Human Comprehension <span class="count">0</span></button></li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="catalog-content">
+      <nav class="family-index" aria-label="Sensor families">
+        <h2 class="section-heading" id="families">Families</h2>
+        <ul class="family-index-list">
+          <li><a href="/families/structural/" class="wikilink">Structural</a> <span class="count">1</span> — Is this artifact internally coherent?</li>
+          <li><a href="/families/behavioral/" class="wikilink">Behavioral</a> <span class="count">2</span> — Does it do what we expect?</li>
+          <li><a href="/families/test-effectiveness/" class="wikilink">Test Effectiveness</a> <span class="count">1</span> — Do our tests actually detect failures?</li>
+          <li><a href="/families/invariants/" class="wikilink">Invariants</a> <span class="count">1</span> — What must always be true?</li>
+          <li><a href="/families/adversarial/" class="wikilink">Adversarial</a> <span class="count">0</span> — Can we make our evidence of correctness fail?</li>
+          <li><a href="/families/runtime/" class="wikilink">Runtime</a> <span class="count">0</span> — What is it actually doing?</li>
+          <li><a href="/families/change/" class="wikilink">Change</a> <span class="count">0</span> — What did this change actually affect?</li>
+          <li><a href="/families/architecture/" class="wikilink">Architecture</a> <span class="count">0</span> — Is the system becoming harder to reason about?</li>
+          <li><a href="/families/evolution/" class="wikilink">Evolution</a> <span class="count">0</span> — Does this look like changes that caused trouble before?</li>
+          <li><a href="/families/comprehension/" class="wikilink">Human Comprehension</a> <span class="count">0</span> — Can another observer understand and challenge this?</li>
+        </ul>
+      </nav>
+
+      <section class="family-section" id="structural" data-family="structural">
+        <div class="family-header">
+          <span class="family-num">01</span>
+          <div>
+            <h2 class="family-title" id="structural"><a href="/families/structural/" class="wikilink">Structural</a></h2>
+            <p class="family-tagline">"Is this artifact internally coherent?"</p>
+            <p class="family-more"><a href="/families/structural/">What belongs in this family →</a></p>
+          </div>
+        </div>
+        <div class="signal-grid">
+          <a class="signal-card" href="/sensors/alpha-probe/">
+            <div class="signal-card-meta">
+              <span class="tag tag-family">Structural</span>
+              <span class="tag tag-type">Predictive</span>
+            </div>
+            <h3 class="signal-card-title" id="alpha-probe">Alpha Probe</h3>
+            <p class="signal-card-blurb">Alpha Probe is a fixture entry. It exists to exercise the reference renderer with one reference of every declared kind, so that a change to the Publications / Tooling / Further reading bucketing…</p>
+            <div class="signal-card-footer">
+              <span class="oracle-meter"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot empty"></span> Oracle</span>
+              <span class="latency-badge" title="How long it takes to get this feedback: seconds"><span class="sr-only">Feedback latency: </span>~seconds</span>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="family-section" id="behavioral" data-family="behavioral">
+        <div class="family-header">
+          <span class="family-num">02</span>
+          <div>
+            <h2 class="family-title" id="behavioral"><a href="/families/behavioral/" class="wikilink">Behavioral</a></h2>
+            <p class="family-tagline">"Does it do what we expect?"</p>
+            <p class="family-more"><a href="/families/behavioral/">What belongs in this family →</a></p>
+          </div>
+        </div>
+        <div class="signal-grid">
+          <a class="signal-card" href="/sensors/beta-signal/">
+            <div class="signal-card-meta">
+              <span class="tag tag-family">Behavioral</span>
+              <span class="tag tag-type">Predictive</span>
+            </div>
+            <h3 class="signal-card-title" id="beta-signal">Beta Signal</h3>
+            <p class="signal-card-blurb">Beta Signal is the fixture entry that carries a fenced code block and a table, because both go through the markdown extensions (fenced_code, tables, smarty) and both have their own escaping behaviour.</p>
+            <div class="signal-card-footer">
+              <span class="oracle-meter"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot empty"></span><span class="dot empty"></span> Oracle</span>
+              <span class="latency-badge" title="How long it takes to get this feedback: minutes"><span class="sr-only">Feedback latency: </span>~minutes</span>
+            </div>
+          </a>
+          <a class="signal-card" href="/sensors/gamma-unreviewed/">
+            <div class="signal-card-meta">
+              <span class="tag tag-family">Behavioral</span>
+              <span class="tag tag-type">Retrospective</span>
+            </div>
+            <h3 class="signal-card-title" id="gamma-unreviewed">Gamma Unreviewed</h3>
+            <p class="signal-card-blurb">Gamma Unreviewed deliberately carries no last_reviewed date, no see_also, no categories, no references, and none of the optional *_note fields.</p>
+            <div class="signal-card-footer">
+              <span class="oracle-meter"><span class="dot filled"></span><span class="dot filled"></span><span class="dot empty"></span><span class="dot empty"></span><span class="dot empty"></span> Oracle</span>
+              <span class="latency-badge" title="How long it takes to get this feedback: hours"><span class="sr-only">Feedback latency: </span>~hours</span>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="family-section" id="test-effectiveness" data-family="test-effectiveness">
+        <div class="family-header">
+          <span class="family-num">03</span>
+          <div>
+            <h2 class="family-title" id="test-effectiveness"><a href="/families/test-effectiveness/" class="wikilink">Test Effectiveness</a></h2>
+            <p class="family-tagline">"Do our tests actually detect failures?"</p>
+            <p class="family-more"><a href="/families/test-effectiveness/">What belongs in this family →</a></p>
+          </div>
+        </div>
+        <div class="signal-grid">
+          <a class="signal-card" href="/sensors/epsilon-atlas/">
+            <div class="signal-card-meta">
+              <span class="tag tag-family">Test Effectiveness</span>
+              <span class="tag tag-type">Retrospective</span>
+            </div>
+            <h3 class="signal-card-title" id="epsilon-atlas-anchor">Epsilon Atlas Anchor</h3>
+            <p class="signal-card-blurb">A short opening paragraph, under the blurb limit, so the untruncated branch of the blurb extractor is exercised too.</p>
+            <div class="signal-card-footer">
+              <span class="oracle-meter"><span class="dot filled"></span><span class="dot empty"></span><span class="dot empty"></span><span class="dot empty"></span><span class="dot empty"></span> Oracle</span>
+              <span class="latency-badge" title="How long it takes to get this feedback: weeks"><span class="sr-only">Feedback latency: </span>~weeks</span>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="family-section" id="invariants" data-family="invariants">
+        <div class="family-header">
+          <span class="family-num">04</span>
+          <div>
+            <h2 class="family-title" id="invariants"><a href="/families/invariants/" class="wikilink">Invariants</a></h2>
+            <p class="family-tagline">"What must always be true?"</p>
+            <p class="family-more"><a href="/families/invariants/">What belongs in this family →</a></p>
+          </div>
+        </div>
+        <div class="signal-grid">
+          <a class="signal-card" href="/sensors/delta-escape/">
+            <div class="signal-card-meta">
+              <span class="tag tag-family">Invariants</span>
+              <span class="tag tag-type">Predictive</span>
+            </div>
+            <h3 class="signal-card-title" id="delta-script-img-src-x-onerror-alert-1">Delta &amp; &lt;/script&gt;&lt;img src=x onerror=alert(1)&gt;</h3>
+            <p class="signal-card-blurb">Delta is the escaping fixture. Its title, one reference title, one reference URL and one reference description all contain characters that must be entity-encoded on the way into HTML: &lt;, &gt;, &amp;, and a…</p>
+            <div class="signal-card-footer">
+              <span class="oracle-meter"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span> Oracle</span>
+              <span class="latency-badge" title="How long it takes to get this feedback: milliseconds"><span class="sr-only">Feedback latency: </span>~milliseconds</span>
+            </div>
+          </a>
+        </div>
+      </section>
+    </div>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/about/">About</a> · <a href="/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/js/main.js"></script>
+</body>
+</html>

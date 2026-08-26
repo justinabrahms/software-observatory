@@ -1,0 +1,531 @@
+# Software Observatory — full catalog
+
+> The complete text of every entry in the catalog of epistemic sensors for
+> software correctness, in one file.
+
+Source: https://softwareobservatory.com/
+Catalog format version: 1
+Content as of: 2026-03-02 (the newest date in the catalog's own data;
+this file carries no build timestamp, so an unchanged catalog produces a
+byte-identical file)
+Entries: 5 in 10 families
+License: CC BY-SA 4.0 — https://creativecommons.org/licenses/by-sa/4.0/
+Attribution: "Software Observatory" by Justin Abrahms. Cite the specific
+entry URL you used (https://softwareobservatory.com/sensors/<slug>/).
+
+Companion surfaces:
+- Index / when to use this catalog: https://softwareobservatory.com/llms.txt
+- Structured catalog (JSON, same data): https://softwareobservatory.com/sensors.json
+- Per-entry markdown: https://softwareobservatory.com/md/sensors/<slug>.md
+
+## How this file is organized
+
+The framework, then the glossary, then one section per family. Each family
+section states its question and its inclusion criterion, then gives every
+entry in full: metadata block, then the entry's own text verbatim.
+
+## Framework
+
+The Framework
+
+### Sensor Properties
+
+We don't rank sensors as "good" or "bad." Every sensor is characterized
+along six dimensions that determine when it is useful, what it can and
+cannot detect, and what evidence it produces for an agent or human.
+
+The important thing is that [no single sensor measures
+correctness](https://softwareobservatory.com/glossary/#no-single-sensor). Each sensor measures one thing. Coverage
+measures execution. Mutation measures test sensitivity. Types measure
+a particular class of structural inconsistency. Contracts measure
+boundary assumptions. Observability measures what actually happened
+and preserves enough dimensionality to investigate unknown unknowns.
+
+The question becomes: what independent observations would cause us
+to update our belief that this software is correct?
+
+01
+
+#### Oracle strength
+
+How confidently does it know that something is wrong?
+
+compiler error
+
+maximum
+
+type error
+
+maximum
+
+test assertion
+
+high
+
+mutation
+
+high
+
+linter
+
+medium
+
+coverage
+
+low
+
+complexity
+
+minimum
+
+code review
+
+medium
+
+A compiler has maximum oracle strength because the implementation
+cannot argue with it. A complexity metric has minimum oracle
+strength because high complexity doesn't prove anything is wrong —
+it just suggests increased risk. The scale is ordinal (minimum →
+low → medium → high → maximum): a sensor two rungs up is stronger,
+not "twice as strong."
+
+Mutation's oracle is derivative. Mutation testing's
+high oracle is bounded by the test assertions underneath it — it
+only detects mutations that the test suite's oracle would catch.
+The strength reflects the test assertion's oracle, applied to a
+perturbation.
+
+"Type checker" spans a range. Structural type systems
+(TypeScript) catch a limited class of mismatches. Ownership and
+lifetime types (Rust) catch memory-safety bugs the compiler refuses
+to allow. Refinement types and SMT-backed verifiers (Dafny) can prove
+full correctness properties — the solver either confirms the
+invariant or produces a counterexample. The maximum rating applies
+to the strong end of that spectrum.
+
+02
+
+#### Independence
+
+Can the thing being evaluated manipulate the sensor?
+
+This is extremely important for agents. A model writing
+tests/ is allowed to write tests that make itself pass.
+The producer and evaluator should be separated wherever possible.
+
+An instruction saying "verify this" is weaker than a gate that
+literally refuses to proceed unless the verification command
+succeeded. Computational controls rather than prose rules.
+
+03
+
+#### Scope
+
+What level of the system does it tell us about?
+
+Line A single line of code
+
+Function A single function or method
+
+Module A package or module
+
+Service A single service or component
+
+System The whole system, across services
+
+User journey What the user experiences end-to-end
+
+04
+
+#### Feedback latency
+
+How long until the sensor tells you something?
+
+compilermilliseconds
+
+unit testsseconds
+
+integrationminutes
+
+mutationminutes / hours
+
+canaryminutes
+
+productionhours / days
+
+incidentweeks
+
+05
+
+#### Actionability
+
+Does it merely say "bad" or does it tell you what to fix?
+
+Three values, in order of how much the feedback directs the next action:
+
+Blocking A binary gate: pass or fail. The pipeline stops on failure, but the sensor does not say what to fix — a compiler error, a failing invariant gate, a smoke test that halts a rollout.
+
+Exploratory A signal to investigate, not a verdict. It narrows where to look but prescribes nothing — a hotspot, a trace, a coverage gap on unchanged lines.
+
+Guiding The feedback itself directs the next action. A mutation report shows the exact untested mutation; a linter diagnostic names the rule and the fix; a type error points at the expression and the expected type.
+
+In Böckeler's framing, the interesting frontier is guiding sensors,
+where the feedback itself tells the agent what to do next.
+
+06
+
+#### Predictive vs retrospective
+
+"This is wrong" or "this looks like things that became wrong before"?
+
+Predictive sensors fire before the code ships — a compiler error, a
+failed test, a mutation that survives. Retrospective sensors fire
+after — they tell you that past changes look like changes that
+caused trouble before: revert rate, incident correlation, escaped
+defect rate.
+
+This dimension is when the signal arrives, not what
+kind of feedback it gives. That is a separate axis —
+[actionability](#actionability): blocking, exploratory,
+guiding. The two are correlated but not the same: most predictive
+sensors gate (a compiler error blocks the build), and most
+retrospective sensors warn (revert rate is a signal, not a gate).
+But the correlation is not a rule. Build provenance &
+SBOM is retrospective — it fires after the build — and
+blocking: an unattested artifact does not ship. A
+retrospective sensor can gate; a predictive sensor can merely warn.
+Read the two dimensions independently.
+
+You don't need to understand FooManagerFactoryImpl. You
+can observe: 27 changes in six months, 8 reverts, 4 incidents,
+touched by 11 teams. That's a retrospective signal — a black-box
+sensor of maintainability.
+
+The catalog splits roughly evenly: predictive sensors catch bugs
+before they ship; retrospective sensors tell you where the bugs came
+from. Both matter — a sensor stack with only predictive sensors has
+no feedback loop; one with only retrospective sensors has no gate.
+
+## Glossary
+
+Glossary
+
+### Glossary
+
+The core vocabulary the Observatory uses to talk about software
+correctness. These terms appear throughout the catalog, the atlas, and
+the framework; this page collects their definitions in one place.
+
+#### Epistemic sensor
+
+A measurement instrument pointed at a failure mode. The term is deliberately not "quality metric": a metric aggregates or scores, while a sensor reduces uncertainty about a specific property of the system. A compiler is a sensor of structural validity; mutation testing is a sensor of test sensitivity; observability events are sensors of what actually happened. Each sensor measures one thing — [no single sensor measures correctness](https://softwareobservatory.com/glossary/#no-single-sensor). The catalog is organized into [10 families](https://softwareobservatory.com/catalog/) of epistemic sensor, each asking a different question about the system.
+
+#### Opaque artifact
+
+Software we cannot — or do not want to — fully understand by reading. Code is increasingly produced by agents, by teams we'll never meet, and by systems that span services we don't own. The question for an opaque artifact is not "is this code good?" but "what independent observations would cause us to update our belief that this software is correct?" The Observatory is a catalog of those observations.
+
+#### Oracle
+
+An oracle is the thing that tells you whether a given behavior is correct. A compiler error is a perfect oracle of structural validity — the implementation cannot argue with it. A test assertion is a strong oracle for the specific case it checks. A complexity metric is a weak oracle — high complexity doesn't prove anything is wrong. [Oracle strength](https://softwareobservatory.com/framework/) is one of the six dimensions every sensor is characterized along.
+
+#### Oracle strength
+
+How confidently a sensor knows that something is wrong. The scale runs from maximum (a compiler error — the code cannot argue) to low (a complexity metric — it suggests risk but proves nothing). See the [framework page](https://softwareobservatory.com/framework/) for the full ranking.
+
+#### Independence
+
+Whether the thing being evaluated can manipulate the sensor. A model writing tests/ is allowed to write tests that make itself pass — that's low independence. A compiler is maximum independence — the code cannot talk its way past a type error. Independence is especially important for AI-generated code: the producer and the evaluator should be separated wherever possible. See [the framework](https://softwareobservatory.com/framework/) and [second-agent review](https://softwareobservatory.com/sensors/second-agent-review/).
+
+#### Scope
+
+What level of the system the sensor tells you about: a single line, a function, a module, a service, the whole system, or a user journey. A type checker has function-level scope; observability events have system-level scope. See [the framework](https://softwareobservatory.com/framework/).
+
+#### Feedback latency
+
+How long until the sensor tells you something. A compiler reports in milliseconds; an escaped-defect-rate sensor reports in months. Latency determines where in the lifecycle a sensor is useful — you can't gate a merge on a signal that takes weeks. See [the framework](https://softwareobservatory.com/framework/).
+
+#### Actionability
+
+Whether a sensor merely flags a problem or tells you what to fix. Three values: blocking — a binary gate that halts the pipeline (compiler error, invariant gate); exploratory — a signal to investigate that narrows where to look but prescribes nothing (hotspot, trace, coverage gap); guiding — the feedback itself directs the next action (mutation report shows the untested mutation, linter names the rule and fix). See [the framework](https://softwareobservatory.com/framework/).
+
+#### Evidence label
+
+A label assigned to each publication reference, describing the study rather than the claim: controlled study (controlled experiment or large-N study with a comparison group), observational study (observational study on production data, no control group), case study (single-organization case study or engineering report with numbers), argument (experience report — not measured, but rendered visibly as unmeasured). The label tells you what kind of evidence backs the claim, so you can weigh it accordingly.
+
+#### Guiding sensor
+
+A sensor whose feedback directs the next action, not just whether something is wrong. A mutation testing report shows the exact untested mutation — the agent knows what to write a test for. A complexity score just says "this is complex" and leaves the agent to figure out what to do. The distinction comes from Birgitta Böckeler's "guides & sensors" framing.
+
+#### Predictive vs retrospective
+
+Whether the sensor fires before the code ships (predictive — a compiler error before merge) or after (retrospective — revert rate, incident correlation). This is when the signal arrives, not what kind of feedback it gives — that is actionability. The two are correlated but not the same: a retrospective sensor can still gate (build provenance blocks an unattested artifact). See [the framework](https://softwareobservatory.com/framework/).
+
+#### Confidence stack
+
+The layers of evidence that accumulate as code moves from authoring to production: compilation, types, tests, mutation, integration, canary, production events, outcomes. No single layer is sufficient; the combination constrains uncertainty from multiple directions. The [atlas](https://softwareobservatory.com/atlas/) arranges the stack as a navigational matrix.
+
+#### Metamorphic testing
+
+A testing technique where you don't know the correct answer, but you know how the answer should change when the input changes. You may not know what sqrt(2) is, but you know sqrt(x * 4) == 2 * sqrt(x) must hold. You don't need a specified oracle; the relation is a partial one. See [the entry](https://softwareobservatory.com/sensors/metamorphic-testing/).
+
+#### High cardinality
+
+A property of observability events: each event carries enough distinct fields (user_id, cart_id, order_id, deployment, git_sha) that you can slice the data along dimensions you didn't know you'd need. The opposite of pre-aggregated metrics, which answer only predetermined questions. See [the entry](https://softwareobservatory.com/sensors/observability-events/).
+
+#### No single sensor measures correctness
+
+A refrain that recurs across the homepage, the framework, and this glossary — deliberately. The repetition is the point: the Observatory's central claim is that correctness is not a scalar any one sensor measures, and stating it once would understate it. Each occurrence links back here so a reader who notices the repetition can verify it is intentional.
+
+## Family 01: Structural
+
+Question: Is this artifact internally coherent?
+URL: https://softwareobservatory.com/families/structural/
+Entries: 1
+
+What belongs here: A sensor belongs here if it can reach its verdict by reading the artifact — its source, its types, its schema, its bill of materials — without running it against real inputs. The oracle is the artifact's own internal consistency: the code either type-checks or it does not, and the implementation cannot argue with the answer.
+
+Contested placements: Build Provenance & SBOM is about where an artifact came from rather than whether its text is coherent; it sits here because it is a claim you can check without executing anything. Model Checking and Theorem Proving establish facts about behaviour, not structure, and are grouped here because they establish them before the system runs.
+
+### Alpha Probe
+
+- Entry ID: SO-T01
+- URL: https://softwareobservatory.com/sensors/alpha-probe/
+- Family: Structural (structural)
+- Oracle strength: high
+- Independence: maximum
+- Scope: module
+- Feedback latency: seconds
+- Actionability: blocking
+- Type: predictive
+- Confidence-stack level: compilation
+- Categories: Structural, Fixture Only
+- Last reviewed: 2025-01-15
+
+Alpha Probe is a fixture entry. It exists to exercise the reference renderer
+with one reference of every declared `kind`, so that a change to the
+Publications / Tooling / Further reading bucketing shows up as a golden diff
+rather than as something a human notices six months later.
+
+It also carries a `see_also` of each resolvable shape: a sensor id
+(`SO-T02`), a family slug (`behavioral`), and the literal `atlas`.
+
+The body links to [the catalog](https://softwareobservatory.com/catalog/) and to [Beta
+Signal](https://softwareobservatory.com/sensors/beta-signal/) by bare filename, which is the form
+`fix_link_depths` rewrites to site-absolute URLs. It also carries the shapes
+that rewriter must leave alone: an
+[absolute URL](https://example.invalid/left-alone), an
+[in-page anchor](#references), a <a class="wikilink" href="/atlas/">raw anchor
+that already has a class</a>, and a [relative link to nothing in
+particular](no-such-page.html) that is deliberately left for the link checker
+to flag rather than silently rewritten.
+
+Its `last_reviewed` is deliberately more than twelve months before the
+catalog's own reference date, so the sidebar renders the stale flag.
+
+## Family 02: Behavioral
+
+Question: Does it do what we expect?
+URL: https://softwareobservatory.com/families/behavioral/
+Entries: 2
+
+What belongs here: These sensors run the system on inputs a human chose and compare what happened against an answer a human supplied. The oracle is external and specific: it is exactly as good as the example, and it says nothing about the cases nobody wrote down.
+
+Contested placements: Synthetic Monitoring runs the same chosen-input check against production, which makes it as much a runtime sensor as a behavioural one. It is grouped here because its oracle is a scripted expectation rather than an observation of real traffic.
+
+### Beta Signal
+
+- Entry ID: SO-T02
+- URL: https://softwareobservatory.com/sensors/beta-signal/
+- Family: Behavioral (behavioral)
+- Oracle strength: medium
+- Independence: low
+- Scope: function
+- Feedback latency: minutes
+- Actionability: guiding
+- Type: predictive
+- Confidence-stack level: behavioral-tests
+- Categories: Behavioral
+- Last reviewed: 2026-03-02
+
+Beta Signal is the fixture entry that carries a fenced code block and a
+table, because both go through the markdown extensions (`fenced_code`,
+`tables`, `smarty`) and both have their own escaping behaviour.
+
+```python
+def beta(signal: str) -> bool:
+    # Angle brackets and ampersands inside a code fence: <b> & "quotes"
+    return signal != "<not a tag>"
+```
+
+| Condition | Verdict | Note |
+| --- | --- | --- |
+| Signal present | pass | the ordinary case |
+| Signal absent | fail | `&` and `<` survive here too |
+| Signal ambiguous | inconclusive | an em-dash --- and "smart quotes" |
+
+A second paragraph, so that the blurb extractor has a first paragraph to
+truncate and a second one to ignore.
+
+### Gamma Unreviewed
+
+- Entry ID: SO-T03
+- URL: https://softwareobservatory.com/sensors/gamma-unreviewed/
+- Family: Behavioral (behavioral)
+- Oracle strength: low
+- Independence: medium
+- Scope: service
+- Feedback latency: hours
+- Actionability: exploratory
+- Type: retrospective
+- Confidence-stack level: integration-tests
+- Categories: none
+- Last reviewed: not yet re-reviewed
+
+Gamma Unreviewed deliberately carries no `last_reviewed` date, no
+`see_also`, no `categories`, no `references`, and none of the optional
+`*_note` fields. It is the honest-provenance path: an entry nobody has
+re-read since it was written must render as "not yet re-reviewed" rather
+than borrowing a date from somewhere convenient.
+
+It is also the minimum-frontmatter case, so every optional-field branch in
+the sensor page renderer is exercised in its absent form by at least one
+fixture.
+
+## Family 03: Test Effectiveness
+
+Question: Do our tests actually detect failures?
+URL: https://softwareobservatory.com/families/test-effectiveness/
+Entries: 1
+
+What belongs here: Every entry here points at the test suite rather than at the system. They answer a second-order question — would these tests have noticed? — which makes this the one family whose subject is other sensors.
+
+Contested placements: Escaped Defect Rate measures the whole delivery pipeline after the fact and could equally sit in Evolution. The coverage entries are weak oracles by construction: they can prove a line was never executed, never that a behaviour was established.
+
+### Epsilon Atlas Anchor
+
+- Entry ID: SO-T05
+- URL: https://softwareobservatory.com/sensors/epsilon-atlas/
+- Family: Test Effectiveness (test-effectiveness)
+- Oracle strength: minimum
+- Independence: minimum
+- Scope: user-journey
+- Feedback latency: weeks
+- Actionability: exploratory
+- Type: retrospective
+- Confidence-stack level: mutation-testing
+- Categories: Test Effectiveness, Fixture Only
+- Last reviewed: 2026-03-02
+
+A short opening paragraph, under the blurb limit, so the untruncated branch
+of the blurb extractor is exercised too.
+
+Epsilon Atlas Anchor exists so the fixture corpus spans four families and
+four stack levels, which is what gives the atlas grid, the family pages, the
+categories page and the dependency graph something to render.
+
+## Notes
+
+It shares `last_reviewed` with Beta Signal and differs from Alpha Probe and
+Delta, so `review_dates_discriminate` is true for this corpus and the
+homepage takes its real-ordering branch rather than the degenerate one.
+
+## Notes
+
+A second heading with the same text, so the heading-id de-duplicator has a
+collision to resolve.
+
+## Family 04: Invariants
+
+Question: What must always be true?
+URL: https://softwareobservatory.com/families/invariants/
+Entries: 1
+
+What belongs here: This family is defined by the shape of the claim, not by where it is enforced: a property stated once that must hold for every state or every execution. The same invariant may be checked by a type, a database constraint, an assertion in production, or a gate before promotion.
+
+Contested placements: Because enforcement is spread across the lifecycle, entries here deliberately overlap Structural (Statically Checked Invariants) and Runtime (Runtime Invariants). The interesting fact about an invariant is that somebody stated it, not which mechanism happens to check it.
+
+### Delta & </script><img src=x onerror=alert(1)>
+
+- Entry ID: SO-T04
+- URL: https://softwareobservatory.com/sensors/delta-escape/
+- Family: Invariants (invariants)
+- Oracle strength: maximum
+- Independence: high
+- Scope: system
+- Feedback latency: milliseconds
+- Actionability: blocking
+- Type: predictive
+- Confidence-stack level: static-analysis
+- Categories: Invariants, Escaping & Encoding
+- Last reviewed: 2026-02-20
+
+Delta is the escaping fixture. Its title, one reference title, one reference
+URL and one reference description all contain characters that must be
+entity-encoded on the way into HTML: `<`, `>`, `&`, and a literal
+`</script>` sequence that would otherwise close the surrounding element on
+any page that emits the title inside a script block.
+
+The title reaches the page title, the visible heading, the meta and
+og:description machinery, the JSON-LD blocks, the search index, the RSS
+feed and the llms.txt digests. Every one of those is a separate encoder,
+which is exactly why one fixture entry is pointed at all of them.
+
+## Family 05: Adversarial
+
+Question: Can we make our evidence of correctness fail?
+URL: https://softwareobservatory.com/families/adversarial/
+Entries: 0
+
+What belongs here: The sensor supplies its own inputs or its own faults. Nobody wrote down the case that fails; the technique searched for it. That is what separates this family from Behavioral, whose inputs are all human-chosen.
+
+Contested placements: Static Security Analysis executes nothing and is adversarial in intent rather than in mechanism. Property-Based Testing and Metamorphic Testing straddle Behavioral: they check properties a human stated, but generate the inputs themselves.
+
+## Family 06: Runtime
+
+Question: What is it actually doing?
+URL: https://softwareobservatory.com/families/runtime/
+Entries: 0
+
+What belongs here: These sensors describe what the system actually did, in the wild, with no expected answer to compare against. They have the weakest oracles in the catalog and the widest scope: they cannot tell you something is wrong, only what happened.
+
+Contested placements: Load Testing is a chosen-input experiment rather than a passive observation and could sit in Behavioral or Adversarial. It is here because what it measures is runtime behaviour under conditions the code cannot see for itself.
+
+## Family 07: Change
+
+Question: What did this change actually affect?
+URL: https://softwareobservatory.com/families/change/
+Entries: 0
+
+What belongs here: Every entry compares two things: the version before a change and the version after, or the population exposed to it and the population that was not. The unit of observation is a change, not a system.
+
+Contested placements: A/B Testing measures user outcome rather than correctness, and Incremental Build Correctness is arguably structural. Both are here because their verdict is about the effect of one specific change.
+
+## Family 08: Architecture
+
+Question: Is the system becoming harder to reason about?
+URL: https://softwareobservatory.com/families/architecture/
+Entries: 0
+
+What belongs here: These sensors measure the shape of the system rather than its behaviour — how the parts depend on each other, and how expensive it is becoming to reason about them. None of them can tell you the system is wrong; they tell you it is getting harder to know.
+
+Contested placements: Live Service Graph Discovery observes production traffic, which makes it a runtime sensor whose subject happens to be architecture. Everything here has a weak oracle: high coupling is a smell, not a defect.
+
+## Family 09: Evolution
+
+Question: Does this look like changes that caused trouble before?
+URL: https://softwareobservatory.com/families/evolution/
+Entries: 0
+
+What belongs here: These sensors read history rather than the current artifact. They are retrospective and statistical — they answer “does this look like changes that caused trouble before?” and can never be a verdict on one specific change.
+
+Contested placements: DORA Metrics describe the delivery system rather than the software, and Incident Correlation overlaps Runtime. Everything here is a base rate: useful for directing attention, useless as proof.
+
+## Family 10: Human Comprehension
+
+Question: Can another observer understand and challenge this?
+URL: https://softwareobservatory.com/families/comprehension/
+Entries: 0
+
+What belongs here: In this family the instrument is another mind, or a proxy for one. The question is not whether the system works but whether a second observer can follow it, reproduce the reasoning, and disagree with it.
+
+Contested placements: Second-Agent Review raises the independence question directly: two instances of the same model share failure modes, so the sensor is worth only as much as the second observer is actually different. Documentation Drift is mechanically checkable and could sit in Structural.

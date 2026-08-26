@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>Privacy — Software Observatory</title>
+  <meta name="description" content="A static site with cookieless, self-hosted analytics: what is counted, what is never collected, and what leaves your browser.">
+  <link rel="canonical" href="https://softwareobservatory.com/privacy/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Privacy — Software Observatory">
+  <meta property="og:description" content="A static site with cookieless, self-hosted analytics: what is counted, what is never collected, and what leaves your browser.">
+  <meta property="og:url" content="https://softwareobservatory.com/privacy/">
+  <meta property="og:image" content="https://softwareobservatory.com/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Privacy — Software Observatory">
+  <meta name="twitter:description" content="A static site with cookieless, self-hosted analytics: what is counted, what is never collected, and what leaves your browser.">
+  <meta name="twitter:image" content="https://softwareobservatory.com/og.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="https://softwareobservatory.com/rss.xml">
+  <script data-goatcounter="https://stats.softwareobservatory.com/count"
+          async src="https://stats.softwareobservatory.com/count.js"></script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/>
+          <line x1="17" y1="24" x2="12" y2="28"/>
+          <line x1="17" y1="24" x2="22" y2="28"/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/catalog/">Catalog</a>
+      <a href="/atlas/">Atlas</a>
+      <a href="/framework/">Framework</a>
+      <a href="/glossary/">Glossary</a>
+      <a href="/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/catalog/">Browse the catalog</a> or <a href="/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <section class="page-header">
+    <p class="eyebrow">Privacy</p>
+    <h1 class="page-title">Privacy</h1>
+    <p class="page-lede">
+      The Software Observatory is a static website. It collects no personal
+      data and uses privacy-respecting, cookieless analytics.
+    </p>
+  </section>
+
+  <div class="about-content">
+    <h2 id="what-we-collect">What we collect</h2>
+    <p>
+      Aggregate visit statistics only. The site uses
+      <a href="https://www.goatcounter.com" class="wikilink">GoatCounter</a>,
+      a self-hosted, open-source analytics tool running on the same server
+      as the site (stats.softwareobservatory.com). It records page views,
+      referrers, country, browser, and screen size. It sets no cookies,
+      stores no IP addresses, and cannot track you across sites or across
+      visits. There are no forms and no backend database behind the site
+      itself. The server logs standard request metadata (IP address, request
+      path, timestamp) for operational purposes — diagnosing abuse and
+      misconfiguration — but these logs are not shared, sold, or used to
+      build profiles of visitors.
+    </p>
+
+    <h2 id="third-party-resources">Third-party resources</h2>
+    <p>
+      The site loads fonts from
+      <a href="https://fonts.google.com" class="wikilink">Google Fonts</a>.
+      Google may collect request metadata (IP address, referer) when your
+      browser fetches the stylesheet. This is governed by
+      <a href="https://policies.google.com/privacy" class="wikilink">Google's
+      privacy policy</a>, not this one.
+    </p>
+
+    <h2 id="github">GitHub</h2>
+    <p>
+      The source code lives on
+      <a href="https://github.com/justinabrahms/software-observatory"
+      class="wikilink">GitHub</a>. If you file an issue or open a pull
+      request, GitHub processes your contribution under its own terms.
+    </p>
+
+    <h2 id="changes">Changes</h2>
+    <p>
+      If the site ever adds comments or any other data-collecting feature,
+      this page will be updated to describe it before the feature ships.
+    </p>
+
+    <h2 id="contact">Contact</h2>
+    <p>
+      Questions about this policy: <a href="mailto:justin@abrah.ms"
+      class="wikilink">justin@abrah.ms</a>.
+    </p>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/about/">About</a> · <a href="/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/js/main.js"></script>
+</body>
+</html>

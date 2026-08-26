@@ -20,6 +20,7 @@ see_also:
 - SO-001
 - SO-014
 - SO-012b
+- SO-014d
 last_reviewed: '2026-08-24'
 references:
 - title: 'Reproducible Builds: Increasing the Integrity of Software Supply Chains'

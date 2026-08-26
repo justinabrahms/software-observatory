@@ -21,7 +21,12 @@ sys.path.insert(0, os.path.join(REPO_ROOT, "scripts"))
 
 import build
 
+# The CLI's committed copy (shipped to npm) and the copy the website serves.
+# One serialization, written to both paths, because #91 was exactly this file
+# drifting from the site it was exported from.
 OUT_PATH = os.path.join(REPO_ROOT, "cli", "data", "sensors.json")
+WEB_OUT_PATH = os.path.join(REPO_ROOT, "sensors.json")
+OUT_PATHS = (OUT_PATH, WEB_OUT_PATH)
 
 HTML_TAG_RE = re.compile(r"<[^>]+>")
 WHITESPACE_RE = re.compile(r"\s+")
@@ -126,25 +131,24 @@ def export():
         for f in build.FAMILIES
     ]
 
-    # Derive a deterministic "generated_at" from the content (newest
-    # last_reviewed date) so two builds of the same content produce
-    # identical output. A wall-clock timestamp would dirty the working
-    # tree on every build.
-    reviewed_dates = [
-        s.get("last_reviewed") for s in out_sensors
-        if s.get("frontmatter", {}).get("last_reviewed")
-    ]
-    # last_reviewed comes through as a date string in frontmatter
+    # Derive a deterministic "generated_at" from the content so two builds of
+    # the same catalog produce identical output. A wall-clock timestamp would
+    # dirty the working tree on every build (#91).
+    #
+    # The old fallback for "no review dates at all" WAS datetime.now(), which
+    # meant the determinism guarantee quietly depended on every entry carrying
+    # a last_reviewed stamp. #112 is about removing those stamps, so the
+    # fallback is now the newest first-seen date (git/first_seen.json) and then
+    # a fixed epoch — content all the way down.
     raw_dates = [
-        str(s.get("frontmatter", {}).get("last_reviewed", "")) for s in out_sensors
+        str(s.get("frontmatter", {}).get("last_reviewed", "") or "")[:10]
+        for s in out_sensors
     ]
     newest = max((d for d in raw_dates if d), default="")
-    generated_at = f"{newest}T00:00:00Z" if newest else (
-        datetime.datetime.now(datetime.timezone.utc)
-        .replace(microsecond=0)
-        .isoformat()
-        .replace("+00:00", "Z")
-    )
+    if not newest:
+        first_seen = build.first_seen_dates(sensors)
+        newest = max((d for d in first_seen.values() if d), default="")
+    generated_at = f"{newest}T00:00:00Z" if newest else "1970-01-01T00:00:00Z"
 
     document = {
         "version": 1,
@@ -153,13 +157,17 @@ def export():
         "families": families,
         "sensors": out_sensors,
     }
-    os.makedirs(os.path.dirname(OUT_PATH), exist_ok=True)
-    with open(OUT_PATH, "w", encoding="utf-8") as handle:
-        json.dump(document, handle, indent=2, ensure_ascii=False, default=json_default, sort_keys=True)
-        handle.write("\n")
-    return len(out_sensors), len(families)
+    payload = json.dumps(
+        document, indent=2, ensure_ascii=False, default=json_default, sort_keys=True
+    ) + "\n"
+    for path in OUT_PATHS:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w", encoding="utf-8") as handle:
+            handle.write(payload)
+    return len(out_sensors), len(families), len(payload)
 
 
 if __name__ == "__main__":
-    sensor_count, family_count = export()
-    print("Wrote %s (%d sensors, %d families)" % (OUT_PATH, sensor_count, family_count))
+    sensor_count, family_count, size = export()
+    print("Wrote %s (%d sensors, %d families, %d bytes)"
+          % (" and ".join(OUT_PATHS), sensor_count, family_count, size))

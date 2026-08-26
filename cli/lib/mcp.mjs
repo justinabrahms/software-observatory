@@ -18,7 +18,7 @@ const SERVER_INFO = { name: "softwareobservatory", version: CLI_VERSION };
 const TOOLS = [
   {
     name: "list_families",
-    description: "List the 11 sensor families of the Software Observatory catalog.",
+    description: "List the sensor families of the Software Observatory catalog.",
     inputSchema: { type: "object", properties: {} },
   },
   {
@@ -45,7 +45,7 @@ const TOOLS = [
   {
     name: "suggest_sensors",
     description:
-      "Given a plain-language description of a project or concern, suggest sensors whose entries address it. Results flagged 'gap' are the first suggestion from a family not yet represented by a higher-scoring result.",
+      "Given a plain-language description of a project or concern, suggest sensors whose entries address it. Ranking is term-based (IDF-weighted, word-boundary matched against each entry's opening framing, title and body), so results carry basis: 'keyword' rather than an authored recommendation. Results flagged 'gap' are the first suggestion from a family not yet represented by a higher-scoring result.",
     inputSchema: {
       type: "object",
       properties: {
@@ -58,7 +58,7 @@ const TOOLS = [
   {
     name: "stack_coverage",
     description:
-      "Assess a set of sensors (by id or slug) for family and confidence-stack coverage, and recommend sensors for uncovered families.",
+      "Assess a set of sensors (by id or slug) for family and confidence-stack coverage, and name the uncovered families. Coverage is scored as one sensor per family; each 'recommendation' is an example entry point into an uncovered family with its 'alternatives' listed, not a ranked pick.",
     inputSchema: {
       type: "object",
       properties: {

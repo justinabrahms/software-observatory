@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>Sensor Atlas — Software Observatory</title>
+  <meta name="description" content="A map of the 10 sensor families against the software lifecycle: which signals are available while you write code, and which only appear in production.">
+  <link rel="canonical" href="https://softwareobservatory.com/atlas/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sensor Atlas — Software Observatory">
+  <meta property="og:description" content="A map of the 10 sensor families against the software lifecycle: which signals are available while you write code, and which only appear in production.">
+  <meta property="og:url" content="https://softwareobservatory.com/atlas/">
+  <meta property="og:image" content="https://softwareobservatory.com/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sensor Atlas — Software Observatory">
+  <meta name="twitter:description" content="A map of the 10 sensor families against the software lifecycle: which signals are available while you write code, and which only appear in production.">
+  <meta name="twitter:image" content="https://softwareobservatory.com/og.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="https://softwareobservatory.com/rss.xml">
+  <script data-goatcounter="https://stats.softwareobservatory.com/count"
+          async src="https://stats.softwareobservatory.com/count.js"></script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/>
+          <line x1="17" y1="24" x2="12" y2="28"/>
+          <line x1="17" y1="24" x2="22" y2="28"/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/catalog/">Catalog</a>
+      <a href="/atlas/">Atlas</a>
+      <a href="/framework/">Framework</a>
+      <a href="/glossary/">Glossary</a>
+      <a href="/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/catalog/">Browse the catalog</a> or <a href="/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="atlas-container">
+    <section class="page-header">
+      <p class="eyebrow">The Atlas</p>
+      <h1 class="page-title">Sensor Atlas</h1>
+      <p class="page-lede">
+        A navigational map of the sensor landscape. Each row is a
+        <a href="/catalog/" class="wikilink">sensor family</a> — a question
+        you're asking about the system. Each column is a stage of the software
+        lifecycle — <em>when</em> the signal becomes available, from authoring
+        the code on the left to observing real-world outcomes on the right.
+        For the narrative version of how evidence accumulates, see the
+        <a href="/#confidence-stack" class="wikilink">confidence stack</a>.
+      </p>
+    </section>
+
+    <div class="atlas-intro">
+      <p style="color:var(--text-soft);max-width:44rem;line-height:1.7;">
+        Use the atlas to orient yourself. <em>What question are you
+        asking?</em> Find the row. <em>When can you afford to learn the
+        answer?</em> Find the column. Empty cells are questions nobody
+        instrumented at that stage yet.
+      </p>
+    </div>
+
+    <!-- Grid -->
+    <div class="atlas-matrix-wrapper">
+      <div class="atlas-matrix">
+        <div class="matrix-header-row">
+          <div class="matrix-corner"></div>
+            <div class="matrix-col-header" title="Signals available before the code runs.">
+              <span class="col-label">Build</span>
+            </div>
+            <div class="matrix-col-header" title="Signals from exercising the system with chosen inputs.">
+              <span class="col-label">Test</span>
+            </div>
+            <div class="matrix-col-header" title="Signals from rolling a change out safely.">
+              <span class="col-label">Deploy</span>
+            </div>
+            <div class="matrix-col-header" title="Signals from the live system.">
+              <span class="col-label">Production</span>
+            </div>
+            <div class="matrix-col-header" title="Signals about real-world results and history.">
+              <span class="col-label">Outcome</span>
+            </div>
+        </div>
+        <div class="matrix-row">
+          <div class="matrix-row-label">
+            <span class="matrix-fam-num">01</span>
+            <span class="matrix-fam-icon fam-structural" aria-hidden="true">■</span>
+            <a href="/families/structural/" class="matrix-fam-name">Structural</a>
+          </div>
+          <div class="matrix-cell has-sensors">
+            <a href="/sensors/alpha-probe/" class="matrix-chip">Alpha Probe</a>
+          </div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+        </div>
+        <div class="matrix-row">
+          <div class="matrix-row-label">
+            <span class="matrix-fam-num">02</span>
+            <span class="matrix-fam-icon fam-behavioral" aria-hidden="true">●</span>
+            <a href="/families/behavioral/" class="matrix-fam-name">Behavioral</a>
+          </div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell has-sensors">
+            <a href="/sensors/beta-signal/" class="matrix-chip">Beta Signal</a>
+<a href="/sensors/gamma-unreviewed/" class="matrix-chip">Gamma Unreviewed</a>
+          </div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+        </div>
+        <div class="matrix-row">
+          <div class="matrix-row-label">
+            <span class="matrix-fam-num">03</span>
+            <span class="matrix-fam-icon fam-test-effectiveness" aria-hidden="true">▲</span>
+            <a href="/families/test-effectiveness/" class="matrix-fam-name">Test Effectiveness</a>
+          </div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell has-sensors">
+            <a href="/sensors/epsilon-atlas/" class="matrix-chip">Epsilon Atlas Anchor</a>
+          </div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+        </div>
+        <div class="matrix-row">
+          <div class="matrix-row-label">
+            <span class="matrix-fam-num">04</span>
+            <span class="matrix-fam-icon fam-invariants" aria-hidden="true">◆</span>
+            <a href="/families/invariants/" class="matrix-fam-name">Invariants</a>
+          </div>
+          <div class="matrix-cell has-sensors">
+            <a href="/sensors/delta-escape/" class="matrix-chip">Delta &amp; &lt;/script&gt;&lt;img src=x onerror=alert(1)&gt;</a>
+          </div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+        </div>
+        <div class="matrix-row">
+          <div class="matrix-row-label">
+            <span class="matrix-fam-num">05</span>
+            <span class="matrix-fam-icon fam-adversarial" aria-hidden="true">✖</span>
+            <a href="/families/adversarial/" class="matrix-fam-name">Adversarial</a>
+          </div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+        </div>
+        <div class="matrix-row">
+          <div class="matrix-row-label">
+            <span class="matrix-fam-num">06</span>
+            <span class="matrix-fam-icon fam-runtime" aria-hidden="true">○</span>
+            <a href="/families/runtime/" class="matrix-fam-name">Runtime</a>
+          </div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+        </div>
+        <div class="matrix-row">
+          <div class="matrix-row-label">
+            <span class="matrix-fam-num">07</span>
+            <span class="matrix-fam-icon fam-change" aria-hidden="true">→</span>
+            <a href="/families/change/" class="matrix-fam-name">Change</a>
+          </div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+        </div>
+        <div class="matrix-row">
+          <div class="matrix-row-label">
+            <span class="matrix-fam-num">08</span>
+            <span class="matrix-fam-icon fam-architecture" aria-hidden="true">▣</span>
+            <a href="/families/architecture/" class="matrix-fam-name">Architecture</a>
+          </div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+        </div>
+        <div class="matrix-row">
+          <div class="matrix-row-label">
+            <span class="matrix-fam-num">09</span>
+            <span class="matrix-fam-icon fam-evolution" aria-hidden="true">⟳</span>
+            <a href="/families/evolution/" class="matrix-fam-name">Evolution</a>
+          </div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+        </div>
+        <div class="matrix-row">
+          <div class="matrix-row-label">
+            <span class="matrix-fam-num">10</span>
+            <span class="matrix-fam-icon fam-comprehension" aria-hidden="true">✔</span>
+            <a href="/families/comprehension/" class="matrix-fam-name">Human Comprehension</a>
+          </div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Axis labels -->
+    <div class="atlas-axes">
+      <div class="axis-label-h">← What question are you asking? (sensor families)</div>
+      <div class="axis-label-v">← earlier / cheaper &nbsp;&nbsp;|&nbsp;&nbsp; later / closer to reality → <br>Lifecycle stages</div>
+    </div>
+
+    <!-- Family map -->
+    <div class="family-map-section">
+      <h2 class="section-heading" id="10-families-at-a-glance">10 families at a glance</h2>
+      <div class="family-map-grid">
+        <a href="/families/structural/" class="family-map-card">
+          <span class="fam-num">01</span>
+          <span class="fam-name">Structural</span>
+          <span class="fam-q">"Is this artifact internally coherent?"</span>
+        </a>
+        <a href="/families/behavioral/" class="family-map-card">
+          <span class="fam-num">02</span>
+          <span class="fam-name">Behavioral</span>
+          <span class="fam-q">"Does it do what we expect?"</span>
+        </a>
+        <a href="/families/test-effectiveness/" class="family-map-card">
+          <span class="fam-num">03</span>
+          <span class="fam-name">Test Effectiveness</span>
+          <span class="fam-q">"Do our tests actually detect failures?"</span>
+        </a>
+        <a href="/families/invariants/" class="family-map-card">
+          <span class="fam-num">04</span>
+          <span class="fam-name">Invariants</span>
+          <span class="fam-q">"What must always be true?"</span>
+        </a>
+        <a href="/families/adversarial/" class="family-map-card">
+          <span class="fam-num">05</span>
+          <span class="fam-name">Adversarial</span>
+          <span class="fam-q">"Can we make our evidence of correctness fail?"</span>
+        </a>
+        <a href="/families/runtime/" class="family-map-card">
+          <span class="fam-num">06</span>
+          <span class="fam-name">Runtime</span>
+          <span class="fam-q">"What is it actually doing?"</span>
+        </a>
+        <a href="/families/change/" class="family-map-card">
+          <span class="fam-num">07</span>
+          <span class="fam-name">Change</span>
+          <span class="fam-q">"What did this change actually affect?"</span>
+        </a>
+        <a href="/families/architecture/" class="family-map-card">
+          <span class="fam-num">08</span>
+          <span class="fam-name">Architecture</span>
+          <span class="fam-q">"Is the system becoming harder to reason about?"</span>
+        </a>
+        <a href="/families/evolution/" class="family-map-card">
+          <span class="fam-num">09</span>
+          <span class="fam-name">Evolution</span>
+          <span class="fam-q">"Does this look like changes that caused trouble before?"</span>
+        </a>
+        <a href="/families/comprehension/" class="family-map-card">
+          <span class="fam-num">10</span>
+          <span class="fam-name">Human Comprehension</span>
+          <span class="fam-q">"Can another observer understand and challenge this?"</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Dependency graph -->
+    <div class="dep-map-section">
+      <h2 class="section-heading" id="how-the-families-lean-on-each-other">How the families lean on each other</h2>
+      <p class="dep-map-lede">
+        Sensor families are not a stack — evidence from one family routinely
+        depends on another family having done its job. Arrows point from the
+        family that leans to the family it leans on, labelled with a sensor
+        that carries the connection. Hover a node to isolate its
+        neighborhood. Drawn from the cross-references inside the catalog
+        entries themselves; only the strongest links are shown.
+      </p>
+      <div class="dep-graph-wrapper">
+      <svg class="dep-graph" viewBox="0 0 1120 920" role="img" aria-label="Family dependency graph: how sensor families lean on each other">
+        <title>Family dependency graph</title>
+        <desc>Arrows point from the family that leans to the family it leans on. 5 edges shown. See the text list below the graph for the full edge set.</desc>
+          <path class="dep-edge" data-src="structural" data-tgt="behavioral" d="M 568.6 122.8 Q 649.2 185.4 751.3 182.2"><title>structural leans on behavioral</title></path>
+          <polygon class="dep-arrowhead" data-src="structural" data-tgt="behavioral" points="751.3,182.2 743.4,186.4 743.2,178.4" />
+          <path class="dep-edge" data-src="invariants" data-tgt="test-effectiveness" d="M 883.4 556.1 Q 848.8 460.0 883.4 363.9"><title>invariants leans on test-effectiveness</title></path>
+          <polygon class="dep-arrowhead" data-src="invariants" data-tgt="test-effectiveness" points="883.4,363.9 884.4,372.8 876.9,370.1" />
+          <path class="dep-edge" data-src="test-effectiveness" data-tgt="structural" d="M 876.1 349.6 Q 762.1 181.9 567.3 125.3"><title>test-effectiveness leans on structural</title></path>
+          <polygon class="dep-arrowhead" data-src="test-effectiveness" data-tgt="structural" points="567.3,125.3 576.1,123.7 573.8,131.4" />
+          <text class="dep-edge-label" data-src="structural" data-tgt="behavioral" x="650.4" y="181.9" text-anchor="middle"><title>Alpha Probe</title>Alpha Probe</text>
+          <text class="dep-edge-label" data-src="invariants" data-tgt="test-effectiveness" x="876.4" y="460.0" text-anchor="middle"><title>Delta &amp; &lt;/script&gt;&lt;img src=x onerror=alert(1)&gt;</title>Delta &amp; &lt;/script&gt;&lt;img src=x onerror=alert(1)&gt;</text>
+          <text class="dep-edge-label" data-src="test-effectiveness" data-tgt="structural" x="749.9" y="198.7" text-anchor="middle"><title>Epsilon Atlas Anchor</title>Epsilon Atlas Anchor</text>
+          <a href="/families/structural/" class="dep-node" data-family="structural">
+            <circle cx="560.0" cy="120.0" r="9" class="dep-node-dot" />
+            <text class="dep-node-label" x="560.0" y="102.0" text-anchor="middle">Structural</text>
+          </a>
+          <a href="/families/behavioral/" class="dep-node" data-family="behavioral">
+            <circle cx="759.8" cy="184.9" r="9" class="dep-node-dot" />
+            <text class="dep-node-label" x="775.8" y="166.9" text-anchor="start">Behavioral</text>
+          </a>
+          <a href="/families/test-effectiveness/" class="dep-node" data-family="test-effectiveness">
+            <circle cx="883.4" cy="354.9" r="9" class="dep-node-dot" />
+            <text class="dep-node-label" x="899.4" y="336.9" text-anchor="start">Test Effectiveness</text>
+          </a>
+          <a href="/families/invariants/" class="dep-node" data-family="invariants">
+            <circle cx="883.4" cy="565.1" r="9" class="dep-node-dot" />
+            <text class="dep-node-label" x="899.4" y="593.1" text-anchor="start">Invariants</text>
+          </a>
+          <a href="/families/adversarial/" class="dep-node" data-family="adversarial">
+            <circle cx="759.8" cy="735.1" r="9" class="dep-node-dot" />
+            <text class="dep-node-label" x="775.8" y="763.1" text-anchor="start">Adversarial</text>
+          </a>
+          <a href="/families/runtime/" class="dep-node" data-family="runtime">
+            <circle cx="560.0" cy="800.0" r="9" class="dep-node-dot" />
+            <text class="dep-node-label" x="560.0" y="828.0" text-anchor="middle">Runtime</text>
+          </a>
+          <a href="/families/change/" class="dep-node" data-family="change">
+            <circle cx="360.2" cy="735.1" r="9" class="dep-node-dot" />
+            <text class="dep-node-label" x="344.2" y="763.1" text-anchor="end">Change</text>
+          </a>
+          <a href="/families/architecture/" class="dep-node" data-family="architecture">
+            <circle cx="236.6" cy="565.1" r="9" class="dep-node-dot" />
+            <text class="dep-node-label" x="220.6" y="593.1" text-anchor="end">Architecture</text>
+          </a>
+          <a href="/families/evolution/" class="dep-node" data-family="evolution">
+            <circle cx="236.6" cy="354.9" r="9" class="dep-node-dot" />
+            <text class="dep-node-label" x="220.6" y="336.9" text-anchor="end">Evolution</text>
+          </a>
+          <a href="/families/comprehension/" class="dep-node" data-family="comprehension">
+            <circle cx="360.2" cy="184.9" r="9" class="dep-node-dot" />
+            <text class="dep-node-label" x="344.2" y="166.9" text-anchor="end">Human Comprehension</text>
+          </a>
+      </svg>
+      </div>
+      <details class="sr-only">
+        <summary>Family dependency graph (text)</summary>
+        <ul>
+        <li>Behavioral leans on Structural via: Beta Signal</li>
+        <li>Invariants leans on Test Effectiveness via: Delta &amp; &lt;/script&gt;&lt;img src=x onerror=alert(1)&gt;</li>
+        <li>Structural leans on Behavioral via: Alpha Probe</li>
+        <li>Test Effectiveness leans on Invariants via: Epsilon Atlas Anchor</li>
+        <li>Test Effectiveness leans on Structural via: Epsilon Atlas Anchor</li>
+        </ul>
+      </details>
+    </div>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/about/">About</a> · <a href="/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/js/main.js"></script>
+</body>
+</html>

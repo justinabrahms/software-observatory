@@ -81,6 +81,21 @@ export function listValues(field) {
   return [...values].sort();
 }
 
+// Every frontmatter key present anywhere in the dataset. `values <field>` uses
+// this to reject an unknown field instead of returning an empty list, which an
+// agent cannot distinguish from "this field has no values".
+export function listFields() {
+  const fields = new Set();
+  for (const sensor of loadData().sensors) {
+    for (const key of Object.keys(sensor.frontmatter)) fields.add(key);
+  }
+  return [...fields].sort();
+}
+
+// Common English plus the connective vocabulary people use to describe a
+// symptom ("we keep shipping X", "our tests still fail"). These carry no
+// signal about which sensor answers the question, and left in they dominate
+// the ranking because they appear in every entry.
 const STOPWORDS = new Set([
   "the", "and", "for", "are", "but", "not", "you", "your", "yours", "all", "any",
   "can", "could", "should", "would", "will", "shall", "may", "might", "must",
@@ -91,36 +106,166 @@ const STOPWORDS = new Set([
   "about", "after", "before", "between", "through", "during", "without", "within",
   "they", "them", "then", "than", "too", "very", "just", "still", "even", "also",
   "know", "make", "made", "get", "got", "use", "used", "using", "want", "need",
+  "a", "an", "as", "at", "be", "by", "do", "if", "in", "is", "it", "me", "my",
+  "no", "of", "off", "on", "or", "out", "over", "own", "re", "so", "to", "up",
+  "us", "we", "ll", "ve", "same", "some", "such", "only", "more", "most",
+  "other", "another", "each", "every", "both", "keep", "keeps", "kept", "go",
+  "goes", "going", "lot", "lots", "one", "two", "let", "lets", "really", "new",
+  "thing", "things", "stuff", "way", "ways", "help", "problem", "problems",
 ]);
 
+// Light suffix stripping so a symptom sentence written in one tense matches an
+// entry written in another: "shipping" -> "ship", "tests" -> "test",
+// "regressions" -> "regression". Deliberately conservative -- "pass" must not
+// become "pas", or it stops matching anything.
+function stem(term) {
+  if (term.length <= 3) return term;
+  let out = term;
+  if (out.endsWith("ies") && out.length > 4) return out.slice(0, -3) + "y";
+  if (out.endsWith("sses")) return out.slice(0, -2);
+  if (out.endsWith("ing") && out.length > 5) out = out.slice(0, -3);
+  else if (out.endsWith("ed") && out.length > 4) out = out.slice(0, -2);
+  else if (out.endsWith("es") && out.length > 4 && !/([sxz]|[cs]h)es$/.test(out)) out = out.slice(0, -2);
+  else if (out.endsWith("s") && !out.endsWith("ss") && out.length > 3) out = out.slice(0, -1);
+  if (/([bdfgklmnprt])\1$/.test(out)) out = out.slice(0, -1);
+  return out;
+}
+
+// Word-start matching, not substring. Substring matching is why "pass" used to
+// hit the "pass" inside unrelated prose and why two-letter tokens like "ai"
+// matched the "ai" in "Time-to-Repair". A word-start match still lets "test"
+// find "testing" and "mutation" find "Mutation Testing".
+const TERM_RE_CACHE = new Map();
+function termRegExp(term) {
+  let re = TERM_RE_CACHE.get(term);
+  if (!re) {
+    re = new RegExp("(?:^|[^a-z0-9])" + term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g");
+    TERM_RE_CACHE.set(term, re);
+  }
+  re.lastIndex = 0;
+  return re;
+}
+
+function countHits(text, term) {
+  const re = termRegExp(term);
+  let n = 0;
+  while (re.exec(text) !== null) {
+    n += 1;
+    if (n >= 6) break;
+  }
+  return n;
+}
+
+// A match in what the entry is *about* outranks an incidental mention. The
+// lede -- the opening paragraph, which is where every entry states the question
+// it answers -- outranks the title, because someone describing a symptom is
+// describing the question, not the name of the sensor. A deep body mention is
+// worth almost nothing.
+const FIELD_WEIGHTS = {
+  lede: 60,
+  title: 34,
+  slug: 28,
+  stack_level: 26,
+  categories: 20,
+  notes: 18,
+  family: 18,
+  body: 6,
+};
+const LEDE_CHARS = 320;
+const NOTE_FIELDS = [
+  "oracle_note", "independence_note", "scope_note",
+  "latency_note", "actionability_note", "type_note",
+];
+
+let searchIndex = null;
+function buildIndex() {
+  if (searchIndex) return searchIndex;
+  const { sensors } = loadData();
+  const documents = sensors.map((sensor) => {
+    const fm = sensor.frontmatter;
+    const family = getFamily(sensor.family);
+    return {
+      sensor,
+      lede: sensor.body_text.slice(0, LEDE_CHARS).toLowerCase(),
+      title: sensor.title.toLowerCase(),
+      slug: sensor.slug.replace(/-/g, " "),
+      stack_level: String(fm.stack_level || "").replace(/-/g, " ").toLowerCase(),
+      categories: (fm.categories || []).join(" ").toLowerCase(),
+      notes: NOTE_FIELDS.map((k) => fm[k] || "").join(" ").toLowerCase(),
+      family: family ? `${family.name} ${family.question} ${family.examples}`.toLowerCase() : "",
+      body: sensor.body_text.toLowerCase(),
+    };
+  });
+  searchIndex = { documents, idf: new Map() };
+  return searchIndex;
+}
+
+// Inverse document frequency. "test" appears in nearly every entry in a catalog
+// of test sensors, so it should barely move the ranking; "mutation" appears in
+// a handful, so it should move it a lot. This is what stops a symptom sentence
+// full of common catalog vocabulary from recommending whichever entry happens
+// to have that vocabulary in its title.
+function inverseDocumentFrequency(index, term) {
+  let value = index.idf.get(term);
+  if (value === undefined) {
+    const total = index.documents.length;
+    let seen = 0;
+    for (const doc of index.documents) {
+      if (countHits(doc.body, term) || countHits(doc.title, term) || countHits(doc.slug, term)) seen += 1;
+    }
+    value = Math.log(1 + total / (1 + seen)) / Math.log(1 + total);
+    index.idf.set(term, value);
+  }
+  return value;
+}
+
+function questionTerms(question) {
+  const words = String(question).toLowerCase().split(/[^a-z0-9+#]+/).filter(Boolean);
+  const terms = new Map(); // stem -> first original word that produced it
+  for (const word of words) {
+    if (word.length < 2 || STOPWORDS.has(word)) continue;
+    const key = stem(word);
+    if (!terms.has(key)) terms.set(key, word);
+  }
+  return terms;
+}
+
 export function suggestSensors(question, { limit = 5 } = {}) {
-  const { sensors, families } = loadData();
-  const terms = String(question)
-    .toLowerCase()
-    .split(/[^\w]+/)
-    .filter((t) => t.length >= 3 && !STOPWORDS.has(t));
-  if (terms.length === 0) return [];
+  const index = buildIndex();
+  const terms = questionTerms(question);
+  if (terms.size === 0) return [];
 
   const scored = [];
-  for (const sensor of sensors) {
-    const title = sensor.title.toLowerCase();
-    const family = getFamily(sensor.family);
-    const familyText = family ? `${family.name} ${family.question} ${family.examples}`.toLowerCase() : "";
+  for (const doc of index.documents) {
     let score = 0;
-    for (const term of terms) {
-      if (title.includes(term)) score += 6;
-      if (familyText.includes(term)) score += 2;
-      if (sensor.body_text.toLowerCase().includes(term)) score += 1;
+    const matched = [];
+    for (const [term, word] of terms) {
+      let weight = 0;
+      if (countHits(doc.lede, term)) {
+        weight = FIELD_WEIGHTS.lede;
+        if (countHits(doc.title, term)) weight += 20;
+      } else if (countHits(doc.title, term)) weight = FIELD_WEIGHTS.title;
+      else if (countHits(doc.slug, term)) weight = FIELD_WEIGHTS.slug;
+      else if (countHits(doc.stack_level, term)) weight = FIELD_WEIGHTS.stack_level;
+      else if (countHits(doc.categories, term)) weight = FIELD_WEIGHTS.categories;
+      else if (countHits(doc.notes, term)) weight = FIELD_WEIGHTS.notes;
+      else if (countHits(doc.family, term)) weight = FIELD_WEIGHTS.family;
+      else {
+        const n = countHits(doc.body, term);
+        if (n) weight = FIELD_WEIGHTS.body + Math.min(n - 1, 4) * 2;
+      }
+      if (!weight) continue;
+      // Covering another distinct term of the question is worth more than
+      // hitting the same one again, so each match carries a coverage bonus.
+      score += (weight + 18) * inverseDocumentFrequency(index, term);
+      matched.push(word);
     }
-    if (score > 0) scored.push({ sensor, score });
+    if (matched.length > 0) scored.push({ sensor: doc.sensor, score, matched });
   }
   scored.sort((a, b) => b.score - a.score || a.sensor.slug.localeCompare(b.sensor.slug));
 
   const seenFamilies = new Set();
-  return scored.slice(0, limit).map(({ sensor, score }) => {
-    const matched = terms.filter(
-      (t) => sensor.title.toLowerCase().includes(t) || sensor.body_text.toLowerCase().includes(t)
-    );
+  return scored.slice(0, limit).map(({ sensor, score, matched }) => {
     const firstOfFamily = !seenFamilies.has(sensor.family);
     seenFamilies.add(sensor.family);
     return {
@@ -128,8 +273,12 @@ export function suggestSensors(question, { limit = 5 } = {}) {
       slug: sensor.slug,
       title: sensor.title,
       family: sensor.family,
-      score,
+      score: Math.round(score),
       matched_terms: matched,
+      // How this result was produced. Today the only path is the term scorer;
+      // a curated symptom -> sensor map would report "curated" here so a caller
+      // can tell an authored recommendation from a keyword guess.
+      basis: "keyword",
       gap: firstOfFamily,
       url: siteUrl(sensor.url_path),
     };
@@ -160,17 +309,28 @@ export function stackCoverage(ids) {
     if (fm.type) types.set(fm.type, (types.get(fm.type) || 0) + 1);
   }
 
+  // The only theory of composition here is "one sensor from each family", and
+  // within a family the pick is the first entry in file order -- not a ranking.
+  // Say so, and list the family's other entries, rather than presenting an
+  // arbitrary pick as a considered recommendation. Composing by distinct doubt
+  // eliminated (rather than by family) is the open question in issue #101.
   const missing = families.filter((f) => !coveredFamilies.has(f.slug));
   const recommendations = [];
   for (const family of missing.slice(0, 3)) {
-    const candidate = sensors.find((s) => s.family === family.slug);
+    const candidates = sensors.filter((s) => s.family === family.slug);
+    const candidate = candidates[0];
     if (candidate) {
       recommendations.push({
         id: candidate.id,
         slug: candidate.slug,
         title: candidate.title,
         family: candidate.family,
-        reason: `covers the ${family.name} family ("${family.question}")`,
+        basis: "family-coverage",
+        reason:
+          `nothing in this set covers the ${family.name} family ("${family.question}"). ` +
+          `Listed as an example entry point, not a ranked pick: this is the first entry ` +
+          `in the family, and any of its ${candidates.length} entries would close the same gap.`,
+        alternatives: candidates.slice(1).map((s) => ({ id: s.id, slug: s.slug, title: s.title })),
       });
     }
   }
@@ -186,6 +346,12 @@ export function stackCoverage(ids) {
       type: Object.fromEntries(types),
     },
     missing_families: missing.map((f) => ({ slug: f.slug, name: f.name, question: f.question })),
+    composition_rule: {
+      id: "one-per-family",
+      description:
+        "Coverage is scored as one sensor per family. It does not model whether two sensors " +
+        "eliminate the same doubt, so a set can look complete and still leave a doubt standing.",
+    },
     recommendations,
   };
 }

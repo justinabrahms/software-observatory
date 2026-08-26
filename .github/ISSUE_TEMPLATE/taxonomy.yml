@@ -1,0 +1,55 @@
+name: Challenge the taxonomy
+description: A family, dimension, or confidence-stack level is wrong, missing, or badly drawn.
+title: "Taxonomy: <what>"
+labels: ["taxonomy"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        These are the expensive changes — they alter what every existing
+        rating *means*, and they are a major version bump (see the
+        "Releasing" section of CONTRIBUTING.md). File the issue before doing
+        the work; the argument is the contribution.
+
+  - type: dropdown
+    id: what
+    attributes:
+      label: What are you challenging
+      options:
+        - A sensor family (add, remove, merge, split, rename, renumber)
+        - One of the six dimensions (add, remove, redefine)
+        - A confidence-stack level
+        - How an existing entry is classified
+        - The inclusion criteria (what counts as a sensor at all)
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong with the current shape
+      description: >-
+        Ideally with an example: a sensor that does not fit anywhere, two
+        families that cannot be told apart in practice, a dimension that
+        collapses to a constant across the catalog.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you propose instead
+    validations:
+      required: true
+
+  - type: textarea
+    id: blast-radius
+    attributes:
+      label: What this would change elsewhere
+      description: >-
+        Which existing entries get re-rated or re-filed? Does the atlas grid
+        change shape? Would a reader who cited the previous version now be
+        citing something different? Best-effort is fine — the point is to
+        make the cost visible before anyone commits to it.
+    validations:
+      required: false

@@ -23,48 +23,37 @@ Node CLI/MCP server in `cli/` (published to npm as `softwareobservatory`).
   (CI-gateable). `--external` also HEADs outbound links (needs network).
 - **Preview:** `python3 -m http.server` from the repo root, then open
   `http://localhost:8000`.
-- **Tests/lint:** `cli/test/smoke.mjs` covers the CLI. For site changes,
-  verification = run the build and eyeball the generated HTML.
+- **Every gate: `make check`** — the one command to run before pushing.
+  It runs `test`, `check-frontmatter`, `check-citations`, `build`,
+  `check-links`, `cli-test` and `check-deploy`, in the order CI runs them, so
+  green locally means green in CI. Run this instead of remembering the
+  individual scripts; `scripts/check_frontmatter.py` gates every deploy and was
+  mentioned in no human-facing doc, which is how it broke CI unnoticed.
+- **Tests/lint:** `make test` runs `scripts/test_build.py` — golden-file
+  snapshot tests over the fixture catalog in `tests/fixtures/content/`, plus a
+  byte-for-byte determinism assertion and gate tests that prove a bad
+  `family`/`see_also`/`stack_level` fails before any file is written. Stdlib
+  `unittest`, no pytest, ~0.2s, no network and no browser. `make cli-test`
+  covers the CLI (`cli/test/smoke.mjs`). After an *intentional* rendering
+  change, re-bless with `make test-update` and commit the `tests/golden/` diff
+  in the same commit — that diff is the review artifact. Do not eyeball the
+  generated HTML in place of reading it.
 
-Deps (`pyyaml`, `markdown`) are already installed in `.venv/` (gitignored).
-The `--watch` flag mentioned in the `scripts/build.py` docstring is **not
-implemented** — `sys.argv` is never parsed.
+Deps are pinned in the tracked `requirements.txt`; `.venv/` itself is
+gitignored. Recreate it with
+`python3 -m venv .venv && .venv/bin/pip install -r requirements.txt`, which is
+exactly what CI does. The `--watch` flag mentioned in the `scripts/build.py`
+docstring is **not implemented** — `sys.argv` is never parsed.
 
-## Deployment
+## Deployment and local browser setup
 
-Live at https://softwareobservatory.com (apex + `www`). `make deploy`
-builds, then rsyncs the repo (minus sources and tooling) to
-`observer@abrah.ms:.` using `~/.ssh/softwareobservatory-deploy`.
+These are documented in a private, untracked `OPERATIONS.md` at the repo root
+(gitignored). They named the production host, its IP, the deploy key path, the
+DNS account and the ACME credential path, which is free reconnaissance in a
+public file and helps no contributor — see issue #118. Ask if you need them.
 
-On the server (`moustachium`, 68.183.69.149), Caddy serves
-`/srv/softwareobservatory.com` for `softwareobservatory.com, www...` with a
-DNS-01 cert via the dnsimple plugin (token in `/etc/caddy/dnsimple.env`), so
-certs are issued without waiting on DNS propagation. The `observer` user's
-sole authorized key is pinned by `rrsync -wo /srv/softwareobservatory.com` —
-the same one-key-per-site pattern as the `sublayer` deploys — which is why
-the rsync destination is `.` rather than the absolute path. A/AAAA records
-live in the dnsimple zone `softwareobservatory.com` (account 44245); both
-point at 68.183.69.149.
-
-## Driving a browser (style/visual work)
-
-Two working paths on this machine (system `apt` is blocked and Chromium
-needs `libasound.so.2`, which was extracted by hand into `.browser-libs/`):
-
-- **chrome-devtools MCP** (preferred): configured in
-  `~/.config/crush/crushrc` as MCP `chrome-devtools` — headless, isolated
-  profile, `LD_LIBRARY_PATH=.browser-libs/usr/lib/x86_64-linux-gnu`,
-  executable = the Playwright chromium-headless-shell in
-  `~/.cache/ms-playwright/`. Gives `navigate_page`, `take_screenshot`,
-  `take_snapshot`, `evaluate_script`, `list_console_messages`, etc.
-  Restart the session after config changes for it to connect.
-- **Playwright from the venv**: `playwright` is installed in `.venv`.
-  Launch with
-  `LD_LIBRARY_PATH="$PWD/.browser-libs/usr/lib/x86_64-linux-gnu" .venv/bin/python script.py`
-  (the env var is mandatory or Chromium dies with exit 127 on libasound).
-
-Serve the site first: `python3 -m http.server` from the repo root, then
-point the browser at `http://localhost:8000/`.
+For tracked files the rule is: no hostnames, no IPs, no account numbers, no
+credential paths, and nothing about other projects' infrastructure.
 
 ## Architecture
 
@@ -83,7 +72,7 @@ The `templates/` directory is **empty** — templates are f-strings inside
 `build.py` (`html_head`, `html_header`, `html_footer`, `html_page`, plus
 per-page `body = f"""..."""` blocks). Do not look for Jinja.
 
-Shared site data (the 11 sensor families, confidence-stack layers, oracle
+Shared site data (the sensor families, confidence-stack layers, oracle
 bar widths, latency labels, and the homepage scatter axes `STACK_SCATTER` /
 `LATENCY_X` / `ORACLE_Y`) are module-level constants at the top of
 `build.py`. Adding or renumbering a family means editing `FAMILIES` there

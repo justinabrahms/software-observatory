@@ -18,6 +18,7 @@ see_also:
 - SO-005
 - SO-005c
 - SO-001c
+- SO-014b
 last_reviewed: '2026-08-24'
 references:
 - title: An Empirical Study on the Effectiveness of Security Code Review
@@ -118,9 +119,10 @@ When the scanner fires:
 
 Vulnerabilities in the composition of services, in configuration, or in the
 dependencies' runtime behavior — those belong to
-[fault injection](fault-injection.html) and live chaos. And a clean scan
-says nothing about attacks that arrive through valid inputs:
-[fuzzing](fuzzing.html) covers that side.
+[fault injection](fault-injection.html) and [live
+chaos](live-chaos-experiments.html). And a clean scan says nothing about
+attacks that arrive through valid inputs: [fuzzing](fuzzing.html) covers
+that side.
 
 Security is a deeper topic than this catalog covers. SAST is one sensor in
 the adversarial family — it asks whether an adversary's input can reach a

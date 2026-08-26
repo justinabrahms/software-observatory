@@ -35,6 +35,9 @@ references:
   kind: publication
   authors: Nicole Forsgren, Jez Humble, Gene Kim, Alanna Brown, Nigel Kersten
   venue: Puppet + DORA
+- title: A history of DORA's software delivery metrics
+  url: https://dora.dev/insights/dora-metrics-history/
+  kind: other
 - title: DORA
   url: https://dora.dev
   kind: tool
@@ -50,17 +53,27 @@ references:
 - title: DevOps Research Assessment
   kind: tool
   url: https://dora.dev/research/
-  description: DORA's four-metric assessment tool
+  description: DORA's research assessment tool
 scope_note: organization-level delivery performance
 ---
 
-Deployment frequency, lead time for changes, change failure rate,
-reliability, time to restore. Five numbers about how changes have
-historically flowed through this organization — a sensor of delivery
+Change lead time, deployment frequency, failed deployment recovery time,
+change fail rate, deployment rework rate. Five numbers about how changes
+have historically flowed through this organization — a sensor of delivery
 *pattern*, answering "does our recent past look like teams that ship
-safely?" Reliability was added in DORA 2023 as the fifth metric, reflecting
-that stability is measured by whether the system meets its reliability
-targets, not just by how fast failures are fixed.
+safely?" This entry describes the five-metric model DORA has published
+since 2024: the first three grouped as throughput, the last two as
+instability.
+
+The set is versioned, and the names move. "Time to restore service" was
+renamed *failed deployment recovery time* in 2023, narrowing it to failures
+a deployment caused rather than any outage; *deployment rework rate* arrived
+in 2024 as the actual fifth metric. Reliability was added in 2021 and is not
+one of the five — DORA's own history records that the report calling it "the
+fifth metric" was inaccurate, and files it under operational rather than
+delivery performance. A dashboard labelled "the DORA metrics" is dated by
+which names it uses, and comparing readings across a rename compares two
+sensors.
 
 ## In practice
 
@@ -69,11 +82,11 @@ compared against the team's own history rather than an industry table:
 
 | Metric | Last quarter | This quarter | Trend |
 |--------|--------------|--------------|-------|
-| Deploy frequency | 14 / week | 6 / week | down |
-| Lead time for changes | 36 hours | 61 hours | up (worse) |
-| Change failure rate | 4% | 11% | up (worse) |
-| Time to restore | 45 minutes | 3 hours | up (worse) |
-| Reliability target met | yes | no | worse |
+| Change lead time | 36 hours | 61 hours | up (worse) |
+| Deployment frequency | 14 / week | 6 / week | down |
+| Failed deployment recovery time | 45 minutes | 3 hours | up (worse) |
+| Change fail rate | 4% | 11% | up (worse) |
+| Deployment rework rate | 6% | 14% | up (worse) |
 
 Reading it well:
 
@@ -102,13 +115,14 @@ moved without moving the underlying delivery health:
   whose pipeline is mature, while the painful path everyone actually
   uses goes unmeasured.
 - **Close incidents early.** Marking an incident resolved when the page
-  stops, not when users are unaffected, buys time-to-restore without
+  stops, not when users are unaffected, buys recovery time without
   restoring anything.
 - **Redefine failure downward.** If only rollbacks count as failures,
   teams hotfix forward and the change failure rate falls by definition.
-- **Tighten the reliability denominator.** Meeting a target is easy
-  when the target was quietly negotiated down after the quarter
-  started.
+- **File rework as planned work.** Deployment rework rate counts the
+  deployments that exist only to fix something already shipped. Attach
+  the hotfix to the next feature ticket and it stops counting, while
+  the rework goes on happening.
 
 The meta-signal is definitional drift: log the metric definitions and
 the counting rules alongside the numbers, and treat any unannounced

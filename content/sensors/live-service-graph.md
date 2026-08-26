@@ -20,6 +20,7 @@ see_also:
 - SO-008b
 - SO-006c
 - SO-006
+- SO-008
 last_reviewed: '2026-08-24'
 references:
 - title: Istio

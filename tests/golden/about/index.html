@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>About — Software Observatory</title>
+  <meta name="description" content="Why the Observatory exists, who maintains it, how entries are researched and cited, and how to propose a sensor the catalog is missing.">
+  <link rel="canonical" href="https://softwareobservatory.com/about/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="About — Software Observatory">
+  <meta property="og:description" content="Why the Observatory exists, who maintains it, how entries are researched and cited, and how to propose a sensor the catalog is missing.">
+  <meta property="og:url" content="https://softwareobservatory.com/about/">
+  <meta property="og:image" content="https://softwareobservatory.com/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="About — Software Observatory">
+  <meta name="twitter:description" content="Why the Observatory exists, who maintains it, how entries are researched and cited, and how to propose a sensor the catalog is missing.">
+  <meta name="twitter:image" content="https://softwareobservatory.com/og.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="https://softwareobservatory.com/rss.xml">
+  <script data-goatcounter="https://stats.softwareobservatory.com/count"
+          async src="https://stats.softwareobservatory.com/count.js"></script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/>
+          <line x1="17" y1="24" x2="12" y2="28"/>
+          <line x1="17" y1="24" x2="22" y2="28"/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/catalog/">Catalog</a>
+      <a href="/atlas/">Atlas</a>
+      <a href="/framework/">Framework</a>
+      <a href="/glossary/">Glossary</a>
+      <a href="/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/catalog/">Browse the catalog</a> or <a href="/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <section class="page-header">
+    <p class="eyebrow">About</p>
+    <h1 class="page-title">About the Observatory</h1>
+    <p class="page-lede">
+      An open reference for the signals software emits — not "code quality
+      metrics," but epistemic sensors: measurement instruments pointed at
+      different failure modes.
+    </p>
+  </section>
+
+  <div class="about-content">
+    <h2 id="the-problem">The problem</h2>
+    <p>
+      Software is increasingly an <a href="/glossary/#opaque-artifact" class="wikilink">opaque
+      artifact</a>. We cannot — and increasingly do not want to — fully
+      understand every implementation. Code is produced by agents, by teams
+      we'll never meet, by systems that span services we don't own. The
+      question is no longer "is this code good?" The question is:
+      <em>what independent observations would cause us to update our belief
+      that this software is correct?</em>
+    </p>
+
+    <h2 id="epistemic-sensors-not-quality-metrics">Epistemic sensors, not quality metrics</h2>
+    <p>
+      We would not call these "quality metrics." We'd call them
+      <a href="/catalog/" class="wikilink">epistemic sensors</a>. Their
+      job is to reduce uncertainty about a system that we cannot — or
+      increasingly do not want to — fully understand.
+    </p>
+
+    <h2 id="the-framework">The framework</h2>
+    <p>
+      The catalog is organized into <a href="/catalog/" class="wikilink">10
+      families</a> of sensors, each asking a different question about the
+      system. Every sensor is characterized along
+      <a href="/framework/" class="wikilink">six dimensions</a>:
+      oracle strength, independence, scope, feedback latency,
+      actionability, and predictive vs retrospective. The
+      <a href="/atlas/" class="wikilink">atlas</a> arranges them as a
+      navigational matrix — families on one axis, confidence stack layers
+      on the other.
+    </p>
+
+    <h2 id="inspirations">Inspirations</h2>
+    <p>
+      <strong>Birgitta Böckeler's "guides &amp; sensors" framing.</strong>
+      Sensors are tools that give an agent feedback about what it has done.
+      The interesting frontier is guiding sensors, where the feedback itself
+      tells the agent what to do next.
+    </p>
+    <p>
+      <strong>Honeycomb's conception of observability.</strong>
+      Don't merely collect predetermined health metrics; preserve enough
+      information to ask questions you didn't know you would need to ask.
+    </p>
+
+    <h2 id="maintained-by">Maintained by</h2>
+    <p>
+      The Software Observatory is built and maintained by
+      <a href="https://justin.abrah.ms/" class="wikilink">Justin Abrahms</a>
+      — a principal engineer working on agent-assisted software delivery and
+      the sensors that let us assess what agents produce. The catalog grows
+      out of that work: if agents can produce software faster than humans can
+      inspect it, code review cannot remain the primary mechanism for
+      establishing quality, and we need a living catalog of the signals we
+      can use instead.
+    </p>
+    <p>
+      Reach out via <a href="mailto:justin@abrah.ms" class="wikilink">email</a>,
+      <a href="https://bsky.app/profile/justin.abrah.ms" class="wikilink">Bluesky</a>,
+      or <a href="https://github.com/justinabrahms" class="wikilink">GitHub</a>.
+      Errors and gaps in the catalog are best filed in the
+      <a href="https://github.com/justinabrahms/software-observatory/issues"
+      class="wikilink">issue tracker</a>.
+    </p>
+
+    <h2 id="contributing">Contributing</h2>
+    <p>
+      The Observatory is meant to be an open reference, and the field should
+      be able to correct it. The catalog applies a producer-evaluator
+      principle to itself: the author shouldn't be the only evaluator.
+      Independent review of the content is welcome and explicitly invited.
+    </p>
+    <p>
+      The best way to contribute right now:
+    </p>
+    <ul>
+      <li>
+        <strong>File an issue</strong> at the
+        <a href="https://github.com/justinabrahms/software-observatory/issues"
+        class="wikilink">GitHub tracker</a> for a factual error, a missing
+        sensor, a taxonomy challenge, or a depth gap.
+      </li>
+      <li>
+        <strong>Open a pull request</strong> with a new or revised
+        <code>content/sensors/*.md</code>. Keep the opening paragraph
+        self-contained; match the frontmatter shape in
+        <a href="https://github.com/justinabrahms/software-observatory/blob/main/CONTRIBUTING.md"
+        class="wikilink">CONTRIBUTING.md</a>; run the build and the link
+        checker before submitting.
+      </li>
+      <li>
+        <strong>Propose a family change</strong> (adding, renumbering, or
+        reclassifying a family) via an issue first — these touch
+        <code>FAMILIES</code> in <code>build.py</code> and the color tokens
+        in <code>css/observatory.css</code>, so they're worth discussing
+        before the work.
+      </li>
+    </ul>
+    <p>
+      See
+      <a href="https://github.com/justinabrahms/software-observatory/blob/main/CONTRIBUTING.md"
+      class="wikilink">CONTRIBUTING.md</a>
+      in the repository for the full guide — frontmatter shape, the
+      relative-link gotcha, build and link-check commands, and style
+      conventions.
+    </p>
+
+    <h2 id="license">License</h2>
+    <p>
+      All content on the Software Observatory is published under
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="wikilink">CC BY-SA 4.0</a>.
+      You are free to share and adapt the material for any purpose,
+      provided you give appropriate credit and distribute contributions
+      under the same license.
+    </p>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/about/">About</a> · <a href="/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/js/main.js"></script>
+</body>
+</html>

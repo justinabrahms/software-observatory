@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>Glossary — Software Observatory</title>
+  <meta name="description" content="Definitions for the vocabulary the catalog runs on — epistemic sensor, oracle, independence, actionability, flakiness, and the rest, in one place.">
+  <link rel="canonical" href="https://softwareobservatory.com/glossary/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Glossary — Software Observatory">
+  <meta property="og:description" content="Definitions for the vocabulary the catalog runs on — epistemic sensor, oracle, independence, actionability, flakiness, and the rest, in one place.">
+  <meta property="og:url" content="https://softwareobservatory.com/glossary/">
+  <meta property="og:image" content="https://softwareobservatory.com/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Glossary — Software Observatory">
+  <meta name="twitter:description" content="Definitions for the vocabulary the catalog runs on — epistemic sensor, oracle, independence, actionability, flakiness, and the rest, in one place.">
+  <meta name="twitter:image" content="https://softwareobservatory.com/og.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="https://softwareobservatory.com/rss.xml">
+  <script type="application/ld+json">
+{
+  "@type": "DefinedTermSet",
+  "@id": "https://softwareobservatory.com/glossary/#defined-term-set",
+  "name": "Software Observatory glossary",
+  "description": "The vocabulary the catalog runs on: epistemic sensor, oracle, independence, actionability, and the rest.",
+  "url": "https://softwareobservatory.com/glossary/",
+  "inLanguage": "en",
+  "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "creator": {
+    "@type": "Person",
+    "@id": "https://softwareobservatory.com/#author",
+    "name": "Justin Abrahms",
+    "url": "https://justin.abrah.ms",
+    "email": "mailto:justin@abrah.ms",
+    "sameAs": [
+      "https://github.com/justinabrahms",
+      "https://bsky.app/profile/justin.abrah.ms",
+      "https://www.linkedin.com/in/justinabrahms"
+    ]
+  },
+  "hasDefinedTerm": [
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://softwareobservatory.com/glossary/#epistemic-sensor",
+      "name": "Epistemic sensor",
+      "description": "A measurement instrument pointed at a failure mode. The term is deliberately not \"quality metric\": a metric aggregates or scores, while a sensor reduces uncertainty about a specific property of the system.",
+      "url": "https://softwareobservatory.com/glossary/#epistemic-sensor",
+      "inDefinedTermSet": {
+        "@id": "https://softwareobservatory.com/glossary/#defined-term-set"
+      }
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://softwareobservatory.com/glossary/#opaque-artifact",
+      "name": "Opaque artifact",
+      "description": "Software we cannot — or do not want to — fully understand by reading. Code is increasingly produced by agents, by teams we'll never meet, and by systems that span services we don't own. The question for an opaque artifact is not \"is this code good?\"",
+      "url": "https://softwareobservatory.com/glossary/#opaque-artifact",
+      "inDefinedTermSet": {
+        "@id": "https://softwareobservatory.com/glossary/#defined-term-set"
+      }
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://softwareobservatory.com/glossary/#oracle",
+      "name": "Oracle",
+      "description": "An oracle is the thing that tells you whether a given behavior is correct. A compiler error is a perfect oracle of structural validity — the implementation cannot argue with it. A test assertion is a strong oracle for the specific case it checks.",
+      "url": "https://softwareobservatory.com/glossary/#oracle",
+      "inDefinedTermSet": {
+        "@id": "https://softwareobservatory.com/glossary/#defined-term-set"
+      }
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://softwareobservatory.com/glossary/#oracle-strength",
+      "name": "Oracle strength",
+      "description": "How confidently a sensor knows that something is wrong. The scale runs from maximum (a compiler error — the code cannot argue) to low (a complexity metric — it suggests risk but proves nothing). See the framework page for the full ranking.",
+      "url": "https://softwareobservatory.com/glossary/#oracle-strength",
+      "inDefinedTermSet": {
+        "@id": "https://softwareobservatory.com/glossary/#defined-term-set"
+      }
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://softwareobservatory.com/glossary/#independence",
+      "name": "Independence",
+      "description": "Whether the thing being evaluated can manipulate the sensor. A model writing tests/ is allowed to write tests that make itself pass — that's low independence. A compiler is maximum independence — the code cannot talk its way past a type error.",
+      "url": "https://softwareobservatory.com/glossary/#independence",
+      "inDefinedTermSet": {
+        "@id": "https://softwareobservatory.com/glossary/#defined-term-set"
+      }
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://softwareobservatory.com/glossary/#scope",
+      "name": "Scope",
+      "description": "What level of the system the sensor tells you about: a single line, a function, a module, a service, the whole system, or a user journey. A type checker has function-level scope; observability events have system-level scope. See the framework.",
+      "url": "https://softwareobservatory.com/glossary/#scope",
+      "inDefinedTermSet": {
+        "@id": "https://softwareobservatory.com/glossary/#defined-term-set"
+      }
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://softwareobservatory.com/glossary/#feedback-latency",
+      "name": "Feedback latency",
+      "description": "How long until the sensor tells you something. A compiler reports in milliseconds; an escaped-defect-rate sensor reports in months. Latency determines where in the lifecycle a sensor is useful — you can't gate a merge on a signal that takes weeks. See the framework.",
+      "url": "https://softwareobservatory.com/glossary/#feedback-latency",
+      "inDefinedTermSet": {
+        "@id": "https://softwareobservatory.com/glossary/#defined-term-set"
+      }
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://softwareobservatory.com/glossary/#actionability",
+      "name": "Actionability",
+      "description": "Whether a sensor merely flags a problem or tells you what to fix. Three values: blocking — a binary gate that halts the pipeline (compiler error, invariant gate); exploratory — a signal to investigate that narrows where to look but prescribes nothing (hotspot, trace, coverage gap); guiding — the…",
+      "url": "https://softwareobservatory.com/glossary/#actionability",
+      "inDefinedTermSet": {
+        "@id": "https://softwareobservatory.com/glossary/#defined-term-set"
+      }
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://softwareobservatory.com/glossary/#evidence-tier",
+      "name": "Evidence label",
+      "description": "A label assigned to each publication reference, describing the study rather than the claim: controlled study (controlled experiment or large-N study with a comparison group), observational study (observational study on production data, no control group), case study (single-organization case study or…",
+      "url": "https://softwareobservatory.com/glossary/#evidence-tier",
+      "inDefinedTermSet": {
+        "@id": "https://softwareobservatory.com/glossary/#defined-term-set"
+      }
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://softwareobservatory.com/glossary/#guiding-sensor",
+      "name": "Guiding sensor",
+      "description": "A sensor whose feedback directs the next action, not just whether something is wrong. A mutation testing report shows the exact untested mutation — the agent knows what to write a test for. A complexity score just says \"this is complex\" and leaves the agent to figure out what to do.",
+      "url": "https://softwareobservatory.com/glossary/#guiding-sensor",
+      "inDefinedTermSet": {
+        "@id": "https://softwareobservatory.com/glossary/#defined-term-set"
+      }
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://softwareobservatory.com/glossary/#predictive-vs-retrospective",
+      "name": "Predictive vs retrospective",
+      "description": "Whether the sensor fires before the code ships (predictive — a compiler error before merge) or after (retrospective — revert rate, incident correlation). This is when the signal arrives, not what kind of feedback it gives — that is actionability.",
+      "url": "https://softwareobservatory.com/glossary/#predictive-vs-retrospective",
+      "inDefinedTermSet": {
+        "@id": "https://softwareobservatory.com/glossary/#defined-term-set"
+      }
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://softwareobservatory.com/glossary/#confidence-stack",
+      "name": "Confidence stack",
+      "description": "The layers of evidence that accumulate as code moves from authoring to production: compilation, types, tests, mutation, integration, canary, production events, outcomes. No single layer is sufficient; the combination constrains uncertainty from multiple directions.",
+      "url": "https://softwareobservatory.com/glossary/#confidence-stack",
+      "inDefinedTermSet": {
+        "@id": "https://softwareobservatory.com/glossary/#defined-term-set"
+      }
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://softwareobservatory.com/glossary/#metamorphic-testing",
+      "name": "Metamorphic testing",
+      "description": "A testing technique where you don't know the correct answer, but you know how the answer should change when the input changes. You may not know what sqrt(2) is, but you know sqrt(x * 4) == 2 * sqrt(x) must hold. You don't need a specified oracle; the relation is a partial one. See the entry.",
+      "url": "https://softwareobservatory.com/glossary/#metamorphic-testing",
+      "inDefinedTermSet": {
+        "@id": "https://softwareobservatory.com/glossary/#defined-term-set"
+      }
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://softwareobservatory.com/glossary/#high-cardinality",
+      "name": "High cardinality",
+      "description": "A property of observability events: each event carries enough distinct fields (user_id, cart_id, order_id, deployment, git_sha) that you can slice the data along dimensions you didn't know you'd need. The opposite of pre-aggregated metrics, which answer only predetermined questions. See the entry.",
+      "url": "https://softwareobservatory.com/glossary/#high-cardinality",
+      "inDefinedTermSet": {
+        "@id": "https://softwareobservatory.com/glossary/#defined-term-set"
+      }
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://softwareobservatory.com/glossary/#no-single-sensor",
+      "name": "No single sensor measures correctness",
+      "description": "A refrain that recurs across the homepage, the framework, and this glossary — deliberately. The repetition is the point: the Observatory's central claim is that correctness is not a scalar any one sensor measures, and stating it once would understate it.",
+      "url": "https://softwareobservatory.com/glossary/#no-single-sensor",
+      "inDefinedTermSet": {
+        "@id": "https://softwareobservatory.com/glossary/#defined-term-set"
+      }
+    }
+  ],
+  "@context": "https://schema.org"
+}
+  </script>
+  <script data-goatcounter="https://stats.softwareobservatory.com/count"
+          async src="https://stats.softwareobservatory.com/count.js"></script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/>
+          <line x1="17" y1="24" x2="12" y2="28"/>
+          <line x1="17" y1="24" x2="22" y2="28"/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/catalog/">Catalog</a>
+      <a href="/atlas/">Atlas</a>
+      <a href="/framework/">Framework</a>
+      <a href="/glossary/">Glossary</a>
+      <a href="/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/catalog/">Browse the catalog</a> or <a href="/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <section class="page-header">
+    <p class="eyebrow">Glossary</p>
+    <h1 class="page-title">Glossary</h1>
+    <p class="page-lede">
+      The core vocabulary the Observatory uses to talk about software
+      correctness. These terms appear throughout the catalog, the atlas, and
+      the framework; this page collects their definitions in one place.
+    </p>
+  </section>
+
+  <div class="about-content">
+    <section class="glossary-entry">
+      <h2 class="glossary-term" id="epistemic-sensor">Epistemic sensor</h2>
+      <p class="glossary-definition">A measurement instrument pointed at a failure mode. The term is deliberately not "quality metric": a metric aggregates or scores, while a sensor reduces uncertainty about a specific property of the system. A compiler is a sensor of structural validity; mutation testing is a sensor of test sensitivity; observability events are sensors of what actually happened. Each sensor measures one thing — <a href="/glossary/#no-single-sensor" class="wikilink">no single sensor measures correctness</a>. The catalog is organized into <a href="/catalog/" class="wikilink">10 families</a> of epistemic sensor, each asking a different question about the system.</p>
+    </section>
+    <section class="glossary-entry">
+      <h2 class="glossary-term" id="opaque-artifact">Opaque artifact</h2>
+      <p class="glossary-definition">Software we cannot — or do not want to — fully understand by reading. Code is increasingly produced by agents, by teams we'll never meet, and by systems that span services we don't own. The question for an opaque artifact is not "is this code good?" but "<em>what independent observations would cause us to update our belief that this software is correct?</em>" The Observatory is a catalog of those observations.</p>
+    </section>
+    <section class="glossary-entry">
+      <h2 class="glossary-term" id="oracle">Oracle</h2>
+      <p class="glossary-definition">An oracle is the thing that tells you whether a given behavior is correct. A compiler error is a perfect oracle of structural validity — the implementation cannot argue with it. A test assertion is a strong oracle for the specific case it checks. A complexity metric is a weak oracle — high complexity doesn't prove anything is wrong. <a href="/framework/" class="wikilink">Oracle strength</a> is one of the six dimensions every sensor is characterized along.</p>
+    </section>
+    <section class="glossary-entry">
+      <h2 class="glossary-term" id="oracle-strength">Oracle strength</h2>
+      <p class="glossary-definition">How confidently a sensor knows that something is wrong. The scale runs from maximum (a compiler error — the code cannot argue) to low (a complexity metric — it suggests risk but proves nothing). See the <a href="/framework/" class="wikilink">framework page</a> for the full ranking.</p>
+    </section>
+    <section class="glossary-entry">
+      <h2 class="glossary-term" id="independence">Independence</h2>
+      <p class="glossary-definition">Whether the thing being evaluated can manipulate the sensor. A model writing <code>tests/</code> is allowed to write tests that make itself pass — that's low independence. A compiler is maximum independence — the code cannot talk its way past a type error. Independence is especially important for AI-generated code: the producer and the evaluator should be separated wherever possible. See <a href="/framework/" class="wikilink">the framework</a> and <a href="/sensors/second-agent-review/" class="wikilink">second-agent review</a>.</p>
+    </section>
+    <section class="glossary-entry">
+      <h2 class="glossary-term" id="scope">Scope</h2>
+      <p class="glossary-definition">What level of the system the sensor tells you about: a single line, a function, a module, a service, the whole system, or a user journey. A type checker has function-level scope; observability events have system-level scope. See <a href="/framework/" class="wikilink">the framework</a>.</p>
+    </section>
+    <section class="glossary-entry">
+      <h2 class="glossary-term" id="feedback-latency">Feedback latency</h2>
+      <p class="glossary-definition">How long until the sensor tells you something. A compiler reports in milliseconds; an escaped-defect-rate sensor reports in months. Latency determines where in the lifecycle a sensor is useful — you can't gate a merge on a signal that takes weeks. See <a href="/framework/" class="wikilink">the framework</a>.</p>
+    </section>
+    <section class="glossary-entry">
+      <h2 class="glossary-term" id="actionability">Actionability</h2>
+      <p class="glossary-definition">Whether a sensor merely flags a problem or tells you what to fix. Three values: <strong>blocking</strong> — a binary gate that halts the pipeline (compiler error, invariant gate); <strong>exploratory</strong> — a signal to investigate that narrows where to look but prescribes nothing (hotspot, trace, coverage gap); <strong>guiding</strong> — the feedback itself directs the next action (mutation report shows the untested mutation, linter names the rule and fix). See <a href="/framework/" class="wikilink">the framework</a>.</p>
+    </section>
+    <section class="glossary-entry">
+      <h2 class="glossary-term" id="evidence-tier">Evidence label</h2>
+      <p class="glossary-definition">A label assigned to each publication reference, describing the <em>study</em> rather than the claim: <strong>controlled study</strong> (controlled experiment or large-N study with a comparison group), <strong>observational study</strong> (observational study on production data, no control group), <strong>case study</strong> (single-organization case study or engineering report with numbers), <strong>argument</strong> (experience report — not measured, but rendered visibly as unmeasured). The label tells you what kind of evidence backs the claim, so you can weigh it accordingly.</p>
+    </section>
+    <section class="glossary-entry">
+      <h2 class="glossary-term" id="guiding-sensor">Guiding sensor</h2>
+      <p class="glossary-definition">A sensor whose feedback directs the next action, not just whether something is wrong. A mutation testing report shows the exact untested mutation — the agent knows what to write a test for. A complexity score just says "this is complex" and leaves the agent to figure out what to do. The distinction comes from Birgitta Böckeler's "guides &amp; sensors" framing.</p>
+    </section>
+    <section class="glossary-entry">
+      <h2 class="glossary-term" id="predictive-vs-retrospective">Predictive vs retrospective</h2>
+      <p class="glossary-definition">Whether the sensor fires before the code ships (predictive — a compiler error before merge) or after (retrospective — revert rate, incident correlation). This is <em>when</em> the signal arrives, not <em>what kind</em> of feedback it gives — that is actionability. The two are correlated but not the same: a retrospective sensor can still gate (build provenance blocks an unattested artifact). See <a href="/framework/" class="wikilink">the framework</a>.</p>
+    </section>
+    <section class="glossary-entry">
+      <h2 class="glossary-term" id="confidence-stack">Confidence stack</h2>
+      <p class="glossary-definition">The layers of evidence that accumulate as code moves from authoring to production: compilation, types, tests, mutation, integration, canary, production events, outcomes. No single layer is sufficient; the combination constrains uncertainty from multiple directions. The <a href="/atlas/" class="wikilink">atlas</a> arranges the stack as a navigational matrix.</p>
+    </section>
+    <section class="glossary-entry">
+      <h2 class="glossary-term" id="metamorphic-testing">Metamorphic testing</h2>
+      <p class="glossary-definition">A testing technique where you don't know the correct answer, but you know how the answer should change when the input changes. You may not know what <code>sqrt(2)</code> is, but you know <code>sqrt(x * 4) == 2 * sqrt(x)</code> must hold. You don't need a specified oracle; the relation is a partial one. See <a href="/sensors/metamorphic-testing/" class="wikilink">the entry</a>.</p>
+    </section>
+    <section class="glossary-entry">
+      <h2 class="glossary-term" id="high-cardinality">High cardinality</h2>
+      <p class="glossary-definition">A property of observability events: each event carries enough distinct fields (user_id, cart_id, order_id, deployment, git_sha) that you can slice the data along dimensions you didn't know you'd need. The opposite of pre-aggregated metrics, which answer only predetermined questions. See <a href="/sensors/observability-events/" class="wikilink">the entry</a>.</p>
+    </section>
+    <section class="glossary-entry">
+      <h2 class="glossary-term" id="no-single-sensor">No single sensor measures correctness</h2>
+      <p class="glossary-definition">A refrain that recurs across the homepage, the framework, and this glossary — deliberately. The repetition is the point: the Observatory's central claim is that correctness is not a scalar any one sensor measures, and stating it once would understate it. Each occurrence links back here so a reader who notices the repetition can verify it is intentional.</p>
+    </section>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/about/">About</a> · <a href="/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/js/main.js"></script>
+</body>
+</html>

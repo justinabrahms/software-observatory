@@ -3,29 +3,43 @@ __pycache__/
 .browser-libs/
 archive-*/
 
-pages/
-# Generated site output at the repo root. The leading slash is load-bearing:
-# a bare "sensors/" also matches content/sensors/, which silently ignored new
-# sensor files -- the most common contribution this repo can receive.
+/pages/
+# Generated site output at the repo root. EVERY rule below is anchored with a
+# leading slash, and the anchoring is load-bearing twice over:
+#
+#   * a bare "sensors/" also matches content/sensors/, which silently ignored
+#     new sensor files -- the most common contribution this repo can receive;
+#   * a bare "catalog/", "index.html", "md/" (and the rest) also match
+#     tests/golden/catalog/, tests/golden/index.html and tests/golden/md/,
+#     which silently ignored 35 of the 37 committed golden snapshot files.
+#     A golden file git refuses to track is not a test.
+#
+# These paths are generated output *at the repo root* and nowhere else. Anchor
+# anything added here.
 /sensors/
-catalog/
-atlas/
-framework/
-about/
-contact/
-privacy/
-glossary/
-categories/
-TODO.md
-chat-w-gpt.md
-index.html
-search-index.json
-sitemap.xml
-robots.txt
-rss.xml
-404.html
-llms.txt
-md/
+/catalog/
+/families/
+/atlas/
+/framework/
+/about/
+/contact/
+/privacy/
+/glossary/
+/categories/
+/TODO.md
+/chat-w-gpt.md
+/index.html
+/search-index.json
+/sitemap.xml
+/robots.txt
+/rss.xml
+/404.html
+/llms.txt
+/llms-full.txt
+# cli/data/sensors.json is committed and must stay that way; only the web copy
+# at the repo root is generated output.
+/sensors.json
+/md/
 .link-cache.json
 *.TMP
 .opencode/
@@ -40,5 +54,20 @@ abstract.md
 abstract.sh
 .opencode-review.md
 
+# Operator notes: host, key paths, DNS account. Moved out of the public
+# AGENTS.md (#118); publishing it is the exact thing it exists to prevent.
+OPERATIONS.md
+
 # Citation checker's TTL cache (see scripts/check_citations.py).
 .citation-cache.json
+
+# Review notes written for the author, not repo content. Whether these
+# belong in public history is a disclosure decision (#113), not a default.
+notes/
+
+# Temp output from the build snapshot suite (scripts/test_build.py). The
+# suite builds into a system temp dir and cleans up after itself, so nothing
+# should ever appear here -- but a killed run leaves a directory behind, and
+# it must not be one `git add -A` away from history. tests/fixtures/ and
+# tests/golden/ are deliberately NOT ignored: the goldens are the test.
+/tests/tmp/

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>Behavioral sensors — Software Observatory</title>
+  <meta name="description" content="Behavioral sensors ask: Does it do what we expect? 2 entries in the Software Observatory — Unit, integration, E2E, contract, snapshot tests.">
+  <link rel="canonical" href="https://softwareobservatory.com/families/behavioral/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Behavioral sensors — Software Observatory">
+  <meta property="og:description" content="Behavioral sensors ask: Does it do what we expect? 2 entries in the Software Observatory — Unit, integration, E2E, contract, snapshot tests.">
+  <meta property="og:url" content="https://softwareobservatory.com/families/behavioral/">
+  <meta property="og:image" content="https://softwareobservatory.com/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Behavioral sensors — Software Observatory">
+  <meta name="twitter:description" content="Behavioral sensors ask: Does it do what we expect? 2 entries in the Software Observatory — Unit, integration, E2E, contract, snapshot tests.">
+  <meta name="twitter:image" content="https://softwareobservatory.com/og.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="https://softwareobservatory.com/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "DefinedTermSet",
+      "@id": "https://softwareobservatory.com/families/behavioral/#defined-term-set",
+      "name": "Behavioral sensors",
+      "description": "Behavioral sensors ask: Does it do what we expect? 2 entries in the Software Observatory — Unit, integration, E2E, contract, snapshot tests.",
+      "url": "https://softwareobservatory.com/families/behavioral/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "creator": {
+        "@type": "Person",
+        "@id": "https://softwareobservatory.com/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "isPartOf": {
+        "@id": "https://softwareobservatory.com/catalog/#defined-term-set"
+      },
+      "hasDefinedTerm": [
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://softwareobservatory.com/sensors/beta-signal/#term",
+          "name": "Beta Signal",
+          "description": "Beta Signal is the fixture entry that carries a fenced code block and a table, because both go through the markdown extensions (fenced_code, tables, smarty) and both have their own escaping behaviour.",
+          "termCode": "SO-T02",
+          "url": "https://softwareobservatory.com/sensors/beta-signal/",
+          "inDefinedTermSet": {
+            "@id": "https://softwareobservatory.com/families/behavioral/#defined-term-set"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://softwareobservatory.com/sensors/gamma-unreviewed/#term",
+          "name": "Gamma Unreviewed",
+          "description": "Gamma Unreviewed deliberately carries no last_reviewed date, no see_also, no categories, no references, and none of the optional *_note fields.",
+          "termCode": "SO-T03",
+          "url": "https://softwareobservatory.com/sensors/gamma-unreviewed/",
+          "inDefinedTermSet": {
+            "@id": "https://softwareobservatory.com/families/behavioral/#defined-term-set"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "https://softwareobservatory.com/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Behavioral"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <script data-goatcounter="https://stats.softwareobservatory.com/count"
+          async src="https://stats.softwareobservatory.com/count.js"></script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/>
+          <line x1="17" y1="24" x2="12" y2="28"/>
+          <line x1="17" y1="24" x2="22" y2="28"/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/catalog/">Catalog</a>
+      <a href="/atlas/">Atlas</a>
+      <a href="/framework/">Framework</a>
+      <a href="/glossary/">Glossary</a>
+      <a href="/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/catalog/">Browse the catalog</a> or <a href="/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <article class="family-page">
+    <p class="breadcrumb"><a href="/catalog/">Catalog</a> › Behavioral</p>
+
+    <section class="page-header">
+      <p class="eyebrow">Sensor family 02</p>
+      <h1 class="page-title">Behavioral</h1>
+      <p class="page-lede">“Does it do what we expect?”</p>
+    </section>
+
+    <div class="about-content">
+      <h2 id="what-belongs-here">What belongs here</h2>
+      <p>These sensors run the system on inputs a human chose and compare what happened against an answer a human supplied. The oracle is external and specific: it is exactly as good as the example, and it says nothing about the cases nobody wrote down.</p>
+
+      <h2 id="contested-placements">Contested placements</h2>
+      <p>Synthetic Monitoring runs the same chosen-input check against production, which makes it as much a runtime sensor as a behavioural one. It is grouped here because its oracle is a scripted expectation rather than an observation of real traffic.</p>
+      <h2 id="where-its-signals-arrive">Where its signals arrive</h2>
+      <ul>
+        <li><strong>Behavioral tests</strong> — Test stage. Does it do what we expect for given inputs?</li>
+        <li><strong>Integration tests</strong> — Test stage. Does it work connected to its real dependencies?</li>
+      </ul>
+      <p>
+        The <a href="/atlas/" class="wikilink">atlas</a> places every family on
+        the same lifecycle grid; the
+        <a href="/framework/" class="wikilink">framework</a> defines the six
+        dimensions each entry below is characterized along.
+      </p>
+
+      <h2 id="entries">Entries (2)</h2>
+    </div>
+
+    <div class="signal-grid">
+          <a class="signal-card" href="/sensors/beta-signal/">
+            <div class="signal-card-meta">
+              <span class="tag tag-family">Behavioral</span>
+              <span class="tag tag-type">Predictive</span>
+            </div>
+            <h3 class="signal-card-title" id="beta-signal">Beta Signal</h3>
+            <p class="signal-card-blurb">Beta Signal is the fixture entry that carries a fenced code block and a table, because both go through the markdown extensions (fenced_code, tables, smarty) and both have their own escaping behaviour.</p>
+            <div class="signal-card-footer">
+              <span class="oracle-meter"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot empty"></span><span class="dot empty"></span> Oracle</span>
+              <span class="latency-badge" title="How long it takes to get this feedback: minutes"><span class="sr-only">Feedback latency: </span>~minutes</span>
+            </div>
+          </a>
+          <a class="signal-card" href="/sensors/gamma-unreviewed/">
+            <div class="signal-card-meta">
+              <span class="tag tag-family">Behavioral</span>
+              <span class="tag tag-type">Retrospective</span>
+            </div>
+            <h3 class="signal-card-title" id="gamma-unreviewed">Gamma Unreviewed</h3>
+            <p class="signal-card-blurb">Gamma Unreviewed deliberately carries no last_reviewed date, no see_also, no categories, no references, and none of the optional *_note fields.</p>
+            <div class="signal-card-footer">
+              <span class="oracle-meter"><span class="dot filled"></span><span class="dot filled"></span><span class="dot empty"></span><span class="dot empty"></span><span class="dot empty"></span> Oracle</span>
+              <span class="latency-badge" title="How long it takes to get this feedback: hours"><span class="sr-only">Feedback latency: </span>~hours</span>
+            </div>
+          </a>
+    </div>
+
+    <div class="about-content">
+      <h2 id="adjacent-families">Adjacent families</h2>
+      <ul>
+        <li>Previous: <a href="/families/structural/" class="wikilink">Structural</a> — Is this artifact internally coherent?</li>
+        <li>Next: <a href="/families/test-effectiveness/" class="wikilink">Test Effectiveness</a> — Do our tests actually detect failures?</li>
+        <li>All of them: the <a href="/catalog/" class="wikilink">complete catalog</a>
+          (this family is also anchored there at
+          <a href="/catalog/#behavioral" class="wikilink">/catalog/#behavioral</a>).</li>
+      </ul>
+    </div>
+  </article>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/about/">About</a> · <a href="/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/js/main.js"></script>
+</body>
+</html>

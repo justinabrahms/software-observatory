@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Software Observatory</title>
+    <link>https://softwareobservatory.com</link>
+    <atom:link href="https://softwareobservatory.com/rss.xml" rel="self" type="application/rss+xml"/>
+    <description>New entries in the catalog of epistemic sensors for software correctness.</description>
+    <language>en</language>
+    <copyright>Content licensed CC BY-SA 4.0 — Justin Abrahms</copyright>
+    <managingEditor>justin@abrah.ms (Justin Abrahms)</managingEditor>
+    <webMaster>justin@abrah.ms (Justin Abrahms)</webMaster>
+    <image>
+      <url>https://softwareobservatory.com/og.png</url>
+      <title>Software Observatory</title>
+      <link>https://softwareobservatory.com</link>
+    </image>
+    <lastBuildDate>Mon, 02 Mar 2026 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Epsilon Atlas Anchor</title>
+      <link>https://softwareobservatory.com/sensors/epsilon-atlas/</link>
+      <guid isPermaLink="true">https://softwareobservatory.com/sensors/epsilon-atlas/</guid>
+      <pubDate>Mon, 02 Mar 2026 00:00:00 +0000</pubDate>
+      <author>justin@abrah.ms (Justin Abrahms)</author>
+      <dc:creator>Justin Abrahms</dc:creator>
+      <description>A short opening paragraph, under the blurb limit, so the untruncated branch of the blurb extractor is exercised too.</description>
+      <category>Test Effectiveness</category>
+    </item>
+    <item>
+      <title>Beta Signal</title>
+      <link>https://softwareobservatory.com/sensors/beta-signal/</link>
+      <guid isPermaLink="true">https://softwareobservatory.com/sensors/beta-signal/</guid>
+      <pubDate>Mon, 02 Mar 2026 00:00:00 +0000</pubDate>
+      <author>justin@abrah.ms (Justin Abrahms)</author>
+      <dc:creator>Justin Abrahms</dc:creator>
+      <description>Beta Signal is the fixture entry that carries a fenced code block and a table, because both go through the markdown extensions (fenced_code, tables, smarty) and both have their own escaping behaviour.</description>
+      <category>Behavioral</category>
+    </item>
+    <item>
+      <title>Delta &amp; &lt;/script&gt;&lt;img src=x onerror=alert(1)&gt;</title>
+      <link>https://softwareobservatory.com/sensors/delta-escape/</link>
+      <guid isPermaLink="true">https://softwareobservatory.com/sensors/delta-escape/</guid>
+      <pubDate>Fri, 20 Feb 2026 00:00:00 +0000</pubDate>
+      <author>justin@abrah.ms (Justin Abrahms)</author>
+      <dc:creator>Justin Abrahms</dc:creator>
+      <description>Delta is the escaping fixture. Its title, one reference title, one reference URL and one reference description all contain characters that must be entity-encoded on the way into HTML: &lt;, &gt;, &amp;, and a…</description>
+      <category>Invariants</category>
+    </item>
+    <item>
+      <title>Alpha Probe</title>
+      <link>https://softwareobservatory.com/sensors/alpha-probe/</link>
+      <guid isPermaLink="true">https://softwareobservatory.com/sensors/alpha-probe/</guid>
+      <pubDate>Wed, 15 Jan 2025 00:00:00 +0000</pubDate>
+      <author>justin@abrah.ms (Justin Abrahms)</author>
+      <dc:creator>Justin Abrahms</dc:creator>
+      <description>Alpha Probe is a fixture entry. It exists to exercise the reference renderer with one reference of every declared kind, so that a change to the Publications / Tooling / Further reading bucketing…</description>
+      <category>Structural</category>
+    </item>
+    <item>
+      <title>Gamma Unreviewed</title>
+      <link>https://softwareobservatory.com/sensors/gamma-unreviewed/</link>
+      <guid isPermaLink="true">https://softwareobservatory.com/sensors/gamma-unreviewed/</guid>
+      <pubDate>Thu, 01 Jan 1970 00:00:00 +0000</pubDate>
+      <author>justin@abrah.ms (Justin Abrahms)</author>
+      <dc:creator>Justin Abrahms</dc:creator>
+      <description>Gamma Unreviewed deliberately carries no last_reviewed date, no see_also, no categories, no references, and none of the optional *_note fields.</description>
+      <category>Behavioral</category>
+    </item>
+  </channel>
+</rss>
