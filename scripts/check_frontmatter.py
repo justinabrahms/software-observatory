@@ -27,7 +27,11 @@ import yaml
 
 SITE_ROOT = Path(__file__).resolve().parent.parent
 SENSOR_DIR = SITE_ROOT / "content" / "sensors"
-BUILD_PY = SITE_ROOT / "scripts" / "build.py"
+# The renderer this file checks against: the module that actually filters a
+# sensor's references by `kind`. It used to be build.py, which was the whole
+# CMS; the reference renderer now lives in the package that replaced it, and
+# the probe below has to read the file the literals are actually in.
+RENDERER_PY = SITE_ROOT / "scripts" / "observatory" / "pages" / "sensor.py"
 
 sys.path.insert(0, str(SITE_ROOT / "scripts"))
 from build import (
@@ -114,33 +118,34 @@ def check_vocabulary_drift(used):
     warnings = []
 
     try:
-        rendered_kinds = kind_literals_in_source(BUILD_PY)
+        rendered_kinds = kind_literals_in_source(RENDERER_PY)
     except (OSError, SyntaxError) as e:
-        errors.append(f"vocabulary: could not parse {BUILD_PY.name} to check kind literals: {e}")
+        errors.append(f"vocabulary: could not parse {RENDERER_PY.relative_to(SITE_ROOT)} to check kind literals: {e}")
         rendered_kinds = set()
 
-    # If build.py imports its vocabulary from vocabulary.py, the binding is
+    # If the renderer imports its vocabulary from vocabulary.py, the binding is
     # structural (a stale name is an ImportError) and the source probe is
     # redundant. Otherwise the probe is the only binding there is, so finding
     # zero `kind` comparisons means it has gone blind — fail rather than pass
     # vacuously, which is how this control would quietly become decoration.
     try:
-        bound_by_import = imports_vocabulary(BUILD_PY)
+        bound_by_import = imports_vocabulary(RENDERER_PY)
     except (OSError, SyntaxError):
         bound_by_import = False
 
     if not rendered_kinds and not bound_by_import:
         errors.append(
-            f"vocabulary: found no `kind` comparisons in {BUILD_PY.name} and no import "
+            f"vocabulary: found no `kind` comparisons in {RENDERER_PY.relative_to(SITE_ROOT)} and no import "
             "of scripts/vocabulary.py. Either the reference renderer was removed, or "
             "kind_literals_in_source() in scripts/vocabulary.py no longer matches how "
-            "build.py filters references. Fix the probe, or bind build.py properly with "
-            "`from vocabulary import REFERENCE_KINDS` — do not delete this check."
+            "the renderer filters references. Fix the probe, or bind the renderer "
+            "properly with `from vocabulary import REFERENCE_KINDS` — do not delete "
+            "this check."
         )
 
     for literal in sorted(rendered_kinds - REFERENCE_KINDS):
         errors.append(
-            f"vocabulary: {BUILD_PY.name} renders reference kind '{literal}', which is "
+            f"vocabulary: {RENDERER_PY.relative_to(SITE_ROOT)} renders reference kind '{literal}', which is "
             f"not declared in scripts/vocabulary.py (declared: {sorted(REFERENCE_KINDS)}). "
             "The renderer and the vocabulary have drifted apart."
         )
@@ -313,8 +318,8 @@ def main():
 
     print(f"All {len(files)} sensor frontmatters OK.")
     print(
-        "Vocabulary in sync: content, scripts/build.py and scripts/vocabulary.py "
-        f"agree on reference kinds {sorted(used['kind'])}."
+        f"Vocabulary in sync: content, {RENDERER_PY.relative_to(SITE_ROOT)} and "
+        f"scripts/vocabulary.py agree on reference kinds {sorted(used['kind'])}."
     )
     return 0
 

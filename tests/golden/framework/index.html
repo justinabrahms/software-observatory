@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
   <title>Framework — Software Observatory</title>
   <meta name="description" content="Six dimensions that characterize every sensor — oracle strength, independence, scope, latency, actionability, and predictive vs retrospective — and why…">
   <link rel="canonical" href="https://softwareobservatory.com/framework/">
@@ -25,6 +30,137 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/observatory.css">
   <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="https://softwareobservatory.com/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://softwareobservatory.com/framework/#page",
+      "name": "Sensor Properties",
+      "description": "Six dimensions that characterize every sensor — oracle strength, independence, scope, latency, actionability, and predictive vs retrospective — and why ranking sensors is the wrong move.",
+      "url": "https://softwareobservatory.com/framework/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "isPartOf": {
+        "@id": "https://softwareobservatory.com/#organization"
+      },
+      "author": {
+        "@type": "Person",
+        "@id": "https://softwareobservatory.com/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "dateModified": "2026-03-02"
+    },
+    {
+      "@type": "DefinedTermSet",
+      "@id": "https://softwareobservatory.com/framework/#defined-term-set",
+      "name": "Sensor properties",
+      "description": "The six dimensions every entry in the Software Observatory catalog is characterized along.",
+      "url": "https://softwareobservatory.com/framework/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "creator": {
+        "@type": "Person",
+        "@id": "https://softwareobservatory.com/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "hasDefinedTerm": [
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://softwareobservatory.com/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "description": "How confidently does it know that something is wrong?",
+          "termCode": "oracle",
+          "url": "https://softwareobservatory.com/framework/#oracle-strength",
+          "inDefinedTermSet": {
+            "@id": "https://softwareobservatory.com/framework/#defined-term-set"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://softwareobservatory.com/framework/#independence",
+          "name": "Independence",
+          "description": "Can the thing being evaluated manipulate the sensor?",
+          "termCode": "independence",
+          "url": "https://softwareobservatory.com/framework/#independence",
+          "inDefinedTermSet": {
+            "@id": "https://softwareobservatory.com/framework/#defined-term-set"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://softwareobservatory.com/framework/#scope",
+          "name": "Scope",
+          "description": "What level of the system does it tell us about?",
+          "termCode": "scope",
+          "url": "https://softwareobservatory.com/framework/#scope",
+          "inDefinedTermSet": {
+            "@id": "https://softwareobservatory.com/framework/#defined-term-set"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://softwareobservatory.com/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "description": "How long until the sensor tells you something?",
+          "termCode": "latency",
+          "url": "https://softwareobservatory.com/framework/#feedback-latency",
+          "inDefinedTermSet": {
+            "@id": "https://softwareobservatory.com/framework/#defined-term-set"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://softwareobservatory.com/framework/#actionability",
+          "name": "Actionability",
+          "description": "Does it merely say \"bad\" or does it tell you what to fix?",
+          "termCode": "actionability",
+          "url": "https://softwareobservatory.com/framework/#actionability",
+          "inDefinedTermSet": {
+            "@id": "https://softwareobservatory.com/framework/#defined-term-set"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://softwareobservatory.com/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "description": "\"This is wrong\" or \"this looks like things that became wrong before\"?",
+          "termCode": "type",
+          "url": "https://softwareobservatory.com/framework/#predictive-vs-retrospective",
+          "inDefinedTermSet": {
+            "@id": "https://softwareobservatory.com/framework/#defined-term-set"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Framework"
+        }
+      ]
+    }
+  ]
+}
+  </script>
   <script data-goatcounter="https://stats.softwareobservatory.com/count"
           async src="https://stats.softwareobservatory.com/count.js"></script>
 </head>

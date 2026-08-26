@@ -1,8 +1,17 @@
 name: Build, check, deploy
 
 on:
+  # `push` is intentionally unscoped (no `branches:` filter): six commits
+  # (05dd6a8..c3a0497) landed on fix/audit-remediation after PR #127 merged
+  # and sat completely untested — `push` was main-only and no PR was open, so
+  # CI had nothing to run — until a second PR (#129) was opened days later and
+  # finally exercised them. `pull_request` alone does not cover a branch with
+  # no open PR, so `push` has to run everywhere too. `pull_request` stays
+  # alongside it because it is what covers PRs from forks, which `push` never
+  # sees. The `deploy` and `publish-npm` jobs are unaffected by this: they
+  # carry their own `github.ref == 'refs/heads/main'` guard below, so a push
+  # to any other branch runs `check` only.
   push:
-    branches: [main]
   pull_request:
   schedule:
     # Weekly external-link audit, Mondays 06:17 UTC. Network checks are slow and
@@ -10,6 +19,40 @@ on:
     # them and files an issue when links rot, so nobody has to remember to look.
     - cron: "17 6 * * 1"
   workflow_dispatch:
+
+# Supersede an in-flight run when a newer commit lands on the same branch.
+#
+# `github.event_name` is IN THE GROUP KEY on purpose, so a push run and a
+# pull_request run of the same branch never cancel each other. Deduplicating
+# the pair is the `check` job's `if:` below, and the two mechanisms are not
+# composable: with a shared group, whichever run started second cancelled the
+# first, and when the survivor was the pull_request run its `check` job
+# skipped — so the push run that would have done the work was cancelled and
+# the commit went completely untested. Observed on PR #130, twice:
+# `push cancelled` + `check skipping` = a green PR that ran nothing.
+#
+# Cancelling is also not how to dedupe the pair even when it works: GitHub
+# reports a cancelled run as a FAILED check, so the PR carries a red X from
+# its own duplicate. `github.head_ref` is set only for `pull_request` events (and
+# is the source branch there); it falls back for push, schedule and
+# workflow_dispatch.
+#
+# That fallback is `github.ref_name`, NOT `github.ref`. head_ref is a bare
+# branch name ("topic"); github.ref is a full ref path ("refs/heads/topic").
+# Pairing the two puts a branch's push run and its pull_request run in two
+# different groups and collapses nothing. Observed, not reasoned about: PR
+# #130 was opened with `github.ref` here and ran `check` twice on one commit.
+#
+# cancel-in-progress is deliberately NOT unconditional. On a feature branch,
+# superseding an in-flight run is free. On main it is not: the run carries the
+# `deploy` job, and cancelling that mid-rsync leaves the live site in a
+# half-synced state that nothing here would detect or repair. Two merges
+# landing close together is exactly when that would happen, which is exactly
+# when you least want a truncated deploy. So main queues; every other ref
+# cancels.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 permissions:
   contents: read
@@ -29,6 +72,19 @@ jobs:
   # runs after, since it reads the generated HTML.
   # ---------------------------------------------------------------------------
   check:
+    # Do the work exactly once per commit. `push` now covers every branch, so
+    # for a branch in this repo the push run is the one that matters and the
+    # pull_request run would be a byte-for-byte duplicate of it. Skipping it
+    # here is quiet — a skipped job is neutral on the PR, where a cancelled
+    # one is red.
+    #
+    # The condition deliberately still runs for pull_request events whose head
+    # repo is NOT this one: a fork's branch never produces a push event here,
+    # so `pull_request` is the only trigger that ever sees fork contributions.
+    # Dropping it entirely would leave every external PR untested.
+    if: >-
+      github.event_name != 'pull_request' ||
+      github.event.pull_request.head.repo.full_name != github.repository
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -76,6 +132,14 @@ jobs:
       - name: Check deploy manifest
         run: make check-deploy
 
+      # Left unscoped to main on purpose: `push` now covers every branch (see
+      # the trigger comment above), so this uploads on every branch push too.
+      # That is the point, not a side effect — the whole reason to widen
+      # `push` was to give feature branches the same CI signal main gets, and
+      # a downloadable build is part of that signal (e.g. inspecting output
+      # without waiting on a PR). The artifact is small, capped at 7 days,
+      # and scoped per-run, so there is no cross-branch collision or
+      # meaningful storage cost to justify narrowing it back to main.
       - name: Upload built site
         if: github.event_name == 'push'
         uses: actions/upload-artifact@v4

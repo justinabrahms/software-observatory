@@ -16,6 +16,15 @@
   --accent-glow: rgba(212,160,86,0.15);
   --signal:      #5b9bd5;     /* observatory blue */
   --signal-soft: rgba(91,155,213,0.12);
+
+  /* Hero illustration. --line/--line-faint are the drawing's two stroke
+     weights; --slot is the dark interior seen through an open shutter, which
+     must stay dark in BOTH themes or the opening disappears and the telescope
+     looks like it is lying on top of the dome. */
+  --line:        #8a6d3b;
+  --line-faint:  #5d4a2a;
+  --slot:        #070b12;
+  --star:        #8a96a8;
   --font-serif:  "Fraunces", Georgia, "Times New Roman", serif;
   --font-sans:   "Inter", -apple-system, "Segoe UI", sans-serif;
   --font-mono:   "JetBrains Mono", "SF Mono", "Fira Code", monospace;
@@ -53,6 +62,11 @@
     --accent-glow: rgba(154,106,31,0.10);
     --signal:      #2b6cb0;
     --signal-soft: rgba(43,108,176,0.08);
+
+    --line:        #8a6229;
+    --line-faint:  #b6a17a;
+    --slot:        #4c4638;   /* still dark: it is an opening, not a surface */
+    --star:        #cfc6ae;   /* a light sky has no dark specks in it */
 
     /* Family palette tuned for the light background. */
     --fam-structural:        #9a6a1f;
@@ -334,7 +348,14 @@ a.wikilink:hover {
   color: var(--accent);
 }
 
-/* Hero visual — instruments pointed at the opaque artifact */
+/* Hero visual — three domed observatories on a ridge, each turned to its own
+   bearing, all three aimed at the same opaque artifact overhead.
+ 
+   The SVG is generated in scripts/build.py from the dome's actual projection:
+   a shutter's edges are meridians, so each projects as a quarter-ellipse and
+   the opening tapers to nothing at the crown; the tube's mouth is a circle
+   seen at an angle, so it projects as an ellipse. Nothing here is a rounded
+   rectangle, which is why it reads as a building. */
 .hero-visual {
   position: relative;
   width: 100%;
@@ -343,43 +364,42 @@ a.wikilink:hover {
   margin-left: auto;
 }
 .hero-instruments { width: 100%; height: 100%; }
-.art-body {
-  fill: var(--bg-card);
-}
-.art-rim {
-  fill: none;
-  stroke: var(--accent-soft);
-  stroke-width: 1.5;
-}
-.instr {
-  fill: var(--accent);
-  filter: drop-shadow(0 0 6px var(--accent-glow));
-  animation: instr-breathe 5s ease-in-out infinite;
-}
-.far-instr { animation-delay: 2s; }
-@keyframes instr-breathe {
-  0%,100% { opacity: .75; }
+
+/* Structure */
+.drum   { fill: var(--bg-soft);  stroke: var(--line); stroke-width: 1.6; stroke-linejoin: round; }
+.shell  { fill: var(--bg-card);  stroke: var(--line); stroke-width: 1.6; stroke-linejoin: round; }
+.edge   { stroke: var(--line);   stroke-width: 1.6; }
+.seam path { fill: none; stroke: var(--line-faint); stroke-width: .7; }
+.detail { fill: none; stroke: var(--line-faint); stroke-width: .8; }
+
+/* The opening, and the shutter leaves retracted either side of it */
+.slit      { fill: var(--slot); stroke: none; }
+.shutter   { fill: none; stroke: var(--line); stroke-width: 2.2; stroke-linecap: round; }
+.shutter-back { fill: none; stroke: var(--line-faint); stroke-width: 1; }
+
+/* The instrument */
+.tube    { fill: var(--bg-elev); stroke: var(--accent); stroke-width: 1.6; stroke-linejoin: round; }
+.tube-in { fill: var(--bg-elev); stroke: var(--accent-soft); stroke-width: 1.1;
+           stroke-linejoin: round; opacity: .5; }
+.tube-band { stroke: var(--accent-soft); stroke-width: 1; opacity: .8; }
+.aperture  { fill: var(--slot); stroke: var(--accent); stroke-width: 1.6; }
+
+/* The artifact under observation, and what is pointed at it */
+.artifact { fill: var(--bg-card); stroke: var(--line); stroke-width: 1.6; }
+.halo     { fill: none; stroke: var(--line-faint); stroke-width: 1; stroke-dasharray: 4 8; }
+.ridge    { fill: none; stroke: var(--line-faint); stroke-width: 1.2; }
+.sight     { stroke: var(--accent); stroke-width: 1.3; opacity: .8; }
+.sight-far { stroke: var(--accent); stroke-width: 1.1; opacity: .45; }
+
+.stars circle { fill: var(--star); }
+.twinkle   { animation: twinkle 6s ease-in-out infinite; }
+.twinkle-b { animation: twinkle 6s ease-in-out infinite; animation-delay: 3s; }
+@keyframes twinkle {
+  0%,100% { opacity: .3; }
   50%     { opacity: 1; }
 }
-.sight {
-  stroke: var(--accent-soft);
-  stroke-width: 1.2;
-  animation: sight-pulse 7s ease-in-out infinite;
-}
-.sight.deep {
-  stroke: var(--accent);
-  stroke-width: 1.6;
-  animation-delay: 1s;
-}
-.sight.mid { animation-delay: 2.5s; }
-.sight.far { animation-delay: 4s; opacity: .7; }
-.sight.farthest {
-  opacity: .5;
-  animation-delay: 5.5s;
-}
-@keyframes sight-pulse {
-  0%,100% { stroke-opacity: .45; }
-  50%     { stroke-opacity: .95; }
+@media (prefers-reduced-motion: reduce) {
+  .twinkle, .twinkle-b { animation: none; opacity: .7; }
 }
 
 /* ── Pillars ───────────────────────────────────────────────────────────── */

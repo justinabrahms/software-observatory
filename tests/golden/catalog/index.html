@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
   <title>Sensor Catalog — Software Observatory</title>
   <meta name="description" content="All 5 epistemic sensors, grouped into the 10 families — what each one detects, what it misses, and how strong its verdict is.">
   <link rel="canonical" href="https://softwareobservatory.com/catalog/">
@@ -160,6 +165,95 @@
           "position": 5,
           "name": "Delta & \u003c/script>\u003cimg src=x onerror=alert(1)>",
           "url": "https://softwareobservatory.com/sensors/delta-escape/"
+        }
+      ]
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://softwareobservatory.com/catalog/#dataset",
+      "name": "Software Observatory sensor catalog",
+      "description": "5 epistemic sensors for software correctness, in 10 families, each characterized along six dimensions and annotated with what it cannot detect.",
+      "url": "https://softwareobservatory.com/catalog/",
+      "inLanguage": "en",
+      "isAccessibleForFree": true,
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "creator": {
+        "@type": "Person",
+        "@id": "https://softwareobservatory.com/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "publisher": {
+        "@id": "https://softwareobservatory.com/#organization"
+      },
+      "variableMeasured": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "https://softwareobservatory.com/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "description": "How confidently does it know that something is wrong?"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "https://softwareobservatory.com/framework/#independence",
+          "name": "Independence",
+          "description": "Can the thing being evaluated manipulate the sensor?"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "https://softwareobservatory.com/framework/#scope",
+          "name": "Scope",
+          "description": "What level of the system does it tell us about?"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "https://softwareobservatory.com/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "description": "How long until the sensor tells you something?"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "https://softwareobservatory.com/framework/#actionability",
+          "name": "Actionability",
+          "description": "Does it merely say \"bad\" or does it tell you what to fix?"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "https://softwareobservatory.com/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "description": "\"This is wrong\" or \"this looks like things that became wrong before\"?"
+        }
+      ],
+      "distribution": [
+        {
+          "@type": "DataDownload",
+          "name": "Full catalog as JSON",
+          "encodingFormat": "application/json",
+          "contentUrl": "https://softwareobservatory.com/sensors.json",
+          "license": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        {
+          "@type": "DataDownload",
+          "name": "Full catalog as Markdown",
+          "encodingFormat": "text/markdown",
+          "contentUrl": "https://softwareobservatory.com/llms-full.txt",
+          "license": "https://creativecommons.org/licenses/by-sa/4.0/"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog"
         }
       ]
     }

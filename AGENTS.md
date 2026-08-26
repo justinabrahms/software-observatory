@@ -57,25 +57,30 @@ credential paths, and nothing about other projects' infrastructure.
 
 ## Architecture
 
-Everything flows through `build.py` (~1500 lines). It is the entire CMS:
+Everything flows through `scripts/build.py`, which is a thin entry point over
+the `scripts/observatory/` package — one module per responsibility, mapped in
+`observatory/__init__.py`. That package is the entire CMS:
 
-1. `load_sensors()` parses every `content/sensors/*.md` (YAML frontmatter +
-   markdown body) into a dict.
-2. `compute_backlinks()` inverts `see_also:` references into a "What links
-   here" list per sensor.
-3. Page generators (`generate_index_page`, `generate_catalog_page`,
-   `generate_atlas_page`, `generate_framework_page`, `generate_about_page`,
-   `generate_sensor_page`) build HTML via **inline f-string templates** and
-   write it directly to the site root.
+1. `content.load_sensors()` parses every `content/sensors/*.md` (YAML
+   frontmatter + markdown body) into a dict.
+2. `content.compute_backlinks()` inverts `see_also:` references into a "What
+   links here" list per sensor.
+3. The page generators in `observatory/pages/` (`home.py`, `catalog.py`,
+   `atlas.py`, `framework.py`, `about.py`, `sensor.py`, …) build HTML via
+   **inline f-string templates** and write it directly to the site root.
+4. `observatory/site.py` (`main()`) is the running order of a whole build,
+   and `observatory/gates.py` holds everything that refuses to publish.
 
-The `templates/` directory is **empty** — templates are f-strings inside
-`build.py` (`html_head`, `html_header`, `html_footer`, `html_page`, plus
-per-page `body = f"""..."""` blocks). Do not look for Jinja.
+The `templates/` directory is **empty** — templates are f-strings in
+`observatory/layout.py` (`html_head`, `html_header`, `html_footer`,
+`html_page`) plus per-page `body = f"""..."""` blocks in
+`observatory/pages/`. Do not look for Jinja.
 
 Shared site data (the sensor families, confidence-stack layers, oracle
 bar widths, latency labels, and the homepage scatter axes `STACK_SCATTER` /
-`LATENCY_X` / `ORACLE_Y`) are module-level constants at the top of
-`build.py`. Adding or renumbering a family means editing `FAMILIES` there
+`LATENCY_X` / `ORACLE_Y`) are module-level constants in
+`observatory/taxonomy.py`. Adding or renumbering a family means editing
+`FAMILIES` there
 — and adding a `--fam-<slug>` color token in `css/observatory.css`, which
 the homepage scatter legend and dots key off.
 
@@ -83,7 +88,8 @@ the homepage scatter legend and dots key off.
 
 | Path | Role |
 |------|------|
-| `scripts/build.py` | The whole generator. Templates + data + logic in one file. |
+| `scripts/build.py` | Entry point. Runs the build; re-exports the names the other scripts import. |
+| `scripts/observatory/` | The generator, one module per responsibility (`taxonomy`, `render`, `content`, `layout`, `jsonld`, `pages/`, `gates`, `site`, …). Read `__init__.py` first. |
 | `scripts/check_links.py` | Internal link/anchor validator over the generated HTML. |
 | `scripts/export_cli_data.py` | Emits `cli/data/sensors.json`; runs at the end of every build. |
 | `cli/` | Zero-dependency Node CLI + MCP server (npm package `softwareobservatory`). `bin/softwareobservatory.mjs` is the entry; `lib/core.mjs` holds query logic; `lib/mcp.mjs` is the stdio JSON-RPC server; `data/sensors.json` is committed build output. |
@@ -105,7 +111,7 @@ the homepage scatter legend and dots key off.
    ```yaml
    id: SO-XXX            # unique; see_also and backlinks key off this, NOT the slug
    title: ...
-   family: structural    # must match a slug in build.py FAMILIES
+   family: structural    # must match a slug in observatory/taxonomy.py FAMILIES
    oracle: medium        # minimum|low|medium|high|maximum
    independence: high    # same scale
    scope: module         # free-form, rendered with - → space
@@ -147,7 +153,7 @@ are left alone and `check_links.py` will flag them.
 - **Inline links in generated/prose HTML** get class `wikilink`;
   `fix_link_depths` auto-adds `class="body-link"` to markdown-rendered
   `<a>` tags lacking a class.
-- **Python style in build.py:** 4-space indent, section banners like
+- **Python style in `scripts/observatory/`:** 4-space indent, section banners like
   `# ── Sensor family metadata ────...`, type hints absent, f-strings
   everywhere. Match it.
 - No em dashes in code. The CSS and prose content use them freely.
