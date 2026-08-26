@@ -73,6 +73,38 @@ merge gate. Write limits that way where it is true.
 purpose, not for the sensor's honest scope. Correct scope described as
 failure is a category error.
 
+## References are part of the claim
+
+**Every reference has to be about this sensor.** Not the general area,
+not an adjacent technology with overlapping vocabulary — the thing the
+page describes. A plausible-looking reference list is worse than a
+short one, because it looks checked.
+
+> *boundary-sensors:* the page was about static import rules, down to an
+> example written in import-linter's contract syntax; all four
+> references were runtime network tooling (Istio, Linkerd, Cilium,
+> eBPF). "these tools aren't what's described below."
+
+**Metadata and references have to agree.** A mismatch between the
+frontmatter and the reference list is a signal that one of them was
+never checked.
+
+> *boundary-sensors:* "this says imports, but the references point at
+> networking boundaries. That sounds wrong?"
+
+**Reference the tool the example is written in.** If the page shows a
+sample reading, the tool that produces that output belongs in the list.
+
+**Don't reuse a neighbouring page's reference set.** Overlap suggests
+the pages aren't as distinct as the catalog claims they are.
+
+**Source the concept, not just the tooling.** A page that opens by
+claiming to be a sensor of some property should cite where that
+property comes from.
+
+**Verify URLs and citation metadata before committing them.** DOIs
+against Crossref, tool URLs against a real request.
+
 ## Prose
 
 **No AI throat-clearing.** Constructions that announce structure
