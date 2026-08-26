@@ -25,9 +25,14 @@ on:
 # PR run and a same-ref branch run collapse into one concurrency group, and
 # cancel whichever run that group already had in flight — the new push always
 # supersedes it. `github.head_ref` is set only for `pull_request` events (and
-# is the source branch there); it falls back to `github.ref` for push,
-# schedule, and workflow_dispatch, so both trigger paths for the same branch
-# land in the same group.
+# is the source branch there); it falls back for push, schedule and
+# workflow_dispatch.
+#
+# That fallback is `github.ref_name`, NOT `github.ref`. head_ref is a bare
+# branch name ("topic"); github.ref is a full ref path ("refs/heads/topic").
+# Pairing the two puts a branch's push run and its pull_request run in two
+# different groups and collapses nothing. Observed, not reasoned about: PR
+# #130 was opened with `github.ref` here and ran `check` twice on one commit.
 #
 # cancel-in-progress is deliberately NOT unconditional. On a feature branch,
 # superseding an in-flight run is free. On main it is not: the run carries the
@@ -37,7 +42,7 @@ on:
 # when you least want a truncated deploy. So main queues; every other ref
 # cancels.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 permissions:
