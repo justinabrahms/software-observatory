@@ -1,0 +1,213 @@
+# NOTE: the dropdowns below duplicate three controlled vocabularies that live in
+# scripts/vocabulary.py and scripts/build.py. They are duplicated deliberately
+# and only for the three that are the framework itself (the 5-level scale,
+# actionability, sensor type) — changing any of those is a major version bump,
+# so drift here is slow and loud. The vocabularies that change often (family,
+# stack_level, latency) are free-text with a pointer to their source, because a
+# stale dropdown in an unvalidated issue form is exactly the failure mode
+# scripts/vocabulary.py exists to prevent.
+name: Propose a sensor
+description: Suggest a new entry for the catalog, with its six property ratings.
+title: "Sensor: <name>"
+labels: ["sensor proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is the contribution the Observatory most wants. A proposal is
+        strongest when it arrives already rated — even if the ratings are
+        wrong, they are arguable, and an arguable rating is worth more than a
+        description.
+
+        You do not have to open a PR. A filled-in issue is enough; someone can
+        turn it into `content/sensors/<slug>.md`. If you would rather write the
+        entry yourself, see
+        [CONTRIBUTING.md](https://github.com/justinabrahms/software-observatory/blob/main/CONTRIBUTING.md).
+
+  - type: input
+    id: name
+    attributes:
+      label: Sensor name
+      placeholder: Differential testing
+    validations:
+      required: true
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What it is
+      description: >-
+        Two or three sentences. What does an engineer actually do or run, and
+        what comes out the other end? Write it so someone who has never used
+        it could recognise it.
+    validations:
+      required: true
+
+  - type: textarea
+    id: signal
+    attributes:
+      label: What its signal means
+      description: >-
+        When this sensor goes green, what have you learned? When it goes red,
+        what do you know? This is the question the whole catalog is about, so
+        it is the field worth spending the most time on.
+    validations:
+      required: true
+
+  - type: textarea
+    id: blind-spots
+    attributes:
+      label: What it cannot detect
+      description: >-
+        Required. Every sensor has a blind spot, and an entry without one
+        reads as advocacy rather than measurement. Name at least one class of
+        defect that passes straight through this sensor, and say why.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: oracle
+    attributes:
+      label: "Oracle strength"
+      description: >-
+        How strong is the truth-signal? Does a green result mean the software
+        is correct, or only that nothing obvious went wrong?
+      options: [minimum, low, medium, high, maximum]
+    validations:
+      required: true
+
+  - type: dropdown
+    id: independence
+    attributes:
+      label: "Independence"
+      description: >-
+        How independent is this signal from the thing it measures, and from
+        the other sensors you already have? A test written by the author of
+        the code shares the author's misunderstandings.
+      options: [minimum, low, medium, high, maximum]
+    validations:
+      required: true
+
+  - type: input
+    id: scope
+    attributes:
+      label: "Scope"
+      description: >-
+        What breadth of the system does one reading cover? Free-form, e.g.
+        expression, function, module, service, system, fleet.
+      placeholder: module
+    validations:
+      required: true
+
+  - type: input
+    id: latency
+    attributes:
+      label: "Latency"
+      description: >-
+        How long between the change and the reading? Use one of the keys of
+        `LATENCY_LABELS` in `scripts/build.py` (milliseconds, seconds,
+        minutes, minutes-hours, hours, seconds-hours, days, weeks, months,
+        varies).
+      placeholder: minutes
+    validations:
+      required: true
+
+  - type: dropdown
+    id: actionability
+    attributes:
+      label: "Actionability"
+      description: >-
+        blocking = can gate a merge or deploy; guiding = shapes what you work
+        on next; exploratory = tells you where to look.
+      options: [blocking, guiding, exploratory]
+    validations:
+      required: true
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: "Type"
+      description: >-
+        predictive = reads before the failure reaches users; retrospective =
+        reads after something has already happened.
+      options: [predictive, retrospective]
+    validations:
+      required: true
+
+  - type: textarea
+    id: rating-rationale
+    attributes:
+      label: Why those ratings
+      description: >-
+        A line each for the ones that were not obvious, especially oracle and
+        independence. Comparisons to existing entries are the most useful form
+        ("more independent than a unit test because X, less than Y because
+        Z"). Disagreement about a rating is a normal outcome, not a failure of
+        the proposal.
+    validations:
+      required: true
+
+  - type: input
+    id: family
+    attributes:
+      label: Family
+      description: >-
+        Which sensor family does it belong to? Must match a `slug` in
+        `FAMILIES` in `scripts/build.py`. If none fits, say so here — a
+        proposal that does not fit the taxonomy is interesting information
+        about the taxonomy.
+      placeholder: adversarial
+    validations:
+      required: true
+
+  - type: input
+    id: stack-level
+    attributes:
+      label: Confidence-stack level
+      description: >-
+        Where does it sit in the confidence stack? Must match a `slug` in
+        `STACK_LAYERS` in `scripts/build.py`, or the atlas grid cell will be
+        empty.
+      placeholder: property-metamorphic
+    validations:
+      required: true
+
+  - type: textarea
+    id: references
+    attributes:
+      label: References
+      description: >-
+        Tools that implement it, and papers, specs or write-ups that describe
+        it. Any empirical claim in the entry ("catches N% of X") needs a
+        source here. Mark each one `tool`, `publication`, `blog`, `book`,
+        `spec` or `other`.
+      placeholder: |
+        - tool: <name> — <url>
+        - publication: <author, year, title> — <doi or url>
+    validations:
+      required: true
+
+  - type: textarea
+    id: related
+    attributes:
+      label: Related entries
+      description: >-
+        Existing sensors this one overlaps, replaces, or depends on — by
+        SO- id or slug. Correlated sensors are worth calling out explicitly:
+        two sensors that fail together are one sensor.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Before submitting
+      options:
+        - label: >-
+            Any tool output I have quoted was produced by actually running the
+            tool, not written from memory or reconstructed.
+          required: true
+        - label: >-
+            I checked the [catalog](https://softwareobservatory.com/catalog/)
+            and this is not already an entry under another name.
+          required: true

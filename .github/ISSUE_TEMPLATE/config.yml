@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security or privacy concern
+    url: https://github.com/justinabrahms/software-observatory/security/policy
+    about: Please report these privately rather than in a public issue.
+  - name: The catalog itself
+    url: https://softwareobservatory.com/catalog/
+    about: Check whether the sensor you have in mind is already an entry.

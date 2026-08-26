@@ -39,7 +39,7 @@ jobs:
       - name: Install deps
         run: |
           python -m venv .venv
-          .venv/bin/pip install pyyaml markdown
+          .venv/bin/pip install -r requirements.txt
 
       # Also asserts that content, build.py and scripts/vocabulary.py still
       # agree on the reference-kind vocabulary. See check_vocabulary_drift().
@@ -102,7 +102,7 @@ jobs:
       - name: Install deps
         run: |
           python -m venv .venv
-          .venv/bin/pip install pyyaml markdown
+          .venv/bin/pip install -r requirements.txt
 
       # NOTE: the gates are deliberately NOT repeated here. They ran in `check`
       # on this same commit with this same code; re-running them doubled CI time
@@ -196,7 +196,7 @@ jobs:
       - name: Install deps
         run: |
           python -m venv .venv
-          .venv/bin/pip install pyyaml markdown
+          .venv/bin/pip install -r requirements.txt
 
       # The external checkers read the generated site, so it has to exist. The
       # TTL caches (.link-cache.json / .citation-cache.json) are not restored

@@ -1,0 +1,41 @@
+# Citation metadata for the Software Observatory.
+#
+# GitHub renders a "Cite this repository" button from this file, so a
+# malformed one silently does nothing. Validate before committing:
+#
+#     pip install cffconvert && cffconvert --validate -i CITATION.cff
+#
+# `version`, `date-released` and the release DOI are added at release time —
+# see the "Releasing" section of CONTRIBUTING.md. They are absent here rather
+# than wrong: there is no tagged release yet, and a version number that does
+# not correspond to a tag is worse than no version number.
+cff-version: 1.2.0
+message: "If you use the Software Observatory catalog or framework, please cite it as below."
+title: "Software Observatory: a catalog of epistemic sensors for software correctness"
+abstract: >-
+  A reference catalog of the signals engineering teams use to decide whether
+  software is correct — tests, type checkers, mutation testing, canaries,
+  formal methods, incident review and the rest — each rated on six
+  dimensions: oracle strength, independence, scope, latency, actionability
+  and predictive/reactive type. The catalog is organised into sensor families
+  and mapped onto a confidence stack, so that a team can see which kinds of
+  evidence it has, which it lacks, and which of its signals are correlated
+  rather than independent.
+type: software
+authors:
+  - given-names: Justin
+    family-names: Abrahms
+    website: "https://abrah.ms"
+repository-code: "https://github.com/justinabrahms/software-observatory"
+url: "https://softwareobservatory.com"
+license:
+  - CC-BY-SA-4.0
+  - MIT
+keywords:
+  - software correctness
+  - software testing
+  - software quality
+  - verification
+  - observability
+  - epistemology
+  - taxonomy

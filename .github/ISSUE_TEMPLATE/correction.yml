@@ -1,0 +1,63 @@
+name: Correct an entry
+description: A factual error, a wrong rating, a dead link, or a claim without evidence.
+title: "Correction: <entry or page>"
+labels: ["correction"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Corrections are welcome and expected. The catalog is one person's
+        calibration written down; the point of writing it down was to make it
+        correctable.
+
+  - type: input
+    id: where
+    attributes:
+      label: Where
+      description: URL, or the `content/sensors/<slug>.md` path.
+      placeholder: https://softwareobservatory.com/sensors/mutation-testing/
+    validations:
+      required: true
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of error
+      options:
+        - Factual error (the description is wrong)
+        - Rating I disagree with
+        - Claim presented without a source
+        - Tool output that looks invented or is not reproducible
+        - Dead or wrong link
+        - Typo or prose problem
+        - Something else
+    validations:
+      required: true
+
+  - type: textarea
+    id: says
+    attributes:
+      label: What it currently says
+      description: Quote it, so the change is unambiguous.
+    validations:
+      required: true
+
+  - type: textarea
+    id: should
+    attributes:
+      label: What it should say, and why
+      description: >-
+        For a factual correction, a source settles it. For a rating you
+        disagree with, the useful argument is a comparison: name an existing
+        entry rated at the level you think this one belongs at, and say what
+        the two have in common.
+    validations:
+      required: true
+
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources
+      description: Links, papers, docs, or a reproducible command and its real output.
+    validations:
+      required: false

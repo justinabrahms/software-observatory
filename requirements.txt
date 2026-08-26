@@ -1,0 +1,22 @@
+# Python dependencies for the build and every CI gate.
+#
+# These are PINNED, not floating. `markdown` renders every sensor body, so a
+# minor release of it can silently change the HTML of all 59 entries; a pin is
+# the difference between "the site changed because someone edited it" and "the
+# site changed because a transitive release landed on a Tuesday".
+#
+# Versions match what the working .venv/ has been building with.
+# Recreate the venv with:
+#
+#     python3 -m venv .venv
+#     .venv/bin/pip install -r requirements.txt
+#
+# CI installs from this file too (.github/workflows/build-check-deploy.yml),
+# so the manifest cannot silently rot.
+#
+# Not listed on purpose: playwright. It is used only for local screenshot and
+# visual work, never by build.py or any gate, and it drags in a browser
+# download. Install it separately if you need it.
+
+markdown==3.10.3
+pyyaml==6.0.3
