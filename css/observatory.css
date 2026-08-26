@@ -1745,30 +1745,39 @@ a.wikilink:hover {
 
 /* ── Catalog: family sections ───────────────────────────────────────────── */
 /* Jump index above the family sections. Distinct from .filter-list in the
-   sidebar, which filters in place; these link out to the family pages. */
-.family-index { margin-bottom: 3rem; }
+   sidebar, which filters in place; these link out to the family pages.
+
+   One grid, three columns, `display: contents` on the rows: name, count and
+   question line up down the whole block and the columns size themselves to
+   the longest entry, so renaming a family cannot break the alignment. The
+   earlier two-across layout wrapped the questions mid-phrase and locked the
+   two columns to a shared row height; every question fits on one line here,
+   which is why this is no taller despite being a single column. */
+.family-index { margin-bottom: 3.5rem; }
 .family-index-list {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-  gap: .5rem 2.5rem;
-}
-.family-index-list li {
-  display: flex;
+  grid-template-columns: max-content max-content minmax(0, 1fr);
   align-items: baseline;
-  gap: .5rem;
-  padding: .35rem 0;
-  font-size: .95rem;
-  color: var(--text-dim);
-  line-height: 1.5;
+  column-gap: 1.25rem;
+  row-gap: .7rem;
 }
-.family-index-list a { flex: none; }
+.family-index-list li { display: contents; }
+/* The link is a grid item, so it would stretch to the name column's width and
+   drag .wikilink's border-bottom (and hover background) out to the width of
+   the longest family name. Shrink it back to its text. */
+.family-index-list a { justify-self: start; }
 .family-index-list .count {
-  flex: none;
   font-family: var(--font-mono);
   font-size: .78rem;
   color: var(--text-dim);
-  opacity: .75;
+  opacity: .7;
+  justify-self: end;
+}
+.family-index-q {
+  font-size: .95rem;
+  line-height: 1.5;
+  color: var(--text-dim);
 }
 
 .catalog-content {
@@ -2294,6 +2303,10 @@ a.wikilink:hover {
   .entry { grid-template-columns: 1fr; gap: .3rem; }
   .entry-family { display: none; }
   .about-content .contributors { grid-template-columns: 1fr; }
+  /* Narrow: the question column has nowhere to go, so stack it under the
+     name instead of letting it wrap to two or three words a line. */
+  .family-index-list { grid-template-columns: 1fr max-content; row-gap: .25rem; }
+  .family-index-q { grid-column: 1 / -1; margin-bottom: .6rem; }
   .site-header { padding: .55rem 1.5rem 1rem; }
   .wiki-layout { grid-template-columns: 1fr; padding: 0 1.5rem; }
   .wiki-sidebar { position: static; padding-top: 0; }

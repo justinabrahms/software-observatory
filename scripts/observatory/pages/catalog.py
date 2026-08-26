@@ -67,8 +67,8 @@ def generate_catalog_page(sensors, output_dir):
         count = len(by_family.get(f["slug"], []))
         family_index += (
             f'          <li><a href="{family_url(f["slug"])}" class="wikilink">'
-            f'{html.escape(f["name"])}</a> <span class="count">{count}</span>'
-            f' \u2014 {html.escape(f["question"])}</li>\n'
+            f'{html.escape(f["name"])}</a><span class="count">{count}</span>'
+            f'<span class="family-index-q">{html.escape(f["question"])}</span></li>\n'
         )
 
     body = f"""  <section class="page-header">
