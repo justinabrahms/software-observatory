@@ -21,7 +21,7 @@ see_also:
 - SO-014
 - SO-012b
 - SO-014d
-last_reviewed: '2026-08-24'
+last_reviewed: '2026-08-26'
 references:
 - title: 'Reproducible Builds: Increasing the Integrity of Software Supply Chains'
   year: 2021
@@ -126,6 +126,23 @@ its own output faithfully. Provenance tells you the artifact is the one the
 pipeline produced; whether the pipeline was honest is a question for
 [static security analysis](static-security-analysis.html) and dependency
 auditing.
+
+It also cannot see **vendored code**. An SBOM lists what the build
+*resolved* — manifests, lockfiles, package metadata. A dependency that
+was pasted into the source tree, or unzipped into `third_party/` and
+committed, was never resolved. There is no manifest line to generate a
+component from, so none is generated, and to the tool it is
+indistinguishable from code your team wrote. It ships anyway, carrying
+whatever CVEs it had on the day it was copied, and no vulnerability
+feed will ever match it.
+
+This is worse than the "not in the SBOM is a finding" habit above can
+handle. That habit assumes something in the artifact disagrees with the
+manifest; vendored source compiles into the same binary as first-party
+code and disagrees with nothing. Binary composition analysis can
+sometimes fingerprint a copied library, but that is a separate and
+heuristic sensor. A clean SBOM is not evidence that a vendored
+dependency is absent — only that nobody declared one.
 
 Supply chain security is a deeper topic than this catalog covers.
 Build provenance and SBOMs are one sensor in the structural family — they
