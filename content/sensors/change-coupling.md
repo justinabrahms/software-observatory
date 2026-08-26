@@ -21,7 +21,7 @@ see_also:
 - SO-009c
 - SO-009d
 - SO-008
-last_reviewed: '2026-08-24'
+last_reviewed: '2026-08-26'
 references:
 - title: Organizational Volatility and its Effects on Software Defects
   year: 2010
