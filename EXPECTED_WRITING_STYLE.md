@@ -53,6 +53,20 @@ wrong claim, not a simplification.
 > tax, no shipping and no discounts, on a page arguing that domain
 > promises should be machine-checked.
 
+**The example should demonstrate the habits, not just precede them.**
+If the page tells the reader to do something, the sample reading is
+where they check whether it was done. A verdict the reader cannot
+derive from the row is a verdict taken on trust — on a page about
+distrusting verdicts.
+
+> *canary-analysis:* "do we need a delta threshold column?" The table
+> showed deviance and pass/fail but not the tolerance band, directly
+> above a habit insisting the band be set before the canary runs.
+
+**Argue from the example's numbers rather than restating them.** Once a
+figure is in the table, prose that lists it again is duplication; prose
+that points at the interesting row is not.
+
 **When a reviewer's nitpick is the page's own subject, promote it.** The
 correction is worth more as a stated habit than as a silent fix.
 
