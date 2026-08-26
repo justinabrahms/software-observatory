@@ -1,4 +1,5 @@
 {
+  "attribution": "Software Observatory by Justin Abrahms — https://softwareobservatory.com. Licensed CC BY-SA 4.0; adaptations must carry the same license.",
   "families": [
     {
       "count": 1,
@@ -82,6 +83,8 @@
     }
   ],
   "generated_at": "2026-03-02T00:00:00Z",
+  "license": "CC-BY-SA-4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
   "sensors": [
     {
       "body_html": "<p>Alpha Probe is a fixture entry. It exists to exercise the reference renderer\nwith one reference of every declared <code>kind</code>, so that a change to the\nPublications / Tooling / Further reading bucketing shows up as a golden diff\nrather than as something a human notices six months later.</p>\n<p>It also carries a <code>see_also</code> of each resolvable shape: a sensor id\n(<code>SO-T02</code>), a family slug (<code>behavioral</code>), and the literal <code>atlas</code>.</p>\n<p>The body links to <a class=\"body-link\" href=\"/catalog/\">the catalog</a> and to <a class=\"body-link\" href=\"/sensors/beta-signal/\">Beta\nSignal</a> by bare filename, which is the form\n<code>fix_link_depths</code> rewrites to site-absolute URLs. It also carries the shapes\nthat rewriter must leave alone: an\n<a class=\"body-link\" href=\"https://example.invalid/left-alone\">absolute URL</a>, an\n<a class=\"body-link\" href=\"#references\">in-page anchor</a>, a <a class=\"wikilink\" href=\"/atlas/\">raw anchor\nthat already has a class</a>, and a <a class=\"body-link\" href=\"no-such-page.html\">relative link to nothing in\nparticular</a> that is deliberately left for the link checker\nto flag rather than silently rewritten.</p>\n<p>Its <code>last_reviewed</code> is deliberately more than twelve months before the\ncatalog&rsquo;s own reference date, so the sidebar renders the stale flag.</p>",

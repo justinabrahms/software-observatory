@@ -150,10 +150,24 @@ def export():
         newest = max((d for d in first_seen.values() if d), default="")
     generated_at = f"{newest}T00:00:00Z" if newest else "1970-01-01T00:00:00Z"
 
+    # sensors.json is served publicly at /sensors.json and shipped to npm. It
+    # is the most reusable artifact here and, until these three fields, the
+    # only one that travelled with no license attached — so the BY-SA terms
+    # applied to every page of the site and silently not to the file most
+    # likely to be pulled into someone else's tool. Named `license` rather
+    # than nested under a metadata object so a consumer finds it without
+    # looking for it, and additive so no existing reader breaks.
     document = {
         "version": 1,
         "generated_at": generated_at,
         "site": build.SITE_URL,
+        "license": "CC-BY-SA-4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "attribution": (
+            "Software Observatory by Justin Abrahms — "
+            f"{build.SITE_URL}. Licensed CC BY-SA 4.0; adaptations must "
+            "carry the same license."
+        ),
         "families": families,
         "sensors": out_sensors,
     }
