@@ -25,7 +25,7 @@ see_also:
 - SO-009
 - SO-012d
 - change
-last_reviewed: '2026-08-24'
+last_reviewed: '2026-08-26'
 references:
 - title: 'Trustworthy Online Controlled Experiments: A Practical Guide to A/B Testing'
   year: 2020
@@ -96,8 +96,9 @@ A/B testing runs an experiment.
 
 ## In practice
 
-A reading is a statistically significant lift (or non-inferiority) on a
-pre-registered metric:
+A reading is a measured difference on a metric you named before the
+experiment started — either an improvement, or a confirmation that
+nothing got worse by more than the amount you agreed to tolerate:
 
 ```
 Experiment: checkout-redesign-v3
@@ -111,35 +112,81 @@ Experiment: checkout-redesign-v3
   Decision: ship treatment
 ```
 
-Three habits matter when reading these:
+Reading that block doesn't take a statistics background, but it does
+take knowing what three of those numbers are for.
 
-1. **Read the guardrails before the headline metric.** A 3% conversion
-   lift with a 15% latency regression is a loss, not a win. Guardrails
-   (latency, error rate, crash rate) are the safety sensors of the
-   experiment; they fail before the headline metric is worth reading.
-2. **Check the sample size before the significance.** A p-value of
-   0.04 on 2,000 users is a hint, not a decision. The experiment
-   needs enough power to detect the minimum effect you care about;
-   underpowered experiments are noise dressed up as significance.
-3. **Distrust the metric you didn't pre-register.** A "significant" lift
-   on a metric chosen after seeing the results is a fishing trip. The
-   metric was chosen before the experiment started, or the number is
-   not a measurement.
+**The interval is the answer; the point estimate is the headline.** The
+lift reads `+3.0%`, but the honest result is the range next to it:
+`+1.2% to +4.9%`. Strictly, a 95% interval is a claim about the
+procedure — repeat the experiment many times and 95% of the intervals
+you compute this way would contain the true effect. Read day to day, it
+means: the real effect is probably somewhere in that range, and every
+number in it is a result you should be willing to live with. This one
+never touches zero, so the change plausibly did something. An interval
+of `-1% to +7%` includes "made things slightly worse" and is not a win;
+it is *we still don't know*.
+
+**The p-value only answers "could this be noise?"** `p = 0.001` means:
+if the change truly did nothing, a difference at least this large would
+turn up about one run in a thousand by luck alone. That's all it says.
+It does not say the effect is large, that it matters, or that it will
+hold next quarter — a trivial effect measured on enough users produces
+a tiny p-value. Which is why the interval, not the p-value, is the
+number to argue about.
+
+**N is what makes either of them trustworthy.** Few users means a wide
+interval, and a wide interval can only detect enormous effects. Working
+out how many users you need to see the smallest effect you'd actually
+act on is called a *power analysis*, and it is the one piece of
+statistics worth doing before the experiment rather than after. Skip it
+and you can run an experiment that was arithmetically incapable of
+finding what you were looking for.
+
+None of this is math anyone should be doing by hand. An experimentation
+platform computes the intervals, holds the stopping rule, verifies the
+split was actually random, and refuses to show you the metric you
+invented after the fact. That is what the tooling is *for*: it makes
+the honest analysis the cheap one. Judge a platform on that — one that
+reports a p-value with no interval, or lets you stop the moment the
+number turns green, is a tool for making the numbers agree with you.
+
+Three habits matter when reading a result:
+
+1. **Read the guardrails before the headline metric.** Guardrails are
+   the limits you agreed to in advance — p99 latency, error rate, crash
+   rate — and they are pass/fail, not part of a trade you negotiate
+   after seeing conversion. In the run above the treatment cost +15ms
+   against a +50ms guardrail, so it passed. Had it cost +200ms, the
+   treatment doesn't ship, however good conversion looked.
+2. **Check the sample size before the significance.** A result that
+   crossed the significance line on 2,000 users is a hint, not a
+   decision: at that size the interval is wide enough that the
+   plausible effects run from "barely anything" to "implausibly
+   large." Look at how many users it took before you look at whether
+   it won.
+3. **Distrust the metric you didn't name in advance.** A win on a
+   metric chosen after seeing the results is a fishing trip. The metric
+   was chosen before the experiment started, or the number is not a
+   measurement.
 
 ## How it gets gamed
 
 A/B tests are easy to make say what you want:
 
-- **Peek and stop.** Checking the p-value every day and stopping when
-  it crosses 0.05 inflates the false positive rate. The fix is a
-  pre-registered stopping rule (fixed sample, or sequential testing
-  with adjusted thresholds).
+- **Peek and stop.** Watching the result every day and stopping the
+  moment it looks like a win. Random noise wanders, so given enough
+  looks it will eventually wander across the line on its own — checking
+  repeatedly and stopping at the first good number finds "effects" that
+  aren't there. The fix is deciding the stopping rule before you start:
+  a fixed sample size, or a method built to be checked repeatedly
+  (sequential testing), which most platforms offer.
 - **Metric shopping.** Running 40 metrics and reporting the one that
   moved. The fix is a single primary metric, chosen before launch.
-- **Underpower and call it "no effect."** An underpowered experiment
-  that shows no significant difference is not evidence of no effect;
-  it is evidence of nothing. The confidence interval, not the
-  p-value, tells you whether the effect could be zero.
+- **Run it too small and call it "no effect."** An experiment with too
+  few users that finds no significant difference is not evidence of no
+  effect; it is evidence of nothing. The interval, not the p-value,
+  tells you which one you're holding: an interval of -8% to +9% rules
+  out almost nothing.
 - **Dilute the treatment.** If 5% of users see the treatment but the
   metric is computed over all users (including the 95% who saw
   control), the lift is diluted toward zero and the experiment can't
@@ -158,10 +205,12 @@ When an A/B test concludes:
    treatment doesn't ship regardless of the headline metric.
 2. **Read the confidence interval, not just the point estimate.** A
    3% lift with a CI of -1% to +7% is not a win; it's "we don't know."
-3. **If non-inferiority was the goal, confirm the margin.** Many
-   refactors are meant to be neutral; "not significantly different"
-   is not the same as "within the non-inferiority margin we pre-
-   registered."
+3. **If the change was meant to be neutral, check it against the
+   margin you set.** Many refactors are supposed to change nothing a
+   user can feel. "No significant difference" is not the same claim as
+   "inside the margin we agreed to" — an experiment too small to detect
+   a 5% drop reports no significant difference even when there is a 5%
+   drop.
 4. **Record the decision and the reason.** An experiment that
    concluded and was then overridden by opinion is a sensor that was
    ignored; track it like a suppression.

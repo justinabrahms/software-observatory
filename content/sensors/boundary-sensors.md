@@ -10,7 +10,7 @@ independence_note: rules are external to the code
 scope: module
 latency: seconds
 actionability: guiding
-actionability_note: shows exactly which import violates the boundary
+actionability_note: names the offending file and the exact edge it crossed
 type: predictive
 stack_level: static-analysis
 categories:
@@ -21,24 +21,31 @@ see_also:
 - SO-008b
 - SO-002
 - SO-015c
-last_reviewed: '2026-08-24'
+last_reviewed: '2026-08-26'
 references:
-- title: Istio
-  url: https://istio.io
+- title: On the Criteria To Be Used in Decomposing Systems into Modules
+  year: 1972
+  tier: IV
+  url: https://doi.org/10.1145/361598.361623
+  kind: publication
+  authors: D. L. Parnas
+  venue: Communications of the ACM 15(12)
+- title: import-linter
   kind: tool
-  description: Service mesh with traffic management and observability
-- title: Linkerd
+  url: https://import-linter.readthedocs.io
+  description: Forbidden-import and layer contracts for Python
+- title: Deptrac
   kind: tool
-  url: https://linkerd.io
-  description: Lightweight Kubernetes service mesh
-- title: Cilium
+  url: https://github.com/qossmic/deptrac
+  description: Layer dependency enforcement for PHP
+- title: eslint-plugin-boundaries
   kind: tool
-  url: https://cilium.io
-  description: eBPF-based networking, observability, and security
-- title: eBPF tools
+  url: https://github.com/javierbrea/eslint-plugin-boundaries
+  description: Import boundary rules between element types for JavaScript/TypeScript
+- title: Bazel visibility
   kind: tool
-  url: https://ebpf.io
-  description: Kernel-level observability tools
+  url: https://bazel.build/concepts/visibility
+  description: Build-level rules for which targets may depend on which
 ---
 
 "This package must not import that package." A sensor of *encapsulation* and
@@ -68,10 +75,10 @@ the fix is rarely ambiguous. Two habits for reading it well:
   fires, the first question is whether the boundary or the import is
   wrong. Both answers happen. The rule exists so the team answers that
   question explicitly instead of silently merging.
-- **New violations are cheap, old ones are not.** Enforce the rule on
-  changed lines from day one and grandfather existing violations with
-  an explicit, shrinking allowlist. An allowlist that grows is a
-  boundary being deleted one exception at a time.
+- **New violations are cheap, old ones are not.** A rule that fails on
+  every pre-existing violation never gets turned on. Enforce it on
+  changed lines from day one and grandfather what is already there
+  into an explicit allowlist with a date on it.
 
 ## How it gets gamed
 

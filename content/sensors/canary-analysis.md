@@ -22,7 +22,7 @@ see_also:
 - SO-007d
 - SO-005c
 - SO-007e
-last_reviewed: '2026-08-24'
+last_reviewed: '2026-08-26'
 references:
 - title: Exploring Statistical Change Point Detection Techniques for Performance Anomaly Detection at Mozilla
   year: 2026
@@ -68,13 +68,19 @@ A canary reading is a side-by-side comparison of the same metric across two
 populations, usually scored into a single pass/fail verdict rather than
 eyeballed per metric:
 
-| Metric | Baseline (v2.40.7) | Canary (v2.41.0, 5% traffic) | Deviance | Verdict |
-|--------|--------------------|------------------------------|----------|---------|
-| Error rate | 0.12% | 0.84% | 7.0x | FAIL |
-| p99 latency | 212 ms | 231 ms | +9% | pass |
-| Success rate | 99.88% | 99.16% | -0.72 pp | FAIL |
-| CPU | 0.41 cores | 0.43 cores | +5% | pass |
-| **Overall score** | | | | **42 / 100 — ROLLBACK** |
+| Metric | Baseline v2.40.7 | Canary v2.41.0 (5%) | Deviance | Tolerance | Verdict |
+|--------|------------------|---------------------|----------|-----------|---------|
+| Error rate | 0.12% | 0.84% | 7.0x | 2x | FAIL |
+| p99 latency | 212 ms | 231 ms | +9% | +10% | pass |
+| Success rate | 99.88% | 99.16% | -0.72 pp | -0.10 pp | FAIL |
+| CPU | 0.41 cores | 0.43 cores | +5% | +20% | pass |
+| **Overall score** | | | | | **42 / 100 — ROLLBACK** |
+
+The tolerance column is the part that was decided before the canary ran.
+Read the table without it and the verdicts look arbitrary: a 9% latency
+bump passes and a 0.72-point drop in success rate fails, with nothing on
+the page saying why. Read it with the column and every verdict is
+arithmetic.
 
 Reading it well requires four habits:
 
@@ -82,12 +88,13 @@ Reading it well requires four habits:
    own; the baseline at 0.12% is what makes it a signal. A canary judged
    against an absolute bar silently passes when everything degrades
    together.
-2. **Set a threshold of deviance before the canary runs.** Every metric
-   needs a tolerance band — p99 within 10%, error rate within 2x, CPU
-   within 20% — decided in advance and written into the analysis config.
-   Without it, the verdict is a vibe: is a 9% latency bump a regression or
-   a Tuesday? Pre-set thresholds also stop the post-hoc rationalization
-   that a failing canary is "close enough."
+2. **Set the tolerance before the canary runs.** Every metric needs a
+   band written into the analysis config in advance. Note where that
+   bites in the table above: latency came in at +9% against a +10%
+   band and passed. Decided afterwards, +9% is whatever the person
+   reading it needs it to be — a regression if they were suspicious, a
+   Tuesday if they want to ship. Pre-set bands are also what stop the
+   argument that a failing canary was "close enough."
 3. **Know which metrics are allowed to move.** Latency within the noise
    band is normal churn. Error rate and invariant violations are not. If
    the score weights treat them alike, noise drowns the real divergences.

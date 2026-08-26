@@ -20,7 +20,7 @@ see_also:
 - SO-002
 - SO-007
 - SO-007d
-last_reviewed: '2026-08-24'
+last_reviewed: '2026-08-26'
 references:
 - title: 'I Depended on You and You Broke Me: An Empirical Study of Manifesting Breaking Changes in Client Packages'
   year: 2023
@@ -58,10 +58,18 @@ references:
 Did externally observable contracts change? A sensor of *boundary stability*
 — can old and new versions coexist?
 
-API compatibility checking verifies that a change doesn't break existing
-consumers. This is the [contract test](contract-tests.html) applied to
-change: not "does the contract hold now" but "did the contract change
-between versions."
+API compatibility checking answers one question about a diff: did this
+change break backwards compatibility? It reads the old version of the
+interface and the new one, and classifies what moved between them. It
+does not ask who is on the other end, and it does not need to — an
+endpoint removed is a backwards-incompatible change whether anyone
+called it or not.
+
+That is the line between this sensor and [contract
+tests](contract-tests.html). Contract tests ask *did we break our
+consumers?* Compatibility asks *did we make a backwards-incompatible
+change?* Compatibility is a property of two versions of a surface;
+breakage is a property of two versions plus the people using them.
 
 ## In practice
 
@@ -75,51 +83,71 @@ NON-BREAKING: added optional query param `cursor` to GET /v1/invoices
 NON-BREAKING: added endpoint POST /v1/invoices/{id}/void
 ```
 
-The classification is the sensor's opinion; the consumer list is the
-verdict. A "breaking" change with zero consumers is safe, and a
-"non-breaking" change, like flipping a default, can break every
-consumer that relied on the old behavior.
+That classification is the whole reading, and its strength is that it
+needs to know nothing about the outside world. `Invoice.total` moving
+from number to string is incompatible whether one caller parses it or
+ten thousand do. Nothing has to be deployed, no traffic has to be
+sampled, and no consumer has to be enumerated — which is why the
+verdict costs seconds and holds up in a merge gate.
 
-So the reading has two halves and neither can be skipped. The diff
-half says what changed in the contract; the consumer half says who
-depends on the old shape. For libraries, the consumer list is the
-package index; for services, it is telemetry of which fields and
-endpoints traffic actually touches. A compatibility check run without
-the consumer half is a style review of the diff, not a prediction of
-breakage.
+The price of that independence is that the reading tells you what you
+did, not what it will cost. Those are different questions, and the
+sensor only answers the first one:
+
+- A **breaking** change with nobody on the other end is still correctly
+  classified breaking. It is also free to ship. The diff cannot tell
+  the two situations apart, because the answer isn't in the diff.
+- A **non-breaking** change can still break every caller — flip a
+  default, tighten a validation rule, start returning results in a
+  different order. The shape held, so the check is silent, and it is
+  silent correctly: nothing about the contract changed.
+
+For the second question — what does this cost, and who does it cost —
+go elsewhere. [Contract tests](contract-tests.html) catch the
+behavioral breaks that leave the shape intact. Consumer telemetry
+says who is actually out there: the package index for a library,
+per-endpoint and per-field traffic for a service.
 
 ## Response playbook
 
 When the check reports a breaking change:
 
-1. **Confirm the consumers before anything else.** An endpoint with
-   zero traffic and zero imports is cheap to remove; the diff
-   cannot tell you whether this is that endpoint.
+1. **Go find out who is on the other end.** The check has told you the
+   change is incompatible. It has not told you whether that is
+   expensive, and it cannot — that answer lives in traffic telemetry
+   and the package index, not in the diff.
 2. **If consumers exist, make it additive.** Ship the new surface
    alongside the old, migrate callers, and remove the old surface
    only after the telemetry confirms nobody is left.
 3. **If removal is forced, version it.** A major-version bump or a
    `/v2` prefix is the honest signal to consumers; a silent removal
    is not.
-4. **Automate the check as a merge gate.** Compatibility review by
-   human eyeball misses default-value and ordering changes that the
-   diff tool would catch.
+4. **Automate the check as a merge gate.** A reviewer scanning a large
+   diff misses a widened parameter or a field quietly made required;
+   the tool compares every signature every time and does not get
+   bored.
 
 ## How it gets gamed
 
 - **Deprecation without removal.** Marking a surface deprecated and
-  never deleting it, so the consumer list grows stale and the
-  compatibility surface calcifies into something nobody can change.
-- **Semantic breaks that pass the diff.** Changing the meaning of a
-  field or an error code while keeping the types identical. The
-  check passes; consumers break. [Contract
-  tests](contract-tests.html) are the sensor for that half.
+  never deleting it. Nothing is ever classified breaking because
+  nothing is ever removed, and the compatible surface grows until it
+  is the thing nobody can change.
+- **Break it semantically instead of structurally.** Change what a
+  field *means*, or what an error code implies, while leaving every
+  type where it was. The gate has nothing to say, and it is not wrong
+  — it was asked about shape. But a team that knows this can route
+  around the gate on purpose. [Contract
+  tests](contract-tests.html) are the sensor that notices.
 - **Version-bump laundering.** Reclassifying a breaking change as a
   "platform migration" so the compatibility gate does not run on
   it.
 
-The meta-signal is consumer telemetry coverage: the fraction of the
-API surface with real usage data behind its compatibility verdicts.
+The meta-signal is how much of the public surface the check can
+actually see. Anything not described by a spec or a signature the tool
+parses — a hand-rolled endpoint, an undocumented header, a field added
+by a serializer at runtime — produces no verdict at all, and silence
+from a compatibility check reads exactly like a pass.
 
 ## What it cannot detect
 

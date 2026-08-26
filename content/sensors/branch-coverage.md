@@ -20,7 +20,7 @@ see_also:
 - SO-003c
 - SO-003
 - SO-003b
-last_reviewed: '2026-08-24'
+last_reviewed: '2026-08-26'
 references:
 - title: Coverage Is Not Strongly Correlated with Test Suite Effectiveness
   year: 2014

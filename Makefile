@@ -114,6 +114,7 @@ DEPLOY_PRIVATE := \
   content templates scripts cli results scratch \
   notes tests \
   Makefile AGENTS.md README.md CONTRIBUTING.md CHANGELOG.md TODO.md \
+  EXPECTED_WRITING_STYLE.md \
   requirements.txt CITATION.cff OPERATIONS.md \
   abstract.md abstract.sh chat-w-gpt.md
 
