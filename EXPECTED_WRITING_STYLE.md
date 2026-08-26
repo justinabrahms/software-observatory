@@ -105,6 +105,30 @@ property comes from.
 **Verify URLs and citation metadata before committing them.** DOIs
 against Crossref, tool URLs against a real request.
 
+## "What it cannot detect" is load-bearing
+
+**The blind spots readers actually get hurt by are the ones that look
+covered.** A limitation nobody would assume away is worth less than one
+the page's own advice appears to handle and doesn't. When adding a
+blind spot, check whether some earlier habit or playbook item looks
+like it catches this case, and say why it doesn't.
+
+> *build-provenance-sbom:* vendored code — "If it's just copy pasted or
+> 'unzip the dependency into the source tree'.. the system is never
+> going to find it." The page already told the reader to treat "not in
+> the SBOM" as a finding, which sounds like the answer and isn't:
+> that needs something in the artifact to disagree with the manifest,
+> and vendored source disagrees with nothing.
+
+**Explain why the sensor is blind, not just that it is.** "An SBOM
+lists what the build *resolved*" is the sentence that makes the
+limitation predictable — a reader who has it can work out the next
+blind spot without being told.
+
+**Scope the claim to this sensor.** Say what *this* sensor cannot see,
+not what is undetectable in principle. If another tool can catch it,
+say so and name what it costs, rather than overstating for effect.
+
 ## Prose
 
 **No AI throat-clearing.** Constructions that announce structure
