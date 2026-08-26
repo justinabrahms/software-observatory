@@ -22,11 +22,18 @@ on:
 
 # Supersede an in-flight run when a newer commit lands on the same branch.
 #
-# This does NOT deduplicate the push/pull_request pair — that is handled at the
-# job level below, because cancelling one of them is the wrong tool: a
-# cancelled run reports as a FAILED check on the pull request, so every PR
-# would carry a red X from its own duplicate. Observed on PR #130: the push
-# run was cancelled correctly and `gh pr checks` reported `check fail 1s`. `github.head_ref` is set only for `pull_request` events (and
+# `github.event_name` is IN THE GROUP KEY on purpose, so a push run and a
+# pull_request run of the same branch never cancel each other. Deduplicating
+# the pair is the `check` job's `if:` below, and the two mechanisms are not
+# composable: with a shared group, whichever run started second cancelled the
+# first, and when the survivor was the pull_request run its `check` job
+# skipped — so the push run that would have done the work was cancelled and
+# the commit went completely untested. Observed on PR #130, twice:
+# `push cancelled` + `check skipping` = a green PR that ran nothing.
+#
+# Cancelling is also not how to dedupe the pair even when it works: GitHub
+# reports a cancelled run as a FAILED check, so the PR carries a red X from
+# its own duplicate. `github.head_ref` is set only for `pull_request` events (and
 # is the source branch there); it falls back for push, schedule and
 # workflow_dispatch.
 #
@@ -44,7 +51,7 @@ on:
 # when you least want a truncated deploy. So main queues; every other ref
 # cancels.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 permissions:
