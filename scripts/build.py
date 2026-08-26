@@ -137,6 +137,151 @@ FAMILIES = [
 
 FAMILY_BY_SLUG = {f["slug"]: f for f in FAMILIES}
 
+# Per-family editorial matter for /families/<slug>/. `belongs` states the
+# inclusion criterion — the thing that makes an entry a member rather than a
+# neighbour — and `contested` names the placements that are genuinely
+# arguable. Taxonomy without a stated criterion is just a list of ten buckets.
+FAMILY_RATIONALE = {
+    "structural": {
+        "belongs":
+            "A sensor belongs here if it can reach its verdict by reading the "
+            "artifact — its source, its types, its schema, its bill of "
+            "materials — without running it against real inputs. The oracle is "
+            "the artifact's own internal consistency: the code either "
+            "type-checks or it does not, and the implementation cannot argue "
+            "with the answer.",
+        "contested":
+            "Build Provenance & SBOM is about where an artifact came from "
+            "rather than whether its text is coherent; it sits here because it "
+            "is a claim you can check without executing anything. Model "
+            "Checking and Theorem Proving establish facts about behaviour, not "
+            "structure, and are grouped here because they establish them "
+            "before the system runs.",
+    },
+    "behavioral": {
+        "belongs":
+            "These sensors run the system on inputs a human chose and compare "
+            "what happened against an answer a human supplied. The oracle is "
+            "external and specific: it is exactly as good as the example, and "
+            "it says nothing about the cases nobody wrote down.",
+        "contested":
+            "Synthetic Monitoring runs the same chosen-input check against "
+            "production, which makes it as much a runtime sensor as a "
+            "behavioural one. It is grouped here because its oracle is a "
+            "scripted expectation rather than an observation of real traffic.",
+    },
+    "test-effectiveness": {
+        "belongs":
+            "Every entry here points at the test suite rather than at the "
+            "system. They answer a second-order question — would these tests "
+            "have noticed? — which makes this the one family whose subject is "
+            "other sensors.",
+        "contested":
+            "Escaped Defect Rate measures the whole delivery pipeline after "
+            "the fact and could equally sit in Evolution. The coverage entries "
+            "are weak oracles by construction: they can prove a line was never "
+            "executed, never that a behaviour was established.",
+    },
+    "invariants": {
+        "belongs":
+            "This family is defined by the shape of the claim, not by where it "
+            "is enforced: a property stated once that must hold for every "
+            "state or every execution. The same invariant may be checked by a "
+            "type, a database constraint, an assertion in production, or a "
+            "gate before promotion.",
+        "contested":
+            "Because enforcement is spread across the lifecycle, entries here "
+            "deliberately overlap Structural (Statically Checked Invariants) "
+            "and Runtime (Runtime Invariants). The interesting fact about an "
+            "invariant is that somebody stated it, not which mechanism happens "
+            "to check it.",
+    },
+    "adversarial": {
+        "belongs":
+            "The sensor supplies its own inputs or its own faults. Nobody "
+            "wrote down the case that fails; the technique searched for it. "
+            "That is what separates this family from Behavioral, whose inputs "
+            "are all human-chosen.",
+        "contested":
+            "Static Security Analysis executes nothing and is adversarial in "
+            "intent rather than in mechanism. Property-Based Testing and "
+            "Metamorphic Testing straddle Behavioral: they check properties a "
+            "human stated, but generate the inputs themselves.",
+    },
+    "runtime": {
+        "belongs":
+            "These sensors describe what the system actually did, in the wild, "
+            "with no expected answer to compare against. They have the weakest "
+            "oracles in the catalog and the widest scope: they cannot tell you "
+            "something is wrong, only what happened.",
+        "contested":
+            "Load Testing is a chosen-input experiment rather than a passive "
+            "observation and could sit in Behavioral or Adversarial. It is "
+            "here because what it measures is runtime behaviour under "
+            "conditions the code cannot see for itself.",
+    },
+    "change": {
+        "belongs":
+            "Every entry compares two things: the version before a change and "
+            "the version after, or the population exposed to it and the "
+            "population that was not. The unit of observation is a change, not "
+            "a system.",
+        "contested":
+            "A/B Testing measures user outcome rather than correctness, and "
+            "Incremental Build Correctness is arguably structural. Both are "
+            "here because their verdict is about the effect of one specific "
+            "change.",
+    },
+    "architecture": {
+        "belongs":
+            "These sensors measure the shape of the system rather than its "
+            "behaviour — how the parts depend on each other, and how expensive "
+            "it is becoming to reason about them. None of them can tell you "
+            "the system is wrong; they tell you it is getting harder to know.",
+        "contested":
+            "Live Service Graph Discovery observes production traffic, which "
+            "makes it a runtime sensor whose subject happens to be "
+            "architecture. Everything here has a weak oracle: high coupling is "
+            "a smell, not a defect.",
+    },
+    "evolution": {
+        "belongs":
+            "These sensors read history rather than the current artifact. They "
+            "are retrospective and statistical — they answer \u201cdoes this look "
+            "like changes that caused trouble before?\u201d and can never be a "
+            "verdict on one specific change.",
+        "contested":
+            "DORA Metrics describe the delivery system rather than the "
+            "software, and Incident Correlation overlaps Runtime. Everything "
+            "here is a base rate: useful for directing attention, useless as "
+            "proof.",
+    },
+    "comprehension": {
+        "belongs":
+            "In this family the instrument is another mind, or a proxy for "
+            "one. The question is not whether the system works but whether a "
+            "second observer can follow it, reproduce the reasoning, and "
+            "disagree with it.",
+        "contested":
+            "Second-Agent Review raises the independence question directly: "
+            "two instances of the same model share failure modes, so the "
+            "sensor is worth only as much as the second observer is actually "
+            "different. Documentation Drift is mechanically checkable and "
+            "could sit in Structural.",
+    },
+}
+
+
+def family_url(slug):
+    """Canonical URL of a family.
+
+    Families were `#anchors` on /catalog/ until #123 promoted them to pages.
+    The anchors still exist on the catalog page and still resolve, so old
+    inbound links keep working; everything the build emits points here.
+    """
+    return f"/families/{slug}/"
+
+
 # Confidence stack layers (top to bottom)
 STACK_LAYERS = [
     {"slug": "user-outcome",          "label": "User outcome",           "desc": "Does the system produce the intended result for users?"},
@@ -421,7 +566,7 @@ def resolve_see_also(see_also_ids, sensors_by_id, families_by_slug):
                 "title": f["name"],
                 "family": "Family",
                 "family_slug": f["slug"],
-                "url": f"/catalog/#{f['slug']}",
+                "url": family_url(f["slug"]),
             })
         elif ref == "atlas":
             results.append({
@@ -562,6 +707,98 @@ SITE_DESCRIPTION = (
 )
 
 
+# ── Structured data (JSON-LD) ───────────────────────────────────────────────
+#
+# One serializer, used by every page. Hand-built JSON strings are how invalid
+# structured data gets shipped: a quote or an em-dash in an entry title breaks
+# the block, the page still renders, and nobody notices. Everything here goes
+# through json.dumps, and assert_json_ld_parses() re-reads every emitted block
+# out of the generated HTML before the build is allowed to finish.
+
+AUTHOR_LD = {
+    "@type": "Person",
+    "@id": "https://softwareobservatory.com/#author",
+    "name": "Justin Abrahms",
+    "url": "https://justin.abrah.ms",
+    "email": "mailto:justin@abrah.ms",
+    "sameAs": [
+        "https://github.com/justinabrahms",
+        "https://bsky.app/profile/justin.abrah.ms",
+        "https://www.linkedin.com/in/justinabrahms",
+    ],
+}
+
+ORGANIZATION_LD = {
+    "@type": "Organization",
+    "@id": "https://softwareobservatory.com/#organization",
+    "name": "Software Observatory",
+    "url": "https://softwareobservatory.com",
+    "logo": "https://softwareobservatory.com/og.png",
+    "founder": {"@id": "https://softwareobservatory.com/#author"},
+}
+
+CONTENT_LICENSE = "https://creativecommons.org/licenses/by-sa/4.0/"
+
+# @ids the blocks use to refer to each other rather than repeating themselves.
+CATALOG_TERMSET_ID = "https://softwareobservatory.com/catalog/#defined-term-set"
+GLOSSARY_TERMSET_ID = "https://softwareobservatory.com/glossary/#defined-term-set"
+
+
+def family_termset_id(slug):
+    return f"{SITE_URL}/families/{slug}/#defined-term-set"
+
+
+def json_ld_script(json_ld):
+    """Serialize one JSON-LD object, or several as an @graph.
+
+    Accepts a dict, a list of dicts, or an already-serialized string (the
+    homepage used to pass one). `<` is escaped so no content can close the
+    surrounding <script> element.
+    """
+    import json as _json
+    if isinstance(json_ld, (list, tuple)):
+        payload = {"@context": "https://schema.org", "@graph": list(json_ld)}
+    elif isinstance(json_ld, dict):
+        payload = dict(json_ld)
+        payload.setdefault("@context", "https://schema.org")
+    else:
+        return str(json_ld).replace("<", "\\u003c")
+    return _json.dumps(payload, indent=2, ensure_ascii=False).replace("<", "\\u003c")
+
+
+def breadcrumb_ld(trail):
+    """BreadcrumbList from [(name, site-relative path or None), ...].
+
+    Fed from the same list that renders the visible breadcrumb, so the two
+    cannot disagree — which is the only reason visible-breadcrumb markup is
+    worth emitting at all.
+    """
+    items = []
+    for position, (name, path) in enumerate(trail, start=1):
+        item = {
+            "@type": "ListItem",
+            "position": position,
+            "name": name,
+        }
+        if path is not None:
+            item["item"] = f"{SITE_URL}{path}"
+        items.append(item)
+    return {"@type": "BreadcrumbList", "itemListElement": items}
+
+
+def sensor_term_ld(sensor, termset_id):
+    """A sensor as a schema.org DefinedTerm."""
+    return {
+        "@type": "DefinedTerm",
+        "@id": f"{SITE_URL}/sensors/{sensor['slug']}/#term",
+        "name": sensor["title"],
+        "description": blurb_text(sensor.get("body_html", ""), 200),
+        "termCode": sensor.get("id", ""),
+        "url": f"{SITE_URL}/sensors/{sensor['slug']}/",
+        "inDefinedTermSet": {"@id": termset_id},
+    }
+
+
 def html_head(title, canonical=None, json_ld="", description=None,
               og_image=None, og_type="website"):
     """canonical is a site-relative path like 'catalog/' ('' for the root);
@@ -583,7 +820,7 @@ def html_head(title, canonical=None, json_ld="", description=None,
     image = og_image or f"{SITE_URL}/og.png"
     json_ld_block = ""
     if json_ld:
-        json_ld_block = f'\n  <script type="application/ld+json">\n{json_ld}\n  </script>'
+        json_ld_block = f'\n  <script type="application/ld+json">\n{json_ld_script(json_ld)}\n  </script>'
     full_title = title if title == "Software Observatory" else f"{title} — Software Observatory"
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -689,7 +926,134 @@ def html_page(title, body_content, canonical=None, json_ld="", description=None,
 
 # ── Page generators ─────────────────────────────────────────────────────────
 
-def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, output_dir):
+# ── Review provenance ───────────────────────────────────────────────────────
+#
+# `last_reviewed` is a claim that a human read this entry on that day. The
+# build must therefore render three states, not one: reviewed recently,
+# reviewed a long time ago, and never re-reviewed. An absent date is a
+# first-class answer — "not yet re-reviewed" is honest, and a date the author
+# has not earned is not (#112).
+#
+# DETERMINISM: ages are measured against catalog_as_of() — the newest date in
+# the catalog's own data — and never against datetime.now(). Wall-clock ages
+# would rewrite all 59 sensor pages the moment the month rolled over, which is
+# the churn #91 was fixed to stop. The trade-off is that "14 months ago" means
+# "14 months older than the freshest thing in this catalog", which is what the
+# tooltip says; it is a claim the artifact can actually support.
+
+REVIEW_STALE_MONTHS = 12
+
+
+def _months_between(earlier, later):
+    """Whole months from one YYYY-MM-DD to another (never negative)."""
+    import datetime
+    a = datetime.date.fromisoformat(earlier)
+    b = datetime.date.fromisoformat(later)
+    months = (b.year - a.year) * 12 + (b.month - a.month)
+    if b.day < a.day:
+        months -= 1
+    return max(months, 0)
+
+
+def review_status(sensor, as_of):
+    """How this entry's review date should be rendered.
+
+    Returns {"reviewed": 'YYYY-MM-DD' or None, "months": int or None,
+    "stale": bool}.
+    """
+    reviewed = _iso_date(sensor.get("last_reviewed"))
+    if not reviewed or not as_of:
+        return {"reviewed": reviewed, "months": None, "stale": False}
+    months = _months_between(reviewed, as_of)
+    return {
+        "reviewed": reviewed,
+        "months": months,
+        "stale": months >= REVIEW_STALE_MONTHS,
+    }
+
+
+def review_dd_html(sensor, as_of):
+    """The <dd> for the sensor page's "Reviewed" row."""
+    status = review_status(sensor, as_of)
+    if not status["reviewed"]:
+        return (
+            '<span class="review-unreviewed" title="This entry carries no '
+            'last_reviewed date: nobody has re-read it since it was written. '
+            'An absent date is reported as absent rather than filled in.">'
+            "not yet re-reviewed</span>"
+        )
+    month = status["reviewed"][:7]
+    if status["months"] is None:
+        return html.escape(month)
+    tooltip = html.escape(
+        f"Age measured against {as_of}, the newest date in the catalog. "
+        f"The build never uses the wall clock, so this page is byte-identical "
+        f"between builds.",
+        quote=True,
+    )
+    if status["months"] == 0:
+        age = "current"
+    elif status["months"] == 1:
+        age = "1 month ago"
+    else:
+        age = f"{status['months']} months ago"
+    classes = "review-age review-stale" if status["stale"] else "review-age"
+    stale_mark = (
+        f' <span class="review-stale-flag" title="Older than '
+        f'{REVIEW_STALE_MONTHS} months.">stale</span>'
+        if status["stale"] else ""
+    )
+    return (
+        f'{html.escape(month)} <span class="{classes}" title="{tooltip}">'
+        f"\u2014 {age}</span>{stale_mark}"
+    )
+
+
+def reviewed_newest_first(sensors):
+    """Entries that carry a real review date, newest first.
+
+    Entries without one are EXCLUDED rather than sorted as if they were
+    fresh: a missing date is not a recent date.
+    """
+    dated = [s for s in sensors if _iso_date(s.get("last_reviewed"))]
+    return sorted(
+        dated,
+        key=lambda s: (_iso_date(s["last_reviewed"]), s["slug"]),
+        reverse=True,
+    )
+
+
+def review_dates_discriminate(sensors):
+    """True when `last_reviewed` actually tells entries apart.
+
+    Today every entry carries the same bulk stamp, so ordering by it is
+    ordering by a constant and any "recently reviewed" list is a fiction.
+    The moment the stamps become real — different dates, or some entries
+    with no date at all — this returns True and the homepage switches to a
+    genuine ordering on its own. Nobody has to remember to flip it.
+    """
+    return len({_iso_date(s.get("last_reviewed")) for s in sensors}) > 1
+
+
+def sensor_card_html(sensor, family):
+    """One catalog card. Shared by /catalog/ and /families/<slug>/ so the two
+    renderings of the same entry cannot drift apart."""
+    return f"""          <a class="signal-card" href="/sensors/{sensor['slug']}/">
+            <div class="signal-card-meta">
+              <span class="tag tag-family">{html.escape(family['name'])}</span>
+              <span class="tag tag-type">{html.escape(sensor.get('type', '').title())}</span>
+            </div>
+            <h3 class="signal-card-title">{html.escape(sensor['title'])}</h3>
+            <p class="signal-card-blurb">{html.escape(blurb_text(sensor.get('body_html', ''), 200))}</p>
+            <div class="signal-card-footer">
+              <span class="oracle-meter">{oracle_dots_html(sensor.get('oracle', 'low'))} Oracle</span>
+              {latency_badge_html(sensor.get('latency', ''))}
+            </div>
+          </a>\n"""
+
+
+def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug,
+                         output_dir, published=None, as_of=None):
     """Generate a single sensor detail page."""
     family = FAMILY_BY_SLUG.get(sensor.get("family", ""), {})
     family_name = family.get("name", sensor.get("family", ""))
@@ -791,7 +1155,7 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
             # Link to family section if it matches a family slug
             fam = FAMILY_BY_SLUG.get(cat.lower().replace(" ", "-"), {})
             if fam:
-                cat_links += f'          <a href="/catalog/#{fam["slug"]}" class="cat-link">{html.escape(cat)}</a>\n'
+                cat_links += f'          <a href="{family_url(fam["slug"])}" class="cat-link">{html.escape(cat)}</a>\n'
             else:
                 cat_slug = re.sub(r"[^a-z0-9]+", "-", cat.lower()).strip("-")
                 cat_links += f'          <a href="/categories/#{cat_slug}" class="cat-link">{html.escape(cat)}</a>\n'
@@ -821,7 +1185,7 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
         for cat in categories:
             fam = FAMILY_BY_SLUG.get(cat.lower().replace(" ", "-"), {})
             if fam:
-                url = f"/catalog/#{fam['slug']}"
+                url = family_url(fam['slug'])
             else:
                 cat_slug = re.sub(r"[^a-z0-9]+", "-", cat.lower()).strip("-")
                 url = f"/categories/#{cat_slug}"
@@ -833,9 +1197,20 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
         </ul>
       </div>"""
 
+    # One trail, two renderings: the visible breadcrumb and the
+    # BreadcrumbList below are generated from this list.
+    breadcrumb_trail = [("Catalog", "/catalog/")]
+    if family_slug:
+        breadcrumb_trail.append((family_name, family_url(family_slug)))
+    breadcrumb_trail.append((sensor["title"], None))
+    breadcrumb_html = " › ".join(
+        f'<a href="{path}">{html.escape(name)}</a>' if path else html.escape(name)
+        for name, path in breadcrumb_trail
+    )
+
     body = f"""  <div class="wiki-layout">
     <article class="signal-detail">
-      <p class="breadcrumb"><a href="/catalog/">Catalog</a> › <a href="/catalog/#{family_slug}">{html.escape(family_name)}</a> › {html.escape(sensor['title'])}</p>
+      <p class="breadcrumb">{breadcrumb_html}</p>
 
       <header class="signal-detail-header">
         <h1 class="signal-detail-title">{html.escape(sensor['title'])}</h1>
@@ -861,7 +1236,7 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
       <div class="sidebar-box">
         <h3 class="sidebar-heading">Sensor properties</h3>
         <dl class="meta-list">
-          <dt>Family</dt>           <dd><a href="/catalog/#{family_slug}" class="wikilink">{html.escape(family_name)}</a></dd>
+          <dt>Family</dt>           <dd><a href="{family_url(family_slug)}" class="wikilink">{html.escape(family_name)}</a></dd>
           <dt>Oracle</dt>          <dd>{html.escape(sensor.get('oracle', '').title())}{note_hover_html(sensor.get('oracle_note'))}</dd>
           <dt>Independence</dt>     <dd>{html.escape(sensor.get('independence', '').title())}{note_hover_html(sensor.get('independence_note'))}</dd>{provisional_note_html(sensor.get('provisional'))}
           <dt>Scope</dt>           <dd>{html.escape(sensor.get('scope', '').replace('-', ' ').title())}{note_hover_html(sensor.get('scope_note'))}</dd>
@@ -869,7 +1244,7 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
           <dt>Actionability</dt>   <dd>{html.escape(sensor.get('actionability', '').title())}{note_hover_html(sensor.get('actionability_note'))}</dd>
           <dt>Type</dt>             <dd>{html.escape(sensor.get('type', '').title())}{note_hover_html(sensor.get('type_note'))}</dd>
           <dt>Entry ID</dt>        <dd>{html.escape(sensor.get('id', ''))}</dd>
-          <dt>Reviewed</dt>        <dd>{html.escape(str(sensor.get('last_reviewed', ''))[:7])}</dd>
+          <dt>Reviewed</dt>        <dd>{review_dd_html(sensor, as_of)}</dd>
         </dl>
       </div>
 {backlink_html}
@@ -880,13 +1255,52 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, out
     # The catalog-card blurb is already a self-contained opening sentence
     # about this sensor specifically — exactly what a search snippet or a
     # Slack unfurl should say.
+    # Structured data. The entry is both an article and a term in the
+    # catalog's vocabulary, so it is typed as both; the breadcrumb is built
+    # from the same trail that renders the visible one above.
+    blurb = blurb_text(sensor.get("body_html", ""), 200)
+    date_published = (published or {}).get(sensor["slug"]) or _iso_date(
+        sensor.get("last_reviewed")
+    )
+    article_ld = {
+        "@type": ["TechArticle", "DefinedTerm"],
+        "@id": f"{SITE_URL}/sensors/{sensor['slug']}/#entry",
+        "headline": sensor["title"],
+        "name": sensor["title"],
+        "description": blurb,
+        "termCode": sensor.get("id", ""),
+        "url": f"{SITE_URL}/sensors/{sensor['slug']}/",
+        "mainEntityOfPage": f"{SITE_URL}/sensors/{sensor['slug']}/",
+        "inLanguage": "en",
+        "license": CONTENT_LICENSE,
+        "author": AUTHOR_LD,
+        "publisher": {"@id": ORGANIZATION_LD["@id"]},
+        "inDefinedTermSet": {"@id": CATALOG_TERMSET_ID},
+        "isPartOf": {"@id": CATALOG_TERMSET_ID},
+    }
+    if date_published:
+        article_ld["datePublished"] = date_published
+    reviewed = _iso_date(sensor.get("last_reviewed"))
+    if reviewed:
+        article_ld["dateModified"] = reviewed
+    if family_slug:
+        article_ld["about"] = {
+            "@type": "Thing",
+            "@id": family_termset_id(family_slug),
+            "name": family_name,
+            "url": f"{SITE_URL}{family_url(family_slug)}",
+        }
+    if categories:
+        article_ld["keywords"] = ", ".join(categories)
+
     page_html = html_page(
         f"{sensor['title']}",
         body,
         canonical=f"sensors/{sensor['slug']}/",
-        description=blurb_text(sensor.get("body_html", ""), 200),
+        description=blurb,
         og_image=sensor_og_image(sensor["slug"]),
         og_type="article",
+        json_ld=[article_ld, breadcrumb_ld(breadcrumb_trail)],
     )
     out_path = output_dir / "sensors" / sensor["slug"] / "index.html"
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -910,33 +1324,15 @@ def generate_catalog_page(sensors, output_dir):
         if not fam_sensors:
             continue
 
-        cards = ""
-        for s in fam_sensors:
-            oracle_str = s.get("oracle", "low")
-            oracle_d = oracle_dots_html(oracle_str)
-            lat = latency_badge_html(s.get("latency", ""))
-            title = s["title"]
-            slug = s["slug"]
-
-            cards += f"""          <a class="signal-card" href="/sensors/{slug}/">
-            <div class="signal-card-meta">
-              <span class="tag tag-family">{html.escape(family['name'])}</span>
-              <span class="tag tag-type">{html.escape(s.get('type', '').title())}</span>
-            </div>
-            <h3 class="signal-card-title">{html.escape(title)}</h3>
-            <p class="signal-card-blurb">{html.escape(blurb_text(s.get('body_html', ''), 200))}</p>
-            <div class="signal-card-footer">
-              <span class="oracle-meter">{oracle_d} Oracle</span>
-              {lat}
-            </div>
-          </a>\n"""
+        cards = "".join(sensor_card_html(s, family) for s in fam_sensors)
 
         sections_html += f"""      <section class="family-section" id="{family['slug']}" data-family="{family['slug']}">
         <div class="family-header">
           <span class="family-num">{family['num']}</span>
           <div>
-            <h2 class="family-title">{html.escape(family['name'])}</h2>
+            <h2 class="family-title"><a href="{family_url(family['slug'])}" class="wikilink">{html.escape(family['name'])}</a></h2>
             <p class="family-tagline">"{html.escape(family['question'])}"</p>
+            <p class="family-more"><a href="{family_url(family['slug'])}">What belongs in this family \u2192</a></p>
           </div>
         </div>
         <div class="signal-grid">
@@ -953,6 +1349,17 @@ def generate_catalog_page(sensors, output_dir):
         filter_families += f'          <li><button type="button" data-family="{f["slug"]}" aria-pressed="false">{html.escape(f["name"])} <span class="count">{count}</span></button></li>\n'
 
     total = len(sensors)
+
+    # Index of the family pages. /catalog/ stays the complete list; each
+    # family also has a page of its own that can rank for its own topic.
+    family_index = ""
+    for f in FAMILIES:
+        count = len(by_family.get(f["slug"], []))
+        family_index += (
+            f'          <li><a href="{family_url(f["slug"])}" class="wikilink">'
+            f'{html.escape(f["name"])}</a> <span class="count">{count}</span>'
+            f' \u2014 {html.escape(f["question"])}</li>\n'
+        )
 
     body = f"""  <section class="page-header">
     <p class="eyebrow">The Catalog</p>
@@ -978,12 +1385,64 @@ def generate_catalog_page(sensors, output_dir):
     </aside>
 
     <div class="catalog-content">
+      <nav class="family-index" aria-label="Sensor families">
+        <h2 class="section-heading">Families</h2>
+        <ul class="family-index-list">
+{family_index.rstrip()}
+        </ul>
+      </nav>
+
 {sections_html.rstrip()}
     </div>
   </div>"""
 
+    # The catalog IS a defined term set: 59 terms, each with a definition,
+    # grouped into 10 families. Emitting it as one lets an entity extractor
+    # read the vocabulary instead of guessing at 59 pages of prose.
+    termset_ld = {
+        "@type": "DefinedTermSet",
+        "@id": CATALOG_TERMSET_ID,
+        "name": "Software Observatory sensor catalog",
+        "description": (
+            f"{len(sensors)} epistemic sensors for software correctness, "
+            f"grouped into {len(FAMILIES)} families."
+        ),
+        "url": f"{SITE_URL}/catalog/",
+        "inLanguage": "en",
+        "license": CONTENT_LICENSE,
+        "creator": AUTHOR_LD,
+        "publisher": {"@id": ORGANIZATION_LD["@id"]},
+        "hasPart": [
+            {"@id": family_termset_id(f["slug"])}
+            for f in FAMILIES if by_family.get(f["slug"])
+        ],
+        "hasDefinedTerm": [
+            sensor_term_ld(s, CATALOG_TERMSET_ID)
+            for f in FAMILIES for s in by_family.get(f["slug"], [])
+        ],
+    }
+    itemlist_ld = {
+        "@type": "ItemList",
+        "@id": f"{SITE_URL}/catalog/#itemlist",
+        "name": "Sensor Catalog",
+        "numberOfItems": len(sensors),
+        "itemListOrder": "https://schema.org/ItemListUnordered",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": position,
+                "name": entry["title"],
+                "url": f"{SITE_URL}/sensors/{entry['slug']}/",
+            }
+            for position, entry in enumerate(
+                [s for f in FAMILIES for s in by_family.get(f["slug"], [])], start=1
+            )
+        ],
+    }
+
     page_html = html_page(
         "Sensor Catalog", body, canonical="catalog/",
+        json_ld=[termset_ld, itemlist_ld],
         description=(
             f"All {len(sensors)} epistemic sensors, grouped into the "
             f"{len(FAMILIES)} families — what each one detects, what it "
@@ -994,6 +1453,142 @@ def generate_catalog_page(sensors, output_dir):
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w") as f:
         f.write(page_html)
+
+
+def family_description(family, count):
+    """The family's own meta description. Unique per family by construction:
+    it is built from that family's name, question and examples."""
+    return (
+        f"{family['name']} sensors ask: {family['question']} "
+        f"{count} entries in the Software Observatory — {family['examples']}."
+    )
+
+
+def generate_family_pages(sensors, output_dir):
+    """Generate /families/<slug>/ for every family.
+
+    Ten topics that share one page compete with each other; ten pages do not.
+    /catalog/ stays the complete index and keeps its `#<slug>` anchors, so
+    every link that ever pointed at /catalog/#adversarial still resolves.
+    """
+    by_family = {}
+    for sensor in sensors:
+        by_family.setdefault(sensor.get("family", "uncategorized"), []).append(sensor)
+
+    stack_by_slug = {layer["slug"]: layer for layer in STACK_LAYERS}
+    stage_by_slug = {stage["slug"]: stage for stage in LIFECYCLE_STAGES}
+
+    for index, family in enumerate(FAMILIES):
+        fam_sensors = by_family.get(family["slug"], [])
+        rationale = FAMILY_RATIONALE.get(family["slug"], {})
+
+        cards = "".join(sensor_card_html(s, family) for s in fam_sensors)
+
+        # Where in the lifecycle this family's signals arrive.
+        levels_html = ""
+        for level_slug in family.get("stack_levels", []):
+            layer = stack_by_slug.get(level_slug)
+            if not layer:
+                continue
+            stage = stage_by_slug.get(STAGE_BY_LEVEL.get(level_slug, ""), {})
+            stage_label = f" — {html.escape(stage['label'])} stage" if stage else ""
+            levels_html += (
+                f'        <li><strong>{html.escape(layer["label"])}</strong>'
+                f'{stage_label}. {html.escape(layer["desc"])}</li>\n'
+            )
+
+        prev_fam = FAMILIES[index - 1] if index > 0 else None
+        next_fam = FAMILIES[index + 1] if index + 1 < len(FAMILIES) else None
+        adjacent = ""
+        if prev_fam:
+            adjacent += (
+                f'        <li>Previous: <a href="{family_url(prev_fam["slug"])}" '
+                f'class="wikilink">{html.escape(prev_fam["name"])}</a> — '
+                f'{html.escape(prev_fam["question"])}</li>\n'
+            )
+        if next_fam:
+            adjacent += (
+                f'        <li>Next: <a href="{family_url(next_fam["slug"])}" '
+                f'class="wikilink">{html.escape(next_fam["name"])}</a> — '
+                f'{html.escape(next_fam["question"])}</li>\n'
+            )
+
+        contested_html = ""
+        if rationale.get("contested"):
+            contested_html = f"""      <h2>Contested placements</h2>
+      <p>{html.escape(rationale["contested"])}</p>
+"""
+
+        body = f"""  <article class="family-page">
+    <p class="breadcrumb"><a href="/catalog/">Catalog</a> \u203a {html.escape(family['name'])}</p>
+
+    <section class="page-header">
+      <p class="eyebrow">Sensor family {family['num']}</p>
+      <h1 class="page-title">{html.escape(family['name'])}</h1>
+      <p class="page-lede">\u201c{html.escape(family['question'])}\u201d</p>
+    </section>
+
+    <div class="about-content">
+      <h2>What belongs here</h2>
+      <p>{html.escape(rationale.get("belongs", family["examples"]))}</p>
+
+{contested_html}      <h2>Where its signals arrive</h2>
+      <ul>
+{levels_html.rstrip()}
+      </ul>
+      <p>
+        The <a href="/atlas/" class="wikilink">atlas</a> places every family on
+        the same lifecycle grid; the
+        <a href="/framework/" class="wikilink">framework</a> defines the six
+        dimensions each entry below is characterized along.
+      </p>
+
+      <h2 id="entries">Entries ({len(fam_sensors)})</h2>
+    </div>
+
+    <div class="signal-grid">
+{cards.rstrip()}
+    </div>
+
+    <div class="about-content">
+      <h2>Adjacent families</h2>
+      <ul>
+{adjacent.rstrip()}
+        <li>All of them: the <a href="/catalog/" class="wikilink">complete catalog</a>
+          (this family is also anchored there at
+          <a href="/catalog/#{family['slug']}" class="wikilink">/catalog/#{family['slug']}</a>).</li>
+      </ul>
+    </div>
+  </article>"""
+
+        family_ld = {
+            "@type": "DefinedTermSet",
+            "@id": family_termset_id(family["slug"]),
+            "name": f"{family['name']} sensors",
+            "description": family_description(family, len(fam_sensors)),
+            "url": f"{SITE_URL}{family_url(family['slug'])}",
+            "inLanguage": "en",
+            "license": CONTENT_LICENSE,
+            "creator": AUTHOR_LD,
+            "isPartOf": {"@id": CATALOG_TERMSET_ID},
+            "hasDefinedTerm": [
+                sensor_term_ld(s, family_termset_id(family["slug"]))
+                for s in fam_sensors
+            ],
+        }
+        crumbs = breadcrumb_ld([("Catalog", "/catalog/"), (family["name"], None)])
+
+        page_html = html_page(
+            f"{family['name']} sensors",
+            body,
+            canonical=f"families/{family['slug']}/",
+            description=family_description(family, len(fam_sensors)),
+            json_ld=[family_ld, crumbs],
+        )
+        out_path = output_dir / "families" / family["slug"] / "index.html"
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(out_path, "w") as handle:
+            handle.write(page_html)
 
 
 def generate_atlas_page(sensors, output_dir):
@@ -1015,7 +1610,7 @@ def generate_atlas_page(sensors, output_dir):
           <div class="matrix-row-label">
             <span class="matrix-fam-num">{family['num']}</span>
             <span class="matrix-fam-icon fam-{family['slug']}" aria-hidden="true">{family['icon']}</span>
-            <a href="/catalog/#{family['slug']}" class="matrix-fam-name">{html.escape(family['name'])}</a>
+            <a href="{family_url(family["slug"])}" class="matrix-fam-name">{html.escape(family['name'])}</a>
           </div>
 """
 
@@ -1157,7 +1752,7 @@ def generate_atlas_page(sensors, output_dir):
         anchor = "start" if x > cx + 10 else ("end" if x < cx - 10 else "middle")
         lx = x + (16 if anchor == "start" else (-16 if anchor == "end" else 0))
         ly = y + (-18 if y < cy - 10 else (28 if y > cy + 10 else 4))
-        nodes_svg += f"""          <a href="/catalog/#{f['slug']}" class="dep-node" data-family="{f['slug']}">
+        nodes_svg += f"""          <a href="{family_url(f["slug"])}" class="dep-node" data-family="{f['slug']}">
             <circle cx="{x:.1f}" cy="{y:.1f}" r="9" class="dep-node-dot" />
             <text class="dep-node-label" x="{lx:.1f}" y="{ly:.1f}" text-anchor="{anchor}">{html.escape(f['name'])}</text>
           </a>
@@ -1187,7 +1782,7 @@ def generate_atlas_page(sensors, output_dir):
     # Family map
     family_map = ""
     for f in FAMILIES:
-        family_map += f"""        <a href="/catalog/#{f['slug']}" class="family-map-card">
+        family_map += f"""        <a href="{family_url(f["slug"])}" class="family-map-card">
           <span class="fam-num">{f['num']}</span>
           <span class="fam-name">{html.escape(f['name'])}</span>
           <span class="fam-q">"{html.escape(f['question'])}"</span>
@@ -1285,7 +1880,7 @@ def generate_index_page(sensors, output_dir):
     # Families grid
     families_grid = ""
     for f in FAMILIES:
-        families_grid += f"""        <a href="/catalog/#{f['slug']}" class="family-card">
+        families_grid += f"""        <a href="{family_url(f["slug"])}" class="family-card">
           <span class="family-num">{f['num']}</span>
           <h3 class="family-name">{html.escape(f['name'])}</h3>
           <p class="family-question">"{html.escape(f['question'])}"</p>
@@ -1293,22 +1888,40 @@ def generate_index_page(sensors, output_dir):
         </a>
 """
 
-    # Featured entries — one per family for the first six families, so the
-    # selection is deterministic and spread across the catalog rather than
-    # masquerading as "recently reviewed" when all review dates are identical.
+    # This list is "Recently reviewed" only when the review dates can actually
+    # support that claim — see review_dates_discriminate(). While every entry
+    # carries the same bulk stamp, sorting by it would be sorting by a
+    # constant, so the section falls back to a fixed, spread-out starting set
+    # and says so in its heading. When the stamps become real the ordering
+    # switches over by itself; nothing has to be remembered.
     featured_slugs = [
         "type-checker", "mutation-testing", "fuzzing",
         "observability-events", "independent-review", "canary-analysis",
     ]
     sensors_by_slug = {s["slug"]: s for s in sensors}
-    recent_sensors = [sensors_by_slug[s] for s in featured_slugs if s in sensors_by_slug]
+    if review_dates_discriminate(sensors):
+        recent_heading = "Recently reviewed"
+        recent_sensors = reviewed_newest_first(sensors)[:len(featured_slugs)]
+        show_review_date = True
+    else:
+        recent_heading = "Start here"
+        recent_sensors = [
+            sensors_by_slug[slug] for slug in featured_slugs
+            if slug in sensors_by_slug
+        ]
+        show_review_date = False
     recent_html = ""
     for s in recent_sensors:
         fam = FAMILY_BY_SLUG.get(s.get("family", ""), {})
+        reviewed = _iso_date(s.get("last_reviewed"))
+        reviewed_html = (
+            f'          <span class="entry-reviewed">reviewed {reviewed[:7]}</span>\n'
+            if show_review_date and reviewed else ""
+        )
         recent_html += f"""        <li class="entry">
           <span class="entry-family">{html.escape(fam.get('name', ''))}</span>
           <a href="/sensors/{s['slug']}/" class="entry-title wikilink">{html.escape(s['title'])}</a>
-          <span class="entry-blurb">{html.escape(blurb_text(s.get('body_html', ''), 140))}</span>
+{reviewed_html}          <span class="entry-blurb">{html.escape(blurb_text(s.get('body_html', ''), 140))}</span>
         </li>
 """
 
@@ -1520,32 +2133,29 @@ def generate_index_page(sensors, output_dir):
     </section>
 
     <section class="recent">
-      <h2 class="section-heading">Start here</h2>
+      <h2 class="section-heading">{recent_heading}</h2>
       <ul class="entry-list">
 {recent_html.rstrip()}
       </ul>
     </section>
   </main>"""
 
-    import json as _json
-    website_ld = _json.dumps({
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "Software Observatory",
-        "url": SITE_URL,
-        "description": "A catalog of epistemic sensors for software correctness.",
-        "author": {
-            "@type": "Person",
-            "name": "Justin Abrahms",
-            "url": "https://justin.abrah.ms",
-            "email": "mailto:justin@abrah.ms",
-            "sameAs": [
-                "https://github.com/justinabrahms",
-                "https://bsky.app/profile/justin.abrah.ms",
-                "https://www.linkedin.com/in/justinabrahms",
-            ],
+    website_ld = [
+        {
+            "@type": "WebSite",
+            "@id": f"{SITE_URL}/#website",
+            "name": "Software Observatory",
+            "url": SITE_URL,
+            "description": "A catalog of epistemic sensors for software correctness.",
+            "inLanguage": "en",
+            "license": CONTENT_LICENSE,
+            "author": {"@id": AUTHOR_LD["@id"]},
+            "publisher": {"@id": ORGANIZATION_LD["@id"]},
+            "hasPart": {"@id": CATALOG_TERMSET_ID},
         },
-    }, indent=2)
+        ORGANIZATION_LD,
+        AUTHOR_LD,
+    ]
 
     page_html = html_page(
         "Software Observatory", body, canonical="", json_ld=website_ld,
@@ -2183,8 +2793,36 @@ def generate_glossary_page(output_dir):
 {sections.rstrip()}
   </div>"""
 
+    glossary_ld = {
+        "@type": "DefinedTermSet",
+        "@id": GLOSSARY_TERMSET_ID,
+        "name": "Software Observatory glossary",
+        "description": (
+            "The vocabulary the catalog runs on: epistemic sensor, oracle, "
+            "independence, actionability, and the rest."
+        ),
+        "url": f"{SITE_URL}/glossary/",
+        "inLanguage": "en",
+        "license": CONTENT_LICENSE,
+        "creator": AUTHOR_LD,
+        "hasDefinedTerm": [
+            {
+                "@type": "DefinedTerm",
+                "@id": f"{SITE_URL}/glossary/#{slug}",
+                "name": term,
+                "description": meta_description(
+                    html.unescape(re.sub(r"<[^>]+>", "", definition)), 300
+                ),
+                "url": f"{SITE_URL}/glossary/#{slug}",
+                "inDefinedTermSet": {"@id": GLOSSARY_TERMSET_ID},
+            }
+            for slug, term, definition in entries
+        ],
+    }
+
     page_html = html_page(
         "Glossary", body, canonical="glossary/",
+        json_ld=glossary_ld,
         description=(
             "Definitions for the vocabulary the catalog runs on — epistemic "
             "sensor, oracle, independence, actionability, flakiness, and the "
@@ -2287,7 +2925,7 @@ def generate_search_index(sensors, output_dir):
             "title": f["name"],
             "kind": "family",
             "family": f["name"],
-            "url": f"/catalog/#{f['slug']}",
+            "url": family_url(f["slug"]),
             "blurb": f["question"],
         })
     for s in sensors:
@@ -2355,6 +2993,8 @@ def generate_sitemap(sensors, output_dir):
         "", "catalog/", "atlas/", "framework/", "about/",
         "contact/", "privacy/", "glossary/", "categories/",
     )]
+    for family in FAMILIES:
+        urls.append((f"families/{family['slug']}/", site_lastmod))
     for s in sensors:
         urls.append((f"sensors/{s['slug']}/", per_sensor.get(s["slug"], site_lastmod)))
     lines = ['<?xml version="1.0" encoding="UTF-8"?>',
@@ -2373,7 +3013,16 @@ def generate_sitemap(sensors, output_dir):
 
 def generate_robots(output_dir):
     """Write robots.txt pointing at the sitemap."""
-    content = f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n"
+    content = (
+        "User-agent: *\n"
+        "Allow: /\n"
+        f"Sitemap: {SITE_URL}/sitemap.xml\n"
+        "\n"
+        "# Machine-readable surfaces (see /llms.txt for what they are for):\n"
+        f"# Agent index:      {SITE_URL}/llms.txt\n"
+        f"# Full catalog:     {SITE_URL}/llms-full.txt\n"
+        f"# Structured data:  {SITE_URL}/sensors.json\n"
+    )
     with open(output_dir / "robots.txt", "w") as f:
         f.write(content)
 
@@ -2540,8 +3189,10 @@ def generate_404(sensors, output_dir):
     <h2>For agents</h2>
     <p>
       Sitemap: <a href="sitemap.xml">/sitemap.xml</a> — all indexable URLs.
-      Machine-readable catalog: <a href="search-index.json">/search-index.json</a>.
-      Agent instructions: <a href="llms.txt">/llms.txt</a>.
+      Search index: <a href="/search-index.json">/search-index.json</a>.
+      Structured catalog: <a href="/sensors.json">/sensors.json</a>.
+      Agent instructions: <a href="/llms.txt">/llms.txt</a>,
+      full catalog in one file: <a href="/llms-full.txt">/llms-full.txt</a>.
     </p>
   </div>"""
     page_html = html_page(
@@ -2554,6 +3205,203 @@ def generate_404(sensors, output_dir):
     )
     with open(output_dir / "404.html", "w") as f:
         f.write(page_html)
+
+
+def catalog_as_of(sensors, published=None):
+    """The newest date anywhere in the catalog's own data (YYYY-MM-DD).
+
+    DETERMINISM: this is the reference date for everything the build renders
+    about time — the llms-full.txt header, the review-age display. It is
+    derived from content (review dates and first-seen dates), never from the
+    clock, because a build that changes nothing must produce a byte-identical
+    tree (#91). datetime.now() here would rewrite every sensor page every day.
+    """
+    dates = [_iso_date(s.get("last_reviewed")) for s in sensors]
+    dates += [_iso_date(d) for d in (published or {}).values()]
+    dates = [d for d in dates if d]
+    return max(dates) if dates else None
+
+
+_MD_LINK_RE = re.compile(r"\]\(([^)\s]+)(\s+\"[^\"]*\")?\)")
+
+
+def absolutize_markdown_links(md_text, sensor_slugs):
+    """Rewrite the catalog's bare-filename markdown links to absolute URLs.
+
+    Entry sources link siblings as `type-checker.html` and sections as
+    `catalog.html#behavioral`; that only resolves relative to the site. In a
+    single flat file those links have to be absolute or they are noise.
+    """
+    def repl(match):
+        url, title = match.group(1), match.group(2) or ""
+        if url.startswith(("http://", "https://", "#", "mailto:")):
+            return match.group(0)
+        if url.startswith("/"):
+            return f"]({SITE_URL}{url}{title})"
+        path, _, frag = url.partition("#")
+        stem = path.removesuffix(".html")
+        frag = f"#{frag}" if frag else ""
+        if "/" not in path and stem in sensor_slugs:
+            return f"]({SITE_URL}/sensors/{stem}/{frag}{title})"
+        if "/" not in path and stem in SECTION_PAGES:
+            return f"]({SITE_URL}/{stem}/{frag}{title})"
+        return match.group(0)
+
+    return _MD_LINK_RE.sub(repl, md_text)
+
+
+_BLOCK_TAGS = ("p", "div", "section", "article", "ul", "ol", "table", "tr",
+               "blockquote", "figure", "figcaption", "dl")
+
+
+def html_to_markdown_ish(html_str):
+    """Flatten a generated page body to plain markdown.
+
+    Used to fold the framework and glossary pages into llms-full.txt without
+    keeping a second hand-written copy of their prose, which would drift. Not
+    a general HTML-to-markdown converter — it only has to handle the markup
+    this build emits.
+    """
+    text = re.sub(r"<svg\b.*?</svg>", "", html_str, flags=re.S | re.I)
+    text = re.sub(r"<(script|style|noscript)\b.*?</\1>", "", text, flags=re.S | re.I)
+    text = re.sub(r"<!--.*?-->", "", text, flags=re.S)
+
+    def link(match):
+        href, inner = match.group(1), match.group(2)
+        inner = re.sub(r"<[^>]+>", "", inner).strip()
+        if href.startswith("/"):
+            href = f"{SITE_URL}{href}"
+        return f"[{inner}]({href})" if inner else ""
+
+    text = re.sub(r'<a\b[^>]*href="([^"]*)"[^>]*>(.*?)</a>', link, text, flags=re.S)
+    text = re.sub(r"<h1\b[^>]*>(.*?)</h1>", r"\n\n### \1\n", text, flags=re.S | re.I)
+    text = re.sub(r"<h2\b[^>]*>(.*?)</h2>", r"\n\n#### \1\n", text, flags=re.S | re.I)
+    text = re.sub(r"<h3\b[^>]*>(.*?)</h3>", r"\n\n##### \1\n", text, flags=re.S | re.I)
+    text = re.sub(r"<h4\b[^>]*>(.*?)</h4>", r"\n\n###### \1\n", text, flags=re.S | re.I)
+    text = re.sub(r"<li\b[^>]*>", "\n- ", text, flags=re.I)
+    text = re.sub(r"<(?:td|th)\b[^>]*>", " | ", text, flags=re.I)
+    text = re.sub(r"<br\s*/?>", "\n", text, flags=re.I)
+    for tag in _BLOCK_TAGS:
+        text = re.sub(rf"</{tag}>", "\n\n", text, flags=re.I)
+    text = re.sub(r"<[^>]+>", "", text)
+    text = html.unescape(text)
+    lines = [re.sub(r"[ \t]+", " ", line).rstrip() for line in text.splitlines()]
+    out, blank = [], 0
+    for line in lines:
+        if not line.strip():
+            blank += 1
+            if blank > 1 or not out:
+                continue
+            out.append("")
+        else:
+            blank = 0
+            out.append(line.strip())
+    return "\n".join(out).strip()
+
+
+def _page_main_html(output_dir, path):
+    """The <main> of an already-generated page, or "" if it isn't there."""
+    page = output_dir / path / "index.html"
+    if not page.exists():
+        return ""
+    match = re.search(r"<main\b[^>]*>(.*)</main>", page.read_text(encoding="utf-8"), re.S)
+    return match.group(1) if match else ""
+
+
+def generate_llms_full_txt(sensors, output_dir, published=None):
+    """Write llms-full.txt — the entire catalog in one fetch.
+
+    llms.txt is an index: an agent that wants the catalog has to follow it
+    with 59 more requests. This is the same corpus as one flat markdown
+    document, in the catalog's own family order, with each entry's full
+    source body and its six-dimension frontmatter.
+
+    Reads the framework and glossary from the pages this build just wrote, so
+    there is no second copy of that prose to drift.
+    """
+    as_of = catalog_as_of(sensors, published)
+    sensor_slugs = {s["slug"] for s in sensors}
+    by_family = {}
+    for sensor in sensors:
+        by_family.setdefault(sensor.get("family", ""), []).append(sensor)
+
+    out = [
+        "# Software Observatory — full catalog",
+        "",
+        "> The complete text of every entry in the catalog of epistemic sensors for",
+        "> software correctness, in one file.",
+        "",
+        f"Source: {SITE_URL}/",
+        "Catalog format version: 1",
+        f"Content as of: {as_of or 'unknown'} (the newest date in the catalog's own data;",
+        "this file carries no build timestamp, so an unchanged catalog produces a",
+        "byte-identical file)",
+        f"Entries: {len(sensors)} in {len(FAMILIES)} families",
+        "License: CC BY-SA 4.0 — https://creativecommons.org/licenses/by-sa/4.0/",
+        "Attribution: \"Software Observatory\" by Justin Abrahms. Cite the specific",
+        f"entry URL you used ({SITE_URL}/sensors/<slug>/).",
+        "",
+        "Companion surfaces:",
+        f"- Index / when to use this catalog: {SITE_URL}/llms.txt",
+        f"- Structured catalog (JSON, same data): {SITE_URL}/sensors.json",
+        f"- Per-entry markdown: {SITE_URL}/md/sensors/<slug>.md",
+        "",
+        "## How this file is organized",
+        "",
+        "The framework, then the glossary, then one section per family. Each family",
+        "section states its question and its inclusion criterion, then gives every",
+        "entry in full: metadata block, then the entry's own text verbatim.",
+        "",
+        "## Framework",
+        "",
+        html_to_markdown_ish(_page_main_html(output_dir, "framework")),
+        "",
+        "## Glossary",
+        "",
+        html_to_markdown_ish(_page_main_html(output_dir, "glossary")),
+        "",
+    ]
+
+    for family in FAMILIES:
+        fam_sensors = by_family.get(family["slug"], [])
+        rationale = FAMILY_RATIONALE.get(family["slug"], {})
+        out += [
+            f"## Family {family['num']}: {family['name']}",
+            "",
+            f"Question: {family['question']}",
+            f"URL: {SITE_URL}{family_url(family['slug'])}",
+            f"Entries: {len(fam_sensors)}",
+            "",
+        ]
+        if rationale.get("belongs"):
+            out += ["What belongs here: " + rationale["belongs"], ""]
+        if rationale.get("contested"):
+            out += ["Contested placements: " + rationale["contested"], ""]
+        for sensor in fam_sensors:
+            _meta, body = parse_frontmatter(Path(sensor["filename"]))
+            reviewed = _iso_date(sensor.get("last_reviewed"))
+            out += [
+                f"### {sensor['title']}",
+                "",
+                f"- Entry ID: {sensor.get('id', '')}",
+                f"- URL: {SITE_URL}/sensors/{sensor['slug']}/",
+                f"- Family: {family['name']} ({family['slug']})",
+                f"- Oracle strength: {sensor.get('oracle', '')}",
+                f"- Independence: {sensor.get('independence', '')}",
+                f"- Scope: {sensor.get('scope', '')}",
+                f"- Feedback latency: {sensor.get('latency', '')}",
+                f"- Actionability: {sensor.get('actionability', '')}",
+                f"- Type: {sensor.get('type', '')}",
+                f"- Confidence-stack level: {sensor.get('stack_level', '')}",
+                f"- Categories: {', '.join(sensor.get('categories', []) or []) or 'none'}",
+                f"- Last reviewed: {reviewed or 'not yet re-reviewed'}",
+                "",
+                absolutize_markdown_links(body.strip(), sensor_slugs),
+                "",
+            ]
+
+    with open(output_dir / "llms-full.txt", "w", encoding="utf-8") as handle:
+        handle.write("\n".join(out).rstrip() + "\n")
 
 
 def generate_llms_txt(sensors, output_dir):
@@ -2590,9 +3438,12 @@ def generate_llms_txt(sensors, output_dir):
         "- Framework: /framework/ — the six dimensions",
         "- Glossary: /glossary/ — definitions of core terms (oracle, independence, epistemic sensor, etc.)",
         "- Individual entries: /sensors/<slug>/ (e.g. /sensors/mutation-testing/)",
+        f"- Family pages: /families/<slug>/ ({len(FAMILIES)} of them, one per family; /catalog/#<slug> still anchors to the same family on the catalog)",
         "",
         "## Machine-readable surfaces",
         "",
+        f"- Full catalog in one fetch: /llms-full.txt (the complete text of all {len(sensors)} entries in one file — fetch this instead of crawling the entries)",
+        "- Structured catalog: /sensors.json (every entry with frontmatter, body HTML, body text, and resolved see_also — the same document the npm package ships)",
         "- Sitemap: /sitemap.xml (every indexable URL, with lastmod)",
         f"- Search index: /search-index.json ({len(sensors)} sensors + {len(FAMILIES)} families: title, family, url, blurb)",
         "- Markdown source of any entry: /md/sensors/<slug>.md",
@@ -2621,7 +3472,7 @@ def generate_llms_txt(sensors, output_dir):
     for f in FAMILIES:
         count = sum(1 for s in sensors if s.get("family") == f["slug"])
         lines.append(
-            f"- {f['name']}: {f['question']} — {count} entries (see /catalog/#{f['slug']})"
+            f"- {f['name']}: {f['question']} — {count} entries (see /families/{f['slug']}/)"
         )
     lines.append("")
     with open(output_dir / "llms.txt", "w") as f:
@@ -2639,7 +3490,7 @@ def assert_family_count(output_dir):
     expected = len(FAMILIES)
     pattern = re.compile(r"(\d+)\s+families?", re.IGNORECASE)
     mismatches = []
-    for html_path in output_dir.rglob("*.html"):
+    for html_path in generated_html_paths(output_dir):
         try:
             text = html_path.read_text(encoding="utf-8")
         except (OSError, UnicodeDecodeError):
@@ -2667,8 +3518,8 @@ def assert_sensor_count(sensors, output_dir):
     """
     expected = len(sensors)
     pattern = re.compile(r"(\d+)\s+(?:epistemic\s+)?sensors\b", re.IGNORECASE)
-    targets = list(output_dir.rglob("*.html"))
-    for extra in ("llms.txt", "rss.xml", "search-index.json"):
+    targets = generated_html_paths(output_dir)
+    for extra in ("llms.txt", "llms-full.txt", "rss.xml", "search-index.json"):
         path = output_dir / extra
         if path.exists():
             targets.append(path)
@@ -2690,9 +3541,92 @@ def assert_sensor_count(sensors, output_dir):
         )
 
 
+# Directories the build itself writes HTML into. The gates below used to
+# rglob the whole repo root, which also walked .venv/ (playwright ships HTML)
+# and any archive-*/ tarball extract. A gate that reads files the build did
+# not write is measuring somebody else's artifact.
+GENERATED_HTML_DIRS = (
+    "sensors", "catalog", "families", "atlas", "framework", "about",
+    "contact", "privacy", "glossary", "categories",
+)
+GENERATED_HTML_FILES = ("index.html", "404.html")
+
+
+def generated_html_paths(output_dir):
+    """Every HTML file this build produced, sorted."""
+    paths = [output_dir / name for name in GENERATED_HTML_FILES]
+    for name in GENERATED_HTML_DIRS:
+        paths.extend((output_dir / name).rglob("*.html"))
+    return sorted(p for p in paths if p.exists())
+
+
+JSON_LD_RE = re.compile(
+    r'<script type="application/ld\+json">(.*?)</script>', re.S
+)
+
+# @type -> properties that must be present and non-empty for the block to be
+# worth emitting at all. Structured data rots silently; this is the gate that
+# notices.
+JSON_LD_REQUIRED = {
+    "WebSite": ("name", "url"),
+    "DefinedTermSet": ("name", "url", "hasDefinedTerm"),
+    "DefinedTerm": ("name", "description", "inDefinedTermSet"),
+    "TechArticle": ("headline", "description", "author", "datePublished"),
+    "BreadcrumbList": ("itemListElement",),
+    "ItemList": ("itemListElement",),
+}
+
+
+def assert_json_ld_parses(output_dir):
+    """Fail the build if any emitted JSON-LD block does not parse, or is
+    missing a required property for its @type.
+
+    Invalid structured data is invisible: the page renders, the block is
+    ignored, and nobody notices for a year. Returns the number of blocks
+    checked so the build log reports coverage rather than silence.
+    """
+    import json as _json
+
+    def check(node, path, problems):
+        if isinstance(node, list):
+            for i, item in enumerate(node):
+                check(item, f"{path}[{i}]", problems)
+            return
+        if not isinstance(node, dict):
+            return
+        types = node.get("@type", "")
+        for t in (types if isinstance(types, list) else [types]):
+            for prop in JSON_LD_REQUIRED.get(t, ()):
+                if not node.get(prop):
+                    problems.append(f"{path}: {t} missing {prop!r}")
+        for key, value in node.items():
+            if key.startswith("@"):
+                continue
+            check(value, f"{path}.{key}", problems)
+
+    problems, blocks = [], 0
+    for html_path in generated_html_paths(output_dir):
+        text = html_path.read_text(encoding="utf-8")
+        for raw in JSON_LD_RE.findall(text):
+            blocks += 1
+            rel = html_path.relative_to(output_dir)
+            try:
+                data = _json.loads(raw)
+            except ValueError as exc:
+                problems.append(f"{rel}: does not parse ({exc})")
+                continue
+            check(data, str(rel), problems)
+    if problems:
+        raise AssertionError(
+            "Invalid JSON-LD — " + "; ".join(problems[:20])
+            + (f" (+{len(problems) - 20} more)" if len(problems) > 20 else "")
+        )
+    return blocks
+
+
 def assert_family_examples(sensors):
-    """Warn if a family's `examples` string names a sensor owned by a
-    different family.
+    """Fail the build if a family's `examples` string names a sensor owned
+    by a different family.
 
     Each family's examples list should be accurate to its rows. The check
     matches comma-separated example tokens against sensor titles
@@ -2722,10 +3656,11 @@ def assert_family_examples(sensors):
                             f'family {owner!r}'
                         )
     if warnings:
-        print("  WARNING: family examples / ownership mismatches:")
-        for w in warnings:
-            print(f"    {w}")
-        print("  (Fix the examples list in FAMILIES or reassign the sensor.)")
+        details = "; ".join(warnings)
+        raise AssertionError(
+            f"Family examples / ownership mismatches — {details}. Fix the "
+            f"examples list in FAMILIES or reassign the sensor."
+        )
 
 
 def assert_see_also_resolves(sensors):
@@ -2782,10 +3717,79 @@ def assert_family_and_stack_level(sensors):
         )
 
 
-def main():
+# ── Gate ordering ───────────────────────────────────────────────────────────
+#
+# THE RULE: nothing is written until every check that can run on the loaded
+# model has passed.
+#
+# A gate that runs after promotion is not a gate — it is a post-mortem. Until
+# #116 all four checks ran at the very end of main(), after 69 pages, the
+# search index, the sitemap, the RSS feed AND the committed
+# cli/data/sensors.json had already been written. A build that was going to
+# fail still produced a complete, corrupt site first.
+#
+# So: validate_sensors() runs immediately after load_sensors() and before any
+# generator. Only checks that genuinely need generated output (they grep the
+# emitted HTML) may run afterwards, and they live in assert_output_invariants()
+# so the split stays visible. If you add a check, it goes in validate_sensors()
+# unless it physically cannot.
+#
+# Running the input gates first also fixes a second bug: a bad `family` slug
+# used to die with a bare KeyError inside resolve_see_also / the atlas
+# dependency graph during generation, so assert_family_and_stack_level's
+# helpful "valid families are ..." message was unreachable. It is reachable now
+# by construction, because generation no longer happens first.
+
+def validate_sensors(sensors):
+    """Every gate that can be answered from the loaded sensor data alone.
+
+    Called before a single byte of output is written. Raises AssertionError
+    on the first violated invariant.
+    """
+    print("Checking family / stack_level slugs...")
+    assert_family_and_stack_level(sensors)
+    print("  OK")
+
+    print("Checking see_also resolution...")
+    assert_see_also_resolves(sensors)
+    print("  OK")
+
+    print("Checking family examples / ownership...")
+    assert_family_examples(sensors)
+    print("  OK")
+
+
+def assert_output_invariants(sensors, output_dir):
+    """Gates that can only be answered by reading generated output.
+
+    These grep the emitted HTML for prose that drifted away from the data, so
+    they cannot run before generation. They are post-checks, not gates, and
+    are labelled as such: a failure here means a bad site is already on disk.
+    """
+    print("Checking family-count consistency...")
+    assert_family_count(output_dir)
+    print("  OK")
+
+    print("Checking sensor-count consistency...")
+    assert_sensor_count(sensors, output_dir)
+    print("  OK")
+
+    print("Checking JSON-LD validity...")
+    count = assert_json_ld_parses(output_dir)
+    print(f"  OK ({count} blocks)")
+
+
+def main(check_only=False):
     print("Loading sensors...")
     sensors = load_sensors()
     print(f"  Found {len(sensors)} sensors")
+
+    # GATES FIRST. Nothing below this line may write a file until every check
+    # that can run on the loaded model has passed.
+    validate_sensors(sensors)
+    if check_only:
+        print("Done (--check: validated, wrote nothing).")
+        return
 
     # Build lookup tables
     sensors_by_id = {s["id"]: s for s in sensors}
@@ -2797,6 +3801,13 @@ def main():
         print(f"  {sid}: {len(bls)} backlinks")
 
     output_dir = OUTPUT_DIR
+
+    # Publication dates (git/first_seen.json) and the catalog's own reference
+    # date. Computed once, passed down: every generator that renders a date
+    # must render the same one, and none of them may look at the clock.
+    published = first_seen_dates(sensors)
+    as_of = catalog_as_of(sensors, published)
+    print(f"  Catalog as of {as_of} (derived from content, not the clock)")
 
     # Remove stale output from the old /pages/*.html layout
     stale_pages = output_dir / "pages"
@@ -2856,6 +3867,9 @@ def main():
     generate_catalog_page(sensors, output_dir)
     print("  catalog/")
 
+    generate_family_pages(sensors, output_dir)
+    print(f"  families/ ({len(FAMILIES)} pages)")
+
     generate_atlas_page(sensors, output_dir)
     print("  atlas/")
 
@@ -2878,35 +3892,27 @@ def main():
     print("  categories/")
 
     for sensor in sensors:
-        generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug, output_dir)
+        generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug,
+                             output_dir, published=published, as_of=as_of)
         print(f"  sensors/{sensor['slug']}/")
 
-    print("Exporting CLI dataset...")
+    # After the pages: llms-full.txt folds in the framework and glossary as
+    # this build rendered them.
+    print("Generating llms-full.txt...")
+    generate_llms_full_txt(sensors, output_dir, published=published)
+    print("  llms-full.txt")
+
+    print("Exporting catalog dataset...")
     import export_cli_data
-    export_cli_data.export()
-    print("  cli/data/sensors.json")
+    written = export_cli_data.export()
+    print("  cli/data/sensors.json + sensors.json (%d sensors, %d families)" % written[:2])
 
-    print("Checking family-count consistency...")
-    assert_family_count(output_dir)
-    print("  OK")
-
-    print("Checking sensor-count consistency...")
-    assert_sensor_count(sensors, output_dir)
-    print("  OK")
-
-    print("Checking family examples / ownership...")
-    assert_family_examples(sensors)
-
-    print("Checking see_also resolution...")
-    assert_see_also_resolves(sensors)
-    print("  OK")
-
-    print("Checking family / stack_level slugs...")
-    assert_family_and_stack_level(sensors)
-    print("  OK")
+    # Post-checks: these read generated HTML, so they cannot be gates. See
+    # the "Gate ordering" comment above validate_sensors().
+    assert_output_invariants(sensors, output_dir)
 
     print("Done.")
 
 
 if __name__ == "__main__":
-    main()
+    main(check_only="--check" in sys.argv)

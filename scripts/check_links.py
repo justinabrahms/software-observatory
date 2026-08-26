@@ -36,6 +36,7 @@ from urllib.parse import urlparse, urldefrag
 
 SITE_ROOT = Path(__file__).resolve().parent.parent
 HTML_GLOBS = ["index.html", "404.html", "catalog/**/*.html", "sensors/**/*.html",
+              "families/**/*.html",
               "atlas/**/*.html", "framework/**/*.html", "about/**/*.html",
               "contact/**/*.html", "privacy/**/*.html", "glossary/**/*.html",
               "categories/**/*.html"]

@@ -9,6 +9,7 @@ pages/
 # sensor files -- the most common contribution this repo can receive.
 /sensors/
 catalog/
+families/
 atlas/
 framework/
 about/
@@ -25,6 +26,10 @@ robots.txt
 rss.xml
 404.html
 llms.txt
+llms-full.txt
+# Leading slash: cli/data/sensors.json is committed and must stay that
+# way; only the web copy at the repo root is generated output.
+/sensors.json
 md/
 .link-cache.json
 *.TMP
@@ -39,6 +44,10 @@ results/
 abstract.md
 abstract.sh
 .opencode-review.md
+
+# Operator notes: host, key paths, DNS account. Moved out of the public
+# AGENTS.md (#118); publishing it is the exact thing it exists to prevent.
+OPERATIONS.md
 
 # Citation checker's TTL cache (see scripts/check_citations.py).
 .citation-cache.json

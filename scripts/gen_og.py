@@ -326,7 +326,7 @@ def generate(items, force=False, quiet=False):
         }
 
     # This machine's Chromium needs libasound.so.2, which was extracted by
-    # hand into .browser-libs/ (system apt is blocked) — see AGENTS.md. Add
+    # hand into .browser-libs/ (system apt is blocked) — see OPERATIONS.md. Add
     # it to the loader path when it's there; harmless when it isn't.
     libdir = SITE_ROOT / ".browser-libs" / "usr" / "lib" / "x86_64-linux-gnu"
     if libdir.is_dir():

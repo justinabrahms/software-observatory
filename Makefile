@@ -55,6 +55,13 @@ check-external: build
 #
 # archive-* directories are matched by prefix, below.
 #
+# requirements.txt, CITATION.cff and OPERATIONS.md are all private. The first
+# two are repository metadata that GitHub reads and the web server has no use
+# for (CITATION.cff drives the "Cite this repository" button from the repo, not
+# from the site; the site's own how-to-cite block is generated content). The
+# third is the untracked operator note holding the deploy topology, and
+# publishing it would be the exact failure it exists to prevent.
+#
 # When you cannot tell which list a path belongs in, put it in DEPLOY_PRIVATE.
 # Wrong-private fails closed: a page 404s and check-links catches it. Wrong-
 # public fails open: it is on the internet before anyone notices. `notes/` is
@@ -63,13 +70,15 @@ check-external: build
 # move it up and say why.
 # ---------------------------------------------------------------------------
 DEPLOY_PUBLIC := \
-  index.html 404.html llms.txt robots.txt rss.xml sitemap.xml search-index.json \
+  index.html 404.html llms.txt llms-full.txt robots.txt rss.xml sitemap.xml \
+  search-index.json sensors.json \
   favicon.svg og.png \
   LICENSE LICENSE-CODE LICENSE-CONTENT \
   css js pages \
   og \
   md \
-  sensors catalog atlas framework about contact privacy glossary categories
+  sensors catalog atlas framework about contact privacy glossary categories \
+  families
 
 DEPLOY_PRIVATE := \
   .git .gitignore .github .venv .browser-libs .crush .opencode .claude \
@@ -78,6 +87,7 @@ DEPLOY_PRIVATE := \
   content templates scripts cli results scratch \
   notes \
   Makefile AGENTS.md README.md CONTRIBUTING.md CHANGELOG.md TODO.md \
+  requirements.txt CITATION.cff OPERATIONS.md \
   abstract.md abstract.sh chat-w-gpt.md
 
 check-deploy:
