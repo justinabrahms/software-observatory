@@ -58,7 +58,8 @@ client configuration.
 
 ```
 content/sensors/*.md       Source of truth — one file per sensor (YAML frontmatter + markdown)
-scripts/build.py           The generator: templates, data, and logic in one file
+scripts/build.py           Entry point for the build
+scripts/observatory/       The generator, split by responsibility (see __init__.py)
 scripts/check_links.py     Internal link/anchor validator over the generated HTML
 scripts/check_frontmatter.py Frontmatter schema validator over content/sensors/*.md
 scripts/export_cli_data.py Emits cli/data/sensors.json on every build
@@ -133,7 +134,7 @@ host.
    ```yaml
    id: SO-XXX              # unique; see_also and backlinks key off this, not the slug
    title: ...
-   family: structural      # must match a slug in build.py FAMILIES
+   family: structural      # must match a slug in observatory/taxonomy.py FAMILIES
    oracle: medium          # minimum | low | medium | high | maximum
    independence: high      # same scale
    scope: module           # free-form, rendered with - → space
@@ -159,8 +160,8 @@ host.
 
 Write links in markdown bodies as bare filenames: `[type
 checker](type-checker.html)` for another sensor,
-`[catalog](catalog.html#behavioral)` for a section page. `build.py`
-(`fix_link_depths`) rewrites those to their site-absolute clean URLs
+`[catalog](catalog.html#behavioral)` for a section page. The renderer
+(`observatory/render.py`, `fix_link_depths`) rewrites those to their site-absolute clean URLs
 (`/sensors/type-checker/`, `/catalog/#behavioral`), so the same rendered
 body works at any depth. Root-relative and absolute URLs are left alone.
 `check_links.py` will catch any link that gets this wrong.

@@ -28,14 +28,15 @@ WHAT IT ASSERTS
 
 ISOLATION
 ---------
-Everything build.py writes through is a module-level path constant, so the
-sandbox below repoints all of them at a temp directory:
+Everything the build writes through is a module-level path constant in
+observatory.config, so the sandbox below repoints all of them at a temp
+directory:
 
-    build.CONTENT_DIR       fixture corpus, not content/
-    build.OUTPUT_DIR        temp dir, not the repo root
-    build.SITE_ROOT         nonexistent temp path, so no committed OG card is
+    config.CONTENT_DIR      fixture corpus, not content/
+    config.OUTPUT_DIR       temp dir, not the repo root
+    config.SITE_ROOT        nonexistent temp path, so no committed OG card is
                             found and no git history is consulted
-    build.FIRST_SEEN_PATH   temp file, not the committed scripts/first_seen.json
+    config.FIRST_SEEN_PATH  temp file, not the committed scripts/first_seen.json
     export_cli_data.OUT_PATHS  temp file + the sandbox output, not the
                             committed cli/data/sensors.json
     gen_og.generate         stubbed to its documented browser-absent result,
@@ -74,6 +75,7 @@ sys.path.insert(0, str(REPO_ROOT / "scripts"))
 import build            # noqa: E402
 import export_cli_data  # noqa: E402
 import gen_og           # noqa: E402
+from observatory import config, dates  # noqa: E402
 
 FIXTURE_CONTENT = REPO_ROOT / "tests" / "fixtures" / "content"
 GOLDEN_DIR = REPO_ROOT / "tests" / "golden"
@@ -101,7 +103,8 @@ GUARDED_DIRS = ("og/cards", "sensors", "catalog", "families", "atlas", "md")
 
 class Sandbox:
     """A build of `content_dir` into a throwaway tree, with every module-level
-    path in build.py / export_cli_data.py / gen_og.py repointed at it."""
+    path in observatory.config / export_cli_data.py / gen_og.py repointed at
+    it."""
 
     def __init__(self, content_dir=FIXTURE_CONTENT):
         self.content_dir = Path(content_dir)
@@ -116,27 +119,27 @@ class Sandbox:
         (self.tmp / "cli" / "data").mkdir(parents=True)
 
         self._saved = {
-            (build, "CONTENT_DIR"): build.CONTENT_DIR,
-            (build, "OUTPUT_DIR"): build.OUTPUT_DIR,
-            (build, "SITE_ROOT"): build.SITE_ROOT,
-            (build, "FIRST_SEEN_PATH"): build.FIRST_SEEN_PATH,
-            (build, "_git_first_seen"): build._git_first_seen,
+            (config, "CONTENT_DIR"): config.CONTENT_DIR,
+            (config, "OUTPUT_DIR"): config.OUTPUT_DIR,
+            (config, "SITE_ROOT"): config.SITE_ROOT,
+            (config, "FIRST_SEEN_PATH"): config.FIRST_SEEN_PATH,
+            (dates, "_git_first_seen"): dates._git_first_seen,
             (export_cli_data, "OUT_PATHS"): export_cli_data.OUT_PATHS,
             (gen_og, "generate"): gen_og.generate,
             (gen_og, "OG_DIR"): gen_og.OG_DIR,
             (gen_og, "MANIFEST_PATH"): gen_og.MANIFEST_PATH,
         }
 
-        build.CONTENT_DIR = self.content_dir
-        build.OUTPUT_DIR = self.out
+        config.CONTENT_DIR = self.content_dir
+        config.OUTPUT_DIR = self.out
         # Nonexistent on purpose: sensor_og_image() then finds no committed
         # card, so og:image is the site-wide fallback and the snapshot does not
         # depend on which PNGs happen to be checked in.
-        build.SITE_ROOT = self.tmp / "no-such-repo"
-        build.FIRST_SEEN_PATH = self.tmp / "first_seen.json"
+        config.SITE_ROOT = self.tmp / "no-such-repo"
+        config.FIRST_SEEN_PATH = self.tmp / "first_seen.json"
         # A fixture corpus has no git history; asking the real repo for one
         # would make the golden output a function of the checkout.
-        build._git_first_seen = lambda: {}
+        dates._git_first_seen = lambda: {}
 
         # The CLI copy goes to the sandbox (it is committed in the real repo);
         # the web copy lands in the snapshotted tree, where it belongs.

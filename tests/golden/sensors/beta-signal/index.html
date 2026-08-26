@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
   <title>Beta Signal — Software Observatory</title>
   <meta name="description" content="Beta Signal is the fixture entry that carries a fenced code block and a table, because both go through the markdown extensions (fenced_code, tables, smarty)…">
   <link rel="canonical" href="https://softwareobservatory.com/sensors/beta-signal/">
@@ -72,7 +77,47 @@
         "name": "Behavioral",
         "url": "https://softwareobservatory.com/families/behavioral/"
       },
-      "keywords": "Behavioral"
+      "keywords": "Behavioral",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "https://softwareobservatory.com/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "value": "medium",
+          "description": "a failure is real, a pass proves only that this case passed"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "https://softwareobservatory.com/framework/#independence",
+          "name": "Independence",
+          "value": "low",
+          "description": "the same person writes the code and the check"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "https://softwareobservatory.com/framework/#scope",
+          "name": "Scope",
+          "value": "function"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "https://softwareobservatory.com/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "value": "minutes"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "https://softwareobservatory.com/framework/#actionability",
+          "name": "Actionability",
+          "value": "guiding"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "https://softwareobservatory.com/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "value": "predictive"
+        }
+      ]
     },
     {
       "@type": "BreadcrumbList",
