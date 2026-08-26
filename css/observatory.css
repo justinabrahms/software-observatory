@@ -30,6 +30,11 @@
   --font-mono:   "JetBrains Mono", "SF Mono", "Fira Code", monospace;
   --max-width:   1200px;
   --reading:     680px;
+  /* Left edge of a --reading column, so it lines up with a --max-width
+     .page-header instead of centring itself independently. Both boxes are
+     border-box with 2rem padding, so matching the margin matches the text
+     edge. Clamped at 0: below --max-width the header is not centred either. */
+  --reading-indent: max(0px, calc((100% - var(--max-width)) / 2));
 
   /* Categorical palette for the sensor families (scatter, future maps).
      Hues spaced around the wheel, tuned to read on the dark background. */
@@ -356,12 +361,15 @@ a.wikilink:hover {
    the opening tapers to nothing at the crown; the tube's mouth is a circle
    seen at an angle, so it projects as an ellipse. Nothing here is a rounded
    rectangle, which is why it reads as a building. */
+/* aspect-ratio tracks the viewBox on .hero-instruments, which is cropped to
+   the drawing's ink box. A square box here (the artwork is 400x336) padded
+   the domes with ~22% dead height and read as an undersized illustration. */
 .hero-visual {
   position: relative;
   width: 100%;
-  aspect-ratio: 1;
-  max-width: 360px;
-  margin-left: auto;
+  aspect-ratio: 400 / 336;
+  max-width: 440px;
+  margin-inline: auto;
 }
 .hero-instruments { width: 100%; height: 100%; }
 
@@ -1044,7 +1052,7 @@ h3:hover .heading-anchor,
 /* ── About page ────────────────────────────────────────────────────────── */
 .about-content {
   max-width: var(--reading);
-  margin: 0 auto;
+  margin-inline: var(--reading-indent) auto;
   padding: 3rem 2rem 5rem;
 }
 .about-content h2 {
@@ -1735,6 +1743,33 @@ a.wikilink:hover {
 }
 
 /* ── Catalog: family sections ───────────────────────────────────────────── */
+/* Jump index above the family sections. Distinct from .filter-list in the
+   sidebar, which filters in place; these link out to the family pages. */
+.family-index { margin-bottom: 3rem; }
+.family-index-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: .5rem 2.5rem;
+}
+.family-index-list li {
+  display: flex;
+  align-items: baseline;
+  gap: .5rem;
+  padding: .35rem 0;
+  font-size: .95rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+.family-index-list a { flex: none; }
+.family-index-list .count {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  color: var(--text-dim);
+  opacity: .75;
+}
+
 .catalog-content {
   min-width: 0;
 }
@@ -1859,7 +1894,7 @@ a.wikilink:hover {
 /* ── Framework page ─────────────────────────────────────────────────────── */
 .framework-content {
   max-width: var(--reading);
-  margin: 0 auto;
+  margin-inline: var(--reading-indent) auto;
   padding: 2rem 2rem 5rem;
 }
 .framework-intro {

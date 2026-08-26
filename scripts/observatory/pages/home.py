@@ -192,7 +192,7 @@ def generate_index_page(sensors, output_dir):
         </div>
       </div>
       <div class="hero-visual" aria-hidden="true">
-        <svg viewBox="0 0 400 400" class="hero-instruments">
+        <svg viewBox="0 24 400 336" class="hero-instruments">
           <g class="stars">
             <circle cx="52" cy="70" r="1.4"/>
             <circle cx="118" cy="128" r="1.1" class="twinkle"/>
