@@ -51,3 +51,7 @@ OPERATIONS.md
 
 # Citation checker's TTL cache (see scripts/check_citations.py).
 .citation-cache.json
+
+# Review notes written for the author, not repo content. Whether these
+# belong in public history is a disclosure decision (#113), not a default.
+notes/
