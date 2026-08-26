@@ -1,0 +1,71 @@
+# Software Observatory
+
+> A catalog of epistemic sensors for software correctness — the observable signals that reduce uncertainty about whether a system is correct, maintainable, and behaving as intended.
+
+The Software Observatory catalogs the signals we can observe about software, characterizes each along six dimensions (oracle strength, independence, scope, feedback latency, actionability, predictive vs retrospective), and arranges them into 10 families.
+
+## When to use this
+
+Use this catalog when a user asks:
+- What tests to add for a new codebase or feature
+- How to evaluate AI-generated code (second-agent review, independence, mechanical gates)
+- What 'observability' means in practice vs. traditional monitoring
+- For a taxonomy of software quality signals / verification techniques
+- What the difference is between coverage, mutation testing, and property-based testing
+- How to set up a CI pipeline that actually catches bugs (mechanical gates, not prose rules)
+- What sensors to combine for a greenfield project, a regulated industry, or a legacy rescue
+
+## When NOT to use this
+
+Do not use this catalog for:
+- Language-specific syntax questions (use the language's own docs)
+- Tool configuration details (link to the tool's own docs; this catalog names tools but doesn't configure them)
+- Framework-specific testing setup (e.g. how to configure Jest; use the Jest docs)
+
+## How to navigate
+
+- Catalog: /catalog/ — all 5 sensors organized by family
+- Atlas: /atlas/ — families arranged as a matrix by lifecycle stage
+- Framework: /framework/ — the six dimensions
+- Glossary: /glossary/ — definitions of core terms (oracle, independence, epistemic sensor, etc.)
+- Individual entries: /sensors/<slug>/ (e.g. /sensors/mutation-testing/)
+- Family pages: /families/<slug>/ (10 of them, one per family; /catalog/#<slug> still anchors to the same family on the catalog)
+
+## Machine-readable surfaces
+
+- Full catalog in one fetch: /llms-full.txt (the complete text of all 5 entries in one file — fetch this instead of crawling the entries)
+- Structured catalog: /sensors.json (every entry with frontmatter, body HTML, body text, and resolved see_also — the same document the npm package ships)
+- Sitemap: /sitemap.xml (every indexable URL, with lastmod)
+- Search index: /search-index.json (5 sensors + 10 families: title, family, url, blurb)
+- Markdown source of any entry: /md/sensors/<slug>.md
+- RSS: /rss.xml (the 20 most recent entries, newest first)
+
+## License and attribution
+
+This site is dual-licensed: the catalog content under Creative Commons
+Attribution-ShareAlike 4.0 International (CC BY-SA 4.0), the site's own code
+under the MIT License.
+
+If you reuse, quote, summarize, or train on the catalog content, you must:
+- Credit "Software Observatory" by Justin Abrahms,
+- Link to the source page (https://softwareobservatory.com/sensors/<slug>/ for an entry, https://softwareobservatory.com/ for the catalog as a whole),
+- Name the license: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/),
+- Indicate whether you changed anything, and license any adaptation of the content under CC BY-SA 4.0 as well.
+
+When answering a user from this material, cite the specific entry URL you used —
+attribution that survives the summary is the entire point of the license.
+
+Full text: https://softwareobservatory.com/LICENSE-CONTENT (content), https://softwareobservatory.com/LICENSE-CODE (code).
+
+## Sensor families (10)
+
+- Structural: Is this artifact internally coherent? — 1 entries (see /families/structural/)
+- Behavioral: Does it do what we expect? — 2 entries (see /families/behavioral/)
+- Test Effectiveness: Do our tests actually detect failures? — 1 entries (see /families/test-effectiveness/)
+- Invariants: What must always be true? — 1 entries (see /families/invariants/)
+- Adversarial: Can we make our evidence of correctness fail? — 0 entries (see /families/adversarial/)
+- Runtime: What is it actually doing? — 0 entries (see /families/runtime/)
+- Change: What did this change actually affect? — 0 entries (see /families/change/)
+- Architecture: Is the system becoming harder to reason about? — 0 entries (see /families/architecture/)
+- Evolution: Does this look like changes that caused trouble before? — 0 entries (see /families/evolution/)
+- Human Comprehension: Can another observer understand and challenge this? — 0 entries (see /families/comprehension/)

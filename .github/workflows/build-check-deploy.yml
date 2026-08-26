@@ -21,10 +21,12 @@ jobs:
   # Makefile targets rather than scripts directly so that `make check` locally
   # and CI cannot diverge — there is one definition of what each gate is.
   #
-  # Ordering: the content-only checks run BEFORE the build. A frontmatter or
-  # citation error is a property of the content, not of the generated site, and
-  # reporting it in 2 seconds beats reporting it after a full build. The link
-  # check necessarily runs after, since it reads the generated HTML.
+  # Ordering: the generator's own snapshot suite runs first (it is the fastest
+  # gate and the one that fails on a broken renderer), then the content-only
+  # checks, and only then the build. A frontmatter or citation error is a
+  # property of the content, not of the generated site, and reporting it in 2
+  # seconds beats reporting it after a full build. The link check necessarily
+  # runs after, since it reads the generated HTML.
   # ---------------------------------------------------------------------------
   check:
     runs-on: ubuntu-latest
@@ -40,6 +42,16 @@ jobs:
         run: |
           python -m venv .venv
           .venv/bin/pip install -r requirements.txt
+
+      # Golden-file snapshot tests for build.py, over a fixture corpus in
+      # tests/fixtures/. Runs first because it is the fastest gate in the job
+      # (~0.2s, no network, no browser) and because it is the one that fails on
+      # a broken renderer: validating real content against a generator whose
+      # own fixtures no longer render is wasted CI time. Also asserts the build
+      # is byte-for-byte deterministic (#91) and that each input gate fails
+      # before writing a file (#116).
+      - name: Test the site generator
+        run: make test
 
       # Also asserts that content, build.py and scripts/vocabulary.py still
       # agree on the reference-kind vocabulary. See check_vocabulary_drift().

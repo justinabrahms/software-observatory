@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Sitemap: https://softwareobservatory.com/sitemap.xml
+
+# Machine-readable surfaces (see /llms.txt for what they are for):
+# Agent index:      https://softwareobservatory.com/llms.txt
+# Full catalog:     https://softwareobservatory.com/llms-full.txt
+# Structured data:  https://softwareobservatory.com/sensors.json

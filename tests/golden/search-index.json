@@ -1,0 +1,117 @@
+[
+ {
+  "blurb": "Is this artifact internally coherent?",
+  "family": "Structural",
+  "kind": "family",
+  "title": "Structural",
+  "url": "/families/structural/"
+ },
+ {
+  "blurb": "Does it do what we expect?",
+  "family": "Behavioral",
+  "kind": "family",
+  "title": "Behavioral",
+  "url": "/families/behavioral/"
+ },
+ {
+  "blurb": "Do our tests actually detect failures?",
+  "family": "Test Effectiveness",
+  "kind": "family",
+  "title": "Test Effectiveness",
+  "url": "/families/test-effectiveness/"
+ },
+ {
+  "blurb": "What must always be true?",
+  "family": "Invariants",
+  "kind": "family",
+  "title": "Invariants",
+  "url": "/families/invariants/"
+ },
+ {
+  "blurb": "Can we make our evidence of correctness fail?",
+  "family": "Adversarial",
+  "kind": "family",
+  "title": "Adversarial",
+  "url": "/families/adversarial/"
+ },
+ {
+  "blurb": "What is it actually doing?",
+  "family": "Runtime",
+  "kind": "family",
+  "title": "Runtime",
+  "url": "/families/runtime/"
+ },
+ {
+  "blurb": "What did this change actually affect?",
+  "family": "Change",
+  "kind": "family",
+  "title": "Change",
+  "url": "/families/change/"
+ },
+ {
+  "blurb": "Is the system becoming harder to reason about?",
+  "family": "Architecture",
+  "kind": "family",
+  "title": "Architecture",
+  "url": "/families/architecture/"
+ },
+ {
+  "blurb": "Does this look like changes that caused trouble before?",
+  "family": "Evolution",
+  "kind": "family",
+  "title": "Evolution",
+  "url": "/families/evolution/"
+ },
+ {
+  "blurb": "Can another observer understand and challenge this?",
+  "family": "Human Comprehension",
+  "kind": "family",
+  "title": "Human Comprehension",
+  "url": "/families/comprehension/"
+ },
+ {
+  "blurb": "Alpha Probe is a fixture entry. It exists to exercise the reference renderer with one reference of every declared kind, so that a change to the Publications /\u2026",
+  "family": "Structural",
+  "keywords": "structural fixture only alpha probe",
+  "kind": "sensor",
+  "text": "absolute alone alpha already also anchor atlas bare before behavioral beta body bucketing carries catalog change checker class date declared deliberately depths diff entry every exercise exists family filename fix fixture flag form further golden human in-page kind last later leave left link links literal months nothing notices one particular probe publications rather raw reading reference relative renderer renders resolvable reviewed rewriter rewrites rewritten see sensor shape shapes shows sidebar signal silently site-absolute six slug so-t02 something stale tooling twelve url urls",
+  "title": "Alpha Probe",
+  "url": "/sensors/alpha-probe/"
+ },
+ {
+  "blurb": "Beta Signal is the fixture entry that carries a fenced code block and a table, because both go through the markdown extensions (fenced_code, tables, smarty)\u2026",
+  "family": "Behavioral",
+  "keywords": "behavioral beta signal",
+  "kind": "sensor",
+  "text": "absent ambiguous ampersands angle because behaviour beta block blurb bool brackets carries case code condition def em-dash entry escaping extensions extractor fail fence fenced first fixture here ignore inconclusive inside markdown note one ordinary paragraph pass present quotes return second signal smart smarty str survive table tables tag through truncate verdict",
+  "title": "Beta Signal",
+  "url": "/sensors/beta-signal/"
+ },
+ {
+  "blurb": "Delta is the escaping fixture. Its title, one reference title, one reference URL and one reference description all contain characters that must be\u2026",
+  "family": "Invariants",
+  "keywords": "invariants escaping & encoding delta escape",
+  "kind": "sensor",
+  "text": "block blocks characters close contain delta description digests element emits encoder entity-encoded entry escaping every exactly feed fixture heading html index inside json-ld literal llms machinery meta one otherwise page pointed reaches reference rss script search separate sequence surrounding them title txt url visible way",
+  "title": "Delta & </script><img src=x onerror=alert(1)>",
+  "url": "/sensors/delta-escape/"
+ },
+ {
+  "blurb": "A short opening paragraph, under the blurb limit, so the untruncated branch of the blurb extractor is exercised too.",
+  "family": "Test Effectiveness",
+  "keywords": "test effectiveness fixture only epsilon atlas",
+  "kind": "sensor",
+  "text": "alpha anchor atlas beta blurb branch categories collision corpus dates de-duplicator degenerate delta dependency differs discriminate epsilon exercised exists extractor families family fixture four gives graph grid heading heading-id homepage last levels limit notes one opening page pages paragraph probe rather real-ordering render resolve review reviewed second shares short signal something spans stack takes text true untruncated",
+  "title": "Epsilon Atlas Anchor",
+  "url": "/sensors/epsilon-atlas/"
+ },
+ {
+  "blurb": "Gamma Unreviewed deliberately carries no last_reviewed date, no see_also, no categories, no references, and none of the optional *_note fields.",
+  "family": "Behavioral",
+  "keywords": "gamma unreviewed",
+  "kind": "sensor",
+  "text": "absent also borrowing branch carries case categories convenient date deliberately entry every exercised fields fixture form gamma honest-provenance last least minimum-frontmatter nobody none note one optional optional-field page path rather re-read re-reviewed references render renderer reviewed see sensor since somewhere unreviewed written yet",
+  "title": "Gamma Unreviewed",
+  "url": "/sensors/gamma-unreviewed/"
+ }
+]

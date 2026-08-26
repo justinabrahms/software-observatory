@@ -24,14 +24,20 @@ Node CLI/MCP server in `cli/` (published to npm as `softwareobservatory`).
 - **Preview:** `python3 -m http.server` from the repo root, then open
   `http://localhost:8000`.
 - **Every gate: `make check`** — the one command to run before pushing.
-  It runs `check-frontmatter`, `check-citations`, `build`, `check-links`,
-  `cli-test` and `check-deploy`, in the order CI runs them, so green locally
-  means green in CI. Run this instead of remembering the individual scripts;
-  `scripts/check_frontmatter.py` gates every deploy and was mentioned in no
-  human-facing doc, which is how it broke CI unnoticed.
-- **Tests/lint:** `cli/test/smoke.mjs` covers the CLI (`make cli-test`). For
-  site *appearance* changes, verification = run the build and eyeball the
-  generated HTML; `make check` covers everything mechanical.
+  It runs `test`, `check-frontmatter`, `check-citations`, `build`,
+  `check-links`, `cli-test` and `check-deploy`, in the order CI runs them, so
+  green locally means green in CI. Run this instead of remembering the
+  individual scripts; `scripts/check_frontmatter.py` gates every deploy and was
+  mentioned in no human-facing doc, which is how it broke CI unnoticed.
+- **Tests/lint:** `make test` runs `scripts/test_build.py` — golden-file
+  snapshot tests over the fixture catalog in `tests/fixtures/content/`, plus a
+  byte-for-byte determinism assertion and gate tests that prove a bad
+  `family`/`see_also`/`stack_level` fails before any file is written. Stdlib
+  `unittest`, no pytest, ~0.2s, no network and no browser. `make cli-test`
+  covers the CLI (`cli/test/smoke.mjs`). After an *intentional* rendering
+  change, re-bless with `make test-update` and commit the `tests/golden/` diff
+  in the same commit — that diff is the review artifact. Do not eyeball the
+  generated HTML in place of reading it.
 
 Deps are pinned in the tracked `requirements.txt`; `.venv/` itself is
 gitignored. Recreate it with

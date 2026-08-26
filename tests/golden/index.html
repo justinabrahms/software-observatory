@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>Software Observatory</title>
+  <meta name="description" content="5 epistemic sensors for software correctness: the signals that tell you whether a system works, what each one can detect, and what it cannot.">
+  <link rel="canonical" href="https://softwareobservatory.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Software Observatory">
+  <meta property="og:description" content="5 epistemic sensors for software correctness: the signals that tell you whether a system works, what each one can detect, and what it cannot.">
+  <meta property="og:url" content="https://softwareobservatory.com/">
+  <meta property="og:image" content="https://softwareobservatory.com/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Software Observatory">
+  <meta name="twitter:description" content="5 epistemic sensors for software correctness: the signals that tell you whether a system works, what each one can detect, and what it cannot.">
+  <meta name="twitter:image" content="https://softwareobservatory.com/og.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="https://softwareobservatory.com/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://softwareobservatory.com/#website",
+      "name": "Software Observatory",
+      "url": "https://softwareobservatory.com",
+      "description": "A catalog of epistemic sensors for software correctness.",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "author": {
+        "@id": "https://softwareobservatory.com/#author"
+      },
+      "publisher": {
+        "@id": "https://softwareobservatory.com/#organization"
+      },
+      "hasPart": {
+        "@id": "https://softwareobservatory.com/catalog/#defined-term-set"
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://softwareobservatory.com/#organization",
+      "name": "Software Observatory",
+      "url": "https://softwareobservatory.com",
+      "logo": "https://softwareobservatory.com/og.png",
+      "founder": {
+        "@id": "https://softwareobservatory.com/#author"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://softwareobservatory.com/#author",
+      "name": "Justin Abrahms",
+      "url": "https://justin.abrah.ms",
+      "email": "mailto:justin@abrah.ms",
+      "sameAs": [
+        "https://github.com/justinabrahms",
+        "https://bsky.app/profile/justin.abrah.ms",
+        "https://www.linkedin.com/in/justinabrahms"
+      ]
+    }
+  ]
+}
+  </script>
+  <script data-goatcounter="https://stats.softwareobservatory.com/count"
+          async src="https://stats.softwareobservatory.com/count.js"></script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/>
+          <line x1="17" y1="24" x2="12" y2="28"/>
+          <line x1="17" y1="24" x2="22" y2="28"/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/catalog/">Catalog</a>
+      <a href="/atlas/">Atlas</a>
+      <a href="/framework/">Framework</a>
+      <a href="/glossary/">Glossary</a>
+      <a href="/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/catalog/">Browse the catalog</a> or <a href="/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+    <section class="hero">
+      <div class="hero-inner">
+        <p class="eyebrow">An industry resource</p>
+        <h1 class="hero-title">
+          What independent observations<br>
+          <em>would cause us to believe</em><br>
+          this software is correct?
+        </h1>
+        <p class="hero-lede">
+          Software is increasingly an opaque artifact. We cannot — and often
+          do not want to — fully understand every implementation. The Software
+          Observatory is a catalog of <a href="/catalog/" class="wikilink">epistemic sensors</a>:
+          the observable signals that reduce uncertainty about whether a system
+          is correct, maintainable, and behaving as intended. Not "code quality
+          metrics." Measurement instruments pointed at different failure modes.
+        </p>
+        <div class="hero-actions">
+          <a href="/catalog/" class="btn btn-primary">Browse the catalog →</a>
+          <a href="/atlas/" class="btn btn-ghost">Open the atlas</a>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <svg viewBox="0 0 400 400" class="hero-instruments">
+          <!-- the opaque artifact -->
+          <circle cx="200" cy="200" r="52" class="art-body" />
+          <circle cx="200" cy="200" r="52" class="art-rim" />
+          <!-- instruments: sight-lines at different depths -->
+          <!-- near, penetrating (static analysis) -->
+          <line x1="90" y1="90" x2="176" y2="176" class="sight deep" />
+          <circle cx="90" cy="90" r="5" class="instr" />
+          <!-- near, penetrating (types) -->
+          <line x1="310" y1="80" x2="230" y2="172" class="sight deep" />
+          <circle cx="310" cy="80" r="5" class="instr" />
+          <!-- mid, surface (tests) -->
+          <line x1="330" y1="230" x2="252" y2="212" class="sight mid" />
+          <circle cx="330" cy="230" r="5" class="instr" />
+          <!-- mid, surface (behavioral) -->
+          <line x1="70" y1="250" x2="148" y2="222" class="sight mid" />
+          <circle cx="70" cy="250" r="5" class="instr" />
+          <!-- far, glancing (production) -->
+          <line x1="250" y1="355" x2="222" y2="252" class="sight far" />
+          <circle cx="250" cy="355" r="5" class="instr far-instr" />
+          <!-- very far, glancing (user outcome) -->
+          <line x1="60" y1="40" x2="120" y2="120" class="sight farthest" stroke-dasharray="3 5" />
+          <circle cx="60" cy="40" r="4" class="instr far-instr" />
+          <line x1="360" y1="330" x2="290" y2="285" class="sight farthest" stroke-dasharray="3 5" />
+          <circle cx="360" cy="330" r="4" class="instr far-instr" />
+        </svg>
+      </div>
+    </section>
+
+    <section class="core-insight">
+      <blockquote class="big-quote">
+        <p>
+          <a href="/glossary/#no-single-sensor" class="wikilink">No single sensor measures correctness</a>. Coverage measures execution.
+          <a href="/sensors/mutation-testing/" class="wikilink">Mutation testing</a> measures
+          test sensitivity. <a href="/sensors/type-checker/" class="wikilink">Types</a> measure
+          a particular class of structural inconsistency.
+          <a href="/sensors/contract-tests/" class="wikilink">Contracts</a> measure boundary
+          assumptions. <a href="/sensors/observability-events/" class="wikilink">Observability</a>
+          measures what actually happened and preserves enough dimensionality
+          to investigate unknown unknowns.
+        </p>
+        <p>They are all measurement instruments pointed at different failure modes.</p>
+      </blockquote>
+    </section>
+
+    <section class="families-section">
+      <h2 class="section-heading" id="10-sensor-families">10 sensor families</h2>
+      <p class="section-lede">
+        The catalog is organized into 10 families, each asking a different
+        question about the system. Together, they form a mesh of independent
+        evidence — no single sensor is sufficient, but the combination
+        constrains uncertainty from multiple directions.
+      </p>
+      <div class="families-grid">
+        <a href="/families/structural/" class="family-card">
+          <span class="family-num">01</span>
+          <h3 class="family-name" id="structural">Structural</h3>
+          <p class="family-question">"Is this artifact internally coherent?"</p>
+          <p class="family-examples">Compiler, type checker, linter, formatter, schema validator</p>
+        </a>
+        <a href="/families/behavioral/" class="family-card">
+          <span class="family-num">02</span>
+          <h3 class="family-name" id="behavioral">Behavioral</h3>
+          <p class="family-question">"Does it do what we expect?"</p>
+          <p class="family-examples">Unit, integration, E2E, contract, snapshot tests</p>
+        </a>
+        <a href="/families/test-effectiveness/" class="family-card">
+          <span class="family-num">03</span>
+          <h3 class="family-name" id="test-effectiveness">Test Effectiveness</h3>
+          <p class="family-question">"Do our tests actually detect failures?"</p>
+          <p class="family-examples">Coverage, diff coverage, mutation testing</p>
+        </a>
+        <a href="/families/invariants/" class="family-card">
+          <span class="family-num">04</span>
+          <h3 class="family-name" id="invariants">Invariants</h3>
+          <p class="family-question">"What must always be true?"</p>
+          <p class="family-examples">Balance &gt;= 0, every FK valid, every request has one ID</p>
+        </a>
+        <a href="/families/adversarial/" class="family-card">
+          <span class="family-num">05</span>
+          <h3 class="family-name" id="adversarial">Adversarial</h3>
+          <p class="family-question">"Can we make our evidence of correctness fail?"</p>
+          <p class="family-examples">Fuzzing, fault injection, chaos, metamorphic testing</p>
+        </a>
+        <a href="/families/runtime/" class="family-card">
+          <span class="family-num">06</span>
+          <h3 class="family-name" id="runtime">Runtime</h3>
+          <p class="family-question">"What is it actually doing?"</p>
+          <p class="family-examples">Logs, traces, metrics, profiles, high-cardinality events</p>
+        </a>
+        <a href="/families/change/" class="family-card">
+          <span class="family-num">07</span>
+          <h3 class="family-name" id="change">Change</h3>
+          <p class="family-question">"What did this change actually affect?"</p>
+          <p class="family-examples">API compatibility, canary, shadow traffic, error budget, A/B testing</p>
+        </a>
+        <a href="/families/architecture/" class="family-card">
+          <span class="family-num">08</span>
+          <h3 class="family-name" id="architecture">Architecture</h3>
+          <p class="family-question">"Is the system becoming harder to reason about?"</p>
+          <p class="family-examples">Dependency graphs, coupling, fitness functions, hotspots</p>
+        </a>
+        <a href="/families/evolution/" class="family-card">
+          <span class="family-num">09</span>
+          <h3 class="family-name" id="evolution">Evolution</h3>
+          <p class="family-question">"Does this look like changes that caused trouble before?"</p>
+          <p class="family-examples">Revert rate, regression rate, churn, incident correlation</p>
+        </a>
+        <a href="/families/comprehension/" class="family-card">
+          <span class="family-num">10</span>
+          <h3 class="family-name" id="human-comprehension">Human Comprehension</h3>
+          <p class="family-question">"Can another observer understand and challenge this?"</p>
+          <p class="family-examples">Review, explainability tests, documentation drift, onboarding</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="stack-preview" id="confidence-stack">
+      <h2 class="section-heading" id="the-confidence-landscape">The confidence landscape</h2>
+      <p class="section-lede">
+        No single sensor is sufficient, so there is no total ordering across
+        sensors — no "best" sensor. But each <em>dimension</em> (oracle
+        strength, latency, scope) is a partial order, and the atlas's
+        left-to-right axis is <em>time</em>, not quality. Each one trades
+        <em>feedback latency</em> — how long you wait for the signal —
+        against <em>efficacy</em>: how much the signal can actually tell
+        you. Compilation is instant and definitive about validity; user
+        outcomes are slow and definitive about everything that matters. Most
+        sensors live somewhere in between.
+      </p>
+      <div class="scatter-toggle" role="group" aria-label="Scatter data">
+        <button type="button" class="scatter-toggle-btn active" data-scatter="layers">Layers</button>
+        <button type="button" class="scatter-toggle-btn" data-scatter="sensors">Sensors</button>
+      </div>
+      <div class="scatter-frame" data-scatter-mode="layers">
+        <div class="scatter-y-label">efficacy of the signal</div>
+        <div class="scatter-body">
+          <div class="scatter-y-ticks">
+            <span>definitive</span>
+            <span>suggestive</span>
+          </div>
+          <div class="scatter-plot">
+          <a href="/atlas/" class="scatter-point layer-point" style="left:94%;bottom:92%" data-label="User outcome">
+            <span class="scatter-dot"></span>
+            <span class="scatter-tag">User outcome</span>
+          </a>
+          <a href="/atlas/" class="scatter-point layer-point" style="left:82%;bottom:42%" data-label="Production behavior">
+            <span class="scatter-dot"></span>
+            <span class="scatter-tag">Production behavior</span>
+          </a>
+          <a href="/atlas/" class="scatter-point layer-point" style="left:66%;bottom:50%" data-label="Canary / shadow">
+            <span class="scatter-dot"></span>
+            <span class="scatter-tag">Canary / shadow</span>
+          </a>
+          <a href="/atlas/" class="scatter-point layer-point" style="left:56%;bottom:58%" data-label="Integration tests">
+            <span class="scatter-dot"></span>
+            <span class="scatter-tag">Integration tests</span>
+          </a>
+          <a href="/atlas/" class="scatter-point layer-point" style="left:32%;bottom:48%" data-label="Behavioral tests">
+            <span class="scatter-dot"></span>
+            <span class="scatter-tag">Behavioral tests</span>
+          </a>
+          <a href="/atlas/" class="scatter-point layer-point" style="left:42%;bottom:62%" data-label="Property / metamorphic">
+            <span class="scatter-dot"></span>
+            <span class="scatter-tag">Property / metamorphic</span>
+          </a>
+          <a href="/atlas/" class="scatter-point layer-point" style="left:46%;bottom:78%" data-label="Mutation testing">
+            <span class="scatter-dot"></span>
+            <span class="scatter-tag">Mutation testing</span>
+          </a>
+          <a href="/atlas/" class="scatter-point layer-point" style="left:14%;bottom:64%" data-label="Static analysis / types">
+            <span class="scatter-dot"></span>
+            <span class="scatter-tag">Static analysis / types</span>
+          </a>
+          <a href="/atlas/" class="scatter-point layer-point" style="left:4%;bottom:82%" data-label="Compilation">
+            <span class="scatter-dot"></span>
+            <span class="scatter-tag">Compilation</span>
+          </a>
+          <a href="/sensors/alpha-probe/" class="scatter-point sensor-point fam-structural" style="left:20.0%;bottom:72.0%" data-label="Alpha Probe" data-family="Structural">
+            <span class="scatter-dot" aria-hidden="true">■</span>
+            <span class="scatter-tag">Alpha Probe</span>
+          </a>
+          <a href="/sensors/beta-signal/" class="scatter-point sensor-point fam-behavioral" style="left:42.0%;bottom:50.0%" data-label="Beta Signal" data-family="Behavioral">
+            <span class="scatter-dot" aria-hidden="true">●</span>
+            <span class="scatter-tag">Beta Signal</span>
+          </a>
+          <a href="/sensors/delta-escape/" class="scatter-point sensor-point fam-invariants" style="left:6.0%;bottom:92.0%" data-label="Delta &amp; &lt;/script&gt;&lt;img src=x onerror=alert(1)&gt;" data-family="Invariants">
+            <span class="scatter-dot" aria-hidden="true">◆</span>
+            <span class="scatter-tag">Delta &amp; &lt;/script&gt;&lt;img src=x onerror=alert(1)&gt;</span>
+          </a>
+          <a href="/sensors/epsilon-atlas/" class="scatter-point sensor-point fam-test-effectiveness" style="left:90.0%;bottom:14.0%" data-label="Epsilon Atlas Anchor" data-family="Test Effectiveness">
+            <span class="scatter-dot" aria-hidden="true">▲</span>
+            <span class="scatter-tag">Epsilon Atlas Anchor</span>
+          </a>
+          <a href="/sensors/gamma-unreviewed/" class="scatter-point sensor-point fam-behavioral" style="left:62.0%;bottom:30.0%" data-label="Gamma Unreviewed" data-family="Behavioral">
+            <span class="scatter-dot" aria-hidden="true">●</span>
+            <span class="scatter-tag">Gamma Unreviewed</span>
+          </a>
+          </div>
+        </div>
+        <div class="scatter-x-axis">
+          <span>instant</span>
+          <span>feedback latency →</span>
+          <span>slow</span>
+        </div>
+        <p class="scatter-hint">Hover a point to name it. Click to open the entry.</p>
+        <div class="scatter-legend">
+          <span class="legend-key"><span class="legend-dot fam-structural" aria-hidden="true">■</span>Structural</span>
+          <span class="legend-key"><span class="legend-dot fam-behavioral" aria-hidden="true">●</span>Behavioral</span>
+          <span class="legend-key"><span class="legend-dot fam-test-effectiveness" aria-hidden="true">▲</span>Test Effectiveness</span>
+          <span class="legend-key"><span class="legend-dot fam-invariants" aria-hidden="true">◆</span>Invariants</span>
+          <span class="legend-key"><span class="legend-dot fam-adversarial" aria-hidden="true">✖</span>Adversarial</span>
+          <span class="legend-key"><span class="legend-dot fam-runtime" aria-hidden="true">○</span>Runtime</span>
+          <span class="legend-key"><span class="legend-dot fam-change" aria-hidden="true">→</span>Change</span>
+          <span class="legend-key"><span class="legend-dot fam-architecture" aria-hidden="true">▣</span>Architecture</span>
+          <span class="legend-key"><span class="legend-dot fam-evolution" aria-hidden="true">⟳</span>Evolution</span>
+          <span class="legend-key"><span class="legend-dot fam-comprehension" aria-hidden="true">✔</span>Human Comprehension</span>
+        </div>
+      </div>
+      <details class="sr-only">
+        <summary>Sensor list (latency × efficacy)</summary>
+        <table>
+          <thead><tr><th>Sensor</th><th>Family</th><th>Feedback latency</th><th>Efficacy (oracle)</th></tr></thead>
+          <tbody>
+          <tr><td><a href="/sensors/alpha-probe/">Alpha Probe</a></td><td>Structural</td><td>seconds</td><td>high</td></tr>
+          <tr><td><a href="/sensors/beta-signal/">Beta Signal</a></td><td>Behavioral</td><td>minutes</td><td>medium</td></tr>
+          <tr><td><a href="/sensors/delta-escape/">Delta &amp; &lt;/script&gt;&lt;img src=x onerror=alert(1)&gt;</a></td><td>Invariants</td><td>milliseconds</td><td>maximum</td></tr>
+          <tr><td><a href="/sensors/epsilon-atlas/">Epsilon Atlas Anchor</a></td><td>Test Effectiveness</td><td>weeks</td><td>minimum</td></tr>
+          <tr><td><a href="/sensors/gamma-unreviewed/">Gamma Unreviewed</a></td><td>Behavioral</td><td>hours</td><td>low</td></tr>
+
+          </tbody>
+        </table>
+      </details>
+      <div class="stack-cta">
+        <a href="/atlas/" class="btn btn-ghost">Open the atlas →</a>
+      </div>
+    </section>
+
+    <section class="featured-signal">
+      <div class="featured-meta">
+        <span class="tag tag-family">Structural</span>
+        <span class="tag tag-confidence">High oracle strength</span>
+      </div>
+      <h2 class="featured-title" id="alpha-probe"><a href="/sensors/alpha-probe/" class="wikilink" style="border-bottom:none">Alpha Probe</a></h2>
+      <p class="featured-blurb">
+        Take <code>if user.is_admin: allow()</code> and mutate it to
+        <code>if not user.is_admin: allow()</code>. If all your tests still
+        pass, your tests did not actually establish the behavior you thought
+        you established. Mutation testing is a sensor of test
+        <em>sensitivity</em> rather than test <em>presence</em>.
+      </p>
+      <div class="featured-cta">
+        <a href="/sensors/alpha-probe/">Read the full entry →</a>
+      </div>
+    </section>
+
+    <section class="recent">
+      <h2 class="section-heading" id="recently-reviewed">Recently reviewed</h2>
+      <ul class="entry-list">
+        <li class="entry">
+          <span class="entry-family">Test Effectiveness</span>
+          <a href="/sensors/epsilon-atlas/" class="entry-title wikilink">Epsilon Atlas Anchor</a>
+          <span class="entry-reviewed">reviewed 2026-03</span>
+          <span class="entry-blurb">A short opening paragraph, under the blurb limit, so the untruncated branch of the blurb extractor is exercised too.</span>
+        </li>
+        <li class="entry">
+          <span class="entry-family">Behavioral</span>
+          <a href="/sensors/beta-signal/" class="entry-title wikilink">Beta Signal</a>
+          <span class="entry-reviewed">reviewed 2026-03</span>
+          <span class="entry-blurb">Beta Signal is the fixture entry that carries a fenced code block and a table, because both go through the markdown extensions…</span>
+        </li>
+        <li class="entry">
+          <span class="entry-family">Invariants</span>
+          <a href="/sensors/delta-escape/" class="entry-title wikilink">Delta &amp; &lt;/script&gt;&lt;img src=x onerror=alert(1)&gt;</a>
+          <span class="entry-reviewed">reviewed 2026-02</span>
+          <span class="entry-blurb">Delta is the escaping fixture. Its title, one reference title, one reference URL and one reference description all contain characters that…</span>
+        </li>
+        <li class="entry">
+          <span class="entry-family">Structural</span>
+          <a href="/sensors/alpha-probe/" class="entry-title wikilink">Alpha Probe</a>
+          <span class="entry-reviewed">reviewed 2025-01</span>
+          <span class="entry-blurb">Alpha Probe is a fixture entry. It exists to exercise the reference renderer with one reference of every declared kind, so that a change to…</span>
+        </li>
+      </ul>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/about/">About</a> · <a href="/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/js/main.js"></script>
+</body>
+</html>
