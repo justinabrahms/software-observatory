@@ -20,6 +20,7 @@ categories:
 see_also:
 - SO-005b
 - SO-003
+- SO-005e
 - adversarial
 last_reviewed: '2026-08-24'
 references:
@@ -161,4 +162,4 @@ When the fuzzer finds a crash:
 Fuzzing with a crash oracle cannot detect *wrong but non-crashing* behavior.
 A function that returns the wrong answer without crashing will pass a fuzzer.
 For correctness properties, pair fuzzing with [property-based
-testing](metamorphic-testing.html) or [mutation testing](mutation-testing.html).
+testing](property-based-testing.html) or [mutation testing](mutation-testing.html).

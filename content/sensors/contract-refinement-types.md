@@ -20,6 +20,7 @@ see_also:
 - SO-001d
 - SO-002
 - SO-005
+- SO-017
 - structural
 last_reviewed: '2026-08-24'
 references:
@@ -39,6 +40,9 @@ references:
   url: https://dafny.org
   kind: tool
   description: Verification-aware programming language
+- title: Dafny user guide, verification debugging
+  url: https://dafny.org/latest/DafnyRef/DafnyRef#sec-counterexamples
+  kind: other
 - title: Frama-C
   kind: tool
   url: https://frama-c.com
@@ -81,17 +85,22 @@ each: the implementation violates its own contract, the contract is
 wrong, or the prover needs an intermediate lemma to connect the two.
 The message alone does not say which. Unlike a test failure, though,
 the verdict is deterministic: a contract that fails today fails on
-every machine, and a proof that discharges never flakes. The counter-
-examples some checkers print are worth keeping; they are the minimal
-inputs that break the claim.
+every machine, and a proof that discharges never flakes. What the
+message will not hand you is a failing input. Dafny can extract one
+from the solver with `--extract-counterexample`, and says in the same
+breath that it "cannot guarantee that the counterexample it reports
+provably violates the assertion", and that the output "should be
+inspected manually and treated as a hint". A solver model is not a
+minimal input and is not always a reachable one.
 
 ## Response playbook
 
 When a contract fails to discharge:
 
-1. **Reproduce with the smallest failing input.** If the checker
-   emits a counter-example, run it; if not, derive one from the
-   failed obligation.
+1. **Try to reproduce with a concrete input.** If the checker will
+   extract a counter-example, run it before believing it — the model
+   is a hint, not a witness. If it will not, derive a candidate from
+   the failed obligation by hand.
 2. **Decide whether the implementation or the contract is wrong.**
    A failed proof is a genuine disagreement between two claims the
    author made, and one of them must be retracted.

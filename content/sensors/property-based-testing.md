@@ -21,6 +21,7 @@ see_also:
 - SO-005
 - SO-005b
 - SO-003
+- SO-002b
 - adversarial
 last_reviewed: '2026-08-24'
 references:
@@ -63,26 +64,43 @@ property-based testing searches the space of cases you didn't.
 
 ## Properties vs examples
 
-A property is a universal statement:
+A property is a universal statement. Here it is stated against a
+`my_sort` that orders numbers lexicographically — `sorted(xs, key=str)`,
+a bug that hides behind any example whose inputs are non-negative single
+digits:
 
 ```python
 @given(st.lists(st.integers()))
-def test_sort_idempotent(xs):
-    assert sort(xs) == sort(sort(xs))
+def test_sort_is_ordered(xs):
+    ys = my_sort(xs)
+    assert ys == sorted(ys)
 ```
 
-A failing run is a counterexample, shrunk to the smallest input that
-still breaks it:
+The reading is one falsifying input, already shrunk. Hypothesis runs the
+property until it fails, reduces the failure, and reports only the
+reduced case — never the input that first broke it:
 
 ```
-Falsifying example: test_sort_idempotent(xs=[1, 0])
-Shrunk to: xs=[1, 0]
-assert sort([1, 0]) == sort(sort([1, 0]))
-AssertionError: [0, 1] != [1, 0]
+xs = [-1, -2]
+
+    @given(st.lists(st.integers()))
+    def test_sort_is_ordered(xs):
+        ys = my_sort(xs)
+>       assert ys == sorted(ys)
+E       assert [-1, -2] == [-2, -1]
+E         At index 0 diff: -1 != -2
+E         Use -v to get more diff
+E       Failing test case: test_sort_is_ordered(
+E           xs=[-1, -2],
+E       )
 ```
 
-The shrink is the actionable part — it turns a random failure into a
-case you can verify by hand in seconds.
+Two elements and a minus sign, verifiable by hand in seconds: that
+reduction is the actionable part of the sensor, and it is invisible in
+the output: the larger inputs that also failed are never printed. (The
+banner is version-dependent — Hypothesis 6 prints
+`Failing test case:` where older releases printed `Falsifying
+example:` — so grep for the parameter line, not the banner.)
 
 ## How it differs from metamorphic testing
 

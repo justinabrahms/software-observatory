@@ -21,6 +21,7 @@ see_also:
 - SO-007c
 - SO-007d
 - SO-005c
+- SO-007e
 last_reviewed: '2026-08-24'
 references:
 - title: Exploring Statistical Change Point Detection Techniques for Performance Anomaly Detection at Mozilla

@@ -20,6 +20,7 @@ categories:
 see_also:
 - SO-005
 - SO-003
+- SO-005e
 - adversarial
 - invariants
 last_reviewed: '2026-08-24'
@@ -85,19 +86,24 @@ and you've found a bug without ever needing to compute the correct answer.
 
 ## In practice
 
-A reading is a relation violation, shrunk to the smallest input that
-breaks it:
+A reading is a relation violation, already reduced. The relation below
+is order-independence — sorting a list and sorting its reverse must
+agree, which is checkable without knowing what the sorted answer is —
+run against a `my_sort` that makes one bubble pass instead of a full
+sort:
 
 ```
-______________ test_sort_is_idempotent ______________
+xs = [0, 0, -1]
 
-Falsifying example:
-    x = [2, 1, 3]
-
-assert sort(sort(x)) == sort(x)
-AssertionError: [1, 2, 3] != [1, 3, 2]
-
-Shrunk to minimal failing input: x = [2, 1]
+    @given(st.lists(st.integers()))
+    def test_sort_is_order_independent(xs):
+>       assert my_sort(xs) == my_sort(list(reversed(xs)))
+E       assert [0, -1, 0] == [-1, 0, 0]
+E         At index 0 diff: 0 != -1
+E         Use -v to get more diff
+E       Failing test case: test_sort_is_order_independent(
+E           xs=[0, 0, -1],
+E       )
 ```
 
 Reading it well:
@@ -106,9 +112,11 @@ Reading it well:
    relation broke (idempotence, round-trip, commutativity), which
    tells you what kind of bug to look for before you look at the
    code.
-2. **Work from the shrunk example.** The original random input is
-   noise; the minimized case is the one you can verify by hand in
-   seconds. If you cannot hand-check it, shrink further.
+2. **The printed case is already the shrunk one.** Hypothesis reports
+   the reduced input and nothing else; the larger inputs that also
+   failed never reach the console. If the printed case is still too
+   big to hand-check, the shrinker was blocked — usually by an
+   `assume` filter or a test that is not deterministic.
 3. **A relation that never fails deserves a glance.** It may be a
    strong invariant, or it may be vacuous. Check that it would have
    fired on a known-bad version of the code.

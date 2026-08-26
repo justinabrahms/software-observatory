@@ -19,6 +19,8 @@ categories:
 - Adversarial
 see_also:
 - SO-003b
+- SO-005e
+- SO-012d
 - behavioral
 - SO-005
 - SO-005b

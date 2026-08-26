@@ -20,6 +20,7 @@ categories:
 - Production Sensors
 see_also:
 - SO-004
+- SO-006b
 - change
 - evolution
 - comprehension
