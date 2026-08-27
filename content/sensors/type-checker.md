@@ -23,7 +23,7 @@ see_also:
 - SO-001b
 - SO-004
 - atlas
-last_reviewed: '2026-08-24'
+last_reviewed: '2026-08-28'
 references:
 - title: 'To Type or Not to Type: Quantifying Detectable Bugs in JavaScript'
   year: 2017
@@ -85,6 +85,11 @@ artifact. This makes them the baseline of the [confidence stack](atlas.html).
 > found Foo` doesn't just say "bad" — it says "you have an `Option` where you
 > need a bare `Foo`, probably unwrap it or change the return type." That's
 > actionability.
+>
+> Pointed at an LLM, the mechanism has a name: positive prompt injection.
+> The diagnostic lands in the model's context and steers the next edit —
+> and because the compiler wrote it, the steer is one you wanted. A
+> checker whose errors only say "bad" throws that channel away.
 
 ## In practice
 

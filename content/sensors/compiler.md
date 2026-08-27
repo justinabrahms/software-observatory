@@ -21,7 +21,7 @@ see_also:
 - SO-001
 - SO-001c
 - SO-001d
-last_reviewed: '2026-08-24'
+last_reviewed: '2026-08-28'
 references:
 - title: 'Aho et al., ''Compilers: Principles, Techniques, and Tools'''
   kind: other
@@ -43,8 +43,8 @@ references:
   description: TypeScript compiler with type checking
 ---
 
-The cheapest and most certain sensor. Is this thing even a valid inhabitant
-of the language? If not, everything else is noise.
+Does this code compile? The cheapest and most certain sensor in the
+catalog.
 
 A compiler doesn't just check syntax — it resolves imports, validates
 module structure, and produces an artifact. If the compiler fails, no

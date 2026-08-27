@@ -25,7 +25,7 @@ see_also:
 - SO-001e
 - SO-017
 - structural
-last_reviewed: '2026-08-24'
+last_reviewed: '2026-08-28'
 references:
 - title: 'How Amazon Web Services Uses Formal Methods'
   year: 2015
@@ -165,12 +165,15 @@ The checker cannot be gamed, but the model can be degraded:
   counter-examples — no crashes, no retries, no clock skew — and the
   checker passes because it is exploring a simpler world than the one
   that ships.
-- **Over-abstract the state.** Collapse the state space until the
-  safety properties hold vacuously: a model with one reachable state
-  has no bad state left to reach. Liveness does not collapse the same
-  way — a single state that stutters forever falsifies `[]<>P` — so an
-  over-abstracted model tends to go green on safety and red on
-  progress. That asymmetry is the tell.
+- **Over-abstract the state.** Collapse the state space until there is
+  nothing bad left to reach. Properties of the form *this must never
+  happen* pass trivially against a model with one reachable state: no
+  bad state exists to reach. Properties of the other form — *this must
+  eventually happen*, the queue drains, the lock is released — do not
+  collapse the same way, because a model that sits in one state forever
+  never gets there either. So an over-abstracted model tends to go green
+  on every must-never check and red on the must-eventually ones. That
+  split is the tell.
 - **Check the happy path only.** Initialize the model with the inputs
   the author expected, not the inputs the system can receive.
 - **Verification off the merge path.** A model-checking job that runs

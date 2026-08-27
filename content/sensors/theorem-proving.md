@@ -24,7 +24,7 @@ see_also:
 - SO-016
 - SO-001
 - structural
-last_reviewed: '2026-08-24'
+last_reviewed: '2026-08-28'
 references:
 - title: 'seL4: Formal Verification of an OS Kernel'
   year: 2009
@@ -84,19 +84,43 @@ prover; the machine is the auditor.
 
 ## In practice
 
-A reading is a proof state — the goal the checker cannot close, with the
-context the human left it in:
+You do not hand a proof assistant a finished proof. You steer it a step at
+a time, and after each step it prints where you have got to: the thing still
+to be proved, and the facts you are allowed to use in proving it. That
+display is the reading.
 
 ```
 1 subgoal
-H : n <= m
-IHn : forall k, k <= n -> k + 1 <= m + 1
-====================================
-n + 1 <= m + 1
+a : nat
+l : list nat
+IHl : rev (rev l) = l
+============================
+rev (rev l ++ [a]) = a :: l
 ```
 
-The `====================================` is the obligation the checker cannot
-discharge from the hypotheses above it. Unlike a test failure, the verdict
+Below the line is the goal — what is still unproved. Above it is everything
+currently known.
+
+The notation is ML-family, and four pieces carry it:
+
+- `rev l` — the list `l`, reversed.
+- `l ++ k` — the lists `l` and `k` joined end to end.
+- `[a]` — the one-element list containing just `a`.
+- `a :: l` — the list `l` with `a` added to the front.
+
+So the hypotheses say: `a` is a number, `l` is a list of numbers, and `IHl`
+— the induction hypothesis — that reversing `l` twice already gives back
+`l`. And the goal says: *reversing (`l` reversed, with `a` on the end)
+should give `l` with `a` on the front.*
+
+That is the standard proof that reversing a list twice returns the
+original, stopped where it always stops. The known fact is about
+`rev (rev l)`. The goal is about `rev` applied to a list with something
+appended to its **end** — a shape nothing above the line mentions — so
+there is no way to get from one to the other. The human has to see that
+gap, break off, and prove the missing fact about appending separately.
+
+Unlike a test failure, the verdict
 is not "this case broke" but "this step of the argument is missing." The
 fix is almost always a lemma the human forgot to state, or an induction
 hypothesis applied at the wrong type. The checker is never wrong about

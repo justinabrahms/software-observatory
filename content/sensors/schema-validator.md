@@ -20,7 +20,7 @@ see_also:
 - SO-001
 - SO-001c
 - SO-002
-last_reviewed: '2026-08-24'
+last_reviewed: '2026-08-28'
 references:
 - title: 'Detecting Data Errors: Where are we and what needs to be done?'
   year: 2016

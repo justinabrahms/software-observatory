@@ -19,7 +19,7 @@ see_also:
 - SO-001
 - SO-001b
 - SO-001d
-last_reviewed: '2026-08-24'
+last_reviewed: '2026-08-28'
 references:
 - title: 'Gang of Eight: A Defect Taxonomy for Infrastructure as Code Scripts'
   year: 2020
@@ -74,10 +74,14 @@ Linter authority is a budget, and it can be spent:
   rule per fight until the linter agrees with everything. The linter still
   "passes" while detecting less.
 - **Style-only drift.** If every enabled rule is stylistic, the linter
-  becomes a formatting tax with no correctness value, which trains people
-  to ignore it. The fix is the opposite of loosening: promote rules that
-  catch real bug classes (unreachable code, unused results, suspicious
-  comparisons) and demote the purely cosmetic ones.
+  becomes a formatting tax with no correctness value, and people learn to
+  ignore the whole tool — including the rules that were worth reading.
+  The answer is not to loosen it. Formatting should not be in the linter
+  at all: hand it to an autoformatter that rewrites the file without
+  asking, so nobody spends attention on it, and keep the linter for rules
+  that catch real bug classes — unreachable code, unused results,
+  suspicious comparisons. A linter arguing about brace placement is
+  occupying a slot a tool would have silently fixed.
 
 The meta-signal is the suppression count. Track it like a metric, not a
 lint error.

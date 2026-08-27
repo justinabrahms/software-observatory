@@ -22,7 +22,7 @@ see_also:
 - SO-005
 - SO-017
 - structural
-last_reviewed: '2026-08-24'
+last_reviewed: '2026-08-28'
 references:
 - title: How Amazon Web Services Uses Formal Methods
   year: 2015

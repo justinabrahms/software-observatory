@@ -21,7 +21,7 @@ see_also:
 - SO-001c
 - SO-001d
 - SO-014
-last_reviewed: '2026-08-24'
+last_reviewed: '2026-08-28'
 references:
 - title: 'How Many of All Bugs Do We Find? A Study of Static Bug Detectors'
   year: 2018
@@ -63,10 +63,13 @@ Pattern-matching and dataflow analysis over the source without executing it.
 Covers the space between a [linter](linter.html) (style and local patterns)
 and a [type checker](type-checker.html) (type soundness): null dereferences,
 unreachable code, resource leaks, taint flow, API misuse. It subsumes
-neither neighbor: it carries no style rules and proves no types. And it is
-deployed more narrowly than both — a linter is a default, a dataflow
-analyzer is a decision. What it adds is the cross-function, path-sensitive
-reasoning neither one does.
+neither neighbor: it carries no style rules and proves no types. It also
+gets adopted differently. A linter arrives with the toolchain and runs from
+the first commit; a dataflow analyzer is slower, noisier out of the box, and
+has to be tuned against the codebase before its output is worth reading, so
+teams switch it on deliberately and usually later. What it buys for that
+cost is reasoning that follows values across function boundaries and down
+particular execution paths, which neither neighbor attempts.
 
 ## In practice
 
