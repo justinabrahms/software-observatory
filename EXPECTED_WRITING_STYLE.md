@@ -168,9 +168,55 @@ Symptoms to avoid: "has two halves and neither can be skipped," "it's
 important to note," "there are three things to consider here,"
 X-not-Y antithesis used as filler rather than for a real contrast.
 
+**Aphorism is not a reason.** The X-is-A, Y-is-B construction reads as
+insight while asserting nothing checkable. If a sentence sounds quotable,
+check whether it is carrying an argument or replacing one.
+
+> *static-analysis:* "a linter is a default, a dataflow analyzer is a
+> decision" → "AI slop. Fix." The real content — a linter ships with the
+> toolchain, a dataflow analyzer is slower and noisier and has to be
+> tuned before its output is worth reading — is longer and says
+> something.
+
+> *compiler:* "Is this thing even a valid inhabitant of the language? If
+> not, everything else is noise." → "this noise comment is AI-ish."
+
 **Say the thing, then stop.** The pages are short and declarative. A
 sentence that only sets up the next sentence should be deleted and its
 job given to the next sentence.
+
+## Code and notation in examples
+
+**A sample reading in an unfamiliar language needs its notation glossed,
+not just its layout explained.** Describing which half of a display is
+which does not help a reader who cannot parse the symbols in either half.
+
+> *theorem-proving:* after the goal was corrected — "I don't know this
+> language and it feels inscrutable as an outsider. Give a brief idea to
+> the reader what this really means." Fixed with four lines glossing
+> `rev`, `++`, `[a]` and `::`, then both lines of the goal translated
+> into English.
+
+**Invented code gets read by people who know the language.** A
+plausible-looking snippet in a formal notation is a claim, and a wrong
+one is worse here than in prose, because the page is usually arguing
+that this tool is exact.
+
+> *theorem-proving:* "looks absurd" — and it was. The induction
+> hypothesis was quantified over one variable but mentioned another in
+> its conclusion, which no induction on that variable produces, and the
+> goal followed from an existing hypothesis with no induction needed at
+> all.
+
+**Prefer a real, known-stuck example to a constructed one.** The cons
+case of `rev (rev l) = l` stops where every textbook says it stops, so
+the surrounding claim — that the fix is a lemma the human forgot to
+state — is demonstrated rather than asserted.
+
+**Check the prose describing the example as carefully as the example.**
+Calling a separator "the obligation the checker cannot discharge" made
+an entire passage unparseable while the code block was also wrong; the
+reviewer saw only that none of it made sense.
 
 ## Consequences of an edit
 
