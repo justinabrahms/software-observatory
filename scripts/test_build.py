@@ -488,10 +488,19 @@ class TestPageStructure(PageAssertions):
         # The honest-provenance path: an absent last_reviewed is reported as
         # absent, never backfilled from something convenient.
         page = built_tree()["sensors/gamma-unreviewed/index.html"].decode("utf-8")
-        self.assertInPage("not yet re-reviewed", page, "gamma-unreviewed page")
+        self.assertInPage('class="review-unreviewed"', page, "gamma-unreviewed page")
+        self.assertInPage(">pending</span>", page, "gamma-unreviewed page")
+        # The label is about the review, not the entry: an undated page is a
+        # finished page, so it must not be dressed up as unfinished or absent.
+        self.assertNotInPage("coming soon", page.lower(), "gamma-unreviewed page")
+        # And it stays a normal, linkable entry — 563 inbound links across the
+        # built site pointed at undated sensors when this was written.
+        family = built_tree()["families/behavioral/index.html"].decode("utf-8")
+        self.assertInPage('href="/sensors/gamma-unreviewed/"', family,
+                          "behavioral family page")
         reviewed = built_tree()["sensors/alpha-probe/index.html"].decode("utf-8")
         self.assertInPage("2025-01", reviewed, "alpha-probe page")
-        self.assertNotInPage("not yet re-reviewed", reviewed, "alpha-probe page")
+        self.assertNotInPage('class="review-unreviewed"', reviewed, "alpha-probe page")
 
 
 class TestRenderingBranches(PageAssertions):

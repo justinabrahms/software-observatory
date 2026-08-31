@@ -21,7 +21,6 @@ see_also:
 - SO-007
 - SO-012b
 - SO-006e
-last_reviewed: '2026-08-24'
 references:
 - title: Meaningful Availability
   year: 2020

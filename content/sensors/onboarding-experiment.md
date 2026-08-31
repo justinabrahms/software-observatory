@@ -19,7 +19,6 @@ see_also:
 - SO-010
 - SO-010b
 - SO-010d
-last_reviewed: '2026-08-24'
 references:
 - title: Onboarding vs. Diversity, Productivity and Quality — Empirical Study of the OpenStack Ecosystem
   year: 2021

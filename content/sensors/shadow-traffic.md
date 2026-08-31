@@ -20,7 +20,6 @@ see_also:
 - SO-007
 - SO-007c
 - SO-005c
-last_reviewed: '2026-08-24'
 references:
 - title: Development and Deployment at Facebook
   year: 2013

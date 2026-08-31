@@ -21,7 +21,6 @@ see_also:
 - SO-009b
 - SO-009d
 - SO-006
-last_reviewed: '2026-08-24'
 references:
 - title: How to Fight Production Incidents? An Empirical Study on a Large-scale Cloud Service
   year: 2022

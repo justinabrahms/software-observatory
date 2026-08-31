@@ -20,7 +20,6 @@ see_also:
 - SO-006b
 - SO-006c
 - SO-006e
-last_reviewed: '2026-08-24'
 references:
 - title: Prometheus
   url: https://prometheus.io

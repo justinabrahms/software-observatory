@@ -384,8 +384,9 @@ truncate and a second one to ignore.
 Gamma Unreviewed deliberately carries no `last_reviewed` date, no
 `see_also`, no `categories`, no `references`, and none of the optional
 `*_note` fields. It is the honest-provenance path: an entry nobody has
-re-read since it was written must render as "not yet re-reviewed" rather
-than borrowing a date from somewhere convenient.
+re-read since it was written must render its review as "pending" rather
+than borrowing a date from somewhere convenient. The entry itself is
+complete either way — the label describes the review, not the content.
 
 It is also the minimum-frontmatter case, so every optional-field branch in
 the sensor page renderer is exercised in its absent form by at least one

@@ -22,7 +22,6 @@ see_also:
 - SO-009b
 - SO-009c
 - SO-015b
-last_reviewed: '2026-08-24'
 references:
 - title: DORA
   url: https://dora.dev

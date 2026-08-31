@@ -19,7 +19,6 @@ see_also:
 - SO-009
 - SO-009b
 - SO-009d
-last_reviewed: '2026-08-24'
 references:
 - title: 'Accelerate: State of DevOps 2019'
   year: 2019

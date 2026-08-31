@@ -192,8 +192,9 @@
         <p>Gamma Unreviewed deliberately carries no <code>last_reviewed</code> date, no
 <code>see_also</code>, no <code>categories</code>, no <code>references</code>, and none of the optional
 <code>*_note</code> fields. It is the honest-provenance path: an entry nobody has
-re-read since it was written must render as &ldquo;not yet re-reviewed&rdquo; rather
-than borrowing a date from somewhere convenient.</p>
+re-read since it was written must render its review as &ldquo;pending&rdquo; rather
+than borrowing a date from somewhere convenient. The entry itself is
+complete either way — the label describes the review, not the content.</p>
 <p>It is also the minimum-frontmatter case, so every optional-field branch in
 the sensor page renderer is exercised in its absent form by at least one
 fixture.</p>
@@ -218,7 +219,7 @@ fixture.</p>
           <dt>Actionability</dt>   <dd>Exploratory</dd>
           <dt>Type</dt>             <dd>Retrospective</dd>
           <dt>Entry ID</dt>        <dd>SO-T03</dd>
-          <dt>Reviewed</dt>        <dd><span class="review-unreviewed" title="This entry carries no last_reviewed date: nobody has re-read it since it was written. An absent date is reported as absent rather than filled in.">not yet re-reviewed</span></dd>
+          <dt>Reviewed</dt>        <dd><span class="review-unreviewed" title="This entry is written and published, but has not yet been re-read in the editorial review pass. An absent review date is reported as absent rather than filled in.">pending</span></dd>
         </dl>
       </div>
 

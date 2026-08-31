@@ -19,7 +19,6 @@ see_also:
 - SO-010
 - SO-010c
 - SO-010d
-last_reviewed: '2026-08-24'
 references:
 - title: 'A First Look at the Deprecation of RESTful APIs: An Empirical Study'
   year: 2020

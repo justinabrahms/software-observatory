@@ -22,7 +22,6 @@ categories:
 see_also:
 - SO-003
 - change
-last_reviewed: '2026-08-24'
 references:
 - title: State of Mutation Testing at Google
   year: 2018

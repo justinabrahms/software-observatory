@@ -19,7 +19,6 @@ see_also:
 - SO-010
 - SO-010b
 - SO-010c
-last_reviewed: '2026-08-24'
 references:
 - authors: Michael Nygard
   title: Documenting Architecture Decisions

@@ -20,7 +20,6 @@ see_also:
 - SO-004
 - SO-004c
 - SO-006
-last_reviewed: '2026-08-24'
 references:
 - title: 'Detecting Data Errors: Where are we and what needs to be done?'
   year: 2016

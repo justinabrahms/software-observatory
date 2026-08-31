@@ -19,7 +19,6 @@ see_also:
 - SO-002b
 - SO-002c
 - SO-003
-last_reviewed: '2026-08-24'
 references:
 - title: Jest snapshot
   kind: tool

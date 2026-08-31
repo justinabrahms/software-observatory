@@ -21,7 +21,6 @@ see_also:
 - SO-008d
 - SO-015c
 - SO-014d
-last_reviewed: '2026-08-24'
 references:
 - title: A Novel Approach for Estimating Truck Factors
   year: 2016

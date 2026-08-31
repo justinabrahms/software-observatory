@@ -21,7 +21,6 @@ see_also:
 - SO-006c
 - SO-006d
 - change
-last_reviewed: '2026-08-24'
 references:
 - title: The Tail at Scale
   year: 2013

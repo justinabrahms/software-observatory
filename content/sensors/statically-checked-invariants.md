@@ -21,7 +21,6 @@ see_also:
 - SO-012
 - SO-001d
 - SO-017
-last_reviewed: '2026-08-24'
 references:
 - title: How Amazon Web Services Uses Formal Methods
   year: 2015

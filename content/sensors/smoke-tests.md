@@ -20,7 +20,6 @@ see_also:
 - SO-002c
 - SO-007
 - SO-013b
-last_reviewed: '2026-08-24'
 references:
 - title: 'Software Engineering at Google, ch. 11: Testing Overview'
   year: 2020

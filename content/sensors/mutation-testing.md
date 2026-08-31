@@ -24,7 +24,6 @@ see_also:
 - behavioral
 - SO-005
 - SO-005b
-last_reviewed: '2026-08-24'
 references:
 - title: Coverage Is Not Strongly Correlated with Test Suite Effectiveness
   year: 2014

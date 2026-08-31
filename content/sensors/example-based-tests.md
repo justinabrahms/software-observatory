@@ -20,7 +20,6 @@ see_also:
 - SO-002d
 - SO-003
 - SO-005e
-last_reviewed: '2026-08-24'
 references:
 - title: Techniques for Improving Regression Testing in Continuous Integration Development Environments
   year: 2014

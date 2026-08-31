@@ -26,7 +26,6 @@ see_also:
 - SO-006
 - adversarial
 - behavioral
-last_reviewed: '2026-08-24'
 references:
 - title: 'Detecting Data Errors: Where are we and what needs to be done?'
   year: 2016

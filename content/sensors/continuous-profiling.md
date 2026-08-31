@@ -20,7 +20,6 @@ see_also:
 - SO-006
 - SO-006b
 - SO-006d
-last_reviewed: '2026-08-24'
 references:
 - title: Exploring Statistical Change Point Detection Techniques for Performance Anomaly Detection at Mozilla
   year: 2026

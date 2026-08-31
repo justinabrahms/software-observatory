@@ -18,7 +18,6 @@ categories:
 - Agent Safety
 see_also:
 - SO-010
-last_reviewed: '2026-08-24'
 ---
 
 An independent agent reviews the first agent's output. A sensor that applies

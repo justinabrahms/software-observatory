@@ -20,7 +20,6 @@ see_also:
 - SO-008
 - SO-008c
 - SO-008d
-last_reviewed: '2026-08-24'
 references:
 - title: ArchUnit
   url: https://www.archunit.org

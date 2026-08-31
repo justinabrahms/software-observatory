@@ -20,7 +20,6 @@ see_also:
 - SO-010c
 - SO-010d
 - SO-011d
-last_reviewed: '2026-08-24'
 references:
 - title: An Empirical Study on the Effectiveness of Security Code Review
   year: 2013

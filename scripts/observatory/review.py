@@ -14,8 +14,14 @@ from .dates import _iso_date
 # `last_reviewed` is a claim that a human read this entry on that day. The
 # build must therefore render three states, not one: reviewed recently,
 # reviewed a long time ago, and never re-reviewed. An absent date is a
-# first-class answer — "not yet re-reviewed" is honest, and a date the author
-# has not earned is not (#112).
+# first-class answer — "pending" is honest, and a date the author has not
+# earned is not (#112).
+#
+# WORDING: "pending" describes the review, never the entry. Every sensor page
+# is complete and published whatever its review state, so the label must not
+# imply the content is missing or on its way — an undated page is linked,
+# indexed and cross-referenced exactly like a dated one (563 inbound links
+# across 70 pages pointed at undated entries when this was written).
 #
 # DETERMINISM: ages are measured against catalog_as_of() — the newest date in
 # the catalog's own data — and never against datetime.now(). Wall-clock ages
@@ -60,10 +66,10 @@ def review_dd_html(sensor, as_of):
     status = review_status(sensor, as_of)
     if not status["reviewed"]:
         return (
-            '<span class="review-unreviewed" title="This entry carries no '
-            'last_reviewed date: nobody has re-read it since it was written. '
-            'An absent date is reported as absent rather than filled in.">'
-            "not yet re-reviewed</span>"
+            '<span class="review-unreviewed" title="This entry is written and '
+            'published, but has not yet been re-read in the editorial review '
+            'pass. An absent review date is reported as absent rather than '
+            'filled in.">pending</span>'
         )
     month = status["reviewed"][:7]
     if status["months"] is None:

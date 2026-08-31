@@ -19,7 +19,6 @@ see_also:
 - SO-004
 - SO-007
 - SO-012b
-last_reviewed: '2026-08-24'
 references:
 - title: OPA Gatekeeper
   url: https://open-policy-agent.github.io/gatekeeper/

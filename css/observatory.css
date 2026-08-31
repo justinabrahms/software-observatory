@@ -1229,6 +1229,31 @@ a.wikilink:hover {
   color: var(--accent);
 }
 
+/* Review provenance. An entry with no `last_reviewed` has not been re-read by
+   a human since it was written, and the sidebar must say so in a way a reader
+   notices — the markup for it existed before this rule did, which meant the
+   honest answer rendered as plain text and looked no different from a date.
+   It is deliberately quiet rather than alarming: unreviewed is the catalog's
+   normal starting state, not a fault. */
+.review-unreviewed {
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  color: var(--text-dim);
+  cursor: help;
+  border: 1px solid var(--border-soft);
+  border-radius: 2px;
+  padding: .05rem .35rem;
+  white-space: nowrap;
+}
+.review-unreviewed::before {
+  content: "\00b7\00a0";
+  color: var(--accent-soft);
+}
+.review-unreviewed:hover, .review-unreviewed:focus {
+  color: var(--text-soft);
+  border-color: var(--accent-soft);
+}
+
 .provisional-note {
   font-size: .8rem;
   font-style: italic;

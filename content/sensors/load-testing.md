@@ -22,7 +22,6 @@ see_also:
 - SO-006d
 - SO-007
 - runtime
-last_reviewed: '2026-08-24'
 references:
 - title: A Survey on Load Testing of Large-Scale Software Systems
   year: 2015

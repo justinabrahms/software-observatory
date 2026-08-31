@@ -24,7 +24,6 @@ see_also:
 - SO-009d
 - SO-007e
 - SO-015b
-last_reviewed: '2026-08-24'
 references:
 - title: git log
   kind: tool
