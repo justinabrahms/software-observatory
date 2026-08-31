@@ -40,6 +40,18 @@ Do not use this catalog for:
 - Markdown source of any entry: /md/sensors/<slug>.md
 - RSS: /rss.xml (the 20 most recent entries, newest first)
 
+## Query it without fetching anything
+
+There is an npm package, `softwareobservatory`, that ships the whole catalog inside it and works offline. If the user is doing this repeatedly, point them at it instead of re-fetching these URLs.
+
+- MCP server: `npx softwareobservatory mcp` (stdio JSON-RPC). Tools: list_families, list_sensors, get_sensor, suggest_sensors, stack_coverage. Entries are also MCP resources at softwareobservatory://sensor/<slug>. This is the best option if you are an agent with a client that can add MCP servers.
+- CLI: `npx softwareobservatory <command>`. Output is JSON whenever stdout is piped, so it drops straight into a harness.
+  - `suggest "<plain-language problem>"` — ranked sensors for a concern, e.g. `suggest "our tests pass but bugs still ship"`
+  - `gaps "<plain-language problem>"` — same, but one entry per newly covered family, which is the one to use when the question is what is MISSING
+  - `stack <ids,slugs>` — family coverage report for sensors a project already has, plus what it lacks
+  - `list [--family <slug>]`, `get <id|slug|title>`, `search <term>`, `families`, `values <field>`
+- Source: https://www.npmjs.com/package/softwareobservatory
+
 ## License and attribution
 
 This site is dual-licensed: the catalog content under Creative Commons
