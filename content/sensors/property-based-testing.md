@@ -23,7 +23,7 @@ see_also:
 - SO-003
 - SO-002b
 - adversarial
-last_reviewed: '2026-08-24'
+last_reviewed: '2026-08-31'
 references:
 - title: 'An Empirical Evaluation of Property-Based Testing in Python'
   year: 2025

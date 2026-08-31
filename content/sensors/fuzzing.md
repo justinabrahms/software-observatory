@@ -22,7 +22,7 @@ see_also:
 - SO-003
 - SO-005e
 - adversarial
-last_reviewed: '2026-08-24'
+last_reviewed: '2026-08-31'
 references:
 - title: Evaluating Fuzz Testing
   year: 2018

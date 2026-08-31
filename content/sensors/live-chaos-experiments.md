@@ -22,7 +22,7 @@ see_also:
 - SO-006c
 - SO-004b
 - SO-005d
-last_reviewed: '2026-08-24'
+last_reviewed: '2026-08-31'
 references:
 - title: Automating Chaos Experiments in Production
   year: 2019

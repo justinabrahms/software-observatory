@@ -20,7 +20,7 @@ see_also:
 - SO-005
 - SO-005b
 - SO-005d
-last_reviewed: '2026-08-24'
+last_reviewed: '2026-08-31'
 references:
 - title: 'Elle: Inferring Isolation Anomalies from Experimental Observations'
   year: 2020
