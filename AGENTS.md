@@ -92,6 +92,7 @@ the homepage scatter legend and dots key off.
 | `scripts/observatory/` | The generator, one module per responsibility (`taxonomy`, `render`, `content`, `layout`, `jsonld`, `pages/`, `gates`, `site`, …). Read `__init__.py` first. |
 | `scripts/check_links.py` | Internal link/anchor validator over the generated HTML. |
 | `scripts/export_cli_data.py` | Emits `cli/data/sensors.json`; runs at the end of every build. |
+| `infra/caddy/` | The live Caddy site block, tracked as a record. Nothing in this repo applies it — the deploy key is pinned to static files on purpose. `CADDY_HOST=... make check-caddy` diffs repo against server, read-only; it is not in `make check` because CI cannot read the server's config. |
 | `cli/` | Zero-dependency Node CLI + MCP server (npm package `softwareobservatory`). `bin/softwareobservatory.mjs` is the entry; `lib/core.mjs` holds query logic; `lib/mcp.mjs` is the stdio JSON-RPC server; `data/sensors.json` is committed build output. |
 | `content/sensors/*.md` | Source of truth for sensor entries (YAML frontmatter). |
 | `content/pages/` | Empty; reserved. |

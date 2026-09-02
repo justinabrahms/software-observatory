@@ -1,5 +1,5 @@
 .PHONY: build check check-frontmatter check-links check-citations check-external \
-        check-deploy cli-test test test-update deploy serve
+        check-deploy check-caddy cli-test test test-update deploy serve
 
 PY := .venv/bin/python
 
@@ -112,11 +112,14 @@ DEPLOY_PRIVATE := \
   .link-cache.json .citation-cache.json .opencode-review.md \
   __pycache__ .pytest_cache .DS_Store \
   content templates scripts cli results scratch \
-  notes tests \
+  notes tests infra \
   Makefile AGENTS.md README.md CONTRIBUTING.md CHANGELOG.md TODO.md \
   EXPECTED_WRITING_STYLE.md \
   requirements.txt CITATION.cff OPERATIONS.md \
   abstract.md abstract.sh chat-w-gpt.md
+
+check-caddy:
+	@CADDY_HOST="$(CADDY_HOST)" python3 scripts/check_caddy.py
 
 check-deploy:
 	@unclassified=""; \

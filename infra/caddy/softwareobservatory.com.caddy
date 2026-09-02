@@ -1,0 +1,74 @@
+# Caddy site block for softwareobservatory.com — the record of record.
+#
+# This file is NOT applied automatically. Nothing in this repo can write it to
+# the web server, deliberately; see infra/caddy/README.md for why, and for the
+# apply procedure. `make check-caddy` verifies the live server still matches.
+#
+# One stanza is held back: the `tls` block, which names the DNS provider and
+# its credential environment variable. Tracked files in this repo carry no
+# hostnames, account names or credential paths, and the live config is
+# recovered by substituting the stanza recorded in OPERATIONS.md (untracked).
+
+softwareobservatory.com, www.softwareobservatory.com {
+    encode gzip
+
+    # TLS is issued over DNS-01 rather than HTTP-01, so the certificate does
+    # not wait on the A record having propagated. Substitute the operator's
+    # provider stanza here before applying:
+    #
+    #     tls {
+    #         dns <provider> {env.<PROVIDER>_API_TOKEN}
+    #         resolvers 1.1.1.1
+    #     }
+
+    log {
+        output file /var/log/caddy/softwareobservatory.com/access.log {
+            roll_keep 3
+        }
+    }
+    root * /srv/softwareobservatory.com
+
+    # Security headers. The generated pages also carry a <meta http-equiv> CSP
+    # with the same policy; only a real header can set frame-ancestors, and the
+    # meta tag is applied later in parsing than a header is.
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        Content-Security-Policy "default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+    }
+
+    # Assets are served under stable names, so revalidation was happening on
+    # every hit. HTML deliberately keeps default revalidation so a corrected
+    # entry is never stale.
+    @assets path /css/* /js/* /og/*
+    header @assets Cache-Control "public, max-age=86400"
+
+    # Legacy /pages/*.html layout -> clean directory URLs
+    @legacy_sensor path_regexp legacy ^/pages/sensors/(.+)\.html$
+    redir @legacy_sensor /sensors/{re.legacy.1}/ 301
+    redir /pages/catalog.html /catalog/ 301
+    redir /pages/atlas.html /atlas/ 301
+    redir /pages/framework.html /framework/ 301
+    redir /pages/about.html /about/ 301
+    redir /pages/contact.html /contact/ 301
+    redir /pages/privacy.html /privacy/ 301
+    redir /pages/glossary.html /glossary/ 301
+    redir /pages/categories.html /categories/ 301
+    redir /index.html / 301
+
+    # Agent-facing aliases. The llms.txt convention has more than one
+    # spelling in the wild: a scanner in August 2026 probed /llms.txt,
+    # /.well-known/llms.txt, /llms.md, /docs/llms.txt and three more in a
+    # single sweep, and took a 404 on all of them. Rewrite rather than
+    # redir, so a naive fetcher that does not follow 3xx still gets the
+    # file, and name the real URL as canonical so the three spellings are
+    # not indexed as three documents.
+    @llms_alias path /.well-known/llms.txt /llms.md
+    header @llms_alias Link `<https://softwareobservatory.com/llms.txt>; rel="canonical"`
+    rewrite @llms_alias /llms.txt
+
+    try_files {path} {path}/index.html
+    file_server
+}
