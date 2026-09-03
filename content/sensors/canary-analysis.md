@@ -38,9 +38,6 @@ references:
   kind: publication
   authors: Chunqiang Tang, Thawan Kooburat, Pradeep Venkatachalam, Akshay Chander, Zhe Wen, Aravind Narayanan, Patrick Dowell, Robert Karl
   venue: SOSP '15
-- title: Netflix Kayenta
-  url: https://github.com/spinnaker/kayenta
-  kind: tool
 - title: Kayenta
   kind: tool
   url: https://github.com/spinnaker/kayenta

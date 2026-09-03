@@ -26,9 +26,6 @@ references:
   year: 2017
   kind: publication
   tier: IV
-- title: ADR
-  url: https://adr.github.io
-  kind: tool
 - title: ADRs
   kind: tool
   url: https://adr.github.io

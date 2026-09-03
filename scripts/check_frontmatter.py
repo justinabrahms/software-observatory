@@ -7,6 +7,9 @@ constants in build.py: family, oracle, independence, latency, stack_level,
 actionability, type, see_also, and id uniqueness. Exits 1 on any violation,
 so it can gate CI alongside check_links.py.
 
+It also refuses an entry that cites the same url twice under two titles; see
+the duplicate-url check below for why that is a content error and not a tidy-up.
+
 It also runs a vocabulary drift check (see `check_vocabulary_drift` below and
 scripts/vocabulary.py) that asserts the three places a controlled vocabulary
 lives — this validator, the renderer in build.py, and the content itself —
@@ -303,6 +306,32 @@ def main():
                         f"{loc}: references[{i}] tier '{tier}' not in "
                         f"{sorted(VALID_TIERS)} — {VOCAB_HINT}"
                     )
+
+            # One URL, one entry. Five entries cited the same page twice under
+            # two names, and in three of them the second name misdescribed the
+            # page it pointed at ('kubectl admission' for the Kubernetes
+            # admission-controller docs, 'error budget calculators' for the SRE
+            # Workbook's error-budget-*policy* chapter). Nobody spots that by
+            # reading a reference list top to bottom, because each entry looks
+            # fine on its own — it is only visible by grouping on the URL.
+            # Trailing slashes are ignored: the same page reached two ways is
+            # still the same page.
+            seen = {}
+            for i, ref in enumerate(references):
+                if not isinstance(ref, dict):
+                    continue
+                url = (ref.get("url") or "").rstrip("/")
+                if not url:
+                    continue
+                if url in seen:
+                    first, first_title = seen[url]
+                    errors.append(
+                        f"{loc}: references[{i}] '{ref.get('title', '?')}' cites the "
+                        f"same url as references[{first}] '{first_title}' ({url}). "
+                        f"Merge them, or point one at the page it actually means."
+                    )
+                else:
+                    seen[url] = (i, ref.get("title", "?"))
 
     vocab_errors, vocab_warnings = check_vocabulary_drift(used)
     errors.extend(vocab_errors)

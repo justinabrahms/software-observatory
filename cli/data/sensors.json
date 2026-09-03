@@ -1740,12 +1740,6 @@
             "url": "https://developer.hashicorp.com/terraform/cli/commands/plan"
           },
           {
-            "description": "Kubernetes admission controllers",
-            "kind": "tool",
-            "title": "kubectl admission",
-            "url": "https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/"
-          },
-          {
             "description": "SQL linter and formatter",
             "kind": "tool",
             "title": "sqlfluff",
@@ -13452,11 +13446,6 @@
             "year": 2015
           },
           {
-            "kind": "tool",
-            "title": "Netflix Kayenta",
-            "url": "https://github.com/spinnaker/kayenta"
-          },
-          {
             "description": "Netflix's automated canary analysis",
             "kind": "tool",
             "title": "Kayenta",
@@ -13719,12 +13708,6 @@
             "kind": "tool",
             "title": "SLO dashboards",
             "url": "https://sre.google/workbook/alerting-on-slos/"
-          },
-          {
-            "description": "Error budget tracking tools",
-            "kind": "tool",
-            "title": "error budget calculators",
-            "url": "https://sre.google/workbook/error-budget-policy/"
           }
         ],
         "scope": "system",
@@ -16893,12 +16876,6 @@
             "year": 2018
           },
           {
-            "description": "DORA research assessment survey",
-            "kind": "tool",
-            "title": "DORA survey",
-            "url": "https://dora.dev"
-          },
-          {
             "description": "DORA's research assessment tool",
             "kind": "tool",
             "title": "DevOps Research Assessment",
@@ -18263,11 +18240,6 @@
             "tier": "IV",
             "title": "Documenting Architecture Decisions",
             "year": 2017
-          },
-          {
-            "kind": "tool",
-            "title": "ADR",
-            "url": "https://adr.github.io"
           },
           {
             "description": "Architecture Decision Records",

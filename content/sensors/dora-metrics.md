@@ -45,10 +45,6 @@ references:
   year: 2018
   kind: publication
   tier: I
-- title: DORA survey
-  kind: tool
-  url: https://dora.dev
-  description: DORA research assessment survey
 - title: DevOps Research Assessment
   kind: tool
   url: https://dora.dev/research/

@@ -28,10 +28,6 @@ references:
   kind: tool
   url: https://sre.google/workbook/alerting-on-slos/
   description: Service level objective tracking dashboards
-- title: error budget calculators
-  kind: tool
-  url: https://sre.google/workbook/error-budget-policy/
-  description: Error budget tracking tools
 ---
 
 Did this change consume an abnormal amount of reliability budget? A sensor

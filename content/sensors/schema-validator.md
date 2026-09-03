@@ -50,10 +50,6 @@ references:
   kind: tool
   url: https://developer.hashicorp.com/terraform/cli/commands/plan
   description: Infrastructure-as-code plan preview
-- title: kubectl admission
-  kind: tool
-  url: https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/
-  description: Kubernetes admission controllers
 - title: sqlfluff
   kind: tool
   url: https://www.sqlfluff.com
