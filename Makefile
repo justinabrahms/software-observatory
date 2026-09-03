@@ -1,5 +1,5 @@
 .PHONY: build check check-frontmatter check-links check-citations check-external \
-        check-deploy check-caddy cli-test test test-update deploy serve
+        check-deploy check-caddy cli-test test test-update review-queue deploy serve
 
 PY := .venv/bin/python
 
@@ -166,6 +166,24 @@ deploy: check-deploy build
 	  --exclude='*' \
 	  ./ observer@abrah.ms:.
 	@echo "Deployed to https://softwareobservatory.com"
+
+# ---------------------------------------------------------------------------
+# Editorial review queue
+#
+# Which entries have gone longest without a human read: never-reviewed first
+# (oldest published first), then oldest `last_reviewed` date. Not a gate — an
+# undated entry is published and complete, it just has not been re-read, which
+# is why the site says "pending" rather than hiding it.
+#
+# N sets how many to list; ARGS passes anything else through, e.g.
+#   make review-queue N=10
+#   make review-queue ARGS=--paths     # for xargs
+#   make review-queue ARGS="--reviewed --all"
+# ---------------------------------------------------------------------------
+N ?= 4
+
+review-queue:
+	@$(PY) scripts/review_queue.py -n $(N) $(ARGS)
 
 serve:
 	python3 -m http.server

@@ -18,6 +18,12 @@ Node CLI/MCP server in `cli/` (published to npm as `softwareobservatory`).
 - **CLI test:** `node cli/test/smoke.mjs` (or `make cli-test`) — exercises
   every CLI command plus the MCP handshake. Needs Node >= 18, no npm
   dependencies.
+- **Review queue:** `make review-queue` (`N=10` for more, `ARGS=--paths` for
+  something to pipe) — which entries have gone longest without a human read:
+  never-reviewed first, oldest published first, then oldest `last_reviewed`.
+  Use it to pick review targets instead of eyeballing dates; an entry with no
+  `last_reviewed` is published and complete, it just has not been re-read.
+  Read-only — unlike a build, it never rewrites `scripts/first_seen.json`.
 - **Link check:** `.venv/bin/python scripts/check_links.py` — validates internal
   links and `#anchors` across all generated HTML, exits 1 on breakage
   (CI-gateable). `--external` also HEADs outbound links (needs network).
@@ -91,6 +97,7 @@ the homepage scatter legend and dots key off.
 | `scripts/build.py` | Entry point. Runs the build; re-exports the names the other scripts import. |
 | `scripts/observatory/` | The generator, one module per responsibility (`taxonomy`, `render`, `content`, `layout`, `jsonld`, `pages/`, `gates`, `site`, …). Read `__init__.py` first. |
 | `scripts/check_links.py` | Internal link/anchor validator over the generated HTML. |
+| `scripts/review_queue.py` | Editorial review queue — entries ordered by how long they have gone unreviewed. Not a gate; `make review-queue`. |
 | `scripts/export_cli_data.py` | Emits `cli/data/sensors.json`; runs at the end of every build. |
 | `infra/caddy/` | The live Caddy site block, tracked as a record. Nothing in this repo applies it — the deploy key is pinned to static files on purpose. `CADDY_HOST=... make check-caddy` diffs repo against server, read-only; it is not in `make check` because CI cannot read the server's config. |
 | `cli/` | Zero-dependency Node CLI + MCP server (npm package `softwareobservatory`). `bin/softwareobservatory.mjs` is the entry; `lib/core.mjs` holds query logic; `lib/mcp.mjs` is the stdio JSON-RPC server; `data/sensors.json` is committed build output. |
