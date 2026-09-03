@@ -20,6 +20,7 @@ see_also:
 - SO-004
 - SO-004c
 - SO-006
+last_reviewed: '2026-09-03'
 references:
 - title: 'Detecting Data Errors: Where are we and what needs to be done?'
   year: 2016
@@ -99,16 +100,23 @@ The database cannot be argued with, but the constraints can be edited:
   shortly before the audit query runs, so the reading is of the
   cleanup, not of the system. Point-in-time checks are harder to
   scrub than scheduled ones.
-- **Move the write around the schema.** Raw SQL, an admin endpoint,
-  or a manual migration that skips the validated path keeps the
-  constraints pristine while data goes in unexamined.
+- **Turn enforcement off for the write.** A `FOREIGN KEY` is checked
+  for every writer, so raw SQL and admin endpoints do not evade it —
+  that is the whole point of enforcing in the engine. What does evade
+  it is `session_replication_role = 'replica'`, which makes Postgres
+  skip FK and trigger checks for the rest of the session, and bulk
+  loads that drop constraints and re-add them `NOT VALID` afterwards.
+  Both are one line, and both leave the schema looking untouched.
 - **Let dirty data grandfather itself.** Existing violations freeze
   the rule in place, because enabling the constraint now would fail.
   Every skipped fix compounds into a migration too expensive to run.
 
 The meta-signal is the constraint diff. Schema migrations that remove
 or relax constraints are deletions of a sensor, and deserve review the
-way deleting a test would.
+way deleting a test would. It will not catch the session that switches
+enforcement off at runtime, because the schema is identical afterwards;
+that one is only visible in the migration and bulk-load scripts
+themselves.
 
 ## Response playbook
 

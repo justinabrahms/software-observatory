@@ -20,6 +20,7 @@ see_also:
 - SO-006
 - SO-006b
 - SO-006d
+last_reviewed: '2026-09-03'
 references:
 - title: Exploring Statistical Change Point Detection Techniques for Performance Anomaly Detection at Mozilla
   year: 2026
@@ -63,34 +64,54 @@ benchmarks, but in real traffic.
 
 ## In practice
 
-A typical reading is a flame graph for one service covering the window
-since the last deploy, diffed against the window before it. Width is
-time; the story is what got wider.
+A reading is a flame graph for one service over the window since the
+last deploy, next to the same graph for the window before it. Each row
+sits inside the frame above it, and a frame's width is its share of all
+samples collected — its own work plus everything it called. A frame is
+therefore never wider than its parent, and a frame's own work is the
+width it does not pass down to a child.
 
 ```
-$ pprof -top -base cpu.before.pb.gz cpu.after.pb.gz
-Showing nodes accounting for 6.20s, 84% of 7.38s total
-      flat  flat%   sum%        cum   cum%
-     2.10s 28.45%  28.45%      2.10s  28.45%  encoding/json.Decode
-     1.30s 17.62%  46.07%      3.40s  46.07%  api/serialize.renderPayload
+$ pprof -http=:8080 cpu.before.pb.gz cpu.after.pb.gz
+
+before  (7.02s of samples)
+  ██████████                        31.0%  api/serialize.renderPayload
+  █████                             15.0%  encoding/json.Decode
+  ██                                 6.0%  runtime.mallocgc
+
+after   (7.38s of samples)
+  ███████████████████               58.1%  api/serialize.renderPayload
+  █████████████                     40.5%  encoding/json.Decode
+  ████                              12.1%  runtime.mallocgc
 ```
 
-| Frame | Share before | Share after | Reading |
-|-------|--------------|-------------|---------|
-| encoding/json.Decode | 9% | 28% | tripled; new payload shape |
-| api/serialize.renderPayload | 16% | 17% | flat, not the regression |
-| runtime.mallocgc | 6% | 12% | allocations follow the JSON |
+Subtracting each row from the one above it separates a frame's own work
+from its subtree's — the same split `pprof -top` prints as `flat` and
+`cum`:
+
+| Frame | Before (own / subtree) | After (own / subtree) | Reading |
+|-------|------------------------|-----------------------|---------|
+| encoding/json.Decode | 9.0% / 15.0% | 28.5% / 40.5% | tripled; the payload shape changed |
+| api/serialize.renderPayload | 16.0% / 31.0% | 17.6% / 58.1% | its own work barely moved |
+| runtime.mallocgc | 6.0% / 6.0% | 12.1% / 12.1% | allocation follows the JSON it sits under |
 
 Reading it well:
 
-- **Diff, don't stare.** A wide frame may have been wide for months. The
-  regression is the delta, so anchor every reading to a baseline window.
-- **Charge the caller, not the leaf.** `Decode` is the leaf, but the fix
-  usually lives in whichever handler started feeding it larger payloads.
-- **Match profile type to symptom.** CPU profiles explain latency,
-  allocation profiles explain memory, lock profiles explain stalls.
-- **Overlay deploy markers.** A plateau that starts exactly at a deploy
-  boundary is a suspect before you read a single frame.
+- **Anchor to a baseline.** `renderPayload` holds 58.1% of samples after
+  the deploy, which looks like the regression until the earlier graph
+  shows it already held 31.0%. Without the second profile there is
+  nothing to subtract and no way to tell a new cost from an old one.
+- **The widest leaf is rarely where the fix goes.** `Decode` tripled
+  while `renderPayload`'s own work went 16.0% → 17.6%: the caller is not
+  doing more, it is handing down more. Walk up from the hot leaf until
+  you reach a frame whose behaviour actually changed.
+- **Pick the profile type from the symptom.** CPU profiles explain
+  latency, allocation profiles explain memory growth, and lock profiles
+  explain stalls that appear in neither. A service that is slow but not
+  busy looks unremarkable in the graph above.
+- **Overlay deploy markers before reading frames.** A plateau that
+  begins at a deploy boundary narrows the suspects to one change set,
+  which is a smaller search than any frame-by-frame reading.
 
 ## How it gets gamed
 
@@ -115,20 +136,26 @@ is actually running. If it falls, the sensor is quietly going dark.
 
 When a profile shows a regression or a resource spike:
 
-1. **Diff against a baseline window.** Take the same profile type for the
-   window before the regression and diff; confirm the regression is a
-   delta, not a long-standing wide frame.
-2. **Bisect by time to the deploy.** Overlay deploy markers on the
-   profile timeline. If the plateau starts at a deploy, the regression is
-   in that change set and [canary analysis](canary-analysis.html) or a
-   revert decision is next.
-3. **Charge the cost to a request.** Join the hot frames to
+1. **Decide revert-or-fix before optimizing.** If the plateau begins at
+   a deploy boundary, reverting that change set and re-profiling is
+   cheaper than understanding it, and [canary
+   analysis](canary-analysis.html) makes the same call on a smaller
+   blast radius. Optimizing a regression you could have reverted is the
+   expensive path.
+2. **Charge the cost to a request.** Join the hot frames to
    [distributed traces](distributed-traces.html) or
    [observability events](observability-events.html) to find which
-   endpoints and payloads feed the hotspot before touching code.
-4. **Fix the biggest frame first.** A 30% frame yields more than four 7%
-   frames for the same effort; resist scattering small optimizations
-   across the graph.
+   endpoints and payloads feed the hotspot. `Decode` at 28.5% does not
+   say which caller to fix; the trace says which route grew.
+3. **Change one frame, then re-profile.** Optimizations interact —
+   removing an allocation can move cost into lock contention rather than
+   deleting it. Without a profile between each change you cannot
+   attribute the improvement to any of them.
+4. **Prefer one wide frame to several narrow ones.** Not because the
+   arithmetic favours it — four 7% frames are 28%, near enough the same
+   — but because every fix costs the same review, deploy and re-profile
+   cycle whatever its size. The wide frame buys that percentage once
+   instead of four times.
 
 ## What it cannot detect
 

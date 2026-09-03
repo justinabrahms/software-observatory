@@ -22,6 +22,7 @@ see_also:
 - SO-004
 - change
 - structural
+last_reviewed: '2026-09-03'
 references:
 - title: 'I Depended on You and You Broke Me: An Empirical Study of Manifesting Breaking Changes in Client Packages'
   year: 2023

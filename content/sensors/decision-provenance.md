@@ -5,8 +5,8 @@ family: comprehension
 family_num: '10'
 oracle: low
 oracle_note: missing provenance is a risk factor
-independence: high
-independence_note: history is independent of current code
+independence: low
+independence_note: the author of the change writes its own record
 scope: module
 latency: days
 actionability: exploratory
@@ -19,6 +19,7 @@ see_also:
 - SO-010
 - SO-010b
 - SO-010c
+last_reviewed: '2026-09-03'
 references:
 - authors: Michael Nygard
   title: Documenting Architecture Decisions
@@ -49,6 +50,16 @@ Decision provenance traces the history of a design decision: the ADRs, PRs,
 discussions, and constraints that led to the current code. When provenance
 is lost, the code becomes untouchable — nobody knows whether it can be
 changed safely.
+
+This sensor scores low on independence, which is unusual for something
+read out of history. `git blame` and `git log -S` are not manipulable —
+they report when a line changed and who changed it, and no amount of
+intent rewrites that. But those are not the questions being asked. The
+"why" lives in prose written by the author of the change, at the same
+time as the change, reviewed by nobody with an interest in
+contradicting it. Every entry under "How it gets gamed" below is that
+one weakness in a different costume, which is why provenance is graded
+on what it explains rather than counted.
 
 ## In practice
 
