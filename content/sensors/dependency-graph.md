@@ -22,20 +22,14 @@ see_also:
 - SO-015c
 - SO-014d
 references:
-- title: A Novel Approach for Estimating Truck Factors
-  year: 2016
+- title: 'Exploring the Structure of Complex Software Designs: An Empirical Study of Open Source and Proprietary Code'
+  year: 2006
   tier: II
-  url: https://arxiv.org/pdf/1604.06766
+  url: https://doi.org/10.1287/mnsc.1060.0552
   kind: publication
-  authors: Guilherme Avelino, Leonardo Passos, Andre Hora, Marco Tulio Valente
-  venue: arXiv 1604.06766 (companion to ICPC 2016)
-- title: Do Developers Update Their Library Dependencies?
-  year: 2017
-  tier: II
-  url: https://arxiv.org/abs/1709.04621
-  kind: publication
-  authors: Raula Gaikovina Kula, Daniel M. German, Ali Ouni, Takashi Ishio, Katsuro Inoue
-  venue: Empirical Software Engineering
+  authors: Alan MacCormack, John Rusnak, Carliss Baldwin
+  venue: Management Science 52(7)
+  description: Dependency structure matrices over Linux and Mozilla; propagation cost as a measure of how far a change can reach through the graph
 - title: dependency-cruiser
   url: https://github.com/sverweij/dependency-cruiser
   kind: tool
