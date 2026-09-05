@@ -52,8 +52,11 @@ def generate_glossary_page(output_dir):
         ("oracle-strength",
          "Oracle strength",
          "How confidently a sensor knows that something is wrong. The scale "
-         "runs from maximum (a compiler error — the code cannot argue) to low "
-         "(a complexity metric — it suggests risk but proves nothing). See the "
+         "is ordinal, with five rungs: maximum (a compiler error — the code "
+         "cannot argue), high, medium, low (line coverage — the line ran, "
+         "which says nothing about whether it was right), and minimum (a "
+         "raw complexity score, which no entry in the catalog currently "
+         "holds). See the "
          '<a href="/framework/" class="wikilink">framework page</a> for the '
          "full ranking."),
         ("independence",
@@ -71,7 +74,8 @@ def generate_glossary_page(output_dir):
          "Scope",
          "What level of the system the sensor tells you about: a single line, "
          "a function, a module, a service, the whole system, or a user journey. "
-         "A type checker has function-level scope; observability events have "
+         "An example-based test has function-level scope; a type checker "
+         "has module-level scope; observability events have "
          'system-level scope. See <a href="/framework/" class="wikilink">'
          "the framework</a>."),
         ("feedback-latency",
@@ -84,8 +88,8 @@ def generate_glossary_page(output_dir):
         ("actionability",
          "Actionability",
          "Whether a sensor merely flags a problem or tells you what to fix. "
-         "Three values: <strong>blocking</strong> — a binary gate that halts "
-         "the pipeline (compiler error, invariant gate); "
+         "Three values: <strong>blocking</strong> — the verdict halts "
+         "the pipeline (a pre-promotion gate, a failed smoke test); "
          "<strong>exploratory</strong> — a signal to investigate that narrows "
          "where to look but prescribes nothing (hotspot, trace, coverage gap); "
          "<strong>guiding</strong> — the feedback itself directs the next "
@@ -111,7 +115,9 @@ def generate_glossary_page(output_dir):
          "untested mutation — the agent knows what to write a test for. A "
          "complexity score just says \"this is complex\" and leaves the agent "
          "to figure out what to do. The distinction comes from Birgitta "
-         "Böckeler's \"guides &amp; sensors\" framing."),
+         "Böckeler's \"guides &amp; sensors\" framing in "
+         '<a href="https://martinfowler.com/articles/harness-engineering.html" '
+         'class="wikilink">Harness engineering for coding agent users</a>.'),
         ("predictive-vs-retrospective",
          "Predictive vs retrospective",
          "Whether the sensor fires before the code ships (predictive — a "
@@ -154,6 +160,34 @@ def generate_glossary_page(output_dir):
           "any one sensor measures, and stating it once would understate "
           "it. Each occurrence links back here so a reader who notices the "
           "repetition can verify it is intentional."),
+         ("negative-control",
+          "Negative control",
+          "A check that the sensor can fail: a known-bad input, a version "
+          "of the code broken on purpose, a fault the system is known not "
+          "to survive, run to watch the sensor fire. A sensor that has "
+          "never been seen to fail is not yet known to be reading anything, "
+          "whatever its dashboard says. The term is borrowed from the "
+          "laboratory, where a control that must come out negative is how "
+          "a reagent that has stopped working gets caught. Several entries "
+          "ask for one in their own words: a metamorphic relation with no "
+          "recorded kill, a fitness function that has never fired, a "
+          "business invariant whose row has been empty for six months, a "
+          "synthetic check that has not failed in a year on a system that "
+          "has had incidents. A negative control is a one-shot proof; the "
+          '<a href="/glossary/#meta-signal" class="wikilink">meta-signal</a> '
+          "is the trend that says when to run one again."),
+         ("meta-signal",
+          "Meta-signal",
+          "The second-order reading that shows a sensor going blind while "
+          "its first-order reading stays green: the suppression count on a "
+          "linter, the equivalent-mutant exemption rate in mutation testing, "
+          "the retry rate of an integration suite, the share of "
+          "shadow-traffic divergences classified benign without an inspected "
+          "sample. Nearly every entry names its own at the end of its "
+          "\"How it gets gamed\" section. A meta-signal is a trend to track; "
+          'a <a href="/glossary/#negative-control" class="wikilink">negative '
+          "control</a> is a one-shot proof that the sensor still fires at "
+          "all."),
      ]
 
     sections = ""
@@ -210,8 +244,8 @@ def generate_glossary_page(output_dir):
         json_ld=[glossary_ld, breadcrumb_ld([("Glossary", None)])],
         description=(
             "Definitions for the vocabulary the catalog runs on — epistemic "
-            "sensor, oracle, independence, actionability, flakiness, and the "
-            "rest, in one place."
+            "sensor, oracle, independence, actionability, guiding sensor, "
+            "and the rest, in one place."
         ),
     )
     out_path = output_dir / "glossary" / "index.html"

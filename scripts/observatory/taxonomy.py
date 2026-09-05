@@ -17,7 +17,6 @@ FAMILIES = [
         "icon": "\u25a0",
         "question": "Is this artifact internally coherent?",
         "examples": "Compiler, type checker, linter, formatter, schema validator",
-        "stack_levels": ["compilation", "static-analysis"],
     },
     {
         "slug": "behavioral",
@@ -26,7 +25,6 @@ FAMILIES = [
         "icon": "●",
         "question": "Does it do what we expect?",
         "examples": "Unit, integration, E2E, contract, snapshot tests",
-        "stack_levels": ["behavioral-tests", "integration-tests"],
     },
     {
         "slug": "test-effectiveness",
@@ -35,7 +33,6 @@ FAMILIES = [
         "icon": "▲",
         "question": "Do our tests actually detect failures?",
         "examples": "Coverage, diff coverage, mutation testing",
-        "stack_levels": ["mutation-testing"],
     },
     {
         "slug": "invariants",
@@ -44,7 +41,6 @@ FAMILIES = [
         "icon": "◆",
         "question": "What must always be true?",
         "examples": "Balance >= 0, every FK valid, every request has one ID",
-        "stack_levels": ["static-analysis", "production-behavior"],
     },
     {
         "slug": "adversarial",
@@ -53,7 +49,6 @@ FAMILIES = [
         "icon": "✖",
         "question": "Can we make our evidence of correctness fail?",
         "examples": "Fuzzing, fault injection, chaos, metamorphic testing",
-        "stack_levels": ["property-metamorphic", "mutation-testing"],
     },
     {
         "slug": "runtime",
@@ -62,7 +57,6 @@ FAMILIES = [
         "icon": "○",
         "question": "What is it actually doing?",
         "examples": "Logs, traces, metrics, profiles, high-cardinality events",
-        "stack_levels": ["production-behavior"],
     },
     {
         "slug": "change",
@@ -71,7 +65,6 @@ FAMILIES = [
         "icon": "→",
         "question": "What did this change actually affect?",
         "examples": "API compatibility, canary, shadow traffic, error budget, A/B testing",
-        "stack_levels": ["canary-shadow", "user-outcome"],
     },
     {
         "slug": "architecture",
@@ -80,7 +73,6 @@ FAMILIES = [
         "icon": "▣",
         "question": "Is the system becoming harder to reason about?",
         "examples": "Dependency graphs, coupling, fitness functions, hotspots",
-        "stack_levels": ["static-analysis"],
     },
     {
         "slug": "evolution",
@@ -89,7 +81,6 @@ FAMILIES = [
         "icon": "⟳",
         "question": "Does this look like changes that caused trouble before?",
         "examples": "Revert rate, regression rate, churn, incident correlation",
-        "stack_levels": ["user-outcome"],
     },
     {
         "slug": "comprehension",
@@ -98,7 +89,6 @@ FAMILIES = [
         "icon": "✔",
         "question": "Can another observer understand and challenge this?",
         "examples": "Review, explainability tests, documentation drift, onboarding",
-        "stack_levels": ["static-analysis", "behavioral-tests", "production-behavior", "user-outcome"],
     },
 ]
 

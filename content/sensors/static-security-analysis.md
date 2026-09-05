@@ -21,20 +21,14 @@ see_also:
 - SO-014b
 last_reviewed: '2026-08-31'
 references:
-- title: An Empirical Study on the Effectiveness of Security Code Review
+- title: Why Don't Software Developers Use Static Analysis Tools to Find Bugs?
   year: 2013
-  tier: I
-  url: https://people.eecs.berkeley.edu/~daw/papers/coderev-essos13.pdf
-  kind: publication
-  authors: Anne Edmundson, Brian Holtkamp, Emanuel Rivera, Matthew Finifter, Adrian Mettler, David Wagner
-  venue: ESSoS 2013
-- title: Eliminating Memory Safety Vulnerabilities at the Source
-  year: 2024
   tier: II
-  url: https://security.googleblog.com/2024/09/eliminating-memory-safety-vulnerabilities-Android.html
+  url: https://doi.org/10.1109/ICSE.2013.6606613
   kind: publication
-  authors: Google Security Blog, Android team
-  venue: Google Security Blog
+  authors: Brittany Johnson, Yoonki Song, Emerson Murphy-Hill, Robert Bowdidge
+  venue: ICSE 2013
+  description: Developer interviews on why scanner findings get ignored; false positives and unreadable output are the reasons given, which is the tax this entry's oracle note names
 - title: Semgrep
   url: https://semgrep.dev
   kind: tool

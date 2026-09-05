@@ -5,8 +5,13 @@ from ..jsonld import breadcrumb_ld, page_ld
 from ..taxonomy import FAMILIES
 
 
-def generate_about_page(output_dir):
+def generate_about_page(sensors, output_dir):
     """Generate the about page."""
+
+    # The AI-contribution disclosure below quotes the review count so the
+    # claim tracks the catalog instead of the day it was written.
+    total = len(sensors)
+    reviewed = sum(1 for s in sensors if s.get("last_reviewed"))
 
     body = f"""  <section class="page-header page-header--reading">
     <p class="eyebrow">About</p>
@@ -51,17 +56,50 @@ def generate_about_page(output_dir):
       on the other.
     </p>
 
-    <h2>Inspirations</h2>
+    <h2>What the catalog leaves out</h2>
     <p>
-      <strong>Birgitta Böckeler's "guides &amp; sensors" framing.</strong>
-      Sensors are tools that give an agent feedback about what it has done.
-      The interesting frontier is guiding sensors, where the feedback itself
-      tells the agent what to do next.
+      Security and reliability engineering share this catalog's vocabulary,
+      and readers keep looking for them here. They are out of scope on
+      purpose. There is no entry for vulnerability scanning, secrets
+      scanning or penetration testing, and none for circuit breakers,
+      retries or failover. The test for inclusion is whether the sensor
+      tells you something about the correctness of a change. A circuit
+      breaker is a mechanism, not a measurement; a CVE feed reports on code
+      you did not write.
     </p>
     <p>
-      <strong>Honeycomb's conception of observability.</strong>
-      Don't merely collect predetermined health metrics; preserve enough
-      information to ask questions you didn't know you would need to ask.
+      Two entries sit on that line and are in for a stated reason.
+      <a href="/sensors/static-security-analysis/" class="wikilink">Static
+      security analysis</a> reads the change itself and asks whether input
+      can reach a dangerous sink, which is a claim about this code.
+      <a href="/sensors/build-provenance-sbom/" class="wikilink">Build
+      provenance &amp; SBOM</a> asks whether the artifact about to ship is
+      the one the pipeline built, which is a structural question. Both end
+      by naming the field they border and pointing at its own references
+      rather than standing in for it.
+    </p>
+
+    <h2>Inspirations</h2>
+    <p>
+      <strong>Birgitta Böckeler's "guides &amp; sensors" framing</strong>, from
+      <a href="https://martinfowler.com/articles/harness-engineering.html"
+      class="wikilink">Harness engineering for coding agent users</a>
+      (martinfowler.com, April 2026). Guides steer an agent before it
+      acts; sensors observe after it acts and give it feedback about what
+      it has done. The interesting frontier is guiding sensors, where the
+      feedback itself tells the agent what to do next. Her follow-up,
+      <a href="https://martinfowler.com/articles/sensors-for-coding-agents.html"
+      class="wikilink">Maintainability sensors for coding agents</a>, works
+      through a real codebase with the same vocabulary.
+    </p>
+    <p>
+      <strong>Honeycomb's conception of observability</strong>, as set out
+      in <a href="https://www.honeycomb.io/what-is-observability"
+      class="wikilink">What Is Observability?</a> and in Charity Majors,
+      Liz Fong-Jones and George Miranda's <em>Observability Engineering</em>
+      (O'Reilly, 2022). Don't merely collect predetermined health metrics;
+      preserve enough information to ask questions you didn't know you
+      would need to ask.
     </p>
 
     <h2>Maintained by</h2>
@@ -82,6 +120,29 @@ def generate_about_page(output_dir):
       Errors and gaps in the catalog are best filed in the
       <a href="https://github.com/justinabrahms/software-observatory/issues"
       class="wikilink">issue tracker</a>.
+    </p>
+
+    <h2>How this was written</h2>
+    <p>
+      Most of the prose on this site was drafted by AI models and then
+      reviewed, corrected and rewritten under the author's direction. On
+      Blair Enns's
+      <a href="https://www.winwithoutpitching.com/aiscale" class="wikilink">AI
+      Contribution Scale</a> that is <strong>AI-4, AI Drafted</strong>: the
+      author supplied the idea, the argument, the source material and the
+      editorial judgment, a model produced most of the initial prose, and
+      the author then edited and verified the result.
+    </p>
+    <p>
+      That review happens one page at a time, and each sensor page shows
+      its review date in the sidebar; {reviewed} of {total} carry one
+      today. A page whose review reads "pending" has not had that pass
+      yet, and until it does it sits at <strong>AI-5, AI Generated</strong>.
+      The scale says the highest applicable level governs the whole, so
+      the site-wide answer is AI-5 until the review pass completes, and
+      AI-4 after. The code that builds the site was written the same way,
+      and the commit history names the model on every commit one
+      co-authored.
     </p>
 
     <h2>Contributing</h2>
@@ -112,9 +173,9 @@ def generate_about_page(output_dir):
       <li>
         <strong>Propose a family change</strong> (adding, renumbering, or
         reclassifying a family) via an issue first — these touch
-        <code>FAMILIES</code> in <code>build.py</code> and the color tokens
-        in <code>css/observatory.css</code>, so they're worth discussing
-        before the work.
+        <code>FAMILIES</code> in <code>scripts/observatory/taxonomy.py</code>
+        and the color tokens in <code>css/observatory.css</code>, so
+        they're worth discussing before the work.
       </li>
     </ul>
     <p>

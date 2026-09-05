@@ -23,20 +23,14 @@ see_also:
 - SO-008
 last_reviewed: '2026-08-26'
 references:
-- title: Organizational Volatility and its Effects on Software Defects
-  year: 2010
-  tier: II
-  url: https://mockus.org/papers/orgQuality-slides.pdf
+- title: Detection of Logical Coupling Based on Product Release History
+  year: 1998
+  tier: III
+  url: https://doi.org/10.1109/ICSM.1998.738508
   kind: publication
-  authors: Audris Mockus
-  venue: FSE 2010
-- title: 2017 State of DevOps Report
-  year: 2017
-  tier: II
-  url: https://dora.dev/research/2017/2017-state-of-devops-report.pdf
-  kind: publication
-  authors: Nicole Forsgren, Jez Humble, Gene Kim, Alanna Brown, Nigel Kersten
-  venue: Puppet + DORA
+  authors: Harald Gall, Karin Hajek, Mehdi Jazayeri
+  venue: ICSM 1998
+  description: The paper that named the technique; twenty releases of a telecom system, modules that change together without a structural dependency
 - authors: Adam Tornhill
   title: Your Code as a Crime Scene
   year: 2015

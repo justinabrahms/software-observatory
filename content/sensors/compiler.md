@@ -94,7 +94,7 @@ When the compiler fires, the response is mechanical:
 
 ## What it cannot detect
 
-A compiler cannot detect [logical errors](mutation-testing.html) — a function
+A compiler cannot detect [logical errors](example-based-tests.html) — a function
 that compiles perfectly but returns the wrong answer. It also cannot detect
 [architectural problems](catalog.html#architecture) or [runtime
 behavior](observability-events.html).

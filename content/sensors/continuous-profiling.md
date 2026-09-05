@@ -24,7 +24,7 @@ last_reviewed: '2026-09-03'
 references:
 - title: Exploring Statistical Change Point Detection Techniques for Performance Anomaly Detection at Mozilla
   year: 2026
-  tier: I
+  tier: II
   url: https://arxiv.org/abs/2606.18377
   kind: publication
   authors: Mohamed Bilel Besbes, Gregory Mierzwinski, Suhaib Mujahid, Philipp Leitner, Alexander Serebrenik, Dave Hunt, Diego Elias Costa

@@ -46,18 +46,18 @@ references:
   year: 1969
   kind: publication
   tier: IV
-- title: assertpy
+- title: Soda
   kind: tool
-  url: https://github.com/assertpy/assertpy
-  description: Python fluent assertion library
-- title: pytest-check
+  url: https://docs.soda.io
+  description: Scheduled checks over live tables, written as declared invariants
+- title: Prometheus alerting rules
   kind: tool
-  url: https://github.com/okken/pytest-check
-  description: Non-blocking assertions for pytest
-- title: Hypothesis invariants
+  url: https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/
+  description: An invariant over a metric stream, evaluated continuously and paged on violation
+- title: Great Expectations
   kind: tool
-  url: https://hypothesis.readthedocs.io/en/latest/quickstart.html
-  description: Using Hypothesis for invariant checking
+  url: https://greatexpectations.io
+  description: Expectations asserted against production data on a schedule
 ---
 
 You don't need to know how the payment service works. You can observe:
@@ -82,7 +82,15 @@ every request has exactly one request_id
 
 Each invariant can be checked at compile time, test time, CI, runtime, in
 the database, or in production analytics. Each is a different sensor at a
-different cost point and latency.
+different cost point and latency, and the catalog splits the production
+end of that range three ways. A
+[database invariant](database-invariants.html) is enforced by the engine
+on the write, so the bad row never lands. A
+[business invariant](business-invariants.html) is a report over a window,
+read by whoever owns the promise. This entry is the checker between them:
+an assertion evaluated against the event stream as it flows, which
+catches what the schema cannot express and reports it before the weekly
+report does.
 
 > Runtime invariants become sensors of correctness without understanding
 > the implementation. You don't need to read the code. You need to observe

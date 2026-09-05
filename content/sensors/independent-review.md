@@ -28,13 +28,14 @@ references:
   kind: publication
   authors: Anne Edmundson, Brian Holtkamp, Emanuel Rivera, Matthew Finifter, Adrian Mettler, David Wagner
   venue: ESSoS 2013
-- title: 'The Cost of Interrupted Work: More Speed and Stress'
-  year: 2008
-  tier: I
-  url: https://ics.uci.edu/~gmark/chi08-mark.pdf
+- title: Expectations, Outcomes, and Challenges of Modern Code Review
+  year: 2013
+  tier: II
+  url: https://doi.org/10.1109/ICSE.2013.6606617
   kind: publication
-  authors: Gloria Mark, Daniela Gudith, Ulrich Klocke
-  venue: CHI 2008
+  authors: Alberto Bacchelli, Christian Bird
+  venue: ICSE 2013
+  description: Interviews and review data at Microsoft; finding defects is the stated motivation, knowledge transfer and awareness are the measured outcomes
 - authors: Fagan
   title: Design and Code Inspections to Reduce Errors
   year: 1976

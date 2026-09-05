@@ -28,10 +28,14 @@ references:
   kind: tool
   url: https://vitest.dev
   description: Vite-native testing framework with snapshots
-- title: instanbul
+- title: insta
   kind: tool
-  url: https://istanbul.js.org
-  description: JavaScript code coverage
+  url: https://insta.rs
+  description: Snapshot testing for Rust, with a review step for accepting changed snapshots
+- title: ApprovalTests
+  kind: tool
+  url: https://approvaltests.com
+  description: Approval testing libraries for a dozen languages
 ---
 
 Did observable output change? Not "is it correct" but "did it change" — a

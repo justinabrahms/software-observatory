@@ -22,15 +22,14 @@ see_also:
 - SO-005d
 last_reviewed: '2026-08-31'
 references:
-- title: 'Elle: Inferring Isolation Anomalies from Experimental Observations'
-  year: 2020
-  tier: II
-  url: https://arxiv.org/abs/2003.10554
+- title: Finding and Understanding Bugs in C Compilers
+  year: 2011
+  tier: III
+  url: https://doi.org/10.1145/1993498.1993532
   kind: publication
-  authors: Kyle Kingsbury, Peter Alvaro
-  venue: arXiv 2003.10554
-- title: Yang et al., 'Finding and Understanding Bugs in C Compilers' (2011, Csmith)
-  kind: other
+  authors: Xuejun Yang, Yang Chen, Eric Eide, John Regehr
+  venue: PLDI 2011
+  description: The Csmith paper; random C programs fed to GCC, Clang and others, with the bug counts this entry cites
 - title: SQLancer
   url: https://github.com/sqlancer/sqlancer
   kind: tool

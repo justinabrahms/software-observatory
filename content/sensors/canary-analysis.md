@@ -24,13 +24,6 @@ see_also:
 - SO-007e
 last_reviewed: '2026-08-26'
 references:
-- title: Exploring Statistical Change Point Detection Techniques for Performance Anomaly Detection at Mozilla
-  year: 2026
-  tier: I
-  url: https://arxiv.org/abs/2606.18377
-  kind: publication
-  authors: Mohamed Bilel Besbes, Gregory Mierzwinski, Suhaib Mujahid, Philipp Leitner, Alexander Serebrenik, Dave Hunt, Diego Elias Costa
-  venue: arXiv preprint
 - title: Holistic Configuration Management at Facebook
   year: 2015
   tier: III

@@ -20,7 +20,7 @@ from ..jsonld import (
 )
 from ..layout import html_page
 from ..render import blurb_text
-from ..review import review_dd_html
+from ..review import ai_level_dd_html, review_dd_html
 from ..taxonomy import FAMILY_BY_SLUG, LATENCY_WORDS, TIER_LABELS, family_url
 
 
@@ -217,6 +217,7 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug,
           <dt>Type</dt>             <dd>{html.escape(sensor.get('type', '').title())}{note_hover_html(sensor.get('type_note'))}</dd>
           <dt>Entry ID</dt>        <dd>{html.escape(sensor.get('id', ''))}</dd>
           <dt>Reviewed</dt>        <dd>{review_dd_html(sensor, as_of)}</dd>
+          <dt>AI contribution</dt> <dd>{ai_level_dd_html(sensor)}</dd>
         </dl>
       </div>
 {backlink_html}

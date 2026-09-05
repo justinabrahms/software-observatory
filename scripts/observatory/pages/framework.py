@@ -1,12 +1,90 @@
 """The framework essay: /framework/."""
 
+import html
+
 from ..layout import html_page
 from ..dates import catalog_as_of
 from ..jsonld import breadcrumb_ld, framework_termset_ld, page_ld
+from ..taxonomy import LATENCY_WORDS, LATENCY_X, ORACLE_WIDTHS
+
+
+# The two charts on this page used to be hand-written rows naming sensors
+# that were not entries ("complexity", "code review", "production") at
+# widths that disagreed with ORACLE_WIDTHS. They are now drawn from the
+# entries, one row per rung, so the chart cannot say something the catalog
+# does not. The slugs are preferences; any catalog (including the test
+# fixture) falls back to the first entry at each rung.
+ORACLE_BAR_PREFERRED = {
+    "maximum": "compiler",
+    "high": "example-based-tests",
+    "medium": "linter",
+    "low": "line-coverage",
+    "minimum": None,
+}
+
+LATENCY_ROW_PREFERRED = {
+    "milliseconds": "compiler",
+    "seconds": "example-based-tests",
+    "minutes": "integration-tests",
+    "minutes-hours": "mutation-testing",
+    "hours": "business-invariants",
+    "days": "revert-rate",
+    "weeks": "incident-correlation",
+    "months": "escaped-defect-rate",
+}
+
+
+def _pick(sensors, field, value, preferred):
+    """The preferred entry at this rung if the catalog has it, else the
+    first entry at the rung, else None."""
+    by_slug = {s["slug"]: s for s in sensors}
+    if preferred and preferred in by_slug and by_slug[preferred].get(field) == value:
+        return by_slug[preferred]
+    return next((s for s in sensors if s.get(field) == value), None)
+
+
+def oracle_bar_rows(sensors):
+    rows = ""
+    for level, width in ORACLE_WIDTHS.items():
+        s = _pick(sensors, "oracle", level, ORACLE_BAR_PREFERRED.get(level))
+        if s is None:
+            continue
+        rows += (
+            f'        <div class="bar-row"><span class="bar-label">'
+            f'<a href="/sensors/{s["slug"]}/">{html.escape(s["title"])}</a></span>'
+            f'<div class="bar-track"><div class="bar-fill" style="width:{width}%"></div></div>'
+            f'<span class="bar-pct">{level}</span></div>\n'
+        )
+    return rows.rstrip()
+
+
+def latency_rows(sensors):
+    rows = ""
+    for label in LATENCY_ROW_PREFERRED:
+        s = _pick(sensors, "latency", label, LATENCY_ROW_PREFERRED[label])
+        if s is None:
+            continue
+        rows += (
+            f'        <div class="lat-row"><span class="lat-sensor">'
+            f'<a href="/sensors/{s["slug"]}/">{html.escape(s["title"])}</a></span>'
+            f'<span class="lat-time">{html.escape(LATENCY_WORDS[label])}</span>'
+            f'<div class="lat-bar"><div class="lat-fill" style="width:{LATENCY_X[label]}%"></div></div></div>\n'
+        )
+    return rows.rstrip()
 
 
 def generate_framework_page(sensors, output_dir):
     """Generate the framework page."""
+
+    has_minimum = any(s.get("oracle") == "minimum" for s in sensors)
+    minimum_note = "" if has_minimum else (
+        "No entry currently rates minimum. A raw complexity score would: "
+        "high complexity proves nothing is wrong, it only suggests risk. "
+        "The catalog has no entry for one; "
+        '<a href="/sensors/hotspot-analysis/" class="wikilink">hotspot '
+        "analysis</a> consumes complexity as an input rather than reading "
+        "it as a verdict."
+    )
 
     body = f"""  <section class="page-header page-header--reading">
     <p class="eyebrow">The Framework</p>
@@ -39,22 +117,15 @@ def generate_framework_page(sensors, output_dir):
       <h2 class="property-detail-title">Oracle strength</h2>
       <p class="property-detail-question">How confidently does it know that something is wrong?</p>
       <div class="property-bars">
-        <div class="bar-row"><span class="bar-label">compiler error</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-pct">maximum</span></div>
-        <div class="bar-row"><span class="bar-label">type error</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-pct">maximum</span></div>
-        <div class="bar-row"><span class="bar-label">test assertion</span><div class="bar-track"><div class="bar-fill" style="width:90%"></div></div><span class="bar-pct">high</span></div>
-        <div class="bar-row"><span class="bar-label">mutation</span><div class="bar-track"><div class="bar-fill" style="width:90%"></div></div><span class="bar-pct">high</span></div>
-        <div class="bar-row"><span class="bar-label">linter</span><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div><span class="bar-pct">medium</span></div>
-        <div class="bar-row"><span class="bar-label">coverage</span><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div><span class="bar-pct">low</span></div>
-        <div class="bar-row"><span class="bar-label">complexity</span><div class="bar-track"><div class="bar-fill" style="width:20%"></div></div><span class="bar-pct">minimum</span></div>
-        <div class="bar-row"><span class="bar-label">code review</span><div class="bar-track"><div class="bar-fill" style="width:60%"></div></div><span class="bar-pct">medium</span></div>
+{oracle_bar_rows(sensors)}
       </div>
       <p>
-        A compiler has maximum oracle strength because the implementation
-        cannot argue with it. A complexity metric has minimum oracle
-        strength because high complexity doesn't prove anything is wrong —
-        it just suggests increased risk. The scale is ordinal (minimum →
+        One entry per rung, drawn from the catalog. A compiler has maximum
+        oracle strength because the implementation cannot argue with it;
+        line coverage is low because the line ran, which says nothing
+        about whether it was right. The scale is ordinal (minimum →
         low → medium → high → maximum): a sensor two rungs up is stronger,
-        not "twice as strong."
+        not "twice as strong." {minimum_note}
       </p>
       <div class="callout">
         <strong>Mutation's oracle is derivative.</strong> Mutation testing's
@@ -109,14 +180,12 @@ def generate_framework_page(sensors, output_dir):
       <h2 class="property-detail-title">Feedback latency</h2>
       <p class="property-detail-question">How long until the sensor tells you something?</p>
       <div class="latency-table">
-        <div class="lat-row"><span class="lat-sensor">compiler</span><span class="lat-time">milliseconds</span><div class="lat-bar"><div class="lat-fill" style="width:5%"></div></div></div>
-        <div class="lat-row"><span class="lat-sensor">unit tests</span><span class="lat-time">seconds</span><div class="lat-bar"><div class="lat-fill" style="width:12%"></div></div></div>
-        <div class="lat-row"><span class="lat-sensor">integration</span><span class="lat-time">minutes</span><div class="lat-bar"><div class="lat-fill" style="width:30%"></div></div></div>
-        <div class="lat-row"><span class="lat-sensor">mutation</span><span class="lat-time">minutes / hours</span><div class="lat-bar"><div class="lat-fill" style="width:50%"></div></div></div>
-        <div class="lat-row"><span class="lat-sensor">canary</span><span class="lat-time">minutes</span><div class="lat-bar"><div class="lat-fill" style="width:35%"></div></div></div>
-        <div class="lat-row"><span class="lat-sensor">production</span><span class="lat-time">hours / days</span><div class="lat-bar"><div class="lat-fill" style="width:70%"></div></div></div>
-        <div class="lat-row"><span class="lat-sensor">incident</span><span class="lat-time">weeks</span><div class="lat-bar"><div class="lat-fill" style="width:100%"></div></div></div>
+{latency_rows(sensors)}
       </div>
+      <p>
+        One entry per latency band, drawn from the catalog and placed on
+        the same axis the homepage scatter uses.
+      </p>
     </section>
 
     <section class="property-detail">
@@ -124,16 +193,33 @@ def generate_framework_page(sensors, output_dir):
       <h2 class="property-detail-title">Actionability</h2>
       <p class="property-detail-question">Does it merely say "bad" or does it tell you what to fix?</p>
       <p>
-        Three values, in order of how much the feedback directs the next action:
+        Three values. One is about what the verdict does; the other two
+        are about what the reading says.
       </p>
       <div class="scope-ladder">
-        <div class="scope-rung">Blocking <span class="scope-desc">A binary gate: pass or fail. The pipeline stops on failure, but the sensor does not say what to fix — a compiler error, a failing invariant gate, a smoke test that halts a rollout.</span></div>
+        <div class="scope-rung">Blocking <span class="scope-desc">The verdict stops the pipeline. A pre-promotion gate refuses the rollout, a smoke test halts it, an unattested artifact does not ship. The message is the refusal; the diagnosis, if there is one, comes from somewhere else.</span></div>
         <div class="scope-rung">Exploratory <span class="scope-desc">A signal to investigate, not a verdict. It narrows where to look but prescribes nothing — a hotspot, a trace, a coverage gap on unchanged lines.</span></div>
         <div class="scope-rung">Guiding <span class="scope-desc">The feedback itself directs the next action. A mutation report shows the exact untested mutation; a linter diagnostic names the rule and the fix; a type error points at the expression and the expected type.</span></div>
       </div>
       <p>
-        In Böckeler's framing, the interesting frontier is guiding sensors,
-        where the feedback itself tells the agent what to do next.
+        The values overlap in practice, and the rating records which one
+        the reading is written for. Every build stops on a compiler error,
+        yet the <a href="/sensors/compiler/" class="wikilink">compiler</a>
+        is rated guiding, because its message names the file, the line and
+        the expected type: it is written to be acted on. A
+        <a href="/sensors/pre-promotion-invariant-gates/" class="wikilink">pre-promotion
+        gate</a> is rated blocking because its message is the refusal.
+        Between them sit sensors whose verdict is a gate and whose output
+        is a diagnosis, such as a model checker's counter-example trace;
+        those are rated by the gate, since that is what the team wires
+        them up as. Whether a guiding sensor is also made a gate is a
+        pipeline decision, not a property of the sensor.
+      </p>
+      <p>
+        In <a href="https://martinfowler.com/articles/harness-engineering.html"
+        class="wikilink">Böckeler's framing</a>, the interesting frontier is
+        guiding sensors, where the feedback itself tells the agent what to
+        do next.
       </p>
     </section>
 
@@ -172,6 +258,36 @@ def generate_framework_page(sensors, output_dir):
         before they ship; retrospective sensors tell you where the bugs came
         from. Both matter — a sensor stack with only predictive sensors has
         no feedback loop; one with only retrospective sensors has no gate.
+      </p>
+    </section>
+
+    <section class="property-detail">
+      <h2 class="property-detail-title">Showing a sensor can fail</h2>
+      <p class="property-detail-question">Has this sensor ever been seen to fire?</p>
+      <p>
+        The six dimensions describe a sensor that works. None of them says
+        whether the one you have installed still does. A linter with every
+        rule suppressed, a fitness function whose baseline covers every
+        violation, a synthetic check whose timeout was widened until it
+        passes: each rates exactly as its entry rates it, and each reads
+        green on a system that is broken.
+      </p>
+      <p>
+        Two habits recur across the catalog for this. A
+        <a href="/glossary/#negative-control" class="wikilink">negative
+        control</a> is a one-shot proof: break the code on purpose, feed the
+        known-bad input, and watch the sensor fire. It is cheap, and it is
+        the only evidence that a sensor which has never failed is reading
+        anything. A <a href="/glossary/#meta-signal" class="wikilink">meta-signal</a>
+        is the trend that says when to run one: the suppression count, the
+        exemption rate, the retry rate, the share of findings closed by
+        policy rather than by a fix. Nearly every entry names its own at
+        the end of "How it gets gamed".
+      </p>
+      <p>
+        The catalog applies this to itself. Its build gates are tested by
+        handing them a bad entry and checking that they refuse it, because
+        a gate that has not been seen to fail is a gate in name only.
       </p>
     </section>
   </div>"""

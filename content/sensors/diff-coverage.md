@@ -23,13 +23,14 @@ see_also:
 - SO-003
 - change
 references:
-- title: State of Mutation Testing at Google
-  year: 2018
-  tier: III
-  url: https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/46584.pdf
+- title: Code Coverage at Google
+  year: 2019
+  tier: II
+  url: https://doi.org/10.1145/3338906.3340459
   kind: publication
-  authors: Goran Petrović, Marko Ivanković
-  venue: ICSE-SEIP 2018
+  authors: Marko Ivanković, Goran Petrović, René Just, Gordon Fraser
+  venue: ESEC/FSE 2019
+  description: Coverage shown per changed line inside code review, across Google; the adoption and survey data behind this entry's claim that the diff is the number that matters at review time
 - title: diff-cover
   kind: tool
   url: https://github.com/Bachmann1234/diff_cover

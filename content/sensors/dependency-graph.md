@@ -22,20 +22,14 @@ see_also:
 - SO-015c
 - SO-014d
 references:
-- title: A Novel Approach for Estimating Truck Factors
-  year: 2016
+- title: 'Exploring the Structure of Complex Software Designs: An Empirical Study of Open Source and Proprietary Code'
+  year: 2006
   tier: II
-  url: https://arxiv.org/pdf/1604.06766
+  url: https://doi.org/10.1287/mnsc.1060.0552
   kind: publication
-  authors: Guilherme Avelino, Leonardo Passos, Andre Hora, Marco Tulio Valente
-  venue: arXiv 1604.06766 (companion to ICPC 2016)
-- title: Do Developers Update Their Library Dependencies?
-  year: 2017
-  tier: II
-  url: https://arxiv.org/abs/1709.04621
-  kind: publication
-  authors: Raula Gaikovina Kula, Daniel M. German, Ali Ouni, Takashi Ishio, Katsuro Inoue
-  venue: Empirical Software Engineering
+  authors: Alan MacCormack, John Rusnak, Carliss Baldwin
+  venue: Management Science 52(7)
+  description: Dependency structure matrices over Linux and Mozilla; propagation cost as a measure of how far a change can reach through the graph
 - title: dependency-cruiser
   url: https://github.com/sverweij/dependency-cruiser
   kind: tool
@@ -64,17 +58,22 @@ risk factors.
 
 ## In practice
 
-The reading is a list of edges plus a few numbers, often surfaced by
-an import-boundary tool refusing an edge:
+The reading is a list of edges plus a few numbers. A cycle finder
+prints the edges that close a loop:
 
 ```
-import-linter: forbidden import detected
-  src/api/views.py -> src/db/session
-  contract "api must not import db internals": BROKEN (1 violation)
+$ madge --circular src
+Processed 212 files (1.4s)
 
-dependency-cruiser: circular
-  src/auth/token.ts -> src/auth/session.ts -> src/auth/token.ts
+✖ Found 2 circular dependencies!
+
+1) auth/token.ts > auth/session.ts
+2) billing/invoice.ts > billing/tax.ts > billing/discount.ts
 ```
+
+Each numbered line is one loop, read left to right and back to the
+start. The rest of the reading is the numbers the graph yields once it
+is built:
 
 | Metric | Reading | Read as |
 |--------|---------|---------|
@@ -84,7 +83,10 @@ dependency-cruiser: circular
 | Instability | 9 changes to `core.py` this quarter | Every dependent pays churn tax |
 
 The numbers are not verdicts; they are the inputs to a judgment about
-where change will be expensive. Read the graph against recent change
+where change will be expensive. When one of those judgments hardens
+into a rule that CI refuses, it has become a
+[boundary sensor](boundary-sensors.html); this entry is the graph such
+rules are written against. Read the graph against recent change
 history, because a stable hub is cheap and a churning hub is a
 bottleneck, and the graph alone cannot tell them apart. Treat a
 single module with high fan-in and high instability as the highest-
@@ -126,4 +128,4 @@ grows while the rule count is flat, the sensor is being spent.
 
 The dependency graph shows structural coupling, not *behavioral* coupling —
 modules that change together for reasons the graph can't see. That requires
-[change coupling](catalog.html#evolution) analysis.
+[change coupling](change-coupling.html) analysis.
