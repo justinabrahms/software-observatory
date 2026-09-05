@@ -124,13 +124,28 @@ def generate_framework_page(sensors, output_dir):
       <h2 class="property-detail-title">Actionability</h2>
       <p class="property-detail-question">Does it merely say "bad" or does it tell you what to fix?</p>
       <p>
-        Three values, in order of how much the feedback directs the next action:
+        Three values. One is about what the verdict does; the other two
+        are about what the reading says.
       </p>
       <div class="scope-ladder">
-        <div class="scope-rung">Blocking <span class="scope-desc">A binary gate: pass or fail. The pipeline stops on failure, but the sensor does not say what to fix — a compiler error, a failing invariant gate, a smoke test that halts a rollout.</span></div>
+        <div class="scope-rung">Blocking <span class="scope-desc">The verdict stops the pipeline. A pre-promotion gate refuses the rollout, a smoke test halts it, an unattested artifact does not ship. The message is the refusal; the diagnosis, if there is one, comes from somewhere else.</span></div>
         <div class="scope-rung">Exploratory <span class="scope-desc">A signal to investigate, not a verdict. It narrows where to look but prescribes nothing — a hotspot, a trace, a coverage gap on unchanged lines.</span></div>
         <div class="scope-rung">Guiding <span class="scope-desc">The feedback itself directs the next action. A mutation report shows the exact untested mutation; a linter diagnostic names the rule and the fix; a type error points at the expression and the expected type.</span></div>
       </div>
+      <p>
+        The values overlap in practice, and the rating records which one
+        the reading is written for. Every build stops on a compiler error,
+        yet the <a href="/sensors/compiler/" class="wikilink">compiler</a>
+        is rated guiding, because its message names the file, the line and
+        the expected type: it is written to be acted on. A
+        <a href="/sensors/pre-promotion-invariant-gates/" class="wikilink">pre-promotion
+        gate</a> is rated blocking because its message is the refusal.
+        Between them sit sensors whose verdict is a gate and whose output
+        is a diagnosis, such as a model checker's counter-example trace;
+        those are rated by the gate, since that is what the team wires
+        them up as. Whether a guiding sensor is also made a gate is a
+        pipeline decision, not a property of the sensor.
+      </p>
       <p>
         In Böckeler's framing, the interesting frontier is guiding sensors,
         where the feedback itself tells the agent what to do next.
