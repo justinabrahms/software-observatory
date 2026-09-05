@@ -51,6 +51,29 @@ def generate_about_page(output_dir):
       on the other.
     </p>
 
+    <h2>What the catalog leaves out</h2>
+    <p>
+      Security and reliability engineering share this catalog's vocabulary,
+      and readers keep looking for them here. They are out of scope on
+      purpose. There is no entry for vulnerability scanning, secrets
+      scanning or penetration testing, and none for circuit breakers,
+      retries or failover. The test for inclusion is whether the sensor
+      tells you something about the correctness of a change. A circuit
+      breaker is a mechanism, not a measurement; a CVE feed reports on code
+      you did not write.
+    </p>
+    <p>
+      Two entries sit on that line and are in for a stated reason.
+      <a href="/sensors/static-security-analysis/" class="wikilink">Static
+      security analysis</a> reads the change itself and asks whether input
+      can reach a dangerous sink, which is a claim about this code.
+      <a href="/sensors/build-provenance-sbom/" class="wikilink">Build
+      provenance &amp; SBOM</a> asks whether the artifact about to ship is
+      the one the pipeline built, which is a structural question. Both end
+      by naming the field they border and pointing at its own references
+      rather than standing in for it.
+    </p>
+
     <h2>Inspirations</h2>
     <p>
       <strong>Birgitta Böckeler's "guides &amp; sensors" framing</strong>, from
@@ -122,9 +145,9 @@ def generate_about_page(output_dir):
       <li>
         <strong>Propose a family change</strong> (adding, renumbering, or
         reclassifying a family) via an issue first — these touch
-        <code>FAMILIES</code> in <code>build.py</code> and the color tokens
-        in <code>css/observatory.css</code>, so they're worth discussing
-        before the work.
+        <code>FAMILIES</code> in <code>scripts/observatory/taxonomy.py</code>
+        and the color tokens in <code>css/observatory.css</code>, so
+        they're worth discussing before the work.
       </li>
     </ul>
     <p>
