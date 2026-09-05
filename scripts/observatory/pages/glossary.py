@@ -52,8 +52,11 @@ def generate_glossary_page(output_dir):
         ("oracle-strength",
          "Oracle strength",
          "How confidently a sensor knows that something is wrong. The scale "
-         "runs from maximum (a compiler error — the code cannot argue) to low "
-         "(a complexity metric — it suggests risk but proves nothing). See the "
+         "is ordinal, with five rungs: maximum (a compiler error — the code "
+         "cannot argue), high, medium, low (line coverage — the line ran, "
+         "which says nothing about whether it was right), and minimum (a "
+         "raw complexity score, which no entry in the catalog currently "
+         "holds). See the "
          '<a href="/framework/" class="wikilink">framework page</a> for the '
          "full ranking."),
         ("independence",
@@ -71,7 +74,8 @@ def generate_glossary_page(output_dir):
          "Scope",
          "What level of the system the sensor tells you about: a single line, "
          "a function, a module, a service, the whole system, or a user journey. "
-         "A type checker has function-level scope; observability events have "
+         "An example-based test has function-level scope; a type checker "
+         "has module-level scope; observability events have "
          'system-level scope. See <a href="/framework/" class="wikilink">'
          "the framework</a>."),
         ("feedback-latency",
@@ -84,8 +88,8 @@ def generate_glossary_page(output_dir):
         ("actionability",
          "Actionability",
          "Whether a sensor merely flags a problem or tells you what to fix. "
-         "Three values: <strong>blocking</strong> — a binary gate that halts "
-         "the pipeline (compiler error, invariant gate); "
+         "Three values: <strong>blocking</strong> — the verdict halts "
+         "the pipeline (a pre-promotion gate, a failed smoke test); "
          "<strong>exploratory</strong> — a signal to investigate that narrows "
          "where to look but prescribes nothing (hotspot, trace, coverage gap); "
          "<strong>guiding</strong> — the feedback itself directs the next "
@@ -212,8 +216,8 @@ def generate_glossary_page(output_dir):
         json_ld=[glossary_ld, breadcrumb_ld([("Glossary", None)])],
         description=(
             "Definitions for the vocabulary the catalog runs on — epistemic "
-            "sensor, oracle, independence, actionability, flakiness, and the "
-            "rest, in one place."
+            "sensor, oracle, independence, actionability, guiding sensor, "
+            "and the rest, in one place."
         ),
     )
     out_path = output_dir / "glossary" / "index.html"

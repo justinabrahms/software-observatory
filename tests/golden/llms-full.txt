@@ -245,7 +245,7 @@ An oracle is the thing that tells you whether a given behavior is correct. A com
 
 #### Oracle strength
 
-How confidently a sensor knows that something is wrong. The scale runs from maximum (a compiler error — the code cannot argue) to low (a complexity metric — it suggests risk but proves nothing). See the [framework page](https://softwareobservatory.com/framework/) for the full ranking.
+How confidently a sensor knows that something is wrong. The scale is ordinal, with five rungs: maximum (a compiler error — the code cannot argue), high, medium, low (line coverage — the line ran, which says nothing about whether it was right), and minimum (a raw complexity score, which no entry in the catalog currently holds). See the [framework page](https://softwareobservatory.com/framework/) for the full ranking.
 
 #### Independence
 
@@ -253,7 +253,7 @@ Whether the thing being evaluated can manipulate the sensor. A model writing tes
 
 #### Scope
 
-What level of the system the sensor tells you about: a single line, a function, a module, a service, the whole system, or a user journey. A type checker has function-level scope; observability events have system-level scope. See [the framework](https://softwareobservatory.com/framework/).
+What level of the system the sensor tells you about: a single line, a function, a module, a service, the whole system, or a user journey. An example-based test has function-level scope; a type checker has module-level scope; observability events have system-level scope. See [the framework](https://softwareobservatory.com/framework/).
 
 #### Feedback latency
 
@@ -261,7 +261,7 @@ How long until the sensor tells you something. A compiler reports in millisecond
 
 #### Actionability
 
-Whether a sensor merely flags a problem or tells you what to fix. Three values: blocking — a binary gate that halts the pipeline (compiler error, invariant gate); exploratory — a signal to investigate that narrows where to look but prescribes nothing (hotspot, trace, coverage gap); guiding — the feedback itself directs the next action (mutation report shows the untested mutation, linter names the rule and fix). See [the framework](https://softwareobservatory.com/framework/).
+Whether a sensor merely flags a problem or tells you what to fix. Three values: blocking — the verdict halts the pipeline (a pre-promotion gate, a failed smoke test); exploratory — a signal to investigate that narrows where to look but prescribes nothing (hotspot, trace, coverage gap); guiding — the feedback itself directs the next action (mutation report shows the untested mutation, linter names the rule and fix). See [the framework](https://softwareobservatory.com/framework/).
 
 #### Evidence label
 

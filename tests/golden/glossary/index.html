@@ -11,11 +11,11 @@
        silently dropped. -->
   <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
   <title>Glossary — Software Observatory</title>
-  <meta name="description" content="Definitions for the vocabulary the catalog runs on — epistemic sensor, oracle, independence, actionability, flakiness, and the rest, in one place.">
+  <meta name="description" content="Definitions for the vocabulary the catalog runs on — epistemic sensor, oracle, independence, actionability, guiding sensor, and the rest, in one place.">
   <link rel="canonical" href="https://softwareobservatory.com/glossary/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Glossary — Software Observatory">
-  <meta property="og:description" content="Definitions for the vocabulary the catalog runs on — epistemic sensor, oracle, independence, actionability, flakiness, and the rest, in one place.">
+  <meta property="og:description" content="Definitions for the vocabulary the catalog runs on — epistemic sensor, oracle, independence, actionability, guiding sensor, and the rest, in one place.">
   <meta property="og:url" content="https://softwareobservatory.com/glossary/">
   <meta property="og:image" content="https://softwareobservatory.com/og.png">
   <meta property="og:image:width" content="1200">
@@ -23,7 +23,7 @@
   <meta property="og:site_name" content="Software Observatory">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Glossary — Software Observatory">
-  <meta name="twitter:description" content="Definitions for the vocabulary the catalog runs on — epistemic sensor, oracle, independence, actionability, flakiness, and the rest, in one place.">
+  <meta name="twitter:description" content="Definitions for the vocabulary the catalog runs on — epistemic sensor, oracle, independence, actionability, guiding sensor, and the rest, in one place.">
   <meta name="twitter:image" content="https://softwareobservatory.com/og.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -89,7 +89,7 @@
           "@type": "DefinedTerm",
           "@id": "https://softwareobservatory.com/glossary/#oracle-strength",
           "name": "Oracle strength",
-          "description": "How confidently a sensor knows that something is wrong. The scale runs from maximum (a compiler error — the code cannot argue) to low (a complexity metric — it suggests risk but proves nothing). See the framework page for the full ranking.",
+          "description": "How confidently a sensor knows that something is wrong. The scale is ordinal, with five rungs: maximum (a compiler error — the code cannot argue), high, medium, low (line coverage — the line ran, which says nothing about whether it was right), and minimum (a raw complexity score, which no entry in…",
           "url": "https://softwareobservatory.com/glossary/#oracle-strength",
           "inDefinedTermSet": {
             "@id": "https://softwareobservatory.com/glossary/#defined-term-set"
@@ -109,7 +109,7 @@
           "@type": "DefinedTerm",
           "@id": "https://softwareobservatory.com/glossary/#scope",
           "name": "Scope",
-          "description": "What level of the system the sensor tells you about: a single line, a function, a module, a service, the whole system, or a user journey. A type checker has function-level scope; observability events have system-level scope. See the framework.",
+          "description": "What level of the system the sensor tells you about: a single line, a function, a module, a service, the whole system, or a user journey. An example-based test has function-level scope; a type checker has module-level scope; observability events have system-level scope. See the framework.",
           "url": "https://softwareobservatory.com/glossary/#scope",
           "inDefinedTermSet": {
             "@id": "https://softwareobservatory.com/glossary/#defined-term-set"
@@ -129,7 +129,7 @@
           "@type": "DefinedTerm",
           "@id": "https://softwareobservatory.com/glossary/#actionability",
           "name": "Actionability",
-          "description": "Whether a sensor merely flags a problem or tells you what to fix. Three values: blocking — a binary gate that halts the pipeline (compiler error, invariant gate); exploratory — a signal to investigate that narrows where to look but prescribes nothing (hotspot, trace, coverage gap); guiding — the…",
+          "description": "Whether a sensor merely flags a problem or tells you what to fix. Three values: blocking — the verdict halts the pipeline (a pre-promotion gate, a failed smoke test); exploratory — a signal to investigate that narrows where to look but prescribes nothing (hotspot, trace, coverage gap); guiding — the…",
           "url": "https://softwareobservatory.com/glossary/#actionability",
           "inDefinedTermSet": {
             "@id": "https://softwareobservatory.com/glossary/#defined-term-set"
@@ -280,7 +280,7 @@
     </section>
     <section class="glossary-entry">
       <h2 class="glossary-term" id="oracle-strength">Oracle strength</h2>
-      <p class="glossary-definition">How confidently a sensor knows that something is wrong. The scale runs from maximum (a compiler error — the code cannot argue) to low (a complexity metric — it suggests risk but proves nothing). See the <a href="/framework/" class="wikilink">framework page</a> for the full ranking.</p>
+      <p class="glossary-definition">How confidently a sensor knows that something is wrong. The scale is ordinal, with five rungs: maximum (a compiler error — the code cannot argue), high, medium, low (line coverage — the line ran, which says nothing about whether it was right), and minimum (a raw complexity score, which no entry in the catalog currently holds). See the <a href="/framework/" class="wikilink">framework page</a> for the full ranking.</p>
     </section>
     <section class="glossary-entry">
       <h2 class="glossary-term" id="independence">Independence</h2>
@@ -288,7 +288,7 @@
     </section>
     <section class="glossary-entry">
       <h2 class="glossary-term" id="scope">Scope</h2>
-      <p class="glossary-definition">What level of the system the sensor tells you about: a single line, a function, a module, a service, the whole system, or a user journey. A type checker has function-level scope; observability events have system-level scope. See <a href="/framework/" class="wikilink">the framework</a>.</p>
+      <p class="glossary-definition">What level of the system the sensor tells you about: a single line, a function, a module, a service, the whole system, or a user journey. An example-based test has function-level scope; a type checker has module-level scope; observability events have system-level scope. See <a href="/framework/" class="wikilink">the framework</a>.</p>
     </section>
     <section class="glossary-entry">
       <h2 class="glossary-term" id="feedback-latency">Feedback latency</h2>
@@ -296,7 +296,7 @@
     </section>
     <section class="glossary-entry">
       <h2 class="glossary-term" id="actionability">Actionability</h2>
-      <p class="glossary-definition">Whether a sensor merely flags a problem or tells you what to fix. Three values: <strong>blocking</strong> — a binary gate that halts the pipeline (compiler error, invariant gate); <strong>exploratory</strong> — a signal to investigate that narrows where to look but prescribes nothing (hotspot, trace, coverage gap); <strong>guiding</strong> — the feedback itself directs the next action (mutation report shows the untested mutation, linter names the rule and fix). See <a href="/framework/" class="wikilink">the framework</a>.</p>
+      <p class="glossary-definition">Whether a sensor merely flags a problem or tells you what to fix. Three values: <strong>blocking</strong> — the verdict halts the pipeline (a pre-promotion gate, a failed smoke test); <strong>exploratory</strong> — a signal to investigate that narrows where to look but prescribes nothing (hotspot, trace, coverage gap); <strong>guiding</strong> — the feedback itself directs the next action (mutation report shows the untested mutation, linter names the rule and fix). See <a href="/framework/" class="wikilink">the framework</a>.</p>
     </section>
     <section class="glossary-entry">
       <h2 class="glossary-term" id="evidence-tier">Evidence label</h2>
