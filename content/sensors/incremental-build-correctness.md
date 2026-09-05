@@ -20,20 +20,14 @@ see_also:
 - SO-014c
 - SO-001
 references:
-- title: 'Reproducible Builds: Increasing the Integrity of Software Supply Chains'
-  year: 2021
+- title: Detecting Incorrect Build Rules
+  year: 2019
   tier: II
-  url: https://arxiv.org/abs/2104.06020
+  url: https://doi.org/10.1109/ICSE.2019.00125
   kind: publication
-  authors: Chris Lamb, Stefano Zacchiroli
-  venue: arXiv preprint; later IEEE Software 39 (2022) 62-70
-- title: An Empirical Analysis of Build Failures in the Continuous Integration Workflows of Java-Based Open-Source Software
-  year: 2017
-  tier: II
-  url: https://dsg.tuwien.ac.at/team/trausch/pub/PID4727015.pdf
-  kind: publication
-  authors: Thomas Rausch, Waldemar Hummer, Philipp Leitner, Stefan Schulte
-  venue: MSR 2017
+  authors: Nandor Licker, Andrew Rice
+  venue: ICSE 2019
+  description: Infers the true dependency graph by tracing what a build actually reads and compares it with what the rules declare; the set difference this entry's reading is built on
 - title: Bazel
   url: https://bazel.build
   kind: tool
