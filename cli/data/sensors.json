@@ -1740,10 +1740,10 @@
             "url": "https://developer.hashicorp.com/terraform/cli/commands/plan"
           },
           {
-            "description": "SQL linter and formatter",
+            "description": "JSON Schema validator for JavaScript",
             "kind": "tool",
-            "title": "sqlfluff",
-            "url": "https://www.sqlfluff.com"
+            "title": "Ajv",
+            "url": "https://ajv.js.org"
           }
         ],
         "scope": "service",
@@ -2708,6 +2708,16 @@
         "oracle": "maximum",
         "oracle_note": "a type error is a fact, not an opinion",
         "references": [
+          {
+            "authors": "Birgitta Böckeler",
+            "description": "The guides-and-sensors framing this entry opens with, and the source of \"positive prompt injection\"",
+            "kind": "publication",
+            "tier": "IV",
+            "title": "Harness engineering for coding agent users",
+            "url": "https://martinfowler.com/articles/harness-engineering.html",
+            "venue": "martinfowler.com",
+            "year": 2026
+          },
           {
             "authors": "Zheng Gao, Christian Bird, Earl T. Barr",
             "kind": "publication",
@@ -4360,10 +4370,16 @@
             "url": "https://vitest.dev"
           },
           {
-            "description": "JavaScript code coverage",
+            "description": "Snapshot testing for Rust, with a review step for accepting changed snapshots",
             "kind": "tool",
-            "title": "instanbul",
-            "url": "https://istanbul.js.org"
+            "title": "insta",
+            "url": "https://insta.rs"
+          },
+          {
+            "description": "Approval testing libraries for a dozen languages",
+            "kind": "tool",
+            "title": "ApprovalTests",
+            "url": "https://approvaltests.com"
           }
         ],
         "scope": "function",
@@ -5313,13 +5329,14 @@
         "oracle_note": "execution ≠ correctness",
         "references": [
           {
-            "authors": "Goran Petrović, Marko Ivanković",
+            "authors": "Marko Ivanković, Goran Petrović, René Just, Gordon Fraser",
+            "description": "Coverage shown per changed line inside code review, across Google; the adoption and survey data behind this entry's claim that the diff is the number that matters at review time",
             "kind": "publication",
-            "tier": "III",
-            "title": "State of Mutation Testing at Google",
-            "url": "https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/46584.pdf",
-            "venue": "ICSE-SEIP 2018",
-            "year": 2018
+            "tier": "II",
+            "title": "Code Coverage at Google",
+            "url": "https://doi.org/10.1145/3338906.3340459",
+            "venue": "ESEC/FSE 2019",
+            "year": 2019
           },
           {
             "description": "Coverage for changed lines only",
@@ -5849,15 +5866,6 @@
             "url": "https://www.cs.ubc.ca/~rtholmes/papers/icse_2014_inozemtseva.pdf",
             "venue": "ICSE 2014",
             "year": 2014
-          },
-          {
-            "authors": "Goran Petrović, Marko Ivanković, Gordon Fraser, René Just",
-            "kind": "publication",
-            "tier": "I",
-            "title": "Does Mutation Testing Improve Testing Practices?",
-            "url": "https://homes.cs.washington.edu/~rjust/publ/mutation_testing_practices_icse_2021.pdf",
-            "venue": "ICSE 2021",
-            "year": 2021
           },
           {
             "description": "Python code coverage measurement",
@@ -7677,22 +7685,22 @@
             "year": 1969
           },
           {
-            "description": "Python fluent assertion library",
+            "description": "Scheduled checks over live tables, written as declared invariants",
             "kind": "tool",
-            "title": "assertpy",
-            "url": "https://github.com/assertpy/assertpy"
+            "title": "Soda",
+            "url": "https://docs.soda.io"
           },
           {
-            "description": "Non-blocking assertions for pytest",
+            "description": "An invariant over a metric stream, evaluated continuously and paged on violation",
             "kind": "tool",
-            "title": "pytest-check",
-            "url": "https://github.com/okken/pytest-check"
+            "title": "Prometheus alerting rules",
+            "url": "https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/"
           },
           {
-            "description": "Using Hypothesis for invariant checking",
+            "description": "Expectations asserted against production data on a schedule",
             "kind": "tool",
-            "title": "Hypothesis invariants",
-            "url": "https://hypothesis.readthedocs.io/en/latest/quickstart.html"
+            "title": "Great Expectations",
+            "url": "https://greatexpectations.io"
           }
         ],
         "scope": "system",
@@ -8338,17 +8346,14 @@
         "oracle_note": "disagreement is definitive evidence of a bug",
         "references": [
           {
-            "authors": "Kyle Kingsbury, Peter Alvaro",
+            "authors": "Xuejun Yang, Yang Chen, Eric Eide, John Regehr",
+            "description": "The Csmith paper; random C programs fed to GCC, Clang and others, with the bug counts this entry cites",
             "kind": "publication",
-            "tier": "II",
-            "title": "Elle: Inferring Isolation Anomalies from Experimental Observations",
-            "url": "https://arxiv.org/abs/2003.10554",
-            "venue": "arXiv 2003.10554",
-            "year": 2020
-          },
-          {
-            "kind": "other",
-            "title": "Yang et al., 'Finding and Understanding Bugs in C Compilers' (2011, Csmith)"
+            "tier": "III",
+            "title": "Finding and Understanding Bugs in C Compilers",
+            "url": "https://doi.org/10.1145/1993498.1993532",
+            "venue": "PLDI 2011",
+            "year": 2011
           },
           {
             "description": "Differential testing for SQL databases",
@@ -9087,10 +9092,10 @@
             "url": "https://github.com/AFLplusplus/AFLplusplus"
           },
           {
-            "description": "Continuous fuzzing integration for CI",
+            "description": "OSS-Fuzz's CI job that runs fuzz targets on pull requests",
             "kind": "tool",
             "title": "CIFuzz",
-            "url": "https://github.com/AdaLogics/fuzz-introspector"
+            "url": "https://google.github.io/oss-fuzz/getting-started/continuous-integration/"
           }
         ],
         "scope": "function",
@@ -9409,7 +9414,7 @@
           {
             "authors": "Ali Basiri, Lorin Hochstein, Nora Jones, Haley Tucker",
             "kind": "publication",
-            "tier": "IV",
+            "tier": "III",
             "title": "Automating Chaos Experiments in Production",
             "url": "https://arxiv.org/abs/1905.04648",
             "venue": "ICSE-SEIP 2019",
@@ -10391,22 +10396,14 @@
         "oracle_note": "findings need triage; false positives are the tax",
         "references": [
           {
-            "authors": "Anne Edmundson, Brian Holtkamp, Emanuel Rivera, Matthew Finifter, Adrian Mettler, David Wagner",
-            "kind": "publication",
-            "tier": "I",
-            "title": "An Empirical Study on the Effectiveness of Security Code Review",
-            "url": "https://people.eecs.berkeley.edu/~daw/papers/coderev-essos13.pdf",
-            "venue": "ESSoS 2013",
-            "year": 2013
-          },
-          {
-            "authors": "Google Security Blog, Android team",
+            "authors": "Brittany Johnson, Yoonki Song, Emerson Murphy-Hill, Robert Bowdidge",
+            "description": "Developer interviews on why scanner findings get ignored; false positives and unreadable output are the reasons given, which is the tax this entry's oracle note names",
             "kind": "publication",
             "tier": "II",
-            "title": "Eliminating Memory Safety Vulnerabilities at the Source",
-            "url": "https://security.googleblog.com/2024/09/eliminating-memory-safety-vulnerabilities-Android.html",
-            "venue": "Google Security Blog",
-            "year": 2024
+            "title": "Why Don't Software Developers Use Static Analysis Tools to Find Bugs?",
+            "url": "https://doi.org/10.1109/ICSE.2013.6606613",
+            "venue": "ICSE 2013",
+            "year": 2013
           },
           {
             "description": "Multi-language static analysis with custom rules",
@@ -10755,7 +10752,7 @@
           {
             "authors": "Mohamed Bilel Besbes, Gregory Mierzwinski, Suhaib Mujahid, Philipp Leitner, Alexander Serebrenik, Dave Hunt, Diego Elias Costa",
             "kind": "publication",
-            "tier": "I",
+            "tier": "II",
             "title": "Exploring Statistical Change Point Detection Techniques for Performance Anomaly Detection at Mozilla",
             "url": "https://arxiv.org/abs/2606.18377",
             "venue": "arXiv preprint",
@@ -11156,9 +11153,14 @@
             "year": 2013
           },
           {
-            "kind": "tool",
-            "title": "Dapper paper",
-            "url": "https://research.google/pubs/pub36356/"
+            "authors": "Benjamin H. Sigelman, Luiz André Barroso, Mike Burrows, Pat Stephenson, Manoj Plakal, Donald Beaver, Saul Jaspan, Chandan Shanbhag",
+            "description": "The trace and span model every tool below implements",
+            "kind": "publication",
+            "tier": "III",
+            "title": "Dapper, a Large-Scale Distributed Systems Tracing Infrastructure",
+            "url": "https://research.google/pubs/pub36356/",
+            "venue": "Google Technical Report",
+            "year": 2010
           },
           {
             "description": "Open-standard observability instrumentation",
@@ -13099,10 +13101,10 @@
             "url": "https://github.com/lightbend/mima"
           },
           {
-            "description": "gRPC command-line client",
+            "description": "Breaking-change detection for Protobuf schemas against a past version",
             "kind": "tool",
-            "title": "grpcurl",
-            "url": "https://github.com/fullstorydev/grpcurl"
+            "title": "buf breaking",
+            "url": "https://buf.build/docs/breaking/"
           },
           {
             "description": "OpenAPI spec diff tool",
@@ -13427,15 +13429,6 @@
         "oracle": "high",
         "oracle_note": "divergence on real traffic is strong evidence",
         "references": [
-          {
-            "authors": "Mohamed Bilel Besbes, Gregory Mierzwinski, Suhaib Mujahid, Philipp Leitner, Alexander Serebrenik, Dave Hunt, Diego Elias Costa",
-            "kind": "publication",
-            "tier": "I",
-            "title": "Exploring Statistical Change Point Detection Techniques for Performance Anomaly Detection at Mozilla",
-            "url": "https://arxiv.org/abs/2606.18377",
-            "venue": "arXiv preprint",
-            "year": 2026
-          },
           {
             "authors": "Chunqiang Tang, Thawan Kooburat, Pradeep Venkatachalam, Akshay Chander, Zhe Wen, Aravind Narayanan, Patrick Dowell, Robert Karl",
             "kind": "publication",
@@ -14326,22 +14319,14 @@
         "oracle_note": "divergence between declared and actual rebuild sets is meaningful but noisy",
         "references": [
           {
-            "authors": "Chris Lamb, Stefano Zacchiroli",
+            "authors": "Nandor Licker, Andrew Rice",
+            "description": "Infers the true dependency graph by tracing what a build actually reads and compares it with what the rules declare; the set difference this entry's reading is built on",
             "kind": "publication",
             "tier": "II",
-            "title": "Reproducible Builds: Increasing the Integrity of Software Supply Chains",
-            "url": "https://arxiv.org/abs/2104.06020",
-            "venue": "arXiv preprint; later IEEE Software 39 (2022) 62-70",
-            "year": 2021
-          },
-          {
-            "authors": "Thomas Rausch, Waldemar Hummer, Philipp Leitner, Stefan Schulte",
-            "kind": "publication",
-            "tier": "II",
-            "title": "An Empirical Analysis of Build Failures in the Continuous Integration Workflows of Java-Based Open-Source Software",
-            "url": "https://dsg.tuwien.ac.at/team/trausch/pub/PID4727015.pdf",
-            "venue": "MSR 2017",
-            "year": 2017
+            "title": "Detecting Incorrect Build Rules",
+            "url": "https://doi.org/10.1109/ICSE.2019.00125",
+            "venue": "ICSE 2019",
+            "year": 2019
           },
           {
             "description": "Google's build system",
@@ -15270,22 +15255,14 @@
         "oracle_note": "coupling is a risk factor, not a bug",
         "references": [
           {
-            "authors": "Guilherme Avelino, Leonardo Passos, Andre Hora, Marco Tulio Valente",
+            "authors": "Alan MacCormack, John Rusnak, Carliss Baldwin",
+            "description": "Dependency structure matrices over Linux and Mozilla; propagation cost as a measure of how far a change can reach through the graph",
             "kind": "publication",
             "tier": "II",
-            "title": "A Novel Approach for Estimating Truck Factors",
-            "url": "https://arxiv.org/pdf/1604.06766",
-            "venue": "arXiv 1604.06766 (companion to ICPC 2016)",
-            "year": 2016
-          },
-          {
-            "authors": "Raula Gaikovina Kula, Daniel M. German, Ali Ouni, Takashi Ishio, Katsuro Inoue",
-            "kind": "publication",
-            "tier": "II",
-            "title": "Do Developers Update Their Library Dependencies?",
-            "url": "https://arxiv.org/abs/1709.04621",
-            "venue": "Empirical Software Engineering",
-            "year": 2017
+            "title": "Exploring the Structure of Complex Software Designs: An Empirical Study of Open Source and Proprietary Code",
+            "url": "https://doi.org/10.1287/mnsc.1060.0552",
+            "venue": "Management Science 52(7)",
+            "year": 2006
           },
           {
             "description": "JavaScript/TypeScript dependency analysis",
@@ -16508,22 +16485,14 @@
         "oracle_note": "coupling correlates with risk",
         "references": [
           {
-            "authors": "Audris Mockus",
+            "authors": "Harald Gall, Karin Hajek, Mehdi Jazayeri",
+            "description": "The paper that named the technique; twenty releases of a telecom system, modules that change together without a structural dependency",
             "kind": "publication",
-            "tier": "II",
-            "title": "Organizational Volatility and its Effects on Software Defects",
-            "url": "https://mockus.org/papers/orgQuality-slides.pdf",
-            "venue": "FSE 2010",
-            "year": 2010
-          },
-          {
-            "authors": "Nicole Forsgren, Jez Humble, Gene Kim, Alanna Brown, Nigel Kersten",
-            "kind": "publication",
-            "tier": "II",
-            "title": "2017 State of DevOps Report",
-            "url": "https://dora.dev/research/2017/2017-state-of-devops-report.pdf",
-            "venue": "Puppet + DORA",
-            "year": 2017
+            "tier": "III",
+            "title": "Detection of Logical Coupling Based on Product Release History",
+            "url": "https://doi.org/10.1109/ICSM.1998.738508",
+            "venue": "ICSM 1998",
+            "year": 1998
           },
           {
             "authors": "Adam Tornhill",
@@ -16871,7 +16840,7 @@
           {
             "authors": "Forsgren et al.",
             "kind": "publication",
-            "tier": "I",
+            "tier": "II",
             "title": "Accelerate",
             "year": 2018
           },
@@ -19045,13 +19014,14 @@
             "year": 2013
           },
           {
-            "authors": "Gloria Mark, Daniela Gudith, Ulrich Klocke",
+            "authors": "Alberto Bacchelli, Christian Bird",
+            "description": "Interviews and review data at Microsoft; finding defects is the stated motivation, knowledge transfer and awareness are the measured outcomes",
             "kind": "publication",
-            "tier": "I",
-            "title": "The Cost of Interrupted Work: More Speed and Stress",
-            "url": "https://ics.uci.edu/~gmark/chi08-mark.pdf",
-            "venue": "CHI 2008",
-            "year": 2008
+            "tier": "II",
+            "title": "Expectations, Outcomes, and Challenges of Modern Code Review",
+            "url": "https://doi.org/10.1109/ICSE.2013.6606617",
+            "venue": "ICSE 2013",
+            "year": 2013
           },
           {
             "authors": "Fagan",

@@ -46,18 +46,18 @@ references:
   year: 1969
   kind: publication
   tier: IV
-- title: assertpy
+- title: Soda
   kind: tool
-  url: https://github.com/assertpy/assertpy
-  description: Python fluent assertion library
-- title: pytest-check
+  url: https://docs.soda.io
+  description: Scheduled checks over live tables, written as declared invariants
+- title: Prometheus alerting rules
   kind: tool
-  url: https://github.com/okken/pytest-check
-  description: Non-blocking assertions for pytest
-- title: Hypothesis invariants
+  url: https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/
+  description: An invariant over a metric stream, evaluated continuously and paged on violation
+- title: Great Expectations
   kind: tool
-  url: https://hypothesis.readthedocs.io/en/latest/quickstart.html
-  description: Using Hypothesis for invariant checking
+  url: https://greatexpectations.io
+  description: Expectations asserted against production data on a schedule
 ---
 
 You don't need to know how the payment service works. You can observe:

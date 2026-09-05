@@ -50,10 +50,10 @@ references:
   kind: tool
   url: https://developer.hashicorp.com/terraform/cli/commands/plan
   description: Infrastructure-as-code plan preview
-- title: sqlfluff
+- title: Ajv
   kind: tool
-  url: https://www.sqlfluff.com
-  description: SQL linter and formatter
+  url: https://ajv.js.org
+  description: JSON Schema validator for JavaScript
 ---
 
 Structural coherence at the boundary of the system. OpenAPI/GraphQL schema

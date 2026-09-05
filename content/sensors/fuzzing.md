@@ -57,8 +57,8 @@ references:
   description: Coverage-guided fuzzer
 - title: CIFuzz
   kind: tool
-  url: https://github.com/AdaLogics/fuzz-introspector
-  description: Continuous fuzzing integration for CI
+  url: https://google.github.io/oss-fuzz/getting-started/continuous-integration/
+  description: OSS-Fuzz's CI job that runs fuzz targets on pull requests
 ---
 
 What happens on inputs humans didn't think of? Fuzzing is a sensor of

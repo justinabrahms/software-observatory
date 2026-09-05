@@ -45,10 +45,10 @@ references:
   kind: tool
   url: https://github.com/lightbend/mima
   description: Binary compatibility checking for Scala/JVM libraries
-- title: grpcurl
+- title: buf breaking
   kind: tool
-  url: https://github.com/fullstorydev/grpcurl
-  description: gRPC command-line client
+  url: https://buf.build/docs/breaking/
+  description: Breaking-change detection for Protobuf schemas against a past version
 - title: openapi-diff
   kind: tool
   url: https://github.com/OpenAPITools/openapi-diff

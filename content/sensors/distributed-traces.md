@@ -29,9 +29,14 @@ references:
   kind: publication
   authors: Jeffrey Dean, Luiz André Barroso
   venue: Communications of the ACM 56(2)
-- title: Dapper paper
+- title: Dapper, a Large-Scale Distributed Systems Tracing Infrastructure
+  year: 2010
+  tier: III
   url: https://research.google/pubs/pub36356/
-  kind: tool
+  kind: publication
+  authors: Benjamin H. Sigelman, Luiz André Barroso, Mike Burrows, Pat Stephenson, Manoj Plakal, Donald Beaver, Saul Jaspan, Chandan Shanbhag
+  venue: Google Technical Report
+  description: The trace and span model every tool below implements
 - title: OpenTelemetry
   kind: tool
   url: https://opentelemetry.io
