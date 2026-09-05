@@ -260,6 +260,36 @@ def generate_framework_page(sensors, output_dir):
         no feedback loop; one with only retrospective sensors has no gate.
       </p>
     </section>
+
+    <section class="property-detail">
+      <h2 class="property-detail-title">Showing a sensor can fail</h2>
+      <p class="property-detail-question">Has this sensor ever been seen to fire?</p>
+      <p>
+        The six dimensions describe a sensor that works. None of them says
+        whether the one you have installed still does. A linter with every
+        rule suppressed, a fitness function whose baseline covers every
+        violation, a synthetic check whose timeout was widened until it
+        passes: each rates exactly as its entry rates it, and each reads
+        green on a system that is broken.
+      </p>
+      <p>
+        Two habits recur across the catalog for this. A
+        <a href="/glossary/#negative-control" class="wikilink">negative
+        control</a> is a one-shot proof: break the code on purpose, feed the
+        known-bad input, and watch the sensor fire. It is cheap, and it is
+        the only evidence that a sensor which has never failed is reading
+        anything. A <a href="/glossary/#meta-signal" class="wikilink">meta-signal</a>
+        is the trend that says when to run one: the suppression count, the
+        exemption rate, the retry rate, the share of findings closed by
+        policy rather than by a fix. Nearly every entry names its own at
+        the end of "How it gets gamed".
+      </p>
+      <p>
+        The catalog applies this to itself. Its build gates are tested by
+        handing them a bad entry and checking that they refuse it, because
+        a gate that has not been seen to fail is a gate in name only.
+      </p>
+    </section>
   </div>"""
 
     description = (

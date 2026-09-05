@@ -208,6 +208,32 @@ before they ship; retrospective sensors tell you where the bugs came
 from. Both matter — a sensor stack with only predictive sensors has
 no feedback loop; one with only retrospective sensors has no gate.
 
+#### Showing a sensor can fail
+
+Has this sensor ever been seen to fire?
+
+The six dimensions describe a sensor that works. None of them says
+whether the one you have installed still does. A linter with every
+rule suppressed, a fitness function whose baseline covers every
+violation, a synthetic check whose timeout was widened until it
+passes: each rates exactly as its entry rates it, and each reads
+green on a system that is broken.
+
+Two habits recur across the catalog for this. A
+[negative
+control](https://softwareobservatory.com/glossary/#negative-control) is a one-shot proof: break the code on purpose, feed the
+known-bad input, and watch the sensor fire. It is cheap, and it is
+the only evidence that a sensor which has never failed is reading
+anything. A [meta-signal](https://softwareobservatory.com/glossary/#meta-signal)
+is the trend that says when to run one: the suppression count, the
+exemption rate, the retry rate, the share of findings closed by
+policy rather than by a fix. Nearly every entry names its own at
+the end of "How it gets gamed".
+
+The catalog applies this to itself. Its build gates are tested by
+handing them a bad entry and checking that they refuse it, because
+a gate that has not been seen to fail is a gate in name only.
+
 ## Glossary
 
 Glossary
@@ -277,6 +303,14 @@ A property of observability events: each event carries enough distinct fields (u
 #### No single sensor measures correctness
 
 A refrain that recurs across the homepage, the framework, and this glossary — deliberately. The repetition is the point: the Observatory's central claim is that correctness is not a scalar any one sensor measures, and stating it once would understate it. Each occurrence links back here so a reader who notices the repetition can verify it is intentional.
+
+#### Negative control
+
+A check that the sensor can fail: a known-bad input, a version of the code broken on purpose, a fault the system is known not to survive, run to watch the sensor fire. A sensor that has never been seen to fail is not yet known to be reading anything, whatever its dashboard says. The term is borrowed from the laboratory, where a control that must come out negative is how a reagent that has stopped working gets caught. Several entries ask for one in their own words: a metamorphic relation with no recorded kill, a fitness function that has never fired, a business invariant whose row has been empty for six months, a synthetic check that has not failed in a year on a system that has had incidents. A negative control is a one-shot proof; the [meta-signal](https://softwareobservatory.com/glossary/#meta-signal) is the trend that says when to run one again.
+
+#### Meta-signal
+
+The second-order reading that shows a sensor going blind while its first-order reading stays green: the suppression count on a linter, the equivalent-mutant exemption rate in mutation testing, the retry rate of an integration suite, the share of shadow-traffic divergences classified benign without an inspected sample. Nearly every entry names its own at the end of its "How it gets gamed" section. A meta-signal is a trend to track; a [negative control](https://softwareobservatory.com/glossary/#negative-control) is a one-shot proof that the sensor still fires at all.
 
 ## Family 01: Structural
 
