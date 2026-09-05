@@ -58,17 +58,22 @@ risk factors.
 
 ## In practice
 
-The reading is a list of edges plus a few numbers, often surfaced by
-an import-boundary tool refusing an edge:
+The reading is a list of edges plus a few numbers. A cycle finder
+prints the edges that close a loop:
 
 ```
-import-linter: forbidden import detected
-  src/api/views.py -> src/db/session
-  contract "api must not import db internals": BROKEN (1 violation)
+$ madge --circular src
+Processed 212 files (1.4s)
 
-dependency-cruiser: circular
-  src/auth/token.ts -> src/auth/session.ts -> src/auth/token.ts
+✖ Found 2 circular dependencies!
+
+1) auth/token.ts > auth/session.ts
+2) billing/invoice.ts > billing/tax.ts > billing/discount.ts
 ```
+
+Each numbered line is one loop, read left to right and back to the
+start. The rest of the reading is the numbers the graph yields once it
+is built:
 
 | Metric | Reading | Read as |
 |--------|---------|---------|
@@ -78,7 +83,10 @@ dependency-cruiser: circular
 | Instability | 9 changes to `core.py` this quarter | Every dependent pays churn tax |
 
 The numbers are not verdicts; they are the inputs to a judgment about
-where change will be expensive. Read the graph against recent change
+where change will be expensive. When one of those judgments hardens
+into a rule that CI refuses, it has become a
+[boundary sensor](boundary-sensors.html); this entry is the graph such
+rules are written against. Read the graph against recent change
 history, because a stable hub is cheap and a churning hub is a
 bottleneck, and the graph alone cannot tell them apart. Treat a
 single module with high fan-in and high instability as the highest-
@@ -120,4 +128,4 @@ grows while the rule count is flat, the sensor is being spent.
 
 The dependency graph shows structural coupling, not *behavioral* coupling —
 modules that change together for reasons the graph can't see. That requires
-[change coupling](catalog.html#evolution) analysis.
+[change coupling](change-coupling.html) analysis.
