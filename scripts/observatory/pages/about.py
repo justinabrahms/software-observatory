@@ -5,8 +5,13 @@ from ..jsonld import breadcrumb_ld, page_ld
 from ..taxonomy import FAMILIES
 
 
-def generate_about_page(output_dir):
+def generate_about_page(sensors, output_dir):
     """Generate the about page."""
+
+    # The AI-contribution disclosure below quotes the review count so the
+    # claim tracks the catalog instead of the day it was written.
+    total = len(sensors)
+    reviewed = sum(1 for s in sensors if s.get("last_reviewed"))
 
     body = f"""  <section class="page-header page-header--reading">
     <p class="eyebrow">About</p>
@@ -115,6 +120,29 @@ def generate_about_page(output_dir):
       Errors and gaps in the catalog are best filed in the
       <a href="https://github.com/justinabrahms/software-observatory/issues"
       class="wikilink">issue tracker</a>.
+    </p>
+
+    <h2>How this was written</h2>
+    <p>
+      Most of the prose on this site was drafted by AI models and then
+      reviewed, corrected and rewritten under the author's direction. On
+      Blair Enns's
+      <a href="https://www.winwithoutpitching.com/aiscale" class="wikilink">AI
+      Contribution Scale</a> that is <strong>AI-4, AI Drafted</strong>: the
+      author supplied the idea, the argument, the source material and the
+      editorial judgment, a model produced most of the initial prose, and
+      the author then edited and verified the result.
+    </p>
+    <p>
+      That review happens one page at a time, and each sensor page shows
+      its review date in the sidebar; {reviewed} of {total} carry one
+      today. A page whose review reads "pending" has not had that pass
+      yet, and until it does it sits at <strong>AI-5, AI Generated</strong>.
+      The scale says the highest applicable level governs the whole, so
+      the site-wide answer is AI-5 until the review pass completes, and
+      AI-4 after. The code that builds the site was written the same way,
+      and the commit history names the model on every commit one
+      co-authored.
     </p>
 
     <h2>Contributing</h2>

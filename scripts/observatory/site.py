@@ -125,7 +125,7 @@ def main(check_only=False):
     generate_framework_page(sensors, output_dir)
     print("  framework/")
 
-    generate_about_page(output_dir)
+    generate_about_page(sensors, output_dir)
     print("  about/")
 
     generate_contact_page(output_dir)
