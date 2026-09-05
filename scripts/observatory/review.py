@@ -61,6 +61,38 @@ def review_status(sensor, as_of):
     }
 
 
+AI_SCALE_URL = "https://www.winwithoutpitching.com/aiscale"
+
+
+def ai_level(sensor):
+    """Where this entry sits on Blair Enns's AI Contribution Scale.
+
+    Every entry was drafted by a model. The review pass is what moves an
+    entry from AI-5 (generated, light approval) to AI-4 (drafted, then
+    substantially edited and verified by the author), so the level is a
+    function of the same field the Reviewed row reads. /about/ explains
+    the placement; this keeps the per-page claim consistent with it."""
+    if sensor.get("last_reviewed"):
+        return ("AI-4", "AI Drafted",
+                "A model wrote most of the first draft; the author then "
+                "edited and verified it in the review pass dated above.")
+    return ("AI-5", "AI Generated",
+            "A model wrote this entry and it has been published on "
+            "approval. The editorial review pass, which moves an entry to "
+            "AI-4, has not reached it yet.")
+
+
+def ai_level_dd_html(sensor):
+    """The <dd> for the sensor page's "AI contribution" row."""
+    code, name, why = ai_level(sensor)
+    return (
+        f'<a href="{AI_SCALE_URL}" class="wikilink" '
+        f'title="{html.escape(why, quote=True)}">{code}, {name}</a> '
+        f'<a href="/about/#how-this-was-written" class="review-age">'
+        f"— why</a>"
+    )
+
+
 def review_dd_html(sensor, as_of):
     """The <dd> for the sensor page's "Reviewed" row."""
     status = review_status(sensor, as_of)
