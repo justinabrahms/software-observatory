@@ -52,17 +52,28 @@ def generate_family_pages(sensors, output_dir):
 
         cards = "".join(sensor_card_html(s, family) for s in fam_sensors)
 
-        # Where in the lifecycle this family's signals arrive.
+        # Where in the lifecycle this family's signals arrive, derived from
+        # the entries themselves. A hand-kept list on the family used to
+        # drive this and had drifted for 18 of 59 entries; the entries are
+        # the only record that cannot disagree with the atlas.
         levels_html = ""
-        for level_slug in family.get("stack_levels", []):
+        by_level = {}
+        for s in fam_sensors:
+            by_level.setdefault(s.get("stack_level", ""), []).append(s)
+        for level_slug in reversed([layer["slug"] for layer in STACK_LAYERS]):
+            members = by_level.get(level_slug)
             layer = stack_by_slug.get(level_slug)
-            if not layer:
+            if not members or not layer:
                 continue
             stage = stage_by_slug.get(STAGE_BY_LEVEL.get(level_slug, ""), {})
             stage_label = f" — {html.escape(stage['label'])} stage" if stage else ""
+            names = ", ".join(
+                f'<a href="/sensors/{s["slug"]}/" class="wikilink">{html.escape(s["title"])}</a>'
+                for s in members
+            )
             levels_html += (
                 f'        <li><strong>{html.escape(layer["label"])}</strong>'
-                f'{stage_label}. {html.escape(layer["desc"])}</li>\n'
+                f'{stage_label}. {html.escape(layer["desc"])} {names}.</li>\n'
             )
 
         prev_fam = FAMILIES[index - 1] if index > 0 else None
