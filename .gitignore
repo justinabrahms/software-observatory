@@ -9,10 +9,10 @@ archive-*/
 #
 #   * a bare "sensors/" also matches content/sensors/, which silently ignored
 #     new sensor files -- the most common contribution this repo can receive;
-#   * a bare "catalog/", "index.html", "md/" (and the rest) also match
-#     tests/golden/catalog/, tests/golden/index.html and tests/golden/md/,
-#     which silently ignored 35 of the 37 committed golden snapshot files.
-#     A golden file git refuses to track is not a test.
+#   * a bare "catalog/", "index.html", "md/" (and the rest) also matched the
+#     golden snapshot files this repo used to commit under tests/, and
+#     silently ignored 35 of 37 of them. The snapshot is gone; the lesson
+#     about anchoring is not.
 #
 # These paths are generated output *at the repo root* and nowhere else. Anchor
 # anything added here.
@@ -68,6 +68,6 @@ notes/
 # Temp output from the build snapshot suite (scripts/test_build.py). The
 # suite builds into a system temp dir and cleans up after itself, so nothing
 # should ever appear here -- but a killed run leaves a directory behind, and
-# it must not be one `git add -A` away from history. tests/fixtures/ and
-# tests/golden/ are deliberately NOT ignored: the goldens are the test.
+# it must not be one `git add -A` away from history. tests/fixtures/ is
+# deliberately NOT ignored: the fixtures are the test's input.
 /tests/tmp/

@@ -1,6 +1,6 @@
 """Where the build reads from, where it writes to, and what it calls itself.
 
-These are the knobs the golden-file suite repoints: scripts/test_build.py
+These are the knobs the build test suite repoints: scripts/test_build.py
 builds the fixture corpus into a temp tree by assigning to the four path
 constants below. That only works if the code reads them through this module
 at call time — `from .config import CONTENT_DIR` would snapshot the repo path

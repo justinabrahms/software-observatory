@@ -35,15 +35,15 @@ Node CLI/MCP server in `cli/` (published to npm as `softwareobservatory`).
   green locally means green in CI. Run this instead of remembering the
   individual scripts; `scripts/check_frontmatter.py` gates every deploy and was
   mentioned in no human-facing doc, which is how it broke CI unnoticed.
-- **Tests/lint:** `make test` runs `scripts/test_build.py` — golden-file
-  snapshot tests over the fixture catalog in `tests/fixtures/content/`, plus a
-  byte-for-byte determinism assertion and gate tests that prove a bad
-  `family`/`see_also`/`stack_level` fails before any file is written. Stdlib
-  `unittest`, no pytest, ~0.2s, no network and no browser. `make cli-test`
-  covers the CLI (`cli/test/smoke.mjs`). After an *intentional* rendering
-  change, re-bless with `make test-update` and commit the `tests/golden/` diff
-  in the same commit — that diff is the review artifact. Do not eyeball the
-  generated HTML in place of reading it.
+- **Tests/lint:** `make test` runs `scripts/test_build.py` — builds the
+  fixture catalog in `tests/fixtures/content/` into a temp directory and
+  asserts a byte-for-byte determinism property, gate tests that prove a bad
+  `family`/`see_also`/`stack_level` fails before any file is written, and
+  escaping, structure and dataset-parity checks. Stdlib `unittest`, no
+  pytest, ~0.2s, no network and no browser. `make cli-test` covers the CLI
+  (`cli/test/smoke.mjs`). There is no golden snapshot: after a rendering
+  change, run `make diff-build` to see the before/after diff of the real
+  site and read it before committing. Nothing is re-blessed.
 
 Deps are pinned in the tracked `requirements.txt`; `.venv/` itself is
 gitignored. Recreate it with
