@@ -28,13 +28,6 @@ references:
   kind: publication
   authors: Laura Inozemtseva, Reid Holmes
   venue: ICSE 2014
-- title: Does Mutation Testing Improve Testing Practices?
-  year: 2021
-  tier: I
-  url: https://homes.cs.washington.edu/~rjust/publ/mutation_testing_practices_icse_2021.pdf
-  kind: publication
-  authors: Goran Petrović, Marko Ivanković, Gordon Fraser, René Just
-  venue: ICSE 2021
 - title: coverage.py
   kind: tool
   url: https://coverage.readthedocs.io
