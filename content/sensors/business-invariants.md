@@ -11,7 +11,7 @@ scope: system
 scope_note: domain level
 latency: hours
 actionability: guiding
-actionability_note: 17 payments have no order transition
+actionability_note: each row names the promise that broke and the window it broke in
 type: retrospective
 stack_level: user-outcome
 categories:
@@ -47,6 +47,14 @@ Business invariants are the highest-level invariant sensor: they check
 whether the system is accomplishing its business purpose, not just whether
 its internals are consistent. They require [observability
 events](observability-events.html) as a data source.
+
+The boundary with [runtime invariants](runtime-invariants.html) is who
+the reading is for. A runtime invariant is evaluated as events arrive and
+names a mechanism: this payment has no order transition. A business
+invariant is evaluated over a window and names a promise: finance cannot
+reconcile this week. The same rule can be both, and the payment example
+on this page is deliberately the one the runtime entry uses, checked at
+the other altitude.
 
 ## In practice
 

@@ -82,7 +82,15 @@ every request has exactly one request_id
 
 Each invariant can be checked at compile time, test time, CI, runtime, in
 the database, or in production analytics. Each is a different sensor at a
-different cost point and latency.
+different cost point and latency, and the catalog splits the production
+end of that range three ways. A
+[database invariant](database-invariants.html) is enforced by the engine
+on the write, so the bad row never lands. A
+[business invariant](business-invariants.html) is a report over a window,
+read by whoever owns the promise. This entry is the checker between them:
+an assertion evaluated against the event stream as it flows, which
+catches what the schema cannot express and reports it before the weekly
+report does.
 
 > Runtime invariants become sensors of correctness without understanding
 > the implementation. You don't need to read the code. You need to observe
