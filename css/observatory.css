@@ -1253,6 +1253,19 @@ a.wikilink:hover {
   color: var(--text-soft);
   border-color: var(--accent-soft);
 }
+/* The age beside a review date, and the "why" link beside the AI
+   contribution level: secondary to the value they qualify. */
+.review-age {
+  font-size: .78rem;
+  color: var(--text-dim);
+}
+a.review-age {
+  border-bottom: none;
+  text-decoration: none;
+}
+a.review-age:hover, a.review-age:focus {
+  color: var(--text-soft);
+}
 
 .provisional-note {
   font-size: .8rem;
