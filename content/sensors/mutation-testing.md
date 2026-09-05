@@ -39,6 +39,14 @@ references:
   kind: publication
   authors: René Just, Darioush Jalali, Laura Inozemtseva, Michael D. Ernst, Reid Holmes, Gordon Fraser
   venue: FSE 2014
+- title: Does Mutation Testing Improve Testing Practices?
+  year: 2021
+  tier: I
+  url: https://homes.cs.washington.edu/~rjust/publ/mutation_testing_practices_icse_2021.pdf
+  kind: publication
+  authors: Goran Petrović, Marko Ivanković, Gordon Fraser, René Just
+  venue: ICSE 2021
+  description: Surfacing surviving mutants in code review at Google, and whether developers write tests that kill them
 - authors: Jia & Harman
   title: An Analysis and Survey of the Development of Mutation Testing
   year: 2011
