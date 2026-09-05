@@ -147,8 +147,10 @@ def generate_framework_page(sensors, output_dir):
         pipeline decision, not a property of the sensor.
       </p>
       <p>
-        In Böckeler's framing, the interesting frontier is guiding sensors,
-        where the feedback itself tells the agent what to do next.
+        In <a href="https://martinfowler.com/articles/harness-engineering.html"
+        class="wikilink">Böckeler's framing</a>, the interesting frontier is
+        guiding sensors, where the feedback itself tells the agent what to
+        do next.
       </p>
     </section>
 

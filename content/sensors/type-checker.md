@@ -25,6 +25,14 @@ see_also:
 - atlas
 last_reviewed: '2026-08-28'
 references:
+- title: Harness engineering for coding agent users
+  year: 2026
+  tier: IV
+  url: https://martinfowler.com/articles/harness-engineering.html
+  kind: publication
+  authors: Birgitta Böckeler
+  venue: martinfowler.com
+  description: The guides-and-sensors framing this entry opens with, and the source of "positive prompt injection"
 - title: 'To Type or Not to Type: Quantifying Detectable Bugs in JavaScript'
   year: 2017
   tier: I

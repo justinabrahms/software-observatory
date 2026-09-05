@@ -111,7 +111,9 @@ def generate_glossary_page(output_dir):
          "untested mutation — the agent knows what to write a test for. A "
          "complexity score just says \"this is complex\" and leaves the agent "
          "to figure out what to do. The distinction comes from Birgitta "
-         "Böckeler's \"guides &amp; sensors\" framing."),
+         "Böckeler's \"guides &amp; sensors\" framing in "
+         '<a href="https://martinfowler.com/articles/harness-engineering.html" '
+         'class="wikilink">Harness engineering for coding agent users</a>.'),
         ("predictive-vs-retrospective",
          "Predictive vs retrospective",
          "Whether the sensor fires before the code ships (predictive — a "

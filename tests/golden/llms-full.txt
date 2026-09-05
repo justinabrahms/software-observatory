@@ -183,8 +183,9 @@ those are rated by the gate, since that is what the team wires
 them up as. Whether a guiding sensor is also made a gate is a
 pipeline decision, not a property of the sensor.
 
-In Böckeler's framing, the interesting frontier is guiding sensors,
-where the feedback itself tells the agent what to do next.
+In [Böckeler's framing](https://martinfowler.com/articles/harness-engineering.html), the interesting frontier is
+guiding sensors, where the feedback itself tells the agent what to
+do next.
 
 06
 
@@ -268,7 +269,7 @@ A label assigned to each publication reference, describing the study rather than
 
 #### Guiding sensor
 
-A sensor whose feedback directs the next action, not just whether something is wrong. A mutation testing report shows the exact untested mutation — the agent knows what to write a test for. A complexity score just says "this is complex" and leaves the agent to figure out what to do. The distinction comes from Birgitta Böckeler's "guides & sensors" framing.
+A sensor whose feedback directs the next action, not just whether something is wrong. A mutation testing report shows the exact untested mutation — the agent knows what to write a test for. A complexity score just says "this is complex" and leaves the agent to figure out what to do. The distinction comes from Birgitta Böckeler's "guides & sensors" framing in [Harness engineering for coding agent users](https://martinfowler.com/articles/harness-engineering.html).
 
 #### Predictive vs retrospective
 
