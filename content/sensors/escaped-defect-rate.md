@@ -37,9 +37,10 @@ When the rate rises, the move is classification, not blame:
    surfaced in production is a [profiling](continuous-profiling.html) gap.
 2. **Add the sensor, then the test.** If a class of defect keeps escaping,
    the suite has a structural hole that one more hand-written test will
-   not fill. Repeat escapes of the same class — two injections in a
-   quarter — mean the right sensor, here [static security
-   analysis](static-security-analysis.html), belongs in the pipeline.
+   not fill. Two SQL injections in one quarter mean the sensor for that
+   class, [static security analysis](static-security-analysis.html),
+   belongs in the pipeline; a test for each would only have caught those
+   two.
 3. **Require a regression test before the fix.** Every escaped defect is a
    free test case: the production failure is the specification.
 4. **Do not manage to the number.** The rate lags by months and the
