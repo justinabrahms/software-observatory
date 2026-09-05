@@ -1,12 +1,90 @@
 """The framework essay: /framework/."""
 
+import html
+
 from ..layout import html_page
 from ..dates import catalog_as_of
 from ..jsonld import breadcrumb_ld, framework_termset_ld, page_ld
+from ..taxonomy import LATENCY_WORDS, LATENCY_X, ORACLE_WIDTHS
+
+
+# The two charts on this page used to be hand-written rows naming sensors
+# that were not entries ("complexity", "code review", "production") at
+# widths that disagreed with ORACLE_WIDTHS. They are now drawn from the
+# entries, one row per rung, so the chart cannot say something the catalog
+# does not. The slugs are preferences; any catalog (including the test
+# fixture) falls back to the first entry at each rung.
+ORACLE_BAR_PREFERRED = {
+    "maximum": "compiler",
+    "high": "example-based-tests",
+    "medium": "linter",
+    "low": "line-coverage",
+    "minimum": None,
+}
+
+LATENCY_ROW_PREFERRED = {
+    "milliseconds": "compiler",
+    "seconds": "example-based-tests",
+    "minutes": "integration-tests",
+    "minutes-hours": "mutation-testing",
+    "hours": "business-invariants",
+    "days": "revert-rate",
+    "weeks": "incident-correlation",
+    "months": "escaped-defect-rate",
+}
+
+
+def _pick(sensors, field, value, preferred):
+    """The preferred entry at this rung if the catalog has it, else the
+    first entry at the rung, else None."""
+    by_slug = {s["slug"]: s for s in sensors}
+    if preferred and preferred in by_slug and by_slug[preferred].get(field) == value:
+        return by_slug[preferred]
+    return next((s for s in sensors if s.get(field) == value), None)
+
+
+def oracle_bar_rows(sensors):
+    rows = ""
+    for level, width in ORACLE_WIDTHS.items():
+        s = _pick(sensors, "oracle", level, ORACLE_BAR_PREFERRED.get(level))
+        if s is None:
+            continue
+        rows += (
+            f'        <div class="bar-row"><span class="bar-label">'
+            f'<a href="/sensors/{s["slug"]}/">{html.escape(s["title"])}</a></span>'
+            f'<div class="bar-track"><div class="bar-fill" style="width:{width}%"></div></div>'
+            f'<span class="bar-pct">{level}</span></div>\n'
+        )
+    return rows.rstrip()
+
+
+def latency_rows(sensors):
+    rows = ""
+    for label in LATENCY_ROW_PREFERRED:
+        s = _pick(sensors, "latency", label, LATENCY_ROW_PREFERRED[label])
+        if s is None:
+            continue
+        rows += (
+            f'        <div class="lat-row"><span class="lat-sensor">'
+            f'<a href="/sensors/{s["slug"]}/">{html.escape(s["title"])}</a></span>'
+            f'<span class="lat-time">{html.escape(LATENCY_WORDS[label])}</span>'
+            f'<div class="lat-bar"><div class="lat-fill" style="width:{LATENCY_X[label]}%"></div></div></div>\n'
+        )
+    return rows.rstrip()
 
 
 def generate_framework_page(sensors, output_dir):
     """Generate the framework page."""
+
+    has_minimum = any(s.get("oracle") == "minimum" for s in sensors)
+    minimum_note = "" if has_minimum else (
+        "No entry currently rates minimum. A raw complexity score would: "
+        "high complexity proves nothing is wrong, it only suggests risk. "
+        "The catalog has no entry for one; "
+        '<a href="/sensors/hotspot-analysis/" class="wikilink">hotspot '
+        "analysis</a> consumes complexity as an input rather than reading "
+        "it as a verdict."
+    )
 
     body = f"""  <section class="page-header page-header--reading">
     <p class="eyebrow">The Framework</p>
@@ -39,22 +117,15 @@ def generate_framework_page(sensors, output_dir):
       <h2 class="property-detail-title">Oracle strength</h2>
       <p class="property-detail-question">How confidently does it know that something is wrong?</p>
       <div class="property-bars">
-        <div class="bar-row"><span class="bar-label">compiler error</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-pct">maximum</span></div>
-        <div class="bar-row"><span class="bar-label">type error</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-pct">maximum</span></div>
-        <div class="bar-row"><span class="bar-label">test assertion</span><div class="bar-track"><div class="bar-fill" style="width:90%"></div></div><span class="bar-pct">high</span></div>
-        <div class="bar-row"><span class="bar-label">mutation</span><div class="bar-track"><div class="bar-fill" style="width:90%"></div></div><span class="bar-pct">high</span></div>
-        <div class="bar-row"><span class="bar-label">linter</span><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div><span class="bar-pct">medium</span></div>
-        <div class="bar-row"><span class="bar-label">coverage</span><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div><span class="bar-pct">low</span></div>
-        <div class="bar-row"><span class="bar-label">complexity</span><div class="bar-track"><div class="bar-fill" style="width:20%"></div></div><span class="bar-pct">minimum</span></div>
-        <div class="bar-row"><span class="bar-label">code review</span><div class="bar-track"><div class="bar-fill" style="width:60%"></div></div><span class="bar-pct">medium</span></div>
+{oracle_bar_rows(sensors)}
       </div>
       <p>
-        A compiler has maximum oracle strength because the implementation
-        cannot argue with it. A complexity metric has minimum oracle
-        strength because high complexity doesn't prove anything is wrong —
-        it just suggests increased risk. The scale is ordinal (minimum →
+        One entry per rung, drawn from the catalog. A compiler has maximum
+        oracle strength because the implementation cannot argue with it;
+        line coverage is low because the line ran, which says nothing
+        about whether it was right. The scale is ordinal (minimum →
         low → medium → high → maximum): a sensor two rungs up is stronger,
-        not "twice as strong."
+        not "twice as strong." {minimum_note}
       </p>
       <div class="callout">
         <strong>Mutation's oracle is derivative.</strong> Mutation testing's
@@ -109,14 +180,12 @@ def generate_framework_page(sensors, output_dir):
       <h2 class="property-detail-title">Feedback latency</h2>
       <p class="property-detail-question">How long until the sensor tells you something?</p>
       <div class="latency-table">
-        <div class="lat-row"><span class="lat-sensor">compiler</span><span class="lat-time">milliseconds</span><div class="lat-bar"><div class="lat-fill" style="width:5%"></div></div></div>
-        <div class="lat-row"><span class="lat-sensor">unit tests</span><span class="lat-time">seconds</span><div class="lat-bar"><div class="lat-fill" style="width:12%"></div></div></div>
-        <div class="lat-row"><span class="lat-sensor">integration</span><span class="lat-time">minutes</span><div class="lat-bar"><div class="lat-fill" style="width:30%"></div></div></div>
-        <div class="lat-row"><span class="lat-sensor">mutation</span><span class="lat-time">minutes / hours</span><div class="lat-bar"><div class="lat-fill" style="width:50%"></div></div></div>
-        <div class="lat-row"><span class="lat-sensor">canary</span><span class="lat-time">minutes</span><div class="lat-bar"><div class="lat-fill" style="width:35%"></div></div></div>
-        <div class="lat-row"><span class="lat-sensor">production</span><span class="lat-time">hours / days</span><div class="lat-bar"><div class="lat-fill" style="width:70%"></div></div></div>
-        <div class="lat-row"><span class="lat-sensor">incident</span><span class="lat-time">weeks</span><div class="lat-bar"><div class="lat-fill" style="width:100%"></div></div></div>
+{latency_rows(sensors)}
       </div>
+      <p>
+        One entry per latency band, drawn from the catalog and placed on
+        the same axis the homepage scatter uses.
+      </p>
     </section>
 
     <section class="property-detail">

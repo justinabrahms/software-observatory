@@ -50,42 +50,30 @@ to update our belief that this software is correct?
 
 How confidently does it know that something is wrong?
 
-compiler error
+[Delta & </script><img src=x onerror=alert(1)>](https://softwareobservatory.com/sensors/delta-escape/)
 
 maximum
 
-type error
-
-maximum
-
-test assertion
+[Alpha Probe](https://softwareobservatory.com/sensors/alpha-probe/)
 
 high
 
-mutation
-
-high
-
-linter
+[Beta Signal](https://softwareobservatory.com/sensors/beta-signal/)
 
 medium
 
-coverage
+[Gamma Unreviewed](https://softwareobservatory.com/sensors/gamma-unreviewed/)
 
 low
 
-complexity
+[Epsilon Atlas Anchor](https://softwareobservatory.com/sensors/epsilon-atlas/)
 
 minimum
 
-code review
-
-medium
-
-A compiler has maximum oracle strength because the implementation
-cannot argue with it. A complexity metric has minimum oracle
-strength because high complexity doesn't prove anything is wrong —
-it just suggests increased risk. The scale is ordinal (minimum →
+One entry per rung, drawn from the catalog. A compiler has maximum
+oracle strength because the implementation cannot argue with it;
+line coverage is low because the line ran, which says nothing
+about whether it was right. The scale is ordinal (minimum →
 low → medium → high → maximum): a sensor two rungs up is stronger,
 not "twice as strong."
 
@@ -141,19 +129,18 @@ User journey What the user experiences end-to-end
 
 How long until the sensor tells you something?
 
-compilermilliseconds
+[Delta & </script><img src=x onerror=alert(1)>](https://softwareobservatory.com/sensors/delta-escape/)milliseconds
 
-unit testsseconds
+[Alpha Probe](https://softwareobservatory.com/sensors/alpha-probe/)seconds
 
-integrationminutes
+[Beta Signal](https://softwareobservatory.com/sensors/beta-signal/)minutes
 
-mutationminutes / hours
+[Gamma Unreviewed](https://softwareobservatory.com/sensors/gamma-unreviewed/)hours
 
-canaryminutes
+[Epsilon Atlas Anchor](https://softwareobservatory.com/sensors/epsilon-atlas/)weeks
 
-productionhours / days
-
-incidentweeks
+One entry per latency band, drawn from the catalog and placed on
+the same axis the homepage scatter uses.
 
 05
 

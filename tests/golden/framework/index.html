@@ -227,22 +227,19 @@
       <h2 class="property-detail-title" id="oracle-strength">Oracle strength</h2>
       <p class="property-detail-question">How confidently does it know that something is wrong?</p>
       <div class="property-bars">
-        <div class="bar-row"><span class="bar-label">compiler error</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-pct">maximum</span></div>
-        <div class="bar-row"><span class="bar-label">type error</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-pct">maximum</span></div>
-        <div class="bar-row"><span class="bar-label">test assertion</span><div class="bar-track"><div class="bar-fill" style="width:90%"></div></div><span class="bar-pct">high</span></div>
-        <div class="bar-row"><span class="bar-label">mutation</span><div class="bar-track"><div class="bar-fill" style="width:90%"></div></div><span class="bar-pct">high</span></div>
-        <div class="bar-row"><span class="bar-label">linter</span><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div><span class="bar-pct">medium</span></div>
-        <div class="bar-row"><span class="bar-label">coverage</span><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div><span class="bar-pct">low</span></div>
-        <div class="bar-row"><span class="bar-label">complexity</span><div class="bar-track"><div class="bar-fill" style="width:20%"></div></div><span class="bar-pct">minimum</span></div>
-        <div class="bar-row"><span class="bar-label">code review</span><div class="bar-track"><div class="bar-fill" style="width:60%"></div></div><span class="bar-pct">medium</span></div>
+        <div class="bar-row"><span class="bar-label"><a href="/sensors/delta-escape/">Delta &amp; &lt;/script&gt;&lt;img src=x onerror=alert(1)&gt;</a></span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-pct">maximum</span></div>
+        <div class="bar-row"><span class="bar-label"><a href="/sensors/alpha-probe/">Alpha Probe</a></span><div class="bar-track"><div class="bar-fill" style="width:90%"></div></div><span class="bar-pct">high</span></div>
+        <div class="bar-row"><span class="bar-label"><a href="/sensors/beta-signal/">Beta Signal</a></span><div class="bar-track"><div class="bar-fill" style="width:60%"></div></div><span class="bar-pct">medium</span></div>
+        <div class="bar-row"><span class="bar-label"><a href="/sensors/gamma-unreviewed/">Gamma Unreviewed</a></span><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div><span class="bar-pct">low</span></div>
+        <div class="bar-row"><span class="bar-label"><a href="/sensors/epsilon-atlas/">Epsilon Atlas Anchor</a></span><div class="bar-track"><div class="bar-fill" style="width:20%"></div></div><span class="bar-pct">minimum</span></div>
       </div>
       <p>
-        A compiler has maximum oracle strength because the implementation
-        cannot argue with it. A complexity metric has minimum oracle
-        strength because high complexity doesn't prove anything is wrong —
-        it just suggests increased risk. The scale is ordinal (minimum →
+        One entry per rung, drawn from the catalog. A compiler has maximum
+        oracle strength because the implementation cannot argue with it;
+        line coverage is low because the line ran, which says nothing
+        about whether it was right. The scale is ordinal (minimum →
         low → medium → high → maximum): a sensor two rungs up is stronger,
-        not "twice as strong."
+        not "twice as strong." 
       </p>
       <div class="callout">
         <strong>Mutation's oracle is derivative.</strong> Mutation testing's
@@ -297,14 +294,16 @@
       <h2 class="property-detail-title" id="feedback-latency">Feedback latency</h2>
       <p class="property-detail-question">How long until the sensor tells you something?</p>
       <div class="latency-table">
-        <div class="lat-row"><span class="lat-sensor">compiler</span><span class="lat-time">milliseconds</span><div class="lat-bar"><div class="lat-fill" style="width:5%"></div></div></div>
-        <div class="lat-row"><span class="lat-sensor">unit tests</span><span class="lat-time">seconds</span><div class="lat-bar"><div class="lat-fill" style="width:12%"></div></div></div>
-        <div class="lat-row"><span class="lat-sensor">integration</span><span class="lat-time">minutes</span><div class="lat-bar"><div class="lat-fill" style="width:30%"></div></div></div>
-        <div class="lat-row"><span class="lat-sensor">mutation</span><span class="lat-time">minutes / hours</span><div class="lat-bar"><div class="lat-fill" style="width:50%"></div></div></div>
-        <div class="lat-row"><span class="lat-sensor">canary</span><span class="lat-time">minutes</span><div class="lat-bar"><div class="lat-fill" style="width:35%"></div></div></div>
-        <div class="lat-row"><span class="lat-sensor">production</span><span class="lat-time">hours / days</span><div class="lat-bar"><div class="lat-fill" style="width:70%"></div></div></div>
-        <div class="lat-row"><span class="lat-sensor">incident</span><span class="lat-time">weeks</span><div class="lat-bar"><div class="lat-fill" style="width:100%"></div></div></div>
+        <div class="lat-row"><span class="lat-sensor"><a href="/sensors/delta-escape/">Delta &amp; &lt;/script&gt;&lt;img src=x onerror=alert(1)&gt;</a></span><span class="lat-time">milliseconds</span><div class="lat-bar"><div class="lat-fill" style="width:6%"></div></div></div>
+        <div class="lat-row"><span class="lat-sensor"><a href="/sensors/alpha-probe/">Alpha Probe</a></span><span class="lat-time">seconds</span><div class="lat-bar"><div class="lat-fill" style="width:20%"></div></div></div>
+        <div class="lat-row"><span class="lat-sensor"><a href="/sensors/beta-signal/">Beta Signal</a></span><span class="lat-time">minutes</span><div class="lat-bar"><div class="lat-fill" style="width:42%"></div></div></div>
+        <div class="lat-row"><span class="lat-sensor"><a href="/sensors/gamma-unreviewed/">Gamma Unreviewed</a></span><span class="lat-time">hours</span><div class="lat-bar"><div class="lat-fill" style="width:62%"></div></div></div>
+        <div class="lat-row"><span class="lat-sensor"><a href="/sensors/epsilon-atlas/">Epsilon Atlas Anchor</a></span><span class="lat-time">weeks</span><div class="lat-bar"><div class="lat-fill" style="width:90%"></div></div></div>
       </div>
+      <p>
+        One entry per latency band, drawn from the catalog and placed on
+        the same axis the homepage scatter uses.
+      </p>
     </section>
 
     <section class="property-detail">
