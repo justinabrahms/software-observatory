@@ -44,7 +44,7 @@ references:
   title: Accelerate
   year: 2018
   kind: publication
-  tier: I
+  tier: II
 - title: DevOps Research Assessment
   kind: tool
   url: https://dora.dev/research/

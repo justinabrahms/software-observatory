@@ -26,7 +26,7 @@ last_reviewed: '2026-08-31'
 references:
 - title: Automating Chaos Experiments in Production
   year: 2019
-  tier: IV
+  tier: III
   url: https://arxiv.org/abs/1905.04648
   kind: publication
   authors: Ali Basiri, Lorin Hochstein, Nora Jones, Haley Tucker
