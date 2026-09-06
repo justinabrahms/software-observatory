@@ -2286,7 +2286,8 @@ a.wikilink:hover {
 }
 .doubt-detail .who { color: var(--text); font-family: var(--font-serif); font-size: 1.05rem; }
 .doubt-detail .who small { font-family: var(--font-mono); font-size: .72rem; color: var(--text-dim); margin-left: .6rem; }
-.doubt-detail .list { display: flex; flex-wrap: wrap; gap: .25rem .7rem; font-size: .85rem; }
+.doubt-detail .list { display: block; font-size: .85rem; line-height: 1.7; }
+.doubt-detail .list .k { margin-right: .5rem; }
 .doubt-detail .k, .doubt-entry-list .k {
   font-family: var(--font-mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .08em;
 }
@@ -2348,7 +2349,7 @@ a.wikilink:hover {
 .doubt-by-sensor { margin-top: 2.5rem; }
 .doubt-by-sensor-lede { color: var(--text-soft); margin: 0 0 1rem; max-width: 70ch; }
 .doubt-table-scroll { overflow-x: auto; border: 1px solid var(--border); }
-.doubt-table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: .88rem; }
+.doubt-table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: .88rem; table-layout: fixed; }
 .doubt-table th, .doubt-table td { text-align: left; vertical-align: top; padding: .5rem .8rem; border-bottom: 1px solid var(--border); }
 .doubt-table thead th {
   font-family: var(--font-mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase;
@@ -2357,6 +2358,7 @@ a.wikilink:hover {
 .doubt-table thead th.misread { color: var(--doubt-misread); }
 .doubt-table thead th.closes, .doubt-table thead th.reveals { color: var(--doubt-close); }
 .doubt-table th[scope="col"]:first-child { width: 15rem; }
+.doubt-table th[scope="col"]:not(:first-child) { width: calc((100% - 15rem) / 3); }
 .doubt-table tbody th[scope="row"] { font-weight: 500; color: var(--text); white-space: nowrap; }
 .doubt-table .fam-row th {
   font-family: var(--font-mono); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase;
