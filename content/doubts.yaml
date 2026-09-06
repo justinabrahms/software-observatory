@@ -6,7 +6,7 @@
 # the entries' "What it cannot detect" sections; nine came from asking each
 # sensor that closed none of those what it does close. Every edge was then
 # stated as a plain assertion and judged by reviewers who saw only the
-# assertion; the edges they rejected are gone. Rendered at /doubts/.
+# assertion; the edges they rejected are gone. Rendered at /what-each-sensor-proves/.
 #
 # misread_as_closing: a green reading is commonly taken as proof the doubt
 #   is closed when it is not.

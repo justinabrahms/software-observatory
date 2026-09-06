@@ -1,4 +1,4 @@
-"""The doubts page: /doubts/.
+"""The doubts page: /what-each-sensor-proves/.
 
 A three-column graph drawn from content/doubts.yaml. Sensors run down both
 sides in family order; the doubts sit between them. A sensor on the left is
@@ -198,8 +198,10 @@ def generate_doubts_page(doubts, sensors, output_dir):
 
     body = f"""  <section class="page-header page-header--reading">
     <p class="eyebrow">The Framework</p>
-    <h1 class="page-title">Doubts</h1>
+    <h1 class="page-title">What each sensor proves</h1>
     <p class="page-lede">
+      What does a passing type check, a green test suite, or 90% coverage
+      actually prove about the code, and what is it mistaken for proving?
       The <a href="/framework/#combining-sensors" class="wikilink">composition
       rule</a> asks of every sensor: what doubt does this eliminate that the
       others leave open? This page is the answer for the whole catalog.
@@ -307,20 +309,23 @@ def generate_doubts_page(doubts, sensors, output_dir):
   </div>"""
 
     description = (
-        f"{len(doubts)} doubts about a system, and for each the sensors that "
-        "close it, the sensors that reveal it after the fact, and the sensors "
-        "whose green reading is mistaken for closing it."
+        "What passing tests, type checks, coverage, canaries and proofs "
+        f"actually prove about software: {len(doubts)} doubts, and for each "
+        "the sensors that rule it out, the sensors that reveal it after the "
+        "fact, and the sensors mistaken for ruling it out."
     )
+    title = "What Each Sensor Proves, and What It Is Mistaken for Proving"
     page_html = html_page(
-        "Doubts", body, canonical="doubts/",
+        title, body, canonical="what-each-sensor-proves/",
         description=description,
         json_ld=[
-            page_ld("WebPage", "Doubts", "/doubts/", description,
+            page_ld("WebPage", title, "/what-each-sensor-proves/", description,
                     extra={"dateModified": catalog_as_of(sensors)}),
-            breadcrumb_ld([("Framework", "framework/"), ("Doubts", None)]),
+            breadcrumb_ld([("Framework", "framework/"),
+                           ("What each sensor proves", None)]),
         ],
     )
-    out_path = output_dir / "doubts" / "index.html"
+    out_path = output_dir / "what-each-sensor-proves" / "index.html"
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w") as f:
         f.write(page_html)
