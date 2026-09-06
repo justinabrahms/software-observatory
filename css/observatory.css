@@ -2245,13 +2245,13 @@ a.wikilink:hover {
    blocks are centred at the reading width, like the header above them; the
    graph and table take the whole container. */
 .doubts-content { max-width: var(--max-width); }
-.doubt-intro, .doubt-notes, .doubt-entries { margin-left: auto; margin-right: auto; }
+.doubt-intro, .doubt-notes { margin-left: auto; margin-right: auto; }
 .doubt-intro { max-width: var(--reading); margin-bottom: 2.5rem; }
 .doubt-intro p { font-size: 1.02rem; line-height: 1.75; color: var(--text-soft); margin-bottom: 1.2rem; }
 .doubt-intro strong { color: var(--text); font-weight: 600; }
 .doubt-legend {
   display: flex; flex-wrap: wrap; gap: .6rem 1.4rem; align-items: center;
-  font-size: .82rem; color: var(--text-soft); margin: 0 0 1.2rem;
+  font-size: .82rem; color: var(--text-soft); margin: 0 0 .8rem;
 }
 .doubt-legend span { display: inline-flex; align-items: center; gap: .5rem; }
 .doubt-legend svg { width: 34px; height: 10px; flex: none; }
@@ -2259,27 +2259,35 @@ a.wikilink:hover {
 .doubt-legend .lg-closes  { stroke: var(--doubt-close); stroke-width: 2.2; }
 .doubt-legend .lg-reveals { stroke: var(--doubt-close); stroke-width: 2.2; stroke-dasharray: 1.5 3.5; stroke-linecap: round; }
 
-.doubt-chips {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: .5rem; margin: 0 0 1rem;
+.doubt-cards-section { margin: 0 0 3rem; }
+.doubt-cards-section > h2, .doubt-figure > h2 {
+  font-family: var(--font-serif); font-weight: 600; font-size: 1.4rem;
+  color: var(--text); margin: 2rem 0 1rem;
 }
-.doubt-chip {
-  background: var(--bg-card); border: 1px solid var(--border); border-radius: 0;
-  padding: .55rem .7rem .5rem; cursor: pointer; text-align: left;
-  color: var(--text); font: inherit; display: flex; flex-direction: column; gap: .25rem;
-  transition: border-color .12s ease;
+.doubt-cards {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: .6rem;
 }
-.doubt-chip:hover, .doubt-chip:focus-visible { border-color: var(--accent-soft); outline: none; }
-.doubt-chip.on { border-color: var(--accent); background: var(--bg-elev); }
-.doubt-chip .name { font-family: var(--font-serif); font-size: 1rem; font-weight: 500; }
-.doubt-chip .counts {
-  font-family: var(--font-mono); font-size: .72rem; color: var(--text-dim);
+.doubt-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  padding: .8rem .9rem .7rem; cursor: pointer;
+  display: flex; flex-direction: column; gap: .4rem;
+  scroll-margin-top: 5rem; transition: border-color .12s ease;
+}
+.doubt-card:hover, .doubt-card:focus-visible { border-color: var(--accent-soft); outline: none; }
+.doubt-card.on, .doubt-card:target { border-color: var(--accent); background: var(--bg-elev); }
+.doubt-card-name { font-family: var(--font-serif); font-size: 1.05rem; font-weight: 500; margin: 0; color: var(--text); }
+.doubt-card-desc { font-size: .85rem; line-height: 1.55; color: var(--text-soft); margin: 0; flex: 1; }
+.doubt-card-counts {
+  font-family: var(--font-mono); font-size: .72rem; color: var(--text-dim); margin: 0;
   display: flex; flex-wrap: wrap; gap: .2rem .7rem; font-variant-numeric: tabular-nums;
 }
-.doubt-chip .counts span { white-space: nowrap; }
-.doubt-chip .counts b { font-weight: 500; }
-.doubt-chip .counts .m b { color: var(--doubt-misread); }
-.doubt-chip .counts .c b, .doubt-chip .counts .r b { color: var(--doubt-close); }
+.doubt-card-counts span { white-space: nowrap; }
+.doubt-card-counts b { font-weight: 500; }
+.doubt-card-counts .m b { color: var(--doubt-misread); }
+.doubt-card-counts .c b, .doubt-card-counts .r b { color: var(--doubt-close); }
+
+.doubt-figure-lede { color: var(--text-soft); margin: 0 0 1rem; max-width: 70ch; }
 
 /* Fixed height so hovering swaps the text without moving the graph. */
 .doubt-detail {
@@ -2338,11 +2346,11 @@ a.wikilink:hover {
 .doubt-graph .edge, .doubt-graph .sensor text, .doubt-graph .sensor .s-dot,
 .doubt-graph .doubt text, .doubt-graph .doubt .d-node { transition: opacity .15s ease, stroke .15s ease; }
 @media (prefers-reduced-motion: reduce) {
-  .doubt-graph *, .doubt-chip { transition: none !important; }
+  .doubt-graph *, .doubt-card { transition: none !important; }
 }
 
 .doubt-notes { max-width: var(--reading); margin-top: 2.5rem; }
-.doubt-notes h2, .doubt-by-sensor h2, .doubt-entries > h2 {
+.doubt-notes h2, .doubt-by-sensor h2 {
   font-family: var(--font-serif); font-weight: 600; font-size: 1.4rem;
   color: var(--text); margin: 2rem 0 .6rem;
 }
@@ -2374,13 +2382,7 @@ a.wikilink:hover {
 .doubt-ref { display: block; color: var(--text-soft); text-decoration: none; line-height: 1.5; }
 .doubt-ref:hover { color: var(--text); text-decoration: underline; }
 
-/* Definitions: the anchor target for every doubt link on the page. */
-.doubt-entries { max-width: var(--reading); margin-top: 2.5rem; }
-.doubt-defs { margin: 0; }
-.doubt-def { padding: .9rem 0; border-top: 1px solid var(--border); scroll-margin-top: 5rem; }
-.doubt-def:target { border-top-color: var(--accent); }
-.doubt-def-name { font-family: var(--font-serif); font-size: 1.1rem; font-weight: 500; color: var(--text); margin: 0 0 .3rem; }
-.doubt-def-desc { color: var(--text-soft); line-height: 1.65; margin: 0; }
+
 
 /* ── Responsive ────────────────────────────────────────────────────────── */
 @media (max-width: 860px) {

@@ -383,10 +383,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // so the two can never say different things.
   const doubtGraph = document.querySelector('.doubt-graph');
   if (doubtGraph) {
-    const chips = document.querySelector('.doubt-chips');
+    const cards = document.querySelector('.doubt-cards');
     const detail = document.querySelector('.doubt-detail');
-    const defs = {};
-    document.querySelectorAll('.doubt-def').forEach(e => { defs[e.id] = e; });
+    const cardOf = {};
+    document.querySelectorAll('.doubt-card').forEach(e => { cardOf[e.dataset.d] = e; });
     const doubtName = {};
     doubtGraph.querySelectorAll('.doubt').forEach(g => {
       doubtName[g.dataset.d] = g.querySelector('.d-name').textContent;
@@ -407,12 +407,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const sel = hover || pinned;
       doubtGraph.classList.toggle('has-sel', !!sel);
       doubtGraph.querySelectorAll('.hi, .sel').forEach(n => n.classList.remove('hi', 'sel'));
-      chips.querySelectorAll('.doubt-chip').forEach(c => {
+      cards.querySelectorAll('.doubt-card').forEach(c => {
         c.classList.toggle('on', !!sel && sel.type === 'doubt' && c.dataset.d === sel.id);
       });
       detail.hidden = false;
       if (!sel) {
-        detail.innerHTML = '<span class="who">Nothing selected</span><span>Hover or click a doubt in the middle, a chip above, or a sensor on either side.</span>';
+        detail.innerHTML = '<span class="who">Nothing selected</span><span>Hover or click a doubt card above, a doubt in the middle of the graph, or a sensor on either side.</span>';
         return;
       }
       if (sel.type === 'doubt') {
@@ -422,8 +422,8 @@ document.addEventListener('DOMContentLoaded', () => {
           const side = e.classList.contains('misread') ? 'l' : 'r';
           doubtGraph.querySelector(`.sensor[data-s="${e.dataset.s}"][data-side="${side}"]`).classList.add('hi');
         });
-        const def = defs[sel.id];
-        const desc = def ? def.querySelector('.doubt-def-desc').textContent : '';
+        const card = cardOf[sel.id];
+        const desc = card ? card.querySelector('.doubt-card-desc').textContent : '';
         const misread = [], closes = [], reveals = [];
         doubtGraph.querySelectorAll(`.edge[data-d="${sel.id}"]`).forEach(e => {
           const link = `<a href="/sensors/${e.dataset.s}/">${sensorTitle[e.dataset.s]}</a>`;
@@ -454,13 +454,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const target = ev => {
-      const g = ev.target.closest('.doubt, .sensor, .doubt-chip');
+      const g = ev.target.closest('.doubt, .sensor, .doubt-card');
       if (!g) return null;
       if (g.dataset.d) return { type: 'doubt', id: g.dataset.d };
       if (g.dataset.s) return { type: 'sensor', id: g.dataset.s };
       return null;
     };
-    [doubtGraph, chips].forEach(root => {
+    [doubtGraph, cards].forEach(root => {
       root.addEventListener('mouseover', ev => { const t = target(ev); if (t) { hover = t; render(); } });
       root.addEventListener('mouseout', ev => { if (target(ev)) { hover = null; render(); } });
       root.addEventListener('click', ev => {
@@ -471,8 +471,17 @@ document.addEventListener('DOMContentLoaded', () => {
         render();
       });
     });
+    cards.addEventListener('keydown', ev => {
+      if (ev.key !== 'Enter' && ev.key !== ' ') return;
+      const t = target(ev);
+      if (!t) return;
+      ev.preventDefault();
+      pinned = same(pinned, t) ? null : t;
+      hover = null;
+      render();
+    });
     document.addEventListener('click', ev => {
-      if (!ev.target.closest('.doubt, .sensor, .doubt-chip, .doubt-detail')) {
+      if (!ev.target.closest('.doubt, .sensor, .doubt-card, .doubt-detail')) {
         pinned = null; hover = null; render();
       }
     });

@@ -120,12 +120,9 @@
     <p class="page-lede">
       What does a passing type check, a green test suite, or 90% coverage
       actually prove about the code, and what is it mistaken for proving?
-      The <a href="/framework/#combining-sensors" class="wikilink">composition
-      rule</a> asks of every sensor: what doubt does this eliminate that the
-      others leave open? This page is the answer for the whole catalog.
-      2 doubts about a system, and for each one the sensors that
-      close it, the sensors that only reveal it after the fact, and the
-      sensors whose green reading is mistaken for closing it.
+      Removing doubt is the job every sensor in the catalog does, and each
+      one removes a different doubt. This page names 2 of them
+      and maps every sensor onto them.
     </p>
   </section>
 
@@ -138,44 +135,55 @@
         rule</a> says how those answers add up: not by counting green checks,
         but by ruling out specific ways the software could be wrong, one at a
         time. A check that rules out nothing new adds nothing, however green
-        it is. This page names those ways of being wrong and maps every
-        sensor onto them.
+        it is.
       </p>
       <p>
         A <em>doubt</em> is one specific way the software could be wrong. The
         logic is wrong even though it compiles. The tests ran the code but
         asserted nothing about the result. The change altered something
-        nobody meant to touch. There are 2 here, and for each one
-        the page asks three questions of every sensor. Does a clean result
-        from this sensor <strong>close</strong> the doubt, for what the sensor
-        was pointed at? Does it only <strong>reveal</strong> the doubt after
-        the fact, once the damage has reached production? Or is its clean
-        result commonly <strong>misread</strong> as closing the doubt when it
-        does not?
+        nobody meant to touch. For each doubt, the page asks three questions
+        of every sensor. Does a clean result from this sensor
+        <strong>close</strong> the doubt, for what the sensor was pointed at?
+        Does it only <strong>reveal</strong> the doubt after the fact, once
+        the damage has reached production? Or is its clean result commonly
+        <strong>misread</strong> as closing the doubt when it does not?
       </p>
       <p>
-        The graph below draws all three answers at once, with the doubts in
-        the middle and the sensors on either side. Hover or click anything to
-        isolate it. Under the graph the same data is laid out by sensor, for
-        when you arrive with a tool in mind and want to know what it proves,
-        and each doubt is defined at the end.
+        The doubts come first. Then a graph that draws all three answers at
+        once, then the same edges laid out by sensor for when you arrive with
+        a tool in mind, and last, where the vocabulary came from.
       </p>
     </div>
 
-    <div class="doubt-legend">
-      <span><svg viewBox="0 0 34 10" aria-hidden="true"><line x1="1" y1="5" x2="33" y2="5" class="lg-misread"/></svg>green is misread as closing this doubt</span>
-      <span><svg viewBox="0 0 34 10" aria-hidden="true"><line x1="1" y1="5" x2="33" y2="5" class="lg-closes"/></svg>closes the doubt before shipping</span>
-      <span><svg viewBox="0 0 34 10" aria-hidden="true"><line x1="1" y1="5" x2="33" y2="5" class="lg-reveals"/></svg>reveals the doubt after the fact</span>
-      <span>dot colour is the family; a sensor is lit on a side only where it has an edge there</span>
-    </div>
-
-    <div class="doubt-chips" role="group" aria-label="Doubts">
-      <button type="button" class="doubt-chip" data-d="wrong-logic"><span class="name">Wrong logic</span><span class="counts"><span class="m"><b>0</b> misread</span><span class="c"><b>1</b> close</span><span class="r"><b>1</b> reveal</span></span></button>
-      <button type="button" class="doubt-chip" data-d="late-effects"><span class="name">Late effects</span><span class="counts"><span class="m"><b>1</b> misread</span><span class="c"><b>0</b> close</span><span class="r"><b>1</b> reveal</span></span></button>
-    </div>
-    <div class="doubt-detail" hidden></div>
+    <section class="doubt-cards-section">
+      <h2 id="the-doubts">The doubts</h2>
+      <div class="doubt-cards" role="list">
+      <article class="doubt-card" id="wrong-logic" data-d="wrong-logic" tabindex="0">
+        <h3 class="doubt-card-name" id="wrong-logic-name">Wrong logic</h3>
+        <p class="doubt-card-desc">The code has the right shape and still returns the wrong answer.</p>
+        <p class="doubt-card-counts"><span class="m"><b>0</b> misread</span><span class="c"><b>1</b> close</span><span class="r"><b>1</b> reveal</span></p>
+      </article>
+      <article class="doubt-card" id="late-effects" data-d="late-effects" tabindex="0">
+        <h3 class="doubt-card-name" id="late-effects-name">Late effects</h3>
+        <p class="doubt-card-desc">The damage shows up after you stopped watching.</p>
+        <p class="doubt-card-counts"><span class="m"><b>1</b> misread</span><span class="c"><b>0</b> close</span><span class="r"><b>1</b> reveal</span></p>
+      </article>
+      </div>
+    </section>
 
     <figure class="doubt-figure">
+      <h2 id="every-sensor-every-doubt">Every sensor, every doubt</h2>
+      <p class="doubt-figure-lede">
+        Doubts in the middle, sensors on either side. Hover or click a doubt
+        above, or anything in the graph, to isolate it.
+      </p>
+      <div class="doubt-detail" hidden></div>
+      <div class="doubt-legend">
+        <span><svg viewBox="0 0 34 10" aria-hidden="true"><line x1="1" y1="5" x2="33" y2="5" class="lg-misread"/></svg>green is misread as closing this doubt</span>
+        <span><svg viewBox="0 0 34 10" aria-hidden="true"><line x1="1" y1="5" x2="33" y2="5" class="lg-closes"/></svg>closes the doubt before shipping</span>
+        <span><svg viewBox="0 0 34 10" aria-hidden="true"><line x1="1" y1="5" x2="33" y2="5" class="lg-reveals"/></svg>reveals the doubt after the fact</span>
+        <span>dot colour is the family; a sensor is lit on a side only where it has an edge there</span>
+      </div>
       <div class="doubt-graph-scroll">
 <svg class="doubt-graph" viewBox="0 0 1200 321" role="img" aria-label="Three-column graph: sensors misread as closing each doubt on the left, the doubts in the middle, sensors that close or reveal each doubt on the right.">
 <g>
@@ -220,37 +228,12 @@
       <figcaption>
         The same 5 sensors appear on both sides, grouped by family in
         the catalog's order. A doubt sits at the average height of the sensors it
-        touches. Hover or click a doubt or a sensor to isolate it. A doubt with
-        an empty left side is one nothing gets mistaken for. The entries at the
-        bottom have no edge in this vocabulary: some close a doubt it does not
-        yet name, some are raw data that other sensors judge, and some are
-        aggregates with nothing to attribute.
+        touches. A doubt with an empty left side is one nothing gets mistaken
+        for. The entries at the bottom have no edge in this vocabulary: some
+        close a doubt it does not yet name, some are raw data that other sensors
+        judge, and some are aggregates with nothing to attribute.
       </figcaption>
     </figure>
-
-    <section class="doubt-by-sensor">
-      <h2 id="by-sensor">By sensor</h2>
-      <p class="doubt-by-sensor-lede">
-        The same edges, one row per sensor. Each doubt links to its definition
-        below.
-      </p>
-      <div class="doubt-table-scroll">
-<table class="doubt-table">
-<thead><tr><th scope="col">Sensor</th><th scope="col" class="misread">Misread as closing</th><th scope="col" class="closes">Closes</th><th scope="col" class="reveals">Reveals after</th></tr></thead>
-<tbody>
-<tr class="fam-row"><th scope="rowgroup" colspan="4">Structural</th></tr>
-<tr><th scope="row"><a href="/sensors/alpha-probe/" class="wikilink">Alpha Probe</a></th><td><a href="#late-effects" class="doubt-ref">Late effects</a></td><td class="empty"></td><td class="empty"></td></tr>
-<tr class="fam-row"><th scope="rowgroup" colspan="4">Behavioral</th></tr>
-<tr><th scope="row"><a href="/sensors/beta-signal/" class="wikilink">Beta Signal</a></th><td class="empty"></td><td><a href="#wrong-logic" class="doubt-ref">Wrong logic</a></td><td class="empty"></td></tr>
-<tr><th scope="row"><a href="/sensors/gamma-unreviewed/" class="wikilink">Gamma Unreviewed</a></th><td class="empty"></td><td class="empty"></td><td><a href="#late-effects" class="doubt-ref">Late effects</a></td></tr>
-<tr class="fam-row"><th scope="rowgroup" colspan="4">Test Effectiveness</th></tr>
-<tr><th scope="row"><a href="/sensors/epsilon-atlas/" class="wikilink">Epsilon Atlas Anchor</a></th><td class="empty"></td><td class="empty"></td><td><a href="#wrong-logic" class="doubt-ref">Wrong logic</a></td></tr>
-<tr class="fam-row"><th scope="rowgroup" colspan="4">Invariants</th></tr>
-<tr class="idle"><th scope="row"><a href="/sensors/delta-escape/" class="wikilink">Delta &amp; &lt;/script&gt;&lt;img src=x onerror=alert(1)&gt;</a></th><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
-</tbody>
-</table>
-      </div>
-    </section>
 
     <section class="doubt-notes">
       <h2 id="reading-the-edges">Reading the edges</h2>
@@ -283,6 +266,32 @@
         
         And <em>wrong logic</em> has an empty left side: nobody reads a clean compile or type check as correct code. The belief engineers actually hold is that a class of bugs is gone, which is true.
       </p>
+    </section>
+
+    <section class="doubt-by-sensor">
+      <h2 id="by-sensor">By sensor</h2>
+      <p class="doubt-by-sensor-lede">
+        The same edges, one row per sensor. Each doubt links back to its card.
+      </p>
+      <div class="doubt-table-scroll">
+<table class="doubt-table">
+<thead><tr><th scope="col">Sensor</th><th scope="col" class="misread">Misread as closing</th><th scope="col" class="closes">Closes</th><th scope="col" class="reveals">Reveals after</th></tr></thead>
+<tbody>
+<tr class="fam-row"><th scope="rowgroup" colspan="4">Structural</th></tr>
+<tr><th scope="row"><a href="/sensors/alpha-probe/" class="wikilink">Alpha Probe</a></th><td><a href="#late-effects" class="doubt-ref">Late effects</a></td><td class="empty"></td><td class="empty"></td></tr>
+<tr class="fam-row"><th scope="rowgroup" colspan="4">Behavioral</th></tr>
+<tr><th scope="row"><a href="/sensors/beta-signal/" class="wikilink">Beta Signal</a></th><td class="empty"></td><td><a href="#wrong-logic" class="doubt-ref">Wrong logic</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/sensors/gamma-unreviewed/" class="wikilink">Gamma Unreviewed</a></th><td class="empty"></td><td class="empty"></td><td><a href="#late-effects" class="doubt-ref">Late effects</a></td></tr>
+<tr class="fam-row"><th scope="rowgroup" colspan="4">Test Effectiveness</th></tr>
+<tr><th scope="row"><a href="/sensors/epsilon-atlas/" class="wikilink">Epsilon Atlas Anchor</a></th><td class="empty"></td><td class="empty"></td><td><a href="#wrong-logic" class="doubt-ref">Wrong logic</a></td></tr>
+<tr class="fam-row"><th scope="rowgroup" colspan="4">Invariants</th></tr>
+<tr class="idle"><th scope="row"><a href="/sensors/delta-escape/" class="wikilink">Delta &amp; &lt;/script&gt;&lt;img src=x onerror=alert(1)&gt;</a></th><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+</tbody>
+</table>
+      </div>
+    </section>
+
+    <section class="doubt-notes">
       <h2 id="where-the-vocabulary-came-from">Where the vocabulary came from</h2>
       <p>
         One of the doubts was mined from the "What it cannot detect" section of every entry, which is where the catalog names what it leaves open. That method finds the catalog's residue, not its
@@ -300,20 +309,6 @@
         not recognise, and every sentence above that names a specific doubt is
         checked against the file at build time.
       </p>
-    </section>
-
-    <section class="doubt-entries">
-      <h2 id="the-doubts-defined">The doubts, defined</h2>
-      <dl class="doubt-defs">
-    <div class="doubt-def" id="wrong-logic">
-      <dt class="doubt-def-name">Wrong logic</dt>
-      <dd class="doubt-def-desc">The code has the right shape and still returns the wrong answer.</dd>
-    </div>
-    <div class="doubt-def" id="late-effects">
-      <dt class="doubt-def-name">Late effects</dt>
-      <dd class="doubt-def-desc">The damage shows up after you stopped watching.</dd>
-    </div>
-      </dl>
     </section>
   </div>
   </main>

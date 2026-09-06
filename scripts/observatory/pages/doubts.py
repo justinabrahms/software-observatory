@@ -216,20 +216,22 @@ def generate_doubts_page(doubts, sensors, output_dir):
     by_slug = {s["slug"]: s for s in sensors}
     n_sensors = len(sensors)
 
-    chips = "\n".join(
-        f'      <button type="button" class="doubt-chip" data-d="{d["id"]}">'
-        f'<span class="name">{html.escape(d["name"])}</span>'
-        f'<span class="counts"><span class="m"><b>{len(d["misread_as_closing"])}</b> misread</span>'
-        f'<span class="c"><b>{len(d["closed_by"])}</b> close</span>'
-        + (f'<span class="r"><b>{len(d["revealed_by"])}</b> reveal</span>' if d["revealed_by"] else "")
-        + "</span></button>"
-        for d in doubts)
+    def counts(d):
+        out = (f'<span class="m"><b>{len(d["misread_as_closing"])}</b> misread</span>'
+               f'<span class="c"><b>{len(d["closed_by"])}</b> close</span>')
+        if d["revealed_by"]:
+            out += f'<span class="r"><b>{len(d["revealed_by"])}</b> reveal</span>'
+        return out
 
-    entries = "\n".join(
-        f'''    <div class="doubt-def" id="{d["id"]}">
-      <dt class="doubt-def-name">{html.escape(d["name"])}</dt>
-      <dd class="doubt-def-desc">{html.escape(d["description"])}</dd>
-    </div>'''
+    # One card per doubt: its name, its one-sentence description and its
+    # edge counts. The card is the anchor every doubt link on the page
+    # points at, and clicking it pins the doubt in the graph below.
+    cards = "\n".join(
+        f'''      <article class="doubt-card" id="{d["id"]}" data-d="{d["id"]}" tabindex="0">
+        <h3 class="doubt-card-name" id="{d["id"]}-name">{html.escape(d["name"])}</h3>
+        <p class="doubt-card-desc">{html.escape(d["description"])}</p>
+        <p class="doubt-card-counts">{counts(d)}</p>
+      </article>'''
         for d in doubts)
 
     claims = {c.label: c for c in prose_claims(doubts, sensors)}
@@ -276,12 +278,9 @@ def generate_doubts_page(doubts, sensors, output_dir):
     <p class="page-lede">
       What does a passing type check, a green test suite, or 90% coverage
       actually prove about the code, and what is it mistaken for proving?
-      The <a href="/framework/#combining-sensors" class="wikilink">composition
-      rule</a> asks of every sensor: what doubt does this eliminate that the
-      others leave open? This page is the answer for the whole catalog.
-      {len(doubts)} doubts about a system, and for each one the sensors that
-      close it, the sensors that only reveal it after the fact, and the
-      sensors whose green reading is mistaken for closing it.
+      Removing doubt is the job every sensor in the catalog does, and each
+      one removes a different doubt. This page names {len(doubts)} of them
+      and maps every sensor onto them.
     </p>
   </section>
 
@@ -294,67 +293,58 @@ def generate_doubts_page(doubts, sensors, output_dir):
         rule</a> says how those answers add up: not by counting green checks,
         but by ruling out specific ways the software could be wrong, one at a
         time. A check that rules out nothing new adds nothing, however green
-        it is. This page names those ways of being wrong and maps every
-        sensor onto them.
+        it is.
       </p>
       <p>
         A <em>doubt</em> is one specific way the software could be wrong. The
         logic is wrong even though it compiles. The tests ran the code but
         asserted nothing about the result. The change altered something
-        nobody meant to touch. There are {len(doubts)} here, and for each one
-        the page asks three questions of every sensor. Does a clean result
-        from this sensor <strong>close</strong> the doubt, for what the sensor
-        was pointed at? Does it only <strong>reveal</strong> the doubt after
-        the fact, once the damage has reached production? Or is its clean
-        result commonly <strong>misread</strong> as closing the doubt when it
-        does not?
+        nobody meant to touch. For each doubt, the page asks three questions
+        of every sensor. Does a clean result from this sensor
+        <strong>close</strong> the doubt, for what the sensor was pointed at?
+        Does it only <strong>reveal</strong> the doubt after the fact, once
+        the damage has reached production? Or is its clean result commonly
+        <strong>misread</strong> as closing the doubt when it does not?
       </p>
       <p>
-        The graph below draws all three answers at once, with the doubts in
-        the middle and the sensors on either side. Hover or click anything to
-        isolate it. Under the graph the same data is laid out by sensor, for
-        when you arrive with a tool in mind and want to know what it proves,
-        and each doubt is defined at the end.
+        The doubts come first. Then a graph that draws all three answers at
+        once, then the same edges laid out by sensor for when you arrive with
+        a tool in mind, and last, where the vocabulary came from.
       </p>
     </div>
 
-    <div class="doubt-legend">
-      <span><svg viewBox="0 0 34 10" aria-hidden="true"><line x1="1" y1="5" x2="33" y2="5" class="lg-misread"/></svg>green is misread as closing this doubt</span>
-      <span><svg viewBox="0 0 34 10" aria-hidden="true"><line x1="1" y1="5" x2="33" y2="5" class="lg-closes"/></svg>closes the doubt before shipping</span>
-      <span><svg viewBox="0 0 34 10" aria-hidden="true"><line x1="1" y1="5" x2="33" y2="5" class="lg-reveals"/></svg>reveals the doubt after the fact</span>
-      <span>dot colour is the family; a sensor is lit on a side only where it has an edge there</span>
-    </div>
-
-    <div class="doubt-chips" role="group" aria-label="Doubts">
-{chips}
-    </div>
-    <div class="doubt-detail" hidden></div>
+    <section class="doubt-cards-section">
+      <h2>The doubts</h2>
+      <div class="doubt-cards" role="list">
+{cards}
+      </div>
+    </section>
 
     <figure class="doubt-figure">
+      <h2>Every sensor, every doubt</h2>
+      <p class="doubt-figure-lede">
+        Doubts in the middle, sensors on either side. Hover or click a doubt
+        above, or anything in the graph, to isolate it.
+      </p>
+      <div class="doubt-detail" hidden></div>
+      <div class="doubt-legend">
+        <span><svg viewBox="0 0 34 10" aria-hidden="true"><line x1="1" y1="5" x2="33" y2="5" class="lg-misread"/></svg>green is misread as closing this doubt</span>
+        <span><svg viewBox="0 0 34 10" aria-hidden="true"><line x1="1" y1="5" x2="33" y2="5" class="lg-closes"/></svg>closes the doubt before shipping</span>
+        <span><svg viewBox="0 0 34 10" aria-hidden="true"><line x1="1" y1="5" x2="33" y2="5" class="lg-reveals"/></svg>reveals the doubt after the fact</span>
+        <span>dot colour is the family; a sensor is lit on a side only where it has an edge there</span>
+      </div>
       <div class="doubt-graph-scroll">
 {render_graph_svg(doubts, sensors)}
       </div>
       <figcaption>
         The same {n_sensors} sensors appear on both sides, grouped by family in
         the catalog's order. A doubt sits at the average height of the sensors it
-        touches. Hover or click a doubt or a sensor to isolate it. A doubt with
-        an empty left side is one nothing gets mistaken for. The entries at the
-        bottom have no edge in this vocabulary: some close a doubt it does not
-        yet name, some are raw data that other sensors judge, and some are
-        aggregates with nothing to attribute.
+        touches. A doubt with an empty left side is one nothing gets mistaken
+        for. The entries at the bottom have no edge in this vocabulary: some
+        close a doubt it does not yet name, some are raw data that other sensors
+        judge, and some are aggregates with nothing to attribute.
       </figcaption>
     </figure>
-
-    <section class="doubt-by-sensor">
-      <h2>By sensor</h2>
-      <p class="doubt-by-sensor-lede">
-        The same edges, one row per sensor. Each doubt links to its definition
-        below.
-      </p>
-      <div class="doubt-table-scroll">
-{render_by_sensor_table(doubts, sensors)}
-      </div>
-    </section>
 
     <section class="doubt-notes">
       <h2>Reading the edges</h2>
@@ -387,6 +377,19 @@ def generate_doubts_page(doubts, sensors, output_dir):
         {claim_sentence("missing-behavior and wrong-specification close only at review or user-outcome sensors")}
         {claim_sentence("wrong-logic has an empty misread side")}
       </p>
+    </section>
+
+    <section class="doubt-by-sensor">
+      <h2>By sensor</h2>
+      <p class="doubt-by-sensor-lede">
+        The same edges, one row per sensor. Each doubt links back to its card.
+      </p>
+      <div class="doubt-table-scroll">
+{render_by_sensor_table(doubts, sensors)}
+      </div>
+    </section>
+
+    <section class="doubt-notes">
       <h2>Where the vocabulary came from</h2>
       <p>
         {origin_sentence} That method finds the catalog's residue, not its
@@ -404,13 +407,6 @@ def generate_doubts_page(doubts, sensors, output_dir):
         not recognise, and every sentence above that names a specific doubt is
         checked against the file at build time.
       </p>
-    </section>
-
-    <section class="doubt-entries">
-      <h2>The doubts, defined</h2>
-      <dl class="doubt-defs">
-{entries}
-      </dl>
     </section>
   </div>"""
 
