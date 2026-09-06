@@ -2379,8 +2379,9 @@ a.wikilink:hover {
 .doubt-table tr.idle th, .doubt-table tr.idle td { color: var(--text-dim); }
 .doubt-table tr.idle th a { color: var(--text-dim); }
 .doubt-table td.empty { background: var(--slot); }
-.doubt-ref { display: block; color: var(--text-soft); text-decoration: none; line-height: 1.5; }
-.doubt-ref:hover { color: var(--text); text-decoration: underline; }
+/* One doubt per line; width: fit-content keeps the wikilink underline under
+   the words rather than across the cell. */
+.doubt-ref { display: block; width: fit-content; line-height: 1.5; margin-bottom: .15rem; }
 
 
 

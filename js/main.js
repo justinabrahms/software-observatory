@@ -426,11 +426,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const desc = card ? card.querySelector('.doubt-card-desc').textContent : '';
         const misread = [], closes = [], reveals = [];
         doubtGraph.querySelectorAll(`.edge[data-d="${sel.id}"]`).forEach(e => {
-          const link = `<a href="/sensors/${e.dataset.s}/">${sensorTitle[e.dataset.s]}</a>`;
+          const link = `<a href="/sensors/${e.dataset.s}/" class="wikilink">${sensorTitle[e.dataset.s]}</a>`;
           (e.classList.contains('misread') ? misread : e.classList.contains('reveals') ? reveals : closes).push(link);
         });
         detail.innerHTML =
-          `<span class="who"><a href="#${sel.id}">${doubtName[sel.id]}</a><small>${sel.id}</small></span><span>${desc}</span>` +
+          `<span class="who"><a href="#${sel.id}" class="wikilink">${doubtName[sel.id]}</a><small>${sel.id}</small></span><span>${desc}</span>` +
           list('misread', 'misread as closing', misread) +
           list('closes', 'closed by', closes) +
           (reveals.length ? list('reveals', 'revealed after by', reveals) : '');
@@ -441,12 +441,12 @@ document.addEventListener('DOMContentLoaded', () => {
       doubtGraph.querySelectorAll(`.edge[data-s="${sel.id}"]`).forEach(e => {
         e.classList.add('hi');
         doubtGraph.querySelector(`.doubt[data-d="${e.dataset.d}"]`).classList.add('hi');
-        const name = `<a href="#${e.dataset.d}">${doubtName[e.dataset.d]}</a>`;
+        const name = `<a href="#${e.dataset.d}" class="wikilink">${doubtName[e.dataset.d]}</a>`;
         (e.classList.contains('misread') ? misread : e.classList.contains('reveals') ? reveals : closes).push(name);
       });
       const none = !misread.length && !closes.length && !reveals.length;
       detail.innerHTML =
-        `<span class="who"><a href="/sensors/${sel.id}/">${sensorTitle[sel.id]}</a><small>${sensorFamily[sel.id]}</small></span>` +
+        `<span class="who"><a href="/sensors/${sel.id}/" class="wikilink">${sensorTitle[sel.id]}</a><small>${sensorFamily[sel.id]}</small></span>` +
         (none ? '<span>No doubt edge in this vocabulary.</span>' : '') +
         list('misread', 'misread as closing', misread) +
         list('closes', 'closes', closes) +

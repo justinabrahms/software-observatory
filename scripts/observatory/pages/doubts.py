@@ -189,7 +189,7 @@ def render_by_sensor_table(doubts, sensors):
         if not ds:
             return '<td class="empty"></td>'
         return "<td>" + "".join(
-            f'<a href="#{d["id"]}" class="doubt-ref">{html.escape(d["name"])}</a>' for d in ds) + "</td>"
+            f'<a href="#{d["id"]}" class="wikilink doubt-ref">{html.escape(d["name"])}</a>' for d in ds) + "</td>"
 
     rows = []
     for fam in FAMILIES:
@@ -407,10 +407,7 @@ def generate_doubts_page(doubts, sensors, output_dir):
         false by reviewers who saw only the assertion. The false ones were
         removed, and they were mostly misreadings: the reviewers' repeated
         finding was that engineers know what a compiler does not prove. No
-        closing edge was judged fully true. The vocabulary lives in
-        <code>content/doubts.yaml</code>, the build refuses a sensor it does
-        not recognise, and every sentence above that names a specific doubt is
-        checked against the file at build time.
+        closing edge was judged fully true.
       </p>
     </section>
   </div>"""

@@ -283,12 +283,12 @@
 <thead><tr><th scope="col">Sensor</th><th scope="col" class="misread">Misread as closing</th><th scope="col" class="closes">Closes</th><th scope="col" class="reveals">Reveals after</th></tr></thead>
 <tbody>
 <tr class="fam-row"><th scope="rowgroup" colspan="4">Structural</th></tr>
-<tr><th scope="row"><a href="/sensors/alpha-probe/" class="wikilink">Alpha Probe</a></th><td><a href="#late-effects" class="doubt-ref">Late effects</a></td><td class="empty"></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/sensors/alpha-probe/" class="wikilink">Alpha Probe</a></th><td><a href="#late-effects" class="wikilink doubt-ref">Late effects</a></td><td class="empty"></td><td class="empty"></td></tr>
 <tr class="fam-row"><th scope="rowgroup" colspan="4">Behavioral</th></tr>
-<tr><th scope="row"><a href="/sensors/beta-signal/" class="wikilink">Beta Signal</a></th><td class="empty"></td><td><a href="#wrong-logic" class="doubt-ref">Wrong logic</a></td><td class="empty"></td></tr>
-<tr><th scope="row"><a href="/sensors/gamma-unreviewed/" class="wikilink">Gamma Unreviewed</a></th><td class="empty"></td><td class="empty"></td><td><a href="#late-effects" class="doubt-ref">Late effects</a></td></tr>
+<tr><th scope="row"><a href="/sensors/beta-signal/" class="wikilink">Beta Signal</a></th><td class="empty"></td><td><a href="#wrong-logic" class="wikilink doubt-ref">Wrong logic</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/sensors/gamma-unreviewed/" class="wikilink">Gamma Unreviewed</a></th><td class="empty"></td><td class="empty"></td><td><a href="#late-effects" class="wikilink doubt-ref">Late effects</a></td></tr>
 <tr class="fam-row"><th scope="rowgroup" colspan="4">Test Effectiveness</th></tr>
-<tr><th scope="row"><a href="/sensors/epsilon-atlas/" class="wikilink">Epsilon Atlas Anchor</a></th><td class="empty"></td><td class="empty"></td><td><a href="#wrong-logic" class="doubt-ref">Wrong logic</a></td></tr>
+<tr><th scope="row"><a href="/sensors/epsilon-atlas/" class="wikilink">Epsilon Atlas Anchor</a></th><td class="empty"></td><td class="empty"></td><td><a href="#wrong-logic" class="wikilink doubt-ref">Wrong logic</a></td></tr>
 <tr class="fam-row"><th scope="rowgroup" colspan="4">Invariants</th></tr>
 <tr class="idle"><th scope="row"><a href="/sensors/delta-escape/" class="wikilink">Delta &amp; &lt;/script&gt;&lt;img src=x onerror=alert(1)&gt;</a></th><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
 </tbody>
@@ -309,10 +309,7 @@
         false by reviewers who saw only the assertion. The false ones were
         removed, and they were mostly misreadings: the reviewers' repeated
         finding was that engineers know what a compiler does not prove. No
-        closing edge was judged fully true. The vocabulary lives in
-        <code>content/doubts.yaml</code>, the build refuses a sensor it does
-        not recognise, and every sentence above that names a specific doubt is
-        checked against the file at build time.
+        closing edge was judged fully true.
       </p>
     </section>
   </div>
