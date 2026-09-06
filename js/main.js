@@ -458,10 +458,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const remembered = new Set(load());
     boxes.forEach(b => { if (remembered.has(b.value)) b.checked = true; });
-    // A reader with ticks remembered, or arriving on a link into the
-    // checklist, should not find it folded away.
+    // Always starts folded, remembered ticks or not; only a link straight
+    // into the checklist opens it.
     const details = stackForm.closest('details');
-    if (details && (remembered.size || /^#(your-stack|stack-result)$/.test(location.hash))) {
+    if (details && /^#(your-stack|stack-result)$/.test(location.hash)) {
       details.open = true;
     }
     stackForm.addEventListener('change', render);

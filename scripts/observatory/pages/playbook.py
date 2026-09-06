@@ -225,8 +225,7 @@ def _stack_check_html(doubts, sensors):
     is left. Nothing about the graph lives in the script, so the checklist
     cannot disagree with the plays or the doubts page. It sits behind a
     native <details> disclosure, so the index still opens on the three
-    lists of triggers; the script opens it when the reader has ticks
-    remembered. Without JavaScript it is a checklist of the catalog by
+    lists of triggers, and it starts folded on every visit. Without JavaScript it is a checklist of the catalog by
     family, which is still a page."""
     by_family = {}
     for s in sensors:
