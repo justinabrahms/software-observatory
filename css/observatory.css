@@ -2337,22 +2337,44 @@ a.wikilink:hover {
 }
 
 .doubt-notes { max-width: var(--reading); margin-top: 2.5rem; }
-.doubt-notes h2 {
+.doubt-notes h2, .doubt-by-sensor h2, .doubt-entries > h2 {
   font-family: var(--font-serif); font-weight: 600; font-size: 1.4rem;
   color: var(--text); margin: 2rem 0 .6rem;
 }
 .doubt-notes p { font-size: 1.02rem; line-height: 1.75; color: var(--text-soft); margin-bottom: 1.2rem; }
 
-.doubt-entries { max-width: var(--reading); margin-top: 2.5rem; }
-.doubt-entries > h2 {
-  font-family: var(--font-serif); font-weight: 600; font-size: 1.4rem;
-  color: var(--text); margin: 2rem 0 1rem;
+/* By-sensor table: the graph pivoted, one row per sensor. Cells hold doubt
+   names, each a link to its definition. Scrolls in its own box when narrow. */
+.doubt-by-sensor { margin-top: 2.5rem; }
+.doubt-by-sensor-lede { color: var(--text-soft); margin: 0 0 1rem; max-width: 70ch; }
+.doubt-table-scroll { overflow-x: auto; border: 1px solid var(--border); }
+.doubt-table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: .88rem; }
+.doubt-table th, .doubt-table td { text-align: left; vertical-align: top; padding: .5rem .8rem; border-bottom: 1px solid var(--border); }
+.doubt-table thead th {
+  font-family: var(--font-mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--text-dim); background: var(--bg-elev); font-weight: 500;
 }
-.doubt-entry { padding: 1.2rem 0; border-top: 1px solid var(--border); }
-.doubt-entry-name { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 500; margin: 0 0 .4rem; }
-.doubt-entry-desc { color: var(--text-soft); line-height: 1.65; margin: 0 0 .6rem; }
-.doubt-entry-list { font-size: .9rem; line-height: 1.6; margin: 0 0 .25rem; color: var(--text-soft); }
-.doubt-entry-list .k { margin-right: .4rem; }
+.doubt-table thead th.misread { color: var(--doubt-misread); }
+.doubt-table thead th.closes, .doubt-table thead th.reveals { color: var(--doubt-close); }
+.doubt-table th[scope="col"]:first-child { width: 15rem; }
+.doubt-table tbody th[scope="row"] { font-weight: 500; color: var(--text); white-space: nowrap; }
+.doubt-table .fam-row th {
+  font-family: var(--font-mono); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--text-dim); background: var(--bg-soft); padding-top: .8rem;
+}
+.doubt-table tr.idle th, .doubt-table tr.idle td { color: var(--text-dim); }
+.doubt-table tr.idle th a { color: var(--text-dim); }
+.doubt-table td.empty { background: var(--slot); }
+.doubt-ref { display: block; color: var(--text-soft); text-decoration: none; line-height: 1.5; }
+.doubt-ref:hover { color: var(--text); text-decoration: underline; }
+
+/* Definitions: the anchor target for every doubt link on the page. */
+.doubt-entries { max-width: var(--reading); margin-top: 2.5rem; }
+.doubt-defs { margin: 0; }
+.doubt-def { padding: .9rem 0; border-top: 1px solid var(--border); scroll-margin-top: 5rem; }
+.doubt-def:target { border-top-color: var(--accent); }
+.doubt-def-name { font-family: var(--font-serif); font-size: 1.1rem; font-weight: 500; color: var(--text); margin: 0 0 .3rem; }
+.doubt-def-desc { color: var(--text-soft); line-height: 1.65; margin: 0; }
 
 /* ── Responsive ────────────────────────────────────────────────────────── */
 @media (max-width: 860px) {

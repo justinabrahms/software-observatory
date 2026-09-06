@@ -228,6 +228,30 @@
       </figcaption>
     </figure>
 
+    <section class="doubt-by-sensor">
+      <h2 id="by-sensor">By sensor</h2>
+      <p class="doubt-by-sensor-lede">
+        The same edges, one row per sensor. Each doubt links to its definition
+        below.
+      </p>
+      <div class="doubt-table-scroll">
+<table class="doubt-table">
+<thead><tr><th scope="col">Sensor</th><th scope="col" class="misread">Misread as closing</th><th scope="col" class="closes">Closes</th><th scope="col" class="reveals">Reveals after</th></tr></thead>
+<tbody>
+<tr class="fam-row"><th scope="rowgroup" colspan="4">Structural</th></tr>
+<tr><th scope="row"><a href="/sensors/alpha-probe/" class="wikilink">Alpha Probe</a></th><td><a href="#late-effects" class="doubt-ref">Late effects</a></td><td class="empty"></td><td class="empty"></td></tr>
+<tr class="fam-row"><th scope="rowgroup" colspan="4">Behavioral</th></tr>
+<tr><th scope="row"><a href="/sensors/beta-signal/" class="wikilink">Beta Signal</a></th><td class="empty"></td><td><a href="#wrong-logic" class="doubt-ref">Wrong logic</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/sensors/gamma-unreviewed/" class="wikilink">Gamma Unreviewed</a></th><td class="empty"></td><td class="empty"></td><td><a href="#late-effects" class="doubt-ref">Late effects</a></td></tr>
+<tr class="fam-row"><th scope="rowgroup" colspan="4">Test Effectiveness</th></tr>
+<tr><th scope="row"><a href="/sensors/epsilon-atlas/" class="wikilink">Epsilon Atlas Anchor</a></th><td class="empty"></td><td class="empty"></td><td><a href="#wrong-logic" class="doubt-ref">Wrong logic</a></td></tr>
+<tr class="fam-row"><th scope="rowgroup" colspan="4">Invariants</th></tr>
+<tr class="idle"><th scope="row"><a href="/sensors/delta-escape/" class="wikilink">Delta &amp; &lt;/script&gt;&lt;img src=x onerror=alert(1)&gt;</a></th><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+</tbody>
+</table>
+      </div>
+    </section>
+
     <section class="doubt-notes">
       <h2 id="reading-the-edges">Reading the edges</h2>
       <p>
@@ -279,21 +303,17 @@
     </section>
 
     <section class="doubt-entries">
-      <h2 id="the-doubts">The doubts</h2>
-    <article class="doubt-entry" id="wrong-logic" data-d="wrong-logic">
-      <h3 class="doubt-entry-name" id="wrong-logic">Wrong logic</h3>
-      <p class="doubt-entry-desc">The code has the right shape and still returns the wrong answer.</p>
-      <p class="doubt-entry-list misread"><span class="k">Misread as closing</span> <em>none</em></p>
-      <p class="doubt-entry-list closes"><span class="k">Closed by</span> <a href="/sensors/beta-signal/" class="wikilink">Beta Signal</a></p>
-      <p class="doubt-entry-list reveals"><span class="k">Revealed after by</span> <a href="/sensors/epsilon-atlas/" class="wikilink">Epsilon Atlas Anchor</a></p>
-    </article>
-    <article class="doubt-entry" id="late-effects" data-d="late-effects">
-      <h3 class="doubt-entry-name" id="late-effects">Late effects</h3>
-      <p class="doubt-entry-desc">The damage shows up after you stopped watching.</p>
-      <p class="doubt-entry-list misread"><span class="k">Misread as closing</span> <a href="/sensors/alpha-probe/" class="wikilink">Alpha Probe</a></p>
-      <p class="doubt-entry-list closes"><span class="k">Closed by</span> <em>none</em></p>
-      <p class="doubt-entry-list reveals"><span class="k">Revealed after by</span> <a href="/sensors/gamma-unreviewed/" class="wikilink">Gamma Unreviewed</a></p>
-    </article>
+      <h2 id="the-doubts-defined">The doubts, defined</h2>
+      <dl class="doubt-defs">
+    <div class="doubt-def" id="wrong-logic">
+      <dt class="doubt-def-name">Wrong logic</dt>
+      <dd class="doubt-def-desc">The code has the right shape and still returns the wrong answer.</dd>
+    </div>
+    <div class="doubt-def" id="late-effects">
+      <dt class="doubt-def-name">Late effects</dt>
+      <dd class="doubt-def-desc">The damage shows up after you stopped watching.</dd>
+    </div>
+      </dl>
     </section>
   </div>
   </main>

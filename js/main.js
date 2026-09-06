@@ -385,8 +385,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (doubtGraph) {
     const chips = document.querySelector('.doubt-chips');
     const detail = document.querySelector('.doubt-detail');
-    const entries = {};
-    document.querySelectorAll('.doubt-entry').forEach(e => { entries[e.dataset.d] = e; });
+    const defs = {};
+    document.querySelectorAll('.doubt-def').forEach(e => { defs[e.id] = e; });
     const doubtName = {};
     doubtGraph.querySelectorAll('.doubt').forEach(g => {
       doubtName[g.dataset.d] = g.querySelector('.d-name').textContent;
@@ -422,11 +422,18 @@ document.addEventListener('DOMContentLoaded', () => {
           const side = e.classList.contains('misread') ? 'l' : 'r';
           doubtGraph.querySelector(`.sensor[data-s="${e.dataset.s}"][data-side="${side}"]`).classList.add('hi');
         });
-        const entry = entries[sel.id];
-        const desc = entry ? entry.querySelector('.doubt-entry-desc').textContent : '';
-        const lists = entry ? [...entry.querySelectorAll('.doubt-entry-list')].map(p =>
-          `<span class="list ${p.classList[1]}">${p.innerHTML}</span>`).join('') : '';
-        detail.innerHTML = `<span class="who">${doubtName[sel.id]}<small>${sel.id}</small></span><span>${desc}</span>${lists}`;
+        const def = defs[sel.id];
+        const desc = def ? def.querySelector('.doubt-def-desc').textContent : '';
+        const misread = [], closes = [], reveals = [];
+        doubtGraph.querySelectorAll(`.edge[data-d="${sel.id}"]`).forEach(e => {
+          const link = `<a href="/sensors/${e.dataset.s}/">${sensorTitle[e.dataset.s]}</a>`;
+          (e.classList.contains('misread') ? misread : e.classList.contains('reveals') ? reveals : closes).push(link);
+        });
+        detail.innerHTML =
+          `<span class="who"><a href="#${sel.id}">${doubtName[sel.id]}</a><small>${sel.id}</small></span><span>${desc}</span>` +
+          list('misread', 'misread as closing', misread) +
+          list('closes', 'closed by', closes) +
+          (reveals.length ? list('reveals', 'revealed after by', reveals) : '');
         return;
       }
       doubtGraph.querySelectorAll(`.sensor[data-s="${sel.id}"]`).forEach(n => n.classList.add('hi', 'sel'));

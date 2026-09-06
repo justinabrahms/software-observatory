@@ -174,12 +174,42 @@ def render_graph_svg(doubts, sensors):
     return "\n".join(out)
 
 
-def _sensor_links(slugs, by_slug):
-    if not slugs:
-        return "<em>none</em>"
-    return ", ".join(
-        f'<a href="/sensors/{slug}/" class="wikilink">{html.escape(by_slug[slug]["title"])}</a>'
-        for slug in slugs)
+def render_by_sensor_table(doubts, sensors):
+    """One row per sensor in family order; the cells hold the doubts it is
+    misread as closing, closes, and reveals, each linked to its definition.
+    A sensor with no edge keeps its row, muted, so a reader looking for it
+    finds it and sees that the vocabulary has nothing for it yet."""
+    per_sensor = {s["slug"]: {k: [] for k, _ in EDGE_KINDS} for s in sensors}
+    for d in doubts:
+        for key, _ in EDGE_KINDS:
+            for slug in d[key]:
+                per_sensor[slug][key].append(d)
+
+    def cell(ds):
+        if not ds:
+            return '<td class="empty"></td>'
+        return "<td>" + "".join(
+            f'<a href="#{d["id"]}" class="doubt-ref">{html.escape(d["name"])}</a>' for d in ds) + "</td>"
+
+    rows = []
+    for fam in FAMILIES:
+        members = sorted((s for s in sensors if s.get("family") == fam["slug"]), key=lambda s: s["title"])
+        if not members:
+            continue
+        rows.append(f'<tr class="fam-row"><th scope="rowgroup" colspan="4">{html.escape(fam["name"])}</th></tr>')
+        for s in members:
+            e = per_sensor[s["slug"]]
+            idle = not any(e.values())
+            rows.append(
+                f'<tr{" class=\"idle\"" if idle else ""}>'
+                f'<th scope="row"><a href="/sensors/{s["slug"]}/" class="wikilink">{html.escape(s["title"])}</a></th>'
+                + cell(e["misread_as_closing"]) + cell(e["closed_by"]) + cell(e["revealed_by"]) + "</tr>")
+    return (
+        '<table class="doubt-table">\n<thead><tr><th scope="col">Sensor</th>'
+        '<th scope="col" class="misread">Misread as closing</th>'
+        '<th scope="col" class="closes">Closes</th>'
+        '<th scope="col" class="reveals">Reveals after</th></tr></thead>\n<tbody>\n'
+        + "\n".join(rows) + "\n</tbody>\n</table>")
 
 
 def generate_doubts_page(doubts, sensors, output_dir):
@@ -196,13 +226,10 @@ def generate_doubts_page(doubts, sensors, output_dir):
         for d in doubts)
 
     entries = "\n".join(
-        f'''    <article class="doubt-entry" id="{d["id"]}" data-d="{d["id"]}">
-      <h3 class="doubt-entry-name">{html.escape(d["name"])}</h3>
-      <p class="doubt-entry-desc">{html.escape(d["description"])}</p>
-      <p class="doubt-entry-list misread"><span class="k">Misread as closing</span> {_sensor_links(d["misread_as_closing"], by_slug)}</p>
-      <p class="doubt-entry-list closes"><span class="k">Closed by</span> {_sensor_links(d["closed_by"], by_slug)}</p>
-      {f'<p class="doubt-entry-list reveals"><span class="k">Revealed after by</span> {_sensor_links(d["revealed_by"], by_slug)}</p>' if d["revealed_by"] else ""}
-    </article>'''
+        f'''    <div class="doubt-def" id="{d["id"]}">
+      <dt class="doubt-def-name">{html.escape(d["name"])}</dt>
+      <dd class="doubt-def-desc">{html.escape(d["description"])}</dd>
+    </div>'''
         for d in doubts)
 
     claims = {c.label: c for c in prose_claims(doubts, sensors)}
@@ -318,6 +345,17 @@ def generate_doubts_page(doubts, sensors, output_dir):
       </figcaption>
     </figure>
 
+    <section class="doubt-by-sensor">
+      <h2>By sensor</h2>
+      <p class="doubt-by-sensor-lede">
+        The same edges, one row per sensor. Each doubt links to its definition
+        below.
+      </p>
+      <div class="doubt-table-scroll">
+{render_by_sensor_table(doubts, sensors)}
+      </div>
+    </section>
+
     <section class="doubt-notes">
       <h2>Reading the edges</h2>
       <p>
@@ -369,8 +407,10 @@ def generate_doubts_page(doubts, sensors, output_dir):
     </section>
 
     <section class="doubt-entries">
-      <h2>The doubts</h2>
+      <h2>The doubts, defined</h2>
+      <dl class="doubt-defs">
 {entries}
+      </dl>
     </section>
   </div>"""
 
