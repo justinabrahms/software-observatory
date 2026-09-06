@@ -358,10 +358,13 @@ def generate_doubts_page(doubts, sensors, output_dir):
         head off.
       </p>
       <p>
-        No closing edge is unconditional. A proof covers its stated property,
-        a test its stated examples, a canary the metrics it compares. That is
-        the composition rule in one sentence, and it is why two sensors that
-        close the same doubt count once.
+        A solid edge does not mean the sensor settles the doubt outright. It
+        settles it only for what the sensor was pointed at. A proof rules out
+        wrong logic for the property someone wrote down, and for nothing else.
+        A test rules it out for the examples it was given. A canary rules out
+        an unsafe release for the metrics it compares. Outside that, the doubt
+        is still open. That is the composition rule in one sentence, and it is
+        why two sensors that close the same doubt count once.
       </p>
       <p>
         Retrospective sensors get their own edge. {claim_sentence("escaped-defect-rate reveals late-effects rather than closing it")}
@@ -370,7 +373,9 @@ def generate_doubts_page(doubts, sensors, output_dir):
       </p>
       <h2>What the shape says</h2>
       <p>
-        The vocabulary does not collapse into families. {claim_sentence("unasserted-execution's closers share one family with some of its misread sensors")}
+        The doubts are not the families under another name. If each family
+        closed one doubt and no other, this page would be the catalog page
+        again. Instead the edges cut across the families. {claim_sentence("unasserted-execution's closers share one family with some of its misread sensors")}
         {wrong_spec_sentence}{future_sentence}
       </p>
       <p>
