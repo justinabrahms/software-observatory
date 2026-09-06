@@ -16,6 +16,10 @@
   --accent-glow: rgba(212,160,86,0.15);
   --signal:      #5b9bd5;     /* observatory blue */
   --signal-soft: rgba(91,155,213,0.12);
+  --doubt-misread:       #c98a3a;  /* doubts page: a green misread as closing */
+  --doubt-misread-faint: rgba(201,138,58,0.28);
+  --doubt-close:         #5b9bd5;  /* doubts page: closes or reveals the doubt */
+  --doubt-close-faint:   rgba(91,155,213,0.28);
 
   /* Hero illustration. --line/--line-faint are the drawing's two stroke
      weights; --slot is the dark interior seen through an open shutter, which
@@ -62,6 +66,10 @@
     --accent-glow: rgba(154,106,31,0.10);
     --signal:      #2b6cb0;
     --signal-soft: rgba(43,108,176,0.08);
+    --doubt-misread:       #a86a1a;
+    --doubt-misread-faint: rgba(168,106,26,0.3);
+    --doubt-close:         #2b6cb0;
+    --doubt-close-faint:   rgba(43,108,176,0.3);
 
     --line:        #8a6229;
     --line-faint:  #b6a17a;
@@ -2228,6 +2236,120 @@ a.wikilink:hover {
   color: var(--text-soft);
   margin-bottom: 1.2rem;
 }
+
+/* ── Doubts page ────────────────────────────────────────────────────────── */
+/* Three-column graph: sensors misread as closing a doubt on the left, the
+   doubts in the middle, sensors that close or reveal them on the right. The
+   SVG is server-rendered; main.js only toggles the highlight classes. */
+.doubts-content { max-width: var(--max-width); }
+.doubt-legend {
+  display: flex; flex-wrap: wrap; gap: .6rem 1.4rem; align-items: center;
+  font-size: .82rem; color: var(--text-soft); margin: 0 0 1.2rem;
+}
+.doubt-legend span { display: inline-flex; align-items: center; gap: .5rem; }
+.doubt-legend svg { width: 34px; height: 10px; flex: none; }
+.doubt-legend .lg-misread { stroke: var(--doubt-misread); stroke-width: 1.6; stroke-dasharray: 4 3; }
+.doubt-legend .lg-closes  { stroke: var(--doubt-close); stroke-width: 2.2; }
+.doubt-legend .lg-reveals { stroke: var(--doubt-close); stroke-width: 2.2; stroke-dasharray: 1.5 3.5; stroke-linecap: round; }
+
+.doubt-chips {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: .5rem; margin: 0 0 1rem;
+}
+.doubt-chip {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 0;
+  padding: .55rem .7rem .5rem; cursor: pointer; text-align: left;
+  color: var(--text); font: inherit; display: flex; flex-direction: column; gap: .25rem;
+  transition: border-color .12s ease;
+}
+.doubt-chip:hover, .doubt-chip:focus-visible { border-color: var(--accent-soft); outline: none; }
+.doubt-chip.on { border-color: var(--accent); background: var(--bg-elev); }
+.doubt-chip .name { font-family: var(--font-serif); font-size: 1rem; font-weight: 500; }
+.doubt-chip .counts {
+  font-family: var(--font-mono); font-size: .72rem; color: var(--text-dim);
+  display: flex; flex-wrap: wrap; gap: .2rem .7rem; font-variant-numeric: tabular-nums;
+}
+.doubt-chip .counts span { white-space: nowrap; }
+.doubt-chip .counts b { font-weight: 500; }
+.doubt-chip .counts .m b { color: var(--doubt-misread); }
+.doubt-chip .counts .c b, .doubt-chip .counts .r b { color: var(--doubt-close); }
+
+/* Fixed height so hovering swaps the text without moving the graph. */
+.doubt-detail {
+  height: 9rem; overflow-y: auto;
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  padding: .8rem 0; margin: 0 0 1.2rem; color: var(--text-soft); font-size: .92rem;
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: .3rem; align-content: start;
+}
+.doubt-detail .who { color: var(--text); font-family: var(--font-serif); font-size: 1.05rem; }
+.doubt-detail .who small { font-family: var(--font-mono); font-size: .72rem; color: var(--text-dim); margin-left: .6rem; }
+.doubt-detail .list { display: flex; flex-wrap: wrap; gap: .25rem .7rem; font-size: .85rem; }
+.doubt-detail .k, .doubt-entry-list .k {
+  font-family: var(--font-mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .08em;
+}
+.doubt-detail .list.misread .k, .doubt-entry-list.misread .k { color: var(--doubt-misread); }
+.doubt-detail .list.closes .k, .doubt-detail .list.reveals .k,
+.doubt-entry-list.closes .k, .doubt-entry-list.reveals .k { color: var(--doubt-close); }
+
+.doubt-figure { margin: 0; }
+.doubt-figure figcaption { color: var(--text-dim); font-size: .85rem; max-width: 70ch; margin: 1rem 0 0; line-height: 1.6; }
+.doubt-graph-scroll { overflow-x: auto; }
+.doubt-graph { display: block; width: 1200px; max-width: none; height: auto; font-family: var(--font-sans); }
+@media (min-width: 1240px) { .doubt-graph { width: 100%; } }
+
+.doubt-graph text { fill: var(--text-soft); font-size: 12px; }
+.doubt-graph .fam-head, .doubt-graph .col-head {
+  fill: var(--text-dim); font-family: var(--font-mono); font-size: 10.5px;
+  letter-spacing: .1em; text-transform: uppercase;
+}
+.doubt-graph .col-head.misread { fill: var(--doubt-misread); }
+.doubt-graph .col-head.closes { fill: var(--doubt-close); }
+.doubt-graph .s-label, .doubt-graph .s-dot, .doubt-graph .d-name, .doubt-graph .d-node { cursor: pointer; }
+.doubt-graph .d-name { fill: var(--text); font-family: var(--font-serif); font-size: 15px; font-weight: 500; }
+.doubt-graph .d-sub { fill: var(--text-dim); font-family: var(--font-mono); font-size: 10.5px; }
+.doubt-graph .d-node { fill: var(--bg-card); stroke: var(--border-soft); stroke-width: 1.2; }
+.doubt-graph .sensor.idle text { fill: var(--text-dim); opacity: .55; }
+.doubt-graph .sensor.idle .s-dot { opacity: .3; }
+.doubt-graph .edge { fill: none; stroke-width: 1.1; }
+.doubt-graph .edge.misread { stroke: var(--doubt-misread-faint); stroke-dasharray: 4 3; }
+.doubt-graph .edge.closes  { stroke: var(--doubt-close-faint); stroke-width: 1.5; }
+.doubt-graph .edge.reveals { stroke: var(--doubt-close-faint); stroke-width: 1.5; stroke-dasharray: 1.5 3.5; stroke-linecap: round; }
+.doubt-graph .rule { stroke: var(--border); stroke-width: 1; }
+.doubt-graph .orphan text { fill: var(--text-dim); }
+.doubt-graph .orphan .s-dot { opacity: .5; }
+
+/* Selection: everything not on the selected node's edges fades. */
+.doubt-graph.has-sel .edge { opacity: .12; }
+.doubt-graph.has-sel .edge.hi.misread { opacity: 1; stroke: var(--doubt-misread); stroke-width: 1.6; }
+.doubt-graph.has-sel .edge.hi.closes,
+.doubt-graph.has-sel .edge.hi.reveals { opacity: 1; stroke: var(--doubt-close); stroke-width: 2.2; }
+.doubt-graph.has-sel .sensor:not(.hi) text, .doubt-graph.has-sel .sensor:not(.hi) .s-dot { opacity: .28; }
+.doubt-graph.has-sel .doubt:not(.hi) text, .doubt-graph.has-sel .doubt:not(.hi) .d-node { opacity: .28; }
+.doubt-graph .sensor.sel text { fill: var(--text); font-weight: 600; }
+.doubt-graph .doubt.sel .d-node { stroke: var(--accent); stroke-width: 1.8; }
+.doubt-graph .edge, .doubt-graph .sensor text, .doubt-graph .sensor .s-dot,
+.doubt-graph .doubt text, .doubt-graph .doubt .d-node { transition: opacity .15s ease, stroke .15s ease; }
+@media (prefers-reduced-motion: reduce) {
+  .doubt-graph *, .doubt-chip { transition: none !important; }
+}
+
+.doubt-notes { max-width: var(--reading); margin-top: 2.5rem; }
+.doubt-notes h2 {
+  font-family: var(--font-serif); font-weight: 600; font-size: 1.4rem;
+  color: var(--text); margin: 2rem 0 .6rem;
+}
+.doubt-notes p { font-size: 1.02rem; line-height: 1.75; color: var(--text-soft); margin-bottom: 1.2rem; }
+
+.doubt-entries { max-width: var(--reading); margin-top: 2.5rem; }
+.doubt-entries > h2 {
+  font-family: var(--font-serif); font-weight: 600; font-size: 1.4rem;
+  color: var(--text); margin: 2rem 0 1rem;
+}
+.doubt-entry { padding: 1.2rem 0; border-top: 1px solid var(--border); }
+.doubt-entry-name { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 500; margin: 0 0 .4rem; }
+.doubt-entry-desc { color: var(--text-soft); line-height: 1.65; margin: 0 0 .6rem; }
+.doubt-entry-list { font-size: .9rem; line-height: 1.6; margin: 0 0 .25rem; color: var(--text-soft); }
+.doubt-entry-list .k { margin-right: .4rem; }
 
 /* ── Responsive ────────────────────────────────────────────────────────── */
 @media (max-width: 860px) {

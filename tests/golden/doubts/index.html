@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Doubts — Software Observatory</title>
+  <meta name="description" content="2 doubts about a system, and for each the sensors that close it, the sensors that reveal it after the fact, and the sensors whose green reading is mistaken…">
+  <link rel="canonical" href="https://softwareobservatory.com/doubts/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Doubts — Software Observatory">
+  <meta property="og:description" content="2 doubts about a system, and for each the sensors that close it, the sensors that reveal it after the fact, and the sensors whose green reading is mistaken…">
+  <meta property="og:url" content="https://softwareobservatory.com/doubts/">
+  <meta property="og:image" content="https://softwareobservatory.com/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Doubts — Software Observatory">
+  <meta name="twitter:description" content="2 doubts about a system, and for each the sensors that close it, the sensors that reveal it after the fact, and the sensors whose green reading is mistaken…">
+  <meta name="twitter:image" content="https://softwareobservatory.com/og.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="https://softwareobservatory.com/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://softwareobservatory.com/doubts/#page",
+      "name": "Doubts",
+      "description": "2 doubts about a system, and for each the sensors that close it, the sensors that reveal it after the fact, and the sensors whose green reading is mistaken for closing it.",
+      "url": "https://softwareobservatory.com/doubts/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "isPartOf": {
+        "@id": "https://softwareobservatory.com/#organization"
+      },
+      "author": {
+        "@type": "Person",
+        "@id": "https://softwareobservatory.com/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "dateModified": "2026-03-02"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Framework",
+          "item": "https://softwareobservatory.comframework/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Doubts"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <script data-goatcounter="https://stats.softwareobservatory.com/count"
+          async src="https://stats.softwareobservatory.com/count.js"></script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/>
+          <line x1="17" y1="24" x2="12" y2="28"/>
+          <line x1="17" y1="24" x2="22" y2="28"/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/catalog/">Catalog</a>
+      <a href="/atlas/">Atlas</a>
+      <a href="/framework/">Framework</a>
+      <a href="/glossary/">Glossary</a>
+      <a href="/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/catalog/">Browse the catalog</a> or <a href="/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <section class="page-header page-header--reading">
+    <p class="eyebrow">The Framework</p>
+    <h1 class="page-title">Doubts</h1>
+    <p class="page-lede">
+      The <a href="/framework/#combining-sensors" class="wikilink">composition
+      rule</a> asks of every sensor: what doubt does this eliminate that the
+      others leave open? This page is the answer for the whole catalog.
+      2 doubts about a system, and for each one the sensors that
+      close it, the sensors that only reveal it after the fact, and the
+      sensors whose green reading is mistaken for closing it.
+    </p>
+  </section>
+
+  <div class="framework-content doubts-content">
+    <div class="doubt-legend">
+      <span><svg viewBox="0 0 34 10" aria-hidden="true"><line x1="1" y1="5" x2="33" y2="5" class="lg-misread"/></svg>green is misread as closing this doubt</span>
+      <span><svg viewBox="0 0 34 10" aria-hidden="true"><line x1="1" y1="5" x2="33" y2="5" class="lg-closes"/></svg>closes the doubt before shipping</span>
+      <span><svg viewBox="0 0 34 10" aria-hidden="true"><line x1="1" y1="5" x2="33" y2="5" class="lg-reveals"/></svg>reveals the doubt after the fact</span>
+      <span>dot colour is the family; a sensor is lit on a side only where it has an edge there</span>
+    </div>
+
+    <div class="doubt-chips" role="group" aria-label="Doubts">
+      <button type="button" class="doubt-chip" data-d="wrong-logic"><span class="name">Wrong logic</span><span class="counts"><span class="m"><b>1</b> misread</span><span class="c"><b>2</b> close</span><span class="r"><b>1</b> reveal</span></span></button>
+      <button type="button" class="doubt-chip" data-d="late-effects"><span class="name">Late effects</span><span class="counts"><span class="m"><b>0</b> misread</span><span class="c"><b>1</b> close</span></span></button>
+    </div>
+    <div class="doubt-detail" hidden></div>
+
+    <figure class="doubt-figure">
+      <div class="doubt-graph-scroll">
+<svg class="doubt-graph" viewBox="0 0 1200 321" role="img" aria-label="Three-column graph: sensors misread as closing each doubt on the left, the doubts in the middle, sensors that close or reveal each doubt on the right.">
+<g>
+<path class="edge misread" d="M282,78.0 C386.0,78.0 386.0,210.0 490,210.0" data-s="alpha-probe" data-d="wrong-logic"/>
+<path class="edge closes" d="M710,210.0 C814.0,210.0 814.0,139.0 918,139.0" data-s="beta-signal" data-d="wrong-logic"/>
+<path class="edge closes" d="M710,210.0 C814.0,210.0 814.0,219.0 918,219.0" data-s="epsilon-atlas" data-d="wrong-logic"/>
+<path class="edge reveals" d="M710,210.0 C814.0,210.0 814.0,158.0 918,158.0" data-s="gamma-unreviewed" data-d="wrong-logic"/>
+<path class="edge closes" d="M710,88.0 C814.0,88.0 814.0,78.0 918,78.0" data-s="alpha-probe" data-d="late-effects"/>
+</g>
+<g>
+<text class="col-head misread" x="262" y="22" text-anchor="end">Misread as closing it</text>
+<text class="col-head" x="600" y="22" text-anchor="middle">Doubt</text>
+<text class="col-head closes" x="938" y="22">Closes it, or reveals it after</text>
+<text class="fam-head" x="262" y="62" text-anchor="end">Structural</text>
+<text class="fam-head" x="938" y="62">Structural</text>
+<text class="fam-head" x="262" y="123" text-anchor="end">Behavioral</text>
+<text class="fam-head" x="938" y="123">Behavioral</text>
+<text class="fam-head" x="262" y="203" text-anchor="end">Test Effectiveness</text>
+<text class="fam-head" x="938" y="203">Test Effectiveness</text>
+<line class="rule" x1="40" y1="250" x2="292" y2="250"/>
+<line class="rule" x1="908" y1="250" x2="1160" y2="250"/>
+<text class="fam-head" x="262" y="270" text-anchor="end">No doubt edge</text>
+<text class="fam-head" x="938" y="270">No doubt edge</text>
+</g>
+<g>
+<g class="sensor" data-s="alpha-probe" data-side="l"><text class="s-label" x="262" y="82" text-anchor="end">Alpha Probe</text><circle class="s-dot" cx="276" cy="78" r="4" fill="var(--fam-structural)"/></g>
+<g class="sensor" data-s="alpha-probe" data-side="r"><circle class="s-dot" cx="924" cy="78" r="4" fill="var(--fam-structural)"/><text class="s-label" x="938" y="82">Alpha Probe</text></g>
+<g class="sensor idle" data-s="beta-signal" data-side="l"><text class="s-label" x="262" y="143" text-anchor="end">Beta Signal</text><circle class="s-dot" cx="276" cy="139" r="4" fill="var(--fam-behavioral)"/></g>
+<g class="sensor" data-s="beta-signal" data-side="r"><circle class="s-dot" cx="924" cy="139" r="4" fill="var(--fam-behavioral)"/><text class="s-label" x="938" y="143">Beta Signal</text></g>
+<g class="sensor idle" data-s="gamma-unreviewed" data-side="l"><text class="s-label" x="262" y="162" text-anchor="end">Gamma Unreviewed</text><circle class="s-dot" cx="276" cy="158" r="4" fill="var(--fam-behavioral)"/></g>
+<g class="sensor" data-s="gamma-unreviewed" data-side="r"><circle class="s-dot" cx="924" cy="158" r="4" fill="var(--fam-behavioral)"/><text class="s-label" x="938" y="162">Gamma Unreviewed</text></g>
+<g class="sensor idle" data-s="epsilon-atlas" data-side="l"><text class="s-label" x="262" y="223" text-anchor="end">Epsilon Atlas Anchor</text><circle class="s-dot" cx="276" cy="219" r="4" fill="var(--fam-test-effectiveness)"/></g>
+<g class="sensor" data-s="epsilon-atlas" data-side="r"><circle class="s-dot" cx="924" cy="219" r="4" fill="var(--fam-test-effectiveness)"/><text class="s-label" x="938" y="223">Epsilon Atlas Anchor</text></g>
+<g class="sensor orphan idle" data-s="delta-escape" data-side="l"><text class="s-label" x="262" y="290" text-anchor="end">Delta &amp; &lt;/script&gt;&lt;img src=x onerror=alert(1)&gt;</text><circle class="s-dot" cx="276" cy="286" r="4" fill="var(--fam-invariants)"/></g>
+<g class="sensor orphan idle" data-s="delta-escape" data-side="r"><circle class="s-dot" cx="924" cy="286" r="4" fill="var(--fam-invariants)"/><text class="s-label" x="938" y="290">Delta &amp; &lt;/script&gt;&lt;img src=x onerror=alert(1)&gt;</text></g>
+</g>
+<g>
+<g class="doubt" data-d="wrong-logic"><rect class="d-node" x="490" y="190.0" width="220" height="40" rx="3"/><text class="d-name" x="600" y="209.0" text-anchor="middle">Wrong logic</text><text class="d-sub" x="600" y="224.0" text-anchor="middle">1 misread · 2 close · 1 reveal</text></g>
+<g class="doubt" data-d="late-effects"><rect class="d-node" x="490" y="68.0" width="220" height="40" rx="3"/><text class="d-name" x="600" y="87.0" text-anchor="middle">Late effects</text><text class="d-sub" x="600" y="102.0" text-anchor="middle">0 misread · 1 close</text></g>
+</g>
+</svg>
+      </div>
+      <figcaption>
+        The same 5 sensors appear on both sides, grouped by family in
+        the catalog's order. A doubt sits at the average height of the sensors it
+        touches. Hover or click a doubt or a sensor to isolate it. A doubt with
+        an empty left side is one nothing gets mistaken for. The entries at the
+        bottom have no edge in this vocabulary: some close a doubt it does not
+        yet name, some are raw data that other sensors judge, and some are
+        aggregates with nothing to attribute.
+      </figcaption>
+    </figure>
+
+    <section class="doubt-notes">
+      <h2 id="how-to-read-it">How to read it</h2>
+      <p>
+        Read each doubt left to right. A sensor on the left is one whose clean
+        result gets taken as proof the doubt is closed when it is not: 90%
+        coverage taken as tested, a green canary taken as a safe release,
+        "formally proven" taken as correct. That is the misreading each entry's
+        "What it cannot detect" section was written to head off, and it is
+        deliberately narrow. Every sensor that does not close a doubt leaves it
+        open, which is nearly the whole catalog for any one doubt and not worth
+        drawing.
+      </p>
+      <p>
+        A sensor on the right closes the doubt for what it was pointed at and
+        nothing beyond. No closing edge here is unconditional: a proof covers
+        its stated property, a test its stated examples, a canary the metrics it
+        compares. That is the composition rule in one sentence, and it is why
+        two sensors that close the same doubt count once.
+      </p>
+      <p>
+        Retrospective sensors get their own edge. Escaped defect rate cannot
+        close <a href="#late-effects">late effects</a> before shipping; it is
+        the sensor that shows, months later, that the doubt was real. The
+        catalog's <a href="/framework/#predictive-vs-retrospective" class="wikilink">predictive
+        versus retrospective</a> dimension is the same distinction.
+      </p>
+      <h2 id="what-the-shape-says">What the shape says</h2>
+      <p>
+        The vocabulary does not collapse into families. <em>Unasserted
+        execution</em> splits one family: coverage is misread as closing it and
+        mutation testing closes it. <em>Wrong specification</em> draws its
+        closers from three families and its misreadings from two. The three
+        doubts at the bottom are about the codebase's future rather than its
+        correctness, and they are what the evolution and comprehension families
+        exist for.
+      </p>
+      <p>
+        Two doubts are nearly unclosable from inside the catalog. <em>Missing
+        behavior</em> and <em>wrong specification</em> both end at human review
+        and outcome sensors. And <em>wrong logic</em> has an empty left side:
+        nobody reads a clean compile or type check as correct code. The belief
+        engineers actually hold is that a class of bugs is gone, which is true.
+      </p>
+      <h2 id="where-the-vocabulary-came-from">Where the vocabulary came from</h2>
+      <p>
+        Ten of the doubts were mined from the "What it cannot detect" section
+        of every entry, which is where the catalog names what it leaves open.
+        That method finds the catalog's residue, not its coverage: a doubt the
+        catalog closes well never appears there, because no entry is worse at
+        it than the sensor that owns it. The other nine came from asking every
+        sensor the first pass left with nothing to close what it does close.
+      </p>
+      <p>
+        Every edge was then stated as a plain assertion, "most engineers think
+        a passing X shows Y" or "X ensures Y", and judged true, partly true, or
+        false by reviewers who saw only the assertion. The false ones were
+        removed: half of the misreadings, and a third of the closing edges. No
+        closing edge was judged fully true. The vocabulary lives in
+        <code>content/doubts.yaml</code>, and the build refuses a sensor it
+        does not recognise.
+      </p>
+    </section>
+
+    <section class="doubt-entries">
+      <h2 id="the-doubts">The doubts</h2>
+    <article class="doubt-entry" id="wrong-logic" data-d="wrong-logic">
+      <h3 class="doubt-entry-name" id="wrong-logic">Wrong logic</h3>
+      <p class="doubt-entry-desc">The code has the right shape and still returns the wrong answer.</p>
+      <p class="doubt-entry-list misread"><span class="k">Misread as closing</span> <a href="/sensors/alpha-probe/" class="wikilink">Alpha Probe</a></p>
+      <p class="doubt-entry-list closes"><span class="k">Closed by</span> <a href="/sensors/beta-signal/" class="wikilink">Beta Signal</a>, <a href="/sensors/epsilon-atlas/" class="wikilink">Epsilon Atlas Anchor</a></p>
+      <p class="doubt-entry-list reveals"><span class="k">Revealed after by</span> <a href="/sensors/gamma-unreviewed/" class="wikilink">Gamma Unreviewed</a></p>
+    </article>
+    <article class="doubt-entry" id="late-effects" data-d="late-effects">
+      <h3 class="doubt-entry-name" id="late-effects">Late effects</h3>
+      <p class="doubt-entry-desc">The damage shows up after you stopped watching.</p>
+      <p class="doubt-entry-list misread"><span class="k">Misread as closing</span> <em>none</em></p>
+      <p class="doubt-entry-list closes"><span class="k">Closed by</span> <a href="/sensors/alpha-probe/" class="wikilink">Alpha Probe</a></p>
+      
+    </article>
+    </section>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/about/">About</a> · <a href="/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/js/main.js"></script>
+</body>
+</html>

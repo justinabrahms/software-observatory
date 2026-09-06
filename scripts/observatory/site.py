@@ -16,6 +16,7 @@ from .pages.atlas import generate_atlas_page
 from .pages.catalog import generate_catalog_page
 from .pages.categories import generate_categories_page
 from .pages.contact import generate_contact_page
+from .pages.doubts import generate_doubts_page
 from .pages.families import generate_family_pages
 from .pages.framework import generate_framework_page
 from .pages.glossary import generate_glossary_page
@@ -127,6 +128,9 @@ def main(check_only=False):
 
     generate_framework_page(sensors, output_dir)
     print("  framework/")
+
+    generate_doubts_page(doubts, sensors, output_dir)
+    print("  doubts/")
 
     generate_about_page(output_dir)
     print("  about/")

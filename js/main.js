@@ -376,4 +376,99 @@ document.addEventListener('DOMContentLoaded', () => {
       node.addEventListener('blur', reset);
     });
   }
+
+  // Doubts page: isolate a doubt or a sensor in the server-rendered graph.
+  // Hover previews, click pins, click again (or click away) releases. The
+  // detail strip is filled from the per-doubt entries further down the page,
+  // so the two can never say different things.
+  const doubtGraph = document.querySelector('.doubt-graph');
+  if (doubtGraph) {
+    const chips = document.querySelector('.doubt-chips');
+    const detail = document.querySelector('.doubt-detail');
+    const entries = {};
+    document.querySelectorAll('.doubt-entry').forEach(e => { entries[e.dataset.d] = e; });
+    const doubtName = {};
+    doubtGraph.querySelectorAll('.doubt').forEach(g => {
+      doubtName[g.dataset.d] = g.querySelector('.d-name').textContent;
+    });
+    const sensorTitle = {};
+    const sensorFamily = {};
+    doubtGraph.querySelectorAll('.sensor[data-side="l"]').forEach(g => {
+      sensorTitle[g.dataset.s] = g.querySelector('.s-label').textContent;
+      const fill = g.querySelector('.s-dot').getAttribute('fill') || '';
+      sensorFamily[g.dataset.s] = fill.replace(/^var\(--fam-|\)$/g, '');
+    });
+    let pinned = null, hover = null;
+    const same = (a, b) => a && b && a.type === b.type && a.id === b.id;
+    const list = (cls, label, items) =>
+      `<span class="list ${cls}"><span class="k">${label}</span>${items.length ? items.join(', ') : '—'}</span>`;
+
+    const render = () => {
+      const sel = hover || pinned;
+      doubtGraph.classList.toggle('has-sel', !!sel);
+      doubtGraph.querySelectorAll('.hi, .sel').forEach(n => n.classList.remove('hi', 'sel'));
+      chips.querySelectorAll('.doubt-chip').forEach(c => {
+        c.classList.toggle('on', !!sel && sel.type === 'doubt' && c.dataset.d === sel.id);
+      });
+      detail.hidden = false;
+      if (!sel) {
+        detail.innerHTML = '<span class="who">Nothing selected</span><span>Hover or click a doubt in the middle, a chip above, or a sensor on either side.</span>';
+        return;
+      }
+      if (sel.type === 'doubt') {
+        doubtGraph.querySelector(`.doubt[data-d="${sel.id}"]`).classList.add('hi', 'sel');
+        doubtGraph.querySelectorAll(`.edge[data-d="${sel.id}"]`).forEach(e => {
+          e.classList.add('hi');
+          const side = e.classList.contains('misread') ? 'l' : 'r';
+          doubtGraph.querySelector(`.sensor[data-s="${e.dataset.s}"][data-side="${side}"]`).classList.add('hi');
+        });
+        const entry = entries[sel.id];
+        const desc = entry ? entry.querySelector('.doubt-entry-desc').textContent : '';
+        const lists = entry ? [...entry.querySelectorAll('.doubt-entry-list')].map(p =>
+          `<span class="list ${p.classList[1]}">${p.innerHTML}</span>`).join('') : '';
+        detail.innerHTML = `<span class="who">${doubtName[sel.id]}<small>${sel.id}</small></span><span>${desc}</span>${lists}`;
+        return;
+      }
+      doubtGraph.querySelectorAll(`.sensor[data-s="${sel.id}"]`).forEach(n => n.classList.add('hi', 'sel'));
+      const misread = [], closes = [], reveals = [];
+      doubtGraph.querySelectorAll(`.edge[data-s="${sel.id}"]`).forEach(e => {
+        e.classList.add('hi');
+        doubtGraph.querySelector(`.doubt[data-d="${e.dataset.d}"]`).classList.add('hi');
+        const name = `<a href="#${e.dataset.d}">${doubtName[e.dataset.d]}</a>`;
+        (e.classList.contains('misread') ? misread : e.classList.contains('reveals') ? reveals : closes).push(name);
+      });
+      const none = !misread.length && !closes.length && !reveals.length;
+      detail.innerHTML =
+        `<span class="who"><a href="/sensors/${sel.id}/">${sensorTitle[sel.id]}</a><small>${sensorFamily[sel.id]}</small></span>` +
+        (none ? '<span>No doubt edge in this vocabulary.</span>' : '') +
+        list('misread', 'misread as closing', misread) +
+        list('closes', 'closes', closes) +
+        (reveals.length ? list('reveals', 'reveals after', reveals) : '');
+    };
+
+    const target = ev => {
+      const g = ev.target.closest('.doubt, .sensor, .doubt-chip');
+      if (!g) return null;
+      if (g.dataset.d) return { type: 'doubt', id: g.dataset.d };
+      if (g.dataset.s) return { type: 'sensor', id: g.dataset.s };
+      return null;
+    };
+    [doubtGraph, chips].forEach(root => {
+      root.addEventListener('mouseover', ev => { const t = target(ev); if (t) { hover = t; render(); } });
+      root.addEventListener('mouseout', ev => { if (target(ev)) { hover = null; render(); } });
+      root.addEventListener('click', ev => {
+        const t = target(ev);
+        if (!t) return;
+        pinned = same(pinned, t) ? null : t;
+        hover = null;
+        render();
+      });
+    });
+    document.addEventListener('click', ev => {
+      if (!ev.target.closest('.doubt, .sensor, .doubt-chip, .doubt-detail')) {
+        pinned = null; hover = null; render();
+      }
+    });
+    render();
+  }
 });
