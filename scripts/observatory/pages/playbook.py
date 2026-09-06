@@ -223,8 +223,11 @@ def _stack_check_html(doubts, sensors):
     from doubts.yaml, and a hidden list carries the doubt names; js/main.js
     only ticks, counts, and picks the addition that closes the most of what
     is left. Nothing about the graph lives in the script, so the checklist
-    cannot disagree with the plays or the doubts page. Without JavaScript
-    it is a checklist of the catalog by family, which is still a page."""
+    cannot disagree with the plays or the doubts page. It sits behind a
+    native <details> disclosure, so the index still opens on the three
+    lists of triggers; the script opens it when the reader has ticks
+    remembered. Without JavaScript it is a checklist of the catalog by
+    family, which is still a page."""
     by_family = {}
     for s in sensors:
         by_family.setdefault(s.get("family", ""), []).append(s)
@@ -261,7 +264,9 @@ def _stack_check_html(doubts, sensors):
         for d in doubts)
     n = len(doubts)
     return f"""    <section class="stack-check" id="your-stack">
-      <h2>What do you already run?</h2>
+      <details class="stack-details">
+      <summary><span class="stack-summary-title">Not sure what to do next?</span>
+        <span class="stack-summary-sub">Tick what you already run and the page says what it closes and what to add.</span></summary>
       <p class="play-group-lede">
         Tick the sensors you run. The page says which of the {n} doubts they
         close, which are still open, and which one addition would close the
@@ -282,6 +287,7 @@ def _stack_check_html(doubts, sensors):
       <noscript><p class="stack-noscript">The count needs JavaScript. The
         <a href="/what-each-sensor-proves/#by-sensor" class="wikilink">by-sensor table</a>
         on the doubts page has the same edges as a static list.</p></noscript>
+      </details>
     </section>
 """
 

@@ -2677,10 +2677,24 @@ ul.play-rows { list-style: none; padding-left: 0; }
    flow in columns so 59 boxes fit above the fold on a wide screen and
    stack cleanly on a phone. */
 .stack-check { margin-bottom: 3.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--border); }
-.stack-check > h2 {
-  font-family: var(--font-serif); font-weight: 600; font-size: 1.4rem;
-  color: var(--text); margin: 0 0 .4rem;
+.stack-details { border: 1px solid var(--border); border-radius: 6px; background: var(--bg-elev); padding: 0 1.4rem; }
+.stack-details[open] { padding-bottom: 1.4rem; }
+.stack-details > summary {
+  cursor: pointer; list-style: none; padding: 1.1rem 0; display: flex; flex-wrap: wrap;
+  align-items: baseline; gap: .3rem 1rem;
 }
+.stack-details > summary::-webkit-details-marker { display: none; }
+.stack-details > summary::before {
+  content: "+"; font-family: var(--font-mono); color: var(--accent); font-size: 1.1rem;
+  width: 1.1rem; flex: none; line-height: 1;
+}
+.stack-details[open] > summary::before { content: "\2013"; }
+.stack-details > summary:hover .stack-summary-title { color: var(--accent); }
+.stack-details > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 3px; }
+.stack-summary-title { font-family: var(--font-serif); font-weight: 600; font-size: 1.25rem; color: var(--text); }
+.stack-summary-sub { font-size: .9rem; color: var(--text-soft); flex: 1 1 18rem; }
+.stack-details[open] > summary { border-bottom: 1px solid var(--border); margin-bottom: 1rem; }
+.stack-details .play-group-lede { font-size: .95rem; }
 .stack-form { columns: 2; column-gap: 2rem; margin: 1.2rem 0 0; }
 @media (max-width: 560px) { .stack-form { columns: 1; } }
 .stack-family {
@@ -2725,7 +2739,7 @@ ul.play-rows { list-style: none; padding-left: 0; }
 }
 .stack-clear:hover { border-color: var(--accent-soft); color: var(--text); }
 .stack-result {
-  margin-top: 1.5rem; padding: 1.2rem 1.4rem; background: var(--bg-elev);
+  margin-top: 1.5rem; padding: 1.2rem 1.4rem; background: var(--bg);
   border: 1px solid var(--border); border-radius: 6px; font-size: .95rem; line-height: 1.7;
   color: var(--text-soft);
 }
