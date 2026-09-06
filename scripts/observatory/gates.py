@@ -8,6 +8,7 @@ ordering" comment below."""
 
 import re
 
+from .doubts import shape_errors
 from .taxonomy import FAMILIES, STACK_LAYERS
 
 
@@ -295,37 +296,21 @@ def assert_family_and_stack_level(sensors):
 # helpful "valid families are ..." message was unreachable. It is reachable now
 # by construction, because generation no longer happens first.
 
-def assert_doubt_edges_resolve(doubts, sensors):
-    """Fail the build if content/doubts.yaml names a sensor slug that does not
-    exist, or two doubts share an id.
+def assert_doubts_well_formed(doubts, sensors):
+    """Fail the build if content/doubts.yaml is malformed: a missing field,
+    an unknown origin, a slug that is not a sensor, a sensor on two sides of
+    one doubt, or a predictive sensor in revealed_by.
 
     The doubts page draws an edge per slug. An unknown slug would otherwise
     become a silently missing edge, which on a page whose subject is
     double-counted evidence is the one failure mode it must not have.
     """
-    known = {s["slug"] for s in sensors}
-    bad = []
-    seen = set()
-    dup = []
-    for d in doubts:
-        did = d.get("id", "<no id>")
-        if did in seen:
-            dup.append(did)
-        seen.add(did)
-        for key in ("misread_as_closing", "closed_by", "revealed_by"):
-            for slug in d.get(key, []):
-                if slug not in known:
-                    bad.append(f"{did}.{key}: {slug}")
-    if bad or dup:
-        parts = []
-        if bad:
-            parts.append("Unknown sensor slugs in content/doubts.yaml — "
-                         + ", ".join(bad))
-        if dup:
-            parts.append("Duplicate doubt ids — " + ", ".join(dup))
+    errors = shape_errors(doubts, sensors)
+    if errors:
+        known = ", ".join(sorted(s["slug"] for s in sensors))
         raise AssertionError(
-            "; ".join(parts) + ". Each slug must be a file in content/sensors/. "
-            f"Known slugs: {', '.join(sorted(known))}")
+            "content/doubts.yaml is malformed — " + "; ".join(errors)
+            + f". Known sensor slugs: {known}")
 
 
 def validate_sensors(sensors):
@@ -348,9 +333,9 @@ def validate_sensors(sensors):
 
 
 def validate_doubts(doubts, sensors):
-    """Gate for content/doubts.yaml. Runs before any output is written."""
-    print("Checking doubt edges resolve to sensors...")
-    assert_doubt_edges_resolve(doubts, sensors)
+    """Gates for content/doubts.yaml. Run before any output is written."""
+    print("Checking doubts are well formed and resolve to sensors...")
+    assert_doubts_well_formed(doubts, sensors)
     print("  OK")
 
 

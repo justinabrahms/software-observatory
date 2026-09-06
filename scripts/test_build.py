@@ -392,14 +392,38 @@ class TestGates(unittest.TestCase):
                       message)
         self.assertEqual(tree, {}, f"gate wrote files before failing: {sorted(tree)}")
 
+    def _run_bad_doubts(self, replacements):
+        return self._run_bad_corpus("../doubts.yaml", replacements)
+
     def test_unknown_doubt_slug_fails_and_writes_nothing(self):
-        message, tree = self._run_bad_corpus(
-            "../doubts.yaml", [("- beta-signal", "- beta-signle")])
-        self.assertIn("Unknown sensor slugs in content/doubts.yaml", message)
-        self.assertIn("wrong-logic.closed_by: beta-signle", message)
-        self.assertIn("Known slugs:", message,
+        message, tree = self._run_bad_doubts([("- beta-signal", "- beta-signle")])
+        self.assertIn("content/doubts.yaml is malformed", message)
+        self.assertIn("closed_by names unknown sensor beta-signle", message)
+        self.assertIn("Known sensor slugs:", message,
                       "the gate must name the valid values, not just complain")
         self.assertEqual(tree, {}, f"gate wrote files before failing: {sorted(tree)}")
+
+    def test_sensor_on_two_sides_of_one_doubt_fails(self):
+        message, tree = self._run_bad_doubts(
+            [("    closed_by:\n      - beta-signal", "    closed_by:\n      - alpha-probe")])
+        self.assertIn("alpha-probe is in both misread_as_closing and closed_by", message)
+        self.assertEqual(tree, {})
+
+    def test_predictive_sensor_in_revealed_by_fails(self):
+        message, tree = self._run_bad_doubts([("      - epsilon-atlas", "      - delta-escape")])
+        self.assertIn("revealed_by names delta-escape, which is type: predictive", message)
+        self.assertEqual(tree, {})
+
+    def test_doubt_without_description_fails(self):
+        message, tree = self._run_bad_doubts(
+            [('description: "The damage shows up after you stopped watching."', 'description: ""')])
+        self.assertIn("late-effects): description is required", message)
+        self.assertEqual(tree, {})
+
+    def test_bad_doubt_origin_fails(self):
+        message, tree = self._run_bad_doubts([("origin: coverage", "origin: coverag")])
+        self.assertIn("origin must be one of mined, coverage", message)
+        self.assertEqual(tree, {})
 
     def test_check_only_validates_and_writes_nothing(self):
         with Sandbox() as sb:

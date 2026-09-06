@@ -8,6 +8,8 @@
 # stated as a plain assertion and judged by reviewers who saw only the
 # assertion; the edges they rejected are gone. Rendered at /what-each-sensor-proves/.
 #
+# origin: mined (from a "What it cannot detect" section) or coverage (added
+#   because a sensor closed none of the mined doubts). The page counts these.
 # misread_as_closing: a green reading is commonly taken as proof the doubt
 #   is closed when it is not.
 # closed_by: rules the doubt out before shipping, for what it was pointed at.
@@ -15,6 +17,7 @@
 
 doubts:
   - id: wrong-logic
+    origin: mined
     name: "Wrong logic"
     description: "The code compiles, type-checks, and has the right shape. It still returns the wrong answer. Anything that only looks at structure cannot see this."
     misread_as_closing: []
@@ -32,6 +35,7 @@ doubts:
       - pre-promotion-invariant-gates
     revealed_by: []
   - id: unasserted-execution
+    origin: mined
     name: "Unasserted execution"
     description: "The tests ran this code, so coverage says it is tested. But no test checked the result, so a wrong result would pass too."
     misread_as_closing:
@@ -43,6 +47,7 @@ doubts:
       - mutation-testing
     revealed_by: []
   - id: unjudged-observation
+    origin: mined
     name: "Unjudged observation"
     description: "Production tells you what happened: this request took 80ms and returned 200. Nothing tells you whether 200 was the right answer."
     misread_as_closing:
@@ -53,6 +58,7 @@ doubts:
       - database-invariants
     revealed_by: []
   - id: unspecified-property
+    origin: mined
     name: "Unspecified property"
     description: "Every check you wrote passes. The bug is in something nobody thought to write a check for, so no check can fail."
     misread_as_closing:
@@ -71,6 +77,7 @@ doubts:
       - observability-events
       - incident-correlation
   - id: wrong-specification
+    origin: mined
     name: "Wrong specification"
     description: "The check passes, and the check is wrong. The proof, invariant, or snapshot describes what the author believed the system should do, and the author was mistaken."
     misread_as_closing:
@@ -87,6 +94,7 @@ doubts:
     revealed_by:
       - escaped-defect-rate
   - id: missing-behavior
+    origin: mined
     name: "Missing behavior"
     description: "The feature was never built. There is no code to test, mutate, or watch, so every sensor stays quiet about it."
     misread_as_closing:
@@ -98,6 +106,7 @@ doubts:
     revealed_by:
       - escaped-defect-rate
   - id: emergent-failure
+    origin: mined
     name: "Emergent failure"
     description: "Every piece passes on its own. The bug only appears when the pieces are wired together and talk to each other."
     misread_as_closing:
@@ -109,6 +118,7 @@ doubts:
       - canary-analysis
     revealed_by: []
   - id: untested-conditions
+    origin: mined
     name: "Untested conditions"
     description: "It works with the traffic, data, and failures you tried. Production has different traffic, different data, and failures you did not try."
     misread_as_closing:
@@ -121,6 +131,7 @@ doubts:
     revealed_by:
       - observability-events
   - id: correlated-blind-spot
+    origin: mined
     name: "Correlated blind spot"
     description: "The sensor checks the code against something else: a second implementation, a mock, the old version, another AI model. If that other thing has the same bug, the two agree and the sensor reads green."
     misread_as_closing:
@@ -129,6 +140,7 @@ doubts:
       - independent-review
     revealed_by: []
   - id: late-effects
+    origin: mined
     name: "Late effects"
     description: "The damage shows up after you stopped watching. A two-week experiment cannot see the users who leave in month three."
     misread_as_closing:
@@ -141,6 +153,7 @@ doubts:
       - error-budget-impact
       - revert-rate
   - id: not-internally-consistent
+    origin: coverage
     name: "Not internally consistent"
     description: "A call site and the thing it calls disagree: wrong type, wrong field name, a shape the schema does not allow. The program is at war with itself before it runs."
     misread_as_closing: []
@@ -151,6 +164,7 @@ doubts:
       - static-analysis
     revealed_by: []
   - id: unintended-change
+    origin: coverage
     name: "Unintended change"
     description: "The output moved and nobody meant it to. The change was supposed to touch one thing and it touched another."
     misread_as_closing:
@@ -162,6 +176,7 @@ doubts:
       - shadow-traffic
     revealed_by: []
   - id: unreached-by-tests
+    origin: coverage
     name: "Unreached by tests"
     description: "No test executes this code at all. Whatever it does, the suite has never seen it happen. The rung below unasserted execution."
     misread_as_closing: []
@@ -170,6 +185,7 @@ doubts:
       - branch-coverage
     revealed_by: []
   - id: does-not-run-where-deployed
+    origin: coverage
     name: "Does not run where deployed"
     description: "It worked on the laptop and in CI. In the target environment a config value is missing, a port is wrong, or the service never comes up."
     misread_as_closing:
@@ -179,6 +195,7 @@ doubts:
       - synthetic-monitoring
     revealed_by: []
   - id: dependency-failure
+    origin: coverage
     name: "Falls over with a dependency"
     description: "Everything works while every dependency is healthy. When one of them is slow or dead, the system does not degrade, it collapses."
     misread_as_closing: []
@@ -187,6 +204,7 @@ doubts:
       - live-chaos-experiments
     revealed_by: []
   - id: cannot-carry-load
+    origin: coverage
     name: "Cannot carry the load"
     description: "It is correct at ten requests a second. At a thousand it times out, runs out of memory, or falls behind and never catches up."
     misread_as_closing: []
@@ -194,6 +212,7 @@ doubts:
       - load-testing
     revealed_by: []
   - id: structure-decayed
+    origin: coverage
     name: "Nobody knows where the coupling is"
     description: "Modules were meant to be separate. Whether they still are, and which ones lean on which, is not something anyone can see without a map."
     misread_as_closing: []
@@ -205,6 +224,7 @@ doubts:
       - change-coupling
     revealed_by: []
   - id: risk-concentrated
+    origin: coverage
     name: "Nobody knows where the risk sits"
     description: "Trouble is not evenly spread. A few files or services cause most of the reverts and incidents, and nobody has looked at which ones."
     misread_as_closing: []
@@ -214,6 +234,7 @@ doubts:
       - incident-correlation
     revealed_by: []
   - id: unexplained
+    origin: coverage
     name: "Nobody can find out why"
     description: "The code is this way for a reason, and the reason is not written anywhere a newcomer can reach. The docs describe a different system."
     misread_as_closing: []

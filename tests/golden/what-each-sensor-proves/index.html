@@ -137,8 +137,8 @@
     </div>
 
     <div class="doubt-chips" role="group" aria-label="Doubts">
-      <button type="button" class="doubt-chip" data-d="wrong-logic"><span class="name">Wrong logic</span><span class="counts"><span class="m"><b>1</b> misread</span><span class="c"><b>2</b> close</span><span class="r"><b>1</b> reveal</span></span></button>
-      <button type="button" class="doubt-chip" data-d="late-effects"><span class="name">Late effects</span><span class="counts"><span class="m"><b>0</b> misread</span><span class="c"><b>1</b> close</span></span></button>
+      <button type="button" class="doubt-chip" data-d="wrong-logic"><span class="name">Wrong logic</span><span class="counts"><span class="m"><b>1</b> misread</span><span class="c"><b>1</b> close</span><span class="r"><b>1</b> reveal</span></span></button>
+      <button type="button" class="doubt-chip" data-d="late-effects"><span class="name">Late effects</span><span class="counts"><span class="m"><b>0</b> misread</span><span class="c"><b>0</b> close</span><span class="r"><b>1</b> reveal</span></span></button>
     </div>
     <div class="doubt-detail" hidden></div>
 
@@ -146,11 +146,10 @@
       <div class="doubt-graph-scroll">
 <svg class="doubt-graph" viewBox="0 0 1200 321" role="img" aria-label="Three-column graph: sensors misread as closing each doubt on the left, the doubts in the middle, sensors that close or reveal each doubt on the right.">
 <g>
-<path class="edge misread" d="M282,78.0 C386.0,78.0 386.0,210.0 490,210.0" data-s="alpha-probe" data-d="wrong-logic"/>
-<path class="edge closes" d="M710,210.0 C814.0,210.0 814.0,139.0 918,139.0" data-s="beta-signal" data-d="wrong-logic"/>
-<path class="edge closes" d="M710,210.0 C814.0,210.0 814.0,219.0 918,219.0" data-s="epsilon-atlas" data-d="wrong-logic"/>
-<path class="edge reveals" d="M710,210.0 C814.0,210.0 814.0,158.0 918,158.0" data-s="gamma-unreviewed" data-d="wrong-logic"/>
-<path class="edge closes" d="M710,88.0 C814.0,88.0 814.0,78.0 918,78.0" data-s="alpha-probe" data-d="late-effects"/>
+<path class="edge misread" d="M282,78.0 C386.0,78.0 386.0,88.0 490,88.0" data-s="alpha-probe" data-d="wrong-logic"/>
+<path class="edge closes" d="M710,88.0 C814.0,88.0 814.0,139.0 918,139.0" data-s="beta-signal" data-d="wrong-logic"/>
+<path class="edge reveals" d="M710,88.0 C814.0,88.0 814.0,219.0 918,219.0" data-s="epsilon-atlas" data-d="wrong-logic"/>
+<path class="edge reveals" d="M710,210.0 C814.0,210.0 814.0,158.0 918,158.0" data-s="gamma-unreviewed" data-d="late-effects"/>
 </g>
 <g>
 <text class="col-head misread" x="262" y="22" text-anchor="end">Misread as closing it</text>
@@ -169,7 +168,7 @@
 </g>
 <g>
 <g class="sensor" data-s="alpha-probe" data-side="l"><text class="s-label" x="262" y="82" text-anchor="end">Alpha Probe</text><circle class="s-dot" cx="276" cy="78" r="4" fill="var(--fam-structural)"/></g>
-<g class="sensor" data-s="alpha-probe" data-side="r"><circle class="s-dot" cx="924" cy="78" r="4" fill="var(--fam-structural)"/><text class="s-label" x="938" y="82">Alpha Probe</text></g>
+<g class="sensor idle" data-s="alpha-probe" data-side="r"><circle class="s-dot" cx="924" cy="78" r="4" fill="var(--fam-structural)"/><text class="s-label" x="938" y="82">Alpha Probe</text></g>
 <g class="sensor idle" data-s="beta-signal" data-side="l"><text class="s-label" x="262" y="143" text-anchor="end">Beta Signal</text><circle class="s-dot" cx="276" cy="139" r="4" fill="var(--fam-behavioral)"/></g>
 <g class="sensor" data-s="beta-signal" data-side="r"><circle class="s-dot" cx="924" cy="139" r="4" fill="var(--fam-behavioral)"/><text class="s-label" x="938" y="143">Beta Signal</text></g>
 <g class="sensor idle" data-s="gamma-unreviewed" data-side="l"><text class="s-label" x="262" y="162" text-anchor="end">Gamma Unreviewed</text><circle class="s-dot" cx="276" cy="158" r="4" fill="var(--fam-behavioral)"/></g>
@@ -180,8 +179,8 @@
 <g class="sensor orphan idle" data-s="delta-escape" data-side="r"><circle class="s-dot" cx="924" cy="286" r="4" fill="var(--fam-invariants)"/><text class="s-label" x="938" y="290">Delta &amp; &lt;/script&gt;&lt;img src=x onerror=alert(1)&gt;</text></g>
 </g>
 <g>
-<g class="doubt" data-d="wrong-logic"><rect class="d-node" x="490" y="190.0" width="220" height="40" rx="3"/><text class="d-name" x="600" y="209.0" text-anchor="middle">Wrong logic</text><text class="d-sub" x="600" y="224.0" text-anchor="middle">1 misread · 2 close · 1 reveal</text></g>
-<g class="doubt" data-d="late-effects"><rect class="d-node" x="490" y="68.0" width="220" height="40" rx="3"/><text class="d-name" x="600" y="87.0" text-anchor="middle">Late effects</text><text class="d-sub" x="600" y="102.0" text-anchor="middle">0 misread · 1 close</text></g>
+<g class="doubt" data-d="wrong-logic"><rect class="d-node" x="490" y="68.0" width="220" height="40" rx="3"/><text class="d-name" x="600" y="87.0" text-anchor="middle">Wrong logic</text><text class="d-sub" x="600" y="102.0" text-anchor="middle">1 misread · 1 close · 1 reveal</text></g>
+<g class="doubt" data-d="late-effects"><rect class="d-node" x="490" y="190.0" width="220" height="40" rx="3"/><text class="d-name" x="600" y="209.0" text-anchor="middle">Late effects</text><text class="d-sub" x="600" y="224.0" text-anchor="middle">0 misread · 0 close · 1 reveal</text></g>
 </g>
 </svg>
       </div>
@@ -265,15 +264,15 @@
       <h3 class="doubt-entry-name" id="wrong-logic">Wrong logic</h3>
       <p class="doubt-entry-desc">The code has the right shape and still returns the wrong answer.</p>
       <p class="doubt-entry-list misread"><span class="k">Misread as closing</span> <a href="/sensors/alpha-probe/" class="wikilink">Alpha Probe</a></p>
-      <p class="doubt-entry-list closes"><span class="k">Closed by</span> <a href="/sensors/beta-signal/" class="wikilink">Beta Signal</a>, <a href="/sensors/epsilon-atlas/" class="wikilink">Epsilon Atlas Anchor</a></p>
-      <p class="doubt-entry-list reveals"><span class="k">Revealed after by</span> <a href="/sensors/gamma-unreviewed/" class="wikilink">Gamma Unreviewed</a></p>
+      <p class="doubt-entry-list closes"><span class="k">Closed by</span> <a href="/sensors/beta-signal/" class="wikilink">Beta Signal</a></p>
+      <p class="doubt-entry-list reveals"><span class="k">Revealed after by</span> <a href="/sensors/epsilon-atlas/" class="wikilink">Epsilon Atlas Anchor</a></p>
     </article>
     <article class="doubt-entry" id="late-effects" data-d="late-effects">
       <h3 class="doubt-entry-name" id="late-effects">Late effects</h3>
       <p class="doubt-entry-desc">The damage shows up after you stopped watching.</p>
       <p class="doubt-entry-list misread"><span class="k">Misread as closing</span> <em>none</em></p>
-      <p class="doubt-entry-list closes"><span class="k">Closed by</span> <a href="/sensors/alpha-probe/" class="wikilink">Alpha Probe</a></p>
-      
+      <p class="doubt-entry-list closes"><span class="k">Closed by</span> <em>none</em></p>
+      <p class="doubt-entry-list reveals"><span class="k">Revealed after by</span> <a href="/sensors/gamma-unreviewed/" class="wikilink">Gamma Unreviewed</a></p>
     </article>
     </section>
   </div>
