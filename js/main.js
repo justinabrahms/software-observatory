@@ -377,6 +377,92 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Playbook index: the "what do you already run?" checklist. The graph is
+  // in the markup (each checkbox carries the doubts its sensor closes and
+  // reveals; the hidden list carries the doubt names), so this only counts.
+  // Two closers of one doubt count once, which is the composition rule.
+  const stackForm = document.querySelector('.stack-form');
+  if (stackForm) {
+    const result = document.querySelector('.stack-result');
+    const tally = stackForm.querySelector('.stack-tally');
+    const doubts = Array.from(document.querySelectorAll('.stack-doubts li')).map(li => ({
+      id: li.dataset.d, name: li.textContent, closable: li.dataset.closable === '1',
+    }));
+    const boxes = Array.from(stackForm.querySelectorAll('input[type="checkbox"]'));
+    const split = v => (v || '').split(' ').filter(Boolean);
+    const meta = {};
+    boxes.forEach(b => {
+      meta[b.value] = {
+        title: b.parentNode.textContent.trim(),
+        closes: split(b.dataset.closes),
+        reveals: split(b.dataset.reveals),
+      };
+    });
+    const STORE = 'so-stack';
+    const load = () => { try { return JSON.parse(localStorage.getItem(STORE) || '[]'); } catch (e) { return []; } };
+    const save = v => { try { localStorage.setItem(STORE, JSON.stringify(v)); } catch (e) { /* private mode */ } };
+    const esc = t => t.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const doubtLink = d => `<a href="/what-each-sensor-proves/#${d.id}" class="wikilink">${esc(d.name.toLowerCase())}</a>`;
+    const sensorLink = slug => `<a href="/sensors/${slug}/" class="wikilink">${esc(meta[slug].title)}</a>`;
+    const list = items => items.length ? items.join(', ') : 'none';
+
+    const render = () => {
+      const ticked = boxes.filter(b => b.checked).map(b => b.value);
+      save(ticked);
+      if (!ticked.length) { result.hidden = true; result.innerHTML = ''; tally.textContent = ''; return; }
+      const closed = new Set(), revealed = new Set();
+      ticked.forEach(s => { meta[s].closes.forEach(d => closed.add(d)); meta[s].reveals.forEach(d => revealed.add(d)); });
+      const closedD = doubts.filter(d => closed.has(d.id));
+      const revealedD = doubts.filter(d => !closed.has(d.id) && revealed.has(d.id));
+      const openD = doubts.filter(d => !closed.has(d.id) && !revealed.has(d.id));
+      const open = new Set(openD.map(d => d.id));
+      const silent = ticked.filter(s => !meta[s].closes.length && !meta[s].reveals.length);
+
+      // The addition that closes the most of what is left. Ties keep page
+      // order, which is family order, so nothing here ranks one closer of
+      // a doubt above another on a scale the catalog does not have.
+      // Sensors that would close exactly the same set share a line: the
+      // catalog has no scale on which to prefer one closer to another.
+      const gainBy = {};
+      boxes.filter(b => !b.checked).forEach(b => {
+        const newly = meta[b.value].closes.filter(d => open.has(d));
+        if (!newly.length) return;
+        const key = newly.join(' ');
+        (gainBy[key] = gainBy[key] || { slugs: [], newly }).slugs.push(b.value);
+      });
+      const gains = Object.values(gainBy).sort((a, b) => b.newly.length - a.newly.length).slice(0, 3);
+      const byId = {}; doubts.forEach(d => { byId[d.id] = d; });
+      const unclosable = openD.filter(d => !d.closable);
+
+      let h = `<p class="stack-count"><b>${closedD.length} of ${doubts.length}</b> doubts closed by what you run` +
+        (revealedD.length ? `, <b>${revealedD.length}</b> more revealed after the fact` : '') + '.</p>';
+      h += `<p><span class="k">Closed</span> ${list(closedD.map(doubtLink))}.</p>`;
+      if (revealedD.length) h += `<p><span class="k">Revealed after the fact</span> ${list(revealedD.map(doubtLink))}.</p>`;
+      h += `<p><span class="k">Still open</span> ${list(openD.map(d => doubtLink(d) + (d.closable ? '' : ' <small>(no closer before shipping)</small>')))}.</p>`;
+      if (gains.length) {
+        h += '<p class="k">Add next</p><ol class="stack-next">' + gains.map(g =>
+          `<li>${g.slugs.map(sensorLink).join(' or ')} <span class="stack-gain">closes ${g.newly.map(d => doubtLink(byId[d])).join(', ')}</span></li>`).join('') + '</ol>';
+      } else if (openD.length) {
+        h += `<p>Nothing in the catalog closes what is left before shipping. ` +
+          `${unclosable.length ? 'Only retrospective sensors touch ' + list(unclosable.map(doubtLink)) + '. ' : ''}` +
+          `The plays under <a href="#where-you-are" class="wikilink">where you are</a> cover that case.</p>`;
+      }
+      if (silent.length) {
+        h += `<p class="stack-silent"><span class="k">Counted for nothing</span> ${list(silent.map(sensorLink))}: no doubt edge in this vocabulary yet.</p>`;
+      }
+      result.innerHTML = h;
+      result.hidden = false;
+      tally.innerHTML = `<a href="#stack-result">${closedD.length} of ${doubts.length} doubts closed</a>` +
+        (openD.length ? `, ${openD.length} open` : '');
+    };
+
+    const remembered = new Set(load());
+    boxes.forEach(b => { if (remembered.has(b.value)) b.checked = true; });
+    stackForm.addEventListener('change', render);
+    stackForm.addEventListener('reset', () => { setTimeout(render, 0); });
+    render();
+  }
+
   // Doubts page: isolate a doubt or a sensor in the server-rendered graph.
   // Hover previews, click pins, click again (or click away) releases. The
   // detail strip is filled from the per-doubt entries further down the page,

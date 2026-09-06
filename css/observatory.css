@@ -184,7 +184,14 @@ a.wikilink:hover {
   font-weight: 400;
   color: var(--text-soft);
 }
-.primary-nav a { position: relative; padding: .3rem 0; }
+.primary-nav a { position: relative; padding: .3rem 0; white-space: nowrap; }
+/* Between the desktop layout and the mobile row, the seven items no longer
+   fit at a 2rem gap; tighten the gap rather than let a two-word label
+   break in half, which is what "Removing Doubt" did at 1024px. */
+@media (max-width: 1180px) {
+  .primary-nav { gap: 1.1rem; font-size: .84rem; }
+  .site-header { gap: 1rem; }
+}
 .primary-nav a::after {
   content: '';
   position: absolute;
@@ -2386,24 +2393,16 @@ a.wikilink:hover {
 
 
 /* ── Responsive ────────────────────────────────────────────────────────── */
-@media (max-width: 860px) {
-  /* The nav row costs the header ~26px; tighten the hero rhythm by more
-     than that so the title and both calls to action stay above the fold. */
-  .hero { grid-template-columns: 1fr; padding: 1.8rem 1.5rem 3rem; min-height: 0; }
-  .hero-visual { display: none; }
-  .eyebrow { margin-bottom: 1rem; }
-  .hero-title { margin-bottom: 1.4rem; }
-  .hero-lede { margin-bottom: 1.8rem; }
-  .pillars { grid-template-columns: 1fr; gap: 1.5rem; padding: 3rem 1.5rem; }
-  .catalog-layout { grid-template-columns: 1fr; padding: 1.5rem; }
-  .filter-sidebar { position: static; }
-  .signal-grid { grid-template-columns: minmax(0, 1fr); }
-
+/* Below this width the seven nav items and the search box no longer share
+   a row with the logo, so the nav takes its own row here rather than at the
+   860px layout breakpoint. Everything else about the phone layout still
+   switches at 860px. */
+@media (max-width: 1000px) {
   /* ── Mobile navigation ───────────────────────────────────────────────
      The nav used to be `display: none` here, which left a reader who
      landed on a deep-linked sensor page with no route to the catalog or
      the atlas at all. It now wraps onto its own full-bleed row under the
-     logo and scrolls horizontally when the five items do not fit. */
+     logo and scrolls horizontally when the seven items do not fit. */
   .site-header {
     flex-wrap: wrap;
     align-items: center;
@@ -2455,6 +2454,21 @@ a.wikilink:hover {
     width: calc(100vw - 3rem);
     max-height: min(24rem, 60vh);
   }
+}
+
+@media (max-width: 860px) {
+  /* The nav row costs the header ~26px; tighten the hero rhythm by more
+     than that so the title and both calls to action stay above the fold. */
+  .hero { grid-template-columns: 1fr; padding: 1.8rem 1.5rem 3rem; min-height: 0; }
+  .hero-visual { display: none; }
+  .eyebrow { margin-bottom: 1rem; }
+  .hero-title { margin-bottom: 1.4rem; }
+  .hero-lede { margin-bottom: 1.8rem; }
+  .pillars { grid-template-columns: 1fr; gap: 1.5rem; padding: 3rem 1.5rem; }
+  .catalog-layout { grid-template-columns: 1fr; padding: 1.5rem; }
+  .filter-sidebar { position: static; }
+  .signal-grid { grid-template-columns: minmax(0, 1fr); }
+
 
   /* Scatter labels are centred on their dot, so points near the right edge
      of the plot used to push the whole document sideways. Flip the far-right
@@ -2657,3 +2671,77 @@ ul.play-rows { list-style: none; padding-left: 0; }
 .play-table td:last-child { color: var(--text-soft); }
 .play-table td em { font-style: normal; color: var(--text-dim); font-size: .85em; }
 .play-table .play-family { display: block; margin: .15rem 0 0; }
+
+/* The stack check at the top of the playbook index: a checklist of the
+   catalog by family, and a result block the script fills. The fieldsets
+   flow in columns so 59 boxes fit above the fold on a wide screen and
+   stack cleanly on a phone. */
+.stack-check { margin-bottom: 3.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--border); }
+.stack-check > h2 {
+  font-family: var(--font-serif); font-weight: 600; font-size: 1.4rem;
+  color: var(--text); margin: 0 0 .4rem;
+}
+.stack-form { columns: 2; column-gap: 2rem; margin: 1.2rem 0 0; }
+@media (max-width: 560px) { .stack-form { columns: 1; } }
+.stack-family {
+  break-inside: avoid; border: 0; padding: 0; margin: 0 0 1.1rem; min-width: 0;
+}
+.stack-family legend {
+  font-family: var(--font-mono); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--text-dim); padding: 0; margin-bottom: .35rem;
+}
+.stack-family legend::before {
+  content: ""; display: inline-block; width: .55em; height: .55em; border-radius: 50%;
+  margin-right: .45em; vertical-align: middle; background: var(--text-dim);
+}
+.stack-family[data-family="structural"] legend::before { background: var(--fam-structural); }
+.stack-family[data-family="behavioral"] legend::before { background: var(--fam-behavioral); }
+.stack-family[data-family="test-effectiveness"] legend::before { background: var(--fam-test-effectiveness); }
+.stack-family[data-family="invariants"] legend::before { background: var(--fam-invariants); }
+.stack-family[data-family="adversarial"] legend::before { background: var(--fam-adversarial); }
+.stack-family[data-family="runtime"] legend::before { background: var(--fam-runtime); }
+.stack-family[data-family="change"] legend::before { background: var(--fam-change); }
+.stack-family[data-family="architecture"] legend::before { background: var(--fam-architecture); }
+.stack-family[data-family="evolution"] legend::before { background: var(--fam-evolution); }
+.stack-family[data-family="comprehension"] legend::before { background: var(--fam-comprehension); }
+.stack-box {
+  display: flex; align-items: baseline; gap: .5rem; font-size: .92rem; line-height: 1.5;
+  color: var(--text-soft); cursor: pointer; padding: .1rem 0;
+}
+.stack-box:hover { color: var(--text); }
+.stack-box input { accent-color: var(--accent); flex: none; position: relative; top: .1em; }
+.stack-box--silent { color: var(--text-dim); }
+.stack-box--silent:hover { color: var(--text-soft); }
+.stack-actions {
+  column-span: all; display: flex; align-items: baseline; gap: 1rem; margin: .4rem 0 0;
+  font-size: .82rem; color: var(--text-dim);
+}
+.stack-tally { font-family: var(--font-mono); font-size: .75rem; color: var(--text-soft); }
+.stack-tally a { color: var(--accent); }
+.stack-clear {
+  font-family: var(--font-mono); font-size: .75rem; letter-spacing: .06em; cursor: pointer;
+  background: none; border: 1px solid var(--border); color: var(--text-soft);
+  padding: .3rem .7rem; border-radius: 3px;
+}
+.stack-clear:hover { border-color: var(--accent-soft); color: var(--text); }
+.stack-result {
+  margin-top: 1.5rem; padding: 1.2rem 1.4rem; background: var(--bg-elev);
+  border: 1px solid var(--border); border-radius: 6px; font-size: .95rem; line-height: 1.7;
+  color: var(--text-soft);
+}
+.stack-result p { margin: 0 0 .6rem; }
+.stack-result p:last-child { margin-bottom: 0; }
+.stack-count { font-size: 1.05rem; color: var(--text); }
+.stack-count b { font-weight: 600; color: var(--accent); }
+.stack-result .k {
+  font-family: var(--font-mono); font-size: .7rem; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--text-dim); margin-right: .4rem;
+}
+.stack-result p.k { margin: .8rem 0 .3rem; }
+.stack-result small { color: var(--text-dim); }
+.stack-next { margin: 0 0 .6rem; padding-left: 1.4rem; }
+.stack-next li { margin-bottom: .25rem; }
+.stack-next li::marker { font-family: var(--font-mono); color: var(--accent); font-size: .85rem; }
+.stack-gain { color: var(--text-dim); font-size: .88rem; }
+.stack-silent { border-top: 1px solid var(--border); padding-top: .6rem; }
+.stack-noscript { margin-top: 1rem; font-size: .9rem; color: var(--text-soft); }

@@ -113,13 +113,55 @@
     <p class="eyebrow">The Playbook</p>
     <h1 class="page-title">The playbook</h1>
     <p class="page-lede">
-      Start from what you noticed, where you are, or what you are building.
-      Each play names the doubt, the sensor to point at it, and where to go
-      next. The catalog is the reference; this is the route through it.
+      Start from what you already run, what you noticed, where you are, or
+      what you are building. Each play names the doubt, the sensor to point
+      at it, and where to go next. The catalog is the reference; this is the
+      route through it.
     </p>
   </section>
 
   <div class="playbook-content">
+    <section class="stack-check" id="your-stack">
+      <h2 id="what-do-you-already-run">What do you already run?</h2>
+      <p class="play-group-lede">
+        Tick the sensors you run. The page says which of the 2 doubts they
+        close, which are still open, and which one addition would close the
+        most of what is left. Two sensors that close the same doubt count
+        once; a sensor with no doubt edge in the vocabulary counts for
+        nothing here, however useful it is.
+      </p>
+      <form class="stack-form" autocomplete="off">
+        <fieldset class="stack-family" data-family="structural">
+          <legend>Structural</legend>
+          <label class="stack-box stack-box--silent"><input type="checkbox" name="sensor" value="alpha-probe" data-closes="" data-reveals=""> Alpha Probe</label>
+        </fieldset>
+        <fieldset class="stack-family" data-family="behavioral">
+          <legend>Behavioral</legend>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="beta-signal" data-closes="wrong-logic" data-reveals=""> Beta Signal</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="gamma-unreviewed" data-closes="" data-reveals="late-effects"> Gamma Unreviewed</label>
+        </fieldset>
+        <fieldset class="stack-family" data-family="test-effectiveness">
+          <legend>Test Effectiveness</legend>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="epsilon-atlas" data-closes="" data-reveals="wrong-logic"> Epsilon Atlas Anchor</label>
+        </fieldset>
+        <fieldset class="stack-family" data-family="invariants">
+          <legend>Invariants</legend>
+          <label class="stack-box stack-box--silent"><input type="checkbox" name="sensor" value="delta-escape" data-closes="" data-reveals=""> Delta &amp; &lt;/script&gt;&lt;img src=x onerror=alert(1)&gt;</label>
+        </fieldset>
+        <p class="stack-actions"><button type="reset" class="stack-clear">Clear</button>
+          <span class="stack-tally"></span>
+          <span class="stack-remember">Your ticks stay in this browser.</span></p>
+      </form>
+      <div class="stack-result" id="stack-result" hidden aria-live="polite"></div>
+      <ul class="stack-doubts" hidden>
+        <li data-d="wrong-logic" data-closable="1">Wrong logic</li>
+        <li data-d="late-effects" data-closable="0">Late effects</li>
+      </ul>
+      <noscript><p class="stack-noscript">The count needs JavaScript. The
+        <a href="/what-each-sensor-proves/#by-sensor" class="wikilink">by-sensor table</a>
+        on the doubts page has the same edges as a static list.</p></noscript>
+    </section>
+
     <section class="play-group play-group--symptom">
       <h2 id="what-you-noticed">What you noticed</h2>
       <p class="play-group-lede">Something is wrong and you can say what it looks like. Each play names the doubt behind it, the sensor to point at it, and where to go if the doubt survives.</p>

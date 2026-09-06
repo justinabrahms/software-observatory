@@ -495,6 +495,21 @@ class TestGates(unittest.TestCase):
         # playbook": the reader already runs it, so the box would be noise.
         self.assertNotIn("In the playbook", tree["sensors/delta-escape/index.html"].decode())
 
+    def test_stack_check_carries_the_doubt_graph(self):
+        """The playbook index's checklist is the doubt graph in data
+        attributes; js/main.js only counts. A checkbox's edges must be the
+        yaml's, and a misread edge must not appear as a closing one."""
+        with Sandbox() as sb:
+            sb.run()
+            page = sb.tree()["playbook/index.html"].decode()
+        self.assertIn('value="beta-signal" data-closes="wrong-logic" data-reveals=""', page)
+        self.assertIn('value="epsilon-atlas" data-closes="" data-reveals="wrong-logic"', page)
+        # alpha-probe is only misread as closing late-effects: no edge here.
+        self.assertIn('value="alpha-probe" data-closes="" data-reveals=""', page)
+        self.assertIn('data-d="late-effects" data-closable="0"', page)
+        self.assertIn('data-d="wrong-logic" data-closable="1"', page)
+        self.assertEqual(page.count('class="stack-box'), 5, "one checkbox per sensor")
+
     def test_check_only_validates_and_writes_nothing(self):
         with Sandbox() as sb:
             log = sb.run(check_only=True)

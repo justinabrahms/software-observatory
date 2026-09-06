@@ -14,7 +14,7 @@ from ..dates import catalog_as_of
 from ..jsonld import breadcrumb_ld, page_ld
 from ..layout import html_page
 from ..playbook import KIND_LABELS, KINDS, sort_key, stack_coverage
-from ..taxonomy import FAMILY_BY_SLUG
+from ..taxonomy import FAMILIES, FAMILY_BY_SLUG
 
 KIND_INTRO = {
     "symptom": ("What you noticed",
@@ -214,6 +214,78 @@ def _composition_sections(play, by_id, by_slug, doubts):
       </section>{body_html}"""
 
 
+# ── The stack check ─────────────────────────────────────────────────────────
+
+def _stack_check_html(doubts, sensors):
+    """The "what do you already run?" checklist at the top of the index.
+
+    Every checkbox carries the doubts its sensor closes and reveals, straight
+    from doubts.yaml, and a hidden list carries the doubt names; js/main.js
+    only ticks, counts, and picks the addition that closes the most of what
+    is left. Nothing about the graph lives in the script, so the checklist
+    cannot disagree with the plays or the doubts page. Without JavaScript
+    it is a checklist of the catalog by family, which is still a page."""
+    by_family = {}
+    for s in sensors:
+        by_family.setdefault(s.get("family", ""), []).append(s)
+    closes_of = {s["slug"]: [] for s in sensors}
+    reveals_of = {s["slug"]: [] for s in sensors}
+    for d in doubts:
+        for slug in d["closed_by"]:
+            if slug in closes_of:
+                closes_of[slug].append(d["id"])
+        for slug in d["revealed_by"]:
+            if slug in reveals_of:
+                reveals_of[slug].append(d["id"])
+
+    groups = []
+    for fam in FAMILIES:
+        members = sorted(by_family.get(fam["slug"], []), key=lambda s: s["title"])
+        if not members:
+            continue
+        boxes = "\n".join(
+            f'          <label class="stack-box{"" if closes_of[s["slug"]] or reveals_of[s["slug"]] else " stack-box--silent"}">'
+            f'<input type="checkbox" name="sensor" value="{s["slug"]}" '
+            f'data-closes="{" ".join(closes_of[s["slug"]])}" '
+            f'data-reveals="{" ".join(reveals_of[s["slug"]])}"> '
+            f'{html.escape(s["title"])}</label>'
+            for s in members)
+        groups.append(f"""        <fieldset class="stack-family" data-family="{fam["slug"]}">
+          <legend>{html.escape(fam["name"])}</legend>
+{boxes}
+        </fieldset>""")
+
+    doubt_items = "\n".join(
+        f'        <li data-d="{d["id"]}" data-closable="{1 if d["closed_by"] else 0}">'
+        f'{html.escape(d["name"])}</li>'
+        for d in doubts)
+    n = len(doubts)
+    return f"""    <section class="stack-check" id="your-stack">
+      <h2>What do you already run?</h2>
+      <p class="play-group-lede">
+        Tick the sensors you run. The page says which of the {n} doubts they
+        close, which are still open, and which one addition would close the
+        most of what is left. Two sensors that close the same doubt count
+        once; a sensor with no doubt edge in the vocabulary counts for
+        nothing here, however useful it is.
+      </p>
+      <form class="stack-form" autocomplete="off">
+{chr(10).join(groups)}
+        <p class="stack-actions"><button type="reset" class="stack-clear">Clear</button>
+          <span class="stack-tally"></span>
+          <span class="stack-remember">Your ticks stay in this browser.</span></p>
+      </form>
+      <div class="stack-result" id="stack-result" hidden aria-live="polite"></div>
+      <ul class="stack-doubts" hidden>
+{doubt_items}
+      </ul>
+      <noscript><p class="stack-noscript">The count needs JavaScript. The
+        <a href="/what-each-sensor-proves/#by-sensor" class="wikilink">by-sensor table</a>
+        on the doubts page has the same edges as a static list.</p></noscript>
+    </section>
+"""
+
+
 # ── Pages ───────────────────────────────────────────────────────────────────
 
 def play_description(play, by_id):
@@ -302,13 +374,15 @@ def generate_playbook_index(plays, doubts, sensors, output_dir):
     <p class="eyebrow">The Playbook</p>
     <h1 class="page-title">The playbook</h1>
     <p class="page-lede">
-      Start from what you noticed, where you are, or what you are building.
-      Each play names the doubt, the sensor to point at it, and where to go
-      next. The catalog is the reference; this is the route through it.
+      Start from what you already run, what you noticed, where you are, or
+      what you are building. Each play names the doubt, the sensor to point
+      at it, and where to go next. The catalog is the reference; this is the
+      route through it.
     </p>
   </section>
 
   <div class="playbook-content">
+{_stack_check_html(doubts, sensors)}
 {chr(10).join(groups)}
   </div>"""
     description = ("Situational plays for the sensor catalog: what to point at a "
