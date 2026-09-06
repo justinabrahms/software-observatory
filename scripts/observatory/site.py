@@ -6,10 +6,10 @@ Read top to bottom, it is the table of contents for the whole package."""
 import shutil
 
 from . import config
-from .content import compute_backlinks, load_doubts, load_sensors, og_card_items
+from .content import compute_backlinks, load_doubts, load_plays, load_sensors, og_card_items
 from .dates import catalog_as_of, first_seen_dates
 from .feed import generate_rss
-from .gates import assert_output_invariants, validate_doubts, validate_sensors
+from .gates import assert_output_invariants, validate_doubts, validate_plays, validate_sensors
 from .llms import generate_llms_full_txt, generate_llms_txt
 from .pages.about import generate_about_page
 from .pages.atlas import generate_atlas_page
@@ -22,9 +22,11 @@ from .pages.framework import generate_framework_page
 from .pages.glossary import generate_glossary_page
 from .pages.home import generate_index_page
 from .pages.notfound import generate_404
+from .pages.playbook import generate_playbook
 from .pages.privacy import generate_privacy_page
 from .pages.sensor import generate_sensor_page
 from .search_index import generate_search_index
+from .playbook import plays_by_sensor
 from .sitemap import generate_robots, generate_sitemap
 from .taxonomy import FAMILIES, FAMILY_BY_SLUG
 
@@ -40,6 +42,9 @@ def main(check_only=False):
     doubts = load_doubts()
     print(f"  Found {len(doubts)} doubts")
     validate_doubts(doubts, sensors)
+    plays = load_plays()
+    print(f"  Found {len(plays)} plays")
+    validate_plays(plays, doubts, sensors)
     if check_only:
         print("Done (--check: validated, wrote nothing).")
         return
@@ -89,7 +94,7 @@ def main(check_only=False):
     print("  search-index.json")
 
     print("Generating sitemap and robots...")
-    generate_sitemap(sensors, output_dir)
+    generate_sitemap(sensors, output_dir, plays=plays)
     print("  sitemap.xml")
     generate_robots(output_dir)
     print("  robots.txt")
@@ -130,7 +135,10 @@ def main(check_only=False):
     print("  framework/")
 
     generate_doubts_page(doubts, sensors, output_dir)
-    print("  doubts/")
+    print("  what-each-sensor-proves/")
+
+    generate_playbook(plays, doubts, sensors, output_dir)
+    print(f"  playbook/ ({len(plays)} plays)")
 
     generate_about_page(output_dir)
     print("  about/")
@@ -147,9 +155,11 @@ def main(check_only=False):
     generate_categories_page(sensors, output_dir)
     print("  categories/")
 
+    plays_for = plays_by_sensor(plays)
     for sensor in sensors:
         generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug,
-                             output_dir, published=published, as_of=as_of)
+                             output_dir, published=published, as_of=as_of,
+                             plays=plays_for.get(sensor["slug"], []))
         print(f"  sensors/{sensor['slug']}/")
 
     # After the pages: llms-full.txt folds in the framework and glossary as

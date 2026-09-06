@@ -4,6 +4,7 @@ Frontmatter parsing, the corpus load, backlinks, see_also resolution, and the
 per-sensor OG-card inputs. Everything here answers "what did the author
 write", never "what does the page look like"."""
 
+import re
 import yaml
 
 from . import config
@@ -65,6 +66,29 @@ def load_doubts():
         for key in ("misread_as_closing", "closed_by", "revealed_by"):
             d[key] = list(d.get(key) or [])
     return doubts
+
+
+def load_plays():
+    """Load content/playbook/*.md: the situational plays. Returns a list of
+    dicts in filename order, or [] if the directory is absent. The body is
+    rendered here; the h2 headings are also kept as a list, because a
+    symptom play's body has a required shape and the gate checks it."""
+    play_dir = config.CONTENT_DIR / "playbook"
+    if not play_dir.exists():
+        return []
+    sensor_slugs = {p.stem for p in (config.CONTENT_DIR / "sensors").glob("*.md")}
+    plays = []
+    for filepath in sorted(play_dir.glob("*.md")):
+        meta, body = parse_frontmatter(filepath)
+        meta["slug"] = filepath.stem
+        meta["filename"] = str(filepath)
+        meta["sections"] = re.findall(r"^## +(.+?)\s*$", body, flags=re.M)
+        meta["body_html"] = fix_link_depths(render_markdown(body), sensor_slugs=sensor_slugs)
+        for key in ("have", "steps", "skip", "stack", "left_open"):
+            if key in meta and meta[key] is None:
+                meta[key] = []
+        plays.append(meta)
+    return plays
 
 
 def compute_backlinks(sensors):

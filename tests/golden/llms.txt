@@ -25,8 +25,10 @@ Do not use this catalog for:
 ## How to navigate
 
 - Catalog: /catalog/ — all 5 sensors organized by family
+- Playbook: /playbook/ — situational plays: what to point at a symptom, what to add first from where you are, a minimal stack per shape of system
 - Atlas: /atlas/ — families arranged as a matrix by lifecycle stage
 - Framework: /framework/ — the six dimensions
+- What each sensor proves: /what-each-sensor-proves/ — the doubt vocabulary: which sensors close, reveal, or are misread as closing each doubt
 - Glossary: /glossary/ — definitions of core terms (oracle, independence, epistemic sensor, etc.)
 - Individual entries: /sensors/<slug>/ (e.g. /sensors/mutation-testing/)
 - Family pages: /families/<slug>/ (10 of them, one per family; /catalog/#<slug> still anchors to the same family on the catalog)

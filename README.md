@@ -25,6 +25,11 @@ am I asking?* and *when can I afford to learn the answer?*
   sensor entries across ten families, each documenting what the sensor can
   detect, what it cannot, how easily it's gamed, and what evidence it
   produces.
+- **[Playbook](https://softwareobservatory.com/playbook/)** — situational
+  plays: what to point at a symptom you noticed, what to add first from
+  where you are, and a minimal stack for each shape of system. Every play
+  is a route through the doubt vocabulary, and the build refuses a play
+  that claims an edge the vocabulary lacks.
 - **[Atlas](https://softwareobservatory.com/atlas/)** — the
   families arranged as a navigational matrix: family on one axis, lifecycle
   stage on the other. Empty cells are questions nobody has instrumented yet.
@@ -32,6 +37,10 @@ am I asking?* and *when can I afford to learn the answer?*
   the six dimensions every sensor is characterized along: oracle strength,
   independence, scope, feedback latency, actionability, predictive vs
   retrospective.
+- **[What each sensor proves](https://softwareobservatory.com/what-each-sensor-proves/)** —
+  the doubt vocabulary: nineteen specific ways software can be wrong, and
+  for each the sensors that close it, reveal it after the fact, or are
+  mistaken for closing it.
 - **[Glossary](https://softwareobservatory.com/glossary/)** — definitions
   of the core terms: oracle strength, independence, epistemic sensor.
 - **[About](https://softwareobservatory.com/about/)** — the

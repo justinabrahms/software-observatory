@@ -81,6 +81,7 @@ def html_header():
     """Site header with nav. All links are site-absolute."""
     nav_items = [
         ("/catalog/", "Catalog"),
+        ("/playbook/", "Playbook"),
         ("/atlas/", "Atlas"),
         ("/framework/", "Framework"),
         ("/what-each-sensor-proves/", "Removing Doubt"),

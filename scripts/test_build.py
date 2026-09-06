@@ -96,7 +96,7 @@ GUARDED_PATHS = (
     "404.html",
     "robots.txt",
 )
-GUARDED_DIRS = ("og/cards", "sensors", "catalog", "families", "atlas", "md")
+GUARDED_DIRS = ("og/cards", "sensors", "catalog", "families", "atlas", "md", "playbook")
 
 
 # ── Sandbox ─────────────────────────────────────────────────────────────────
@@ -434,6 +434,66 @@ class TestGates(unittest.TestCase):
         self.assertIn("A sentence on the doubts page would be false", message)
         self.assertIn("wrong-logic has an empty misread side", message)
         self.assertEqual(tree, {}, f"gate wrote files before failing: {sorted(tree)}")
+
+    def _run_bad_play(self, filename, replacements):
+        return self._run_bad_corpus(f"../playbook/{filename}", replacements)
+
+    def test_play_claiming_edge_not_in_doubts_fails_and_writes_nothing(self):
+        # Alpha is misread as closing late effects; a play that says it
+        # closes it is asserting a road the doubt graph does not have.
+        message, tree = self._run_bad_play(
+            "starting-from-alpha.md",
+            [("  - sensor: beta-signal\n    closes: [wrong-logic]",
+              "  - sensor: alpha-probe\n    closes: [late-effects]")])
+        self.assertIn("content/playbook is malformed", message)
+        self.assertIn("doubts.yaml does not say alpha-probe closes late-effects", message)
+        self.assertEqual(tree, {}, f"gate wrote files before failing: {sorted(tree)}")
+
+    def test_symptom_play_sensor_must_close_or_reveal_its_doubt(self):
+        message, tree = self._run_bad_play(
+            "beta-went-quiet.md", [("sensor: beta-signal", "sensor: alpha-probe")])
+        self.assertIn("does not say alpha-probe closes or reveals wrong-logic", message)
+        self.assertEqual(tree, {})
+
+    def test_symptom_play_body_shape_is_gated(self):
+        message, tree = self._run_bad_play(
+            "beta-went-quiet.md", [("## Reading it", "## Reading the result")])
+        self.assertIn("body must have exactly these h2 sections in order", message)
+        self.assertEqual(tree, {})
+
+    def test_symptom_play_next_must_be_a_play(self):
+        message, tree = self._run_bad_play(
+            "beta-went-quiet.md", [("next: starting-from-alpha", "next: starting-from-omega")])
+        self.assertIn("next names unknown play 'starting-from-omega'", message)
+        self.assertEqual(tree, {})
+
+    def test_composition_may_not_close_one_doubt_twice(self):
+        message, tree = self._run_bad_play(
+            "stack-for-a-fixture.md",
+            [("  - sensor: epsilon-atlas\n    reveals: [wrong-logic]",
+              "  - sensor: beta-signal\n    closes: [wrong-logic]")])
+        self.assertIn("wrong-logic is closed by both beta-signal and beta-signal", message)
+        self.assertEqual(tree, {})
+
+    def test_composition_may_not_close_and_leave_open_the_same_doubt(self):
+        message, tree = self._run_bad_play(
+            "stack-for-a-fixture.md", [("  - doubt: late-effects", "  - doubt: wrong-logic")])
+        self.assertIn("wrong-logic is both closed by beta-signal and left open", message)
+        self.assertEqual(tree, {})
+
+    def test_play_rows_link_only_to_real_sensors_and_plays(self):
+        with Sandbox() as sb:
+            sb.run()
+            tree = sb.tree()
+        page = tree["playbook/starting-from-alpha/index.html"].decode()
+        self.assertIn('href="/sensors/beta-signal/"', page)
+        self.assertIn('href="/what-each-sensor-proves/#wrong-logic"', page)
+        sensor_page = tree["sensors/beta-signal/index.html"].decode()
+        self.assertIn("In the playbook", sensor_page)
+        self.assertIn('href="/playbook/beta-went-quiet/"', sensor_page)
+        # A sensor a play only lists under `have` or `skip` is not "in the
+        # playbook": the reader already runs it, so the box would be noise.
+        self.assertNotIn("In the playbook", tree["sensors/delta-escape/index.html"].decode())
 
     def test_check_only_validates_and_writes_nothing(self):
         with Sandbox() as sb:

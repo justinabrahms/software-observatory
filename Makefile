@@ -104,7 +104,7 @@ DEPLOY_PUBLIC := \
   css js pages \
   og \
   md \
-  sensors catalog atlas framework what-each-sensor-proves about contact privacy glossary categories \
+  sensors catalog atlas framework what-each-sensor-proves playbook about contact privacy glossary categories \
   families
 
 DEPLOY_PRIVATE := \

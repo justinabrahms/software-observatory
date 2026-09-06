@@ -24,7 +24,7 @@ JS_DIR = SITE_ROOT / "js"
 # fix_link_depths rewrites them using this set.
 SECTION_PAGES = {
     "catalog", "atlas", "framework", "glossary", "about",
-    "contact", "privacy", "categories",
+    "contact", "privacy", "categories", "playbook",
 }
 
 SITE_URL = "https://softwareobservatory.com"

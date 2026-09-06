@@ -27,7 +27,7 @@ def sitemap_lastmods(sensors):
     return per_sensor, site
 
 
-def generate_sitemap(sensors, output_dir):
+def generate_sitemap(sensors, output_dir, plays=()):
     """Write sitemap.xml listing every indexable URL with a <lastmod>."""
     per_sensor, site_lastmod = sitemap_lastmods(sensors)
     urls = [(path, site_lastmod) for path in (
@@ -36,6 +36,10 @@ def generate_sitemap(sensors, output_dir):
     )]
     for family in FAMILIES:
         urls.append((f"families/{family['slug']}/", site_lastmod))
+    if plays:
+        urls.append(("playbook/", site_lastmod))
+        for p in plays:
+            urls.append((f"playbook/{p['slug']}/", site_lastmod))
     for s in sensors:
         urls.append((f"sensors/{s['slug']}/", per_sensor.get(s["slug"], site_lastmod)))
     lines = ['<?xml version="1.0" encoding="UTF-8"?>',

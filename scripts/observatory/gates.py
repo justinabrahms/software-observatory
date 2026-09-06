@@ -9,6 +9,7 @@ ordering" comment below."""
 import re
 
 from .doubts import claim_failures, shape_errors
+from .playbook import shape_errors as playbook_shape_errors
 from .taxonomy import FAMILIES, STACK_LAYERS
 
 
@@ -355,6 +356,25 @@ def validate_doubts(doubts, sensors):
 
     print("Checking the doubts page's prose claims hold...")
     assert_doubt_prose_holds(doubts, sensors)
+    print("  OK")
+
+
+def assert_plays_well_formed(plays, doubts, sensors):
+    """Fail the build if a play under content/playbook/ is malformed, or
+    claims an edge (this sensor closes that doubt) that doubts.yaml does not
+    have. A play is a route through the doubt graph; one that asserts a
+    road the map lacks would be the site contradicting itself on the page
+    whose job is telling the reader what to trust."""
+    errors = playbook_shape_errors(plays, doubts, sensors)
+    if errors:
+        raise AssertionError(
+            "content/playbook is malformed — " + "; ".join(errors))
+
+
+def validate_plays(plays, doubts, sensors):
+    """Gates for content/playbook/*.md. Run before any output is written."""
+    print("Checking plays are well formed and their edges are in doubts.yaml...")
+    assert_plays_well_formed(plays, doubts, sensors)
     print("  OK")
 
 

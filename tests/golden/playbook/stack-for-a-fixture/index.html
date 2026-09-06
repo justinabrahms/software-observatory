@@ -10,20 +10,20 @@
        without the other is how content gets reused with the attribution
        silently dropped. -->
   <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
-  <title>Runtime sensors — Software Observatory</title>
-  <meta name="description" content="Runtime sensors ask: What is it actually doing? 0 entries in the Software Observatory — Logs, traces, metrics, profiles, high-cardinality events.">
-  <link rel="canonical" href="https://softwareobservatory.com/families/runtime/">
+  <title>A minimal stack for a fixture — Software Observatory</title>
+  <meta name="description" content="Five sensors, two doubts, one of them unclosable.">
+  <link rel="canonical" href="https://softwareobservatory.com/playbook/stack-for-a-fixture/">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Runtime sensors — Software Observatory">
-  <meta property="og:description" content="Runtime sensors ask: What is it actually doing? 0 entries in the Software Observatory — Logs, traces, metrics, profiles, high-cardinality events.">
-  <meta property="og:url" content="https://softwareobservatory.com/families/runtime/">
+  <meta property="og:title" content="A minimal stack for a fixture — Software Observatory">
+  <meta property="og:description" content="Five sensors, two doubts, one of them unclosable.">
+  <meta property="og:url" content="https://softwareobservatory.com/playbook/stack-for-a-fixture/">
   <meta property="og:image" content="https://softwareobservatory.com/og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:site_name" content="Software Observatory">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Runtime sensors — Software Observatory">
-  <meta name="twitter:description" content="Runtime sensors ask: What is it actually doing? 0 entries in the Software Observatory — Logs, traces, metrics, profiles, high-cardinality events.">
+  <meta name="twitter:title" content="A minimal stack for a fixture — Software Observatory">
+  <meta name="twitter:description" content="Five sensors, two doubts, one of them unclosable.">
   <meta name="twitter:image" content="https://softwareobservatory.com/og.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,18 +35,43 @@
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "WebPage",
+      "@id": "https://softwareobservatory.com/playbook/stack-for-a-fixture/#page",
+      "name": "A minimal stack for a fixture",
+      "description": "Five sensors, two doubts, one of them unclosable.",
+      "url": "https://softwareobservatory.com/playbook/stack-for-a-fixture/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "isPartOf": {
+        "@id": "https://softwareobservatory.com/#organization"
+      },
+      "author": {
+        "@type": "Person",
+        "@id": "https://softwareobservatory.com/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "dateModified": "2026-03-02"
+    },
+    {
       "@type": "BreadcrumbList",
       "itemListElement": [
         {
           "@type": "ListItem",
           "position": 1,
-          "name": "Catalog",
-          "item": "https://softwareobservatory.com/catalog/"
+          "name": "Playbook",
+          "item": "https://softwareobservatory.com/playbook/"
         },
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Runtime"
+          "name": "A minimal stack for a fixture"
         }
       ]
     }
@@ -90,50 +115,52 @@
     </div>
   </header>
   <main id="main" tabindex="-1">
-  <article class="family-page">
-    <p class="breadcrumb"><a href="/catalog/">Catalog</a> › Runtime</p>
-
-    <section class="page-header">
-      <p class="eyebrow">Sensor family 06</p>
-      <h1 class="page-title">Runtime</h1>
-      <p class="page-lede">“What is it actually doing?”</p>
-    </section>
-
-    <div class="about-content">
-      <h2 id="what-belongs-here">What belongs here</h2>
-      <p>These sensors describe what the system actually did, in the wild, with no expected answer to compare against. They have the weakest oracles in the catalog and the widest scope: they cannot tell you something is wrong, only what happened.</p>
-
-      <h2 id="contested-placements">Contested placements</h2>
-      <p>Load Testing is a chosen-input experiment rather than a passive observation and could sit in Behavioral or Adversarial. It is here because what it measures is runtime behaviour under conditions the code cannot see for itself.</p>
-      <h2 id="where-its-signals-arrive">Where its signals arrive</h2>
-      <ul>
-        <li><strong>Production behavior</strong> — Production stage. What is it actually doing in the real world?</li>
-      </ul>
-      <p>
-        The <a href="/atlas/" class="wikilink">atlas</a> places every family on
-        the same lifecycle grid; the
-        <a href="/framework/" class="wikilink">framework</a> defines the six
-        dimensions each entry below is characterized along.
-      </p>
-
-      <h2 id="entries">Entries (0)</h2>
-    </div>
-
-    <div class="signal-grid">
-
-    </div>
-
-    <div class="about-content">
-      <h2 id="adjacent-families">Adjacent families</h2>
-      <ul>
-        <li>Previous: <a href="/families/adversarial/" class="wikilink">Adversarial</a> — Can we make our evidence of correctness fail?</li>
-        <li>Next: <a href="/families/change/" class="wikilink">Change</a> — What did this change actually affect?</li>
-        <li>All of them: the <a href="/catalog/" class="wikilink">complete catalog</a>
-          (this family is also anchored there at
-          <a href="/catalog/#runtime" class="wikilink">/catalog/#runtime</a>).</li>
-      </ul>
-    </div>
-  </article>
+  <div class="play-layout">
+    <article class="play">
+      <p class="breadcrumb"><a href="/playbook/">Playbook</a> › A minimal stack for a fixture</p>
+      <header class="page-header page-header--play">
+        <p class="eyebrow">Composition</p>
+        <h1 class="page-title">A minimal stack for a fixture</h1>
+      </header>
+      <section class="play-shape">
+        <h2 id="the-shape">The shape</h2>
+        <p>Five sensors, two doubts, one of them unclosable.</p>
+      </section>
+      <section class="play-stack">
+        <h2 id="the-stack">The stack</h2>
+        <p class="play-steps-lede">One row per doubt. No two rows do the same job.</p>
+        <div class="play-table-scroll">
+        <table class="play-table">
+          <thead><tr><th scope="col">Doubt</th><th scope="col">Sensor</th><th scope="col">Why this one</th></tr></thead>
+          <tbody>
+          <tr>
+            <td><a href="/what-each-sensor-proves/#wrong-logic" class="wikilink">wrong logic</a></td>
+            <td><a href="/sensors/beta-signal/" class="wikilink">Beta Signal</a> <span class="play-family" data-family="behavioral">Behavioral</span></td>
+            <td>The only closer.</td>
+          </tr>
+          <tr>
+            <td><em>reveals</em> <a href="/what-each-sensor-proves/#wrong-logic" class="wikilink">wrong logic</a></td>
+            <td><a href="/sensors/epsilon-atlas/" class="wikilink">Epsilon Atlas Anchor</a> <span class="play-family" data-family="test-effectiveness">Test Effectiveness</span></td>
+            <td>Sees it after the fact too.</td>
+          </tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+      <section class="play-left-open">
+        <h2 id="left-open-on-purpose">Left open, on purpose</h2>
+        <ul class="play-rows">
+          <li><p class="play-row-head"><a href="/what-each-sensor-proves/#late-effects" class="wikilink">late effects</a></p>
+            <p class="play-row-why">No fixture sensor closes it.</p></li>
+        </ul>
+      </section>
+      <section class="play-mistaken">
+        <h2 id="what-this-stack-is-mistaken-for-proving">What this stack is mistaken for proving</h2>
+        <p>2 sensors close 1 of 2 doubts. Every doubt in the vocabulary is either closed, revealed, or deliberately left open above.</p>
+      </section>
+      <p class="play-back"><a href="/playbook/" class="wikilink">All plays</a></p>
+    </article>
+  </div>
   </main>
   <footer class="site-footer">
     <div class="footer-inner">

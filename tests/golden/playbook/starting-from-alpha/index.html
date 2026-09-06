@@ -10,20 +10,20 @@
        without the other is how content gets reused with the attribution
        silently dropped. -->
   <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
-  <title>Runtime sensors — Software Observatory</title>
-  <meta name="description" content="Runtime sensors ask: What is it actually doing? 0 entries in the Software Observatory — Logs, traces, metrics, profiles, high-cardinality events.">
-  <link rel="canonical" href="https://softwareobservatory.com/families/runtime/">
+  <title>You have Alpha and nothing else — Software Observatory</title>
+  <meta name="description" content="One probe, no signal, no atlas.">
+  <link rel="canonical" href="https://softwareobservatory.com/playbook/starting-from-alpha/">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Runtime sensors — Software Observatory">
-  <meta property="og:description" content="Runtime sensors ask: What is it actually doing? 0 entries in the Software Observatory — Logs, traces, metrics, profiles, high-cardinality events.">
-  <meta property="og:url" content="https://softwareobservatory.com/families/runtime/">
+  <meta property="og:title" content="You have Alpha and nothing else — Software Observatory">
+  <meta property="og:description" content="One probe, no signal, no atlas.">
+  <meta property="og:url" content="https://softwareobservatory.com/playbook/starting-from-alpha/">
   <meta property="og:image" content="https://softwareobservatory.com/og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:site_name" content="Software Observatory">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Runtime sensors — Software Observatory">
-  <meta name="twitter:description" content="Runtime sensors ask: What is it actually doing? 0 entries in the Software Observatory — Logs, traces, metrics, profiles, high-cardinality events.">
+  <meta name="twitter:title" content="You have Alpha and nothing else — Software Observatory">
+  <meta name="twitter:description" content="One probe, no signal, no atlas.">
   <meta name="twitter:image" content="https://softwareobservatory.com/og.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,18 +35,43 @@
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "WebPage",
+      "@id": "https://softwareobservatory.com/playbook/starting-from-alpha/#page",
+      "name": "You have Alpha and nothing else",
+      "description": "One probe, no signal, no atlas.",
+      "url": "https://softwareobservatory.com/playbook/starting-from-alpha/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "isPartOf": {
+        "@id": "https://softwareobservatory.com/#organization"
+      },
+      "author": {
+        "@type": "Person",
+        "@id": "https://softwareobservatory.com/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "dateModified": "2026-03-02"
+    },
+    {
       "@type": "BreadcrumbList",
       "itemListElement": [
         {
           "@type": "ListItem",
           "position": 1,
-          "name": "Catalog",
-          "item": "https://softwareobservatory.com/catalog/"
+          "name": "Playbook",
+          "item": "https://softwareobservatory.com/playbook/"
         },
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Runtime"
+          "name": "You have Alpha and nothing else"
         }
       ]
     }
@@ -90,50 +115,48 @@
     </div>
   </header>
   <main id="main" tabindex="-1">
-  <article class="family-page">
-    <p class="breadcrumb"><a href="/catalog/">Catalog</a> › Runtime</p>
-
-    <section class="page-header">
-      <p class="eyebrow">Sensor family 06</p>
-      <h1 class="page-title">Runtime</h1>
-      <p class="page-lede">“What is it actually doing?”</p>
-    </section>
-
-    <div class="about-content">
-      <h2 id="what-belongs-here">What belongs here</h2>
-      <p>These sensors describe what the system actually did, in the wild, with no expected answer to compare against. They have the weakest oracles in the catalog and the widest scope: they cannot tell you something is wrong, only what happened.</p>
-
-      <h2 id="contested-placements">Contested placements</h2>
-      <p>Load Testing is a chosen-input experiment rather than a passive observation and could sit in Behavioral or Adversarial. It is here because what it measures is runtime behaviour under conditions the code cannot see for itself.</p>
-      <h2 id="where-its-signals-arrive">Where its signals arrive</h2>
-      <ul>
-        <li><strong>Production behavior</strong> — Production stage. What is it actually doing in the real world?</li>
-      </ul>
-      <p>
-        The <a href="/atlas/" class="wikilink">atlas</a> places every family on
-        the same lifecycle grid; the
-        <a href="/framework/" class="wikilink">framework</a> defines the six
-        dimensions each entry below is characterized along.
-      </p>
-
-      <h2 id="entries">Entries (0)</h2>
-    </div>
-
-    <div class="signal-grid">
-
-    </div>
-
-    <div class="about-content">
-      <h2 id="adjacent-families">Adjacent families</h2>
-      <ul>
-        <li>Previous: <a href="/families/adversarial/" class="wikilink">Adversarial</a> — Can we make our evidence of correctness fail?</li>
-        <li>Next: <a href="/families/change/" class="wikilink">Change</a> — What did this change actually affect?</li>
-        <li>All of them: the <a href="/catalog/" class="wikilink">complete catalog</a>
-          (this family is also anchored there at
-          <a href="/catalog/#runtime" class="wikilink">/catalog/#runtime</a>).</li>
-      </ul>
-    </div>
-  </article>
+  <div class="play-layout">
+    <article class="play">
+      <p class="breadcrumb"><a href="/playbook/">Playbook</a> › You have Alpha and nothing else</p>
+      <header class="page-header page-header--play">
+        <p class="eyebrow">Starting point</p>
+        <h1 class="page-title">You have Alpha and nothing else</h1>
+      </header>
+      <section class="play-where">
+        <h2 id="where-you-are">Where you are</h2>
+        <p>One probe, no signal, no atlas.</p>
+        <p class="play-have">You run <a href="/sensors/alpha-probe/" class="wikilink">Alpha Probe</a>. Nothing on that list closes any of the 2 doubts.</p>
+      </section>
+      <section class="play-steps">
+        <h2 id="add-in-this-order">Add in this order</h2>
+        <p class="play-steps-lede">Each step closes a doubt the previous ones left open.</p>
+        <ol class="play-rows">
+          <li>
+            <p class="play-row-head"><a href="/sensors/beta-signal/" class="wikilink">Beta Signal</a> <span class="play-family" data-family="behavioral">Behavioral</span>
+              <span class="play-row-edge">closes <a href="/what-each-sensor-proves/#wrong-logic" class="wikilink">wrong logic</a></span></p>
+            <p class="play-row-why">Alpha closes nothing; Beta is the only closer of wrong logic.</p>
+          </li>
+          <li>
+            <p class="play-row-head"><a href="/sensors/gamma-unreviewed/" class="wikilink">Gamma Unreviewed</a> <span class="play-family" data-family="behavioral">Behavioral</span>
+              <span class="play-row-edge">reveals <a href="/what-each-sensor-proves/#late-effects" class="wikilink">late effects</a></span></p>
+            <p class="play-row-why">Reveals late effects after the fact, which nothing closes.</p>
+          </li>
+        </ol>
+        <p class="play-after">After these steps: 1 of 2 doubts closed, 1 more revealed after the fact. Still untouched: none.</p>
+      </section>
+      <section class="play-skip">
+        <h2 id="what-not-to-add-yet">What not to add yet</h2>
+        <ul class="play-rows">
+          <li><p class="play-row-head"><a href="/sensors/delta-escape/" class="wikilink">Delta &amp; &lt;/script&gt;&lt;img src=x onerror=alert(1)&gt;</a></p>
+            <p class="play-row-why">It has no doubt edge yet.</p></li>
+        </ul>
+      </section>
+      <div class="play-body signal-detail-body">
+<p>A short body paragraph, to prove the body renders under the steps.</p>
+      </div>
+      <p class="play-back"><a href="/playbook/" class="wikilink">All plays</a></p>
+    </article>
+  </div>
   </main>
   <footer class="site-footer">
     <div class="footer-inner">

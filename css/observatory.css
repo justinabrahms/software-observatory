@@ -2559,3 +2559,101 @@ a.wikilink:hover {
   color: var(--text-dim);
   font-size: .9em;
 }
+
+/* ── Playbook ───────────────────────────────────────────────────────────── */
+/* The index is three lists of triggers and nothing else. Each list item is
+   the whole link, so the click target is the row rather than the words. */
+.playbook-content {
+  max-width: var(--reading);
+  margin: 0 auto;
+  padding: 1rem 2rem 5rem;
+}
+.play-group { margin-bottom: 3rem; }
+.play-group h2 {
+  font-family: var(--font-serif); font-weight: 600; font-size: 1.4rem;
+  color: var(--text); margin: 0 0 .4rem;
+}
+.play-group-lede { color: var(--text-soft); line-height: 1.6; margin: 0 0 1rem; }
+.play-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
+.play-list li { border-bottom: 1px solid var(--border); }
+.play-link {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+  padding: .8rem .4rem; color: var(--text); text-decoration: none;
+}
+.play-link:hover, .play-link:focus-visible { background: var(--bg-elev); outline: none; }
+.play-link-title { font-family: var(--font-serif); font-size: 1.1rem; }
+.play-link:hover .play-link-title { color: var(--accent); }
+.play-link-sub {
+  font-family: var(--font-mono); font-size: .72rem; letter-spacing: .04em;
+  color: var(--text-dim); white-space: nowrap; flex: none;
+}
+
+/* A play page is one reading column. The sections the build derives from
+   doubts.yaml (the doubt block, "already closed", "mistaken for proving")
+   share the body's type so the reader cannot tell computed from written,
+   which is the point: both are equally the site's claim. */
+.play-layout { max-width: var(--reading); margin: 0 auto; padding: 2rem 2rem 5rem; }
+.play .breadcrumb {
+  font-family: var(--font-mono); font-size: .78rem; color: var(--text-dim);
+  margin: 0 0 .5rem;
+}
+.play .breadcrumb a { color: var(--text-dim); }
+.play .breadcrumb a:hover { color: var(--accent); }
+.page-header--play { max-width: none; padding: 1rem 0 1.5rem; }
+.page-header--play .eyebrow { margin-bottom: .8rem; }
+.play section { margin: 0 0 2.2rem; }
+.play section > h2, .play-body h2 {
+  font-family: var(--font-serif); font-weight: 600; font-size: 1.4rem;
+  color: var(--text); margin: 0 0 .7rem;
+}
+.play section > p, .play-body p { font-size: 1.05rem; line-height: 1.8; color: var(--text-soft); margin-bottom: 1rem; }
+.play-body { margin-bottom: 2.2rem; }
+.play-body h2 { margin-top: 2.2rem; }
+.play-body ul { padding-left: 1.4rem; margin: 0 0 1.2rem; }
+.play-body li { line-height: 1.7; color: var(--text-soft); margin-bottom: .5rem; }
+.play-doubt p strong { color: var(--text); font-weight: 600; }
+.play-doubt-misread, .play-have, .play-after, .play-steps-lede { font-size: .95rem !important; }
+.play-next, .play-back { font-size: 1rem; margin-top: 1rem; }
+.play-next { padding-top: 1.2rem; border-top: 1px solid var(--border); }
+.play-back { color: var(--text-dim); }
+
+/* Step and row lists: sensor on the head line with its family and the doubt
+   it closes, the why underneath. Ordered where order is the content. */
+.play-rows { margin: 0; padding-left: 1.6rem; }
+ul.play-rows { list-style: none; padding-left: 0; }
+.play-rows li { margin-bottom: 1.1rem; padding-left: .3rem; }
+.play-rows li::marker { font-family: var(--font-mono); color: var(--accent); font-size: .9rem; }
+.play-row-head { margin: 0 0 .2rem !important; line-height: 1.6 !important; font-size: 1.02rem !important; color: var(--text) !important; }
+.play-row-head a.wikilink { font-weight: 500; }
+.play-row-edge { display: block; font-size: .88rem; color: var(--text-soft); }
+.play-row-why { margin: 0 !important; font-size: .98rem !important; line-height: 1.65 !important; }
+.play-family {
+  font-family: var(--font-mono); font-size: .68rem; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--text-dim); margin-left: .4rem; white-space: nowrap;
+}
+.play-family::before {
+  content: ""; display: inline-block; width: .5em; height: .5em; border-radius: 50%;
+  margin-right: .35em; vertical-align: middle; background: var(--text-dim);
+}
+.play-family[data-family="structural"]::before { background: var(--fam-structural); }
+.play-family[data-family="behavioral"]::before { background: var(--fam-behavioral); }
+.play-family[data-family="test-effectiveness"]::before { background: var(--fam-test-effectiveness); }
+.play-family[data-family="invariants"]::before { background: var(--fam-invariants); }
+.play-family[data-family="adversarial"]::before { background: var(--fam-adversarial); }
+.play-family[data-family="runtime"]::before { background: var(--fam-runtime); }
+.play-family[data-family="change"]::before { background: var(--fam-change); }
+.play-family[data-family="architecture"]::before { background: var(--fam-architecture); }
+.play-family[data-family="evolution"]::before { background: var(--fam-evolution); }
+.play-family[data-family="comprehension"]::before { background: var(--fam-comprehension); }
+
+/* The stack table. Scrolls in its own box when narrow. */
+.play-table-scroll { overflow-x: auto; border: 1px solid var(--border); margin-bottom: 1rem; }
+.play-table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: .92rem; }
+.play-table th, .play-table td { text-align: left; vertical-align: top; padding: .6rem .8rem; border-bottom: 1px solid var(--border); line-height: 1.55; }
+.play-table thead th {
+  font-family: var(--font-mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--text-dim); background: var(--bg-elev); font-weight: 500;
+}
+.play-table td:last-child { color: var(--text-soft); }
+.play-table td em { font-style: normal; color: var(--text-dim); font-size: .85em; }
+.play-table .play-family { display: block; margin: .15rem 0 0; }

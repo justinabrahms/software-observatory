@@ -25,8 +25,10 @@ from ..taxonomy import FAMILY_BY_SLUG, LATENCY_WORDS, TIER_LABELS, family_url
 
 
 def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug,
-                         output_dir, published=None, as_of=None):
-    """Generate a single sensor detail page."""
+                         output_dir, published=None, as_of=None, plays=()):
+    """Generate a single sensor detail page. `plays` are the playbook entries
+    that point at this sensor; they render as a sidebar box so a reader who
+    lands here from search finds the situation the sensor is for."""
     family = FAMILY_BY_SLUG.get(sensor.get("family", ""), {})
     family_name = family.get("name", sensor.get("family", ""))
     family_slug = family.get("slug", "")
@@ -150,6 +152,19 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug,
         </ul>
       </div>"""
 
+    # Playbook sidebar: the plays that reach for this sensor
+    play_sidebar_html = ""
+    if plays:
+        items = "".join(
+            f'          <li><a href="/playbook/{p["slug"]}/">{html.escape(p["title"])}</a>\n'
+            for p in plays)
+        play_sidebar_html = f"""      <div class="sidebar-box">
+        <h3 class="sidebar-heading">In the playbook</h3>
+        <ul class="sidebar-cat-list">
+{items.rstrip()}
+        </ul>
+      </div>"""
+
     # Category sidebar
     cat_sidebar_html = ""
     if categories:
@@ -220,6 +235,7 @@ def generate_sensor_page(sensor, backlinks, sensors_by_id, families_by_slug,
         </dl>
       </div>
 {backlink_html}
+{play_sidebar_html}
 {cat_sidebar_html}
     </aside>
   </div>"""

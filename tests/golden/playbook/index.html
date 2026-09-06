@@ -10,20 +10,20 @@
        without the other is how content gets reused with the attribution
        silently dropped. -->
   <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
-  <title>Runtime sensors — Software Observatory</title>
-  <meta name="description" content="Runtime sensors ask: What is it actually doing? 0 entries in the Software Observatory — Logs, traces, metrics, profiles, high-cardinality events.">
-  <link rel="canonical" href="https://softwareobservatory.com/families/runtime/">
+  <title>The Playbook — Software Observatory</title>
+  <meta name="description" content="Situational plays for the sensor catalog: what to point at a symptom, what to add first from where you are, and a minimal stack for each shape of system.">
+  <link rel="canonical" href="https://softwareobservatory.com/playbook/">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Runtime sensors — Software Observatory">
-  <meta property="og:description" content="Runtime sensors ask: What is it actually doing? 0 entries in the Software Observatory — Logs, traces, metrics, profiles, high-cardinality events.">
-  <meta property="og:url" content="https://softwareobservatory.com/families/runtime/">
+  <meta property="og:title" content="The Playbook — Software Observatory">
+  <meta property="og:description" content="Situational plays for the sensor catalog: what to point at a symptom, what to add first from where you are, and a minimal stack for each shape of system.">
+  <meta property="og:url" content="https://softwareobservatory.com/playbook/">
   <meta property="og:image" content="https://softwareobservatory.com/og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:site_name" content="Software Observatory">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Runtime sensors — Software Observatory">
-  <meta name="twitter:description" content="Runtime sensors ask: What is it actually doing? 0 entries in the Software Observatory — Logs, traces, metrics, profiles, high-cardinality events.">
+  <meta name="twitter:title" content="The Playbook — Software Observatory">
+  <meta name="twitter:description" content="Situational plays for the sensor catalog: what to point at a symptom, what to add first from where you are, and a minimal stack for each shape of system.">
   <meta name="twitter:image" content="https://softwareobservatory.com/og.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,18 +35,37 @@
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "CollectionPage",
+      "@id": "https://softwareobservatory.com/playbook/#page",
+      "name": "The Playbook",
+      "description": "Situational plays for the sensor catalog: what to point at a symptom, what to add first from where you are, and a minimal stack for each shape of system.",
+      "url": "https://softwareobservatory.com/playbook/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "isPartOf": {
+        "@id": "https://softwareobservatory.com/#organization"
+      },
+      "author": {
+        "@type": "Person",
+        "@id": "https://softwareobservatory.com/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "dateModified": "2026-03-02"
+    },
+    {
       "@type": "BreadcrumbList",
       "itemListElement": [
         {
           "@type": "ListItem",
           "position": 1,
-          "name": "Catalog",
-          "item": "https://softwareobservatory.com/catalog/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Runtime"
+          "name": "Playbook"
         }
       ]
     }
@@ -90,50 +109,39 @@
     </div>
   </header>
   <main id="main" tabindex="-1">
-  <article class="family-page">
-    <p class="breadcrumb"><a href="/catalog/">Catalog</a> › Runtime</p>
+  <section class="page-header page-header--reading">
+    <p class="eyebrow">The Playbook</p>
+    <h1 class="page-title">The playbook</h1>
+    <p class="page-lede">
+      Start from what you noticed, where you are, or what you are building.
+      Each play names the doubt, the sensor to point at it, and where to go
+      next. The catalog is the reference; this is the route through it.
+    </p>
+  </section>
 
-    <section class="page-header">
-      <p class="eyebrow">Sensor family 06</p>
-      <h1 class="page-title">Runtime</h1>
-      <p class="page-lede">“What is it actually doing?”</p>
+  <div class="playbook-content">
+    <section class="play-group play-group--symptom">
+      <h2 id="what-you-noticed">What you noticed</h2>
+      <p class="play-group-lede">Something is wrong and you can say what it looks like. Each play names the doubt behind it, the sensor to point at it, and where to go if the doubt survives.</p>
+      <ul class="play-list">
+          <li><a href="/playbook/beta-went-quiet/" class="play-link"><span class="play-link-title">Beta went quiet &amp; &lt;nobody&gt; noticed</span><span class="play-link-sub">the doubt: wrong logic</span></a></li>
+      </ul>
     </section>
-
-    <div class="about-content">
-      <h2 id="what-belongs-here">What belongs here</h2>
-      <p>These sensors describe what the system actually did, in the wild, with no expected answer to compare against. They have the weakest oracles in the catalog and the widest scope: they cannot tell you something is wrong, only what happened.</p>
-
-      <h2 id="contested-placements">Contested placements</h2>
-      <p>Load Testing is a chosen-input experiment rather than a passive observation and could sit in Behavioral or Adversarial. It is here because what it measures is runtime behaviour under conditions the code cannot see for itself.</p>
-      <h2 id="where-its-signals-arrive">Where its signals arrive</h2>
-      <ul>
-        <li><strong>Production behavior</strong> — Production stage. What is it actually doing in the real world?</li>
+    <section class="play-group play-group--starting-point">
+      <h2 id="where-you-are">Where you are</h2>
+      <p class="play-group-lede">What you already run decides what to add first. Each play starts from a set of sensors and adds them in the order that closes a new doubt at every step.</p>
+      <ul class="play-list">
+          <li><a href="/playbook/starting-from-alpha/" class="play-link"><span class="play-link-title">You have Alpha and nothing else</span><span class="play-link-sub">2 steps</span></a></li>
       </ul>
-      <p>
-        The <a href="/atlas/" class="wikilink">atlas</a> places every family on
-        the same lifecycle grid; the
-        <a href="/framework/" class="wikilink">framework</a> defines the six
-        dimensions each entry below is characterized along.
-      </p>
-
-      <h2 id="entries">Entries (0)</h2>
-    </div>
-
-    <div class="signal-grid">
-
-    </div>
-
-    <div class="about-content">
-      <h2 id="adjacent-families">Adjacent families</h2>
-      <ul>
-        <li>Previous: <a href="/families/adversarial/" class="wikilink">Adversarial</a> — Can we make our evidence of correctness fail?</li>
-        <li>Next: <a href="/families/change/" class="wikilink">Change</a> — What did this change actually affect?</li>
-        <li>All of them: the <a href="/catalog/" class="wikilink">complete catalog</a>
-          (this family is also anchored there at
-          <a href="/catalog/#runtime" class="wikilink">/catalog/#runtime</a>).</li>
+    </section>
+    <section class="play-group play-group--composition">
+      <h2 id="what-you-are-building">What you are building</h2>
+      <p class="play-group-lede">A minimal stack for one shape of system, composed by distinct doubts closed rather than one sensor per family.</p>
+      <ul class="play-list">
+          <li><a href="/playbook/stack-for-a-fixture/" class="play-link"><span class="play-link-title">A minimal stack for a fixture</span><span class="play-link-sub">2 sensors</span></a></li>
       </ul>
-    </div>
-  </article>
+    </section>
+  </div>
   </main>
   <footer class="site-footer">
     <div class="footer-inner">
