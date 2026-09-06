@@ -174,6 +174,70 @@ def generate_framework_page(sensors, output_dir):
         no feedback loop; one with only retrospective sensors has no gate.
       </p>
     </section>
+    <section class="property-detail">
+      <h2 class="property-detail-title">Combining sensors</h2>
+      <p class="property-detail-question">Does a second sensor add anything?</p>
+      <p>
+        The intuitive model of a sensor stack is additive: every green check
+        is a little more evidence that the system is correct, so more
+        sensors mean more confidence. The safety-case literature tested that
+        model and it failed. Knight and Leveson had 27 versions of one
+        program written independently from the same specification and ran a
+        million tests against them. Each version was reliable on its own,
+        but they failed together far more often than independence predicts,
+        because their authors had misread the specification in the same
+        ways. Littlewood and Wright showed the stranger case formally: a
+        second line of evidence that entirely supports the first can leave
+        you less confident than the first alone, because of what it reveals
+        about an assumption the two share.
+      </p>
+      <p>
+        The catalog has its own instance.
+        <a href="/sensors/line-coverage/" class="wikilink">Line coverage</a>
+        and <a href="/sensors/branch-coverage/" class="wikilink">branch
+        coverage</a> sit in the same family, at the same rung of the stack,
+        reading the same instrument. Counting them as two sensors is
+        counting one sensor twice. The
+        <a href="#independence">independence</a> dimension does not catch
+        this, and is not meant to: it asks whether the producer can
+        manipulate the sensor, not whether two sensors share a blind spot.
+      </p>
+      <p>
+        So the composition rule this catalog uses is not accumulation. It is
+        what the assurance-case field calls eliminative induction:
+        confidence comes from ruling out specific ways the system could be
+        wrong, and a check that rules out nothing new adds nothing, however
+        green it is. The question to ask of every sensor in a stack is
+        <em>what doubt does this eliminate that the others leave open?</em>
+        Each entry opens by naming what it measures, and its "What it cannot
+        detect" section names the doubts it leaves live. A stack is read
+        from the second list, not the first.
+      </p>
+      <p>
+        The same literature backs the meta-signal that most entries name at
+        the end of "How it gets gamed": the second-order reading that shows
+        a sensor going blind while its first-order reading stays green.
+        Rushby's Bayesian model of a test-and-verify argument finds that a
+        higher pass rate moves belief about the test oracle more than belief
+        about the system: green tests are mostly evidence that the tests
+        are in good shape. That is why a sensor that has stopped eliminating
+        its doubt still reads green, and why the catalog tracks the reading
+        that shows it going blind.
+      </p>
+      <p class="property-detail-note">
+        Knight &amp; Leveson, <a href="http://sunnyday.mit.edu/papers/nver-tse.pdf">An
+        Experimental Evaluation of the Assumption of Independence in
+        Multiversion Programming</a>, IEEE TSE SE-12(1), 1986.
+        Littlewood &amp; Wright, <a href="https://openaccess.city.ac.uk/id/eprint/1619/1/TSE-0219-0805.R1_complete_d.pdf">The
+        Use of Multi-legged Arguments to Increase Confidence in Safety Claims
+        for Software-based Systems</a>, IEEE TSE 33(5), 2007.
+        Rushby, <a href="https://www.csl.sri.com/~rushby/papers/sri-csl-15-1-assurance-cases.pdf">The
+        Interpretation and Evaluation of Assurance Cases</a>, SRI-CSL-15-01,
+        2015. Weinstock, Goodenough &amp; Klein,
+        <a href="https://www.sei.cmu.edu/documents/1424/2013_021_001_88002.pdf">Measuring
+        Assurance Case Confidence using Baconian Probabilities</a>, SEI, 2013.
+      </p>
+    </section>
   </div>"""
 
     description = (
