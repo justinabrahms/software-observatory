@@ -149,15 +149,20 @@ check-deploy:
 # the changelog reached production.
 #
 # Note: --delete does NOT remove receiver files that match an exclude rule, so
-# converting to an allow-list stops new leaks but does not clean up old ones.
-# Already-leaked paths must be purged on the server by hand; see the deploy
-# notes in the PR that introduced this.
+# the allow-list stops new leaks but does not clean up old ones, and a page
+# that moves or is retired stays live at its old path forever. DEPLOY_RETIRED
+# is the fix: every path listed there is included in the rsync rules too, and
+# since it no longer exists locally, --delete removes it from the server. Add
+# a path here when you rename or remove a generated section; leave it until
+# the next deploy has run, after which it may stay or go.
 #
 # Publish to the observer@abrah.ms deploy slot. The `observer` user's only
 # authorized key is pinned by `rrsync -wo` to /srv/softwareobservatory.com,
 # so this key can write nowhere else on the host.
 # ---------------------------------------------------------------------------
-RSYNC_INCLUDES := $(foreach p,$(DEPLOY_PUBLIC),--include='/$(p)' --include='/$(p)/***')
+DEPLOY_RETIRED := doubts
+
+RSYNC_INCLUDES := $(foreach p,$(DEPLOY_PUBLIC) $(DEPLOY_RETIRED),--include='/$(p)' --include='/$(p)/***')
 
 deploy: check-deploy build
 	rsync -avz --delete \
