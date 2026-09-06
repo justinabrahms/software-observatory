@@ -130,6 +130,38 @@
   </section>
 
   <div class="framework-content doubts-content">
+    <div class="doubt-intro">
+      <p>
+        No sensor in the catalog measures correctness. Each one answers a
+        narrower question, and the
+        <a href="/framework/#combining-sensors" class="wikilink">composition
+        rule</a> says how those answers add up: not by counting green checks,
+        but by ruling out specific ways the software could be wrong, one at a
+        time. A check that rules out nothing new adds nothing, however green
+        it is. This page names those ways of being wrong and maps every
+        sensor onto them.
+      </p>
+      <p>
+        A <em>doubt</em> is one specific way the software could be wrong. The
+        logic is wrong even though it compiles. The tests ran the code but
+        asserted nothing about the result. The change altered something
+        nobody meant to touch. There are 2 here, and for each one
+        the page asks three questions of every sensor. Does a clean result
+        from this sensor <strong>close</strong> the doubt, for what the sensor
+        was pointed at? Does it only <strong>reveal</strong> the doubt after
+        the fact, once the damage has reached production? Or is its clean
+        result commonly <strong>misread</strong> as closing the doubt when it
+        does not?
+      </p>
+      <p>
+        The graph below draws all three answers at once, with the doubts in
+        the middle and the sensors on either side. Hover or click anything to
+        isolate it. Under the graph the same data is laid out by sensor, for
+        when you arrive with a tool in mind and want to know what it proves,
+        and each doubt is defined at the end.
+      </p>
+    </div>
+
     <div class="doubt-legend">
       <span><svg viewBox="0 0 34 10" aria-hidden="true"><line x1="1" y1="5" x2="33" y2="5" class="lg-misread"/></svg>green is misread as closing this doubt</span>
       <span><svg viewBox="0 0 34 10" aria-hidden="true"><line x1="1" y1="5" x2="33" y2="5" class="lg-closes"/></svg>closes the doubt before shipping</span>
@@ -197,23 +229,21 @@
     </figure>
 
     <section class="doubt-notes">
-      <h2 id="how-to-read-it">How to read it</h2>
+      <h2 id="reading-the-edges">Reading the edges</h2>
       <p>
-        Read each doubt left to right. A sensor on the left is one whose clean
-        result gets taken as proof the doubt is closed when it is not: 90%
-        coverage taken as tested, a green canary taken as a safe release,
-        "formally proven" taken as correct. That is the misreading each entry's
-        "What it cannot detect" section was written to head off, and it is
-        deliberately narrow. Every sensor that does not close a doubt leaves it
-        open, which is nearly the whole catalog for any one doubt and not worth
-        drawing.
+        The misread edge is deliberately narrow. Every sensor that does not
+        close a doubt leaves it open, which is nearly the whole catalog for any
+        one doubt and not worth drawing. What the dashed edges mark is the
+        specific mistake: 90% coverage taken as tested, a green canary taken as
+        a safe release, "formally proven" taken as correct. That is the
+        misreading each entry's "What it cannot detect" section was written to
+        head off.
       </p>
       <p>
-        A sensor on the right closes the doubt for what it was pointed at and
-        nothing beyond. No closing edge here is unconditional: a proof covers
-        its stated property, a test its stated examples, a canary the metrics it
-        compares. That is the composition rule in one sentence, and it is why
-        two sensors that close the same doubt count once.
+        No closing edge is unconditional. A proof covers its stated property,
+        a test its stated examples, a canary the metrics it compares. That is
+        the composition rule in one sentence, and it is why two sensors that
+        close the same doubt count once.
       </p>
       <p>
         Retrospective sensors get their own edge. 

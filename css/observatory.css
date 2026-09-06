@@ -2242,6 +2242,9 @@ a.wikilink:hover {
    doubts in the middle, sensors that close or reveal them on the right. The
    SVG is server-rendered; main.js only toggles the highlight classes. */
 .doubts-content { max-width: var(--max-width); }
+.doubt-intro { max-width: var(--reading); margin: 0 0 2.5rem; }
+.doubt-intro p { font-size: 1.02rem; line-height: 1.75; color: var(--text-soft); margin-bottom: 1.2rem; }
+.doubt-intro strong { color: var(--text); font-weight: 600; }
 .doubt-legend {
   display: flex; flex-wrap: wrap; gap: .6rem 1.4rem; align-items: center;
   font-size: .82rem; color: var(--text-soft); margin: 0 0 1.2rem;
