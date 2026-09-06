@@ -1,0 +1,22 @@
+# Fixture doubt vocabulary. Two doubts over the five fixture sensors, shaped
+# to reach every branch of the doubts page: a doubt with all three edge
+# kinds, a doubt with an empty misread side, and one sensor (delta-escape)
+# with no edge at all so the "no doubt edge" block renders.
+doubts:
+  - id: wrong-logic
+    name: "Wrong logic"
+    description: "The code has the right shape and still returns the wrong answer."
+    misread_as_closing:
+      - alpha-probe
+    closed_by:
+      - beta-signal
+      - epsilon-atlas
+    revealed_by:
+      - gamma-unreviewed
+  - id: late-effects
+    name: "Late effects"
+    description: "The damage shows up after you stopped watching."
+    misread_as_closing: []
+    closed_by:
+      - alpha-probe
+    revealed_by: []

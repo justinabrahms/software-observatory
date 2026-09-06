@@ -392,6 +392,15 @@ class TestGates(unittest.TestCase):
                       message)
         self.assertEqual(tree, {}, f"gate wrote files before failing: {sorted(tree)}")
 
+    def test_unknown_doubt_slug_fails_and_writes_nothing(self):
+        message, tree = self._run_bad_corpus(
+            "../doubts.yaml", [("- beta-signal", "- beta-signle")])
+        self.assertIn("Unknown sensor slugs in content/doubts.yaml", message)
+        self.assertIn("wrong-logic.closed_by: beta-signle", message)
+        self.assertIn("Known slugs:", message,
+                      "the gate must name the valid values, not just complain")
+        self.assertEqual(tree, {}, f"gate wrote files before failing: {sorted(tree)}")
+
     def test_check_only_validates_and_writes_nothing(self):
         with Sandbox() as sb:
             log = sb.run(check_only=True)

@@ -52,6 +52,21 @@ def load_sensors():
     return sensors
 
 
+def load_doubts():
+    """Load content/doubts.yaml: the doubt vocabulary and its edges to sensors.
+    Returns a list of dicts in file order, or [] if the file is absent."""
+    path = config.CONTENT_DIR / "doubts.yaml"
+    if not path.exists():
+        return []
+    with open(path, "r", encoding="utf-8") as f:
+        data = yaml.safe_load(f) or {}
+    doubts = data.get("doubts") or []
+    for d in doubts:
+        for key in ("misread_as_closing", "closed_by", "revealed_by"):
+            d[key] = list(d.get(key) or [])
+    return doubts
+
+
 def compute_backlinks(sensors):
     """For each sensor, find all other sensors that reference it in see_also."""
     by_id = {s["id"]: s for s in sensors}

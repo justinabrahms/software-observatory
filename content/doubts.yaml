@@ -1,0 +1,224 @@
+# The doubt vocabulary: what each sensor closes, what it is mistaken for
+# closing, and what it reveals only after the fact.
+#
+# Every list holds sensor slugs (content/sensors/<slug>.md). The build
+# refuses a slug that does not exist. Ten of these doubts were mined from
+# the entries' "What it cannot detect" sections; nine came from asking each
+# sensor that closed none of those what it does close. Every edge was then
+# stated as a plain assertion and judged by reviewers who saw only the
+# assertion; the edges they rejected are gone. Rendered at /doubts/.
+#
+# misread_as_closing: a green reading is commonly taken as proof the doubt
+#   is closed when it is not.
+# closed_by: rules the doubt out before shipping, for what it was pointed at.
+# revealed_by: retrospective; shows the doubt was real after the fact.
+
+doubts:
+  - id: wrong-logic
+    name: "Wrong logic"
+    description: "The code compiles, type-checks, and has the right shape. It still returns the wrong answer. Anything that only looks at structure cannot see this."
+    misread_as_closing: []
+    closed_by:
+      - example-based-tests
+      - property-based-testing
+      - metamorphic-testing
+      - runtime-invariants
+      - business-invariants
+      - differential-testing
+      - theorem-proving
+      - model-checking
+      - contract-refinement-types
+      - statically-checked-invariants
+      - pre-promotion-invariant-gates
+    revealed_by: []
+  - id: unasserted-execution
+    name: "Unasserted execution"
+    description: "The tests ran this code, so coverage says it is tested. But no test checked the result, so a wrong result would pass too."
+    misread_as_closing:
+      - line-coverage
+      - branch-coverage
+      - diff-coverage
+      - snapshot-tests
+    closed_by:
+      - mutation-testing
+    revealed_by: []
+  - id: unjudged-observation
+    name: "Unjudged observation"
+    description: "Production tells you what happened: this request took 80ms and returned 200. Nothing tells you whether 200 was the right answer."
+    misread_as_closing:
+      - observability-events
+    closed_by:
+      - runtime-invariants
+      - business-invariants
+      - database-invariants
+    revealed_by: []
+  - id: unspecified-property
+    name: "Unspecified property"
+    description: "Every check you wrote passes. The bug is in something nobody thought to write a check for, so no check can fail."
+    misread_as_closing:
+      - business-invariants
+      - fitness-functions
+      - pre-promotion-invariant-gates
+      - statically-checked-invariants
+      - contract-refinement-types
+      - property-based-testing
+      - fault-injection
+      - live-chaos-experiments
+      - synthetic-monitoring
+      - canary-analysis
+    closed_by: []
+    revealed_by:
+      - observability-events
+      - incident-correlation
+  - id: wrong-specification
+    name: "Wrong specification"
+    description: "The check passes, and the check is wrong. The proof, invariant, or snapshot describes what the author believed the system should do, and the author was mistaken."
+    misread_as_closing:
+      - contract-refinement-types
+      - model-checking
+      - theorem-proving
+      - statically-checked-invariants
+      - pre-promotion-invariant-gates
+      - snapshot-tests
+    closed_by:
+      - independent-review
+      - ab-testing
+      - second-agent-review
+    revealed_by:
+      - escaped-defect-rate
+  - id: missing-behavior
+    name: "Missing behavior"
+    description: "The feature was never built. There is no code to test, mutate, or watch, so every sensor stays quiet about it."
+    misread_as_closing:
+      - mutation-testing
+      - example-based-tests
+    closed_by:
+      - independent-review
+      - second-agent-review
+    revealed_by:
+      - escaped-defect-rate
+  - id: emergent-failure
+    name: "Emergent failure"
+    description: "Every piece passes on its own. The bug only appears when the pieces are wired together and talk to each other."
+    misread_as_closing:
+      - example-based-tests
+      - contract-tests
+    closed_by:
+      - integration-tests
+      - shadow-traffic
+      - canary-analysis
+    revealed_by: []
+  - id: untested-conditions
+    name: "Untested conditions"
+    description: "It works with the traffic, data, and failures you tried. Production has different traffic, different data, and failures you did not try."
+    misread_as_closing:
+      - load-testing
+      - fault-injection
+      - live-chaos-experiments
+    closed_by:
+      - canary-analysis
+      - shadow-traffic
+    revealed_by:
+      - observability-events
+  - id: correlated-blind-spot
+    name: "Correlated blind spot"
+    description: "The sensor checks the code against something else: a second implementation, a mock, the old version, another AI model. If that other thing has the same bug, the two agree and the sensor reads green."
+    misread_as_closing:
+      - differential-testing
+    closed_by:
+      - independent-review
+    revealed_by: []
+  - id: late-effects
+    name: "Late effects"
+    description: "The damage shows up after you stopped watching. A two-week experiment cannot see the users who leave in month three."
+    misread_as_closing:
+      - ab-testing
+      - canary-analysis
+    closed_by: []
+    revealed_by:
+      - escaped-defect-rate
+      - incident-correlation
+      - error-budget-impact
+      - revert-rate
+  - id: not-internally-consistent
+    name: "Not internally consistent"
+    description: "A call site and the thing it calls disagree: wrong type, wrong field name, a shape the schema does not allow. The program is at war with itself before it runs."
+    misread_as_closing: []
+    closed_by:
+      - compiler
+      - type-checker
+      - schema-validator
+      - static-analysis
+    revealed_by: []
+  - id: unintended-change
+    name: "Unintended change"
+    description: "The output moved and nobody meant it to. The change was supposed to touch one thing and it touched another."
+    misread_as_closing:
+      - example-based-tests
+    closed_by:
+      - snapshot-tests
+      - api-compatibility
+      - canary-analysis
+      - shadow-traffic
+    revealed_by: []
+  - id: unreached-by-tests
+    name: "Unreached by tests"
+    description: "No test executes this code at all. Whatever it does, the suite has never seen it happen. The rung below unasserted execution."
+    misread_as_closing: []
+    closed_by:
+      - line-coverage
+      - branch-coverage
+    revealed_by: []
+  - id: does-not-run-where-deployed
+    name: "Does not run where deployed"
+    description: "It worked on the laptop and in CI. In the target environment a config value is missing, a port is wrong, or the service never comes up."
+    misread_as_closing:
+      - integration-tests
+    closed_by:
+      - smoke-tests
+      - synthetic-monitoring
+    revealed_by: []
+  - id: dependency-failure
+    name: "Falls over with a dependency"
+    description: "Everything works while every dependency is healthy. When one of them is slow or dead, the system does not degrade, it collapses."
+    misread_as_closing: []
+    closed_by:
+      - fault-injection
+      - live-chaos-experiments
+    revealed_by: []
+  - id: cannot-carry-load
+    name: "Cannot carry the load"
+    description: "It is correct at ten requests a second. At a thousand it times out, runs out of memory, or falls behind and never catches up."
+    misread_as_closing: []
+    closed_by:
+      - load-testing
+    revealed_by: []
+  - id: structure-decayed
+    name: "Nobody knows where the coupling is"
+    description: "Modules were meant to be separate. Whether they still are, and which ones lean on which, is not something anyone can see without a map."
+    misread_as_closing: []
+    closed_by:
+      - boundary-sensors
+      - fitness-functions
+      - dependency-graph
+      - live-service-graph
+      - change-coupling
+    revealed_by: []
+  - id: risk-concentrated
+    name: "Nobody knows where the risk sits"
+    description: "Trouble is not evenly spread. A few files or services cause most of the reverts and incidents, and nobody has looked at which ones."
+    misread_as_closing: []
+    closed_by:
+      - hotspot-analysis
+      - revert-rate
+      - incident-correlation
+    revealed_by: []
+  - id: unexplained
+    name: "Nobody can find out why"
+    description: "The code is this way for a reason, and the reason is not written anywhere a newcomer can reach. The docs describe a different system."
+    misread_as_closing: []
+    closed_by:
+      - decision-provenance
+      - documentation-drift
+      - onboarding-experiment
+    revealed_by: []

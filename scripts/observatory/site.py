@@ -6,10 +6,10 @@ Read top to bottom, it is the table of contents for the whole package."""
 import shutil
 
 from . import config
-from .content import compute_backlinks, load_sensors, og_card_items
+from .content import compute_backlinks, load_doubts, load_sensors, og_card_items
 from .dates import catalog_as_of, first_seen_dates
 from .feed import generate_rss
-from .gates import assert_output_invariants, validate_sensors
+from .gates import assert_output_invariants, validate_doubts, validate_sensors
 from .llms import generate_llms_full_txt, generate_llms_txt
 from .pages.about import generate_about_page
 from .pages.atlas import generate_atlas_page
@@ -36,6 +36,9 @@ def main(check_only=False):
     # GATES FIRST. Nothing below this line may write a file until every check
     # that can run on the loaded model has passed.
     validate_sensors(sensors)
+    doubts = load_doubts()
+    print(f"  Found {len(doubts)} doubts")
+    validate_doubts(doubts, sensors)
     if check_only:
         print("Done (--check: validated, wrote nothing).")
         return
