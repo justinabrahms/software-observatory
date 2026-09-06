@@ -405,7 +405,8 @@ class TestGates(unittest.TestCase):
 
     def test_sensor_on_two_sides_of_one_doubt_fails(self):
         message, tree = self._run_bad_doubts(
-            [("    closed_by:\n      - beta-signal", "    closed_by:\n      - alpha-probe")])
+            [("    closed_by: []\n    revealed_by:\n      - gamma-unreviewed",
+              "    closed_by:\n      - alpha-probe\n    revealed_by:\n      - gamma-unreviewed")])
         self.assertIn("alpha-probe is in both misread_as_closing and closed_by", message)
         self.assertEqual(tree, {})
 
@@ -424,6 +425,15 @@ class TestGates(unittest.TestCase):
         message, tree = self._run_bad_doubts([("origin: coverage", "origin: coverag")])
         self.assertIn("origin must be one of mined, coverage", message)
         self.assertEqual(tree, {})
+
+    def test_false_prose_claim_fails_and_writes_nothing(self):
+        # The page says wrong logic has an empty misread side. Give it one.
+        message, tree = self._run_bad_doubts(
+            [("    misread_as_closing: []\n    closed_by:\n      - beta-signal",
+              "    misread_as_closing:\n      - alpha-probe\n    closed_by:\n      - beta-signal")])
+        self.assertIn("A sentence on the doubts page would be false", message)
+        self.assertIn("wrong-logic has an empty misread side", message)
+        self.assertEqual(tree, {}, f"gate wrote files before failing: {sorted(tree)}")
 
     def test_check_only_validates_and_writes_nothing(self):
         with Sandbox() as sb:

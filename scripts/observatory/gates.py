@@ -8,7 +8,7 @@ ordering" comment below."""
 
 import re
 
-from .doubts import shape_errors
+from .doubts import claim_failures, shape_errors
 from .taxonomy import FAMILIES, STACK_LAYERS
 
 
@@ -313,6 +313,21 @@ def assert_doubts_well_formed(doubts, sensors):
             + f". Known sensor slugs: {known}")
 
 
+def assert_doubt_prose_holds(doubts, sensors):
+    """Fail the build if a sentence the doubts page states about specific
+    doubts is false for this catalog. The claims live next to the sentences
+    in observatory/doubts.py; an edit to the yaml that falsifies one fails
+    here instead of publishing a false sentence.
+    """
+    failed = claim_failures(doubts, sensors)
+    if failed:
+        raise AssertionError(
+            "A sentence on the doubts page would be false for this catalog — "
+            + "; ".join(failed)
+            + ". Fix content/doubts.yaml, or rewrite the claim in "
+            "scripts/observatory/doubts.py so the prose says what the data says.")
+
+
 def validate_sensors(sensors):
     """Every gate that can be answered from the loaded sensor data alone.
 
@@ -336,6 +351,10 @@ def validate_doubts(doubts, sensors):
     """Gates for content/doubts.yaml. Run before any output is written."""
     print("Checking doubts are well formed and resolve to sensors...")
     assert_doubts_well_formed(doubts, sensors)
+    print("  OK")
+
+    print("Checking the doubts page's prose claims hold...")
+    assert_doubt_prose_holds(doubts, sensors)
     print("  OK")
 
 

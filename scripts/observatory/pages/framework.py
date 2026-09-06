@@ -5,7 +5,7 @@ from ..dates import catalog_as_of
 from ..jsonld import breadcrumb_ld, framework_termset_ld, page_ld
 
 
-def generate_framework_page(sensors, output_dir):
+def generate_framework_page(sensors, output_dir, doubts=()):
     """Generate the framework page."""
 
     body = f"""  <section class="page-header page-header--reading">
@@ -213,9 +213,10 @@ def generate_framework_page(sensors, output_dir):
         detect" section names the doubts it leaves live. A stack is read
         from the second list, not the first. The
         <a href="/what-each-sensor-proves/" class="wikilink">what each sensor
-        proves</a> draws that answer for the whole catalog: nineteen doubts, and for each one the
-        sensors that close it, the sensors that only reveal it afterwards,
-        and the sensors whose green reading is mistaken for closing it.
+        proves</a> draws that answer for the whole catalog: {len(doubts)} doubts,
+        and for each one the sensors that close it, the sensors that only
+        reveal it afterwards, and the sensors whose green reading is mistaken
+        for closing it.
       </p>
       <p>
         The same literature backs the meta-signal that most entries name at

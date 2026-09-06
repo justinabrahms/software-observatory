@@ -1,15 +1,16 @@
 # Fixture doubt vocabulary. Two doubts over the five fixture sensors, shaped
 # to reach every branch of the doubts page: a doubt with all three edge
 # kinds, a doubt with an empty misread side, and one sensor (delta-escape)
-# with no edge at all so the "no doubt edge" block renders. The revealed_by
-# sensors are the two retrospective fixtures, which the shape gate requires.
+# with no edge at all so the "no doubt edge" block renders. wrong-logic has
+# no misread sensors because the page's prose claims exactly that, and the
+# claim is gated (observatory/doubts.py). The revealed_by sensors are the
+# two retrospective fixtures, which the shape gate requires.
 doubts:
   - id: wrong-logic
     origin: mined
     name: "Wrong logic"
     description: "The code has the right shape and still returns the wrong answer."
-    misread_as_closing:
-      - alpha-probe
+    misread_as_closing: []
     closed_by:
       - beta-signal
     revealed_by:
@@ -18,7 +19,8 @@ doubts:
     origin: coverage
     name: "Late effects"
     description: "The damage shows up after you stopped watching."
-    misread_as_closing: []
+    misread_as_closing:
+      - alpha-probe
     closed_by: []
     revealed_by:
       - gamma-unreviewed

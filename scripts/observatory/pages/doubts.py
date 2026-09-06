@@ -14,9 +14,18 @@ which is what a reader without a pointer, or a crawler, gets.
 import html
 
 from ..dates import catalog_as_of
+from ..doubts import families_of, origin_counts, prose_claims
 from ..jsonld import breadcrumb_ld, page_ld
 from ..layout import html_page
 from ..taxonomy import FAMILIES
+
+WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight",
+         "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen",
+         "sixteen", "seventeen", "eighteen", "nineteen", "twenty"]
+
+
+def number_word(n):
+    return WORDS[n] if 0 <= n < len(WORDS) else str(n)
 
 # Layout, in SVG user units. Chosen for the content: 59 rows of 19px with a
 # family heading every few rows, and a doubt box wide enough for the longest
@@ -196,6 +205,44 @@ def generate_doubts_page(doubts, sensors, output_dir):
     </article>'''
         for d in doubts)
 
+    claims = {c.label: c for c in prose_claims(doubts, sensors)}
+
+    def claim_sentence(label):
+        c = claims[label]
+        # A claim that applies and fails has already failed the build in
+        # validate_doubts; here it can only apply-and-hold or not apply.
+        return c.sentence if c.applies and c.holds else ""
+
+    by_id = {d["id"]: d for d in doubts}
+    wrong_spec_sentence = ""
+    ws = by_id.get("wrong-specification")
+    if ws is not None:
+        n_close = len(families_of(ws["closed_by"], by_slug))
+        n_misread = len(families_of(ws["misread_as_closing"], by_slug))
+        wrong_spec_sentence = (
+            f"<em>Wrong specification</em> draws its closers from "
+            f"{number_word(n_close)} famil{'y' if n_close == 1 else 'ies'} and its "
+            f"misreadings from {number_word(n_misread)}. ")
+
+    future_ids = ["structure-decayed", "risk-concentrated", "unexplained"]
+    future_sentence = ""
+    if all(i in by_id for i in future_ids):
+        names = [f'<a href="#{i}">{html.escape(by_id[i]["name"].lower())}</a>' for i in future_ids]
+        future_sentence = (
+            f"Three doubts, {names[0]}, {names[1]} and {names[2]}, are about "
+            "the codebase's future rather than its correctness, and they are "
+            "what the evolution and comprehension families exist for.")
+
+    origins = origin_counts(doubts)
+    origin_sentence = (
+        f"{number_word(origins['mined']).capitalize()} of the doubts "
+        f"{'was' if origins['mined'] == 1 else 'were'} mined "
+        'from the "What it cannot detect" section of every entry, which is '
+        "where the catalog names what it leaves open.")
+    coverage_sentence = (
+        f"The other {number_word(origins['coverage'])} came from asking every "
+        "sensor the first pass left with nothing to close what it does close.")
+
     body = f"""  <section class="page-header page-header--reading">
     <p class="eyebrow">The Framework</p>
     <h1 class="page-title">What each sensor proves</h1>
@@ -259,46 +306,35 @@ def generate_doubts_page(doubts, sensors, output_dir):
         two sensors that close the same doubt count once.
       </p>
       <p>
-        Retrospective sensors get their own edge. Escaped defect rate cannot
-        close <a href="#late-effects">late effects</a> before shipping; it is
-        the sensor that shows, months later, that the doubt was real. The
-        catalog's <a href="/framework/#predictive-vs-retrospective" class="wikilink">predictive
+        Retrospective sensors get their own edge. {claim_sentence("escaped-defect-rate reveals late-effects rather than closing it")}
+        The catalog's <a href="/framework/#predictive-vs-retrospective" class="wikilink">predictive
         versus retrospective</a> dimension is the same distinction.
       </p>
       <h2>What the shape says</h2>
       <p>
-        The vocabulary does not collapse into families. <em>Unasserted
-        execution</em> splits one family: coverage is misread as closing it and
-        mutation testing closes it. <em>Wrong specification</em> draws its
-        closers from three families and its misreadings from two. The three
-        doubts at the bottom are about the codebase's future rather than its
-        correctness, and they are what the evolution and comprehension families
-        exist for.
+        The vocabulary does not collapse into families. {claim_sentence("unasserted-execution's closers share one family with some of its misread sensors")}
+        {wrong_spec_sentence}{future_sentence}
       </p>
       <p>
-        Two doubts are nearly unclosable from inside the catalog. <em>Missing
-        behavior</em> and <em>wrong specification</em> both end at human review
-        and outcome sensors. And <em>wrong logic</em> has an empty left side:
-        nobody reads a clean compile or type check as correct code. The belief
-        engineers actually hold is that a class of bugs is gone, which is true.
+        {claim_sentence("missing-behavior and wrong-specification close only at review or user-outcome sensors")}
+        {claim_sentence("wrong-logic has an empty misread side")}
       </p>
       <h2>Where the vocabulary came from</h2>
       <p>
-        Ten of the doubts were mined from the "What it cannot detect" section
-        of every entry, which is where the catalog names what it leaves open.
-        That method finds the catalog's residue, not its coverage: a doubt the
-        catalog closes well never appears there, because no entry is worse at
-        it than the sensor that owns it. The other nine came from asking every
-        sensor the first pass left with nothing to close what it does close.
+        {origin_sentence} That method finds the catalog's residue, not its
+        coverage: a doubt the catalog closes well never appears there, because
+        no entry is worse at it than the sensor that owns it. {coverage_sentence}
       </p>
       <p>
         Every edge was then stated as a plain assertion, "most engineers think
         a passing X shows Y" or "X ensures Y", and judged true, partly true, or
         false by reviewers who saw only the assertion. The false ones were
-        removed: half of the misreadings, and a third of the closing edges. No
+        removed, and they were mostly misreadings: the reviewers' repeated
+        finding was that engineers know what a compiler does not prove. No
         closing edge was judged fully true. The vocabulary lives in
-        <code>content/doubts.yaml</code>, and the build refuses a sensor it
-        does not recognise.
+        <code>content/doubts.yaml</code>, the build refuses a sensor it does
+        not recognise, and every sentence above that names a specific doubt is
+        checked against the file at build time.
       </p>
     </section>
 

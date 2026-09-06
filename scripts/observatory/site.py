@@ -126,7 +126,7 @@ def main(check_only=False):
     generate_atlas_page(sensors, output_dir)
     print("  atlas/")
 
-    generate_framework_page(sensors, output_dir)
+    generate_framework_page(sensors, output_dir, doubts)
     print("  framework/")
 
     generate_doubts_page(doubts, sensors, output_dir)
