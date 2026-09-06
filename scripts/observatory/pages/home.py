@@ -382,9 +382,11 @@ def generate_index_page(sensors, output_dir):
       <h2 class="section-heading">{len(FAMILIES)} sensor families</h2>
       <p class="section-lede">
         The catalog is organized into {len(FAMILIES)} families, each asking a different
-        question about the system. Together, they form a mesh of independent
-        evidence — no single sensor is sufficient, but the combination
-        constrains uncertainty from multiple directions.
+        question about the system. Each family rules out a different way the
+        software could be wrong. No single sensor is sufficient, and neither
+        is a pile of them: a sensor earns its place by
+        <a href="/framework/#combining-sensors" class="wikilink">eliminating a
+        doubt the others leave open</a>, not by adding another green check.
       </p>
       <div class="families-grid">
 {families_grid.rstrip()}
