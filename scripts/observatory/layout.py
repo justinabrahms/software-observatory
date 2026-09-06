@@ -83,6 +83,7 @@ def html_header():
         ("/catalog/", "Catalog"),
         ("/atlas/", "Atlas"),
         ("/framework/", "Framework"),
+        ("/what-each-sensor-proves/", "Removing Doubt"),
         ("/glossary/", "Glossary"),
         ("/about/", "About"),
     ]
