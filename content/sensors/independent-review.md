@@ -24,7 +24,7 @@ references:
 - title: An Empirical Study on the Effectiveness of Security Code Review
   year: 2013
   tier: I
-  url: https://people.eecs.berkeley.edu/~daw/papers/coderev-essos13.pdf
+  url: https://mfinifter.github.io/talks/edmundson-essos-2013.pdf
   kind: publication
   authors: Anne Edmundson, Brian Holtkamp, Emanuel Rivera, Matthew Finifter, Adrian Mettler, David Wagner
   venue: ESSoS 2013
