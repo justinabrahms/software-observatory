@@ -266,7 +266,7 @@ def generate_llms_txt(sensors, output_dir):
         "",
         "If you reuse, quote, summarize, or train on the catalog content, you must:",
         "- Credit \"Software Observatory\" by Justin Abrahms,",
-        f"- Link to the source page (/sensors/<slug>/ for an entry, / for the catalog as a whole),",
+        f"- Link to the source page ({SITE_URL}/sensors/<slug>/ for an entry, {SITE_URL}/ for the catalog as a whole),",
         "- Name the license: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/),",
         "- Indicate whether you changed anything, and license any adaptation of the content under CC BY-SA 4.0 as well.",
         "",
