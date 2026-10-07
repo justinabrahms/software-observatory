@@ -62,7 +62,7 @@ under the MIT License.
 
 If you reuse, quote, summarize, or train on the catalog content, you must:
 - Credit "Software Observatory" by Justin Abrahms,
-- Link to the source page (https://softwareobservatory.com/sensors/<slug>/ for an entry, https://softwareobservatory.com/ for the catalog as a whole),
+- Link to the source page (/sensors/<slug>/ for an entry, / for the catalog as a whole),
 - Name the license: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/),
 - Indicate whether you changed anything, and license any adaptation of the content under CC BY-SA 4.0 as well.
 
