@@ -187,8 +187,9 @@ def generate_index_page(sensors, output_dir):
           metrics." Measurement instruments pointed at different failure modes.
         </p>
         <div class="hero-actions">
-          <a href="/catalog/" class="btn btn-primary">Browse the catalog →</a>
+          <a href="/playbook/" class="btn btn-primary">Start with the playbook →</a>
           <a href="/atlas/" class="btn btn-ghost">Open the atlas</a>
+          <a href="/catalog/" class="btn btn-ghost">Browse the catalog</a>
         </div>
       </div>
       <div class="hero-visual" aria-hidden="true">
@@ -391,6 +392,10 @@ def generate_index_page(sensors, output_dir):
       <div class="families-grid">
 {families_grid.rstrip()}
       </div>
+      <p class="section-lede">Not sure which family to start from?
+        <a href="/playbook/" class="wikilink">Open the playbook</a> — it maps
+        what you've noticed to the sensor to point at it — or
+        <a href="/atlas/" class="wikilink">explore the atlas</a>.</p>
     </section>
 
     <section class="stack-preview" id="confidence-stack">
