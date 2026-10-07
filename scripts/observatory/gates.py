@@ -75,6 +75,38 @@ def assert_sensor_count(sensors, output_dir):
         )
 
 
+def assert_no_placeholder_in_url(output_dir):
+    """Fail the build if a generated text surface embeds a literal template
+    placeholder (like <slug>) inside an http(s) URL.
+
+    llms.txt and llms-full.txt are written as plain text, so a placeholder
+    left inside an absolute URL ships live as `https://…/sensors/<slug>/`.
+    The weekly external-link scan is what notices — a 404 days after the
+    build published it. The relative convention (`/sensors/<slug>/`,
+    `/md/sensors/<slug>.md`) is the intended form, so this gate only fails
+    the absolute one and catches the leak at build time.
+    """
+    pattern = re.compile(r"https?://[^\s<>]*<[a-zA-Z]")
+    targets = (output_dir / "llms.txt", output_dir / "llms-full.txt")
+    problems = []
+    for path in targets:
+        if not path.exists():
+            continue
+        try:
+            text = path.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError):
+            continue
+        for m in pattern.finditer(text):
+            problems.append((path.name, m.group(0)))
+    if problems:
+        details = "; ".join(f"{name}: {snippet!r}" for name, snippet in problems)
+        raise AssertionError(
+            f"Placeholder leaked inside a URL — {details}. Use the relative "
+            f"convention (/sensors/<slug>/, /md/sensors/<slug>.md) instead of "
+            f"an absolute SITE_URL form."
+        )
+
+
 # Directories the build itself writes HTML into. The gates below used to
 # rglob the whole repo root, which also walked .venv/ (playwright ships HTML)
 # and any archive-*/ tarball extract. A gate that reads files the build did
@@ -396,3 +428,7 @@ def assert_output_invariants(sensors, output_dir):
     print("Checking JSON-LD validity...")
     count = assert_json_ld_parses(output_dir)
     print(f"  OK ({count} blocks)")
+
+    print("Checking for placeholders inside URLs...")
+    assert_no_placeholder_in_url(output_dir)
+    print("  OK")
