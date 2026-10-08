@@ -362,6 +362,38 @@ def generate_index_page(sensors, output_dir):
       </div>
     </section>
 
+    <section class="agent-prompt">
+      <h2 class="section-heading">Prompt your agent like this</h2>
+      <p class="section-lede">
+        The catalog also ships as a tool your coding agent can call: a
+        <code>softwareobservatory</code> command and an MCP server. It bundles
+        the whole catalog, so a suggestion needs no network call. Tell your
+        agent the doubt, and it asks the catalog which sensors speak to it.
+      </p>
+      <pre class="term"><code><span class="term-prompt">$</span> npx -y softwareobservatory@latest suggest "our tests pass but bugs still ship"</code></pre>
+      <pre class="term term-out"><code>GAP SO-003    Mutation Testing [test-effectiveness]
+GAP SO-007e   A/B Testing [change]
+GAP SO-004c   Business Invariants [invariants]
+    SO-012d   Escaped Defect Rate [test-effectiveness]
+GAP SO-002    Contract Tests [behavioral]</code></pre>
+      <p class="section-lede">
+        The first hit is the one to read. A complaint that tests pass while bugs
+        still ship ranks <a href="/sensors/mutation-testing/" class="wikilink">mutation
+        testing</a> first — the sensor of test <em>sensitivity</em>, not test
+        presence. The <code>GAP</code> marker sits on the first result from each
+        family, the sensor that would newly cover that family; run
+        <code>gaps</code> instead of <code>suggest</code> when the question is
+        what is missing rather than what is relevant.
+      </p>
+      <p class="section-lede">
+        Wire it into your agent as an MCP server
+        (<code>npx -y softwareobservatory mcp</code>) and
+        <code>suggest_sensors</code> is a single tool call away. Full command
+        reference: <a href="https://www.npmjs.com/package/softwareobservatory" class="body-link">the
+        npm package</a>.
+      </p>
+    </section>
+
     <section class="core-insight">
       <blockquote class="big-quote">
         <p>
