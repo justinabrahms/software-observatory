@@ -1357,6 +1357,53 @@ a.wikilink:hover {
   color: var(--text);
 }
 
+/* ── Homepage: agent prompt ─────────────────────────────────────── */
+.agent-prompt {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  border-top: 1px solid var(--border);
+}
+.agent-prompt .section-lede {
+  margin-bottom: 1.5rem;
+}
+.agent-prompt code {
+  font-family: var(--font-mono);
+  font-size: .88em;
+  background: var(--bg-elev);
+  padding: .15em .4em;
+  border-radius: 3px;
+  color: var(--accent);
+}
+.agent-prompt pre.term {
+  font-family: var(--font-mono);
+  font-size: .85rem;
+  line-height: 1.6;
+  color: var(--text-soft);
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1.2rem;
+  overflow-x: auto;
+  max-width: 44rem;
+  margin: 1.5rem 0;
+  white-space: pre;
+  overscroll-behavior-x: contain;
+}
+.agent-prompt pre.term code {
+  background: none;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+}
+.agent-prompt pre.term-out {
+  color: var(--text-dim);
+}
+.agent-prompt .term-prompt {
+  color: var(--accent);
+  user-select: none;
+}
+
 /* ── Homepage: families grid ─────────────────────────────────────── */
 .families-section,
 .stack-preview,
