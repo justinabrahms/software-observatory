@@ -355,3 +355,109 @@ export function stackCoverage(ids) {
     recommendations,
   };
 }
+
+// --- evidence inventory / audit -------------------------------------------
+//
+// The catalog says which sensors exist; it cannot say whether a given system is
+// actually running them. An evidence inventory closes that gap: a machine-
+// checkable record of the checks a system claims to run, what each checks, what
+// happened at its last reading, and whether a failure blocks anything. The
+// `audit` command reads this inventory and turns it into findings, so a skipped
+// staging test or an advisory-only quality gate cannot quietly pass for
+// coverage.
+//
+// Execution, outcome and enforcement are kept separate on purpose: a failing
+// check is evidence (of a defect, or of an advisory worth reading), while a
+// skipped check is no evidence at all, and a required job that silently reports
+// no result is exactly the hole the audit is meant to surface.
+
+export function auditInventory(inventory) {
+  if (!inventory || typeof inventory !== "object") {
+    return { valid: false, errors: [{ code: "not_object", message: "inventory must be a JSON object" }] };
+  }
+  const errors = [];
+  if (inventory.schema_version !== 1) {
+    errors.push({ code: "schema_version", message: `schema_version must be 1, got ${JSON.stringify(inventory.schema_version)}` });
+  }
+  if (!Array.isArray(inventory.checks)) {
+    errors.push({ code: "checks", message: "checks must be an array" });
+  }
+  if (errors.length > 0) return { valid: false, errors };
+
+  const summary = {
+    checks: inventory.checks.length,
+    evidence: 0,
+    no_result: 0,
+    failing: 0,
+    unenforced_failing: 0,
+    unknown_sensor: 0,
+  };
+
+  const checks = inventory.checks.map((check) => {
+    const row = {
+      id: check.id ?? null,
+      sensor: check.sensor ?? null,
+      sensor_title: null,
+      claim: check.claim ?? null,
+      execution: check.execution ?? null,
+      outcome: check.outcome ?? "none",
+      enforcement: check.enforcement ?? null,
+      finding: null,
+    };
+
+    // A claim may reference a sensor the caller *wishes* existed. Sort that out
+    // before anything else; the rest of the analysis depends on it.
+    const sensor = check.sensor ? findSensor(check.sensor) : null;
+    if (check.sensor && !sensor) {
+      row.finding = { code: "unknown_sensor", summary: `"${check.sensor}" is not a sensor in the catalog` };
+      summary.unknown_sensor += 1;
+      return row;
+    }
+    if (sensor) row.sensor_title = sensor.title;
+
+    const executed = check.execution === "ran";
+    const hasOutcome = check.outcome === "pass" || check.outcome === "fail";
+
+    if (!executed) {
+      row.finding = {
+        code: "no_result",
+        summary: `${row.id} did not run (execution: ${check.execution ?? "missing"}), so it supplied no evidence`,
+      };
+      summary.no_result += 1;
+      return row;
+    }
+    if (!hasOutcome) {
+      row.finding = {
+        code: "no_result",
+        summary: `${row.id} ran but produced no usable result (outcome: ${check.outcome ?? "none"})`,
+      };
+      summary.no_result += 1;
+      return row;
+    }
+
+    summary.evidence += 1;
+    if (check.outcome === "fail") {
+      summary.failing += 1;
+      const blocks = check.enforcement === "blocking";
+      if (!blocks) summary.unenforced_failing += 1;
+      row.finding = {
+        code: blocks ? "failing_blocking" : "failing_advisory",
+        summary: blocks
+          ? `${row.id} is failing and blocks`
+          : `${row.id} is failing but only advisory (enforcement: ${check.enforcement ?? "none"}), so it does not block`,
+      };
+      return row;
+    }
+
+    row.finding = { code: "ok", summary: `${row.id} ran and passed` };
+    return row;
+  });
+
+  return {
+    valid: true,
+    schema_version: inventory.schema_version,
+    system: inventory.system ?? null,
+    summary,
+    checks,
+  };
+}

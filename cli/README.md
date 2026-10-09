@@ -18,6 +18,7 @@ $ npx softwareobservatory search mutation
 $ npx softwareobservatory suggest "our tests pass but bugs still ship"
 $ npx softwareobservatory gaps "how do I know my ai-generated code is safe"
 $ npx softwareobservatory stack linter,SO-003,canary-analysis
+$ npx softwareobservatory audit evidence-inventory.json
 $ npx softwareobservatory values oracle
 ```
 
@@ -33,6 +34,7 @@ $ npx softwareobservatory values oracle
 | `suggest <question...>` | Ranked sensors relevant to a plain-language concern. |
 | `gaps <question...>` | Like `suggest`, but only the first result from each newly covered family. |
 | `stack <id,slug,...>` | Family/stack coverage report for a sensor set, with recommendations. |
+| `audit <inventory.json\|->` | Audit an evidence inventory: which checks supplied evidence, which supplied none, and which failures are unenforced. `-` reads stdin. |
 | `mcp` | Run an MCP (stdio JSON-RPC) server. |
 | `version` | CLI and dataset versions. |
 
@@ -41,6 +43,46 @@ $ npx softwareobservatory values oracle
 - `--json`: machine-readable output. This is the default when stdout is not a
   TTY, so piping into `jq` or an agent harness just works.
 - `--plain`: force human-readable output.
+
+## Evidence inventory (`audit`)
+
+The catalog names sensors; it cannot say whether a given system is running
+them. `audit` reads an *evidence inventory* — a machine-checkable record of the
+checks a system claims to run — and reports which checks supplied evidence,
+which supplied none, and which failures are advisory rather than blocking.
+
+An inventory is JSON with a `schema_version: 1` header and a `checks` array.
+Execution, outcome, and enforcement stay separate so a skipped required job
+and a failing advisory gate do not blur together:
+
+```json
+{
+  "schema_version": 1,
+  "system": { "name": "Identity", "repo": "…", "revision": "…" },
+  "checks": [
+    {
+      "id": "staging-tests",
+      "claim": "the staging image runs its unit suite",
+      "sensor": "SO-002b",
+      "implementation": ".github/actions/test/action.yml",
+      "execution": "skipped",
+      "outcome": "none",
+      "enforcement": "blocking",
+      "evidence": { "url": "…", "observed_at": "…", "config_version": "…" }
+    }
+  ]
+}
+```
+
+A worked example — the `Identity` evaluation from the "Making Software
+Observatory more useful" note, with a skipped test, an advisory-failing gate,
+and a passing contract check — ships at `examples/inventory.example.json`.
+
+Findings are conservative. A check that did not run (`execution` other than
+`ran`) supplies `no_result`; one that ran without a `pass`/`fail` `outcome`
+supplies `no_result`; a `fail` still counts as evidence but is flagged
+`failing_advisory` when `enforcement` is not `blocking`; and a `sensor` that is
+not in the catalog is `unknown_sensor`, never guessed at.
 
 ## MCP server
 

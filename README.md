@@ -57,6 +57,7 @@ npx softwareobservatory list --family structural
 npx softwareobservatory get SO-003
 npx softwareobservatory suggest "our tests pass but bugs still ship"
 npx softwareobservatory stack linter,SO-003,canary-analysis
+npx softwareobservatory audit evidence-inventory.json
 npx softwareobservatory mcp   # MCP server for agent clients
 ```
 
