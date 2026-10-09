@@ -1,9 +1,11 @@
 // Smoke test: exercises every command in JSON mode plus the MCP handshake.
 // Run with: node cli/test/smoke.mjs
 import { execFileSync } from "node:child_process";
+import { writeFileSync, rmSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const BIN = fileURLToPath(new URL("../bin/softwareobservatory.mjs", import.meta.url));
+const EXAMPLE_INVENTORY = fileURLToPath(new URL("../examples/inventory.example.json", import.meta.url));
 
 let failures = 0;
 
@@ -273,6 +275,55 @@ check("stack does not present its arbitrary pick as a ranked recommendation", ()
     assert(Array.isArray(rec.alternatives), "recommendation should list the family's other entries");
     assert(/example entry point/.test(rec.reason), "reason should not claim the pick is ranked");
   }
+});
+
+// --- audit ------------------------------------------------------------------
+
+check("audit reads an evidence inventory and separates execution from outcome from enforcement", () => {
+  const out = runJson(["audit", EXAMPLE_INVENTORY]);
+  assert(out.valid === true, "inventory should validate");
+  assert(out.summary.checks === 3, "expected three checks");
+  assert(out.summary.no_result === 1, "the skipped staging test should count as no_result");
+  assert(out.summary.failing === 1, "the failing advisory gate should count as failing");
+  assert(out.summary.unknown_sensor === 0, "all sensors in the example exist");
+  const staged = out.checks.find((c) => c.id === "staging-tests");
+  assert(staged.finding.code === "no_result", "a skipped check supplies no evidence");
+  assert(staged.sensor_title === "Example-Based Tests", "sensor title should resolve from the catalog");
+  const gate = out.checks.find((c) => c.id === "sonar-quality-gate");
+  assert(gate.finding.code === "failing_advisory", "a failing advisory check should be called out as unenforced");
+});
+
+check("audit reads an inventory from stdin with '-'", () => {
+  const inventory = JSON.stringify({
+    schema_version: 1,
+    system: { name: "x" },
+    checks: [{ id: "a", sensor: "SO-003", claim: "c", execution: "ran", outcome: "pass", enforcement: "blocking" }],
+  });
+  const out = JSON.parse(run(["audit", "-"], { input: inventory }));
+  assert(out.valid === true, "stdin inventory should validate");
+  assert(out.checks[0].finding.code === "ok", "a passing blocked check is evidence");
+});
+
+check("audit flags an unknown sensor instead of guessing", () => {
+  const inventory = JSON.stringify({
+    schema_version: 1,
+    checks: [{ id: "a", sensor: "SO-999", claim: "c", execution: "ran", outcome: "pass", enforcement: "blocking" }],
+  });
+  const out = JSON.parse(run(["audit", "-"], { input: inventory }));
+  assert(out.summary.unknown_sensor === 1, "unknown sensor should be counted");
+  assert(out.checks[0].finding.code === "unknown_sensor", "unknown sensor should produce an unknown_sensor finding");
+});
+
+check("audit rejects a wrong schema version", () => {
+  const tmp = fileURLToPath(new URL("../examples/_bad-version.json", import.meta.url));
+  writeFileSync(tmp, JSON.stringify({ schema_version: 2, checks: [] }));
+  let result;
+  try {
+    result = runFail(["audit", tmp]);
+  } finally {
+    rmSync(tmp, { force: true });
+  }
+  assert(result && typeof result.status === "number" && result.status !== 0, "wrong schema version should exit non-zero");
 });
 
 if (failures > 0) {
