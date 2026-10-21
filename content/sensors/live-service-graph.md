@@ -96,6 +96,18 @@ not allow:
    but the trend: re-run the comparison regularly and alert on new edges,
    so violations surface in days rather than years.
 
+## How it gets gamed
+
+- **Filter away an awkward edge.** Hide low-volume services or external
+  calls until a forbidden dependency disappears from the displayed graph.
+- **Merge identities.** Label unrelated workloads as the same service,
+  turning a cross-service dependency into an invisible internal call.
+- **Treat missing telemetry as no traffic.** Report a clean graph while an
+  agent, protocol, or region is deliberately excluded from collection.
+
+The meta-signal is the share of workloads and traffic with a known service
+identity and working collection, plus changes to graph filters.
+
 ## What it cannot detect
 
 Edges that are legitimate but unwise, and edges that exist only under rare

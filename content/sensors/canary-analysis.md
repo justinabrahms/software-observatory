@@ -24,6 +24,13 @@ see_also:
 - SO-007e
 last_reviewed: '2026-08-26'
 references:
+- title: Canarying Releases
+  year: 2018
+  tier: IV
+  url: https://sre.google/workbook/canarying-releases/
+  kind: book
+  authors: Alec Warner and Stepan Davidovic
+  venue: The Site Reliability Workbook
 - title: Exploring Statistical Change Point Detection Techniques for Performance Anomaly Detection at Mozilla
   year: 2026
   tier: I
@@ -61,9 +68,9 @@ version and compares its behavior to the old. If error rates, latency, or
 
 ## In practice
 
-A canary reading is a side-by-side comparison of the same metric across two
-populations, usually scored into a single pass/fail verdict rather than
-eyeballed per metric:
+A canary reading compares the same metric across two populations. This
+illustrative table applies pre-set operational limits; it does not establish
+statistical significance or specify a particular analysis tool.
 
 | Metric | Baseline v2.40.7 | Canary v2.41.0 (5%) | Deviance | Tolerance | Verdict |
 |--------|------------------|---------------------|----------|-----------|---------|
@@ -71,13 +78,14 @@ eyeballed per metric:
 | p99 latency | 212 ms | 231 ms | +9% | +10% | pass |
 | Success rate | 99.88% | 99.16% | -0.72 pp | -0.10 pp | FAIL |
 | CPU | 0.41 cores | 0.43 cores | +5% | +20% | pass |
-| **Overall score** | | | | | **42 / 100 — ROLLBACK** |
+| **Decision** | | | | Required metrics must pass | **ROLLBACK** |
 
 The tolerance column is the part that was decided before the canary ran.
 Read the table without it and the verdicts look arbitrary: a 9% latency
 bump passes and a 0.72-point drop in success rate fails, with nothing on
-the page saying why. Read it with the column and every verdict is
-arithmetic.
+the page saying why. Read it with the column and every threshold verdict is
+arithmetic. The counts, observation window, and uncertainty estimates are
+still needed before treating a passing threshold as evidence for promotion.
 
 Reading it well requires four habits:
 
@@ -104,8 +112,51 @@ The verdict is only as good as the metrics underneath it, which is why the
 canary is downstream of the [observability work](observability-events.html)
 rather than a replacement for it.
 
+## How it gets gamed
+
+- **Stop before the test can see the regression.** A short bake with little
+  traffic may never observe the rare failure it is meant to catch. Set a
+  minimum sample size and bake time before running, based on the smallest
+  regression you need to detect.
+- **Route easy traffic to the canary.** Exclude large accounts, expensive
+  requests, or troublesome regions and the canary measures a safer
+  population. Compare the traffic mix as well as the outcome metrics.
+- **Move the tolerance after seeing the result.** Widening the limit or
+  dropping a failing metric converts the same evidence into approval.
+  Record those changes separately from the deployment verdict.
+
+The meta-signal is the fraction of promotions that bypassed the agreed
+sample size, bake time, population checks, or failure limits.
+
+## Response playbook
+
+1. **Pause promotion when a required metric fails.** Preserve the baseline,
+   canary version, traffic split, analysis configuration, and measurement
+   window before changing anything. Roll back if the agreed stop condition
+   is met.
+2. **Check whether the comparison is valid.** Confirm comparable traffic,
+   healthy telemetry, and enough observations for the regression size the
+   analysis was designed to detect. An underpowered run is inconclusive.
+3. **Investigate the failing population.** Use traces and events to find
+   which requests account for the difference; an aggregate verdict does
+   not identify the defect.
+4. **Repeat after the fix with the agreed limits.** Increasing exposure
+   should require another satisfactory reading, not a waived failure.
+
 ## What it cannot detect
 
 Canary analysis can only detect differences in metrics you're measuring.
 Unknown unknowns require [high-cardinality events](observability-events.html)
 to investigate after the fact.
+
+A small sample can miss a real regression. Statistical power is the chance
+that the analysis detects a regression of a specified size when it exists.
+Choose that minimum detectable effect, the required sample size, and the
+observation window before the rollout. Rare events need more observations;
+a short bake at 1% of traffic can look green because it saw too few
+requests. Latency estimates also need enough representative observations.
+A passing point estimate alone cannot establish that the change is safe.
+
+The SRE Workbook's [Canarying Releases](https://sre.google/workbook/canarying-releases/)
+chapter explains how population, traffic volume, and duration affect whether
+a canary observes a representative sample.

@@ -105,6 +105,19 @@ The meta-signal is the trend of the unsuppressed finding count per
 commit. A rising baseline or a falling suppression ratio both indicate
 the sensor being neutered.
 
+## Response playbook
+
+1. **Inspect the rule, location, and trace together.** Follow the value from
+   its origin to the failing operation and check the assumptions on each
+   path. A severity label alone is not a diagnosis.
+2. **Try to reproduce a reachable finding.** Add a regression test for the
+   path when practical. A trace through impossible states may instead
+   expose a missing model of an external API.
+3. **Fix the defect or document the modeling gap.** Keep a justified
+   suppression narrow, with the relevant invariant or precondition stated.
+4. **Rerun the analyzer and regression tests.** Check that the unsafe path
+   disappeared, rather than only the warning at its original location.
+
 ## What it cannot detect
 
 Static analysis cannot detect [behavioral correctness](catalog.html#behavioral) —

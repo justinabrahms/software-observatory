@@ -276,3 +276,12 @@ By contributing, you agree your content contributions will be licensed
 under
 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/),
 the same license as the rest of the site content.
+
+## Required entry sections
+
+Every sensor needs substantive text under `## In practice`,
+`## How it gets gamed`, `## Response playbook`, and
+`## What it cannot detect`. `make check` rejects missing or empty sections
+before building. A heading inside a code example does not count. Describe
+the specific ways this sensor is bypassed and how to respond to its reading;
+a generic warning does not make the entry useful.

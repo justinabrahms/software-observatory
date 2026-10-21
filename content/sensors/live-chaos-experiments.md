@@ -111,6 +111,20 @@ When a live experiment reveals a weakness:
 5. **Re-run the identical experiment.** Same fault, same radius, same
    invariants. The re-run is the proof; the fix alone is a claim.
 
+## How it gets gamed
+
+- **Choose a harmless target.** Repeatedly kill an idle replica while
+  avoiding the dependency or region whose failure would hurt users. Record
+  why the chosen target represents a failure the service must tolerate.
+- **Disable the abort signal.** Mute an alert or relax a stop condition so
+  an experiment can be reported as completed despite user harm.
+- **Call a recovery script the system's resilience.** Supply manual help
+  during the experiment and omit it from the result. Record interventions
+  alongside the observed recovery.
+
+The meta-signal is experiment coverage of the named failure scenarios,
+with abort-condition overrides and manual interventions counted explicitly.
+
 ## What it cannot detect
 
 Failures you did not think to inject, and failures whose blast radius

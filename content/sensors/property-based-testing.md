@@ -129,6 +129,20 @@ between two calls.
 The meta-signal is the ratio of discarded (assumed-away) examples to
 generated ones. As it climbs, the property is being strangled.
 
+## In practice
+
+Start with a property that must hold across generated inputs, such as
+sorting a list twice giving the same result as sorting it once. A failure
+should report the input that violated the assertion and, when shrinking
+succeeds, a smaller input that still fails. Inspect that input against the
+property before changing the implementation: an incorrect property fails
+just as convincingly as incorrect code.
+
+Passing means the property held for the cases this run generated. Record
+the seed and generator settings so a failure can be replayed, and check
+that the generators can produce empty lists, duplicate values, and other
+cases the implementation handles differently.
+
 ## Response playbook
 
 When a property fails:

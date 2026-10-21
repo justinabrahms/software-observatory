@@ -57,10 +57,28 @@ Catches structural inconsistencies that are syntactically valid but
 semantically suspect. Lower oracle strength than a [type
 checker](type-checker.html), but faster feedback on style and common traps.
 
-A linter sits between [compilation](compiler.html) and [type
-checking](type-checker.html) — it catches things the compiler won't (unused
-variables, unreachable code, style violations) but with less authority. A
-linter can be wrong; a compiler cannot.
+Linters and type checkers usually inspect source independently; there is no
+fixed pipeline position between type checking and compilation. A linter's
+rules may identify likely defects or enforce a convention. The rule and
+context determine how much authority a finding deserves. Compilers can
+also be wrong; [differential testing](differential-testing.html) is one way
+to find their defects.
+
+## In practice
+
+Illustrative finding, not a particular linter's console output:
+
+```text
+Rule: unused-result
+Location: checkout.py:42
+Finding: the result of calculate_total(order) is discarded
+```
+
+Read the call and its contract before accepting the finding. If the caller
+needed the returned total, discarding it is a bug. If the call exists for a
+side effect and its return value is optional, the rule may be too broad.
+A location makes the finding easy to inspect; it does not settle that
+judgment.
 
 ## How it gets gamed
 
@@ -85,6 +103,19 @@ Linter authority is a budget, and it can be spent:
 
 The meta-signal is the suppression count. Track it like a metric, not a
 lint error.
+
+## Response playbook
+
+1. **Read the rule and the surrounding code.** Decide whether it identifies
+   a real defect, a style disagreement, or a limitation in the analyzer.
+2. **Fix the code when the finding is right.** Use an automatic fix only
+   after inspecting what it changes, then run the relevant tests.
+3. **Keep justified exceptions local.** State why the rule is wrong for
+   this line and suppress that finding rather than disabling the rule
+   across the project.
+4. **Review recurring noise.** If the same rule is repeatedly suppressed,
+   check its configuration and whether another check covers the failure
+   mode before changing the shared preset.
 
 ## What it cannot detect
 
