@@ -42,6 +42,23 @@ $ npx softwareobservatory values oracle
   TTY, so piping into `jq` or an agent harness just works.
 - `--plain`: force human-readable output.
 
+## How suggestions are chosen
+
+Known situations match the website's playbooks first. Results carry
+`basis: "curated"`, an authored `reason`, and a `playbook_url`. The order
+comes from the play, and the numeric score only preserves that order; it
+is not a probability or comparable to a keyword score.
+
+For example, `suggest "our tests pass but bugs still ship"` returns mutation
+testing first and escaped defect rate second. The first checks whether tests
+notice changed behavior; the second tracks confirmed failures that escaped.
+
+Questions that match no curated situation use keyword retrieval and carry
+`basis: "keyword"` with that limitation stated. `gap` still means the first
+result from a family; it does not prove a missing correctness check. The
+`stack` command still reports family coverage. Composition by distinct doubts
+is tracked separately in #101.
+
 ## MCP server
 
 ```console

@@ -9,6 +9,19 @@ noticed: >-
 doubt: unjudged-observation
 sensor: business-invariants
 next: bugs-in-inputs-nobody-tried
+
+suggest_when:
+- - production
+  - prod
+  - '200'
+- - wrong
+  - incorrect
+- - answer
+  - result
+  - total
+recommendations:
+- sensor: business-invariants
+  reason: Business invariants check domain promises that an HTTP success status does not establish.
 ---
 
 ## Point this at it

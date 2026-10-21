@@ -230,7 +230,45 @@ function questionTerms(question) {
   return terms;
 }
 
+// Match authored situations before retrieval. Every group must match at least
+// one whole-word phrase, preventing a single shared word from taking over.
+function phraseWords(text) {
+  return String(text).toLowerCase().split(/[^a-z0-9]+/).filter(Boolean).map(stem);
+}
+
+function curatedSuggestions(question, limit) {
+  const words = phraseWords(question);
+  const matches = (phrase) => {
+    const parts = phraseWords(phrase);
+    return parts.length > 0 && words.some((_, start) =>
+      parts.every((part, offset) => words[start + offset] === part));
+  };
+  const routes = (loadData().symptoms || []).filter((route) =>
+    route.match_all.every((group) => group.some(matches)));
+  // Prefer the more specific situation (e.g. the same agent reviewing its
+  // own work), then use a stable slug order for equal-specificity matches.
+  routes.sort((a, b) => b.match_all.length - a.match_all.length || a.slug.localeCompare(b.slug));
+  const route = routes[0];
+  if (!route) return null;
+  const seenFamilies = new Set();
+  return route.recommendations.slice(0, limit).map((row, rank) => {
+    const sensor = findSensor(row.sensor);
+    if (!sensor) throw new Error(`Curated route ${route.slug} names unknown sensor ${row.sensor}; rebuild the catalog.`);
+    const gap = !seenFamilies.has(sensor.family);
+    seenFamilies.add(sensor.family);
+    return {
+      id: sensor.id, slug: sensor.slug, title: sensor.title, family: sensor.family,
+      score: 100 - rank, // authored order, not confidence or a keyword score
+      matched_terms: route.match_all.flatMap((group) => group.filter(matches)),
+      basis: "curated", reason: row.reason, symptom: route.slug,
+      playbook_url: siteUrl(route.url_path), gap, url: siteUrl(sensor.url_path),
+    };
+  });
+}
+
 export function suggestSensors(question, { limit = 5 } = {}) {
+  const curated = curatedSuggestions(question, limit);
+  if (curated !== null) return curated;
   const index = buildIndex();
   const terms = questionTerms(question);
   if (terms.size === 0) return [];
@@ -275,10 +313,8 @@ export function suggestSensors(question, { limit = 5 } = {}) {
       family: sensor.family,
       score: Math.round(score),
       matched_terms: matched,
-      // How this result was produced. Today the only path is the term scorer;
-      // a curated symptom -> sensor map would report "curated" here so a caller
-      // can tell an authored recommendation from a keyword guess.
       basis: "keyword",
+      reason: `Keyword overlap (${matched.join(", ")}); this is a retrieval result, not an authored recommendation.` ,
       gap: firstOfFamily,
       url: siteUrl(sensor.url_path),
     };

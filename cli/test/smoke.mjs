@@ -2,6 +2,7 @@
 // Run with: node cli/test/smoke.mjs
 import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { loadData } from "../lib/core.mjs";
 
 const BIN = fileURLToPath(new URL("../bin/softwareobservatory.mjs", import.meta.url));
 
@@ -213,7 +214,8 @@ check("README example: 'our tests pass but bugs still ship'", () => {
   const slugs = out.map((r) => r.slug);
   assert(slugs[0] === "mutation-testing", `expected mutation-testing first, got ${slugs.join(", ")}`);
   assert(slugs.includes("escaped-defect-rate"), `expected escaped-defect-rate in results, got ${slugs.join(", ")}`);
-  assert(out.every((r) => r.basis === "keyword"), "every result should declare how it was produced");
+  assert(slugs[1] === "escaped-defect-rate", `expected escaped-defect-rate second, got ${slugs.join(", ")}`);
+  assert(out.every((r) => r.basis === "curated" && r.reason && r.playbook_url), "expected authored reasons and playbook links");
 });
 
 check("README example: gaps for AI-generated code", () => {
@@ -242,6 +244,43 @@ check("suggest survives every documented example query", () => {
     assert(out.length > 0, `no suggestions for '${question}'`);
     assert(out.every((r) => typeof r.score === "number" && r.id && r.slug), `malformed result for '${question}'`);
   }
+});
+
+check("curated routes recognize paraphrases but do not capture isolated terms", () => {
+  for (const query of ["the suite is green but regressions ship", "tests passed and bugs shipped"]) {
+    const out = runJson(["suggest", query]);
+    assert(out[0].slug === "mutation-testing" && out[1].slug === "escaped-defect-rate", query);
+    assert(out.every((r) => r.basis === "curated"), query);
+  }
+  for (const query of ["mutation", "tests", "explain the pass instruction"]) {
+    const out = runJson(["suggest", query]);
+    assert(out.every((r) => r.basis === "keyword" && /not an authored/.test(r.reason)), query);
+  }
+  const out = runJson(["suggest", "the same agent wrote the code and reviewed it"]);
+  assert(out[0].symptom === "agent-wrote-it-agent-reviewed-it", "more specific route should win");
+});
+
+check("each authored situation is reachable and preserves its sensor order", () => {
+  for (const route of loadData().symptoms) {
+    const query = route.match_all.map((group) => group[0]).join(" ");
+    const out = runJson(["suggest", query]);
+    assert(out[0].symptom === route.slug, `${query}: matched ${out[0].symptom} instead of ${route.slug}`);
+    assert(out.map((r) => r.slug).join() === route.recommendations.slice(0, 5).map((r) => r.sensor).join(), query);
+  }
+});
+
+check("plain output shows why a recommendation was made", () => {
+  const out = run(["suggest", "our tests pass but bugs still ship", "--plain"]);
+  assert(out.includes("curated:") && out.includes("playbook/tests-pass-bugs-ship/"), "plain output hides reasoning");
+});
+
+check("MCP uses the same curated answers and respects limits", () => {
+  const message = { jsonrpc: "2.0", id: 1, method: "tools/call", params: {
+    name: "suggest_sensors", arguments: { question: "our tests pass but bugs still ship", limit: 1 },
+  } };
+  const reply = JSON.parse(run(["mcp"], { input: JSON.stringify(message) + "\n" }));
+  const out = JSON.parse(reply.result.content[0].text);
+  assert(out.length === 1 && out[0].slug === "mutation-testing" && out[0].basis === "curated", "MCP recommendation differs");
 });
 
 // --- README command coverage -------------------------------------------------

@@ -8,6 +8,23 @@ noticed: >-
 doubt: unasserted-execution
 sensor: mutation-testing
 next: bugs-in-inputs-nobody-tried
+
+suggest_when:
+- - test
+  - suite
+  - ci
+- - pass
+  - green
+- - bug
+  - regression
+  - ship
+recommendations:
+- sensor: mutation-testing
+  reason: Mutation testing checks whether the passing suite notices plausible changes to the
+    implementation.
+- sensor: escaped-defect-rate
+  reason: Escaped defect rate tracks the confirmed bugs the suite missed in production; it
+    complements the faster mutation check.
 ---
 
 ## Point this at it

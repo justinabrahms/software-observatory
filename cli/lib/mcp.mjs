@@ -45,7 +45,7 @@ const TOOLS = [
   {
     name: "suggest_sensors",
     description:
-      "Given a plain-language description of a project or concern, suggest sensors whose entries address it. Ranking is term-based (IDF-weighted, word-boundary matched against each entry's opening framing, title and body), so results carry basis: 'keyword' rather than an authored recommendation. Results flagged 'gap' are the first suggestion from a family not yet represented by a higher-scoring result.",
+      "Given a plain-language description of a project or concern, suggest sensors whose entries address it. Known situations use the website playbooks' ordered sensor recommendations and return basis: 'curated', an authored reason, and a playbook link. Unmatched questions use keyword retrieval and return basis: 'keyword' with that limitation stated. Results flagged 'gap' are the first suggestion from a family not yet represented by a higher-scoring result.",
     inputSchema: {
       type: "object",
       properties: {

@@ -20,6 +20,8 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(REPO_ROOT, "scripts"))
 
 import build
+from observatory.content import load_plays
+from observatory.playbook import recommendations_for
 
 # The CLI's committed copy (shipped to npm) and the copy the website serves.
 # One serialization, written to both paths, because #91 was exactly this file
@@ -171,6 +173,17 @@ def export():
         "families": families,
         "sensors": out_sensors,
     }
+    routes = []
+    for play in sorted(load_plays(), key=lambda p: (p.get("order", 999), p["slug"])):
+        if play.get("suggest_when"):
+            routes.append({
+                "slug": play["slug"], "title": play["title"],
+                "match_all": play["suggest_when"],
+                "recommendations": recommendations_for(play),
+                "url_path": f"playbook/{play['slug']}/",
+            })
+    if routes:
+        document["symptoms"] = routes
     payload = json.dumps(
         document, indent=2, ensure_ascii=False, default=json_default, sort_keys=True
     ) + "\n"

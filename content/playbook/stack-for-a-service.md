@@ -44,6 +44,14 @@ left_open:
       Same closer, independent review. The canary compares the new
       version against the old one, so a bug both versions share reads
       green; review is where that gets caught.
+
+suggest_when:
+- - greenfield
+  - starting
+  - new
+- - service
+  - project
+
 ---
 
 Install the merge gates first: the type checker and the integration suite
