@@ -26,6 +26,24 @@ caught? Escaped defect rate is the slowest and most honest measure of test
 effectiveness: not "would the tests catch a hypothetical mutant?" but "did
 they catch the actual failures, judged after the fact?"
 
+## In practice
+
+Illustrative monthly review, using a fixed definition: confirmed defects
+first discovered in production divided by all confirmed defects first
+discovered during the month. Deduplicate reports before counting them.
+
+| First discovered | Confirmed defects |
+|------------------|-------------------|
+| Before production | 32 |
+| In production | 8 |
+| Total | 40 |
+
+The escaped share is 8 / 40, or 20%. This is a discovery cohort, not a
+measurement of the probability that a release contains a bug: some of the
+eight escapes may have shipped months earlier. Keep the raw counts and
+severity breakdown alongside the percentage. A change in reporting or
+classification can move it without any change in the software.
+
 ## Response playbook
 
 When the rate rises, the move is classification, not blame:
@@ -46,6 +64,18 @@ When the rate rises, the move is classification, not blame:
    classification is judgment. Optimizing it directly produces re-labeling,
    not better sensors. Pair it with [mutation
    testing](mutation-testing.html) as the fast leading indicator.
+
+## How it gets gamed
+
+- **Relabel the escape.** Call a production bug a support request or an
+  enhancement so it leaves the numerator without changing the product.
+- **Change the denominator.** Split releases or count smaller work items to
+  improve a per-release rate while the same number of defects reaches users.
+- **Close before classifying.** Resolve incidents without linking the defect
+  and the sensor that missed it, leaving the hardest cases uncounted.
+
+The meta-signal is the fraction of production incidents with no linked
+defect classification, plus changes to severity and denominator rules.
 
 ## What it cannot detect
 

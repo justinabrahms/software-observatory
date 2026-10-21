@@ -108,6 +108,20 @@ When validation fails:
 5. **Re-run the check after every fix.** Boundary validation is
    cheap enough to run on every attempt.
 
+## How it gets gamed
+
+- **Widen the schema to fit the failing payload.** Make required fields
+  optional or replace a constrained value with an unrestricted one without
+  checking whether consumers can handle it. Version and review the change.
+- **Validate a cleaned copy.** Strip unknown or invalid fields for the check
+  but let the original payload reach the consumer. Validate the instance
+  that is actually used, including any transformations.
+- **Allow failures at selected boundaries.** Log a validation error and
+  continue, while counting the request as validated. Track those bypasses.
+
+The meta-signal is the number of relaxed constraints and validation bypasses,
+not just the fraction of payloads that pass.
+
 ## What it cannot detect
 
 Schema validation cannot detect whether a valid request produces the

@@ -92,6 +92,22 @@ When the compiler fires, the response is mechanical:
    `unsafe` block, or a suppression attribute converts a
    maximum-oracle verdict into a deferred bug.
 
+## How it gets gamed
+
+- **Compile a smaller program.** Exclude failing files, targets, features,
+  or platforms from the required build while still displaying its success
+  as a verdict on the release. Compare the checked targets with the
+  artifacts and configurations you actually ship.
+- **Reuse a success for different inputs.** Accept a cached verdict or a
+  previously built artifact without checking its source and configuration.
+  Bind the verdict to the revision, toolchain, and build options.
+- **Downgrade failures.** Ignore the compiler's exit code or replace the
+  failing build step with a command that always succeeds. A successful CI
+  job then says nothing about compilation.
+
+The meta-signal is the count of shipped targets without a matching
+successful build, plus changes to exclusions and allowed failures.
+
 ## What it cannot detect
 
 A compiler cannot detect [logical errors](mutation-testing.html) — a function

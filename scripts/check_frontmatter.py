@@ -45,6 +45,7 @@ from build import (
     ORACLE_WIDTHS,
     INDEPENDENCE_DOTS,
 )
+from observatory.sections import section_errors
 from vocabulary import (
     ACTIONABILITY,
     REFERENCE_KINDS,
@@ -185,10 +186,12 @@ def main():
         loc = f"{filepath.name}"
 
         try:
-            meta, _ = parse_frontmatter(filepath)
+            meta, body = parse_frontmatter(filepath)
         except yaml.YAMLError as e:
             errors.append(f"{loc}: YAML parse error: {e}")
             continue
+
+        errors.extend(f"{loc}: {error}" for error in section_errors(body))
 
         for field in REQUIRED_FIELDS:
             if field not in meta:

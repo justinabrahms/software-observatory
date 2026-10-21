@@ -129,6 +129,20 @@ When the checker fires, the response is a decision, not a reflex:
    missed is an argument for a stricter mode or a narrower type, not
    for moving on.
 
+## How it gets gamed
+
+- **Opt out at the difficult boundary.** Use `Any`, unchecked casts,
+  `# type: ignore`, or `as any` to make the checker accept an operation
+  without establishing that it is safe. Review each escape hatch as a
+  separate claim that needs evidence.
+- **Make the declarations agree instead of the code.** Write a stub that
+  promises a third-party API returns a value it does not actually return.
+- **Shrink the checked surface.** Exclude a failing directory or turn off
+  strict checks while continuing to cite the project's green type check.
+
+The meta-signal is the rate of new suppressions and unchecked types, together
+with the fraction of shipped modules included in the required check.
+
 ## What it cannot detect
 
 Types measure a particular class of *structural inconsistency*. They cannot

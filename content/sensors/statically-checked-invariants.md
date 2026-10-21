@@ -123,6 +123,20 @@ When an invariant fails to discharge:
    [runtime invariant](runtime-invariants.html) on every execution,
    and it should.
 
+## How it gets gamed
+
+- **Replace an obligation with an assumption.** A trusted axiom, admitted
+  proof, or unchecked external declaration can make a proof pass by
+  asserting the very fact it was meant to establish. Review the trusted
+  assumptions separately from the verified code.
+- **Weaken the statement.** Strengthen a precondition until the troublesome
+  inputs are excluded, or drop a postcondition the implementation fails.
+- **Verify the easy subset.** Exclude modules or suppress obligations while
+  presenting the remaining proofs as evidence for the whole system.
+
+The meta-signal is the count of trusted assumptions, excluded obligations,
+and contract weakenings relative to the surface claimed as verified.
+
 ## What it cannot detect
 
 Invariants that were never written down, and invariants whose statement is

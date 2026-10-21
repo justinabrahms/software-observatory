@@ -117,6 +117,19 @@ When a trace (or a set of traces) shows an operation over budget:
    unaccounted gap, instrument it. Every incident resolved by guesswork
    is a span that should have existed.
 
+## How it gets gamed
+
+- **Keep only successful requests.** Tail-sampling rules that discard errors
+  or slow traces make the retained traffic look healthy. Audit sampling
+  rules and compare retained traces with independent request/error counts.
+- **Drop expensive spans.** Remove database calls or downstream operations
+  from instrumentation, then attribute their time to an opaque parent.
+- **Break propagation and ignore the fragments.** A trace that stops at a
+  service boundary is not evidence that the request stopped there.
+
+The meta-signal is the rate of missing parent spans and propagation breaks,
+with retained error and latency distributions checked against request metrics.
+
 ## What it cannot detect
 
 Traces show execution paths but not [correctness](runtime-invariants.html).

@@ -380,6 +380,24 @@ class TestCuratedPlaybookData(unittest.TestCase):
                 self.assertTrue(any(message in error for error in errors), errors)
 
 
+class TestEditorialSections(unittest.TestCase):
+    def test_complete_entry_and_each_missing_section(self):
+        from observatory.sections import REQUIRED_SECTIONS, section_errors
+        body = "\n\n".join(f"## {h}\n\nSpecific advice." for h in REQUIRED_SECTIONS)
+        self.assertEqual(section_errors(body), [])
+        for heading in REQUIRED_SECTIONS:
+            with self.subTest(heading=heading):
+                broken = body.replace(f"## {heading}\n\nSpecific advice.", "")
+                self.assertEqual(section_errors(broken), [f"missing or empty section '## {heading}'"])
+
+    def test_empty_sections_and_fake_headings_in_code_do_not_pass(self):
+        from observatory.sections import REQUIRED_SECTIONS, section_errors
+        headings = "\n\n".join(f"## {h}" for h in REQUIRED_SECTIONS)
+        for body in (headings, "```text\n" + headings + "\n```", "<!-- " + headings + " -->"):
+            with self.subTest(body=body):
+                self.assertEqual(len(section_errors(body)), len(REQUIRED_SECTIONS))
+
+
 class TestGates(unittest.TestCase):
     """Each gate must fail the build, say something useful, and write nothing."""
 

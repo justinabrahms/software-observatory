@@ -119,6 +119,18 @@ When the sensor fires:
    next quarter, you need to answer which deployments carry it, from
    the SBOM, not from memory.
 
+## How it gets gamed
+
+- **Attest a different artifact.** Build and sign a clean artifact, then ship a
+  modified one while displaying the clean build's provenance. Verify the
+  deployed artifact's digest against the attestation.
+- **Exclude inconvenient dependencies.** Generate the SBOM from a partial
+  manifest or suppress components until a policy passes. Compare the
+  inventory with what the build resolved and inspect exclusion changes.
+
+The meta-signal is the share of deployed artifact digests without verified
+provenance, together with changes to inventory exclusions.
+
 ## What it cannot detect
 
 Malice inside the sources themselves, or a compromised builder that signs
