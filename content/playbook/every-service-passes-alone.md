@@ -10,6 +10,17 @@ noticed: >-
 doubt: emergent-failure
 sensor: integration-tests
 next: worked-in-ci-died-on-deploy
+
+suggest_when:
+- - service
+  - integration
+- - alone
+  - together
+  - individually
+recommendations:
+- sensor: integration-tests
+  reason: Integration tests exercise the services together, where their individually passing
+    checks leave interactions untested.
 ---
 
 ## Point this at it

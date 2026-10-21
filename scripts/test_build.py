@@ -345,6 +345,41 @@ class TestDeterminism(unittest.TestCase):
             )
 
 
+class TestCuratedPlaybookData(unittest.TestCase):
+    def test_web_and_cli_use_the_same_ordered_readings(self):
+        with Sandbox(REPO_ROOT / "content") as sandbox:
+            sandbox.run()
+            data = json.loads(sandbox.cli_json.read_text())
+            self.assertGreaterEqual(len(data["symptoms"]), 10)
+            for route in data["symptoms"]:
+                page = (sandbox.out / route["url_path"] / "index.html").read_text()
+                positions = []
+                for row in route["recommendations"]:
+                    import html
+                    self.assertIn(f'/sensors/{row["sensor"]}/', page)
+                    # Exact reason parity also catches the renderer constructing
+                    # its body before appending the recommendation section.
+                    positions.append(page.index(html.escape(row["reason"])))
+                self.assertEqual(positions, sorted(positions), route["slug"])
+
+    def test_malformed_routes_are_rejected_before_export(self):
+        import copy
+        from observatory.content import load_plays, load_doubts, load_sensors
+        from observatory.playbook import shape_errors
+        plays, doubts, sensors = load_plays(), load_doubts(), load_sensors()
+        target = next(p for p in plays if p.get("recommendations"))
+        for field, value, message in [
+            ("suggest_when", [[]], "nonempty groups"),
+            ("recommendations", [{"sensor": "not-a-sensor", "reason": "Why"}], "unknown sensor"),
+            ("recommendations", [{"sensor": target["sensor"]}], "needs a reason"),
+        ]:
+            with self.subTest(field=field, value=value):
+                broken = copy.deepcopy(target)
+                broken[field] = value
+                errors = shape_errors([broken] + [p for p in plays if p is not target], doubts, sensors)
+                self.assertTrue(any(message in error for error in errors), errors)
+
+
 class TestGates(unittest.TestCase):
     """Each gate must fail the build, say something useful, and write nothing."""
 

@@ -351,6 +351,8 @@ function humanSuggest(results, { gapsOnly }) {
     console.log(
       `${marker}${result.id.padEnd(9)} ${result.title} [${result.family}]  matched: ${result.matched_terms.join(", ") || "-"}`
     );
+    console.log(`    ${result.basis}: ${result.reason}`);
+    if (result.playbook_url) console.log(`    ${result.playbook_url}`);
   }
   if (shown.length === 0) console.log("No suggestions. Try different wording.");
   else console.log(`\n${shown.length} suggestion(s)`);

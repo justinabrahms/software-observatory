@@ -20035,5 +20035,357 @@
     }
   ],
   "site": "https://softwareobservatory.com",
+  "symptoms": [
+    {
+      "match_all": [
+        [
+          "greenfield",
+          "starting",
+          "new"
+        ],
+        [
+          "service",
+          "project"
+        ]
+      ],
+      "recommendations": [
+        {
+          "reason": "Milliseconds, definitive, and the diagnostic names both sides.",
+          "sensor": "type-checker"
+        },
+        {
+          "reason": "The only closer. Run it on the modules that bill or authorize.",
+          "sensor": "mutation-testing"
+        },
+        {
+          "reason": "Against the real database, before merge; a canary sees it too late.",
+          "sensor": "integration-tests"
+        },
+        {
+          "reason": "Four requests against the fresh deploy, before real traffic arrives.",
+          "sensor": "smoke-tests"
+        },
+        {
+          "reason": "In staging, at realistic magnitude; live chaos is the same technique later.",
+          "sensor": "fault-injection"
+        },
+        {
+          "reason": "Says whether the 200 was the right answer, in the domain's terms.",
+          "sensor": "business-invariants"
+        },
+        {
+          "reason": "Two doubts, one sensor, on traffic you already have.",
+          "sensor": "canary-analysis"
+        },
+        {
+          "reason": "Retrospective, but it charges the burn to the deploy that caused it.",
+          "sensor": "error-budget-impact"
+        }
+      ],
+      "slug": "stack-for-a-service",
+      "title": "A minimal stack for a request-serving service",
+      "url_path": "playbook/stack-for-a-service/"
+    },
+    {
+      "match_all": [
+        [
+          "test",
+          "suite",
+          "ci"
+        ],
+        [
+          "pass",
+          "green"
+        ],
+        [
+          "bug",
+          "regression",
+          "ship"
+        ]
+      ],
+      "recommendations": [
+        {
+          "reason": "Mutation testing checks whether the passing suite notices plausible changes to the implementation.",
+          "sensor": "mutation-testing"
+        },
+        {
+          "reason": "Escaped defect rate tracks the confirmed bugs the suite missed in production; it complements the faster mutation check.",
+          "sensor": "escaped-defect-rate"
+        }
+      ],
+      "slug": "tests-pass-bugs-ship",
+      "title": "Tests pass, bugs still ship",
+      "url_path": "playbook/tests-pass-bugs-ship/"
+    },
+    {
+      "match_all": [
+        [
+          "input",
+          "edge case",
+          "boundary"
+        ],
+        [
+          "untried",
+          "unexpected",
+          "missing",
+          "nobody tried",
+          "untested"
+        ]
+      ],
+      "recommendations": [
+        {
+          "reason": "Property-based testing generates inputs beyond the examples the suite already exercises.",
+          "sensor": "property-based-testing"
+        }
+      ],
+      "slug": "bugs-in-inputs-nobody-tried",
+      "title": "The bug was in an input nobody tried",
+      "url_path": "playbook/bugs-in-inputs-nobody-tried/"
+    },
+    {
+      "match_all": [
+        [
+          "ai",
+          "agent",
+          "model"
+        ],
+        [
+          "code",
+          "output"
+        ],
+        [
+          "review",
+          "safe",
+          "trust"
+        ]
+      ],
+      "recommendations": [
+        {
+          "reason": "Everything you have so far was produced by the author. A different model, shown the diff and never the author's summary, is the cheapest check on whether the change does what was asked and whether anything asked for is absent, and it runs at the speed you are merging.",
+          "sensor": "second-agent-review"
+        },
+        {
+          "reason": "Two models from one lineage agree on the same wrong answer, so the previous step cannot close correlated blind spot. A human who reads the specification and then the code, on a sample of merges, is the only closer of that doubt in the catalog.",
+          "sensor": "independent-review"
+        },
+        {
+          "reason": "The tests being judged were written by the agent that wrote the code, and an agent will call every function and assert on none of them. Each surviving mutant is a test that ran the line and never checked it; on an agent-written suite, expect the survivor list to be long.",
+          "sensor": "mutation-testing"
+        },
+        {
+          "reason": "An agent takes the shortest path to a passing test, and the shortest path is often an import the architecture forbids. A handful of dependency rules, run in CI, fail on the exact edge the change added, and they are the only step here that reads the structure rather than the behaviour.",
+          "sensor": "fitness-functions"
+        },
+        {
+          "reason": "Every step above judges the change on its own. Routing a few percent of real traffic to it and comparing error rate and latency against the old version, with tolerances set in advance, is the one step that sees the change wired into the system under traffic nobody wrote a test for.",
+          "sensor": "canary-analysis"
+        }
+      ],
+      "slug": "agent-written-code",
+      "title": "You ship agent-written code faster than you can read it",
+      "url_path": "playbook/agent-written-code/"
+    },
+    {
+      "match_all": [
+        [
+          "production",
+          "prod",
+          "200"
+        ],
+        [
+          "wrong",
+          "incorrect"
+        ],
+        [
+          "answer",
+          "result",
+          "total"
+        ]
+      ],
+      "recommendations": [
+        {
+          "reason": "Business invariants check domain promises that an HTTP success status does not establish.",
+          "sensor": "business-invariants"
+        }
+      ],
+      "slug": "prod-says-200-answer-was-wrong",
+      "title": "Production says 200 and the answer was wrong",
+      "url_path": "playbook/prod-says-200-answer-was-wrong/"
+    },
+    {
+      "match_all": [
+        [
+          "api",
+          "interface",
+          "contract"
+        ],
+        [
+          "breaking",
+          "compatibility",
+          "unintended"
+        ]
+      ],
+      "recommendations": [
+        {
+          "reason": "API compatibility checks compare interface versions for incompatible shape changes; behavioral compatibility still needs other evidence.",
+          "sensor": "api-compatibility"
+        }
+      ],
+      "slug": "something-changed-nobody-meant-to",
+      "title": "Something changed that nobody meant to change",
+      "url_path": "playbook/something-changed-nobody-meant-to/"
+    },
+    {
+      "match_all": [
+        [
+          "service",
+          "integration"
+        ],
+        [
+          "alone",
+          "together",
+          "individually"
+        ]
+      ],
+      "recommendations": [
+        {
+          "reason": "Integration tests exercise the services together, where their individually passing checks leave interactions untested.",
+          "sensor": "integration-tests"
+        }
+      ],
+      "slug": "every-service-passes-alone",
+      "title": "Every service passes alone, the system fails together",
+      "url_path": "playbook/every-service-passes-alone/"
+    },
+    {
+      "match_all": [
+        [
+          "deploy",
+          "production",
+          "prod"
+        ],
+        [
+          "break",
+          "fail",
+          "die"
+        ],
+        [
+          "ci",
+          "worked",
+          "pass",
+          "deploy"
+        ]
+      ],
+      "recommendations": [
+        {
+          "reason": "Smoke tests exercise the deployed artifact and its vital paths in the environment where it must run.",
+          "sensor": "smoke-tests"
+        }
+      ],
+      "slug": "worked-in-ci-died-on-deploy",
+      "title": "It worked in CI and died on deploy",
+      "url_path": "playbook/worked-in-ci-died-on-deploy/"
+    },
+    {
+      "match_all": [
+        [
+          "dependency",
+          "downstream"
+        ],
+        [
+          "slow",
+          "timeout",
+          "unavailable"
+        ]
+      ],
+      "recommendations": [
+        {
+          "reason": "Fault injection tests what happens when the downstream dependency is slow or unavailable.",
+          "sensor": "fault-injection"
+        }
+      ],
+      "slug": "one-slow-dependency",
+      "title": "One slow dependency took everything down",
+      "url_path": "playbook/one-slow-dependency/"
+    },
+    {
+      "match_all": [
+        [
+          "agent",
+          "ai",
+          "model"
+        ],
+        [
+          "wrote",
+          "written",
+          "generated"
+        ],
+        [
+          "review"
+        ],
+        [
+          "same",
+          "both"
+        ]
+      ],
+      "recommendations": [
+        {
+          "reason": "Independent review supplies a reviewer who did not produce the change; another pass by the producing agent can repeat the same assumptions.",
+          "sensor": "independent-review"
+        }
+      ],
+      "slug": "agent-wrote-it-agent-reviewed-it",
+      "title": "The agent wrote it, the agent reviewed it, both agreed",
+      "url_path": "playbook/agent-wrote-it-agent-reviewed-it/"
+    },
+    {
+      "match_all": [
+        [
+          "file",
+          "module"
+        ],
+        [
+          "same",
+          "repeated"
+        ],
+        [
+          "incident",
+          "bug",
+          "failure"
+        ]
+      ],
+      "recommendations": [
+        {
+          "reason": "Hotspot analysis combines change frequency with code structure to focus investigation on recurring trouble.",
+          "sensor": "hotspot-analysis"
+        }
+      ],
+      "slug": "same-three-files",
+      "title": "The same three files keep causing incidents",
+      "url_path": "playbook/same-three-files/"
+    },
+    {
+      "match_all": [
+        [
+          "code",
+          "decision"
+        ],
+        [
+          "why",
+          "rationale",
+          "reason"
+        ]
+      ],
+      "recommendations": [
+        {
+          "reason": "Decision provenance links the code to the recorded rationale and constraints behind the change.",
+          "sensor": "decision-provenance"
+        }
+      ],
+      "slug": "nobody-can-say-why",
+      "title": "Nobody can say why the code is like this",
+      "url_path": "playbook/nobody-can-say-why/"
+    }
+  ],
   "version": 1
 }

@@ -8,6 +8,19 @@ noticed: >-
   of them passed.
 doubt: wrong-logic
 sensor: property-based-testing
+
+suggest_when:
+- - input
+  - edge case
+  - boundary
+- - untried
+  - unexpected
+  - missing
+  - nobody tried
+  - untested
+recommendations:
+- sensor: property-based-testing
+  reason: Property-based testing generates inputs beyond the examples the suite already exercises.
 ---
 
 ## Point this at it
