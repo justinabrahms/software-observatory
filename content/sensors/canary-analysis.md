@@ -24,6 +24,13 @@ see_also:
 - SO-007e
 last_reviewed: '2026-08-26'
 references:
+- title: Canarying Releases
+  year: 2018
+  tier: IV
+  url: https://sre.google/workbook/canarying-releases/
+  kind: book
+  authors: Alec Warner and Stepan Davidovic
+  venue: The Site Reliability Workbook
 - title: Exploring Statistical Change Point Detection Techniques for Performance Anomaly Detection at Mozilla
   year: 2026
   tier: I
@@ -149,3 +156,7 @@ observation window before the rollout. Rare events need more observations;
 a short bake at 1% of traffic can look green because it saw too few
 requests. Latency estimates also need enough representative observations.
 A passing point estimate alone cannot establish that the change is safe.
+
+The SRE Workbook's [Canarying Releases](https://sre.google/workbook/canarying-releases/)
+chapter explains how population, traffic volume, and duration affect whether
+a canary observes a representative sample.
