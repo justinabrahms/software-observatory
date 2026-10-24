@@ -87,7 +87,15 @@ jobs:
       github.event.pull_request.head.repo.full_name != github.repository
     runs-on: ubuntu-latest
     steps:
+      # Full history, because `make check-frontmatter` compares each entry's
+      # `last_reviewed` against the date of the commit that added it (#112), and
+      # the default `--depth 1` clone cannot see that commit. The gate fails
+      # closed on missing history rather than passing, so without this line CI
+      # would be red for a reason that has nothing to do with the change. Only
+      # this job needs it; the deploy, publish and audit jobs read no history.
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
