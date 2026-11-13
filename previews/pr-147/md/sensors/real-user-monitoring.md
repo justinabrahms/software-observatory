@@ -23,11 +23,19 @@ see_also:
 - SO-012c
 - SO-007
 references:
-- title: Web Vitals
+- title: Web Vitals (October 2024 revision)
   authors: Philip Walton
-  year: 2020
+  year: 2024
   kind: blog
   url: https://web.dev/articles/vitals
+- title: Interaction to Next Paint becomes a Core Web Vital on March 12
+  authors: Jeremy Wagner, Rick Viscomi
+  year: 2024
+  kind: blog
+  url: https://web.dev/blog/inp-cwv-march-12
+- title: Web Vitals Changelogs
+  kind: other
+  url: https://chromium.googlesource.com/chromium/src/+/main/docs/speed/metrics_changelog/README.md
 - title: Performance Timeline
   kind: spec
   url: https://www.w3.org/TR/performance-timeline/
@@ -65,8 +73,12 @@ interactions during a visit; **Cumulative Layout Shift (CLS)** measures
 unexpected movement of visible content. A page can do well on all three
 and still display the wrong price.
 
-Google's guidance calls for evaluating these at the **75th percentile**,
-separately for mobile and desktop. That is the value at or below which
+INP replaced First Input Delay (FID) as a Core Web Vital in March 2024.
+A dashboard that still reports FID needs updating to assess the current set.
+
+Google's Web Vitals guidance, updated in October 2024, calls for evaluating
+these at the **75th percentile**, separately for mobile and desktop. That is
+the value at or below which
 75% of the observations fall. Good values are at most 2.5 seconds for LCP,
 200 milliseconds for INP, and 0.1 for CLS. The `web-vitals` library handles
 the details of measuring and reporting them. A visit without a qualifying
@@ -138,7 +150,10 @@ account for unequal sampling.
 Finally, the definition itself can move. Dropping a slow route, changing
 metric versions, or reclassifying an error as handled can make the chart
 look healthier without changing anyone's experience. Annotate those
-changes alongside application releases.
+changes alongside application releases. Browser updates can change the
+measurement too; keep browser and instrumentation versions with the data,
+and consult the [Web Vitals changelog](https://chromium.googlesource.com/chromium/src/+/main/docs/speed/metrics_changelog/README.md)
+when readings shift without an application change.
 
 ## Response playbook
 

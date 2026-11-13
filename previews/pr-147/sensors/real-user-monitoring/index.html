@@ -214,8 +214,11 @@ when the largest eligible piece of visible content appears;
 interactions during a visit; <strong>Cumulative Layout Shift (CLS)</strong> measures
 unexpected movement of visible content. A page can do well on all three
 and still display the wrong price.</p>
-<p>Google&rsquo;s guidance calls for evaluating these at the <strong>75th percentile</strong>,
-separately for mobile and desktop. That is the value at or below which
+<p>INP replaced First Input Delay (FID) as a Core Web Vital in March 2024.
+A dashboard that still reports FID needs updating to assess the current set.</p>
+<p>Google&rsquo;s Web Vitals guidance, updated in October 2024, calls for evaluating
+these at the <strong>75th percentile</strong>, separately for mobile and desktop. That is
+the value at or below which
 75% of the observations fall. Good values are at most 2.5 seconds for LCP,
 200 milliseconds for INP, and 0.1 for CLS. The <code>web-vitals</code> library handles
 the details of measuring and reporting them. A visit without a qualifying
@@ -310,7 +313,10 @@ account for unequal sampling.</p>
 <p>Finally, the definition itself can move. Dropping a slow route, changing
 metric versions, or reclassifying an error as handled can make the chart
 look healthier without changing anyone&rsquo;s experience. Annotate those
-changes alongside application releases.</p>
+changes alongside application releases. Browser updates can change the
+measurement too; keep browser and instrumentation versions with the data,
+and consult the <a class="body-link" href="https://chromium.googlesource.com/chromium/src/+/main/docs/speed/metrics_changelog/README.md">Web Vitals changelog</a>
+when readings shift without an application change.</p>
 <h2 id="response-playbook">Response playbook</h2>
 <p>First check whether the reading is trustworthy. Did collection volume,
 bot filtering, sampling, or metric eligibility change? Then narrow the
@@ -371,7 +377,9 @@ outcomes, and <a class="body-link" href="/software-observatory/previews/pr-147/s
         </ul>
         <h3 class="references-subheading" id="further-reading">Further reading</h3>
         <ul class="reference-list">
-          <li><a href="https://web.dev/articles/vitals" class="wikilink">Web Vitals</a> <span class="ref-meta">2020</span></li>
+          <li><a href="https://web.dev/articles/vitals" class="wikilink">Web Vitals (October 2024 revision)</a> <span class="ref-meta">2024</span></li>
+          <li><a href="https://web.dev/blog/inp-cwv-march-12" class="wikilink">Interaction to Next Paint becomes a Core Web Vital on March 12</a> <span class="ref-meta">2024</span></li>
+          <li><a href="https://chromium.googlesource.com/chromium/src/+/main/docs/speed/metrics_changelog/README.md" class="wikilink">Web Vitals Changelogs</a></li>
           <li><a href="https://www.w3.org/TR/performance-timeline/" class="wikilink">Performance Timeline</a></li>
           <li><a href="https://www.w3.org/TR/resource-timing/" class="wikilink">Resource Timing</a></li>
           <li><a href="https://docs.datadoghq.com/real_user_monitoring/guide/identify-bots-in-the-ui/" class="wikilink">Identify Bots in the RUM Explorer</a></li>
