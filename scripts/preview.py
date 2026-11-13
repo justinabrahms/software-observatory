@@ -32,10 +32,12 @@ def unpack(archive, output):
         bundle.extractall(output)
 
 
-def stage(root, output, number):
+def stage(root, output, number, project):
     from observatory.config import SITE_URL
 
-    prefix = f'/previews/pr-{number}'
+    if not re.fullmatch(r'[A-Za-z0-9_.-]+', project) or project in {'.', '..'}:
+        raise ValueError('Invalid Pages project name')
+    prefix = f'/{project}/previews/pr-{number}'
     public = subprocess.check_output(
         ['make', '-s', 'print-deploy-public'], cwd=root, text=True).split()
     for name in public:
@@ -63,6 +65,7 @@ def stage(root, output, number):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--number', type=int)
+    parser.add_argument('--project', help='GitHub repository name (Pages project prefix)')
     parser.add_argument('--archive', type=Path)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
@@ -70,7 +73,7 @@ if __name__ == '__main__':
         parser.error('--output must be a new directory')
     if args.archive:
         unpack(args.archive, args.output)
-    elif args.number and args.number > 0:
-        stage(Path(__file__).resolve().parents[1], args.output, args.number)
+    elif args.number and args.number > 0 and args.project:
+        stage(Path(__file__).resolve().parents[1], args.output, args.number, args.project)
     else:
-        parser.error('supply --archive or a positive --number')
+        parser.error('supply --archive or a positive --number with --project')

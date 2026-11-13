@@ -162,7 +162,7 @@ check-deploy:
 # authorized key is pinned by `rrsync -wo` to /srv/softwareobservatory.com,
 # so this key can write nowhere else on the host.
 # ---------------------------------------------------------------------------
-DEPLOY_RETIRED := doubts
+DEPLOY_RETIRED := doubts previews
 
 RSYNC_INCLUDES := $(foreach p,$(DEPLOY_PUBLIC) $(DEPLOY_RETIRED),--include='/$(p)' --include='/$(p)/***')
 

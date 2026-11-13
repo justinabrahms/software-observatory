@@ -4,27 +4,32 @@ on:
     workflows: [Build PR preview]
     types: [completed]
 permissions:
-  contents: read
+  contents: write # persist static snapshots to gh-pages only
   actions: read
+  pages: write
+  id-token: write
   pull-requests: write
+# Each deployment includes all persisted PR snapshots. Serialize updates so
+# publishing one PR cannot overwrite another PR's files or a newer deployment.
 concurrency:
-  group: preview-publish-${{ github.event.workflow_run.head_repository.full_name }}-${{ github.event.workflow_run.head_branch }}
+  group: preview-pages-publish
   cancel-in-progress: false
 jobs:
   publish:
     if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request'
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      # Privileged job uses ONLY default-branch code, never PR code. The
-      # artifact is untrusted static data; validate all paths before extraction.
+      # Privileged job uses ONLY default-branch code, never PR code. It has
+      # no production SSH key and never executes artifact or snapshot scripts.
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.repository.default_branch }}
           persist-credentials: false
       - uses: actions/github-script@v7
         id: preview
-        env:
-          PREVIEW_BASE_URL: ${{ vars.PREVIEW_BASE_URL }}
         with:
           script: |
             const prepare = require('./scripts/preview-publish.cjs');
@@ -32,26 +37,40 @@ jobs:
       - name: Validate and unpack static files
         if: steps.preview.outputs.number != ''
         run: python3 scripts/preview.py --archive "$RUNNER_TEMP/preview.zip" --output "$RUNNER_TEMP/preview"
-      - name: Publish
+      - name: Load persisted static snapshots
+        if: steps.preview.outputs.number != ''
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: pages-state
+      - name: Update only this PR's snapshot
         if: steps.preview.outputs.number != ''
         env:
-          DEPLOY_KEY: ${{ secrets.SOFTWAREOBSERVATORY_DEPLOY_KEY }}
-          SSH_TARGET: ${{ vars.PREVIEW_SSH_TARGET }}
-          KNOWN_HOSTS: ${{ vars.PREVIEW_SSH_KNOWN_HOSTS }}
           PR_NUMBER: ${{ steps.preview.outputs.number }}
         run: |
           set -euo pipefail
-          mkdir -p ~/.ssh
-          printf '%s\n' "$DEPLOY_KEY" > "$RUNNER_TEMP/preview-key"
-          chmod 600 "$RUNNER_TEMP/preview-key"
-          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
-          test -n "$SSH_TARGET"
-          mkdir -p "$RUNNER_TEMP/publish"
-          mv "$RUNNER_TEMP/preview" "$RUNNER_TEMP/publish/pr-$PR_NUMBER"
-          rsync -az --delete --chmod=D755,F644 \
-            -e "ssh -i $RUNNER_TEMP/preview-key -o BatchMode=yes -o StrictHostKeyChecking=yes" \
-            --include="/pr-$PR_NUMBER/" --include="/pr-$PR_NUMBER/***" --exclude='*' \
-            "$RUNNER_TEMP/publish/" "$SSH_TARGET:previews/"
+          mkdir -p "pages-state/previews/pr-$PR_NUMBER"
+          rsync -a --delete "$RUNNER_TEMP/preview/" "pages-state/previews/pr-$PR_NUMBER/"
+          python3 scripts/preview_index.py pages-state
+          git -C pages-state config user.name 'github-actions[bot]'
+          git -C pages-state config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git -C pages-state add previews index.html robots.txt .nojekyll
+          if ! git -C pages-state diff --cached --quiet; then
+            git -C pages-state commit -m "Update preview for PR #$PR_NUMBER"
+            git -C pages-state push origin HEAD:gh-pages
+          fi
+      - name: Package all snapshots without repository metadata
+        if: steps.preview.outputs.number != ''
+        run: |
+          mkdir -p "$RUNNER_TEMP/pages"
+          rsync -a --exclude='.git' --exclude='.github' pages-state/ "$RUNNER_TEMP/pages/"
+      - uses: actions/upload-pages-artifact@v3
+        if: steps.preview.outputs.number != ''
+        with:
+          path: ${{ runner.temp }}/pages
+      - uses: actions/deploy-pages@v4
+        if: steps.preview.outputs.number != ''
+        id: deployment
       - name: Verify served pages
         if: steps.preview.outputs.number != ''
         run: python3 scripts/verify_preview.py "$RUNNER_TEMP/preview-links.json"
@@ -64,12 +83,9 @@ jobs:
             const data = JSON.parse(fs.readFileSync(`${process.env.RUNNER_TEMP}/preview-links.json`));
             const issue_number = Number('${{ steps.preview.outputs.number }}');
             const marker = '<!-- observatory-preview -->';
-            const body = `${marker}\nPreview for \`${data.sha}\` (public, noindex):\n\n` +
+            const body = `${marker}\nPreview for \`${data.sha}\` (public, noindex, isolated GitHub Pages origin):\n\n` +
               data.links.map(link => `- [${link.label}](${link.url})`).join('\n');
             const comments = await github.paginate(github.rest.issues.listComments, {...context.repo, issue_number});
             const old = comments.find(c => c.user.type === 'Bot' && c.body.includes(marker));
             if (old) await github.rest.issues.updateComment({...context.repo, comment_id: old.id, body});
             else await github.rest.issues.createComment({...context.repo, issue_number, body});
-      - name: Remove temporary key
-        if: always()
-        run: rm -f "$RUNNER_TEMP/preview-key"

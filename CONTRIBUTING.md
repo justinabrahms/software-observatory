@@ -290,35 +290,47 @@ above invented diagnostics in the same block.
 
 Every PR builds a public preview after `make check` passes. A bot updates one
 comment with the exact source commit, home/catalog/atlas links, and direct links
-to added or changed sensor pages. Each PR has a stable `/previews/pr-N/` path;
-new successful builds replace it. Failed builds leave the previous preview
-and its commit label in place. Closed PR previews are retained for review history.
-The downloadable build artifact expires after seven days.
+to added or changed sensor pages. Previews use this repository's default GitHub
+Pages site, under `/<repository>/previews/pr-N/`. No custom domain is configured.
+New successful builds replace that PR's snapshot; failed builds leave its
+previously labeled commit in place. Closed snapshots are retained for review
+history. Downloadable build artifacts expire after seven days.
 
-Previews use the production deploy allow-list, rewrite navigation, assets,
-search data and dynamic links into their PR prefix, omit analytics, and add
-`noindex` metadata. Production deploys leave the previews directory alone.
-These are public static pages on the site's origin, so do not put confidential
-data in a PR or treat the preview as an authentication boundary.
+Preview JavaScript is untrusted. It must never run on the production origin.
+The publisher queries GitHub's Pages configuration and rejects custom domains,
+non-HTTPS URLs, an unexpected project path, or any host other than the owner's
+default Pages host. Tests demonstrate that the former production-origin URL
+is rejected. Keep this Pages origin for public, untrusted previews only;
+PRs share an origin with each other, so it must not host a trusted application.
+
+Staging uses the production deploy allow-list, rewrites navigation, assets,
+search data, and dynamic links into the Pages project and PR prefix, omits
+analytics, and adds noindex metadata and a preview notice. These are public
+pages: do not put confidential data in a PR. The production deploy retires the
+former `/previews/` directory so abandoned same-origin previews are removed.
 
 The build job has read-only permissions and no deploy secrets. A separate
-`workflow_run` publisher checks out the default branch, validates the static
-artifact (including traversal and symlink rejection), rejects superseded heads,
-publishes it, verifies the linked pages, and updates the PR comment. It never
-executes scripts from the artifact or checks out PR code with deploy credentials.
-Fork workflows may first need GitHub's normal maintainer approval.
+`workflow_run` publisher uses only default-branch code, rejects superseded
+heads, and validates archive paths, file types, symlinks, and size before
+extraction. It never executes artifact or snapshot scripts. Static snapshots
+are persisted on `gh-pages`; a Pages deployment publishes them together so a
+new PR preview preserves the others. The publisher uses GitHub's short-lived
+token and Pages OIDC permissions. It has no SSH steps, production deployment
+secret, or long-lived publishing credential. Fork builds may first need
+GitHub's normal maintainer approval.
 
-Operator setup uses the existing `SOFTWAREOBSERVATORY_DEPLOY_KEY` secret plus
-repository variables `PREVIEW_BASE_URL` (HTTPS URL ending in `/previews`),
-`PREVIEW_SSH_TARGET` (the existing restricted deploy destination, without a
-path), and `PREVIEW_SSH_KNOWN_HOSTS` (pinned host keys). Keep their actual values
-out of tracked files. The publisher must first land on the default branch for
-GitHub to trigger it; the PR introducing it needs a one-time manual preview.
-Local staging after `make check`:
+Operator setup: initialize the static `gh-pages` branch, enable Pages with
+GitHub Actions as its source, leave the custom domain empty, and restrict the
+`github-pages` environment to deployments from the default branch. No preview
+repository variables or additional secrets are needed. GitHub activates the
+publisher after it lands on the default branch; the introducing PR needs a
+one-time manual Pages deployment.
+
+Local staging after `make check` (use a new output directory each time):
 
 ```sh
-.venv/bin/python scripts/preview.py --number 123 --output /tmp/observatory-preview-123
+.venv/bin/python scripts/preview.py --number 123 --project software-observatory --output /tmp/observatory-preview-123
 ```
 
-Use a new output directory each time. The staging script reads `DEPLOY_PUBLIC`
-from the Makefile rather than maintaining another publication allow-list.
+The staging script reads `DEPLOY_PUBLIC` from the Makefile rather than
+maintaining another publication allow-list.

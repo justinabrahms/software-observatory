@@ -12,6 +12,13 @@ from preview import stage, unpack
 
 
 class PreviewTests(unittest.TestCase):
+    def test_publisher_has_no_production_credentials_or_arbitrary_base_url(self):
+        root = Path(__file__).resolve().parents[1]
+        workflow = (root / '.github/workflows/preview-publish.yml').read_text()
+        self.assertNotIn('secrets.', workflow)
+        self.assertNotIn('PREVIEW_BASE_URL', workflow)
+        self.assertIn('actions/deploy-pages@', workflow)
+
     def test_staging_keeps_navigation_search_and_assets_in_preview(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -22,19 +29,19 @@ class PreviewTests(unittest.TestCase):
             (root / 'private.txt').write_text('must not ship')
             output = root / 'output'
             with patch('subprocess.check_output', return_value='index.html js search-index.json'):
-                stage(root, output, 42)
+                stage(root, output, 42, 'example')
             html = (output / 'index.html').read_text()
-            self.assertIn('href="/previews/pr-42/catalog/#runtime"', html)
+            self.assertIn('href="/example/previews/pr-42/catalog/#runtime"', html)
             self.assertIn('src="//external.invalid/a.png"', html)
             self.assertIn('noindex, nofollow', html)
             self.assertNotIn('data-goatcounter', html)
             self.assertFalse((output / 'private.txt').exists())
-            self.assertIn("fetch('/previews/pr-42/search-index.json')", (output / 'js/main.js').read_text())
-            self.assertIn('/previews/pr-42/sensors/${slug}/', (output / 'js/main.js').read_text())
-            self.assertEqual(json.loads((output / 'search-index.json').read_text())[0]['url'], '/previews/pr-42/sensors/example/')
+            self.assertIn("fetch('/example/previews/pr-42/search-index.json')", (output / 'js/main.js').read_text())
+            self.assertIn('/example/previews/pr-42/sensors/${slug}/', (output / 'js/main.js').read_text())
+            self.assertEqual(json.loads((output / 'search-index.json').read_text())[0]['url'], '/example/previews/pr-42/sensors/example/')
 
     def test_archive_rejects_traversal_symlinks_and_nonstatic_files_before_writing(self):
-        for name in ['../escape.html', '/escape.html', 'js\\escape.js', '.ssh/key.txt', 'run.py', 'link.html']:
+        for name in ['../escape.html', '/escape.html', 'js\\escape.js', '.ssh/key.txt', 'run.py', 'CNAME', 'link.html']:
             with self.subTest(name=name), tempfile.TemporaryDirectory() as directory:
                 root = Path(directory)
                 with zipfile.ZipFile(root / 'artifact.zip', 'w') as bundle:

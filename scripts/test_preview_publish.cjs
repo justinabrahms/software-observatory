@@ -7,13 +7,25 @@ const prepare = require('./preview-publish.cjs');
 (async () => {
   const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'preview-test-'));
   process.env.RUNNER_TEMP = temp;
-  process.env.PREVIEW_BASE_URL = 'https://preview.invalid/previews';
+  const {previewBase} = require('./preview_config.cjs');
+  const repo = {owner: 'owner', repo: 'repo'};
+  const pages = {html_url: 'https://owner.github.io/repo/', cname: null, build_type: 'workflow'};
+  assert.equal(previewBase(repo, pages), 'https://owner.github.io/repo/previews');
+  for (const invalid of [
+    {...pages, html_url: 'https://production.invalid/previews/'},
+    {...pages, cname: 'production.invalid'},
+    {...pages, html_url: 'http://owner.github.io/repo/'},
+    {...pages, html_url: 'https://owner.github.io/other/'},
+    {...pages, html_url: 'https://owner.github.io.evil.invalid/repo/'},
+    {...pages, html_url: 'https://other.github.io/repo/'},
+    {...pages, build_type: 'legacy'},
+  ]) assert.throws(() => previewBase(repo, invalid), /default HTTPS GitHub Pages origin/);
   const pr = {number: 42, head: {sha: 'current', ref: 'feature', repo: {full_name: 'owner/repo'}}};
   const run = {id: 1, head_sha: 'old', head_branch: 'feature', head_repository: {full_name: 'owner/repo'}};
   let downloads = 0;
   let output;
   const github = {
-    rest: {pulls: {list: 'pulls', listFiles: 'files'}, actions: {
+    rest: {repos: {getPages: async () => ({data: pages})}, pulls: {list: 'pulls', listFiles: 'files'}, actions: {
       listWorkflowRunArtifacts: 'artifacts',
       downloadArtifact: async () => { downloads++; return {data: Buffer.from('zip')}; },
     }},
@@ -36,6 +48,6 @@ const prepare = require('./preview-publish.cjs');
     assert.equal(data.sha, 'current');
     assert(data.links.some(link => link.url.endsWith('/pr-42/sensors/real-user-monitoring/')));
     assert(!data.links.some(link => link.url.includes('removed')));
-    console.log('Preview publisher: current-head and changed-page checks passed.');
+    console.log('Preview publisher: origin isolation, current-head, and changed-page checks passed.');
   } finally { fs.rmSync(temp, {recursive: true, force: true}); }
 })().catch(error => { console.error(error); process.exit(1); });

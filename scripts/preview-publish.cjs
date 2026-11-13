@@ -6,8 +6,9 @@ module.exports = async ({github, context, core}) => {
   const pr = pulls.find(p => p.head.sha === run.head_sha &&
     p.head.repo?.full_name === run.head_repository.full_name && p.head.ref === run.head_branch);
   if (!pr) { core.info('PR closed or head superseded; skipping'); return; }
-  const base = process.env.PREVIEW_BASE_URL;
-  if (!base || !base.startsWith('https://')) throw new Error('Set PREVIEW_BASE_URL');
+  const {previewBase} = require('./preview_config.cjs');
+  const pages = await github.rest.repos.getPages(context.repo);
+  const base = previewBase(context.repo, pages.data);
   const url = `${base.replace(/\/$/, '')}/pr-${pr.number}`;
   const links = [
     {label: 'Home', url: `${url}/`},
