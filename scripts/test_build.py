@@ -67,6 +67,7 @@ import shutil
 import sys
 import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -378,6 +379,63 @@ class TestCuratedPlaybookData(unittest.TestCase):
                 broken[field] = value
                 errors = shape_errors([broken] + [p for p in plays if p is not target], doubts, sensors)
                 self.assertTrue(any(message in error for error in errors), errors)
+
+
+class TestEditorialGateWiring(unittest.TestCase):
+    """The section gate must be reachable from `make check`, not just testable.
+
+    `TestEditorialSections` proves `section_errors` is right. Nothing proved that
+    the gate calls it: replacing the call in check_frontmatter.py with `pass`
+    left the whole suite green, so the requirement was one deletion away from
+    being decorative. This runs the real gate over a corpus with one section
+    removed and asserts it refuses, names the section, and writes nothing.
+
+    The fixture corpus cannot be the mutant: its entries carry no `##` headings
+    at all, and the build sandbox does not run check_frontmatter, so mutating a
+    fixture would be a no-op test of a gate it never invokes.
+    """
+
+    def _run_gate(self, body_suffix):
+        import contextlib
+        import io
+        import check_frontmatter
+
+        with tempfile.TemporaryDirectory(prefix="so-frontmatter-gate-") as tmp:
+            sensors = Path(tmp) / "sensors"
+            sensors.mkdir()
+            entry = sensors / "alpha-probe.md"
+            entry.write_text(
+                (FIXTURE_CONTENT / "sensors" / "alpha-probe.md").read_text(encoding="utf-8") + body_suffix,
+                encoding="utf-8",
+            )
+            buffer = io.StringIO()
+            with mock.patch.object(check_frontmatter, "SENSOR_DIR", sensors):
+                with contextlib.redirect_stdout(buffer):
+                    code = check_frontmatter.main()
+            return code, buffer.getvalue(), sorted(p.name for p in sensors.iterdir())
+
+    def test_a_missing_editorial_section_fails_the_gate_by_name(self):
+        complete = "".join(f"\n## {h}\n\nWhat a team does.\n" for h in
+                           ("In practice", "How it gets gamed", "Response playbook"))
+        code, output, _ = self._run_gate(complete)
+        self.assertIn("missing or empty section '## What it cannot detect'", output,
+                      f"the gate did not name the missing section: {output[-400:]}")
+        self.assertNotEqual(code, 0, "the frontmatter gate passed an entry with a missing section")
+
+    def test_a_complete_entry_gets_no_section_complaint(self):
+        # The control: the same harness with all four sections present must not
+        # complain about sections, or the test above would be satisfied by a gate
+        # that always fails. The fixture entry is not otherwise valid -- it
+        # carries a tool reference with no URL on purpose, to exercise the
+        # reference gate -- so this asserts the absence of the section error
+        # rather than a zero exit.
+        complete = "".join(f"\n## {h}\n\nWhat a team does.\n" for h in
+                           ("In practice", "How it gets gamed", "Response playbook", "What it cannot detect"))
+        _, output, _ = self._run_gate(complete)
+        self.assertNotIn("missing or empty section", output,
+                         f"a complete entry was refused on sections: {output[-400:]}")
+        self.assertIn("fixturefmt", output,
+                      "the harness did not reach the gate at all: the fixture's known reference error is missing")
 
 
 class TestEditorialSections(unittest.TestCase):
