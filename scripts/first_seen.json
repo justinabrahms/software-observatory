@@ -43,6 +43,7 @@
  "onboarding-experiment": "2026-08-23",
  "pre-promotion-invariant-gates": "2026-08-23",
  "property-based-testing": "2026-08-24",
+ "real-user-monitoring": "2026-11-13",
  "resource-telemetry": "2026-08-23",
  "revert-rate": "2026-08-23",
  "runtime-invariants": "2026-08-23",

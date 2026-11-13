@@ -21,6 +21,7 @@ see_also:
 - SO-007
 - SO-012b
 - SO-006e
+- SO-006f
 references:
 - title: Meaningful Availability
   year: 2020
@@ -144,4 +145,4 @@ When a synthetic check fails:
 
 Behavior outside the scripted paths. Synthetics cover the flows you thought
 to script; the long tail of user behavior is the domain of
-[observability events](observability-events.html) and real-user monitoring.
+[observability events](observability-events.html) and [real user monitoring](real-user-monitoring.html).
