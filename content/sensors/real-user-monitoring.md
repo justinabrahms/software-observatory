@@ -124,6 +124,27 @@ correlation identifier to connect a client failure to a
 strings, and persistent personal identifiers should not be the price of
 being able to investigate a slow page.
 
+## In practice
+
+Running this is a weekly rhythm, not a dashboard someone remembers to open.
+
+Pick the few journeys that matter — sign-in, the expensive screen, the checkout
+step — and tag them as the measured set rather than collecting everything the
+agent can emit. Decide the target before looking at the data: a percentile
+budget per device class, so a mobile regression cannot hide inside a desktop
+average. Keep the browser and build version on every reading, so a shift can be
+attributed to a release or ruled out.
+
+Then put the reading in front of the people who change code, next to the release
+they shipped, and give someone the job of opening it once a week. A number with
+no owner is a chart; a number with an owner and a threshold is a signal. When the
+budget is crossed, the response playbook below says what to do; when nothing has
+moved, the boring answer is the correct one and worth writing down.
+
+Retire what stops earning its place. Every field collected is a privacy cost and
+a maintenance cost, and a journey nobody acts on is instrumentation that will be
+wrong before it is deleted.
+
 ## How it gets gamed
 
 A dashboard can improve because its audience changed. Bots that execute
