@@ -1,0 +1,75 @@
+name: Publish PR preview
+on:
+  workflow_run:
+    workflows: [Build PR preview]
+    types: [completed]
+permissions:
+  contents: read
+  actions: read
+  pull-requests: write
+concurrency:
+  group: preview-publish-${{ github.event.workflow_run.head_repository.full_name }}-${{ github.event.workflow_run.head_branch }}
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      # Privileged job uses ONLY default-branch code, never PR code. The
+      # artifact is untrusted static data; validate all paths before extraction.
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+      - uses: actions/github-script@v7
+        id: preview
+        env:
+          PREVIEW_BASE_URL: ${{ vars.PREVIEW_BASE_URL }}
+        with:
+          script: |
+            const prepare = require('./scripts/preview-publish.cjs');
+            await prepare({github, context, core});
+      - name: Validate and unpack static files
+        if: steps.preview.outputs.number != ''
+        run: python3 scripts/preview.py --archive "$RUNNER_TEMP/preview.zip" --output "$RUNNER_TEMP/preview"
+      - name: Publish
+        if: steps.preview.outputs.number != ''
+        env:
+          DEPLOY_KEY: ${{ secrets.SOFTWAREOBSERVATORY_DEPLOY_KEY }}
+          SSH_TARGET: ${{ vars.PREVIEW_SSH_TARGET }}
+          KNOWN_HOSTS: ${{ vars.PREVIEW_SSH_KNOWN_HOSTS }}
+          PR_NUMBER: ${{ steps.preview.outputs.number }}
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > "$RUNNER_TEMP/preview-key"
+          chmod 600 "$RUNNER_TEMP/preview-key"
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          test -n "$SSH_TARGET"
+          mkdir -p "$RUNNER_TEMP/publish"
+          mv "$RUNNER_TEMP/preview" "$RUNNER_TEMP/publish/pr-$PR_NUMBER"
+          rsync -az --delete --chmod=D755,F644 \
+            -e "ssh -i $RUNNER_TEMP/preview-key -o BatchMode=yes -o StrictHostKeyChecking=yes" \
+            --include="/pr-$PR_NUMBER/" --include="/pr-$PR_NUMBER/***" --exclude='*' \
+            "$RUNNER_TEMP/publish/" "$SSH_TARGET:previews/"
+      - name: Verify served pages
+        if: steps.preview.outputs.number != ''
+        run: python3 scripts/verify_preview.py "$RUNNER_TEMP/preview-links.json"
+      - name: Update PR preview comment
+        if: steps.preview.outputs.number != ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const data = JSON.parse(fs.readFileSync(`${process.env.RUNNER_TEMP}/preview-links.json`));
+            const issue_number = Number('${{ steps.preview.outputs.number }}');
+            const marker = '<!-- observatory-preview -->';
+            const body = `${marker}\nPreview for \`${data.sha}\` (public, noindex):\n\n` +
+              data.links.map(link => `- [${link.label}](${link.url})`).join('\n');
+            const comments = await github.paginate(github.rest.issues.listComments, {...context.repo, issue_number});
+            const old = comments.find(c => c.user.type === 'Bot' && c.body.includes(marker));
+            if (old) await github.rest.issues.updateComment({...context.repo, comment_id: old.id, body});
+            else await github.rest.issues.createComment({...context.repo, issue_number, body});
+      - name: Remove temporary key
+        if: always()
+        run: rm -f "$RUNNER_TEMP/preview-key"

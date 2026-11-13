@@ -52,6 +52,8 @@ cli-test:
 # added to the pinned requirements.txt, one command, like cli/test/smoke.mjs.
 test:
 	$(PY) scripts/test_build.py
+	$(PY) scripts/test_preview.py
+	node scripts/test_preview_publish.cjs
 
 # Re-bless the goldens after an INTENTIONAL rendering change. Commit the
 # resulting tests/golden/ diff together with the change that caused it; that
@@ -192,3 +194,8 @@ review-queue:
 
 serve:
 	python3 -m http.server
+
+# Shared allow-list for PR preview staging; never copy the checkout wholesale.
+.PHONY: print-deploy-public
+print-deploy-public:
+	@echo $(DEPLOY_PUBLIC)

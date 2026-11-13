@@ -285,3 +285,40 @@ Keep interpretation outside the captured block. If a sample is constructed or
 combines several runs, label it **illustrative** immediately before the sample
 and say it is not the named tool's console output. Do not put a real command
 above invented diagnostics in the same block.
+
+## PR previews
+
+Every PR builds a public preview after `make check` passes. A bot updates one
+comment with the exact source commit, home/catalog/atlas links, and direct links
+to added or changed sensor pages. Each PR has a stable `/previews/pr-N/` path;
+new successful builds replace it. Failed builds leave the previous preview
+and its commit label in place. Closed PR previews are retained for review history.
+The downloadable build artifact expires after seven days.
+
+Previews use the production deploy allow-list, rewrite navigation, assets,
+search data and dynamic links into their PR prefix, omit analytics, and add
+`noindex` metadata. Production deploys leave the previews directory alone.
+These are public static pages on the site's origin, so do not put confidential
+data in a PR or treat the preview as an authentication boundary.
+
+The build job has read-only permissions and no deploy secrets. A separate
+`workflow_run` publisher checks out the default branch, validates the static
+artifact (including traversal and symlink rejection), rejects superseded heads,
+publishes it, verifies the linked pages, and updates the PR comment. It never
+executes scripts from the artifact or checks out PR code with deploy credentials.
+Fork workflows may first need GitHub's normal maintainer approval.
+
+Operator setup uses the existing `SOFTWAREOBSERVATORY_DEPLOY_KEY` secret plus
+repository variables `PREVIEW_BASE_URL` (HTTPS URL ending in `/previews`),
+`PREVIEW_SSH_TARGET` (the existing restricted deploy destination, without a
+path), and `PREVIEW_SSH_KNOWN_HOSTS` (pinned host keys). Keep their actual values
+out of tracked files. The publisher must first land on the default branch for
+GitHub to trigger it; the PR introducing it needs a one-time manual preview.
+Local staging after `make check`:
+
+```sh
+.venv/bin/python scripts/preview.py --number 123 --output /tmp/observatory-preview-123
+```
+
+Use a new output directory each time. The staging script reads `DEPLOY_PUBLIC`
+from the Makefile rather than maintaining another publication allow-list.
