@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-147/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Hotspot Analysis — Software Observatory</title>
+  <meta name="description" content="Change frequency times complexity. Identifies places where the system is simultaneously difficult and frequently changed — more interesting than “files with…">
+  <link rel="canonical" href="/software-observatory/previews/pr-147/sensors/hotspot-analysis/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Hotspot Analysis — Software Observatory">
+  <meta property="og:description" content="Change frequency times complexity. Identifies places where the system is simultaneously difficult and frequently changed — more interesting than “files with…">
+  <meta property="og:url" content="/software-observatory/previews/pr-147/sensors/hotspot-analysis/">
+  <meta property="og:image" content="/software-observatory/previews/pr-147/og/cards/hotspot-analysis.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Hotspot Analysis — Software Observatory">
+  <meta name="twitter:description" content="Change frequency times complexity. Identifies places where the system is simultaneously difficult and frequently changed — more interesting than “files with…">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-147/og/cards/hotspot-analysis.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-147/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-147/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "TechArticle",
+        "DefinedTerm"
+      ],
+      "@id": "/software-observatory/previews/pr-147/sensors/hotspot-analysis/#entry",
+      "headline": "Hotspot Analysis",
+      "name": "Hotspot Analysis",
+      "description": "Change frequency times complexity. Identifies places where the system is simultaneously difficult and frequently changed — more interesting than “files with the most lines.” Hotspot analysis combines…",
+      "termCode": "SO-008c",
+      "url": "/software-observatory/previews/pr-147/sensors/hotspot-analysis/",
+      "mainEntityOfPage": "/software-observatory/previews/pr-147/sensors/hotspot-analysis/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-147/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "publisher": {
+        "@id": "/software-observatory/previews/pr-147/#organization"
+      },
+      "inDefinedTermSet": {
+        "@id": "/software-observatory/previews/pr-147/catalog/#defined-term-set"
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-147/catalog/#defined-term-set"
+      },
+      "datePublished": "2026-08-23",
+      "about": {
+        "@type": "Thing",
+        "@id": "/software-observatory/previews/pr-147/families/architecture/#defined-term-set",
+        "name": "Architecture",
+        "url": "/software-observatory/previews/pr-147/families/architecture/"
+      },
+      "keywords": "Architecture",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "value": "low",
+          "description": "a hotspot is a risk indicator, not a bug"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#independence",
+          "name": "Independence",
+          "value": "high",
+          "description": "computed from git and metrics"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#scope",
+          "name": "Scope",
+          "value": "module"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "value": "minutes"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#actionability",
+          "name": "Actionability",
+          "value": "exploratory",
+          "description": "shows the heat map"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "value": "retrospective"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-147/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Architecture",
+          "item": "/software-observatory/previews/pr-147/families/architecture/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Hotspot Analysis"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #147 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-147/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-147/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-147/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-147/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-147/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-147/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-147/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-147/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-147/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-147/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-147/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="wiki-layout">
+    <article class="signal-detail">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-147/catalog/">Catalog</a> › <a href="/software-observatory/previews/pr-147/families/architecture/">Architecture</a> › Hotspot Analysis</p>
+
+      <header class="signal-detail-header">
+        <h1 class="signal-detail-title">Hotspot Analysis</h1>
+        <div class="signal-detail-meta">
+          <span class="tag tag-family">Architecture</span>
+          <span class="tag tag-confidence">Low oracle</span>
+          <span class="tag tag-type">Retrospective</span>
+        </div>
+      </header>
+
+      <div class="signal-detail-body">
+        <p>Change frequency times complexity. Identifies places where the system is
+simultaneously <em>difficult</em> and <em>frequently changed</em> — more interesting than
+&ldquo;files with the most lines.&rdquo;</p>
+<p>Hotspot analysis combines two signals: how complex a module is
+(cyclomatic complexity, nesting depth) and how often it changes (commit
+frequency). The intersection — a complex module that changes frequently — is
+where risk concentrates.</p>
+<h2 id="in-practice">In practice</h2>
+<p>The reading is a ranked list: modules scored by change frequency weighted
+against complexity, usually over the last 6 to 12 months.</p>
+<pre><code class="language-text">window: 12 months, complexity = cyclomatic
+
+  rank  module                     commits  complexity  authors
+  1     src/checkout/session.py    187      42          9
+  2     src/billing/pricing.py     141      38          4
+  3     lib/feature_flags/rules.ts 96       29          7
+  4     src/checkout/session.py (again, 3 of top 10 commits
+        are merge-conflict fixes)
+</code></pre>
+<p>Reading it well:</p>
+<ol>
+<li><strong>Rank is a question, not a verdict.</strong> A top hotspot means &ldquo;look
+   here first,&rdquo; not &ldquo;this code is broken.&rdquo; Some hotspots are healthy
+   and churning because the product churns there.</li>
+<li><strong>Cross-reference with defects.</strong> A hot module that also appears in
+   recent incident reports and <a class="body-link" href="/software-observatory/previews/pr-147/sensors/escaped-defect-rate/">escaped
+   defects</a> is where attention pays back; a
+   hot module with a clean record may just be popular.</li>
+<li><strong>Watch the author column.</strong> Nine authors in one file is a
+   coordination problem independent of complexity.</li>
+<li><strong>Compare windows.</strong> A module that was cold six months ago and is
+   hot now marks a behavior change, which is often more interesting
+   than the perennial top ten.</li>
+</ol>
+<h2 id="how-it-gets-gamed">How it gets gamed</h2>
+<ul>
+<li><strong>Squash to shrink the count.</strong> If hotspot ranking drives attention
+  or blame, committing in large squashed batches lowers the apparent
+  change frequency without changing the churn.</li>
+<li><strong>Touch it to cool it.</strong> A few cosmetic commits in a quiet module
+  raise its frequency and dilute the ranking; conversely, routing real
+  changes through a side branch keeps a hot file artificially cold.</li>
+<li><strong>Rename and split to reset history.</strong> File moves restart the clock
+  in tools that do not track renames, demoting a hotspot without
+  touching its content.</li>
+<li><strong>Complexity theater.</strong> Wrapping a gnarly function in three small
+  ones lowers the per-function score while the tangled logic moves one
+  level down unchanged.</li>
+</ul>
+<p>The meta-signal is churn per author: a hotspot whose commits concentrate
+on one person is a knowledge problem the ranking alone will not show.</p>
+<h2 id="response-playbook">Response playbook</h2>
+<p>When a hotspot keeps churning:</p>
+<ol>
+<li><strong>Read the churn, not the code.</strong> Run the git log for the module and
+   ask what each change was actually for. Repeated changes for the same
+   reason are the specification of the missing abstraction.</li>
+<li><strong>Test before touching.</strong> A hot, complex module is exactly where an
+   untested refactor causes incidents. Establish <a class="body-link" href="/software-observatory/previews/pr-147/sensors/example-based-tests/">example-based
+   tests</a> around current behavior first.</li>
+<li><strong>Extract one seam.</strong> Do not rewrite. Find the axis the churn keeps
+   crossing (a config knob, a policy switch, a format conversion) and
+   pull it out so the next change does not touch the core.</li>
+<li><strong>Pair the next three changes.</strong> If nine authors churn one file,
+   route the next edits through review with the person who knows it,
+   and write down what they explain.</li>
+<li><strong>Re-score after a quarter.</strong> The hotspot list is cheap to recompute;
+   a fix that worked shows up as a rank drop.</li>
+</ol>
+<h2 id="what-it-cannot-detect">What it cannot detect</h2>
+<p>Hotspot analysis doesn&rsquo;t tell you <em>why</em> a module changes frequently or
+<em>whether</em> it&rsquo;s correct. It identifies where attention is needed, not what
+the attention should fix.</p>
+
+                <h2 id="related-sensors">Related sensors</h2>
+        <div class="see-also-grid">
+          <a href="/software-observatory/previews/pr-147/sensors/dependency-graph/" class="see-also-card">
+            <span class="see-also-type">Architecture</span>
+            <span class="see-also-title">Dependency Graph</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/fitness-functions/" class="see-also-card">
+            <span class="see-also-type">Architecture</span>
+            <span class="see-also-title">Architecture Fitness Functions</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/boundary-sensors/" class="see-also-card">
+            <span class="see-also-type">Architecture</span>
+            <span class="see-also-title">Boundary Sensors</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/escaped-defect-rate/" class="see-also-card">
+            <span class="see-also-type">Test Effectiveness</span>
+            <span class="see-also-title">Escaped Defect Rate</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/families/evolution/" class="see-also-card">
+            <span class="see-also-type">Family</span>
+            <span class="see-also-title">Evolution</span>
+          </a>
+        </div>
+
+        <div class="entry-categories">
+          <span class="cat-label">Categories:</span>
+          <a href="/software-observatory/previews/pr-147/families/architecture/" class="cat-link">Architecture</a>
+        </div>
+
+        <h2 id="references">References</h2>
+        <h3 class="references-subheading" id="publications">Publications</h3>
+        <ul class="reference-list">
+          <li><a href="https://arxiv.org/pdf/1604.06766" class="wikilink">A Novel Approach for Estimating Truck Factors</a> — <span class="ref-meta">Guilherme Avelino, Leonardo Passos, Andre Hora, Marco Tulio Valente · 2016 · observational study · arXiv 1604.06766 (companion to ICPC 2016)</span></li>
+          <li><a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/bird2011dtm.pdf" class="wikilink">Don&#x27;t Touch My Code! Examining the Effects of Ownership on Software Quality</a> — <span class="ref-meta">Christian Bird, Nachiappan Nagappan, Brendan Murphy, Harald Gall, Premkumar Devanbu · 2011 · observational study · ESEC/FSE &#x27;11</span></li>
+          <li>Your Code as a Crime Scene — <span class="ref-meta">Adam Tornhill · 2015 · argument</span></li>
+        </ul>
+        <h3 class="references-subheading" id="tooling">Tooling</h3>
+        <ul class="reference-list reference-tools">
+          <li><span class="ref-title"><a href="https://codescene.com" class="wikilink">CodeScene</a></span><span class="ref-desc">Code analysis predicting technical debt from behavioral code</span></li>
+          <li><span class="ref-title"><a href="https://github.com/arzzen/git-quick-stats" class="wikilink">git-quick-stats</a></span><span class="ref-desc">Git history analysis script</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <aside class="wiki-sidebar">
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="sensor-properties">Sensor properties</h3>
+        <dl class="meta-list">
+          <dt>Family</dt>           <dd><a href="/software-observatory/previews/pr-147/families/architecture/" class="wikilink">Architecture</a></dd>
+          <dt>Oracle</dt>          <dd>Low <span class="prop-note" title="a hotspot is a risk indicator, not a bug" aria-label="a hotspot is a risk indicator, not a bug">(?)</span></dd>
+          <dt>Independence</dt>     <dd>High <span class="prop-note" title="computed from git and metrics" aria-label="computed from git and metrics">(?)</span></dd>
+          <dt>Scope</dt>           <dd>Module</dd>
+          <dt>Latency</dt>         <dd>Minutes</dd>
+          <dt>Actionability</dt>   <dd>Exploratory <span class="prop-note" title="shows the heat map" aria-label="shows the heat map">(?)</span></dd>
+          <dt>Type</dt>             <dd>Retrospective</dd>
+          <dt>Entry ID</dt>        <dd>SO-008c</dd>
+          <dt>Reviewed</dt>        <dd><span class="review-unreviewed" title="This entry is written and published, but has not yet been re-read in the editorial review pass. An absent review date is reported as absent rather than filled in.">pending</span></dd>
+        </dl>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="what-links-here">What links here</h3>
+        <ul class="backlink-list">
+          <li><a href="/software-observatory/previews/pr-147/sensors/dependency-graph/">Dependency Graph</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/fitness-functions/">Architecture Fitness Functions</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+        </ul>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="in-the-playbook">In the playbook</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-147/playbook/inherited-codebase/">You inherited a codebase nobody explains</a>
+          <li><a href="/software-observatory/previews/pr-147/playbook/same-three-files/">The same three files keep causing incidents</a>
+        </ul>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="related-categories">Related categories</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-147/families/architecture/">Category: Architecture</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-147/about/">About</a> · <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-147/js/main.js"></script>
+</body>
+</html>

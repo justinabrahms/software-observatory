@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-147/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Line Coverage — Software Observatory</title>
+  <meta name="description" content="Did we execute this line? Useful but weak. A project can have 90% line coverage while mutation testing finds large numbers of mutations that tests don’t…">
+  <link rel="canonical" href="/software-observatory/previews/pr-147/sensors/line-coverage/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Line Coverage — Software Observatory">
+  <meta property="og:description" content="Did we execute this line? Useful but weak. A project can have 90% line coverage while mutation testing finds large numbers of mutations that tests don’t…">
+  <meta property="og:url" content="/software-observatory/previews/pr-147/sensors/line-coverage/">
+  <meta property="og:image" content="/software-observatory/previews/pr-147/og/cards/line-coverage.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Line Coverage — Software Observatory">
+  <meta name="twitter:description" content="Did we execute this line? Useful but weak. A project can have 90% line coverage while mutation testing finds large numbers of mutations that tests don’t…">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-147/og/cards/line-coverage.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-147/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-147/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "TechArticle",
+        "DefinedTerm"
+      ],
+      "@id": "/software-observatory/previews/pr-147/sensors/line-coverage/#entry",
+      "headline": "Line Coverage",
+      "name": "Line Coverage",
+      "description": "Did we execute this line? Useful but weak. A project can have 90% line coverage while mutation testing finds large numbers of mutations that tests don’t detect. Coverage measures execution.",
+      "termCode": "SO-003c",
+      "url": "/software-observatory/previews/pr-147/sensors/line-coverage/",
+      "mainEntityOfPage": "/software-observatory/previews/pr-147/sensors/line-coverage/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-147/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "publisher": {
+        "@id": "/software-observatory/previews/pr-147/#organization"
+      },
+      "inDefinedTermSet": {
+        "@id": "/software-observatory/previews/pr-147/catalog/#defined-term-set"
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-147/catalog/#defined-term-set"
+      },
+      "datePublished": "2026-08-23",
+      "about": {
+        "@type": "Thing",
+        "@id": "/software-observatory/previews/pr-147/families/test-effectiveness/#defined-term-set",
+        "name": "Test Effectiveness",
+        "url": "/software-observatory/previews/pr-147/families/test-effectiveness/"
+      },
+      "keywords": "Test Effectiveness, Coverage",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "value": "low",
+          "description": "execution is not correctness"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#independence",
+          "name": "Independence",
+          "value": "low",
+          "description": "same author writes tests"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#scope",
+          "name": "Scope",
+          "value": "line"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "value": "seconds"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#actionability",
+          "name": "Actionability",
+          "value": "guiding",
+          "description": "shows which lines weren't executed"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "value": "predictive"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-147/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Test Effectiveness",
+          "item": "/software-observatory/previews/pr-147/families/test-effectiveness/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Line Coverage"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #147 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-147/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-147/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-147/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-147/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-147/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-147/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-147/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-147/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-147/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-147/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-147/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="wiki-layout">
+    <article class="signal-detail">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-147/catalog/">Catalog</a> › <a href="/software-observatory/previews/pr-147/families/test-effectiveness/">Test Effectiveness</a> › Line Coverage</p>
+
+      <header class="signal-detail-header">
+        <h1 class="signal-detail-title">Line Coverage</h1>
+        <div class="signal-detail-meta">
+          <span class="tag tag-family">Test Effectiveness</span>
+          <span class="tag tag-confidence">Low oracle</span>
+          <span class="tag tag-type">Predictive</span>
+        </div>
+      </header>
+
+      <div class="signal-detail-body">
+        <p>Did we execute this line? Useful but weak. A project can have 90% line
+coverage while <a class="body-link" href="/software-observatory/previews/pr-147/sensors/mutation-testing/">mutation testing</a> finds large numbers
+of mutations that tests don&rsquo;t detect.</p>
+<p>Coverage measures execution. An assertion measures correctness. These are
+not the same thing.</p>
+<h2 id="in-practice">In practice</h2>
+<p>A line coverage reading is the summary every coverage tool prints at the
+end of a test run:</p>
+<pre><code>Name                         Stmts   Miss  Cover
+api/handlers.py              342     58    83%
+api/middleware.py             96      4    96%
+TOTAL                        438     62    86%
+</code></pre>
+<p>The same report annotates the source, marking each uncovered line. A few
+habits keep it honest:</p>
+<ol>
+<li><strong>Read the uncovered lines, not the percentage.</strong> The number is a
+   summary; the annotated source is the finding. Ten uncovered lines in
+   an error handler matter more than a 2-point total.</li>
+<li><strong>Watch the trend, gate the delta.</strong> Absolute coverage is mostly
+   noise between projects. The useful readings are &ldquo;did this change
+   lower coverage&rdquo; and &ldquo;are the changed lines covered,&rdquo; which is the
+   job of <a class="body-link" href="/software-observatory/previews/pr-147/sensors/diff-coverage/">diff coverage</a>.</li>
+<li><strong>Treat covered-but-unasserted as the default suspicion.</strong> A line
+   that executes inside a test with no assertions still counts as
+   covered. Coverage tells you where to look, never what to believe.</li>
+<li><strong>Expect the last percent to lie.</strong> Defensive branches and dead paths
+   resist honest coverage, and the tests written to reach them tend to
+   assert nothing.</li>
+</ol>
+<h2 id="how-it-gets-gamed">How it gets gamed</h2>
+<p>Line coverage is the easiest oracle in the catalog to inflate, precisely
+because it measures nothing but execution:</p>
+<ul>
+<li><strong>Assertion-free tests.</strong> Calling code with no assertions still
+  executes it, and executed lines count. A suite can climb toward 100%
+  while verifying nothing. This is the dominant gaming mode, especially
+  with generated tests that import a module and call everything in it.</li>
+<li><strong>Coverage of the test, not the behavior.</strong> Tests that assert on
+  mocks and fixtures exercise their own lines, not the system&rsquo;s. The
+  report looks healthy while the production code&rsquo;s behavior is never
+  checked.</li>
+<li><strong>Exclusion pragmas.</strong> <code># pragma: no cover</code>, ignore lists, and
+  rewritten conditionals quietly shrink the denominator. A rising count
+  of exclusions is the metric being edited rather than earned.</li>
+</ul>
+<p>The meta-signal is <a class="body-link" href="/software-observatory/previews/pr-147/sensors/mutation-testing/">mutation testing</a> on the
+covered code. High line coverage with a low mutation score is a suite
+that executes its code without reading it.</p>
+<h2 id="response-playbook">Response playbook</h2>
+<p>When line coverage falls or a report exposes a hole:</p>
+<ol>
+<li><strong>Open the annotated source.</strong> Locate the specific uncovered lines.
+   The percentage alone tells you nothing actionable.</li>
+<li><strong>Write one test per uncovered path, asserting on output.</strong> Start
+   with the lines that handle errors and edge inputs; they are the ones
+   that fail in production. Assert on the result, not on the fact that
+   the code ran.</li>
+<li><strong>Cut dead code instead of covering it.</strong> Lines that cannot be
+   reached are not a testing gap. Deleting them raises coverage for
+   free and removes the temptation to write contrived tests.</li>
+<li><strong>Block merges that lower coverage on changed lines.</strong> Wire a
+   <a class="body-link" href="/software-observatory/previews/pr-147/sensors/diff-coverage/">diff coverage</a> gate into CI so the next drop
+   surfaces at review time, not in the monthly report.</li>
+</ol>
+<h2 id="what-it-cannot-detect">What it cannot detect</h2>
+<p>Whether the code that <em>executed</em> was actually <em>asserted on</em>. A line can
+execute without any test verifying its output. This is why coverage alone
+is a <a class="body-link" href="/software-observatory/previews/pr-147/sensors/mutation-testing/">weak oracle</a>.</p>
+
+                <h2 id="related-sensors">Related sensors</h2>
+        <div class="see-also-grid">
+          <a href="/software-observatory/previews/pr-147/sensors/branch-coverage/" class="see-also-card">
+            <span class="see-also-type">Test Effectiveness</span>
+            <span class="see-also-title">Branch Coverage</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/mutation-testing/" class="see-also-card">
+            <span class="see-also-type">Test Effectiveness</span>
+            <span class="see-also-title">Mutation Testing</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/diff-coverage/" class="see-also-card">
+            <span class="see-also-type">Test Effectiveness</span>
+            <span class="see-also-title">Diff Coverage</span>
+          </a>
+        </div>
+
+        <div class="entry-categories">
+          <span class="cat-label">Categories:</span>
+          <a href="/software-observatory/previews/pr-147/families/test-effectiveness/" class="cat-link">Test Effectiveness</a>
+          <a href="/software-observatory/previews/pr-147/categories/#coverage" class="cat-link">Coverage</a>
+        </div>
+
+        <h2 id="references">References</h2>
+        <h3 class="references-subheading" id="publications">Publications</h3>
+        <ul class="reference-list">
+          <li><a href="https://www.cs.ubc.ca/~rtholmes/papers/icse_2014_inozemtseva.pdf" class="wikilink">Coverage Is Not Strongly Correlated with Test Suite Effectiveness</a> — <span class="ref-meta">Laura Inozemtseva, Reid Holmes · 2014 · controlled study · ICSE 2014</span></li>
+          <li><a href="https://homes.cs.washington.edu/~rjust/publ/mutation_testing_practices_icse_2021.pdf" class="wikilink">Does Mutation Testing Improve Testing Practices?</a> — <span class="ref-meta">Goran Petrović, Marko Ivanković, Gordon Fraser, René Just · 2021 · controlled study · ICSE 2021</span></li>
+        </ul>
+        <h3 class="references-subheading" id="tooling">Tooling</h3>
+        <ul class="reference-list reference-tools">
+          <li><span class="ref-title"><a href="https://coverage.readthedocs.io" class="wikilink">coverage.py</a></span><span class="ref-desc">Python code coverage measurement</span></li>
+          <li><span class="ref-title"><a href="https://istanbul.js.org" class="wikilink">Istanbul</a></span><span class="ref-desc">JavaScript code coverage</span></li>
+          <li><span class="ref-title"><a href="https://www.jacoco.org" class="wikilink">JaCoCo</a></span><span class="ref-desc">Java code coverage</span></li>
+          <li><span class="ref-title"><a href="https://gcc.gnu.org/onlinedocs/gcc/Gcov.html" class="wikilink">gcov</a></span><span class="ref-desc">GCC code coverage</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <aside class="wiki-sidebar">
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="sensor-properties">Sensor properties</h3>
+        <dl class="meta-list">
+          <dt>Family</dt>           <dd><a href="/software-observatory/previews/pr-147/families/test-effectiveness/" class="wikilink">Test Effectiveness</a></dd>
+          <dt>Oracle</dt>          <dd>Low <span class="prop-note" title="execution is not correctness" aria-label="execution is not correctness">(?)</span></dd>
+          <dt>Independence</dt>     <dd>Low <span class="prop-note" title="same author writes tests" aria-label="same author writes tests">(?)</span></dd>
+          <dt>Scope</dt>           <dd>Line</dd>
+          <dt>Latency</dt>         <dd>Seconds</dd>
+          <dt>Actionability</dt>   <dd>Guiding <span class="prop-note" title="shows which lines weren&#x27;t executed" aria-label="shows which lines weren&#x27;t executed">(?)</span></dd>
+          <dt>Type</dt>             <dd>Predictive</dd>
+          <dt>Entry ID</dt>        <dd>SO-003c</dd>
+          <dt>Reviewed</dt>        <dd><span class="review-unreviewed" title="This entry is written and published, but has not yet been re-read in the editorial review pass. An absent review date is reported as absent rather than filled in.">pending</span></dd>
+        </dl>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="what-links-here">What links here</h3>
+        <ul class="backlink-list">
+          <li><a href="/software-observatory/previews/pr-147/sensors/branch-coverage/">Branch Coverage</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="related-categories">Related categories</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-147/families/test-effectiveness/">Category: Test Effectiveness</a></li>
+          <li><a href="/software-observatory/previews/pr-147/categories/#coverage">Category: Coverage</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-147/about/">About</a> · <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-147/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-148/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>DORA Metrics — Software Observatory</title>
+  <meta name="description" content="Change lead time, deployment frequency, failed deployment recovery time, change fail rate, deployment rework rate.">
+  <link rel="canonical" href="/software-observatory/previews/pr-148/sensors/dora-metrics/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="DORA Metrics — Software Observatory">
+  <meta property="og:description" content="Change lead time, deployment frequency, failed deployment recovery time, change fail rate, deployment rework rate.">
+  <meta property="og:url" content="/software-observatory/previews/pr-148/sensors/dora-metrics/">
+  <meta property="og:image" content="/software-observatory/previews/pr-148/og/cards/dora-metrics.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DORA Metrics — Software Observatory">
+  <meta name="twitter:description" content="Change lead time, deployment frequency, failed deployment recovery time, change fail rate, deployment rework rate.">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-148/og/cards/dora-metrics.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-148/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-148/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "TechArticle",
+        "DefinedTerm"
+      ],
+      "@id": "/software-observatory/previews/pr-148/sensors/dora-metrics/#entry",
+      "headline": "DORA Metrics",
+      "name": "DORA Metrics",
+      "description": "Change lead time, deployment frequency, failed deployment recovery time, change fail rate, deployment rework rate.",
+      "termCode": "SO-015b",
+      "url": "/software-observatory/previews/pr-148/sensors/dora-metrics/",
+      "mainEntityOfPage": "/software-observatory/previews/pr-148/sensors/dora-metrics/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-148/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "publisher": {
+        "@id": "/software-observatory/previews/pr-148/#organization"
+      },
+      "inDefinedTermSet": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "datePublished": "2026-08-23",
+      "about": {
+        "@type": "Thing",
+        "@id": "/software-observatory/previews/pr-148/families/evolution/#defined-term-set",
+        "name": "Evolution",
+        "url": "/software-observatory/previews/pr-148/families/evolution/"
+      },
+      "keywords": "Evolution",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "value": "medium",
+          "description": "the metrics proxy safety; they are not safety"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#independence",
+          "name": "Independence",
+          "value": "high",
+          "description": "derived from deployment and incident records, not self-report"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#scope",
+          "name": "Scope",
+          "value": "system",
+          "description": "organization-level delivery performance"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "value": "days"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#actionability",
+          "name": "Actionability",
+          "value": "guiding",
+          "description": "tells you which stage of the pipeline to distrust"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "value": "retrospective"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-148/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Evolution",
+          "item": "/software-observatory/previews/pr-148/families/evolution/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "DORA Metrics"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #148 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-148/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-148/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-148/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-148/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-148/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-148/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-148/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-148/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-148/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-148/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="wiki-layout">
+    <article class="signal-detail">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-148/catalog/">Catalog</a> › <a href="/software-observatory/previews/pr-148/families/evolution/">Evolution</a> › DORA Metrics</p>
+
+      <header class="signal-detail-header">
+        <h1 class="signal-detail-title">DORA Metrics</h1>
+        <div class="signal-detail-meta">
+          <span class="tag tag-family">Evolution</span>
+          <span class="tag tag-confidence">Medium oracle</span>
+          <span class="tag tag-type">Retrospective</span>
+        </div>
+      </header>
+
+      <div class="signal-detail-body">
+        <p>Change lead time, deployment frequency, failed deployment recovery time,
+change fail rate, deployment rework rate. Five numbers about how changes
+have historically flowed through this organization — a sensor of delivery
+<em>pattern</em>, answering &ldquo;does our recent past look like teams that ship
+safely?&rdquo; This entry describes the five-metric model DORA has published
+since 2024: the first three grouped as throughput, the last two as
+instability.</p>
+<p>The set is versioned, and the names move. &ldquo;Time to restore service&rdquo; was
+renamed <em>failed deployment recovery time</em> in 2023, narrowing it to failures
+a deployment caused rather than any outage; <em>deployment rework rate</em> arrived
+in 2024 as the actual fifth metric. Reliability was added in 2021 and is not
+one of the five — DORA&rsquo;s own history records that the report calling it &ldquo;the
+fifth metric&rdquo; was inaccurate, and files it under operational rather than
+delivery performance. A dashboard labelled &ldquo;the DORA metrics&rdquo; is dated by
+which names it uses, and comparing readings across a rename compares two
+sensors.</p>
+<h2 id="in-practice">In practice</h2>
+<p>The reading is a dashboard of the five numbers over a trailing window,
+compared against the team&rsquo;s own history rather than an industry table:</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Last quarter</th>
+<th>This quarter</th>
+<th>Trend</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Change lead time</td>
+<td>36 hours</td>
+<td>61 hours</td>
+<td>up (worse)</td>
+</tr>
+<tr>
+<td>Deployment frequency</td>
+<td>14 / week</td>
+<td>6 / week</td>
+<td>down</td>
+</tr>
+<tr>
+<td>Failed deployment recovery time</td>
+<td>45 minutes</td>
+<td>3 hours</td>
+<td>up (worse)</td>
+</tr>
+<tr>
+<td>Change fail rate</td>
+<td>4%</td>
+<td>11%</td>
+<td>up (worse)</td>
+</tr>
+<tr>
+<td>Deployment rework rate</td>
+<td>6%</td>
+<td>14%</td>
+<td>up (worse)</td>
+</tr>
+</tbody>
+</table>
+<p>Reading it well:</p>
+<ol>
+<li><strong>Read the five together.</strong> Deployment frequency falling alone might
+   be a deliberate pause; falling alongside rising failure rate and
+   lead time is a pipeline in trouble. One number is an anecdote, five
+   are a pattern.</li>
+<li><strong>Compare against the team&rsquo;s own baseline.</strong> Industry quartiles
+   tell you what other teams do, not what changed here. The trend line
+   is the signal.</li>
+<li><strong>Distrust flat perfection.</strong> Metrics that never move usually mean
+   the instrumentation is stale or the definitions quietly widened.</li>
+<li><strong>Follow a bad number to its records.</strong> The dashboard locates the
+   quarter; the deploy log and incident timeline explain it.</li>
+</ol>
+<h2 id="how-it-gets-gamed">How it gets gamed</h2>
+<p>DORA metrics are classically gameable, because every one of them can be
+moved without moving the underlying delivery health:</p>
+<ul>
+<li><strong>Batch deploys to inflate frequency.</strong> Shipping twenty small commits
+  as one &ldquo;deploy&rdquo; or splitting one change into ten trivial ones; the
+  frequency number moves either way, depending on which direction
+  flatters the dashboard.</li>
+<li><strong>Cherry-pick easy deploys.</strong> Counting only the low-risk service
+  whose pipeline is mature, while the painful path everyone actually
+  uses goes unmeasured.</li>
+<li><strong>Close incidents early.</strong> Marking an incident resolved when the page
+  stops, not when users are unaffected, buys recovery time without
+  restoring anything.</li>
+<li><strong>Redefine failure downward.</strong> If only rollbacks count as failures,
+  teams hotfix forward and the change failure rate falls by definition.</li>
+<li><strong>File rework as planned work.</strong> Deployment rework rate counts the
+  deployments that exist only to fix something already shipped. Attach
+  the hotfix to the next feature ticket and it stops counting, while
+  the rework goes on happening.</li>
+</ul>
+<p>The meta-signal is definitional drift: log the metric definitions and
+the counting rules alongside the numbers, and treat any unannounced
+change to them as a finding in itself.</p>
+<h2 id="response-playbook">Response playbook</h2>
+<p>When the dashboard degrades:</p>
+<ol>
+<li><strong>Verify the definitions first.</strong> Before acting, confirm the numbers
+   were computed the same way as last quarter. Half of all &ldquo;sudden&rdquo;
+   DORA regressions are a pipeline or counting change, not a delivery
+   change.</li>
+<li><strong>Trace the lead-time increase stage by stage.</strong> Split lead time
+   into review, build, test, and deploy waits; the longest stage is
+   the one to attack, and it is almost never the one people guess.</li>
+<li><strong>Correlate failure rate with incident records.</strong> Use <a class="body-link" href="/software-observatory/previews/pr-148/sensors/incident-correlation/">incident
+   correlation</a> to see whether failures are
+   clustering in one service or one change type before prescribing a
+   fix.</li>
+<li><strong>Lower batch size, not ambition.</strong> If deploys are failing more,
+   ship smaller changes with <a class="body-link" href="/software-observatory/previews/pr-148/sensors/canary-analysis/">canary analysis</a>
+   in front of them; do not add another approval gate, which raises
+   lead time and failure rate together.</li>
+<li><strong>Re-measure after one quarter.</strong> The dashboard lags; give any fix a
+   full window before judging it, and say so when the numbers are
+   reported.</li>
+</ol>
+<h2 id="what-it-cannot-detect">What it cannot detect</h2>
+<p>The cause of a bad number. DORA metrics locate the problem in time and
+stage; understanding it requires <a class="body-link" href="/software-observatory/previews/pr-148/sensors/decision-provenance/">decision provenance</a>
+and <a class="body-link" href="/software-observatory/previews/pr-148/sensors/incident-correlation/">incident correlation</a>. And like all metrics
+that become targets, they invite gaming — deployment frequency can be raised
+by shipping trivia.</p>
+
+                <h2 id="related-sensors">Related sensors</h2>
+        <div class="see-also-grid">
+          <a href="/software-observatory/previews/pr-148/sensors/revert-rate/" class="see-also-card">
+            <span class="see-also-type">Evolution</span>
+            <span class="see-also-title">Revert Rate</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/change-coupling/" class="see-also-card">
+            <span class="see-also-type">Evolution</span>
+            <span class="see-also-title">Change Coupling</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/time-to-repair/" class="see-also-card">
+            <span class="see-also-type">Evolution</span>
+            <span class="see-also-title">Time-to-Repair</span>
+          </a>
+        </div>
+
+        <div class="entry-categories">
+          <span class="cat-label">Categories:</span>
+          <a href="/software-observatory/previews/pr-148/families/evolution/" class="cat-link">Evolution</a>
+        </div>
+
+        <h2 id="references">References</h2>
+        <h3 class="references-subheading" id="publications">Publications</h3>
+        <ul class="reference-list">
+          <li><a href="https://dora.dev/research/2019/dora-report/2019-dora-accelerate-state-of-devops-report.pdf" class="wikilink">Accelerate: State of DevOps 2019</a> — <span class="ref-meta">Nicole Forsgren, Dustin Smith, Jez Humble, Jessie Frazelle · 2019 · observational study · DORA / Google Cloud</span></li>
+          <li><a href="https://dora.dev/research/2017/2017-state-of-devops-report.pdf" class="wikilink">2017 State of DevOps Report</a> — <span class="ref-meta">Nicole Forsgren, Jez Humble, Gene Kim, Alanna Brown, Nigel Kersten · 2017 · observational study · Puppet + DORA</span></li>
+          <li>Accelerate — <span class="ref-meta">Forsgren et al. · 2018 · controlled study</span></li>
+        </ul>
+        <h3 class="references-subheading" id="tooling">Tooling</h3>
+        <ul class="reference-list reference-tools">
+          <li><span class="ref-title"><a href="https://dora.dev" class="wikilink">DORA</a></span></li>
+          <li><span class="ref-title"><a href="https://dora.dev/research/" class="wikilink">DevOps Research Assessment</a></span><span class="ref-desc">DORA&#x27;s research assessment tool</span></li>
+        </ul>
+        <h3 class="references-subheading" id="further-reading">Further reading</h3>
+        <ul class="reference-list">
+          <li><a href="https://dora.dev/insights/dora-metrics-history/" class="wikilink">A history of DORA&#x27;s software delivery metrics</a></li>
+        </ul>
+      </div>
+    </article>
+
+    <aside class="wiki-sidebar">
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="sensor-properties">Sensor properties</h3>
+        <dl class="meta-list">
+          <dt>Family</dt>           <dd><a href="/software-observatory/previews/pr-148/families/evolution/" class="wikilink">Evolution</a></dd>
+          <dt>Oracle</dt>          <dd>Medium <span class="prop-note" title="the metrics proxy safety; they are not safety" aria-label="the metrics proxy safety; they are not safety">(?)</span></dd>
+          <dt>Independence</dt>     <dd>High <span class="prop-note" title="derived from deployment and incident records, not self-report" aria-label="derived from deployment and incident records, not self-report">(?)</span></dd>
+          <dt>Scope</dt>           <dd>System <span class="prop-note" title="organization-level delivery performance" aria-label="organization-level delivery performance">(?)</span></dd>
+          <dt>Latency</dt>         <dd>Days</dd>
+          <dt>Actionability</dt>   <dd>Guiding <span class="prop-note" title="tells you which stage of the pipeline to distrust" aria-label="tells you which stage of the pipeline to distrust">(?)</span></dd>
+          <dt>Type</dt>             <dd>Retrospective</dd>
+          <dt>Entry ID</dt>        <dd>SO-015b</dd>
+          <dt>Reviewed</dt>        <dd><span class="review-unreviewed" title="This entry is written and published, but has not yet been re-read in the editorial review pass. An absent review date is reported as absent rather than filled in.">pending</span></dd>
+        </dl>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="what-links-here">What links here</h3>
+        <ul class="backlink-list">
+          <li><a href="/software-observatory/previews/pr-148/sensors/revert-rate/">Revert Rate</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/time-to-repair/">Time-to-Repair</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="related-categories">Related categories</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-148/families/evolution/">Category: Evolution</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-148/about/">About</a> · <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-148/js/main.js"></script>
+</body>
+</html>

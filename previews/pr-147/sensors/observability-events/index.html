@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-147/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Observability Events — Software Observatory</title>
+  <meta name="description" content="Traditional monitoring says: “CPU is 82%.” Observability says: “Show me the requests that are slow, and let me figure out what those requests have in common.”…">
+  <link rel="canonical" href="/software-observatory/previews/pr-147/sensors/observability-events/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Observability Events — Software Observatory">
+  <meta property="og:description" content="Traditional monitoring says: “CPU is 82%.” Observability says: “Show me the requests that are slow, and let me figure out what those requests have in common.”…">
+  <meta property="og:url" content="/software-observatory/previews/pr-147/sensors/observability-events/">
+  <meta property="og:image" content="/software-observatory/previews/pr-147/og/cards/observability-events.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Observability Events — Software Observatory">
+  <meta name="twitter:description" content="Traditional monitoring says: “CPU is 82%.” Observability says: “Show me the requests that are slow, and let me figure out what those requests have in common.”…">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-147/og/cards/observability-events.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-147/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-147/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "TechArticle",
+        "DefinedTerm"
+      ],
+      "@id": "/software-observatory/previews/pr-147/sensors/observability-events/#entry",
+      "headline": "Observability Events",
+      "name": "Observability Events",
+      "description": "Traditional monitoring says: “CPU is 82%.” Observability says: “Show me the requests that are slow, and let me figure out what those requests have in common.” The distinction is fundamental.",
+      "termCode": "SO-006",
+      "url": "/software-observatory/previews/pr-147/sensors/observability-events/",
+      "mainEntityOfPage": "/software-observatory/previews/pr-147/sensors/observability-events/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-147/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "publisher": {
+        "@id": "/software-observatory/previews/pr-147/#organization"
+      },
+      "inDefinedTermSet": {
+        "@id": "/software-observatory/previews/pr-147/catalog/#defined-term-set"
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-147/catalog/#defined-term-set"
+      },
+      "datePublished": "2026-08-23",
+      "about": {
+        "@type": "Thing",
+        "@id": "/software-observatory/previews/pr-147/families/runtime/#defined-term-set",
+        "name": "Runtime",
+        "url": "/software-observatory/previews/pr-147/families/runtime/"
+      },
+      "keywords": "Runtime, Production Sensors",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "value": "medium",
+          "description": "shows what happened, not whether it was correct"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#independence",
+          "name": "Independence",
+          "value": "high",
+          "description": "production reality cannot be gamed by the test author (but the producer chose what to instrument)"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#scope",
+          "name": "Scope",
+          "value": "system"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "value": "seconds",
+          "description": "real-time"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#actionability",
+          "name": "Actionability",
+          "value": "exploratory",
+          "description": "you query to find the signal"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "value": "retrospective",
+          "description": "what actually happened"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-147/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Runtime",
+          "item": "/software-observatory/previews/pr-147/families/runtime/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Observability Events"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #147 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-147/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-147/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-147/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-147/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-147/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-147/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-147/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-147/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-147/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-147/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-147/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="wiki-layout">
+    <article class="signal-detail">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-147/catalog/">Catalog</a> › <a href="/software-observatory/previews/pr-147/families/runtime/">Runtime</a> › Observability Events</p>
+
+      <header class="signal-detail-header">
+        <h1 class="signal-detail-title">Observability Events</h1>
+        <div class="signal-detail-meta">
+          <span class="tag tag-family">Runtime</span>
+          <span class="tag tag-confidence">Medium oracle</span>
+          <span class="tag tag-type">Retrospective</span>
+        </div>
+      </header>
+
+      <div class="signal-detail-body">
+        <p>Traditional monitoring says: <em>&ldquo;CPU is 82%.&rdquo;</em> Observability says: <em>&ldquo;Show me
+the requests that are slow, and let me figure out what those requests have
+in common.&rdquo;</em></p>
+<p>The distinction is fundamental. Monitoring collects predetermined health
+metrics. Observability preserves enough information to ask questions you
+didn&rsquo;t know you would need to ask. The implementation emphasizes wide
+structured events, high cardinality, high dimensionality, retained context,
+and exploratory querying.</p>
+<h2 id="the-event-as-the-fundamental-unit">The event as the fundamental unit</h2>
+<p>Make events the center rather than metrics. A metric is a pre-aggregation of
+reality. An event is a fact about one execution, with enough context to
+investigate it.</p>
+<pre><code>checkout.completed
+  user_id:        u_8473
+  cart_id:        c_29201
+  order_id:       o_14829
+  deployment:     deploy-2026-08-22-a
+  git_sha:        a1b2c3d
+  experiment:     checkout_v2
+  payment_provider: stripe
+  duration:       1.8s
+  db_queries:     23
+  cache_hits:     7
+  region:         us-east-1
+</code></pre>
+<p>The sensor isn&rsquo;t <code>checkout latency = 1.8s</code>. It&rsquo;s: <em>here is an observable fact
+about one execution, with enough context to investigate it.</em> That&rsquo;s a much
+richer sensor.</p>
+<blockquote>
+<p>The Honeycomb conception of observability provides the other half of the
+sensor model: don&rsquo;t merely collect predetermined health metrics; preserve
+enough information to ask questions you didn&rsquo;t know you would need to ask.</p>
+</blockquote>
+<h2 id="in-practice">In practice</h2>
+<p>A typical reading starts from a symptom and slices until one dimension
+explains it. &ldquo;p99 checkout duration is up&rdquo; becomes a query grouped by
+deployment and payment provider:</p>
+<table>
+<thead>
+<tr>
+<th>deployment</th>
+<th>provider</th>
+<th>p99 duration</th>
+<th>requests</th>
+<th>error rate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>deploy-08-21-a</td>
+<td>stripe</td>
+<td>1.9s</td>
+<td>41,203</td>
+<td>0.1%</td>
+</tr>
+<tr>
+<td>deploy-08-22-a</td>
+<td>stripe</td>
+<td>4.7s</td>
+<td>39,877</td>
+<td>0.9%</td>
+</tr>
+<tr>
+<td>deploy-08-22-a</td>
+<td>paypal</td>
+<td>2.0s</td>
+<td>12,044</td>
+<td>0.1%</td>
+</tr>
+</tbody>
+</table>
+<p>The symptom exists in one deployment, on one provider. The cohort is the
+finding.</p>
+<p>Reading it well:</p>
+<ul>
+<li><strong>Slice until the variance lives in one dimension.</strong> If every dimension
+  shows the same degradation, the cause is below the event layer: hosts,
+  network, a shared dependency. If one value carries it, you have a
+  handle.</li>
+<li><strong>Keep the identifying fields.</strong> <code>user_id</code>, <code>request_id</code>, and <code>git_sha</code>
+  are what let an event join to a complaint, a trace, and a deploy.
+  Events stripped of identifiers aggregate back into telemetry.</li>
+<li><strong>Sample with suspicion.</strong> If events are sampled, know which ones
+  survive. Head sampling drops errors at the same rate as successes, so
+  the worst executions become precisely the ones you cannot see.</li>
+</ul>
+<h2 id="how-it-gets-gamed">How it gets gamed</h2>
+<p>Events are emitted by the same teams that ship the code, so the sensor
+can be degraded at the source:</p>
+<ul>
+<li><strong>Sampling away the inconvenient.</strong> Head-based sampling drops errors at
+  the same rate as successes, so the worst executions are precisely the
+  ones missing when you go looking. Tail-based sampling that keeps
+  errors is the honest configuration.</li>
+<li><strong>Cardinality starvation.</strong> &ldquo;Stop emitting user_id, it&rsquo;s blowing up
+  our bill&rdquo; is sometimes a real cost decision and sometimes a way to
+  make a per-user abuse pattern unqueryable. Every dropped field is a
+  question the team can no longer answer.</li>
+<li><strong>Instrumentation theater.</strong> A service that emits one <code>request.done</code>
+  event with no fields technically participates in observability while
+  telling you nothing. Coverage counts without field checks reward this.</li>
+</ul>
+<p>The meta-signal is event volume per service, tracked over time. A service
+whose event rate falls after a contentious incident is a sensor being
+turned down.</p>
+<h2 id="response-playbook">Response playbook</h2>
+<p>When an event query reveals a bad cohort, for example one deployment
+and one provider carrying all the errors:</p>
+<ol>
+<li><strong>Reproduce the query and pin the cohort.</strong> Save the exact query, the
+   time window, and the filter values that isolate the problem. A cohort
+   you cannot re-derive is a rumor.</li>
+<li><strong>Pull raw events for the victims.</strong> Download a handful of the
+   failing events with their identifiers and join them to
+   <a class="body-link" href="/software-observatory/previews/pr-147/sensors/distributed-traces/">distributed traces</a> and error reports; the
+   fields on one bad event usually name the mechanism.</li>
+<li><strong>Confirm the blast radius.</strong> Count affected users, requests, and
+   regions from the same events before deciding between a fix-forward
+   and a rollback.</li>
+<li><strong>Contain via the deploy, not the symptom.</strong> If the cohort correlates
+   with a deployment or a feature flag, revert or disable it. Fixing
+   forward while the cohort keeps growing is paying interest.</li>
+<li><strong>Close the instrumentation gap.</strong> If the investigation stalled on a
+   missing field, add it before the next incident, while the pain is
+   still the argument.</li>
+</ol>
+<h2 id="what-it-cannot-detect">What it cannot detect</h2>
+<p>Observability events tell you <em>what happened</em>, not <em>whether it was correct</em>.
+Determining correctness requires <a class="body-link" href="/software-observatory/previews/pr-147/sensors/runtime-invariants/">invariants</a> layered
+on top of events. Events without invariants are raw data, not yet sensors of
+correctness.</p>
+
+                <h2 id="related-sensors">Related sensors</h2>
+        <div class="see-also-grid">
+          <a href="/software-observatory/previews/pr-147/sensors/runtime-invariants/" class="see-also-card">
+            <span class="see-also-type">Invariants</span>
+            <span class="see-also-title">Runtime Invariants</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/distributed-traces/" class="see-also-card">
+            <span class="see-also-type">Runtime</span>
+            <span class="see-also-title">Distributed Traces</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/real-user-monitoring/" class="see-also-card">
+            <span class="see-also-type">Runtime</span>
+            <span class="see-also-title">Real User Monitoring (RUM)</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/families/change/" class="see-also-card">
+            <span class="see-also-type">Family</span>
+            <span class="see-also-title">Change</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/families/evolution/" class="see-also-card">
+            <span class="see-also-type">Family</span>
+            <span class="see-also-title">Evolution</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/families/comprehension/" class="see-also-card">
+            <span class="see-also-type">Family</span>
+            <span class="see-also-title">Human Comprehension</span>
+          </a>
+        </div>
+
+        <div class="entry-categories">
+          <span class="cat-label">Categories:</span>
+          <a href="/software-observatory/previews/pr-147/families/runtime/" class="cat-link">Runtime</a>
+          <a href="/software-observatory/previews/pr-147/categories/#production-sensors" class="cat-link">Production Sensors</a>
+        </div>
+
+        <h2 id="references">References</h2>
+        <h3 class="references-subheading" id="publications">Publications</h3>
+        <ul class="reference-list">
+          <li><a href="https://acmsocc.org/2022/assets/slides/95.pdf" class="wikilink">How to Fight Production Incidents? An Empirical Study on a Large-scale Cloud Service</a> — <span class="ref-meta">Supriyo Ghosh, Manish Shetty, Chetan Bansal, Suman Nath · 2022 · observational study · ACM SoCC &#x27;22</span></li>
+          <li><a href="https://www.barroso.org/publications/TheTailAtScale.pdf" class="wikilink">The Tail at Scale</a> — <span class="ref-meta">Jeffrey Dean, Luiz André Barroso · 2013 · case study · Communications of the ACM 56(2)</span></li>
+          <li>Observability Engineering — <span class="ref-meta">Charity Majors et al. · 2022 · argument</span></li>
+        </ul>
+        <h3 class="references-subheading" id="tooling">Tooling</h3>
+        <ul class="reference-list reference-tools">
+          <li><span class="ref-title"><a href="https://opentelemetry.io" class="wikilink">OpenTelemetry</a></span><span class="ref-desc">Open-standard observability instrumentation</span></li>
+          <li><span class="ref-title"><a href="https://www.honeycomb.io" class="wikilink">Honeycomb</a></span><span class="ref-desc">Observability platform for high-cardinality events</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <aside class="wiki-sidebar">
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="sensor-properties">Sensor properties</h3>
+        <dl class="meta-list">
+          <dt>Family</dt>           <dd><a href="/software-observatory/previews/pr-147/families/runtime/" class="wikilink">Runtime</a></dd>
+          <dt>Oracle</dt>          <dd>Medium <span class="prop-note" title="shows what happened, not whether it was correct" aria-label="shows what happened, not whether it was correct">(?)</span></dd>
+          <dt>Independence</dt>     <dd>High <span class="prop-note" title="production reality cannot be gamed by the test author (but the producer chose what to instrument)" aria-label="production reality cannot be gamed by the test author (but the producer chose what to instrument)">(?)</span></dd>
+          <dt>Scope</dt>           <dd>System</dd>
+          <dt>Latency</dt>         <dd>Seconds <span class="prop-note" title="real-time" aria-label="real-time">(?)</span></dd>
+          <dt>Actionability</dt>   <dd>Exploratory <span class="prop-note" title="you query to find the signal" aria-label="you query to find the signal">(?)</span></dd>
+          <dt>Type</dt>             <dd>Retrospective <span class="prop-note" title="what actually happened" aria-label="what actually happened">(?)</span></dd>
+          <dt>Entry ID</dt>        <dd>SO-006</dd>
+          <dt>Reviewed</dt>        <dd><span class="review-unreviewed" title="This entry is written and published, but has not yet been re-read in the editorial review pass. An absent review date is reported as absent rather than filled in.">pending</span></dd>
+        </dl>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="what-links-here">What links here</h3>
+        <ul class="backlink-list">
+          <li><a href="/software-observatory/previews/pr-147/sensors/business-invariants/">Business Invariants</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/continuous-profiling/">Continuous Profiling</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/database-invariants/">Database Invariants</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/distributed-traces/">Distributed Traces</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/incident-correlation/">Incident Correlation</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/live-service-graph/">Live Service Graph Discovery</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/load-testing/">Load Testing</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/real-user-monitoring/">Real User Monitoring (RUM)</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/resource-telemetry/">Resource Telemetry</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/runtime-invariants/">Runtime Invariants</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+        </ul>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="in-the-playbook">In the playbook</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-147/playbook/starting-from-green-ci/">You have green CI and nothing from production</a>
+          <li><a href="/software-observatory/previews/pr-147/playbook/still-surprised/">You have everything and still get surprised</a>
+        </ul>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="related-categories">Related categories</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-147/families/runtime/">Category: Runtime</a></li>
+          <li><a href="/software-observatory/previews/pr-147/categories/#production-sensors">Category: Production Sensors</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-147/about/">About</a> · <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-147/js/main.js"></script>
+</body>
+</html>

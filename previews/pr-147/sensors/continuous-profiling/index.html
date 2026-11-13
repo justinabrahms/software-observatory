@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-147/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Continuous Profiling — Software Observatory</title>
+  <meta name="description" content="Where did computation actually go? Not “CPU is 82%” but “this function consumed 40% of the time in these specific requests.” A sensor of resource reality.">
+  <link rel="canonical" href="/software-observatory/previews/pr-147/sensors/continuous-profiling/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Continuous Profiling — Software Observatory">
+  <meta property="og:description" content="Where did computation actually go? Not “CPU is 82%” but “this function consumed 40% of the time in these specific requests.” A sensor of resource reality.">
+  <meta property="og:url" content="/software-observatory/previews/pr-147/sensors/continuous-profiling/">
+  <meta property="og:image" content="/software-observatory/previews/pr-147/og/cards/continuous-profiling.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Continuous Profiling — Software Observatory">
+  <meta name="twitter:description" content="Where did computation actually go? Not “CPU is 82%” but “this function consumed 40% of the time in these specific requests.” A sensor of resource reality.">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-147/og/cards/continuous-profiling.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-147/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-147/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "TechArticle",
+        "DefinedTerm"
+      ],
+      "@id": "/software-observatory/previews/pr-147/sensors/continuous-profiling/#entry",
+      "headline": "Continuous Profiling",
+      "name": "Continuous Profiling",
+      "description": "Where did computation actually go? Not “CPU is 82%” but “this function consumed 40% of the time in these specific requests.” A sensor of resource reality.",
+      "termCode": "SO-006c",
+      "url": "/software-observatory/previews/pr-147/sensors/continuous-profiling/",
+      "mainEntityOfPage": "/software-observatory/previews/pr-147/sensors/continuous-profiling/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-147/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "publisher": {
+        "@id": "/software-observatory/previews/pr-147/#organization"
+      },
+      "inDefinedTermSet": {
+        "@id": "/software-observatory/previews/pr-147/catalog/#defined-term-set"
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-147/catalog/#defined-term-set"
+      },
+      "datePublished": "2026-08-23",
+      "dateModified": "2026-09-03",
+      "about": {
+        "@type": "Thing",
+        "@id": "/software-observatory/previews/pr-147/families/runtime/#defined-term-set",
+        "name": "Runtime",
+        "url": "/software-observatory/previews/pr-147/families/runtime/"
+      },
+      "keywords": "Runtime, Production Sensors",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "value": "medium",
+          "description": "shows where resources go, not whether it's correct"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#independence",
+          "name": "Independence",
+          "value": "high",
+          "description": "production samples"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#scope",
+          "name": "Scope",
+          "value": "system"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "value": "seconds"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#actionability",
+          "name": "Actionability",
+          "value": "exploratory",
+          "description": "you profile to find bottlenecks"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "value": "retrospective"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-147/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Runtime",
+          "item": "/software-observatory/previews/pr-147/families/runtime/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Continuous Profiling"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #147 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-147/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-147/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-147/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-147/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-147/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-147/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-147/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-147/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-147/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-147/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-147/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="wiki-layout">
+    <article class="signal-detail">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-147/catalog/">Catalog</a> › <a href="/software-observatory/previews/pr-147/families/runtime/">Runtime</a> › Continuous Profiling</p>
+
+      <header class="signal-detail-header">
+        <h1 class="signal-detail-title">Continuous Profiling</h1>
+        <div class="signal-detail-meta">
+          <span class="tag tag-family">Runtime</span>
+          <span class="tag tag-confidence">Medium oracle</span>
+          <span class="tag tag-type">Retrospective</span>
+        </div>
+      </header>
+
+      <div class="signal-detail-body">
+        <p>Where did computation actually go? Not &ldquo;CPU is 82%&rdquo; but &ldquo;this function
+consumed 40% of the time in these specific requests.&rdquo; A sensor of <em>resource
+reality</em>.</p>
+<p>Continuous profiling samples production execution to show where CPU, memory,
+allocations, and lock contention actually occur — not in synthetic
+benchmarks, but in real traffic.</p>
+<h2 id="in-practice">In practice</h2>
+<p>A reading is a flame graph for one service over the window since the
+last deploy, next to the same graph for the window before it. Each row
+sits inside the frame above it, and a frame&rsquo;s width is its share of all
+samples collected — its own work plus everything it called. A frame is
+therefore never wider than its parent, and a frame&rsquo;s own work is the
+width it does not pass down to a child.</p>
+<pre><code>$ pprof -http=:8080 cpu.before.pb.gz cpu.after.pb.gz
+
+before  (7.02s of samples)
+  ██████████                        31.0%  api/serialize.renderPayload
+  █████                             15.0%  encoding/json.Decode
+  ██                                 6.0%  runtime.mallocgc
+
+after   (7.38s of samples)
+  ███████████████████               58.1%  api/serialize.renderPayload
+  █████████████                     40.5%  encoding/json.Decode
+  ████                              12.1%  runtime.mallocgc
+</code></pre>
+<p>Subtracting each row from the one above it separates a frame&rsquo;s own work
+from its subtree&rsquo;s — the same split <code>pprof -top</code> prints as <code>flat</code> and
+<code>cum</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Frame</th>
+<th>Before (own / subtree)</th>
+<th>After (own / subtree)</th>
+<th>Reading</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>encoding/json.Decode</td>
+<td>9.0% / 15.0%</td>
+<td>28.5% / 40.5%</td>
+<td>tripled; the payload shape changed</td>
+</tr>
+<tr>
+<td>api/serialize.renderPayload</td>
+<td>16.0% / 31.0%</td>
+<td>17.6% / 58.1%</td>
+<td>its own work barely moved</td>
+</tr>
+<tr>
+<td>runtime.mallocgc</td>
+<td>6.0% / 6.0%</td>
+<td>12.1% / 12.1%</td>
+<td>allocation follows the JSON it sits under</td>
+</tr>
+</tbody>
+</table>
+<p>Reading it well:</p>
+<ul>
+<li><strong>Anchor to a baseline.</strong> <code>renderPayload</code> holds 58.1% of samples after
+  the deploy, which looks like the regression until the earlier graph
+  shows it already held 31.0%. Without the second profile there is
+  nothing to subtract and no way to tell a new cost from an old one.</li>
+<li><strong>The widest leaf is rarely where the fix goes.</strong> <code>Decode</code> tripled
+  while <code>renderPayload</code>&rsquo;s own work went 16.0% → 17.6%: the caller is not
+  doing more, it is handing down more. Walk up from the hot leaf until
+  you reach a frame whose behaviour actually changed.</li>
+<li><strong>Pick the profile type from the symptom.</strong> CPU profiles explain
+  latency, allocation profiles explain memory growth, and lock profiles
+  explain stalls that appear in neither. A service that is slow but not
+  busy looks unremarkable in the graph above.</li>
+<li><strong>Overlay deploy markers before reading frames.</strong> A plateau that
+  begins at a deploy boundary narrows the suspects to one change set,
+  which is a smaller search than any frame-by-frame reading.</li>
+</ul>
+<h2 id="how-it-gets-gamed">How it gets gamed</h2>
+<p>Production profiles are hard to fake, but easy to lose:</p>
+<ul>
+<li><strong>Agent off, problem gone.</strong> Profiling agents are the first casualty of a
+  resource dispute: &ldquo;the profiler costs 5% CPU, disable it.&rdquo; Once the
+  agent is off, every regression it would have shown simply does not
+  exist. Track agent coverage per service like an uptime number.</li>
+<li><strong>Benchmarks instead of production.</strong> A passing benchmark proves the
+  benchmark&rsquo;s workload is fine, not production&rsquo;s. Swapping synthetic
+  numbers in for production profiles is gaming by substitution.</li>
+<li><strong>Optimizing the frame, not the workload.</strong> Once people know which
+  frames get scrutinized, effort concentrates on making those frames
+  narrow while the real cost moves into serialization, allocation, or
+  lock waits that nobody is diffing.</li>
+</ul>
+<p>The meta-signal is profiling coverage: the share of services whose agent
+is actually running. If it falls, the sensor is quietly going dark.</p>
+<h2 id="response-playbook">Response playbook</h2>
+<p>When a profile shows a regression or a resource spike:</p>
+<ol>
+<li><strong>Decide revert-or-fix before optimizing.</strong> If the plateau begins at
+   a deploy boundary, reverting that change set and re-profiling is
+   cheaper than understanding it, and <a class="body-link" href="/software-observatory/previews/pr-147/sensors/canary-analysis/">canary
+   analysis</a> makes the same call on a smaller
+   blast radius. Optimizing a regression you could have reverted is the
+   expensive path.</li>
+<li><strong>Charge the cost to a request.</strong> Join the hot frames to
+   <a class="body-link" href="/software-observatory/previews/pr-147/sensors/distributed-traces/">distributed traces</a> or
+   <a class="body-link" href="/software-observatory/previews/pr-147/sensors/observability-events/">observability events</a> to find which
+   endpoints and payloads feed the hotspot. <code>Decode</code> at 28.5% does not
+   say which caller to fix; the trace says which route grew.</li>
+<li><strong>Change one frame, then re-profile.</strong> Optimizations interact —
+   removing an allocation can move cost into lock contention rather than
+   deleting it. Without a profile between each change you cannot
+   attribute the improvement to any of them.</li>
+<li><strong>Prefer one wide frame to several narrow ones.</strong> Not because the
+   arithmetic favours it — four 7% frames are 28%, near enough the same
+   — but because every fix costs the same review, deploy and re-profile
+   cycle whatever its size. The wide frame buys that percentage once
+   instead of four times.</li>
+</ol>
+<h2 id="what-it-cannot-detect">What it cannot detect</h2>
+<p>Profiling shows resource consumption, not <a class="body-link" href="/software-observatory/previews/pr-147/sensors/runtime-invariants/">correctness</a>.
+A function that consumes 40% of CPU may be doing the wrong thing efficiently.</p>
+
+                <h2 id="related-sensors">Related sensors</h2>
+        <div class="see-also-grid">
+          <a href="/software-observatory/previews/pr-147/sensors/observability-events/" class="see-also-card">
+            <span class="see-also-type">Runtime</span>
+            <span class="see-also-title">Observability Events</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/distributed-traces/" class="see-also-card">
+            <span class="see-also-type">Runtime</span>
+            <span class="see-also-title">Distributed Traces</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/resource-telemetry/" class="see-also-card">
+            <span class="see-also-type">Runtime</span>
+            <span class="see-also-title">Resource Telemetry</span>
+          </a>
+        </div>
+
+        <div class="entry-categories">
+          <span class="cat-label">Categories:</span>
+          <a href="/software-observatory/previews/pr-147/families/runtime/" class="cat-link">Runtime</a>
+          <a href="/software-observatory/previews/pr-147/categories/#production-sensors" class="cat-link">Production Sensors</a>
+        </div>
+
+        <h2 id="references">References</h2>
+        <h3 class="references-subheading" id="publications">Publications</h3>
+        <ul class="reference-list">
+          <li><a href="https://arxiv.org/abs/2606.18377" class="wikilink">Exploring Statistical Change Point Detection Techniques for Performance Anomaly Detection at Mozilla</a> — <span class="ref-meta">Mohamed Bilel Besbes, Gregory Mierzwinski, Suhaib Mujahid, Philipp Leitner, Alexander Serebrenik, Dave Hunt, Diego Elias Costa · 2026 · controlled study · arXiv preprint</span></li>
+          <li><a href="https://tangchq74.github.io/FBDetect-SOSP24.pdf" class="wikilink">FBDetect: Catching Tiny Performance Regressions at Hyperscale through In-Production Monitoring</a> — <span class="ref-meta">Dong Young Yoon, Yang Wang, Miao Yu, Elvis Huang, Juan Ignacio Jones, Abhinay Kukkadapu, Osman Kocas, Jonathan Wiepert, Kapil Goenka, Sherry Chen, Yanjun Lin, Zhihui Huang, Jocelyn Kong, Michael Chow, Chunqiang Tang · 2024 · case study · SOSP &#x27;24</span></li>
+        </ul>
+        <h3 class="references-subheading" id="tooling">Tooling</h3>
+        <ul class="reference-list reference-tools">
+          <li><span class="ref-title"><a href="https://pyroscope.io" class="wikilink">Pyroscope</a></span><span class="ref-desc">Continuous profiling platform</span></li>
+          <li><span class="ref-title"><a href="https://github.com/google/pprof" class="wikilink">pprof</a></span><span class="ref-desc">Go profiling tool</span></li>
+          <li><span class="ref-title"><a href="https://www.parca.dev" class="wikilink">Parca</a></span><span class="ref-desc">Continuous profiling for Kubernetes</span></li>
+          <li><span class="ref-title"><a href="https://docs.datadoghq.com/profiler" class="wikilink">Datadog Profiler</a></span><span class="ref-desc">Always-on profiling in Datadog</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <aside class="wiki-sidebar">
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="sensor-properties">Sensor properties</h3>
+        <dl class="meta-list">
+          <dt>Family</dt>           <dd><a href="/software-observatory/previews/pr-147/families/runtime/" class="wikilink">Runtime</a></dd>
+          <dt>Oracle</dt>          <dd>Medium <span class="prop-note" title="shows where resources go, not whether it&#x27;s correct" aria-label="shows where resources go, not whether it&#x27;s correct">(?)</span></dd>
+          <dt>Independence</dt>     <dd>High <span class="prop-note" title="production samples" aria-label="production samples">(?)</span></dd>
+          <dt>Scope</dt>           <dd>System</dd>
+          <dt>Latency</dt>         <dd>Seconds</dd>
+          <dt>Actionability</dt>   <dd>Exploratory <span class="prop-note" title="you profile to find bottlenecks" aria-label="you profile to find bottlenecks">(?)</span></dd>
+          <dt>Type</dt>             <dd>Retrospective</dd>
+          <dt>Entry ID</dt>        <dd>SO-006c</dd>
+          <dt>Reviewed</dt>        <dd>2026-09 <span class="review-age" title="Age measured against 2026-11-13, the newest date in the catalog. The build never uses the wall clock, so this page is byte-identical between builds.">— 2 months ago</span></dd>
+        </dl>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="what-links-here">What links here</h3>
+        <ul class="backlink-list">
+          <li><a href="/software-observatory/previews/pr-147/sensors/distributed-traces/">Distributed Traces</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/feature-flag-exposure/">Feature Flag Exposure Telemetry</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/live-chaos-experiments/">Live Chaos Experiments</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/live-service-graph/">Live Service Graph Discovery</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/resource-telemetry/">Resource Telemetry</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/synthetic-monitoring/">Synthetic Monitoring</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="related-categories">Related categories</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-147/families/runtime/">Category: Runtime</a></li>
+          <li><a href="/software-observatory/previews/pr-147/categories/#production-sensors">Category: Production Sensors</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-147/about/">About</a> · <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-147/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-147/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Pre-Promotion Invariant Gates — Software Observatory</title>
+  <meta name="description" content="Invariants checked at the moment of promotion, before a change can reach users: migrations must be backward-compatible, no PII column may be added without an…">
+  <link rel="canonical" href="/software-observatory/previews/pr-147/sensors/pre-promotion-invariant-gates/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Pre-Promotion Invariant Gates — Software Observatory">
+  <meta property="og:description" content="Invariants checked at the moment of promotion, before a change can reach users: migrations must be backward-compatible, no PII column may be added without an…">
+  <meta property="og:url" content="/software-observatory/previews/pr-147/sensors/pre-promotion-invariant-gates/">
+  <meta property="og:image" content="/software-observatory/previews/pr-147/og/cards/pre-promotion-invariant-gates.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pre-Promotion Invariant Gates — Software Observatory">
+  <meta name="twitter:description" content="Invariants checked at the moment of promotion, before a change can reach users: migrations must be backward-compatible, no PII column may be added without an…">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-147/og/cards/pre-promotion-invariant-gates.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-147/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-147/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "TechArticle",
+        "DefinedTerm"
+      ],
+      "@id": "/software-observatory/previews/pr-147/sensors/pre-promotion-invariant-gates/#entry",
+      "headline": "Pre-Promotion Invariant Gates",
+      "name": "Pre-Promotion Invariant Gates",
+      "description": "Invariants checked at the moment of promotion, before a change can reach users: migrations must be backward-compatible, no PII column may be added without an encryption flag, the new schema must…",
+      "termCode": "SO-013b",
+      "url": "/software-observatory/previews/pr-147/sensors/pre-promotion-invariant-gates/",
+      "mainEntityOfPage": "/software-observatory/previews/pr-147/sensors/pre-promotion-invariant-gates/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-147/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "publisher": {
+        "@id": "/software-observatory/previews/pr-147/#organization"
+      },
+      "inDefinedTermSet": {
+        "@id": "/software-observatory/previews/pr-147/catalog/#defined-term-set"
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-147/catalog/#defined-term-set"
+      },
+      "datePublished": "2026-08-23",
+      "about": {
+        "@type": "Thing",
+        "@id": "/software-observatory/previews/pr-147/families/invariants/#defined-term-set",
+        "name": "Invariants",
+        "url": "/software-observatory/previews/pr-147/families/invariants/"
+      },
+      "keywords": "Invariants, Deployment Safety",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "value": "high",
+          "description": "the rule either holds for this change or it does not"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#independence",
+          "name": "Independence",
+          "value": "high",
+          "description": "enforced by the pipeline, not the team shipping the change"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#scope",
+          "name": "Scope",
+          "value": "system"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "value": "minutes"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#actionability",
+          "name": "Actionability",
+          "value": "blocking"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "value": "predictive"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-147/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Invariants",
+          "item": "/software-observatory/previews/pr-147/families/invariants/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Pre-Promotion Invariant Gates"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #147 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-147/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-147/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-147/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-147/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-147/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-147/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-147/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-147/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-147/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-147/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-147/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="wiki-layout">
+    <article class="signal-detail">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-147/catalog/">Catalog</a> › <a href="/software-observatory/previews/pr-147/families/invariants/">Invariants</a> › Pre-Promotion Invariant Gates</p>
+
+      <header class="signal-detail-header">
+        <h1 class="signal-detail-title">Pre-Promotion Invariant Gates</h1>
+        <div class="signal-detail-meta">
+          <span class="tag tag-family">Invariants</span>
+          <span class="tag tag-confidence">High oracle</span>
+          <span class="tag tag-type">Predictive</span>
+        </div>
+      </header>
+
+      <div class="signal-detail-body">
+        <p>Invariants checked at the moment of promotion, before a change can reach
+users: migrations must be backward-compatible, no PII column may be added
+without an encryption flag, the new schema must accept every message the old
+one could. Where <a class="body-link" href="/software-observatory/previews/pr-147/sensors/canary-analysis/">canary analysis</a> watches behavior
+diverge on real traffic, these gates refuse the rollout outright when a
+declared rule is violated.</p>
+<h2 id="in-practice">In practice</h2>
+<p>A pre-promotion gate reading is a policy verdict at deploy time, before
+any traffic moves. With a tool like OPA or Kyverno, the promotion step
+prints the violated rule and refuses to continue:</p>
+<pre><code>gate: deny migration-not-backward-compatible
+change: deploy/api v2.41.0
+violation: migration 20260823_add_status.sql drops column
+           &quot;orders.legacy_state&quot;; old pods still read it.
+result: PROMOTION BLOCKED
+</code></pre>
+<p>The verdict is binary and the output names the invariant, so the reading
+is unambiguous. Habits that keep it useful:</p>
+<ol>
+<li><strong>Read the rule name first, the diff second.</strong> The gate tells you
+   which declared invariant failed. The fix usually follows directly:
+   make the migration additive, ship the drop in a later release.</li>
+<li><strong>A blocked promotion is cheap; an unblocked violation is not.</strong>
+   The gate firing at promotion is the sensor doing its job. The cost
+   to compare against is the same change caught by
+   <a class="body-link" href="/software-observatory/previews/pr-147/sensors/canary-analysis/">canary analysis</a> or by users.</li>
+<li><strong>Watch how often the gate fires.</strong> A rule that blocks every other
+   deploy is either catching real drift or is written against how the
+   team actually works. Both deserve attention; only one is fixed by
+   editing the rule.</li>
+<li><strong>Note what the gate did not check.</strong> The absence of a rule is
+   invisible in the output. The invariants list itself is the artifact
+   to review.</li>
+</ol>
+<h2 id="how-it-gets-gamed">How it gets gamed</h2>
+<p>The gate enforces declared rules, so the gaming happens at declaration
+and exception time:</p>
+<ul>
+<li><strong>Exception inflation.</strong> Every rule grows an exceptions list, and the
+  exceptions outlive the emergencies that justified them. A gate with a
+  long standing exception file is enforcing the rules minus the parts
+  the team found inconvenient.</li>
+<li><strong>Rule wording as evasion.</strong> When a promotion blocks, the fast path
+  is editing the policy until the change passes: narrowing &ldquo;no dropped
+  columns&rdquo; to &ldquo;no dropped columns except in orders.&rdquo; The gate still
+  reads as enforced while covering less.</li>
+<li><strong>Promoting outside the gate.</strong> A hotfix path, a manual deploy, or a
+  different pipeline that skips the policy step. The gate protects the
+  front door, and changes start leaving through the side.</li>
+</ul>
+<p>The meta-signal is the exception count per rule and how long exceptions
+live. Permanent exceptions are rule deletions wearing a badge.</p>
+<h2 id="response-playbook">Response playbook</h2>
+<p>When a pre-promotion gate blocks a change, or its output loses trust:</p>
+<ol>
+<li><strong>Read the violated invariant and fix the change, not the gate.</strong>
+   Most blocks are repairable at source: make the migration additive,
+   split the schema change from the deploy, add the missing flag.</li>
+<li><strong>If the rule is wrong, change it in a reviewed policy commit.</strong>
+   Rule edits need the same scrutiny as code, or the gate becomes
+   negotiable at deploy time, which is the worst time to negotiate.</li>
+<li><strong>Grant exceptions with an expiry.</strong> If a real emergency requires
+   bypassing the gate, record it with an owner and a date. Expired
+   exceptions should fail loudly, not lapse silently.</li>
+<li><strong>After any incident, ask which invariant was missing.</strong> If a
+   failure slipped through promotion, the gap is a rule nobody
+   declared. Add it, and let the gate list grow from incidents rather
+   than from guesses.</li>
+</ol>
+<h2 id="what-it-cannot-detect">What it cannot detect</h2>
+<p>Violations of rules nobody declared, and rules whose declaration is wrong.
+The gate is only as good as the invariant list, which is why the list itself
+deserves <a class="body-link" href="/software-observatory/previews/pr-147/sensors/independent-review/">independent review</a>.</p>
+
+                <h2 id="related-sensors">Related sensors</h2>
+        <div class="see-also-grid">
+          <a href="/software-observatory/previews/pr-147/sensors/runtime-invariants/" class="see-also-card">
+            <span class="see-also-type">Invariants</span>
+            <span class="see-also-title">Runtime Invariants</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/canary-analysis/" class="see-also-card">
+            <span class="see-also-type">Change</span>
+            <span class="see-also-title">Canary Analysis</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/smoke-tests/" class="see-also-card">
+            <span class="see-also-type">Behavioral</span>
+            <span class="see-also-title">Smoke Tests</span>
+          </a>
+        </div>
+
+        <div class="entry-categories">
+          <span class="cat-label">Categories:</span>
+          <a href="/software-observatory/previews/pr-147/families/invariants/" class="cat-link">Invariants</a>
+          <a href="/software-observatory/previews/pr-147/categories/#deployment-safety" class="cat-link">Deployment Safety</a>
+        </div>
+
+        <h2 id="references">References</h2>
+        <h3 class="references-subheading" id="tooling">Tooling</h3>
+        <ul class="reference-list reference-tools">
+          <li><span class="ref-title"><a href="https://open-policy-agent.github.io/gatekeeper/" class="wikilink">OPA Gatekeeper</a></span><span class="ref-desc">Kubernetes policy enforcement via Open Policy Agent</span></li>
+          <li><span class="ref-title"><a href="https://kyverno.io" class="wikilink">Kyverno</a></span><span class="ref-desc">Kubernetes-native policy management</span></li>
+          <li><span class="ref-title"><a href="https://www.conftest.dev" class="wikilink">Conftest</a></span><span class="ref-desc">Policy testing for structured data</span></li>
+          <li><span class="ref-title"><a href="https://developer.hashicorp.com/sentinel" class="wikilink">HashiCorp Sentinel</a></span><span class="ref-desc">Policy-as-code for Terraform</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <aside class="wiki-sidebar">
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="sensor-properties">Sensor properties</h3>
+        <dl class="meta-list">
+          <dt>Family</dt>           <dd><a href="/software-observatory/previews/pr-147/families/invariants/" class="wikilink">Invariants</a></dd>
+          <dt>Oracle</dt>          <dd>High <span class="prop-note" title="the rule either holds for this change or it does not" aria-label="the rule either holds for this change or it does not">(?)</span></dd>
+          <dt>Independence</dt>     <dd>High <span class="prop-note" title="enforced by the pipeline, not the team shipping the change" aria-label="enforced by the pipeline, not the team shipping the change">(?)</span></dd>
+          <dt>Scope</dt>           <dd>System</dd>
+          <dt>Latency</dt>         <dd>Minutes</dd>
+          <dt>Actionability</dt>   <dd>Blocking</dd>
+          <dt>Type</dt>             <dd>Predictive</dd>
+          <dt>Entry ID</dt>        <dd>SO-013b</dd>
+          <dt>Reviewed</dt>        <dd><span class="review-unreviewed" title="This entry is written and published, but has not yet been re-read in the editorial review pass. An absent review date is reported as absent rather than filled in.">pending</span></dd>
+        </dl>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="what-links-here">What links here</h3>
+        <ul class="backlink-list">
+          <li><a href="/software-observatory/previews/pr-147/sensors/smoke-tests/">Smoke Tests</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="related-categories">Related categories</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-147/families/invariants/">Category: Invariants</a></li>
+          <li><a href="/software-observatory/previews/pr-147/categories/#deployment-safety">Category: Deployment Safety</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-147/about/">About</a> · <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-147/js/main.js"></script>
+</body>
+</html>

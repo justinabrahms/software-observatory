@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-148/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Shadow Traffic — Software Observatory</title>
+  <meta name="description" content="Run the new implementation against real inputs without affecting users. A sensor that produces differential evidence with zero user risk.">
+  <link rel="canonical" href="/software-observatory/previews/pr-148/sensors/shadow-traffic/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Shadow Traffic — Software Observatory">
+  <meta property="og:description" content="Run the new implementation against real inputs without affecting users. A sensor that produces differential evidence with zero user risk.">
+  <meta property="og:url" content="/software-observatory/previews/pr-148/sensors/shadow-traffic/">
+  <meta property="og:image" content="/software-observatory/previews/pr-148/og/cards/shadow-traffic.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Shadow Traffic — Software Observatory">
+  <meta name="twitter:description" content="Run the new implementation against real inputs without affecting users. A sensor that produces differential evidence with zero user risk.">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-148/og/cards/shadow-traffic.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-148/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-148/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "TechArticle",
+        "DefinedTerm"
+      ],
+      "@id": "/software-observatory/previews/pr-148/sensors/shadow-traffic/#entry",
+      "headline": "Shadow Traffic",
+      "name": "Shadow Traffic",
+      "description": "Run the new implementation against real inputs without affecting users. A sensor that produces differential evidence with zero user risk.",
+      "termCode": "SO-007b",
+      "url": "/software-observatory/previews/pr-148/sensors/shadow-traffic/",
+      "mainEntityOfPage": "/software-observatory/previews/pr-148/sensors/shadow-traffic/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-148/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "publisher": {
+        "@id": "/software-observatory/previews/pr-148/#organization"
+      },
+      "inDefinedTermSet": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "datePublished": "2026-08-23",
+      "about": {
+        "@type": "Thing",
+        "@id": "/software-observatory/previews/pr-148/families/change/#defined-term-set",
+        "name": "Change",
+        "url": "/software-observatory/previews/pr-148/families/change/"
+      },
+      "keywords": "Change, Deployment Safety",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "value": "high",
+          "description": "divergence on real inputs is strong evidence"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#independence",
+          "name": "Independence",
+          "value": "high",
+          "description": "production inputs"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#scope",
+          "name": "Scope",
+          "value": "system"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "value": "minutes"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#actionability",
+          "name": "Actionability",
+          "value": "guiding",
+          "description": "shows divergent requests and responses"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "value": "retrospective"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-148/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Change",
+          "item": "/software-observatory/previews/pr-148/families/change/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Shadow Traffic"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #148 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-148/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-148/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-148/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-148/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-148/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-148/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-148/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-148/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-148/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-148/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="wiki-layout">
+    <article class="signal-detail">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-148/catalog/">Catalog</a> › <a href="/software-observatory/previews/pr-148/families/change/">Change</a> › Shadow Traffic</p>
+
+      <header class="signal-detail-header">
+        <h1 class="signal-detail-title">Shadow Traffic</h1>
+        <div class="signal-detail-meta">
+          <span class="tag tag-family">Change</span>
+          <span class="tag tag-confidence">High oracle</span>
+          <span class="tag tag-type">Retrospective</span>
+        </div>
+      </header>
+
+      <div class="signal-detail-body">
+        <p>Run the new implementation against real inputs without affecting users. A
+sensor that produces <em>differential evidence</em> with zero user risk.</p>
+<p>Shadow traffic mirrors real requests to the new version, discards the
+responses, and compares the new version&rsquo;s behavior to the old. It&rsquo;s
+<a class="body-link" href="/software-observatory/previews/pr-148/sensors/differential-testing/">differential testing</a> with real production
+inputs.</p>
+<h2 id="in-practice">In practice</h2>
+<p>A typical reading is the comparison report after a mirroring window:</p>
+<table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Baseline</th>
+<th>Candidate</th>
+<th>Divergence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2xx rate</td>
+<td>99.9%</td>
+<td>99.2%</td>
+<td>-0.7pp, FAIL</td>
+</tr>
+<tr>
+<td>p95 latency</td>
+<td>122 ms</td>
+<td>141 ms</td>
+<td>+16%, watch</td>
+</tr>
+<tr>
+<td>body diff rate</td>
+<td></td>
+<td>0.4% of requests</td>
+<td>classify</td>
+</tr>
+</tbody>
+</table>
+<pre><code>sample divergent request 8f31e2:
+  endpoint:  GET /v2/orders/10482
+  baseline:  200  {&quot;status&quot;:&quot;shipped&quot;,&quot;items&quot;:[...]}
+  candidate: 200  {&quot;items&quot;:[...],&quot;status&quot;:&quot;shipped&quot;}
+  diff:      field ordering only (benign)
+</code></pre>
+<p>Reading it well:</p>
+<ul>
+<li><strong>Classify before counting.</strong> A 0.4% diff rate is alarming or trivial
+  depending on whether the diffs are wrong answers or field ordering and
+  timestamps. The report is only as good as its classifier.</li>
+<li><strong>Trust the inputs, check the coverage.</strong> Mirroring guarantees the same
+  input distribution, but confirm the window contained the rare shapes:
+  month-end batches, enterprise accounts, retry storms.</li>
+<li><strong>Watch the side-effect line.</strong> A shadow that writes to the real
+  database or charges the real card is not shadowing. Isolation is the
+  precondition that makes the whole sensor honest.</li>
+</ul>
+<h2 id="how-it-gets-gamed">How it gets gamed</h2>
+<p>Shadow traffic runs on real inputs, but the verdict is still read by
+people who want the deploy to land:</p>
+<ul>
+<li><strong>Divergences classified benign in bulk.</strong> Field ordering, timestamps,
+  and rounding are genuinely harmless diffs, and &ldquo;it&rsquo;s just ordering&rdquo; is
+  the easiest blanket rationale for a report nobody wants to read item by
+  item. A divergence rate that falls after reclassification, not after a
+  code change, is the tell.</li>
+<li><strong>Mirroring only the easy traffic.</strong> Routing only idempotent GETs, or
+  only internal test accounts, through the shadow gives the candidate a
+  gentler exam than production will give it. Check the shadow&rsquo;s input
+  distribution against real traffic before trusting the verdict.</li>
+<li><strong>Short windows.</strong> A ten-minute mirror window that contains no rare
+  payloads, month-end shapes, or retry storms will report clean, and the
+  report will be technically true.</li>
+<li><strong>Ignoring the side-effect audit.</strong> Divergence reports get read; the
+  question &ldquo;did the shadow write anything real?&rdquo; often does not. Skipping
+  that audit is how a zero-risk sensor becomes a risk.</li>
+</ul>
+<p>The meta-signal is the share of divergent requests classified as benign
+without an inspected sample. If it approaches 100%, the comparison is a
+formality.</p>
+<h2 id="response-playbook">Response playbook</h2>
+<p>When the shadow comparison report shows divergence:</p>
+<ol>
+<li><strong>Classify the divergences before reacting.</strong> Pull a sample of the
+   divergent request pairs and sort them: wrong answers, missing fields,
+   ordering, timestamps, errors. The category, not the count, decides
+   what to do next.</li>
+<li><strong>Reproduce one divergence locally.</strong> Take a single divergent input,
+   run it against both versions, and find the mechanism. One reproduced
+   case is worth a thousand sampled pairs.</li>
+<li><strong>Check the side-effect line immediately.</strong> Verify the shadow run
+   wrote nothing to real storage and made no external calls it should
+   not have. If isolation broke, that is the incident, ahead of any
+   divergence question.</li>
+<li><strong>Decide the gate.</strong> If the divergences are wrong answers, block the
+   promotion and fix; if they are benign noise, improve the classifier
+   so the next run reports them separately, and record why they were
+   accepted.</li>
+<li><strong>Re-run the mirror after the fix.</strong> Shadow traffic is cheap and
+   reproducible; a second window after the fix closes the loop without
+   spending any user risk.</li>
+</ol>
+<h2 id="what-it-cannot-detect">What it cannot detect</h2>
+<p>Shadow traffic can only compare what both versions produce. If both have
+the same bug, it won&rsquo;t be detected. Also, side effects (database writes,
+external calls) must be carefully isolated.</p>
+
+                <h2 id="related-sensors">Related sensors</h2>
+        <div class="see-also-grid">
+          <a href="/software-observatory/previews/pr-148/sensors/canary-analysis/" class="see-also-card">
+            <span class="see-also-type">Change</span>
+            <span class="see-also-title">Canary Analysis</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/api-compatibility/" class="see-also-card">
+            <span class="see-also-type">Change</span>
+            <span class="see-also-title">API Compatibility</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/differential-testing/" class="see-also-card">
+            <span class="see-also-type">Adversarial</span>
+            <span class="see-also-title">Differential Testing</span>
+          </a>
+        </div>
+
+        <div class="entry-categories">
+          <span class="cat-label">Categories:</span>
+          <a href="/software-observatory/previews/pr-148/families/change/" class="cat-link">Change</a>
+          <a href="/software-observatory/previews/pr-148/categories/#deployment-safety" class="cat-link">Deployment Safety</a>
+        </div>
+
+        <h2 id="references">References</h2>
+        <h3 class="references-subheading" id="publications">Publications</h3>
+        <ul class="reference-list">
+          <li><a href="https://www.cs.huji.ac.il/w~feit/papers/FB13IC.pdf" class="wikilink">Development and Deployment at Facebook</a> — <span class="ref-meta">Dror G. Feitelson, Eitan Frachtenberg, Kent L. Beck · 2013 · case study · IEEE Internet Computing 17(4)</span></li>
+        </ul>
+        <h3 class="references-subheading" id="tooling">Tooling</h3>
+        <ul class="reference-list reference-tools">
+          <li><span class="ref-title"><a href="https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/cluster/cluster#shadow" class="wikilink">Envoy shadow</a></span><span class="ref-desc">Envoy proxy shadow traffic mirroring</span></li>
+          <li><span class="ref-title"><a href="https://github.com/twitter/diffy" class="wikilink">diffy</a></span><span class="ref-desc">Differential proxy for API testing</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <aside class="wiki-sidebar">
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="sensor-properties">Sensor properties</h3>
+        <dl class="meta-list">
+          <dt>Family</dt>           <dd><a href="/software-observatory/previews/pr-148/families/change/" class="wikilink">Change</a></dd>
+          <dt>Oracle</dt>          <dd>High <span class="prop-note" title="divergence on real inputs is strong evidence" aria-label="divergence on real inputs is strong evidence">(?)</span></dd>
+          <dt>Independence</dt>     <dd>High <span class="prop-note" title="production inputs" aria-label="production inputs">(?)</span></dd>
+          <dt>Scope</dt>           <dd>System</dd>
+          <dt>Latency</dt>         <dd>Minutes</dd>
+          <dt>Actionability</dt>   <dd>Guiding <span class="prop-note" title="shows divergent requests and responses" aria-label="shows divergent requests and responses">(?)</span></dd>
+          <dt>Type</dt>             <dd>Retrospective</dd>
+          <dt>Entry ID</dt>        <dd>SO-007b</dd>
+          <dt>Reviewed</dt>        <dd><span class="review-unreviewed" title="This entry is written and published, but has not yet been re-read in the editorial review pass. An absent review date is reported as absent rather than filled in.">pending</span></dd>
+        </dl>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="what-links-here">What links here</h3>
+        <ul class="backlink-list">
+          <li><a href="/software-observatory/previews/pr-148/sensors/ab-testing/">A/B Testing</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/canary-analysis/">Canary Analysis</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/error-budget-impact/">Error-Budget Impact</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/incremental-build-correctness/">Incremental Build Correctness</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="related-categories">Related categories</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-148/families/change/">Category: Change</a></li>
+          <li><a href="/software-observatory/previews/pr-148/categories/#deployment-safety">Category: Deployment Safety</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-148/about/">About</a> · <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-148/js/main.js"></script>
+</body>
+</html>

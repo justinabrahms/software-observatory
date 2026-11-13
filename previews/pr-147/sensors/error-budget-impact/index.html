@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-147/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Error-Budget Impact — Software Observatory</title>
+  <meta name="description" content="Did this change consume an abnormal amount of reliability budget? A sensor that directly ties code changes to user-visible impact.">
+  <link rel="canonical" href="/software-observatory/previews/pr-147/sensors/error-budget-impact/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Error-Budget Impact — Software Observatory">
+  <meta property="og:description" content="Did this change consume an abnormal amount of reliability budget? A sensor that directly ties code changes to user-visible impact.">
+  <meta property="og:url" content="/software-observatory/previews/pr-147/sensors/error-budget-impact/">
+  <meta property="og:image" content="/software-observatory/previews/pr-147/og/cards/error-budget-impact.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Error-Budget Impact — Software Observatory">
+  <meta name="twitter:description" content="Did this change consume an abnormal amount of reliability budget? A sensor that directly ties code changes to user-visible impact.">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-147/og/cards/error-budget-impact.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-147/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-147/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "TechArticle",
+        "DefinedTerm"
+      ],
+      "@id": "/software-observatory/previews/pr-147/sensors/error-budget-impact/#entry",
+      "headline": "Error-Budget Impact",
+      "name": "Error-Budget Impact",
+      "description": "Did this change consume an abnormal amount of reliability budget? A sensor that directly ties code changes to user-visible impact.",
+      "termCode": "SO-007d",
+      "url": "/software-observatory/previews/pr-147/sensors/error-budget-impact/",
+      "mainEntityOfPage": "/software-observatory/previews/pr-147/sensors/error-budget-impact/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-147/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "publisher": {
+        "@id": "/software-observatory/previews/pr-147/#organization"
+      },
+      "inDefinedTermSet": {
+        "@id": "/software-observatory/previews/pr-147/catalog/#defined-term-set"
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-147/catalog/#defined-term-set"
+      },
+      "datePublished": "2026-08-23",
+      "about": {
+        "@type": "Thing",
+        "@id": "/software-observatory/previews/pr-147/families/change/#defined-term-set",
+        "name": "Change",
+        "url": "/software-observatory/previews/pr-147/families/change/"
+      },
+      "keywords": "Change, Production Sensors",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "value": "medium",
+          "description": "budget burn is correlated, not causal"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#independence",
+          "name": "Independence",
+          "value": "high",
+          "description": "production measurements"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#scope",
+          "name": "Scope",
+          "value": "system"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "value": "hours"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#actionability",
+          "name": "Actionability",
+          "value": "guiding",
+          "description": "this deployment burned 30% of the monthly budget"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "value": "retrospective"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-147/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Change",
+          "item": "/software-observatory/previews/pr-147/families/change/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Error-Budget Impact"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #147 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-147/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-147/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-147/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-147/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-147/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-147/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-147/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-147/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-147/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-147/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-147/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="wiki-layout">
+    <article class="signal-detail">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-147/catalog/">Catalog</a> › <a href="/software-observatory/previews/pr-147/families/change/">Change</a> › Error-Budget Impact</p>
+
+      <header class="signal-detail-header">
+        <h1 class="signal-detail-title">Error-Budget Impact</h1>
+        <div class="signal-detail-meta">
+          <span class="tag tag-family">Change</span>
+          <span class="tag tag-confidence">Medium oracle</span>
+          <span class="tag tag-type">Retrospective</span>
+        </div>
+      </header>
+
+      <div class="signal-detail-body">
+        <p>Did this change consume an abnormal amount of reliability budget? A sensor
+that directly ties code changes to user-visible impact.</p>
+<p>An error budget is the allowed amount of unreliability over a period (e.g.,
+99.9% uptime = 43 minutes of downtime per month). Error-budget impact
+measures whether a specific deployment consumed a disproportionate share of
+that budget — connecting code changes to <a class="body-link" href="/software-observatory/previews/pr-147/catalog/#evolution">user outcomes</a>.</p>
+<h2 id="in-practice">In practice</h2>
+<p>An error-budget reading is a burn number tied to a time window, usually
+on the SLO dashboard next to the deployment timeline:</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SLO</td>
+<td>99.9% success over 30 days</td>
+</tr>
+<tr>
+<td>Budget for the window</td>
+<td>43.2 minutes of errors</td>
+</tr>
+<tr>
+<td>Consumed by v2.41.0 rollout (14:02-14:47)</td>
+<td>27 minutes</td>
+</tr>
+<tr>
+<td>Budget burned by this change</td>
+<td>62%</td>
+</tr>
+<tr>
+<td>Remaining budget</td>
+<td>16.2 minutes</td>
+</tr>
+</tbody>
+</table>
+<p>The core reading is attribution: which deployment, feature, or incident
+ate the budget, and how much. Reading it well:</p>
+<ol>
+<li><strong>Read burn rate, not totals.</strong> The budget drains a little every
+   day. What matters is the slope change at the deploy timestamp, not
+   the cumulative number in isolation.</li>
+<li><strong>Compare burn to the change size.</strong> A routine release should burn
+   almost nothing. A change that consumes a third of the monthly budget
+   has bought its way into production with reliability as the currency.</li>
+<li><strong>Check the window before judging.</strong> A budget at 5% remaining in the
+   last two days of the window is a different reading than at the start
+   of it. Exhaustion is what triggers consequences, not the burn alone.</li>
+<li><strong>Correlation is the sensor&rsquo;s limit.</strong> The deploy and the burn
+   coinciding is evidence, not proof. Cross-check against
+   <a class="body-link" href="/software-observatory/previews/pr-147/sensors/canary-analysis/">canary analysis</a> and the deployment timeline
+   before assigning the cost to one change.</li>
+</ol>
+<h2 id="how-it-gets-gamed">How it gets gamed</h2>
+<p>The burn itself comes from production and cannot be faked, but the
+budget is a policy number, and policy is where the gaming happens:</p>
+<ul>
+<li><strong>SLO shopping.</strong> When the budget runs out, the fix becomes relaxing
+  the SLO: 99.9% becomes 99.5%, or the error class in question is
+  excluded from the indicator. The budget resets without anything
+   becoming more reliable.</li>
+<li><strong>Error reclassification.</strong> Failures get labeled &ldquo;client errors&rdquo; or
+  &ldquo;expected churn&rdquo; and leave the numerator. The dashboard improves
+  while users see the same behavior.</li>
+<li><strong>Budget laundering across windows.</strong> Burning the budget at the end
+  of one window and counting the reset as fresh starts, so the
+   consecutive cost of unreliable changes never accumulates anywhere.</li>
+</ul>
+<p>The meta-signal is the SLO change history. Every relaxation of a target
+or redefinition of an error class should be reviewed like a rule change
+to a computational gate, because that is what it is.</p>
+<h2 id="response-playbook">Response playbook</h2>
+<p>When a change burns budget or the budget runs out:</p>
+<ol>
+<li><strong>Attribute the burn before acting.</strong> Line the burn curve up with the
+   deployment timeline and confirm the change that started it. If the
+   correlation is weak, stop there and investigate rather than
+   penalizing a release that only looks guilty.</li>
+<li><strong>Roll back if the burn is ongoing.</strong> A change still consuming
+   budget is costing users right now. Reverting restores the budget
+   immediately; the <a class="body-link" href="/software-observatory/previews/pr-147/sensors/revert-rate/">revert rate</a> absorbs the mark,
+   and that is the correct trade.</li>
+<li><strong>Halt feature launches when the budget is exhausted.</strong> The budget
+   is the agreed price of unreliability; when it is spent, new risk is
+   paused and effort shifts to reliability until the window resets.</li>
+<li><strong>Charge the burn to the change that caused it.</strong> Record the
+   deployment that consumed the budget next to the incident, so the
+   next release decision sees the cost of the last one.</li>
+<li><strong>Tighten the rollout for the next change.</strong> A budget-hungry
+   deployment should come back with a smaller canary slice and
+   <a class="body-link" href="/software-observatory/previews/pr-147/sensors/canary-analysis/">canary analysis</a> thresholds checked before it
+   is allowed to burn at scale again.</li>
+</ol>
+<h2 id="what-it-cannot-detect">What it cannot detect</h2>
+<p>Error-budget impact shows correlation between deployment and reliability
+degradation, but not causation. Other factors (traffic patterns, upstream
+failures) may contribute.</p>
+
+                <h2 id="related-sensors">Related sensors</h2>
+        <div class="see-also-grid">
+          <a href="/software-observatory/previews/pr-147/sensors/canary-analysis/" class="see-also-card">
+            <span class="see-also-type">Change</span>
+            <span class="see-also-title">Canary Analysis</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/shadow-traffic/" class="see-also-card">
+            <span class="see-also-type">Change</span>
+            <span class="see-also-title">Shadow Traffic</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/families/evolution/" class="see-also-card">
+            <span class="see-also-type">Family</span>
+            <span class="see-also-title">Evolution</span>
+          </a>
+        </div>
+
+        <div class="entry-categories">
+          <span class="cat-label">Categories:</span>
+          <a href="/software-observatory/previews/pr-147/families/change/" class="cat-link">Change</a>
+          <a href="/software-observatory/previews/pr-147/categories/#production-sensors" class="cat-link">Production Sensors</a>
+        </div>
+
+        <h2 id="references">References</h2>
+        <h3 class="references-subheading" id="tooling">Tooling</h3>
+        <ul class="reference-list reference-tools">
+          <li><span class="ref-title"><a href="https://sre.google/workbook/error-budget-policy/" class="wikilink">Google SRE Workbook</a></span></li>
+          <li><span class="ref-title"><a href="https://sre.google/workbook/alerting-on-slos/" class="wikilink">SLO dashboards</a></span><span class="ref-desc">Service level objective tracking dashboards</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <aside class="wiki-sidebar">
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="sensor-properties">Sensor properties</h3>
+        <dl class="meta-list">
+          <dt>Family</dt>           <dd><a href="/software-observatory/previews/pr-147/families/change/" class="wikilink">Change</a></dd>
+          <dt>Oracle</dt>          <dd>Medium <span class="prop-note" title="budget burn is correlated, not causal" aria-label="budget burn is correlated, not causal">(?)</span></dd>
+          <dt>Independence</dt>     <dd>High <span class="prop-note" title="production measurements" aria-label="production measurements">(?)</span></dd>
+          <dt>Scope</dt>           <dd>System</dd>
+          <dt>Latency</dt>         <dd>Hours</dd>
+          <dt>Actionability</dt>   <dd>Guiding <span class="prop-note" title="this deployment burned 30% of the monthly budget" aria-label="this deployment burned 30% of the monthly budget">(?)</span></dd>
+          <dt>Type</dt>             <dd>Retrospective</dd>
+          <dt>Entry ID</dt>        <dd>SO-007d</dd>
+          <dt>Reviewed</dt>        <dd><span class="review-unreviewed" title="This entry is written and published, but has not yet been re-read in the editorial review pass. An absent review date is reported as absent rather than filled in.">pending</span></dd>
+        </dl>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="what-links-here">What links here</h3>
+        <ul class="backlink-list">
+          <li><a href="/software-observatory/previews/pr-147/sensors/api-compatibility/">API Compatibility</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/canary-analysis/">Canary Analysis</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+        </ul>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="in-the-playbook">In the playbook</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-147/playbook/stack-for-a-service/">A minimal stack for a request-serving service</a>
+        </ul>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="related-categories">Related categories</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-147/families/change/">Category: Change</a></li>
+          <li><a href="/software-observatory/previews/pr-147/categories/#production-sensors">Category: Production Sensors</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-147/about/">About</a> · <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-147/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-148/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Time-to-Repair — Software Observatory</title>
+  <meta name="description" content="When this component breaks, how long does it take to restore? A sensor of maintainability measured in hours, not in subjective assessment.">
+  <link rel="canonical" href="/software-observatory/previews/pr-148/sensors/time-to-repair/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Time-to-Repair — Software Observatory">
+  <meta property="og:description" content="When this component breaks, how long does it take to restore? A sensor of maintainability measured in hours, not in subjective assessment.">
+  <meta property="og:url" content="/software-observatory/previews/pr-148/sensors/time-to-repair/">
+  <meta property="og:image" content="/software-observatory/previews/pr-148/og/cards/time-to-repair.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Time-to-Repair — Software Observatory">
+  <meta name="twitter:description" content="When this component breaks, how long does it take to restore? A sensor of maintainability measured in hours, not in subjective assessment.">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-148/og/cards/time-to-repair.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-148/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-148/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "TechArticle",
+        "DefinedTerm"
+      ],
+      "@id": "/software-observatory/previews/pr-148/sensors/time-to-repair/#entry",
+      "headline": "Time-to-Repair",
+      "name": "Time-to-Repair",
+      "description": "When this component breaks, how long does it take to restore? A sensor of maintainability measured in hours, not in subjective assessment.",
+      "termCode": "SO-009d",
+      "url": "/software-observatory/previews/pr-148/sensors/time-to-repair/",
+      "mainEntityOfPage": "/software-observatory/previews/pr-148/sensors/time-to-repair/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-148/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "publisher": {
+        "@id": "/software-observatory/previews/pr-148/#organization"
+      },
+      "inDefinedTermSet": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "datePublished": "2026-08-23",
+      "about": {
+        "@type": "Thing",
+        "@id": "/software-observatory/previews/pr-148/families/evolution/#defined-term-set",
+        "name": "Evolution",
+        "url": "/software-observatory/previews/pr-148/families/evolution/"
+      },
+      "keywords": "Evolution, Maintainability, Black-Box Sensors",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "value": "medium",
+          "description": "long repair time correlates with complexity"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#independence",
+          "name": "Independence",
+          "value": "high",
+          "description": "measured from incident records"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#scope",
+          "name": "Scope",
+          "value": "module"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "value": "weeks"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#actionability",
+          "name": "Actionability",
+          "value": "exploratory",
+          "description": "shows where repair is slow"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "value": "retrospective"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-148/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Evolution",
+          "item": "/software-observatory/previews/pr-148/families/evolution/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Time-to-Repair"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #148 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-148/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-148/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-148/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-148/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-148/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-148/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-148/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-148/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-148/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-148/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="wiki-layout">
+    <article class="signal-detail">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-148/catalog/">Catalog</a> › <a href="/software-observatory/previews/pr-148/families/evolution/">Evolution</a> › Time-to-Repair</p>
+
+      <header class="signal-detail-header">
+        <h1 class="signal-detail-title">Time-to-Repair</h1>
+        <div class="signal-detail-meta">
+          <span class="tag tag-family">Evolution</span>
+          <span class="tag tag-confidence">Medium oracle</span>
+          <span class="tag tag-type">Retrospective</span>
+        </div>
+      </header>
+
+      <div class="signal-detail-body">
+        <p>When this component breaks, how long does it take to restore? A sensor of
+<em>maintainability</em> measured in hours, not in subjective assessment.</p>
+<p>Time-to-repair (MTTR) measures how long it takes to fix a failure, from
+detection to restoration. Long repair times indicate code that is difficult
+to understand, debug, or safely modify — even if you don&rsquo;t know <em>why</em> it&rsquo;s
+difficult.</p>
+<h2 id="in-practice">In practice</h2>
+<p>A time-to-repair reading is an incident record collapsed to a duration,
+usually on a dashboard next to the component it concerns:</p>
+<table>
+<thead>
+<tr>
+<th>Incident</th>
+<th>Component</th>
+<th>Detected</th>
+<th>Restored</th>
+<th>Duration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>INC-412</td>
+<td>billing</td>
+<td>09:14</td>
+<td>15:52</td>
+<td>6h 38m</td>
+</tr>
+<tr>
+<td>INC-418</td>
+<td>billing</td>
+<td>13:02</td>
+<td>14:11</td>
+<td>1h 9m</td>
+</tr>
+<tr>
+<td>median MTTR, billing, 90 days</td>
+<td></td>
+<td></td>
+<td></td>
+<td><strong>3h 40m</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The number is a median across incidents, not a single event. Reading it
+well:</p>
+<ol>
+<li><strong>Read the median, then read the tail.</strong> A 3h median with a 26h
+   worst case means most repairs are routine and some are catastrophic.
+   The tail is where the hard code lives.</li>
+<li><strong>Decompose before judging.</strong> Time-to-repair is detection plus
+   diagnosis plus fix plus deploy. A long MTTR caused by a 2-hour
+   deploy pipeline is an operational problem, not a code problem.</li>
+<li><strong>Compare components on the same scale.</strong> Billing at 3h and search
+   at 40 minutes says something about the two codebases, provided
+   their incident volumes and on-call setups are comparable.</li>
+<li><strong>Treat the trend as the sensor.</strong> MTTR is noisy incident to
+   incident. The reading that matters is whether repairs in this area
+   are getting slower over quarters, which is the maintainability
+   drift this sensor exists to catch.</li>
+</ol>
+<h2 id="how-it-gets-gamed">How it gets gamed</h2>
+<p>MTTR is computed from timestamps in incident records, and every one of
+those timestamps can be massaged:</p>
+<ul>
+<li><strong>Closing the incident early.</strong> The clock stops when the incident is
+  marked resolved, so declaring victory at mitigation and logging the
+  remaining work as a follow-up produces a short MTTR while users keep
+  hurting. The metric improves; the repair did not finish.</li>
+<li><strong>Delaying detection to shrink the window.</strong> If the start time is
+  &ldquo;first alert&rdquo; rather than &ldquo;first user impact,&rdquo; an hour of silent
+  failure disappears from the number. The repair looks faster because
+  the clock started late.</li>
+<li><strong>Splitting one incident into several.</strong> Two 2-hour incidents look
+  better than one 4-hour incident in the median, and the split is
+  always justifiable after the fact.</li>
+</ul>
+<p>The meta-signal is the gap between mitigation time and full-restoration
+time per incident. When the gap grows while MTTR falls, incidents are
+being closed at the workaround, not at the fix.</p>
+<h2 id="response-playbook">Response playbook</h2>
+<p>When repair times climb or a single incident runs long:</p>
+<ol>
+<li><strong>Decompose the timeline after the fact.</strong> Split detection,
+   diagnosis, fix, and deployment. The longest segment is the target,
+   and each segment has a different fix.</li>
+<li><strong>Attack the diagnosis segment first.</strong> If most of the time went to
+   finding the cause, the code lacks legibility: add
+   <a class="body-link" href="/software-observatory/previews/pr-148/sensors/observability-events/">observability</a> and runbooks for the
+   failure modes that just cost hours.</li>
+<li><strong>Make the fix safe to deploy.</strong> If repair waited on a slow pipeline
+   or a risky deploy, that is the bottleneck to remove: faster
+   rollbacks, smaller releases, a rehearsed revert path.</li>
+<li><strong>Write the regression test from the incident.</strong> The failure that
+   took hours to repair is a free test case. Land it before the next
+   incident in the same area.</li>
+<li><strong>Track MTTR per component, not per team.</strong> Team-level MTTR invites
+   the gaming above; component-level MTTR points at the code that is
+   hard to repair, which is what the sensor is for.</li>
+</ol>
+<h2 id="what-it-cannot-detect">What it cannot detect</h2>
+<p>Time-to-repair conflates code difficulty with operational factors (on-call
+response time, deployment latency, test suite duration). A long repair time
+may not reflect code quality at all.</p>
+
+                <h2 id="related-sensors">Related sensors</h2>
+        <div class="see-also-grid">
+          <a href="/software-observatory/previews/pr-148/sensors/revert-rate/" class="see-also-card">
+            <span class="see-also-type">Evolution</span>
+            <span class="see-also-title">Revert Rate</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/change-coupling/" class="see-also-card">
+            <span class="see-also-type">Evolution</span>
+            <span class="see-also-title">Change Coupling</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/incident-correlation/" class="see-also-card">
+            <span class="see-also-type">Evolution</span>
+            <span class="see-also-title">Incident Correlation</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/dora-metrics/" class="see-also-card">
+            <span class="see-also-type">Evolution</span>
+            <span class="see-also-title">DORA Metrics</span>
+          </a>
+        </div>
+
+        <div class="entry-categories">
+          <span class="cat-label">Categories:</span>
+          <a href="/software-observatory/previews/pr-148/families/evolution/" class="cat-link">Evolution</a>
+          <a href="/software-observatory/previews/pr-148/categories/#maintainability" class="cat-link">Maintainability</a>
+          <a href="/software-observatory/previews/pr-148/categories/#black-box-sensors" class="cat-link">Black-Box Sensors</a>
+        </div>
+
+        <h2 id="references">References</h2>
+        <h3 class="references-subheading" id="tooling">Tooling</h3>
+        <ul class="reference-list reference-tools">
+          <li><span class="ref-title"><a href="https://dora.dev" class="wikilink">DORA</a></span></li>
+          <li><span class="ref-title"><a href="https://www.atlassian.com/software/jira" class="wikilink">Jira</a></span><span class="ref-desc">Project and issue tracking</span></li>
+          <li><span class="ref-title"><a href="https://linear.app" class="wikilink">Linear</a></span><span class="ref-desc">Issue tracking for product teams</span></li>
+          <li><span class="ref-title"><a href="https://incident.io" class="wikilink">incident.io</a></span><span class="ref-desc">Incident management and response platform</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <aside class="wiki-sidebar">
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="sensor-properties">Sensor properties</h3>
+        <dl class="meta-list">
+          <dt>Family</dt>           <dd><a href="/software-observatory/previews/pr-148/families/evolution/" class="wikilink">Evolution</a></dd>
+          <dt>Oracle</dt>          <dd>Medium <span class="prop-note" title="long repair time correlates with complexity" aria-label="long repair time correlates with complexity">(?)</span></dd>
+          <dt>Independence</dt>     <dd>High <span class="prop-note" title="measured from incident records" aria-label="measured from incident records">(?)</span></dd>
+          <dt>Scope</dt>           <dd>Module</dd>
+          <dt>Latency</dt>         <dd>Weeks</dd>
+          <dt>Actionability</dt>   <dd>Exploratory <span class="prop-note" title="shows where repair is slow" aria-label="shows where repair is slow">(?)</span></dd>
+          <dt>Type</dt>             <dd>Retrospective</dd>
+          <dt>Entry ID</dt>        <dd>SO-009d</dd>
+          <dt>Reviewed</dt>        <dd><span class="review-unreviewed" title="This entry is written and published, but has not yet been re-read in the editorial review pass. An absent review date is reported as absent rather than filled in.">pending</span></dd>
+        </dl>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="what-links-here">What links here</h3>
+        <ul class="backlink-list">
+          <li><a href="/software-observatory/previews/pr-148/sensors/change-coupling/">Change Coupling</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/dora-metrics/">DORA Metrics</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/incident-correlation/">Incident Correlation</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/revert-rate/">Revert Rate</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="related-categories">Related categories</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-148/families/evolution/">Category: Evolution</a></li>
+          <li><a href="/software-observatory/previews/pr-148/categories/#maintainability">Category: Maintainability</a></li>
+          <li><a href="/software-observatory/previews/pr-148/categories/#black-box-sensors">Category: Black-Box Sensors</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-148/about/">About</a> · <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-148/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-148/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Runtime sensors — Software Observatory</title>
+  <meta name="description" content="Runtime sensors ask: What is it actually doing? 5 entries in the Software Observatory — Logs, traces, metrics, profiles, high-cardinality events.">
+  <link rel="canonical" href="/software-observatory/previews/pr-148/families/runtime/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Runtime sensors — Software Observatory">
+  <meta property="og:description" content="Runtime sensors ask: What is it actually doing? 5 entries in the Software Observatory — Logs, traces, metrics, profiles, high-cardinality events.">
+  <meta property="og:url" content="/software-observatory/previews/pr-148/families/runtime/">
+  <meta property="og:image" content="/software-observatory/previews/pr-148/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Runtime sensors — Software Observatory">
+  <meta name="twitter:description" content="Runtime sensors ask: What is it actually doing? 5 entries in the Software Observatory — Logs, traces, metrics, profiles, high-cardinality events.">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-148/og.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-148/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-148/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "DefinedTermSet",
+      "@id": "/software-observatory/previews/pr-148/families/runtime/#defined-term-set",
+      "name": "Runtime sensors",
+      "description": "Runtime sensors ask: What is it actually doing? 5 entries in the Software Observatory — Logs, traces, metrics, profiles, high-cardinality events.",
+      "url": "/software-observatory/previews/pr-148/families/runtime/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "creator": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-148/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "hasDefinedTerm": [
+        {
+          "@type": "DefinedTerm",
+          "@id": "/software-observatory/previews/pr-148/sensors/continuous-profiling/#term",
+          "name": "Continuous Profiling",
+          "description": "Where did computation actually go? Not “CPU is 82%” but “this function consumed 40% of the time in these specific requests.” A sensor of resource reality.",
+          "termCode": "SO-006c",
+          "url": "/software-observatory/previews/pr-148/sensors/continuous-profiling/",
+          "inDefinedTermSet": {
+            "@id": "/software-observatory/previews/pr-148/families/runtime/#defined-term-set"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "/software-observatory/previews/pr-148/sensors/distributed-traces/#term",
+          "name": "Distributed Traces",
+          "description": "What path did this particular operation take? A sensor of execution flow across service boundaries — the span tree is itself a signal.",
+          "termCode": "SO-006b",
+          "url": "/software-observatory/previews/pr-148/sensors/distributed-traces/",
+          "inDefinedTermSet": {
+            "@id": "/software-observatory/previews/pr-148/families/runtime/#defined-term-set"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "/software-observatory/previews/pr-148/sensors/load-testing/#term",
+          "name": "Load Testing",
+          "description": "Does the system behave under the traffic it claims to handle? A load test drives generated requests at a target rate and measures what breaks — latency, errors, throughput — before real users do.",
+          "termCode": "SO-006e",
+          "url": "/software-observatory/previews/pr-148/sensors/load-testing/",
+          "inDefinedTermSet": {
+            "@id": "/software-observatory/previews/pr-148/families/runtime/#defined-term-set"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "/software-observatory/previews/pr-148/sensors/observability-events/#term",
+          "name": "Observability Events",
+          "description": "Traditional monitoring says: “CPU is 82%.” Observability says: “Show me the requests that are slow, and let me figure out what those requests have in common.” The distinction is fundamental.",
+          "termCode": "SO-006",
+          "url": "/software-observatory/previews/pr-148/sensors/observability-events/",
+          "inDefinedTermSet": {
+            "@id": "/software-observatory/previews/pr-148/families/runtime/#defined-term-set"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "/software-observatory/previews/pr-148/sensors/resource-telemetry/#term",
+          "name": "Resource Telemetry",
+          "description": "CPU, memory, IO, network, GC, queues. Traditional monitoring — useful but limited. Low cardinality, low dimensionality, predetermined questions. Resource telemetry is the weakest runtime sensor.",
+          "termCode": "SO-006d",
+          "url": "/software-observatory/previews/pr-148/sensors/resource-telemetry/",
+          "inDefinedTermSet": {
+            "@id": "/software-observatory/previews/pr-148/families/runtime/#defined-term-set"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-148/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Runtime"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #148 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-148/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-148/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-148/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-148/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-148/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-148/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-148/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-148/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-148/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-148/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <article class="family-page">
+    <p class="breadcrumb"><a href="/software-observatory/previews/pr-148/catalog/">Catalog</a> › Runtime</p>
+
+    <section class="page-header">
+      <p class="eyebrow">Sensor family 06</p>
+      <h1 class="page-title">Runtime</h1>
+      <p class="page-lede">“What is it actually doing?”</p>
+    </section>
+
+    <div class="about-content">
+      <h2 id="what-belongs-here">What belongs here</h2>
+      <p>These sensors describe what the system actually did, in the wild, with no expected answer to compare against. They have the weakest oracles in the catalog and the widest scope: they cannot tell you something is wrong, only what happened.</p>
+
+      <h2 id="contested-placements">Contested placements</h2>
+      <p>Load Testing is a chosen-input experiment rather than a passive observation and could sit in Behavioral or Adversarial. It is here because what it measures is runtime behaviour under conditions the code cannot see for itself.</p>
+      <h2 id="where-its-signals-arrive">Where its signals arrive</h2>
+      <ul>
+        <li><strong>Production behavior</strong> — Production stage. What is it actually doing in the real world?</li>
+      </ul>
+      <p>
+        The <a href="/software-observatory/previews/pr-148/atlas/" class="wikilink">atlas</a> places every family on
+        the same lifecycle grid; the
+        <a href="/software-observatory/previews/pr-148/framework/" class="wikilink">framework</a> defines the six
+        dimensions each entry below is characterized along.
+      </p>
+
+      <h2 id="entries">Entries (5)</h2>
+    </div>
+
+    <div class="signal-grid">
+          <a class="signal-card" href="/software-observatory/previews/pr-148/sensors/continuous-profiling/">
+            <div class="signal-card-meta">
+              <span class="tag tag-family">Runtime</span>
+              <span class="tag tag-type">Retrospective</span>
+            </div>
+            <h3 class="signal-card-title" id="continuous-profiling">Continuous Profiling</h3>
+            <p class="signal-card-blurb">Where did computation actually go? Not “CPU is 82%” but “this function consumed 40% of the time in these specific requests.” A sensor of resource reality.</p>
+            <div class="signal-card-footer">
+              <span class="oracle-meter"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot empty"></span><span class="dot empty"></span> Oracle</span>
+              <span class="latency-badge" title="How long it takes to get this feedback: seconds"><span class="sr-only">Feedback latency: </span>~seconds</span>
+            </div>
+          </a>
+          <a class="signal-card" href="/software-observatory/previews/pr-148/sensors/distributed-traces/">
+            <div class="signal-card-meta">
+              <span class="tag tag-family">Runtime</span>
+              <span class="tag tag-type">Retrospective</span>
+            </div>
+            <h3 class="signal-card-title" id="distributed-traces">Distributed Traces</h3>
+            <p class="signal-card-blurb">What path did this particular operation take? A sensor of execution flow across service boundaries — the span tree is itself a signal.</p>
+            <div class="signal-card-footer">
+              <span class="oracle-meter"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot empty"></span><span class="dot empty"></span> Oracle</span>
+              <span class="latency-badge" title="How long it takes to get this feedback: seconds"><span class="sr-only">Feedback latency: </span>~seconds</span>
+            </div>
+          </a>
+          <a class="signal-card" href="/software-observatory/previews/pr-148/sensors/load-testing/">
+            <div class="signal-card-meta">
+              <span class="tag tag-family">Runtime</span>
+              <span class="tag tag-type">Predictive</span>
+            </div>
+            <h3 class="signal-card-title" id="load-testing">Load Testing</h3>
+            <p class="signal-card-blurb">Does the system behave under the traffic it claims to handle? A load test drives generated requests at a target rate and measures what breaks — latency, errors, throughput — before real users do.</p>
+            <div class="signal-card-footer">
+              <span class="oracle-meter"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot empty"></span><span class="dot empty"></span> Oracle</span>
+              <span class="latency-badge" title="How long it takes to get this feedback: minutes"><span class="sr-only">Feedback latency: </span>~minutes</span>
+            </div>
+          </a>
+          <a class="signal-card" href="/software-observatory/previews/pr-148/sensors/observability-events/">
+            <div class="signal-card-meta">
+              <span class="tag tag-family">Runtime</span>
+              <span class="tag tag-type">Retrospective</span>
+            </div>
+            <h3 class="signal-card-title" id="observability-events">Observability Events</h3>
+            <p class="signal-card-blurb">Traditional monitoring says: “CPU is 82%.” Observability says: “Show me the requests that are slow, and let me figure out what those requests have in common.” The distinction is fundamental.</p>
+            <div class="signal-card-footer">
+              <span class="oracle-meter"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot empty"></span><span class="dot empty"></span> Oracle</span>
+              <span class="latency-badge" title="How long it takes to get this feedback: seconds"><span class="sr-only">Feedback latency: </span>~seconds</span>
+            </div>
+          </a>
+          <a class="signal-card" href="/software-observatory/previews/pr-148/sensors/resource-telemetry/">
+            <div class="signal-card-meta">
+              <span class="tag tag-family">Runtime</span>
+              <span class="tag tag-type">Retrospective</span>
+            </div>
+            <h3 class="signal-card-title" id="resource-telemetry">Resource Telemetry</h3>
+            <p class="signal-card-blurb">CPU, memory, IO, network, GC, queues. Traditional monitoring — useful but limited. Low cardinality, low dimensionality, predetermined questions. Resource telemetry is the weakest runtime sensor.</p>
+            <div class="signal-card-footer">
+              <span class="oracle-meter"><span class="dot filled"></span><span class="dot filled"></span><span class="dot empty"></span><span class="dot empty"></span><span class="dot empty"></span> Oracle</span>
+              <span class="latency-badge" title="How long it takes to get this feedback: seconds"><span class="sr-only">Feedback latency: </span>~seconds</span>
+            </div>
+          </a>
+    </div>
+
+    <div class="about-content">
+      <h2 id="adjacent-families">Adjacent families</h2>
+      <ul>
+        <li>Previous: <a href="/software-observatory/previews/pr-148/families/adversarial/" class="wikilink">Adversarial</a> — Can we make our evidence of correctness fail?</li>
+        <li>Next: <a href="/software-observatory/previews/pr-148/families/change/" class="wikilink">Change</a> — What did this change actually affect?</li>
+        <li>All of them: the <a href="/software-observatory/previews/pr-148/catalog/" class="wikilink">complete catalog</a>
+          (this family is also anchored there at
+          <a href="/software-observatory/previews/pr-148/catalog/#runtime" class="wikilink">/catalog/#runtime</a>).</li>
+      </ul>
+    </div>
+  </article>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-148/about/">About</a> · <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-148/js/main.js"></script>
+</body>
+</html>

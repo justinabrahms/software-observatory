@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-147/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>A/B Testing — Software Observatory</title>
+  <meta name="description" content="Did users actually behave differently? An A/B test splits traffic between two versions and measures whether the treatment changes a user outcome metric…">
+  <link rel="canonical" href="/software-observatory/previews/pr-147/sensors/ab-testing/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="A/B Testing — Software Observatory">
+  <meta property="og:description" content="Did users actually behave differently? An A/B test splits traffic between two versions and measures whether the treatment changes a user outcome metric…">
+  <meta property="og:url" content="/software-observatory/previews/pr-147/sensors/ab-testing/">
+  <meta property="og:image" content="/software-observatory/previews/pr-147/og/cards/ab-testing.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="A/B Testing — Software Observatory">
+  <meta name="twitter:description" content="Did users actually behave differently? An A/B test splits traffic between two versions and measures whether the treatment changes a user outcome metric…">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-147/og/cards/ab-testing.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-147/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-147/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "TechArticle",
+        "DefinedTerm"
+      ],
+      "@id": "/software-observatory/previews/pr-147/sensors/ab-testing/#entry",
+      "headline": "A/B Testing",
+      "name": "A/B Testing",
+      "description": "Did users actually behave differently? An A/B test splits traffic between two versions and measures whether the treatment changes a user outcome metric — click-through, conversion, retention…",
+      "termCode": "SO-007e",
+      "url": "/software-observatory/previews/pr-147/sensors/ab-testing/",
+      "mainEntityOfPage": "/software-observatory/previews/pr-147/sensors/ab-testing/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-147/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "publisher": {
+        "@id": "/software-observatory/previews/pr-147/#organization"
+      },
+      "inDefinedTermSet": {
+        "@id": "/software-observatory/previews/pr-147/catalog/#defined-term-set"
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-147/catalog/#defined-term-set"
+      },
+      "datePublished": "2026-08-24",
+      "dateModified": "2026-08-26",
+      "about": {
+        "@type": "Thing",
+        "@id": "/software-observatory/previews/pr-147/families/change/#defined-term-set",
+        "name": "Change",
+        "url": "/software-observatory/previews/pr-147/families/change/"
+      },
+      "keywords": "Change, Controlled Experiments",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "value": "high",
+          "description": "a statistically significant difference is a fact about users, not a guess"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#independence",
+          "name": "Independence",
+          "value": "medium",
+          "description": "the experiment is independent of the implementation, but the metric is chosen by the team"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#scope",
+          "name": "Scope",
+          "value": "system",
+          "description": "user behavior at the system level"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "value": "days"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#actionability",
+          "name": "Actionability",
+          "value": "guiding",
+          "description": "the metric and the variant tell you what to ship, not just that something changed"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "value": "predictive",
+          "description": "predicts which version will produce better outcomes"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-147/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Change",
+          "item": "/software-observatory/previews/pr-147/families/change/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "A/B Testing"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #147 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-147/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-147/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-147/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-147/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-147/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-147/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-147/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-147/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-147/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-147/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-147/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="wiki-layout">
+    <article class="signal-detail">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-147/catalog/">Catalog</a> › <a href="/software-observatory/previews/pr-147/families/change/">Change</a> › A/B Testing</p>
+
+      <header class="signal-detail-header">
+        <h1 class="signal-detail-title">A/B Testing</h1>
+        <div class="signal-detail-meta">
+          <span class="tag tag-family">Change</span>
+          <span class="tag tag-confidence">High oracle</span>
+          <span class="tag tag-type">Predictive</span>
+        </div>
+      </header>
+
+      <div class="signal-detail-body">
+        <p>Did users actually behave differently? An A/B test splits traffic between
+two versions and measures whether the treatment changes a user outcome
+metric — click-through, conversion, retention, latency-experienced. It is
+the strongest sensor in the user-outcome layer because it is <em>controlled</em>:
+the difference is attributable to the change, not to the weather.</p>
+<h2 id="controlled-not-retrospective">Controlled, not retrospective</h2>
+<p>The Outcome column is mostly retrospective. <a class="body-link" href="/software-observatory/previews/pr-147/sensors/revert-rate/">Revert rate</a>,
+<a class="body-link" href="/software-observatory/previews/pr-147/sensors/incident-correlation/">incident correlation</a>, and
+<a class="body-link" href="/software-observatory/previews/pr-147/sensors/escaped-defect-rate/">escaped defect rate</a> observe what happened and
+ask whether the change correlates with trouble. A/B testing is different:
+it assigns users to variants <em>before</em> observing them, so the difference in
+outcomes is caused by the change, not merely associated with it. The
+retrospective sensors answer &ldquo;did this change look like trouble?&rdquo;; A/B
+testing answers &ldquo;did this change produce the outcome we intended?&rdquo;</p>
+<p>That distinction — causal, not correlational — is why A/B testing sits in
+the Change family rather than Evolution. Evolution sensors watch history;
+A/B testing runs an experiment.</p>
+<h2 id="in-practice">In practice</h2>
+<p>A reading is a measured difference on a metric you named before the
+experiment started — either an improvement, or a confirmation that
+nothing got worse by more than the amount you agreed to tolerate:</p>
+<pre><code>Experiment: checkout-redesign-v3
+  Variant: control (N=48,210)  treatment (N=48,182)
+  Metric: checkout_completion_rate
+    control:   0.2341  (95% CI: 0.2298–0.2384)
+    treatment: 0.2412  (95% CI: 0.2369–0.2455)
+    lift: +3.0%  (95% CI: +1.2% to +4.9%)   p = 0.001
+  Guardrail: p99 latency
+    control: 820ms   treatment: 835ms   delta: +15ms (within +50ms guardrail)
+  Decision: ship treatment
+</code></pre>
+<p>Reading that block doesn&rsquo;t take a statistics background, but it does
+take knowing what three of those numbers are for.</p>
+<p><strong>The interval is the answer; the point estimate is the headline.</strong> The
+lift reads <code>+3.0%</code>, but the honest result is the range next to it:
+<code>+1.2% to +4.9%</code>. Strictly, a 95% interval is a claim about the
+procedure — repeat the experiment many times and 95% of the intervals
+you compute this way would contain the true effect. Read day to day, it
+means: the real effect is probably somewhere in that range, and every
+number in it is a result you should be willing to live with. This one
+never touches zero, so the change plausibly did something. An interval
+of <code>-1% to +7%</code> includes &ldquo;made things slightly worse&rdquo; and is not a win;
+it is <em>we still don&rsquo;t know</em>.</p>
+<p><strong>The p-value only answers &ldquo;could this be noise?&rdquo;</strong> <code>p = 0.001</code> means:
+if the change truly did nothing, a difference at least this large would
+turn up about one run in a thousand by luck alone. That&rsquo;s all it says.
+It does not say the effect is large, that it matters, or that it will
+hold next quarter — a trivial effect measured on enough users produces
+a tiny p-value. Which is why the interval, not the p-value, is the
+number to argue about.</p>
+<p><strong>N is what makes either of them trustworthy.</strong> Few users means a wide
+interval, and a wide interval can only detect enormous effects. Working
+out how many users you need to see the smallest effect you&rsquo;d actually
+act on is called a <em>power analysis</em>, and it is the one piece of
+statistics worth doing before the experiment rather than after. Skip it
+and you can run an experiment that was arithmetically incapable of
+finding what you were looking for.</p>
+<p>None of this is math anyone should be doing by hand. An experimentation
+platform computes the intervals, holds the stopping rule, verifies the
+split was actually random, and refuses to show you the metric you
+invented after the fact. That is what the tooling is <em>for</em>: it makes
+the honest analysis the cheap one. Judge a platform on that — one that
+reports a p-value with no interval, or lets you stop the moment the
+number turns green, is a tool for making the numbers agree with you.</p>
+<p>Three habits matter when reading a result:</p>
+<ol>
+<li><strong>Read the guardrails before the headline metric.</strong> Guardrails are
+   the limits you agreed to in advance — p99 latency, error rate, crash
+   rate — and they are pass/fail, not part of a trade you negotiate
+   after seeing conversion. In the run above the treatment cost +15ms
+   against a +50ms guardrail, so it passed. Had it cost +200ms, the
+   treatment doesn&rsquo;t ship, however good conversion looked.</li>
+<li><strong>Check the sample size before the significance.</strong> A result that
+   crossed the significance line on 2,000 users is a hint, not a
+   decision: at that size the interval is wide enough that the
+   plausible effects run from &ldquo;barely anything&rdquo; to &ldquo;implausibly
+   large.&rdquo; Look at how many users it took before you look at whether
+   it won.</li>
+<li><strong>Distrust the metric you didn&rsquo;t name in advance.</strong> A win on a
+   metric chosen after seeing the results is a fishing trip. The metric
+   was chosen before the experiment started, or the number is not a
+   measurement.</li>
+</ol>
+<h2 id="how-it-gets-gamed">How it gets gamed</h2>
+<p>A/B tests are easy to make say what you want:</p>
+<ul>
+<li><strong>Peek and stop.</strong> Watching the result every day and stopping the
+  moment it looks like a win. Random noise wanders, so given enough
+  looks it will eventually wander across the line on its own — checking
+  repeatedly and stopping at the first good number finds &ldquo;effects&rdquo; that
+  aren&rsquo;t there. The fix is deciding the stopping rule before you start:
+  a fixed sample size, or a method built to be checked repeatedly
+  (sequential testing), which most platforms offer.</li>
+<li><strong>Metric shopping.</strong> Running 40 metrics and reporting the one that
+  moved. The fix is a single primary metric, chosen before launch.</li>
+<li><strong>Run it too small and call it &ldquo;no effect.&rdquo;</strong> An experiment with too
+  few users that finds no significant difference is not evidence of no
+  effect; it is evidence of nothing. The interval, not the p-value,
+  tells you which one you&rsquo;re holding: an interval of -8% to +9% rules
+  out almost nothing.</li>
+<li><strong>Dilute the treatment.</strong> If 5% of users see the treatment but the
+  metric is computed over all users (including the 95% who saw
+  control), the lift is diluted toward zero and the experiment can&rsquo;t
+  detect anything. Exposure bugs are the most common silent failure.</li>
+</ul>
+<p>The meta-signal is the ratio of experiments that shipped to
+experiments that found a significant effect. A platform where every
+experiment wins is either very good at picking winners or not
+actually measuring.</p>
+<h2 id="response-playbook">Response playbook</h2>
+<p>When an A/B test concludes:</p>
+<ol>
+<li><strong>Check the guardrails first.</strong> If any guardrail breached, the
+   treatment doesn&rsquo;t ship regardless of the headline metric.</li>
+<li><strong>Read the confidence interval, not just the point estimate.</strong> A
+   3% lift with a CI of -1% to +7% is not a win; it&rsquo;s &ldquo;we don&rsquo;t know.&rdquo;</li>
+<li><strong>If the change was meant to be neutral, check it against the
+   margin you set.</strong> Many refactors are supposed to change nothing a
+   user can feel. &ldquo;No significant difference&rdquo; is not the same claim as
+   &ldquo;inside the margin we agreed to&rdquo; — an experiment too small to detect
+   a 5% drop reports no significant difference even when there is a 5%
+   drop.</li>
+<li><strong>Record the decision and the reason.</strong> An experiment that
+   concluded and was then overridden by opinion is a sensor that was
+   ignored; track it like a suppression.</li>
+</ol>
+<h2 id="what-it-cannot-detect">What it cannot detect</h2>
+<p>A/B testing measures the outcomes you instrumented, on the users you
+exposed, over the time you ran it. It cannot detect effects that take
+longer than the experiment to appear (network effects, retention over
+months), effects on users who were excluded from the experiment, or
+effects on metrics you didn&rsquo;t think to measure. For long-horizon
+outcomes, see <a class="body-link" href="/software-observatory/previews/pr-147/sensors/escaped-defect-rate/">escaped defect rate</a> and
+<a class="body-link" href="/software-observatory/previews/pr-147/sensors/error-budget-impact/">error budget impact</a>; for whether the
+change is safe to expose in the first place, see
+<a class="body-link" href="/software-observatory/previews/pr-147/sensors/canary-analysis/">canary analysis</a> and
+<a class="body-link" href="/software-observatory/previews/pr-147/sensors/shadow-traffic/">shadow traffic</a>.</p>
+
+                <h2 id="related-sensors">Related sensors</h2>
+        <div class="see-also-grid">
+          <a href="/software-observatory/previews/pr-147/sensors/canary-analysis/" class="see-also-card">
+            <span class="see-also-type">Change</span>
+            <span class="see-also-title">Canary Analysis</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/shadow-traffic/" class="see-also-card">
+            <span class="see-also-type">Change</span>
+            <span class="see-also-title">Shadow Traffic</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/feature-flag-exposure/" class="see-also-card">
+            <span class="see-also-type">Change</span>
+            <span class="see-also-title">Feature Flag Exposure Telemetry</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/revert-rate/" class="see-also-card">
+            <span class="see-also-type">Evolution</span>
+            <span class="see-also-title">Revert Rate</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/escaped-defect-rate/" class="see-also-card">
+            <span class="see-also-type">Test Effectiveness</span>
+            <span class="see-also-title">Escaped Defect Rate</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/families/change/" class="see-also-card">
+            <span class="see-also-type">Family</span>
+            <span class="see-also-title">Change</span>
+          </a>
+        </div>
+
+        <div class="entry-categories">
+          <span class="cat-label">Categories:</span>
+          <a href="/software-observatory/previews/pr-147/families/change/" class="cat-link">Change</a>
+          <a href="/software-observatory/previews/pr-147/categories/#controlled-experiments" class="cat-link">Controlled Experiments</a>
+        </div>
+
+        <h2 id="references">References</h2>
+        <h3 class="references-subheading" id="publications">Publications</h3>
+        <ul class="reference-list">
+          <li><a href="https://experimentguide.com" class="wikilink">Trustworthy Online Controlled Experiments: A Practical Guide to A/B Testing</a> — <span class="ref-meta">Ron Kohavi, Diane Tang, Ya Xu · 2020 · observational study · Cambridge University Press</span></li>
+          <li><a href="https://doi.org/10.1145/2623330.2623341" class="wikilink">Seven Rules of Thumb for Web Site Experimenters</a> — <span class="ref-meta">Ron Kohavi, Alex Deng, Roger Longbotham, Ya Xu · 2014 · observational study · KDD 2014</span></li>
+          <li><a href="https://doi.org/10.1145/2487575.2488217" class="wikilink">Online Controlled Experiments at Large Scale</a> — <span class="ref-meta">Ron Kohavi, Alex Deng, Brian Frasca, Toby Walker, Ya Xu, Nils Pohlmann · 2013 · observational study · KDD 2013</span></li>
+          <li><a href="https://doi.org/10.1145/3097983.3097992" class="wikilink">Peeking at A/B Tests: Why It Matters, and What to Do About It</a> — <span class="ref-meta">Ramesh Johari, Pete Koomen, Leonid Pekelis, David Walsh · 2017 · observational study · KDD 2017</span></li>
+        </ul>
+        <h3 class="references-subheading" id="tooling">Tooling</h3>
+        <ul class="reference-list reference-tools">
+          <li><span class="ref-title"><a href="https://www.growthbook.io" class="wikilink">GrowthBook</a></span><span class="ref-desc">Open-source feature flagging and A/B testing platform</span></li>
+          <li><span class="ref-title"><a href="https://www.statsig.com" class="wikilink">Statsig</a></span><span class="ref-desc">Experimentation and feature flagging platform</span></li>
+          <li><span class="ref-title"><a href="https://www.optimizely.com" class="wikilink">Optimizely</a></span><span class="ref-desc">Experimentation platform with stats engine</span></li>
+          <li><span class="ref-title"><a href="https://launchdarkly.com" class="wikilink">LaunchDarkly</a></span><span class="ref-desc">Feature management with experimentation</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <aside class="wiki-sidebar">
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="sensor-properties">Sensor properties</h3>
+        <dl class="meta-list">
+          <dt>Family</dt>           <dd><a href="/software-observatory/previews/pr-147/families/change/" class="wikilink">Change</a></dd>
+          <dt>Oracle</dt>          <dd>High <span class="prop-note" title="a statistically significant difference is a fact about users, not a guess" aria-label="a statistically significant difference is a fact about users, not a guess">(?)</span></dd>
+          <dt>Independence</dt>     <dd>Medium <span class="prop-note" title="the experiment is independent of the implementation, but the metric is chosen by the team" aria-label="the experiment is independent of the implementation, but the metric is chosen by the team">(?)</span></dd>
+          <dt>Scope</dt>           <dd>System <span class="prop-note" title="user behavior at the system level" aria-label="user behavior at the system level">(?)</span></dd>
+          <dt>Latency</dt>         <dd>Days</dd>
+          <dt>Actionability</dt>   <dd>Guiding <span class="prop-note" title="the metric and the variant tell you what to ship, not just that something changed" aria-label="the metric and the variant tell you what to ship, not just that something changed">(?)</span></dd>
+          <dt>Type</dt>             <dd>Predictive <span class="prop-note" title="predicts which version will produce better outcomes" aria-label="predicts which version will produce better outcomes">(?)</span></dd>
+          <dt>Entry ID</dt>        <dd>SO-007e</dd>
+          <dt>Reviewed</dt>        <dd>2026-08 <span class="review-age" title="Age measured against 2026-11-13, the newest date in the catalog. The build never uses the wall clock, so this page is byte-identical between builds.">— 2 months ago</span></dd>
+        </dl>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="what-links-here">What links here</h3>
+        <ul class="backlink-list">
+          <li><a href="/software-observatory/previews/pr-147/sensors/canary-analysis/">Canary Analysis</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/feature-flag-exposure/">Feature Flag Exposure Telemetry</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/revert-rate/">Revert Rate</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="related-categories">Related categories</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-147/families/change/">Category: Change</a></li>
+          <li><a href="/software-observatory/previews/pr-147/categories/#controlled-experiments">Category: Controlled Experiments</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-147/about/">About</a> · <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-147/js/main.js"></script>
+</body>
+</html>

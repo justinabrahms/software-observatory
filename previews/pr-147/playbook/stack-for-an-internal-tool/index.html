@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-147/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>A minimal stack for an internal tool with ten users — Software Observatory</title>
+  <meta name="description" content="A small app one team uses. Every user is reachable by chat, and downtime costs minutes.">
+  <link rel="canonical" href="/software-observatory/previews/pr-147/playbook/stack-for-an-internal-tool/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="A minimal stack for an internal tool with ten users — Software Observatory">
+  <meta property="og:description" content="A small app one team uses. Every user is reachable by chat, and downtime costs minutes.">
+  <meta property="og:url" content="/software-observatory/previews/pr-147/playbook/stack-for-an-internal-tool/">
+  <meta property="og:image" content="/software-observatory/previews/pr-147/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="A minimal stack for an internal tool with ten users — Software Observatory">
+  <meta name="twitter:description" content="A small app one team uses. Every user is reachable by chat, and downtime costs minutes.">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-147/og.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-147/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-147/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "/software-observatory/previews/pr-147/playbook/stack-for-an-internal-tool/#page",
+      "name": "A minimal stack for an internal tool with ten users",
+      "description": "A small app one team uses. Every user is reachable by chat, and downtime costs minutes.",
+      "url": "/software-observatory/previews/pr-147/playbook/stack-for-an-internal-tool/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-147/#organization"
+      },
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-147/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "dateModified": "2026-09-03"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Playbook",
+          "item": "/software-observatory/previews/pr-147/playbook/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "A minimal stack for an internal tool with ten users"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #147 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-147/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-147/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-147/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-147/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-147/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-147/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-147/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-147/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-147/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-147/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-147/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="play-layout">
+    <article class="play">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-147/playbook/">Playbook</a> › A minimal stack for an internal tool with ten users</p>
+      <header class="page-header page-header--play">
+        <p class="eyebrow">Composition</p>
+        <h1 class="page-title">A minimal stack for an internal tool with ten users</h1>
+      </header>
+      <section class="play-shape">
+        <h2 id="the-shape">The shape</h2>
+        <p>A small app one team uses. Every user is reachable by chat, and downtime costs minutes.</p>
+      </section>
+      <section class="play-stack">
+        <h2 id="the-stack">The stack</h2>
+        <p class="play-steps-lede">One row per doubt. No two rows do the same job.</p>
+        <div class="play-table-scroll">
+        <table class="play-table">
+          <thead><tr><th scope="col">Doubt</th><th scope="col">Sensor</th><th scope="col">Why this one</th></tr></thead>
+          <tbody>
+          <tr>
+            <td><a href="/software-observatory/previews/pr-147/what-each-sensor-proves/#not-internally-consistent" class="wikilink">not internally consistent</a></td>
+            <td><a href="/software-observatory/previews/pr-147/sensors/type-checker/" class="wikilink">Type Checker</a> <span class="play-family" data-family="structural">Structural</span></td>
+            <td>Free with the toolchain, and it fires before anyone is bothered.</td>
+          </tr>
+          <tr>
+            <td><a href="/software-observatory/previews/pr-147/what-each-sensor-proves/#wrong-logic" class="wikilink">wrong logic</a></td>
+            <td><a href="/software-observatory/previews/pr-147/sensors/example-based-tests/" class="wikilink">Example-Based Tests</a> <span class="play-family" data-family="behavioral">Behavioral</span></td>
+            <td>The cases the team actually hit, pinned. Cheapest closer by far.</td>
+          </tr>
+          <tr>
+            <td><a href="/software-observatory/previews/pr-147/what-each-sensor-proves/#does-not-run-where-deployed" class="wikilink">does not run where deployed</a></td>
+            <td><a href="/software-observatory/previews/pr-147/sensors/smoke-tests/" class="wikilink">Smoke Tests</a> <span class="play-family" data-family="behavioral">Behavioral</span></td>
+            <td>One request after deploy, so a user is not the smoke test.</td>
+          </tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+      <section class="play-left-open">
+        <h2 id="left-open-on-purpose">Left open, on purpose</h2>
+        <ul class="play-rows">
+          <li><p class="play-row-head"><a href="/software-observatory/previews/pr-147/what-each-sensor-proves/#unasserted-execution" class="wikilink">unasserted execution</a></p>
+            <p class="play-row-why">Ten people use every screen daily and say so in chat. Mutation testing is worth an afternoon once the tool touches money or permissions.</p></li>
+          <li><p class="play-row-head"><a href="/software-observatory/previews/pr-147/what-each-sensor-proves/#unjudged-observation" class="wikilink">unjudged observation</a></p>
+            <p class="play-row-why">The users judge every observation. A wrong number on the screen gets a message within the hour.</p></li>
+          <li><p class="play-row-head"><a href="/software-observatory/previews/pr-147/what-each-sensor-proves/#unintended-change" class="wikilink">unintended change</a></p>
+            <p class="play-row-why">The person who looked at that output yesterday notices it moved. Add snapshot tests when the users stop being people you can ask.</p></li>
+          <li><p class="play-row-head"><a href="/software-observatory/previews/pr-147/what-each-sensor-proves/#untested-conditions" class="wikilink">untested conditions</a></p>
+            <p class="play-row-why">There is no traffic to split a canary over. The users are the canary, and a bad deploy costs them minutes.</p></li>
+          <li><p class="play-row-head"><a href="/software-observatory/previews/pr-147/what-each-sensor-proves/#emergent-failure" class="wikilink">emergent failure</a></p>
+            <p class="play-row-why">Ten users on the real dependencies find the wiring bug within the hour. At this scale an integration suite costs more than the outage it prevents.</p></li>
+          <li><p class="play-row-head"><a href="/software-observatory/previews/pr-147/what-each-sensor-proves/#dependency-failure" class="wikilink">falls over with a dependency</a></p>
+            <p class="play-row-why">When a dependency dies the tool dies, and someone posts in chat. Degrading gracefully matters when nobody can be told.</p></li>
+          <li><p class="play-row-head"><a href="/software-observatory/previews/pr-147/what-each-sensor-proves/#cannot-carry-load" class="wikilink">cannot carry the load</a></p>
+            <p class="play-row-why">Ten users is the load, and you know all of them.</p></li>
+          <li><p class="play-row-head"><a href="/software-observatory/previews/pr-147/what-each-sensor-proves/#late-effects" class="wikilink">late effects</a></p>
+            <p class="play-row-why">A slow drift in behavior is noticed by the same ten people, who are still here in month three to mention it.</p></li>
+          <li><p class="play-row-head"><a href="/software-observatory/previews/pr-147/what-each-sensor-proves/#unspecified-property" class="wikilink">unspecified property</a></p>
+            <p class="play-row-why">The check nobody wrote is the message a user sends. That message arrives within the hour, which is faster than any incident feed.</p></li>
+          <li><p class="play-row-head"><a href="/software-observatory/previews/pr-147/what-each-sensor-proves/#wrong-specification" class="wikilink">wrong specification</a></p>
+            <p class="play-row-why">The users wrote the spec, in chat, and they check the result against what they meant.</p></li>
+          <li><p class="play-row-head"><a href="/software-observatory/previews/pr-147/what-each-sensor-proves/#missing-behavior" class="wikilink">missing behavior</a></p>
+            <p class="play-row-why">The user who asked for the feature is the one who checks it shipped.</p></li>
+        </ul>
+      </section>
+      <section class="play-mistaken">
+        <h2 id="what-this-stack-is-mistaken-for-proving">What this stack is mistaken for proving</h2>
+        <p>3 sensors close 3 of 19 doubts. It says nothing about <a href="/software-observatory/previews/pr-147/what-each-sensor-proves/#correlated-blind-spot" class="wikilink">correlated blind spot</a>, <a href="/software-observatory/previews/pr-147/what-each-sensor-proves/#unreached-by-tests" class="wikilink">unreached by tests</a>, <a href="/software-observatory/previews/pr-147/what-each-sensor-proves/#structure-decayed" class="wikilink">nobody knows where the coupling is</a>, <a href="/software-observatory/previews/pr-147/what-each-sensor-proves/#risk-concentrated" class="wikilink">nobody knows where the risk sits</a>, <a href="/software-observatory/previews/pr-147/what-each-sensor-proves/#unexplained" class="wikilink">nobody can find out why</a>. A green board from this stack is not evidence against any of those.</p>
+      </section>
+      <div class="play-body signal-detail-body">
+<p>Every doubt left open here is closed by the users, and that is acceptable
+while the sensor&rsquo;s cost stays bounded: a wrong reading reaches one of ten
+named people, they tell you in chat, and the fix ships in minutes. The list
+stops being acceptable when the user count grows past the people you can
+name, when the tool starts touching money or permissions, or when a deploy
+stops taking a minute. Each of those retires one of the reasons above;
+re-read the list when it happens. <a class="body-link" href="/software-observatory/previews/pr-147/sensors/synthetic-monitoring/">Synthetic
+monitoring</a> closes the same doubt as the
+<a class="body-link" href="/software-observatory/previews/pr-147/sensors/smoke-tests/">smoke test</a>, and probing a tool nobody uses at night
+buys nothing here.</p>
+      </div>
+      <p class="play-back"><a href="/software-observatory/previews/pr-147/playbook/" class="wikilink">All plays</a></p>
+    </article>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-147/about/">About</a> · <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-147/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-147/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Production says 200 and the answer was wrong — Software Observatory</title>
+  <meta name="description" content="Dashboards were green all week. Latency fine, error rate zero. Then finance found orders that were paid and never marked paid, and every one of them had been…">
+  <link rel="canonical" href="/software-observatory/previews/pr-147/playbook/prod-says-200-answer-was-wrong/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Production says 200 and the answer was wrong — Software Observatory">
+  <meta property="og:description" content="Dashboards were green all week. Latency fine, error rate zero. Then finance found orders that were paid and never marked paid, and every one of them had been…">
+  <meta property="og:url" content="/software-observatory/previews/pr-147/playbook/prod-says-200-answer-was-wrong/">
+  <meta property="og:image" content="/software-observatory/previews/pr-147/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Production says 200 and the answer was wrong — Software Observatory">
+  <meta name="twitter:description" content="Dashboards were green all week. Latency fine, error rate zero. Then finance found orders that were paid and never marked paid, and every one of them had been…">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-147/og.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-147/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-147/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "/software-observatory/previews/pr-147/playbook/prod-says-200-answer-was-wrong/#page",
+      "name": "Production says 200 and the answer was wrong",
+      "description": "Dashboards were green all week. Latency fine, error rate zero. Then finance found orders that were paid and never marked paid, and every one of them had been logged as a success.",
+      "url": "/software-observatory/previews/pr-147/playbook/prod-says-200-answer-was-wrong/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-147/#organization"
+      },
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-147/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "dateModified": "2026-09-03"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Playbook",
+          "item": "/software-observatory/previews/pr-147/playbook/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Production says 200 and the answer was wrong"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #147 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-147/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-147/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-147/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-147/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-147/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-147/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-147/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-147/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-147/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-147/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-147/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="play-layout">
+    <article class="play">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-147/playbook/">Playbook</a> › Production says 200 and the answer was wrong</p>
+      <header class="page-header page-header--play">
+        <p class="eyebrow">Symptom</p>
+        <h1 class="page-title">Production says 200 and the answer was wrong</h1>
+      </header>
+      <section class="play-noticed">
+        <h2 id="you-noticed">You noticed</h2>
+        <p>Dashboards were green all week. Latency fine, error rate zero. Then finance found orders that were paid and never marked paid, and every one of them had been logged as a success.</p>
+      </section>
+      <section class="play-doubt">
+        <h2 id="the-doubt">The doubt</h2>
+        <p><strong><a href="/software-observatory/previews/pr-147/what-each-sensor-proves/#unjudged-observation" class="wikilink">unjudged observation</a>.</strong> Production tells you what happened: this request took 80ms and returned 200. Nothing tells you whether 200 was the right answer.</p>
+        <p class="play-doubt-misread">Commonly misread as closing it: <a href="/software-observatory/previews/pr-147/sensors/observability-events/" class="wikilink">Observability Events</a>.</p>
+      </section>
+      <div class="play-body signal-detail-body">
+<h2 id="point-this-at-it">Point this at it</h2>
+<p><a class="body-link" href="/software-observatory/previews/pr-147/sensors/business-invariants/">Business invariants</a>, one query, over the
+last 24 hours, for the promise that just broke. Write it against the
+events or tables you already have and run it once a day from a
+scheduled job: a dbt test, a Great Expectations suite, or a cron job
+with SQL in it. &ldquo;Every payment event has an order in state paid within
+an hour&rdquo; with an expected violation count of zero.</p>
+<p>Every term has to name a field someone can point at. &ldquo;The order total is
+right&rdquo; cannot be queried, so whoever implements it picks a weaker
+reading, and that row passes without testing the promise you meant. The
+feed is your existing observability events; if the fields the query
+needs are not being emitted, that is the first fix.</p>
+<h2 id="reading-it">Reading it</h2>
+<ul>
+<li>Red: a violation count. Run the query by hand against the same window
+  before escalating, since a late batch or a schema rename produces
+  violations that never happened. Then route it to the domain owner. A
+  new violation class is an incident; a trickle that has been there for
+  months is a known gap.</li>
+<li>Green: zero violations of this promise in this window. A row that has
+  never failed in six months deserves a check that it is still running.</li>
+<li>It does not prove anything about promises you did not write down, and
+  it reads hours after the damage rather than before it.</li>
+</ul>
+<h2 id="if-the-doubt-survives">If the doubt survives</h2>
+<p>The invariant tells you the answer was wrong; it says nothing about why.
+When you trace the violating rows back into the code, the usual finding
+is a function that returns the wrong result for inputs the tests never
+supplied. That is wrong logic, and the next play is for it.</p>
+      </div>
+      <p class="play-next">Next play: <a href="/software-observatory/previews/pr-147/playbook/bugs-in-inputs-nobody-tried/" class="wikilink">The bug was in an input nobody tried</a></p>
+      <p class="play-back"><a href="/software-observatory/previews/pr-147/playbook/" class="wikilink">All plays</a></p>
+    </article>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-147/about/">About</a> · <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-147/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-148/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Differential Testing — Software Observatory</title>
+  <meta name="description" content="implementation_A(input) == implementation_B(input). You don’t know which is right. But disagreement is an excellent sensor.">
+  <link rel="canonical" href="/software-observatory/previews/pr-148/sensors/differential-testing/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Differential Testing — Software Observatory">
+  <meta property="og:description" content="implementation_A(input) == implementation_B(input). You don’t know which is right. But disagreement is an excellent sensor.">
+  <meta property="og:url" content="/software-observatory/previews/pr-148/sensors/differential-testing/">
+  <meta property="og:image" content="/software-observatory/previews/pr-148/og/cards/differential-testing.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Differential Testing — Software Observatory">
+  <meta name="twitter:description" content="implementation_A(input) == implementation_B(input). You don’t know which is right. But disagreement is an excellent sensor.">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-148/og/cards/differential-testing.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-148/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-148/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "TechArticle",
+        "DefinedTerm"
+      ],
+      "@id": "/software-observatory/previews/pr-148/sensors/differential-testing/#entry",
+      "headline": "Differential Testing",
+      "name": "Differential Testing",
+      "description": "implementation_A(input) == implementation_B(input). You don’t know which is right. But disagreement is an excellent sensor.",
+      "termCode": "SO-005c",
+      "url": "/software-observatory/previews/pr-148/sensors/differential-testing/",
+      "mainEntityOfPage": "/software-observatory/previews/pr-148/sensors/differential-testing/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-148/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "publisher": {
+        "@id": "/software-observatory/previews/pr-148/#organization"
+      },
+      "inDefinedTermSet": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "datePublished": "2026-08-23",
+      "dateModified": "2026-08-31",
+      "about": {
+        "@type": "Thing",
+        "@id": "/software-observatory/previews/pr-148/families/adversarial/#defined-term-set",
+        "name": "Adversarial",
+        "url": "/software-observatory/previews/pr-148/families/adversarial/"
+      },
+      "keywords": "Adversarial, Oracle-Free",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "value": "high",
+          "description": "disagreement is definitive evidence of a bug"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#independence",
+          "name": "Independence",
+          "value": "high",
+          "description": "two independent implementations"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#scope",
+          "name": "Scope",
+          "value": "function"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "value": "minutes-hours"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#actionability",
+          "name": "Actionability",
+          "value": "guiding",
+          "description": "shows the divergent inputs and outputs"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "value": "predictive"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-148/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Adversarial",
+          "item": "/software-observatory/previews/pr-148/families/adversarial/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Differential Testing"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #148 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-148/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-148/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-148/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-148/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-148/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-148/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-148/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-148/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-148/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-148/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="wiki-layout">
+    <article class="signal-detail">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-148/catalog/">Catalog</a> › <a href="/software-observatory/previews/pr-148/families/adversarial/">Adversarial</a> › Differential Testing</p>
+
+      <header class="signal-detail-header">
+        <h1 class="signal-detail-title">Differential Testing</h1>
+        <div class="signal-detail-meta">
+          <span class="tag tag-family">Adversarial</span>
+          <span class="tag tag-confidence">High oracle</span>
+          <span class="tag tag-type">Predictive</span>
+        </div>
+      </header>
+
+      <div class="signal-detail-body">
+        <p><code>implementation_A(input) == implementation_B(input)</code>. You don&rsquo;t know which is
+right. But disagreement is an excellent sensor.</p>
+<h2 id="the-oracle-question">The oracle question</h2>
+<p>Differential testing is oracle-free: you don&rsquo;t need to know the correct
+answer, only whether two implementations agree. This makes it powerful for
+systems where computing the expected output is infeasible.</p>
+<pre><code>old implementation vs new implementation
+production implementation vs reference implementation
+database query vs independently computed result
+two parsers
+two serialization formats
+compiler vs interpreter
+</code></pre>
+<h2 id="where-it-shines">Where it shines</h2>
+<p>Differential testing earned its reputation in domains where multiple
+independent implementations of the same spec exist:</p>
+<ul>
+<li><strong>Compiler fuzzing</strong>: Csmith generates random C programs, feeds them to
+  GCC, Clang, and MSVC, and flags disagreements. This found hundreds of
+  compiler bugs.</li>
+<li><strong>Spec conformance</strong>: TLS, JSON, and XML parser differential testing —
+  feed the same inputs to multiple parsers, flag disagreements. The JSON
+  parser differential testing work found conformance bugs in every major
+  parser.</li>
+<li><strong>Database engines</strong>: running the same SQL against Postgres, MySQL, and
+  SQLite and comparing results.</li>
+</ul>
+<p>In each case, you don&rsquo;t need to know the correct answer — you only need
+two implementations that <em>should</em> agree.</p>
+<h2 id="in-practice">In practice</h2>
+<p>A reading is two outputs for one input, with the disagreement
+flagged:</p>
+<table>
+<thead>
+<tr>
+<th>Input</th>
+<th>Engine A (Postgres)</th>
+<th>Engine B (SQLite)</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SELECT 3 + 4</code></td>
+<td>7</td>
+<td>7</td>
+<td>agree</td>
+</tr>
+<tr>
+<td><code>SELECT 1 / 0</code></td>
+<td>ERROR: division by zero</td>
+<td>NULL</td>
+<td>disagree</td>
+</tr>
+<tr>
+<td><code>SELECT 'abc' + 1</code></td>
+<td>ERROR</td>
+<td>1</td>
+<td>disagree</td>
+</tr>
+</tbody>
+</table>
+<p>The tooling writes each divergent case to disk as the report:</p>
+<pre><code>[mismatch] seed 0x8f3a2c
+  query:     SELECT 1 / 0
+  engine A:  ERROR: division by zero
+  engine B:  NULL
+  reduced input saved to findings/0x8f3a2c.sql
+</code></pre>
+<p>Reading it well:</p>
+<ol>
+<li><strong>Disagreement means at least one is wrong, not both.</strong> The
+   reading is a fact about the pair; assigning blame is a separate
+   step against the spec.</li>
+<li><strong>Check whether the spec is silent.</strong> Some disagreements live in
+   undefined territory where each engine picked its own answer. Those
+   are spec bugs as much as implementation bugs, and they will bite
+   anyone who assumed otherwise.</li>
+<li><strong>Trust the reduced input, not the original.</strong> Generated cases
+   are enormous; the minimized case is the one a human can verify by
+   hand, and the one worth filing.</li>
+</ol>
+<h2 id="how-it-gets-gamed">How it gets gamed</h2>
+<p>The sensor is a comparison, and comparisons can be rigged:</p>
+<ul>
+<li><strong>Cherry-pick the reference.</strong> The reference implementation is
+  chosen for convenience, not correctness. When it is the weaker
+  half of the pair, disagreements get resolved in its favor by
+  default, which silently converts &ldquo;does my code match the spec&rdquo;
+  into &ldquo;does my code match the thing I picked.&rdquo; The fix is to judge
+  divergences against the spec, never against the reference.</li>
+<li><strong>Filter the input distribution.</strong> Narrow the generator, or prune
+  the seed corpus after a big finding, until the divergent region
+  stops being sampled. The campaign still runs and the report stays
+  clean, because the inputs that would have caught the bug are no
+  longer in the lottery.</li>
+<li><strong>Label divergences as flaky.</strong> Real nondeterminism exists, but a
+  disagreement that comes and goes is usually an ordering or
+  precision bug on one side, not noise. Retrying until the two
+  agree launders the finding.</li>
+<li><strong>Exempt input classes.</strong> &ldquo;Undefined behavior,&rdquo; &ldquo;unsupported
+  locale,&rdquo; &ldquo;legacy format&rdquo;: every excluded class is a place where
+  disagreement is ruled out by decree. Some exclusions are
+  legitimate; an exclusion list that grows right after findings is
+  a gaming pattern.</li>
+</ul>
+<p>The meta-signal is the exclusion list plus the disagreement-dismissal
+rate. Findings should be closed by the spec, not by policy.</p>
+<h2 id="response-playbook">Response playbook</h2>
+<p>When two implementations disagree:</p>
+<ol>
+<li><strong>Preserve the divergent input.</strong> The reduced case is the
+   reading; commit it before it is lost to the next campaign.</li>
+<li><strong>Judge against the spec, not the majority.</strong> Disagreement means
+   at least one implementation is wrong; the spec says which. If the
+   spec is silent, both answers are defensible and the spec is the
+   bug.</li>
+<li><strong>Fix the implementation you own.</strong> If one side is yours, the
+   other implementation&rsquo;s output, judged against the spec, is a test
+   case written for free.</li>
+<li><strong>Add the case to the suite.</strong> A divergence found once is worth
+   pinning forever, because the fix can regress without anyone
+   re-running the campaign.</li>
+</ol>
+<h2 id="what-it-cannot-detect">What it cannot detect</h2>
+<p>If both implementations share the same bug, differential testing won&rsquo;t find
+it. Also requires two implementations, which may not exist.</p>
+
+                <h2 id="related-sensors">Related sensors</h2>
+        <div class="see-also-grid">
+          <a href="/software-observatory/previews/pr-148/sensors/fuzzing/" class="see-also-card">
+            <span class="see-also-type">Adversarial</span>
+            <span class="see-also-title">Fuzzing</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/metamorphic-testing/" class="see-also-card">
+            <span class="see-also-type">Adversarial</span>
+            <span class="see-also-title">Metamorphic Testing</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/fault-injection/" class="see-also-card">
+            <span class="see-also-type">Adversarial</span>
+            <span class="see-also-title">Fault Injection</span>
+          </a>
+        </div>
+
+        <div class="entry-categories">
+          <span class="cat-label">Categories:</span>
+          <a href="/software-observatory/previews/pr-148/families/adversarial/" class="cat-link">Adversarial</a>
+          <a href="/software-observatory/previews/pr-148/categories/#oracle-free" class="cat-link">Oracle-Free</a>
+        </div>
+
+        <h2 id="references">References</h2>
+        <h3 class="references-subheading" id="publications">Publications</h3>
+        <ul class="reference-list">
+          <li><a href="https://arxiv.org/abs/2003.10554" class="wikilink">Elle: Inferring Isolation Anomalies from Experimental Observations</a> — <span class="ref-meta">Kyle Kingsbury, Peter Alvaro · 2020 · observational study · arXiv 2003.10554</span></li>
+        </ul>
+        <h3 class="references-subheading" id="tooling">Tooling</h3>
+        <ul class="reference-list reference-tools">
+          <li><span class="ref-title"><a href="https://github.com/sqlancer/sqlancer" class="wikilink">SQLancer</a></span><span class="ref-desc">Differential testing for SQL databases</span></li>
+          <li><span class="ref-title"><a href="https://embed.cs.utah.edu/csmith" class="wikilink">Csmith</a></span><span class="ref-desc">Random C program generator for compiler testing</span></li>
+        </ul>
+        <h3 class="references-subheading" id="further-reading">Further reading</h3>
+        <ul class="reference-list">
+          <li>Yang et al., &#x27;Finding and Understanding Bugs in C Compilers&#x27; (2011, Csmith)</li>
+        </ul>
+      </div>
+    </article>
+
+    <aside class="wiki-sidebar">
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="sensor-properties">Sensor properties</h3>
+        <dl class="meta-list">
+          <dt>Family</dt>           <dd><a href="/software-observatory/previews/pr-148/families/adversarial/" class="wikilink">Adversarial</a></dd>
+          <dt>Oracle</dt>          <dd>High <span class="prop-note" title="disagreement is definitive evidence of a bug" aria-label="disagreement is definitive evidence of a bug">(?)</span></dd>
+          <dt>Independence</dt>     <dd>High <span class="prop-note" title="two independent implementations" aria-label="two independent implementations">(?)</span></dd>
+          <dt>Scope</dt>           <dd>Function</dd>
+          <dt>Latency</dt>         <dd>Minutes to hours</dd>
+          <dt>Actionability</dt>   <dd>Guiding <span class="prop-note" title="shows the divergent inputs and outputs" aria-label="shows the divergent inputs and outputs">(?)</span></dd>
+          <dt>Type</dt>             <dd>Predictive</dd>
+          <dt>Entry ID</dt>        <dd>SO-005c</dd>
+          <dt>Reviewed</dt>        <dd>2026-08 <span class="review-age" title="Age measured against 2026-09-03, the newest date in the catalog. The build never uses the wall clock, so this page is byte-identical between builds.">— current</span></dd>
+        </dl>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="what-links-here">What links here</h3>
+        <ul class="backlink-list">
+          <li><a href="/software-observatory/previews/pr-148/sensors/canary-analysis/">Canary Analysis</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/live-chaos-experiments/">Live Chaos Experiments</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/shadow-traffic/">Shadow Traffic</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/static-security-analysis/">Static Security Analysis</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="related-categories">Related categories</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-148/families/adversarial/">Category: Adversarial</a></li>
+          <li><a href="/software-observatory/previews/pr-148/categories/#oracle-free">Category: Oracle-Free</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-148/about/">About</a> · <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-148/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-148/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>API Compatibility — Software Observatory</title>
+  <meta name="description" content="Did externally observable contracts change? A sensor of boundary stability — can old and new versions coexist?">
+  <link rel="canonical" href="/software-observatory/previews/pr-148/sensors/api-compatibility/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="API Compatibility — Software Observatory">
+  <meta property="og:description" content="Did externally observable contracts change? A sensor of boundary stability — can old and new versions coexist?">
+  <meta property="og:url" content="/software-observatory/previews/pr-148/sensors/api-compatibility/">
+  <meta property="og:image" content="/software-observatory/previews/pr-148/og/cards/api-compatibility.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="API Compatibility — Software Observatory">
+  <meta name="twitter:description" content="Did externally observable contracts change? A sensor of boundary stability — can old and new versions coexist?">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-148/og/cards/api-compatibility.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-148/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-148/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "TechArticle",
+        "DefinedTerm"
+      ],
+      "@id": "/software-observatory/previews/pr-148/sensors/api-compatibility/#entry",
+      "headline": "API Compatibility",
+      "name": "API Compatibility",
+      "description": "Did externally observable contracts change? A sensor of boundary stability — can old and new versions coexist?",
+      "termCode": "SO-007c",
+      "url": "/software-observatory/previews/pr-148/sensors/api-compatibility/",
+      "mainEntityOfPage": "/software-observatory/previews/pr-148/sensors/api-compatibility/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-148/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "publisher": {
+        "@id": "/software-observatory/previews/pr-148/#organization"
+      },
+      "inDefinedTermSet": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "datePublished": "2026-08-23",
+      "dateModified": "2026-08-26",
+      "about": {
+        "@type": "Thing",
+        "@id": "/software-observatory/previews/pr-148/families/change/#defined-term-set",
+        "name": "Change",
+        "url": "/software-observatory/previews/pr-148/families/change/"
+      },
+      "keywords": "Change, Boundary Assumptions",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "value": "high",
+          "description": "breaking changes are definitive"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#independence",
+          "name": "Independence",
+          "value": "high",
+          "description": "schema/contract is external"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#scope",
+          "name": "Scope",
+          "value": "service"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "value": "seconds"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#actionability",
+          "name": "Actionability",
+          "value": "guiding",
+          "description": "shows which API surface changed"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "value": "predictive"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-148/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Change",
+          "item": "/software-observatory/previews/pr-148/families/change/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "API Compatibility"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #148 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-148/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-148/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-148/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-148/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-148/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-148/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-148/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-148/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-148/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-148/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="wiki-layout">
+    <article class="signal-detail">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-148/catalog/">Catalog</a> › <a href="/software-observatory/previews/pr-148/families/change/">Change</a> › API Compatibility</p>
+
+      <header class="signal-detail-header">
+        <h1 class="signal-detail-title">API Compatibility</h1>
+        <div class="signal-detail-meta">
+          <span class="tag tag-family">Change</span>
+          <span class="tag tag-confidence">High oracle</span>
+          <span class="tag tag-type">Predictive</span>
+        </div>
+      </header>
+
+      <div class="signal-detail-body">
+        <p>Did externally observable contracts change? A sensor of <em>boundary stability</em>
+— can old and new versions coexist?</p>
+<p>API compatibility checking answers one question about a diff: did this
+change break backwards compatibility? It reads the old version of the
+interface and the new one, and classifies what moved between them. It
+does not ask who is on the other end, and it does not need to — an
+endpoint removed is a backwards-incompatible change whether anyone
+called it or not.</p>
+<p>That is the line between this sensor and <a class="body-link" href="/software-observatory/previews/pr-148/sensors/contract-tests/">contract
+tests</a>. Contract tests ask <em>did we break our
+consumers?</em> Compatibility asks <em>did we make a backwards-incompatible
+change?</em> Compatibility is a property of two versions of a surface;
+breakage is a property of two versions plus the people using them.</p>
+<h2 id="in-practice">In practice</h2>
+<p>The reading is a classified diff of the API surface:</p>
+<p>Illustrative classification of an API diff, not openapi-diff or oasdiff
+console output:</p>
+<pre><code class="language-text">Breaking: removed endpoint GET /v1/invoices/{id}/export
+Breaking: changed response field Invoice.total from number to string
+Compatible addition: optional query parameter cursor on GET /v1/invoices
+Compatible addition: endpoint POST /v1/invoices/{id}/void
+</code></pre>
+<p>That classification is the whole reading, and its strength is that it
+needs to know nothing about the outside world. <code>Invoice.total</code> moving
+from number to string is incompatible whether one caller parses it or
+ten thousand do. Nothing has to be deployed, no traffic has to be
+sampled, and no consumer has to be enumerated — which is why the
+verdict costs seconds and holds up in a merge gate.</p>
+<p>The price of that independence is that the reading tells you what you
+did, not what it will cost. Those are different questions, and the
+sensor only answers the first one:</p>
+<ul>
+<li>A <strong>breaking</strong> change with nobody on the other end is still correctly
+  classified breaking. It is also free to ship. The diff cannot tell
+  the two situations apart, because the answer isn&rsquo;t in the diff.</li>
+<li>A <strong>non-breaking</strong> change can still break every caller — flip a
+  default, tighten a validation rule, start returning results in a
+  different order. The shape held, so the check is silent, and it is
+  silent correctly: nothing about the contract changed.</li>
+</ul>
+<p>For the second question — what does this cost, and who does it cost —
+go elsewhere. <a class="body-link" href="/software-observatory/previews/pr-148/sensors/contract-tests/">Contract tests</a> catch the
+behavioral breaks that leave the shape intact. Consumer telemetry
+says who is actually out there: the package index for a library,
+per-endpoint and per-field traffic for a service.</p>
+<h2 id="response-playbook">Response playbook</h2>
+<p>When the check reports a breaking change:</p>
+<ol>
+<li><strong>Go find out who is on the other end.</strong> The check has told you the
+   change is incompatible. It has not told you whether that is
+   expensive, and it cannot — that answer lives in traffic telemetry
+   and the package index, not in the diff.</li>
+<li><strong>If consumers exist, make it additive.</strong> Ship the new surface
+   alongside the old, migrate callers, and remove the old surface
+   only after the telemetry confirms nobody is left.</li>
+<li><strong>If removal is forced, version it.</strong> A major-version bump or a
+   <code>/v2</code> prefix is the honest signal to consumers; a silent removal
+   is not.</li>
+<li><strong>Automate the check as a merge gate.</strong> A reviewer scanning a large
+   diff misses a widened parameter or a field quietly made required;
+   the tool compares every signature every time and does not get
+   bored.</li>
+</ol>
+<h2 id="how-it-gets-gamed">How it gets gamed</h2>
+<ul>
+<li><strong>Deprecation without removal.</strong> Marking a surface deprecated and
+  never deleting it. Nothing is ever classified breaking because
+  nothing is ever removed, and the compatible surface grows until it
+  is the thing nobody can change.</li>
+<li><strong>Break it semantically instead of structurally.</strong> Change what a
+  field <em>means</em>, or what an error code implies, while leaving every
+  type where it was. The gate has nothing to say, and it is not wrong
+  — it was asked about shape. But a team that knows this can route
+  around the gate on purpose. <a class="body-link" href="/software-observatory/previews/pr-148/sensors/contract-tests/">Contract
+  tests</a> are the sensor that notices.</li>
+<li><strong>Version-bump laundering.</strong> Reclassifying a breaking change as a
+  &ldquo;platform migration&rdquo; so the compatibility gate does not run on
+  it.</li>
+</ul>
+<p>The meta-signal is how much of the public surface the check can
+actually see. Anything not described by a spec or a signature the tool
+parses — a hand-rolled endpoint, an undocumented header, a field added
+by a serializer at runtime — produces no verdict at all, and silence
+from a compatibility check reads exactly like a pass.</p>
+<h2 id="what-it-cannot-detect">What it cannot detect</h2>
+<p>API compatibility checks the <em>shape</em> of the interface, not the
+<em>behavioral meaning</em>. A response with the same fields and types but
+different semantics will pass compatibility checks.</p>
+
+                <h2 id="related-sensors">Related sensors</h2>
+        <div class="see-also-grid">
+          <a href="/software-observatory/previews/pr-148/sensors/contract-tests/" class="see-also-card">
+            <span class="see-also-type">Behavioral</span>
+            <span class="see-also-title">Contract Tests</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/canary-analysis/" class="see-also-card">
+            <span class="see-also-type">Change</span>
+            <span class="see-also-title">Canary Analysis</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/error-budget-impact/" class="see-also-card">
+            <span class="see-also-type">Change</span>
+            <span class="see-also-title">Error-Budget Impact</span>
+          </a>
+        </div>
+
+        <div class="entry-categories">
+          <span class="cat-label">Categories:</span>
+          <a href="/software-observatory/previews/pr-148/families/change/" class="cat-link">Change</a>
+          <a href="/software-observatory/previews/pr-148/categories/#boundary-assumptions" class="cat-link">Boundary Assumptions</a>
+        </div>
+
+        <h2 id="references">References</h2>
+        <h3 class="references-subheading" id="publications">Publications</h3>
+        <ul class="reference-list">
+          <li><a href="https://arxiv.org/abs/2301.04563" class="wikilink">I Depended on You and You Broke Me: An Empirical Study of Manifesting Breaking Changes in Client Packages</a> — <span class="ref-meta">Daniel Venturini, Filipe Roseiro Cogo, Ivanilton Polato, Marco A Gerosa, Igor Scaliante Wiese · 2023 · observational study · ACM TOSEM</span></li>
+          <li><a href="https://arxiv.org/abs/2110.07889" class="wikilink">Breaking Bad? Semantic Versioning and Impact of Breaking Changes in Maven Central</a> — <span class="ref-meta">Lina Ochoa, Thomas Degueule, Jean-Rémy Falleri, Jurgen Vinju · 2022 · observational study · Empirical Software Engineering 27</span></li>
+        </ul>
+        <h3 class="references-subheading" id="tooling">Tooling</h3>
+        <ul class="reference-list reference-tools">
+          <li><span class="ref-title"><a href="https://revapi.org" class="wikilink">revapi</a></span><span class="ref-desc">API compatibility checking for JVM</span></li>
+          <li><span class="ref-title"><a href="https://github.com/lightbend/mima" class="wikilink">MiMa</a></span><span class="ref-desc">Binary compatibility checking for Scala/JVM libraries</span></li>
+          <li><span class="ref-title"><a href="https://github.com/fullstorydev/grpcurl" class="wikilink">grpcurl</a></span><span class="ref-desc">gRPC command-line client</span></li>
+          <li><span class="ref-title"><a href="https://github.com/OpenAPITools/openapi-diff" class="wikilink">openapi-diff</a></span><span class="ref-desc">OpenAPI spec diff tool</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <aside class="wiki-sidebar">
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="sensor-properties">Sensor properties</h3>
+        <dl class="meta-list">
+          <dt>Family</dt>           <dd><a href="/software-observatory/previews/pr-148/families/change/" class="wikilink">Change</a></dd>
+          <dt>Oracle</dt>          <dd>High <span class="prop-note" title="breaking changes are definitive" aria-label="breaking changes are definitive">(?)</span></dd>
+          <dt>Independence</dt>     <dd>High <span class="prop-note" title="schema/contract is external" aria-label="schema/contract is external">(?)</span></dd>
+          <dt>Scope</dt>           <dd>Service</dd>
+          <dt>Latency</dt>         <dd>Seconds</dd>
+          <dt>Actionability</dt>   <dd>Guiding <span class="prop-note" title="shows which API surface changed" aria-label="shows which API surface changed">(?)</span></dd>
+          <dt>Type</dt>             <dd>Predictive</dd>
+          <dt>Entry ID</dt>        <dd>SO-007c</dd>
+          <dt>Reviewed</dt>        <dd>2026-08 <span class="review-age" title="Age measured against 2026-09-03, the newest date in the catalog. The build never uses the wall clock, so this page is byte-identical between builds.">— current</span></dd>
+        </dl>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="what-links-here">What links here</h3>
+        <ul class="backlink-list">
+          <li><a href="/software-observatory/previews/pr-148/sensors/canary-analysis/">Canary Analysis</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/shadow-traffic/">Shadow Traffic</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+        </ul>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="in-the-playbook">In the playbook</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-148/playbook/something-changed-nobody-meant-to/">Something changed that nobody meant to change</a>
+          <li><a href="/software-observatory/previews/pr-148/playbook/stack-for-a-library/">A minimal stack for a library with downstream users</a>
+        </ul>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="related-categories">Related categories</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-148/families/change/">Category: Change</a></li>
+          <li><a href="/software-observatory/previews/pr-148/categories/#boundary-assumptions">Category: Boundary Assumptions</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-148/about/">About</a> · <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-148/js/main.js"></script>
+</body>
+</html>

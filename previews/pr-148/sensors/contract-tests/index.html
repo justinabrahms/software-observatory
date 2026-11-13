@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-148/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Contract Tests — Software Observatory</title>
+  <meta name="description" content="Does service A continue satisfying the assumptions of service B? Contract tests are a sensor of boundary assumptions — the implicit agreements between…">
+  <link rel="canonical" href="/software-observatory/previews/pr-148/sensors/contract-tests/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Contract Tests — Software Observatory">
+  <meta property="og:description" content="Does service A continue satisfying the assumptions of service B? Contract tests are a sensor of boundary assumptions — the implicit agreements between…">
+  <meta property="og:url" content="/software-observatory/previews/pr-148/sensors/contract-tests/">
+  <meta property="og:image" content="/software-observatory/previews/pr-148/og/cards/contract-tests.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Contract Tests — Software Observatory">
+  <meta name="twitter:description" content="Does service A continue satisfying the assumptions of service B? Contract tests are a sensor of boundary assumptions — the implicit agreements between…">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-148/og/cards/contract-tests.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-148/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-148/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "TechArticle",
+        "DefinedTerm"
+      ],
+      "@id": "/software-observatory/previews/pr-148/sensors/contract-tests/#entry",
+      "headline": "Contract Tests",
+      "name": "Contract Tests",
+      "description": "Does service A continue satisfying the assumptions of service B? Contract tests are a sensor of boundary assumptions — the implicit agreements between independent components about what the interface…",
+      "termCode": "SO-002",
+      "url": "/software-observatory/previews/pr-148/sensors/contract-tests/",
+      "mainEntityOfPage": "/software-observatory/previews/pr-148/sensors/contract-tests/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-148/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "publisher": {
+        "@id": "/software-observatory/previews/pr-148/#organization"
+      },
+      "inDefinedTermSet": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "datePublished": "2026-08-23",
+      "dateModified": "2026-09-03",
+      "about": {
+        "@type": "Thing",
+        "@id": "/software-observatory/previews/pr-148/families/behavioral/#defined-term-set",
+        "name": "Behavioral",
+        "url": "/software-observatory/previews/pr-148/families/behavioral/"
+      },
+      "keywords": "Behavioral, Boundary Assumptions",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "value": "high",
+          "description": "a contract violation is a definite bug"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#independence",
+          "name": "Independence",
+          "value": "high",
+          "description": "consumer defines the contract"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#scope",
+          "name": "Scope",
+          "value": "service",
+          "description": "between services, at their boundaries"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "value": "minutes"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#actionability",
+          "name": "Actionability",
+          "value": "guiding",
+          "description": "shows exactly which contract clause was violated"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "value": "predictive",
+          "description": "catches breaking changes before deployment"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-148/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Behavioral",
+          "item": "/software-observatory/previews/pr-148/families/behavioral/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Contract Tests"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #148 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-148/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-148/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-148/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-148/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-148/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-148/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-148/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-148/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-148/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-148/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="wiki-layout">
+    <article class="signal-detail">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-148/catalog/">Catalog</a> › <a href="/software-observatory/previews/pr-148/families/behavioral/">Behavioral</a> › Contract Tests</p>
+
+      <header class="signal-detail-header">
+        <h1 class="signal-detail-title">Contract Tests</h1>
+        <div class="signal-detail-meta">
+          <span class="tag tag-family">Behavioral</span>
+          <span class="tag tag-confidence">High oracle</span>
+          <span class="tag tag-type">Predictive</span>
+        </div>
+      </header>
+
+      <div class="signal-detail-body">
+        <p>Does service A continue satisfying the assumptions of service B? Contract
+tests are a sensor of <em>boundary assumptions</em> — the implicit agreements
+between independent components about what the interface between them
+promises.</p>
+<h2 id="contracts-measure-boundary-assumptions">Contracts measure boundary assumptions</h2>
+<p>A <em>contract</em> is a specification of what one component promises to provide
+and what another component is allowed to assume. Contract tests verify that
+both sides of the boundary continue to honor these promises as the system
+evolves.</p>
+<pre><code># Consumer-driven contract
+Service B (consumer) defines:
+  &quot;I expect GET /users/{id} to return
+   { id: int, name: string, active: bool }&quot;
+
+Service A (provider) must satisfy:
+  its response matches this shape
+  the field types are correct
+  the endpoint exists and responds
+</code></pre>
+<p>The sensor detects <em>breaking changes</em> — when a provider modifies its API in
+a way that violates the assumptions its consumers depend on. This is
+particularly powerful in microservice architectures where independent teams
+deploy independently.</p>
+<blockquote>
+<p>Contracts measure boundary assumptions. Types measure a particular class
+of structural inconsistency. Contract tests are the boundary-level version
+of what type checkers are at the module level: both enforce structural
+promises, but at different scopes and different feedback latencies.</p>
+</blockquote>
+<h2 id="in-practice">In practice</h2>
+<p>A reading is a pact verification failure that names the broken clause
+and the consumer it belongs to:</p>
+<pre><code>Verifying a pact between Orders (consumer) and Billing (provider)
+
+  A request for invoice 42
+    GET /invoices/42
+      returns a response which
+        has status code 200
+        includes headers
+          &quot;Content-Type&quot; with value &quot;application/json&quot;  FAILED
+            actual value: &quot;text/html&quot;
+        has a matching body                             FAILED
+          $.amount: expected number, got string
+
+2 interactions, 2 failures
+</code></pre>
+<p>Reading it well:</p>
+<ol>
+<li><strong>Read the clause, not just the red.</strong> Status, header, and body
+   failures have different owners and different fixes. The clause
+   names which promise broke.</li>
+<li><strong>The failure belongs to the change, not the expectation.</strong> The
+   consumer stated its assumption first; the provider moved. The fix
+   direction is usually to hold the provider to the promise, not to
+   relax the expectation.</li>
+<li><strong>A passing pact is one-directional evidence.</strong> It says the
+   provider honors the recorded expectations. It does not say the
+   expectations are complete: a consumer that never wrote a pact is
+   a gap the sensor cannot see.</li>
+</ol>
+<h2 id="how-it-gets-gamed">How it gets gamed</h2>
+<ul>
+<li><strong>Delete or weaken the pact.</strong> Removing an expectation the
+  provider now violates turns red to green without fixing the
+  provider. The consumer still holds the old assumption, so the
+  breakage moves from the report to production.</li>
+<li><strong>Verify against a stub.</strong> Running the provider side of a pact
+  against a mock instead of the real service passes the check and
+  tests nothing.</li>
+<li><strong>Let pacts go stale.</strong> A pact not re-verified after a provider
+  change is an assumption wearing a check mark.</li>
+</ul>
+<p>The meta-signal is the pact count per consumer over time. A pact file
+that shrinks after a failure is the sensor being overridden.</p>
+<h2 id="response-playbook">Response playbook</h2>
+<p>When a contract test fails:</p>
+<ol>
+<li><strong>Read the broken clause.</strong> Status, header, and body failures
+   have different owners. The clause names which promise broke and
+   which consumer depends on it.</li>
+<li><strong>Assume the provider is wrong until shown otherwise.</strong> The
+   consumer stated its assumption before the provider changed. The
+   default fix is restoring the promise, not relaxing the pact.</li>
+<li><strong>If the consumer is wrong, change both sides together.</strong> Update
+   the pact and the consumer in the same change, so the window where
+   neither matches is zero.</li>
+<li><strong>Check the other consumers.</strong> A broken clause usually breaks
+   every consumer that holds it. The report names one; the pact
+   broker lists the rest.</li>
+</ol>
+<h2 id="what-it-cannot-detect">What it cannot detect</h2>
+<p>Contract tests verify the <em>shape</em> of communication, not its <em>meaning</em>. A
+response that has the right fields and types but contains wrong values will
+pass a contract test. They also cannot detect
+<a class="body-link" href="/software-observatory/previews/pr-148/catalog/#behavioral">integration failures</a> that emerge from the
+<em>interaction</em> of correct components producing incorrect emergent behavior.</p>
+
+                <h2 id="related-sensors">Related sensors</h2>
+        <div class="see-also-grid">
+          <a href="/software-observatory/previews/pr-148/sensors/type-checker/" class="see-also-card">
+            <span class="see-also-type">Structural</span>
+            <span class="see-also-title">Type Checker</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/runtime-invariants/" class="see-also-card">
+            <span class="see-also-type">Invariants</span>
+            <span class="see-also-title">Runtime Invariants</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/families/change/" class="see-also-card">
+            <span class="see-also-type">Family</span>
+            <span class="see-also-title">Change</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/families/structural/" class="see-also-card">
+            <span class="see-also-type">Family</span>
+            <span class="see-also-title">Structural</span>
+          </a>
+        </div>
+
+        <div class="entry-categories">
+          <span class="cat-label">Categories:</span>
+          <a href="/software-observatory/previews/pr-148/families/behavioral/" class="cat-link">Behavioral</a>
+          <a href="/software-observatory/previews/pr-148/categories/#boundary-assumptions" class="cat-link">Boundary Assumptions</a>
+        </div>
+
+        <h2 id="references">References</h2>
+        <h3 class="references-subheading" id="publications">Publications</h3>
+        <ul class="reference-list">
+          <li><a href="https://arxiv.org/abs/2301.04563" class="wikilink">I Depended on You and You Broke Me: An Empirical Study of Manifesting Breaking Changes in Client Packages</a> — <span class="ref-meta">Daniel Venturini, Filipe Roseiro Cogo, Ivanilton Polato, Marco A Gerosa, Igor Scaliante Wiese · 2023 · observational study · ACM TOSEM</span></li>
+          <li><a href="https://arxiv.org/pdf/2108.03384" class="wikilink">Design, Monitoring, and Testing of Microservices Systems: The Practitioners&#x27; Perspective</a> — <span class="ref-meta">Muhammad Waseem, Peng Liang, Mojtaba Shahin, Amleto Di Salle, Gastón Márquez · 2021 · observational study · Journal of Systems and Software 182</span></li>
+          <li><a href="https://martinfowler.com/articles/consumerDrivenContracts.html" class="wikilink">Consumer-Driven Contracts: A Service Evolution Pattern</a> — <span class="ref-meta">Ian Robinson · 2006 · argument · martinfowler.com</span></li>
+        </ul>
+        <h3 class="references-subheading" id="tooling">Tooling</h3>
+        <ul class="reference-list reference-tools">
+          <li><span class="ref-title"><a href="https://pact.io" class="wikilink">Pact</a></span><span class="ref-desc">Consumer-driven contract testing</span></li>
+          <li><span class="ref-title"><a href="https://spring.io/projects/spring-cloud-contract" class="wikilink">Spring Cloud Contract</a></span><span class="ref-desc">Contract testing for Spring/JVM</span></li>
+          <li><span class="ref-title"><a href="https://www.postman.com" class="wikilink">Postman</a></span><span class="ref-desc">API testing and contract validation</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <aside class="wiki-sidebar">
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="sensor-properties">Sensor properties</h3>
+        <dl class="meta-list">
+          <dt>Family</dt>           <dd><a href="/software-observatory/previews/pr-148/families/behavioral/" class="wikilink">Behavioral</a></dd>
+          <dt>Oracle</dt>          <dd>High <span class="prop-note" title="a contract violation is a definite bug" aria-label="a contract violation is a definite bug">(?)</span></dd>
+          <dt>Independence</dt>     <dd>High <span class="prop-note" title="consumer defines the contract" aria-label="consumer defines the contract">(?)</span></dd>
+          <dt>Scope</dt>           <dd>Service <span class="prop-note" title="between services, at their boundaries" aria-label="between services, at their boundaries">(?)</span></dd>
+          <dt>Latency</dt>         <dd>Minutes</dd>
+          <dt>Actionability</dt>   <dd>Guiding <span class="prop-note" title="shows exactly which contract clause was violated" aria-label="shows exactly which contract clause was violated">(?)</span></dd>
+          <dt>Type</dt>             <dd>Predictive <span class="prop-note" title="catches breaking changes before deployment" aria-label="catches breaking changes before deployment">(?)</span></dd>
+          <dt>Entry ID</dt>        <dd>SO-002</dd>
+          <dt>Reviewed</dt>        <dd>2026-09 <span class="review-age" title="Age measured against 2026-09-03, the newest date in the catalog. The build never uses the wall clock, so this page is byte-identical between builds.">— current</span></dd>
+        </dl>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="what-links-here">What links here</h3>
+        <ul class="backlink-list">
+          <li><a href="/software-observatory/previews/pr-148/sensors/api-compatibility/">API Compatibility</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/boundary-sensors/">Boundary Sensors</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/contract-refinement-types/">Contract &amp; Refinement Types</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/integration-tests/">Integration Tests</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/schema-validator/">Schema Validator</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="related-categories">Related categories</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-148/families/behavioral/">Category: Behavioral</a></li>
+          <li><a href="/software-observatory/previews/pr-148/categories/#boundary-assumptions">Category: Boundary Assumptions</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-148/about/">About</a> · <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-148/js/main.js"></script>
+</body>
+</html>

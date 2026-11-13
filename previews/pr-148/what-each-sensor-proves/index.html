@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-148/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>What Each Sensor Proves, and What It Is Mistaken for Proving — Software Observatory</title>
+  <meta name="description" content="What passing tests, type checks, coverage, canaries and proofs actually prove about software: 19 doubts, and for each the sensors that rule it out, the…">
+  <link rel="canonical" href="/software-observatory/previews/pr-148/what-each-sensor-proves/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="What Each Sensor Proves, and What It Is Mistaken for Proving — Software Observatory">
+  <meta property="og:description" content="What passing tests, type checks, coverage, canaries and proofs actually prove about software: 19 doubts, and for each the sensors that rule it out, the…">
+  <meta property="og:url" content="/software-observatory/previews/pr-148/what-each-sensor-proves/">
+  <meta property="og:image" content="/software-observatory/previews/pr-148/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="What Each Sensor Proves, and What It Is Mistaken for Proving — Software Observatory">
+  <meta name="twitter:description" content="What passing tests, type checks, coverage, canaries and proofs actually prove about software: 19 doubts, and for each the sensors that rule it out, the…">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-148/og.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-148/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-148/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "/software-observatory/previews/pr-148/what-each-sensor-proves/#page",
+      "name": "What Each Sensor Proves, and What It Is Mistaken for Proving",
+      "description": "What passing tests, type checks, coverage, canaries and proofs actually prove about software: 19 doubts, and for each the sensors that rule it out, the sensors that reveal it after the fact, and the sensors mistaken for ruling it out.",
+      "url": "/software-observatory/previews/pr-148/what-each-sensor-proves/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-148/#organization"
+      },
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-148/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "dateModified": "2026-09-03"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Framework",
+          "item": "https://softwareobservatory.comframework/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "What each sensor proves"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #148 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-148/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-148/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-148/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-148/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-148/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-148/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-148/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-148/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-148/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-148/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <section class="page-header page-header--reading">
+    <p class="eyebrow">The Framework</p>
+    <h1 class="page-title">What each sensor proves</h1>
+    <p class="page-lede">
+      What does a passing type check, a green test suite, or 90% coverage
+      actually prove about the code, and what is it mistaken for proving?
+      Removing doubt is the job every sensor in the catalog does, and each
+      one removes a different doubt. This page names 19 of them
+      and maps every sensor onto them.
+    </p>
+  </section>
+
+  <div class="framework-content doubts-content">
+    <div class="doubt-intro">
+      <p>
+        No sensor in the catalog measures correctness. Each one answers a
+        narrower question, and the
+        <a href="/software-observatory/previews/pr-148/framework/#combining-sensors" class="wikilink">composition
+        rule</a> says how those answers add up: not by counting green checks,
+        but by ruling out specific ways the software could be wrong, one at a
+        time. A check that rules out nothing new adds nothing, however green
+        it is.
+      </p>
+      <p>
+        A <em>doubt</em> is one specific way the software could be wrong. The
+        logic is wrong even though it compiles. The tests ran the code but
+        asserted nothing about the result. The change altered something
+        nobody meant to touch. For each doubt, the page asks three questions
+        of every sensor. Does a clean result from this sensor
+        <strong>close</strong> the doubt, for what the sensor was pointed at?
+        Does it only <strong>reveal</strong> the doubt after the fact, once
+        the damage has reached production? Or is its clean result commonly
+        <strong>misread</strong> as closing the doubt when it does not?
+      </p>
+      <p>
+        The doubts come first. Then a graph that draws all three answers at
+        once, then the same edges laid out by sensor for when you arrive with
+        a tool in mind, and last, where the vocabulary came from.
+      </p>
+    </div>
+
+    <section class="doubt-cards-section">
+      <h2 id="the-doubts">The doubts</h2>
+      <div class="doubt-cards" role="list">
+      <article class="doubt-card" id="wrong-logic" data-d="wrong-logic" tabindex="0">
+        <h3 class="doubt-card-name" id="wrong-logic-name">Wrong logic</h3>
+        <p class="doubt-card-desc">The code compiles, type-checks, and has the right shape. It still returns the wrong answer. Anything that only looks at structure cannot see this.</p>
+        <p class="doubt-card-counts"><span class="m"><b>0</b> misread</span><span class="c"><b>11</b> close</span></p>
+      </article>
+      <article class="doubt-card" id="unasserted-execution" data-d="unasserted-execution" tabindex="0">
+        <h3 class="doubt-card-name" id="unasserted-execution-name">Unasserted execution</h3>
+        <p class="doubt-card-desc">The tests ran this code, so coverage says it is tested. But no test checked the result, so a wrong result would pass too.</p>
+        <p class="doubt-card-counts"><span class="m"><b>4</b> misread</span><span class="c"><b>1</b> close</span></p>
+      </article>
+      <article class="doubt-card" id="unjudged-observation" data-d="unjudged-observation" tabindex="0">
+        <h3 class="doubt-card-name" id="unjudged-observation-name">Unjudged observation</h3>
+        <p class="doubt-card-desc">Production tells you what happened: this request took 80ms and returned 200. Nothing tells you whether 200 was the right answer.</p>
+        <p class="doubt-card-counts"><span class="m"><b>1</b> misread</span><span class="c"><b>3</b> close</span></p>
+      </article>
+      <article class="doubt-card" id="unspecified-property" data-d="unspecified-property" tabindex="0">
+        <h3 class="doubt-card-name" id="unspecified-property-name">Unspecified property</h3>
+        <p class="doubt-card-desc">Every check you wrote passes. The bug is in something nobody thought to write a check for, so no check can fail.</p>
+        <p class="doubt-card-counts"><span class="m"><b>10</b> misread</span><span class="c"><b>0</b> close</span><span class="r"><b>2</b> reveal</span></p>
+      </article>
+      <article class="doubt-card" id="wrong-specification" data-d="wrong-specification" tabindex="0">
+        <h3 class="doubt-card-name" id="wrong-specification-name">Wrong specification</h3>
+        <p class="doubt-card-desc">The check passes, and the check is wrong. The proof, invariant, or snapshot describes what the author believed the system should do, and the author was mistaken.</p>
+        <p class="doubt-card-counts"><span class="m"><b>6</b> misread</span><span class="c"><b>3</b> close</span><span class="r"><b>1</b> reveal</span></p>
+      </article>
+      <article class="doubt-card" id="missing-behavior" data-d="missing-behavior" tabindex="0">
+        <h3 class="doubt-card-name" id="missing-behavior-name">Missing behavior</h3>
+        <p class="doubt-card-desc">The feature was never built. There is no code to test, mutate, or watch, so every sensor stays quiet about it.</p>
+        <p class="doubt-card-counts"><span class="m"><b>2</b> misread</span><span class="c"><b>2</b> close</span><span class="r"><b>1</b> reveal</span></p>
+      </article>
+      <article class="doubt-card" id="emergent-failure" data-d="emergent-failure" tabindex="0">
+        <h3 class="doubt-card-name" id="emergent-failure-name">Emergent failure</h3>
+        <p class="doubt-card-desc">Every piece passes on its own. The bug only appears when the pieces are wired together and talk to each other.</p>
+        <p class="doubt-card-counts"><span class="m"><b>2</b> misread</span><span class="c"><b>3</b> close</span></p>
+      </article>
+      <article class="doubt-card" id="untested-conditions" data-d="untested-conditions" tabindex="0">
+        <h3 class="doubt-card-name" id="untested-conditions-name">Untested conditions</h3>
+        <p class="doubt-card-desc">It works with the traffic, data, and failures you tried. Production has different traffic, different data, and failures you did not try.</p>
+        <p class="doubt-card-counts"><span class="m"><b>3</b> misread</span><span class="c"><b>2</b> close</span><span class="r"><b>1</b> reveal</span></p>
+      </article>
+      <article class="doubt-card" id="correlated-blind-spot" data-d="correlated-blind-spot" tabindex="0">
+        <h3 class="doubt-card-name" id="correlated-blind-spot-name">Correlated blind spot</h3>
+        <p class="doubt-card-desc">The sensor checks the code against something else: a second implementation, a mock, the old version, another AI model. If that other thing has the same bug, the two agree and the sensor reads green.</p>
+        <p class="doubt-card-counts"><span class="m"><b>1</b> misread</span><span class="c"><b>1</b> close</span></p>
+      </article>
+      <article class="doubt-card" id="late-effects" data-d="late-effects" tabindex="0">
+        <h3 class="doubt-card-name" id="late-effects-name">Late effects</h3>
+        <p class="doubt-card-desc">The damage shows up after you stopped watching. A two-week experiment cannot see the users who leave in month three.</p>
+        <p class="doubt-card-counts"><span class="m"><b>2</b> misread</span><span class="c"><b>0</b> close</span><span class="r"><b>4</b> reveal</span></p>
+      </article>
+      <article class="doubt-card" id="not-internally-consistent" data-d="not-internally-consistent" tabindex="0">
+        <h3 class="doubt-card-name" id="not-internally-consistent-name">Not internally consistent</h3>
+        <p class="doubt-card-desc">A call site and the thing it calls disagree: wrong type, wrong field name, a shape the schema does not allow. The program is at war with itself before it runs.</p>
+        <p class="doubt-card-counts"><span class="m"><b>0</b> misread</span><span class="c"><b>4</b> close</span></p>
+      </article>
+      <article class="doubt-card" id="unintended-change" data-d="unintended-change" tabindex="0">
+        <h3 class="doubt-card-name" id="unintended-change-name">Unintended change</h3>
+        <p class="doubt-card-desc">The output moved and nobody meant it to. The change was supposed to touch one thing and it touched another.</p>
+        <p class="doubt-card-counts"><span class="m"><b>1</b> misread</span><span class="c"><b>4</b> close</span></p>
+      </article>
+      <article class="doubt-card" id="unreached-by-tests" data-d="unreached-by-tests" tabindex="0">
+        <h3 class="doubt-card-name" id="unreached-by-tests-name">Unreached by tests</h3>
+        <p class="doubt-card-desc">No test executes this code at all. Whatever it does, the suite has never seen it happen. The rung below unasserted execution.</p>
+        <p class="doubt-card-counts"><span class="m"><b>0</b> misread</span><span class="c"><b>2</b> close</span></p>
+      </article>
+      <article class="doubt-card" id="does-not-run-where-deployed" data-d="does-not-run-where-deployed" tabindex="0">
+        <h3 class="doubt-card-name" id="does-not-run-where-deployed-name">Does not run where deployed</h3>
+        <p class="doubt-card-desc">It worked on the laptop and in CI. In the target environment a config value is missing, a port is wrong, or the service never comes up.</p>
+        <p class="doubt-card-counts"><span class="m"><b>1</b> misread</span><span class="c"><b>2</b> close</span></p>
+      </article>
+      <article class="doubt-card" id="dependency-failure" data-d="dependency-failure" tabindex="0">
+        <h3 class="doubt-card-name" id="dependency-failure-name">Falls over with a dependency</h3>
+        <p class="doubt-card-desc">Everything works while every dependency is healthy. When one of them is slow or dead, the system does not degrade, it collapses.</p>
+        <p class="doubt-card-counts"><span class="m"><b>0</b> misread</span><span class="c"><b>2</b> close</span></p>
+      </article>
+      <article class="doubt-card" id="cannot-carry-load" data-d="cannot-carry-load" tabindex="0">
+        <h3 class="doubt-card-name" id="cannot-carry-load-name">Cannot carry the load</h3>
+        <p class="doubt-card-desc">It is correct at ten requests a second. At a thousand it times out, runs out of memory, or falls behind and never catches up.</p>
+        <p class="doubt-card-counts"><span class="m"><b>0</b> misread</span><span class="c"><b>1</b> close</span></p>
+      </article>
+      <article class="doubt-card" id="structure-decayed" data-d="structure-decayed" tabindex="0">
+        <h3 class="doubt-card-name" id="structure-decayed-name">Nobody knows where the coupling is</h3>
+        <p class="doubt-card-desc">Modules were meant to be separate. Whether they still are, and which ones lean on which, is not something anyone can see without a map.</p>
+        <p class="doubt-card-counts"><span class="m"><b>0</b> misread</span><span class="c"><b>5</b> close</span></p>
+      </article>
+      <article class="doubt-card" id="risk-concentrated" data-d="risk-concentrated" tabindex="0">
+        <h3 class="doubt-card-name" id="risk-concentrated-name">Nobody knows where the risk sits</h3>
+        <p class="doubt-card-desc">Trouble is not evenly spread. A few files or services cause most of the reverts and incidents, and nobody has looked at which ones.</p>
+        <p class="doubt-card-counts"><span class="m"><b>0</b> misread</span><span class="c"><b>3</b> close</span></p>
+      </article>
+      <article class="doubt-card" id="unexplained" data-d="unexplained" tabindex="0">
+        <h3 class="doubt-card-name" id="unexplained-name">Nobody can find out why</h3>
+        <p class="doubt-card-desc">The code is this way for a reason, and the reason is not written anywhere a newcomer can reach. The docs describe a different system.</p>
+        <p class="doubt-card-counts"><span class="m"><b>0</b> misread</span><span class="c"><b>3</b> close</span></p>
+      </article>
+      </div>
+    </section>
+
+    <figure class="doubt-figure">
+      <h2 id="every-sensor-every-doubt">Every sensor, every doubt</h2>
+      <p class="doubt-figure-lede">
+        Doubts in the middle, sensors on either side. Hover or click a doubt
+        above, or anything in the graph, to isolate it.
+      </p>
+      <div class="doubt-detail" hidden></div>
+      <div class="doubt-legend">
+        <span><svg viewBox="0 0 34 10" aria-hidden="true"><line x1="1" y1="5" x2="33" y2="5" class="lg-misread"/software-observatory/previews/pr-148/></svg>green is misread as closing this doubt</span>
+        <span><svg viewBox="0 0 34 10" aria-hidden="true"><line x1="1" y1="5" x2="33" y2="5" class="lg-closes"/software-observatory/previews/pr-148/></svg>closes the doubt before shipping</span>
+        <span><svg viewBox="0 0 34 10" aria-hidden="true"><line x1="1" y1="5" x2="33" y2="5" class="lg-reveals"/software-observatory/previews/pr-148/></svg>reveals the doubt after the fact</span>
+        <span>dot colour is the family; a sensor is lit on a side only where it has an edge there</span>
+      </div>
+      <div class="doubt-graph-scroll">
+<svg class="doubt-graph" viewBox="0 0 1200 1641" role="img" aria-label="Three-column graph: sensors misread as closing each doubt on the left, the doubts in the middle, sensors that close or reveal each doubt on the right.">
+<g>
+<path class="edge closes" d="M710,366.2 C814.0,366.2 814.0,272.0 918,272.0" data-s="example-based-tests" data-d="wrong-logic"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,366.2 C814.0,366.2 814.0,759.0 918,759.0" data-s="property-based-testing" data-d="wrong-logic"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,366.2 C814.0,366.2 814.0,740.0 918,740.0" data-s="metamorphic-testing" data-d="wrong-logic"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,366.2 C814.0,366.2 814.0,603.0 918,603.0" data-s="runtime-invariants" data-d="wrong-logic"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,366.2 C814.0,366.2 814.0,546.0 918,546.0" data-s="business-invariants" data-d="wrong-logic"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,366.2 C814.0,366.2 814.0,683.0 918,683.0" data-s="differential-testing" data-d="wrong-logic"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,366.2 C814.0,366.2 814.0,173.0 918,173.0" data-s="theorem-proving" data-d="wrong-logic"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,366.2 C814.0,366.2 814.0,116.0 918,116.0" data-s="model-checking" data-d="wrong-logic"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,366.2 C814.0,366.2 814.0,97.0 918,97.0" data-s="contract-refinement-types" data-d="wrong-logic"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,366.2 C814.0,366.2 814.0,622.0 918,622.0" data-s="statically-checked-invariants" data-d="wrong-logic"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,366.2 C814.0,366.2 814.0,584.0 918,584.0" data-s="pre-promotion-invariant-gates" data-d="wrong-logic"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,466.0 C386.0,466.0 386.0,227.1 490,227.1" data-s="line-coverage" data-d="unasserted-execution"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,409.0 C386.0,409.0 386.0,227.1 490,227.1" data-s="branch-coverage" data-d="unasserted-execution"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,428.0 C386.0,428.0 386.0,227.1 490,227.1" data-s="diff-coverage" data-d="unasserted-execution"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,329.0 C386.0,329.0 386.0,227.1 490,227.1" data-s="snapshot-tests" data-d="unasserted-execution"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,227.1 C814.0,227.1 814.0,485.0 918,485.0" data-s="mutation-testing" data-d="unasserted-execution"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,839.0 C386.0,839.0 386.0,574.9 490,574.9" data-s="observability-events" data-d="unjudged-observation"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,574.9 C814.0,574.9 814.0,603.0 918,603.0" data-s="runtime-invariants" data-d="unjudged-observation"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,574.9 C814.0,574.9 814.0,546.0 918,546.0" data-s="business-invariants" data-d="unjudged-observation"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,574.9 C814.0,574.9 814.0,565.0 918,565.0" data-s="database-invariants" data-d="unjudged-observation"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,546.0 C386.0,546.0 386.0,714.0 490,714.0" data-s="business-invariants" data-d="unspecified-property"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,1037.0 C386.0,1037.0 386.0,714.0 490,714.0" data-s="fitness-functions" data-d="unspecified-property"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,584.0 C386.0,584.0 386.0,714.0 490,714.0" data-s="pre-promotion-invariant-gates" data-d="unspecified-property"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,622.0 C386.0,622.0 386.0,714.0 490,714.0" data-s="statically-checked-invariants" data-d="unspecified-property"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,97.0 C386.0,97.0 386.0,714.0 490,714.0" data-s="contract-refinement-types" data-d="unspecified-property"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,759.0 C386.0,759.0 386.0,714.0 490,714.0" data-s="property-based-testing" data-d="unspecified-property"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,702.0 C386.0,702.0 386.0,714.0 490,714.0" data-s="fault-injection" data-d="unspecified-property"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,721.0 C386.0,721.0 386.0,714.0 490,714.0" data-s="live-chaos-experiments" data-d="unspecified-property"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,348.0 C386.0,348.0 386.0,714.0 490,714.0" data-s="synthetic-monitoring" data-d="unspecified-property"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,938.0 C386.0,938.0 386.0,714.0 490,714.0" data-s="canary-analysis" data-d="unspecified-property"/software-observatory/previews/pr-148/>
+<path class="edge reveals" d="M710,714.0 C814.0,714.0 814.0,839.0 918,839.0" data-s="observability-events" data-d="unspecified-property"/software-observatory/previews/pr-148/>
+<path class="edge reveals" d="M710,714.0 C814.0,714.0 814.0,1193.0 918,1193.0" data-s="incident-correlation" data-d="unspecified-property"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,97.0 C386.0,97.0 386.0,505.3 490,505.3" data-s="contract-refinement-types" data-d="wrong-specification"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,116.0 C386.0,116.0 386.0,505.3 490,505.3" data-s="model-checking" data-d="wrong-specification"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,173.0 C386.0,173.0 386.0,505.3 490,505.3" data-s="theorem-proving" data-d="wrong-specification"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,622.0 C386.0,622.0 386.0,505.3 490,505.3" data-s="statically-checked-invariants" data-d="wrong-specification"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,584.0 C386.0,584.0 386.0,505.3 490,505.3" data-s="pre-promotion-invariant-gates" data-d="wrong-specification"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,329.0 C386.0,329.0 386.0,505.3 490,505.3" data-s="snapshot-tests" data-d="wrong-specification"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,505.3 C814.0,505.3 814.0,1311.0 918,1311.0" data-s="independent-review" data-d="wrong-specification"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,505.3 C814.0,505.3 814.0,900.0 918,900.0" data-s="ab-testing" data-d="wrong-specification"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,505.3 C814.0,505.3 814.0,1349.0 918,1349.0" data-s="second-agent-review" data-d="wrong-specification"/software-observatory/previews/pr-148/>
+<path class="edge reveals" d="M710,505.3 C814.0,505.3 814.0,447.0 918,447.0" data-s="escaped-defect-rate" data-d="wrong-specification"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,485.0 C386.0,485.0 386.0,853.1 490,853.1" data-s="mutation-testing" data-d="missing-behavior"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,272.0 C386.0,272.0 386.0,853.1 490,853.1" data-s="example-based-tests" data-d="missing-behavior"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,853.1 C814.0,853.1 814.0,1311.0 918,1311.0" data-s="independent-review" data-d="missing-behavior"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,853.1 C814.0,853.1 814.0,1349.0 918,1349.0" data-s="second-agent-review" data-d="missing-behavior"/software-observatory/previews/pr-148/>
+<path class="edge reveals" d="M710,853.1 C814.0,853.1 814.0,447.0 918,447.0" data-s="escaped-defect-rate" data-d="missing-behavior"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,272.0 C386.0,272.0 386.0,435.8 490,435.8" data-s="example-based-tests" data-d="emergent-failure"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,253.0 C386.0,253.0 386.0,435.8 490,435.8" data-s="contract-tests" data-d="emergent-failure"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,435.8 C814.0,435.8 814.0,291.0 918,291.0" data-s="integration-tests" data-d="emergent-failure"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,435.8 C814.0,435.8 814.0,976.0 918,976.0" data-s="shadow-traffic" data-d="emergent-failure"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,435.8 C814.0,435.8 814.0,938.0 918,938.0" data-s="canary-analysis" data-d="emergent-failure"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,820.0 C386.0,820.0 386.0,992.2 490,992.2" data-s="load-testing" data-d="untested-conditions"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,702.0 C386.0,702.0 386.0,992.2 490,992.2" data-s="fault-injection" data-d="untested-conditions"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,721.0 C386.0,721.0 386.0,992.2 490,992.2" data-s="live-chaos-experiments" data-d="untested-conditions"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,992.2 C814.0,992.2 814.0,938.0 918,938.0" data-s="canary-analysis" data-d="untested-conditions"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,992.2 C814.0,992.2 814.0,976.0 918,976.0" data-s="shadow-traffic" data-d="untested-conditions"/software-observatory/previews/pr-148/>
+<path class="edge reveals" d="M710,992.2 C814.0,992.2 814.0,839.0 918,839.0" data-s="observability-events" data-d="untested-conditions"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,683.0 C386.0,683.0 386.0,1131.3 490,1131.3" data-s="differential-testing" data-d="correlated-blind-spot"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,1131.3 C814.0,1131.3 814.0,1311.0 918,1311.0" data-s="independent-review" data-d="correlated-blind-spot"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,900.0 C386.0,900.0 386.0,1061.8 490,1061.8" data-s="ab-testing" data-d="late-effects"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,938.0 C386.0,938.0 386.0,1061.8 490,1061.8" data-s="canary-analysis" data-d="late-effects"/software-observatory/previews/pr-148/>
+<path class="edge reveals" d="M710,1061.8 C814.0,1061.8 814.0,447.0 918,447.0" data-s="escaped-defect-rate" data-d="late-effects"/software-observatory/previews/pr-148/>
+<path class="edge reveals" d="M710,1061.8 C814.0,1061.8 814.0,1193.0 918,1193.0" data-s="incident-correlation" data-d="late-effects"/software-observatory/previews/pr-148/>
+<path class="edge reveals" d="M710,1061.8 C814.0,1061.8 814.0,957.0 918,957.0" data-s="error-budget-impact" data-d="late-effects"/software-observatory/previews/pr-148/>
+<path class="edge reveals" d="M710,1061.8 C814.0,1061.8 814.0,1212.0 918,1212.0" data-s="revert-rate" data-d="late-effects"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,88.0 C814.0,88.0 814.0,78.0 918,78.0" data-s="compiler" data-d="not-internally-consistent"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,88.0 C814.0,88.0 814.0,192.0 918,192.0" data-s="type-checker" data-d="not-internally-consistent"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,88.0 C814.0,88.0 814.0,135.0 918,135.0" data-s="schema-validator" data-d="not-internally-consistent"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,88.0 C814.0,88.0 814.0,154.0 918,154.0" data-s="static-analysis" data-d="not-internally-consistent"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,272.0 C386.0,272.0 386.0,644.4 490,644.4" data-s="example-based-tests" data-d="unintended-change"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,644.4 C814.0,644.4 814.0,329.0 918,329.0" data-s="snapshot-tests" data-d="unintended-change"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,644.4 C814.0,644.4 814.0,919.0 918,919.0" data-s="api-compatibility" data-d="unintended-change"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,644.4 C814.0,644.4 814.0,938.0 918,938.0" data-s="canary-analysis" data-d="unintended-change"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,644.4 C814.0,644.4 814.0,976.0 918,976.0" data-s="shadow-traffic" data-d="unintended-change"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,296.7 C814.0,296.7 814.0,466.0 918,466.0" data-s="line-coverage" data-d="unreached-by-tests"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,296.7 C814.0,296.7 814.0,409.0 918,409.0" data-s="branch-coverage" data-d="unreached-by-tests"/software-observatory/previews/pr-148/>
+<path class="edge misread" d="M282,291.0 C386.0,291.0 386.0,157.6 490,157.6" data-s="integration-tests" data-d="does-not-run-where-deployed"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,157.6 C814.0,157.6 814.0,310.0 918,310.0" data-s="smoke-tests" data-d="does-not-run-where-deployed"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,157.6 C814.0,157.6 814.0,348.0 918,348.0" data-s="synthetic-monitoring" data-d="does-not-run-where-deployed"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,783.6 C814.0,783.6 814.0,702.0 918,702.0" data-s="fault-injection" data-d="dependency-failure"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,783.6 C814.0,783.6 814.0,721.0 918,721.0" data-s="live-chaos-experiments" data-d="dependency-failure"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,922.7 C814.0,922.7 814.0,820.0 918,820.0" data-s="load-testing" data-d="cannot-carry-load"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,1200.9 C814.0,1200.9 814.0,1056.0 918,1056.0" data-s="boundary-sensors" data-d="structure-decayed"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,1200.9 C814.0,1200.9 814.0,1037.0 918,1037.0" data-s="fitness-functions" data-d="structure-decayed"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,1200.9 C814.0,1200.9 814.0,1075.0 918,1075.0" data-s="dependency-graph" data-d="structure-decayed"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,1200.9 C814.0,1200.9 814.0,1113.0 918,1113.0" data-s="live-service-graph" data-d="structure-decayed"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,1200.9 C814.0,1200.9 814.0,1174.0 918,1174.0" data-s="change-coupling" data-d="structure-decayed"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,1270.4 C814.0,1270.4 814.0,1094.0 918,1094.0" data-s="hotspot-analysis" data-d="risk-concentrated"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,1270.4 C814.0,1270.4 814.0,1212.0 918,1212.0" data-s="revert-rate" data-d="risk-concentrated"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,1270.4 C814.0,1270.4 814.0,1193.0 918,1193.0" data-s="incident-correlation" data-d="risk-concentrated"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,1340.0 C814.0,1340.0 814.0,1273.0 918,1273.0" data-s="decision-provenance" data-d="unexplained"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,1340.0 C814.0,1340.0 814.0,1292.0 918,1292.0" data-s="documentation-drift" data-d="unexplained"/software-observatory/previews/pr-148/>
+<path class="edge closes" d="M710,1340.0 C814.0,1340.0 814.0,1330.0 918,1330.0" data-s="onboarding-experiment" data-d="unexplained"/software-observatory/previews/pr-148/>
+</g>
+<g>
+<text class="col-head misread" x="262" y="22" text-anchor="end">Misread as closing it</text>
+<text class="col-head" x="600" y="22" text-anchor="middle">Doubt</text>
+<text class="col-head closes" x="938" y="22">Closes it, or reveals it after</text>
+<text class="fam-head" x="262" y="62" text-anchor="end">Structural</text>
+<text class="fam-head" x="938" y="62">Structural</text>
+<text class="fam-head" x="262" y="237" text-anchor="end">Behavioral</text>
+<text class="fam-head" x="938" y="237">Behavioral</text>
+<text class="fam-head" x="262" y="393" text-anchor="end">Test Effectiveness</text>
+<text class="fam-head" x="938" y="393">Test Effectiveness</text>
+<text class="fam-head" x="262" y="530" text-anchor="end">Invariants</text>
+<text class="fam-head" x="938" y="530">Invariants</text>
+<text class="fam-head" x="262" y="667" text-anchor="end">Adversarial</text>
+<text class="fam-head" x="938" y="667">Adversarial</text>
+<text class="fam-head" x="262" y="804" text-anchor="end">Runtime</text>
+<text class="fam-head" x="938" y="804">Runtime</text>
+<text class="fam-head" x="262" y="884" text-anchor="end">Change</text>
+<text class="fam-head" x="938" y="884">Change</text>
+<text class="fam-head" x="262" y="1021" text-anchor="end">Architecture</text>
+<text class="fam-head" x="938" y="1021">Architecture</text>
+<text class="fam-head" x="262" y="1158" text-anchor="end">Evolution</text>
+<text class="fam-head" x="938" y="1158">Evolution</text>
+<text class="fam-head" x="262" y="1257" text-anchor="end">Human Comprehension</text>
+<text class="fam-head" x="938" y="1257">Human Comprehension</text>
+<line class="rule" x1="40" y1="1380" x2="292" y2="1380"/software-observatory/previews/pr-148/>
+<line class="rule" x1="908" y1="1380" x2="1160" y2="1380"/software-observatory/previews/pr-148/>
+<text class="fam-head" x="262" y="1400" text-anchor="end">No doubt edge</text>
+<text class="fam-head" x="938" y="1400">No doubt edge</text>
+</g>
+<g>
+<g class="sensor idle" data-s="compiler" data-side="l"><text class="s-label" x="262" y="82" text-anchor="end">Compiler</text><circle class="s-dot" cx="276" cy="78" r="4" fill="var(--fam-structural)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="compiler" data-side="r"><circle class="s-dot" cx="924" cy="78" r="4" fill="var(--fam-structural)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="82">Compiler</text></g>
+<g class="sensor" data-s="contract-refinement-types" data-side="l"><text class="s-label" x="262" y="101" text-anchor="end">Contract &amp; Refinement Types</text><circle class="s-dot" cx="276" cy="97" r="4" fill="var(--fam-structural)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="contract-refinement-types" data-side="r"><circle class="s-dot" cx="924" cy="97" r="4" fill="var(--fam-structural)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="101">Contract &amp; Refinement Types</text></g>
+<g class="sensor" data-s="model-checking" data-side="l"><text class="s-label" x="262" y="120" text-anchor="end">Model Checking</text><circle class="s-dot" cx="276" cy="116" r="4" fill="var(--fam-structural)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="model-checking" data-side="r"><circle class="s-dot" cx="924" cy="116" r="4" fill="var(--fam-structural)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="120">Model Checking</text></g>
+<g class="sensor idle" data-s="schema-validator" data-side="l"><text class="s-label" x="262" y="139" text-anchor="end">Schema Validator</text><circle class="s-dot" cx="276" cy="135" r="4" fill="var(--fam-structural)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="schema-validator" data-side="r"><circle class="s-dot" cx="924" cy="135" r="4" fill="var(--fam-structural)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="139">Schema Validator</text></g>
+<g class="sensor idle" data-s="static-analysis" data-side="l"><text class="s-label" x="262" y="158" text-anchor="end">Static Analysis</text><circle class="s-dot" cx="276" cy="154" r="4" fill="var(--fam-structural)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="static-analysis" data-side="r"><circle class="s-dot" cx="924" cy="154" r="4" fill="var(--fam-structural)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="158">Static Analysis</text></g>
+<g class="sensor" data-s="theorem-proving" data-side="l"><text class="s-label" x="262" y="177" text-anchor="end">Theorem Proving</text><circle class="s-dot" cx="276" cy="173" r="4" fill="var(--fam-structural)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="theorem-proving" data-side="r"><circle class="s-dot" cx="924" cy="173" r="4" fill="var(--fam-structural)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="177">Theorem Proving</text></g>
+<g class="sensor idle" data-s="type-checker" data-side="l"><text class="s-label" x="262" y="196" text-anchor="end">Type Checker</text><circle class="s-dot" cx="276" cy="192" r="4" fill="var(--fam-structural)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="type-checker" data-side="r"><circle class="s-dot" cx="924" cy="192" r="4" fill="var(--fam-structural)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="196">Type Checker</text></g>
+<g class="sensor" data-s="contract-tests" data-side="l"><text class="s-label" x="262" y="257" text-anchor="end">Contract Tests</text><circle class="s-dot" cx="276" cy="253" r="4" fill="var(--fam-behavioral)"/software-observatory/previews/pr-148/></g>
+<g class="sensor idle" data-s="contract-tests" data-side="r"><circle class="s-dot" cx="924" cy="253" r="4" fill="var(--fam-behavioral)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="257">Contract Tests</text></g>
+<g class="sensor" data-s="example-based-tests" data-side="l"><text class="s-label" x="262" y="276" text-anchor="end">Example-Based Tests</text><circle class="s-dot" cx="276" cy="272" r="4" fill="var(--fam-behavioral)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="example-based-tests" data-side="r"><circle class="s-dot" cx="924" cy="272" r="4" fill="var(--fam-behavioral)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="276">Example-Based Tests</text></g>
+<g class="sensor" data-s="integration-tests" data-side="l"><text class="s-label" x="262" y="295" text-anchor="end">Integration Tests</text><circle class="s-dot" cx="276" cy="291" r="4" fill="var(--fam-behavioral)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="integration-tests" data-side="r"><circle class="s-dot" cx="924" cy="291" r="4" fill="var(--fam-behavioral)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="295">Integration Tests</text></g>
+<g class="sensor idle" data-s="smoke-tests" data-side="l"><text class="s-label" x="262" y="314" text-anchor="end">Smoke Tests</text><circle class="s-dot" cx="276" cy="310" r="4" fill="var(--fam-behavioral)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="smoke-tests" data-side="r"><circle class="s-dot" cx="924" cy="310" r="4" fill="var(--fam-behavioral)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="314">Smoke Tests</text></g>
+<g class="sensor" data-s="snapshot-tests" data-side="l"><text class="s-label" x="262" y="333" text-anchor="end">Snapshot Tests</text><circle class="s-dot" cx="276" cy="329" r="4" fill="var(--fam-behavioral)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="snapshot-tests" data-side="r"><circle class="s-dot" cx="924" cy="329" r="4" fill="var(--fam-behavioral)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="333">Snapshot Tests</text></g>
+<g class="sensor" data-s="synthetic-monitoring" data-side="l"><text class="s-label" x="262" y="352" text-anchor="end">Synthetic Monitoring</text><circle class="s-dot" cx="276" cy="348" r="4" fill="var(--fam-behavioral)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="synthetic-monitoring" data-side="r"><circle class="s-dot" cx="924" cy="348" r="4" fill="var(--fam-behavioral)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="352">Synthetic Monitoring</text></g>
+<g class="sensor" data-s="branch-coverage" data-side="l"><text class="s-label" x="262" y="413" text-anchor="end">Branch Coverage</text><circle class="s-dot" cx="276" cy="409" r="4" fill="var(--fam-test-effectiveness)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="branch-coverage" data-side="r"><circle class="s-dot" cx="924" cy="409" r="4" fill="var(--fam-test-effectiveness)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="413">Branch Coverage</text></g>
+<g class="sensor" data-s="diff-coverage" data-side="l"><text class="s-label" x="262" y="432" text-anchor="end">Diff Coverage</text><circle class="s-dot" cx="276" cy="428" r="4" fill="var(--fam-test-effectiveness)"/software-observatory/previews/pr-148/></g>
+<g class="sensor idle" data-s="diff-coverage" data-side="r"><circle class="s-dot" cx="924" cy="428" r="4" fill="var(--fam-test-effectiveness)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="432">Diff Coverage</text></g>
+<g class="sensor idle" data-s="escaped-defect-rate" data-side="l"><text class="s-label" x="262" y="451" text-anchor="end">Escaped Defect Rate</text><circle class="s-dot" cx="276" cy="447" r="4" fill="var(--fam-test-effectiveness)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="escaped-defect-rate" data-side="r"><circle class="s-dot" cx="924" cy="447" r="4" fill="var(--fam-test-effectiveness)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="451">Escaped Defect Rate</text></g>
+<g class="sensor" data-s="line-coverage" data-side="l"><text class="s-label" x="262" y="470" text-anchor="end">Line Coverage</text><circle class="s-dot" cx="276" cy="466" r="4" fill="var(--fam-test-effectiveness)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="line-coverage" data-side="r"><circle class="s-dot" cx="924" cy="466" r="4" fill="var(--fam-test-effectiveness)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="470">Line Coverage</text></g>
+<g class="sensor" data-s="mutation-testing" data-side="l"><text class="s-label" x="262" y="489" text-anchor="end">Mutation Testing</text><circle class="s-dot" cx="276" cy="485" r="4" fill="var(--fam-test-effectiveness)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="mutation-testing" data-side="r"><circle class="s-dot" cx="924" cy="485" r="4" fill="var(--fam-test-effectiveness)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="489">Mutation Testing</text></g>
+<g class="sensor" data-s="business-invariants" data-side="l"><text class="s-label" x="262" y="550" text-anchor="end">Business Invariants</text><circle class="s-dot" cx="276" cy="546" r="4" fill="var(--fam-invariants)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="business-invariants" data-side="r"><circle class="s-dot" cx="924" cy="546" r="4" fill="var(--fam-invariants)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="550">Business Invariants</text></g>
+<g class="sensor idle" data-s="database-invariants" data-side="l"><text class="s-label" x="262" y="569" text-anchor="end">Database Invariants</text><circle class="s-dot" cx="276" cy="565" r="4" fill="var(--fam-invariants)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="database-invariants" data-side="r"><circle class="s-dot" cx="924" cy="565" r="4" fill="var(--fam-invariants)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="569">Database Invariants</text></g>
+<g class="sensor" data-s="pre-promotion-invariant-gates" data-side="l"><text class="s-label" x="262" y="588" text-anchor="end">Pre-Promotion Invariant Gates</text><circle class="s-dot" cx="276" cy="584" r="4" fill="var(--fam-invariants)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="pre-promotion-invariant-gates" data-side="r"><circle class="s-dot" cx="924" cy="584" r="4" fill="var(--fam-invariants)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="588">Pre-Promotion Invariant Gates</text></g>
+<g class="sensor idle" data-s="runtime-invariants" data-side="l"><text class="s-label" x="262" y="607" text-anchor="end">Runtime Invariants</text><circle class="s-dot" cx="276" cy="603" r="4" fill="var(--fam-invariants)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="runtime-invariants" data-side="r"><circle class="s-dot" cx="924" cy="603" r="4" fill="var(--fam-invariants)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="607">Runtime Invariants</text></g>
+<g class="sensor" data-s="statically-checked-invariants" data-side="l"><text class="s-label" x="262" y="626" text-anchor="end">Statically Checked Invariants</text><circle class="s-dot" cx="276" cy="622" r="4" fill="var(--fam-invariants)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="statically-checked-invariants" data-side="r"><circle class="s-dot" cx="924" cy="622" r="4" fill="var(--fam-invariants)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="626">Statically Checked Invariants</text></g>
+<g class="sensor" data-s="differential-testing" data-side="l"><text class="s-label" x="262" y="687" text-anchor="end">Differential Testing</text><circle class="s-dot" cx="276" cy="683" r="4" fill="var(--fam-adversarial)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="differential-testing" data-side="r"><circle class="s-dot" cx="924" cy="683" r="4" fill="var(--fam-adversarial)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="687">Differential Testing</text></g>
+<g class="sensor" data-s="fault-injection" data-side="l"><text class="s-label" x="262" y="706" text-anchor="end">Fault Injection</text><circle class="s-dot" cx="276" cy="702" r="4" fill="var(--fam-adversarial)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="fault-injection" data-side="r"><circle class="s-dot" cx="924" cy="702" r="4" fill="var(--fam-adversarial)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="706">Fault Injection</text></g>
+<g class="sensor" data-s="live-chaos-experiments" data-side="l"><text class="s-label" x="262" y="725" text-anchor="end">Live Chaos Experiments</text><circle class="s-dot" cx="276" cy="721" r="4" fill="var(--fam-adversarial)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="live-chaos-experiments" data-side="r"><circle class="s-dot" cx="924" cy="721" r="4" fill="var(--fam-adversarial)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="725">Live Chaos Experiments</text></g>
+<g class="sensor idle" data-s="metamorphic-testing" data-side="l"><text class="s-label" x="262" y="744" text-anchor="end">Metamorphic Testing</text><circle class="s-dot" cx="276" cy="740" r="4" fill="var(--fam-adversarial)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="metamorphic-testing" data-side="r"><circle class="s-dot" cx="924" cy="740" r="4" fill="var(--fam-adversarial)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="744">Metamorphic Testing</text></g>
+<g class="sensor" data-s="property-based-testing" data-side="l"><text class="s-label" x="262" y="763" text-anchor="end">Property-Based Testing</text><circle class="s-dot" cx="276" cy="759" r="4" fill="var(--fam-adversarial)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="property-based-testing" data-side="r"><circle class="s-dot" cx="924" cy="759" r="4" fill="var(--fam-adversarial)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="763">Property-Based Testing</text></g>
+<g class="sensor" data-s="load-testing" data-side="l"><text class="s-label" x="262" y="824" text-anchor="end">Load Testing</text><circle class="s-dot" cx="276" cy="820" r="4" fill="var(--fam-runtime)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="load-testing" data-side="r"><circle class="s-dot" cx="924" cy="820" r="4" fill="var(--fam-runtime)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="824">Load Testing</text></g>
+<g class="sensor" data-s="observability-events" data-side="l"><text class="s-label" x="262" y="843" text-anchor="end">Observability Events</text><circle class="s-dot" cx="276" cy="839" r="4" fill="var(--fam-runtime)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="observability-events" data-side="r"><circle class="s-dot" cx="924" cy="839" r="4" fill="var(--fam-runtime)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="843">Observability Events</text></g>
+<g class="sensor" data-s="ab-testing" data-side="l"><text class="s-label" x="262" y="904" text-anchor="end">A/B Testing</text><circle class="s-dot" cx="276" cy="900" r="4" fill="var(--fam-change)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="ab-testing" data-side="r"><circle class="s-dot" cx="924" cy="900" r="4" fill="var(--fam-change)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="904">A/B Testing</text></g>
+<g class="sensor idle" data-s="api-compatibility" data-side="l"><text class="s-label" x="262" y="923" text-anchor="end">API Compatibility</text><circle class="s-dot" cx="276" cy="919" r="4" fill="var(--fam-change)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="api-compatibility" data-side="r"><circle class="s-dot" cx="924" cy="919" r="4" fill="var(--fam-change)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="923">API Compatibility</text></g>
+<g class="sensor" data-s="canary-analysis" data-side="l"><text class="s-label" x="262" y="942" text-anchor="end">Canary Analysis</text><circle class="s-dot" cx="276" cy="938" r="4" fill="var(--fam-change)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="canary-analysis" data-side="r"><circle class="s-dot" cx="924" cy="938" r="4" fill="var(--fam-change)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="942">Canary Analysis</text></g>
+<g class="sensor idle" data-s="error-budget-impact" data-side="l"><text class="s-label" x="262" y="961" text-anchor="end">Error-Budget Impact</text><circle class="s-dot" cx="276" cy="957" r="4" fill="var(--fam-change)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="error-budget-impact" data-side="r"><circle class="s-dot" cx="924" cy="957" r="4" fill="var(--fam-change)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="961">Error-Budget Impact</text></g>
+<g class="sensor idle" data-s="shadow-traffic" data-side="l"><text class="s-label" x="262" y="980" text-anchor="end">Shadow Traffic</text><circle class="s-dot" cx="276" cy="976" r="4" fill="var(--fam-change)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="shadow-traffic" data-side="r"><circle class="s-dot" cx="924" cy="976" r="4" fill="var(--fam-change)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="980">Shadow Traffic</text></g>
+<g class="sensor" data-s="fitness-functions" data-side="l"><text class="s-label" x="262" y="1041" text-anchor="end">Architecture Fitness Functions</text><circle class="s-dot" cx="276" cy="1037" r="4" fill="var(--fam-architecture)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="fitness-functions" data-side="r"><circle class="s-dot" cx="924" cy="1037" r="4" fill="var(--fam-architecture)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="1041">Architecture Fitness Functions</text></g>
+<g class="sensor idle" data-s="boundary-sensors" data-side="l"><text class="s-label" x="262" y="1060" text-anchor="end">Boundary Sensors</text><circle class="s-dot" cx="276" cy="1056" r="4" fill="var(--fam-architecture)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="boundary-sensors" data-side="r"><circle class="s-dot" cx="924" cy="1056" r="4" fill="var(--fam-architecture)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="1060">Boundary Sensors</text></g>
+<g class="sensor idle" data-s="dependency-graph" data-side="l"><text class="s-label" x="262" y="1079" text-anchor="end">Dependency Graph</text><circle class="s-dot" cx="276" cy="1075" r="4" fill="var(--fam-architecture)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="dependency-graph" data-side="r"><circle class="s-dot" cx="924" cy="1075" r="4" fill="var(--fam-architecture)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="1079">Dependency Graph</text></g>
+<g class="sensor idle" data-s="hotspot-analysis" data-side="l"><text class="s-label" x="262" y="1098" text-anchor="end">Hotspot Analysis</text><circle class="s-dot" cx="276" cy="1094" r="4" fill="var(--fam-architecture)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="hotspot-analysis" data-side="r"><circle class="s-dot" cx="924" cy="1094" r="4" fill="var(--fam-architecture)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="1098">Hotspot Analysis</text></g>
+<g class="sensor idle" data-s="live-service-graph" data-side="l"><text class="s-label" x="262" y="1117" text-anchor="end">Live Service Graph Discovery</text><circle class="s-dot" cx="276" cy="1113" r="4" fill="var(--fam-architecture)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="live-service-graph" data-side="r"><circle class="s-dot" cx="924" cy="1113" r="4" fill="var(--fam-architecture)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="1117">Live Service Graph Discovery</text></g>
+<g class="sensor idle" data-s="change-coupling" data-side="l"><text class="s-label" x="262" y="1178" text-anchor="end">Change Coupling</text><circle class="s-dot" cx="276" cy="1174" r="4" fill="var(--fam-evolution)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="change-coupling" data-side="r"><circle class="s-dot" cx="924" cy="1174" r="4" fill="var(--fam-evolution)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="1178">Change Coupling</text></g>
+<g class="sensor idle" data-s="incident-correlation" data-side="l"><text class="s-label" x="262" y="1197" text-anchor="end">Incident Correlation</text><circle class="s-dot" cx="276" cy="1193" r="4" fill="var(--fam-evolution)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="incident-correlation" data-side="r"><circle class="s-dot" cx="924" cy="1193" r="4" fill="var(--fam-evolution)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="1197">Incident Correlation</text></g>
+<g class="sensor idle" data-s="revert-rate" data-side="l"><text class="s-label" x="262" y="1216" text-anchor="end">Revert Rate</text><circle class="s-dot" cx="276" cy="1212" r="4" fill="var(--fam-evolution)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="revert-rate" data-side="r"><circle class="s-dot" cx="924" cy="1212" r="4" fill="var(--fam-evolution)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="1216">Revert Rate</text></g>
+<g class="sensor idle" data-s="decision-provenance" data-side="l"><text class="s-label" x="262" y="1277" text-anchor="end">Decision Provenance</text><circle class="s-dot" cx="276" cy="1273" r="4" fill="var(--fam-comprehension)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="decision-provenance" data-side="r"><circle class="s-dot" cx="924" cy="1273" r="4" fill="var(--fam-comprehension)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="1277">Decision Provenance</text></g>
+<g class="sensor idle" data-s="documentation-drift" data-side="l"><text class="s-label" x="262" y="1296" text-anchor="end">Documentation Drift</text><circle class="s-dot" cx="276" cy="1292" r="4" fill="var(--fam-comprehension)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="documentation-drift" data-side="r"><circle class="s-dot" cx="924" cy="1292" r="4" fill="var(--fam-comprehension)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="1296">Documentation Drift</text></g>
+<g class="sensor idle" data-s="independent-review" data-side="l"><text class="s-label" x="262" y="1315" text-anchor="end">Independent Review</text><circle class="s-dot" cx="276" cy="1311" r="4" fill="var(--fam-comprehension)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="independent-review" data-side="r"><circle class="s-dot" cx="924" cy="1311" r="4" fill="var(--fam-comprehension)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="1315">Independent Review</text></g>
+<g class="sensor idle" data-s="onboarding-experiment" data-side="l"><text class="s-label" x="262" y="1334" text-anchor="end">Onboarding Experiment</text><circle class="s-dot" cx="276" cy="1330" r="4" fill="var(--fam-comprehension)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="onboarding-experiment" data-side="r"><circle class="s-dot" cx="924" cy="1330" r="4" fill="var(--fam-comprehension)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="1334">Onboarding Experiment</text></g>
+<g class="sensor idle" data-s="second-agent-review" data-side="l"><text class="s-label" x="262" y="1353" text-anchor="end">Second-Agent Review</text><circle class="s-dot" cx="276" cy="1349" r="4" fill="var(--fam-comprehension)"/software-observatory/previews/pr-148/></g>
+<g class="sensor" data-s="second-agent-review" data-side="r"><circle class="s-dot" cx="924" cy="1349" r="4" fill="var(--fam-comprehension)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="1353">Second-Agent Review</text></g>
+<g class="sensor orphan idle" data-s="build-provenance-sbom" data-side="l"><text class="s-label" x="262" y="1420" text-anchor="end">Build Provenance &amp; SBOM</text><circle class="s-dot" cx="276" cy="1416" r="4" fill="var(--fam-structural)"/software-observatory/previews/pr-148/></g>
+<g class="sensor orphan idle" data-s="build-provenance-sbom" data-side="r"><circle class="s-dot" cx="924" cy="1416" r="4" fill="var(--fam-structural)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="1420">Build Provenance &amp; SBOM</text></g>
+<g class="sensor orphan idle" data-s="continuous-profiling" data-side="l"><text class="s-label" x="262" y="1439" text-anchor="end">Continuous Profiling</text><circle class="s-dot" cx="276" cy="1435" r="4" fill="var(--fam-runtime)"/software-observatory/previews/pr-148/></g>
+<g class="sensor orphan idle" data-s="continuous-profiling" data-side="r"><circle class="s-dot" cx="924" cy="1435" r="4" fill="var(--fam-runtime)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="1439">Continuous Profiling</text></g>
+<g class="sensor orphan idle" data-s="dora-metrics" data-side="l"><text class="s-label" x="262" y="1458" text-anchor="end">DORA Metrics</text><circle class="s-dot" cx="276" cy="1454" r="4" fill="var(--fam-evolution)"/software-observatory/previews/pr-148/></g>
+<g class="sensor orphan idle" data-s="dora-metrics" data-side="r"><circle class="s-dot" cx="924" cy="1454" r="4" fill="var(--fam-evolution)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="1458">DORA Metrics</text></g>
+<g class="sensor orphan idle" data-s="distributed-traces" data-side="l"><text class="s-label" x="262" y="1477" text-anchor="end">Distributed Traces</text><circle class="s-dot" cx="276" cy="1473" r="4" fill="var(--fam-runtime)"/software-observatory/previews/pr-148/></g>
+<g class="sensor orphan idle" data-s="distributed-traces" data-side="r"><circle class="s-dot" cx="924" cy="1473" r="4" fill="var(--fam-runtime)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="1477">Distributed Traces</text></g>
+<g class="sensor orphan idle" data-s="feature-flag-exposure" data-side="l"><text class="s-label" x="262" y="1496" text-anchor="end">Feature Flag Exposure Telemetry</text><circle class="s-dot" cx="276" cy="1492" r="4" fill="var(--fam-change)"/software-observatory/previews/pr-148/></g>
+<g class="sensor orphan idle" data-s="feature-flag-exposure" data-side="r"><circle class="s-dot" cx="924" cy="1492" r="4" fill="var(--fam-change)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="1496">Feature Flag Exposure Telemetry</text></g>
+<g class="sensor orphan idle" data-s="fuzzing" data-side="l"><text class="s-label" x="262" y="1515" text-anchor="end">Fuzzing</text><circle class="s-dot" cx="276" cy="1511" r="4" fill="var(--fam-adversarial)"/software-observatory/previews/pr-148/></g>
+<g class="sensor orphan idle" data-s="fuzzing" data-side="r"><circle class="s-dot" cx="924" cy="1511" r="4" fill="var(--fam-adversarial)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="1515">Fuzzing</text></g>
+<g class="sensor orphan idle" data-s="incremental-build-correctness" data-side="l"><text class="s-label" x="262" y="1534" text-anchor="end">Incremental Build Correctness</text><circle class="s-dot" cx="276" cy="1530" r="4" fill="var(--fam-change)"/software-observatory/previews/pr-148/></g>
+<g class="sensor orphan idle" data-s="incremental-build-correctness" data-side="r"><circle class="s-dot" cx="924" cy="1530" r="4" fill="var(--fam-change)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="1534">Incremental Build Correctness</text></g>
+<g class="sensor orphan idle" data-s="linter" data-side="l"><text class="s-label" x="262" y="1553" text-anchor="end">Linter</text><circle class="s-dot" cx="276" cy="1549" r="4" fill="var(--fam-structural)"/software-observatory/previews/pr-148/></g>
+<g class="sensor orphan idle" data-s="linter" data-side="r"><circle class="s-dot" cx="924" cy="1549" r="4" fill="var(--fam-structural)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="1553">Linter</text></g>
+<g class="sensor orphan idle" data-s="resource-telemetry" data-side="l"><text class="s-label" x="262" y="1572" text-anchor="end">Resource Telemetry</text><circle class="s-dot" cx="276" cy="1568" r="4" fill="var(--fam-runtime)"/software-observatory/previews/pr-148/></g>
+<g class="sensor orphan idle" data-s="resource-telemetry" data-side="r"><circle class="s-dot" cx="924" cy="1568" r="4" fill="var(--fam-runtime)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="1572">Resource Telemetry</text></g>
+<g class="sensor orphan idle" data-s="static-security-analysis" data-side="l"><text class="s-label" x="262" y="1591" text-anchor="end">Static Security Analysis</text><circle class="s-dot" cx="276" cy="1587" r="4" fill="var(--fam-adversarial)"/software-observatory/previews/pr-148/></g>
+<g class="sensor orphan idle" data-s="static-security-analysis" data-side="r"><circle class="s-dot" cx="924" cy="1587" r="4" fill="var(--fam-adversarial)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="1591">Static Security Analysis</text></g>
+<g class="sensor orphan idle" data-s="time-to-repair" data-side="l"><text class="s-label" x="262" y="1610" text-anchor="end">Time-to-Repair</text><circle class="s-dot" cx="276" cy="1606" r="4" fill="var(--fam-evolution)"/software-observatory/previews/pr-148/></g>
+<g class="sensor orphan idle" data-s="time-to-repair" data-side="r"><circle class="s-dot" cx="924" cy="1606" r="4" fill="var(--fam-evolution)"/software-observatory/previews/pr-148/><text class="s-label" x="938" y="1610">Time-to-Repair</text></g>
+</g>
+<g>
+<g class="doubt" data-d="wrong-logic"><rect class="d-node" x="490" y="346.2" width="220" height="40" rx="3"/software-observatory/previews/pr-148/><text class="d-name" x="600" y="365.2" text-anchor="middle">Wrong logic</text><text class="d-sub" x="600" y="380.2" text-anchor="middle">0 misread · 11 close</text></g>
+<g class="doubt" data-d="unasserted-execution"><rect class="d-node" x="490" y="207.1" width="220" height="40" rx="3"/software-observatory/previews/pr-148/><text class="d-name" x="600" y="226.1" text-anchor="middle">Unasserted execution</text><text class="d-sub" x="600" y="241.1" text-anchor="middle">4 misread · 1 close</text></g>
+<g class="doubt" data-d="unjudged-observation"><rect class="d-node" x="490" y="554.9" width="220" height="40" rx="3"/software-observatory/previews/pr-148/><text class="d-name" x="600" y="573.9" text-anchor="middle">Unjudged observation</text><text class="d-sub" x="600" y="588.9" text-anchor="middle">1 misread · 3 close</text></g>
+<g class="doubt" data-d="unspecified-property"><rect class="d-node" x="490" y="694.0" width="220" height="40" rx="3"/software-observatory/previews/pr-148/><text class="d-name" x="600" y="713.0" text-anchor="middle">Unspecified property</text><text class="d-sub" x="600" y="728.0" text-anchor="middle">10 misread · 0 close · 2 reveal</text></g>
+<g class="doubt" data-d="wrong-specification"><rect class="d-node" x="490" y="485.3" width="220" height="40" rx="3"/software-observatory/previews/pr-148/><text class="d-name" x="600" y="504.3" text-anchor="middle">Wrong specification</text><text class="d-sub" x="600" y="519.3" text-anchor="middle">6 misread · 3 close · 1 reveal</text></g>
+<g class="doubt" data-d="missing-behavior"><rect class="d-node" x="490" y="833.1" width="220" height="40" rx="3"/software-observatory/previews/pr-148/><text class="d-name" x="600" y="852.1" text-anchor="middle">Missing behavior</text><text class="d-sub" x="600" y="867.1" text-anchor="middle">2 misread · 2 close · 1 reveal</text></g>
+<g class="doubt" data-d="emergent-failure"><rect class="d-node" x="490" y="415.8" width="220" height="40" rx="3"/software-observatory/previews/pr-148/><text class="d-name" x="600" y="434.8" text-anchor="middle">Emergent failure</text><text class="d-sub" x="600" y="449.8" text-anchor="middle">2 misread · 3 close</text></g>
+<g class="doubt" data-d="untested-conditions"><rect class="d-node" x="490" y="972.2" width="220" height="40" rx="3"/software-observatory/previews/pr-148/><text class="d-name" x="600" y="991.2" text-anchor="middle">Untested conditions</text><text class="d-sub" x="600" y="1006.2" text-anchor="middle">3 misread · 2 close · 1 reveal</text></g>
+<g class="doubt" data-d="correlated-blind-spot"><rect class="d-node" x="490" y="1111.3" width="220" height="40" rx="3"/software-observatory/previews/pr-148/><text class="d-name" x="600" y="1130.3" text-anchor="middle">Correlated blind spot</text><text class="d-sub" x="600" y="1145.3" text-anchor="middle">1 misread · 1 close</text></g>
+<g class="doubt" data-d="late-effects"><rect class="d-node" x="490" y="1041.8" width="220" height="40" rx="3"/software-observatory/previews/pr-148/><text class="d-name" x="600" y="1060.8" text-anchor="middle">Late effects</text><text class="d-sub" x="600" y="1075.8" text-anchor="middle">2 misread · 0 close · 4 reveal</text></g>
+<g class="doubt" data-d="not-internally-consistent"><rect class="d-node" x="490" y="68.0" width="220" height="40" rx="3"/software-observatory/previews/pr-148/><text class="d-name" x="600" y="87.0" text-anchor="middle">Not internally consistent</text><text class="d-sub" x="600" y="102.0" text-anchor="middle">0 misread · 4 close</text></g>
+<g class="doubt" data-d="unintended-change"><rect class="d-node" x="490" y="624.4" width="220" height="40" rx="3"/software-observatory/previews/pr-148/><text class="d-name" x="600" y="643.4" text-anchor="middle">Unintended change</text><text class="d-sub" x="600" y="658.4" text-anchor="middle">1 misread · 4 close</text></g>
+<g class="doubt" data-d="unreached-by-tests"><rect class="d-node" x="490" y="276.7" width="220" height="40" rx="3"/software-observatory/previews/pr-148/><text class="d-name" x="600" y="295.7" text-anchor="middle">Unreached by tests</text><text class="d-sub" x="600" y="310.7" text-anchor="middle">0 misread · 2 close</text></g>
+<g class="doubt" data-d="does-not-run-where-deployed"><rect class="d-node" x="490" y="137.6" width="220" height="40" rx="3"/software-observatory/previews/pr-148/><text class="d-name" x="600" y="156.6" text-anchor="middle">Does not run where deployed</text><text class="d-sub" x="600" y="171.6" text-anchor="middle">1 misread · 2 close</text></g>
+<g class="doubt" data-d="dependency-failure"><rect class="d-node" x="490" y="763.6" width="220" height="40" rx="3"/software-observatory/previews/pr-148/><text class="d-name" x="600" y="782.6" text-anchor="middle">Falls over with a dependency</text><text class="d-sub" x="600" y="797.6" text-anchor="middle">0 misread · 2 close</text></g>
+<g class="doubt" data-d="cannot-carry-load"><rect class="d-node" x="490" y="902.7" width="220" height="40" rx="3"/software-observatory/previews/pr-148/><text class="d-name" x="600" y="921.7" text-anchor="middle">Cannot carry the load</text><text class="d-sub" x="600" y="936.7" text-anchor="middle">0 misread · 1 close</text></g>
+<g class="doubt" data-d="structure-decayed"><rect class="d-node" x="490" y="1180.9" width="220" height="40" rx="3"/software-observatory/previews/pr-148/><text class="d-name" x="600" y="1199.9" text-anchor="middle">Nobody knows where the coupling is</text><text class="d-sub" x="600" y="1214.9" text-anchor="middle">0 misread · 5 close</text></g>
+<g class="doubt" data-d="risk-concentrated"><rect class="d-node" x="490" y="1250.4" width="220" height="40" rx="3"/software-observatory/previews/pr-148/><text class="d-name" x="600" y="1269.4" text-anchor="middle">Nobody knows where the risk sits</text><text class="d-sub" x="600" y="1284.4" text-anchor="middle">0 misread · 3 close</text></g>
+<g class="doubt" data-d="unexplained"><rect class="d-node" x="490" y="1320.0" width="220" height="40" rx="3"/software-observatory/previews/pr-148/><text class="d-name" x="600" y="1339.0" text-anchor="middle">Nobody can find out why</text><text class="d-sub" x="600" y="1354.0" text-anchor="middle">0 misread · 3 close</text></g>
+</g>
+</svg>
+      </div>
+      <figcaption>
+        The same 59 sensors appear on both sides, grouped by family in
+        the catalog's order. A doubt sits at the average height of the sensors it
+        touches. A doubt with an empty left side is one nothing gets mistaken
+        for. The entries at the bottom have no edge in this vocabulary: some
+        close a doubt it does not yet name, some are raw data that other sensors
+        judge, and some are aggregates with nothing to attribute.
+      </figcaption>
+    </figure>
+
+    <section class="doubt-notes">
+      <h2 id="reading-the-edges">Reading the edges</h2>
+      <p>
+        The misread edge is deliberately narrow. Every sensor that does not
+        close a doubt leaves it open, which is nearly the whole catalog for any
+        one doubt and not worth drawing. What the dashed edges mark is the
+        specific mistake: 90% coverage taken as tested, a green canary taken as
+        a safe release, "formally proven" taken as correct. That is the
+        misreading each entry's "What it cannot detect" section was written to
+        head off.
+      </p>
+      <p>
+        A solid edge does not mean the sensor settles the doubt outright. It
+        settles it only for what the sensor was pointed at. A proof rules out
+        wrong logic for the property someone wrote down, and for nothing else.
+        A test rules it out for the examples it was given. A canary rules out
+        an unsafe release for the metrics it compares. Outside that, the doubt
+        is still open. That is the composition rule in one sentence, and it is
+        why two sensors that close the same doubt count once.
+      </p>
+      <p>
+        Retrospective sensors get their own edge. Escaped defect rate cannot close <a href="#late-effects">late effects</a> before shipping; it is the sensor that shows, months later, that the doubt was real.
+        The catalog's <a href="/software-observatory/previews/pr-148/framework/#predictive-vs-retrospective" class="wikilink">predictive
+        versus retrospective</a> dimension is the same distinction.
+      </p>
+      <h2 id="what-the-shape-says">What the shape says</h2>
+      <p>
+        The doubts are not the families under another name. If each family
+        closed one doubt and no other, this page would be the catalog page
+        again. Instead the edges cut across the families. <em>Unasserted execution</em> splits one family: the coverage sensors are misread as closing it, and mutation testing, in the same family, closes it.
+        <em>Wrong specification</em> draws its closers from two families and its misreadings from three. Three doubts, <a href="#structure-decayed">nobody knows where the coupling is</a>, <a href="#risk-concentrated">nobody knows where the risk sits</a> and <a href="#unexplained">nobody can find out why</a>, are about the codebase's future rather than its correctness, and they are what the evolution and comprehension families exist for.
+      </p>
+      <p>
+        Two doubts are nearly unclosable from inside the catalog. <em>Missing behavior</em> and <em>wrong specification</em> both end at human review and outcome sensors.
+        And <em>wrong logic</em> has an empty left side: nobody reads a clean compile or type check as correct code. The belief engineers actually hold is that a class of bugs is gone, which is true.
+      </p>
+    </section>
+
+    <section class="doubt-by-sensor">
+      <h2 id="by-sensor">By sensor</h2>
+      <p class="doubt-by-sensor-lede">
+        The same edges, one row per sensor. Each doubt links back to its card.
+      </p>
+      <div class="doubt-table-scroll">
+<table class="doubt-table">
+<thead><tr><th scope="col">Sensor</th><th scope="col" class="misread">Misread as closing</th><th scope="col" class="closes">Closes</th><th scope="col" class="reveals">Reveals after</th></tr></thead>
+<tbody>
+<tr class="fam-row"><th scope="rowgroup" colspan="4">Structural</th></tr>
+<tr class="idle"><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/build-provenance-sbom/" class="wikilink">Build Provenance &amp; SBOM</a></th><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/compiler/" class="wikilink">Compiler</a></th><td class="empty"></td><td><a href="#not-internally-consistent" class="wikilink doubt-ref">Not internally consistent</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/contract-refinement-types/" class="wikilink">Contract &amp; Refinement Types</a></th><td><a href="#unspecified-property" class="wikilink doubt-ref">Unspecified property</a><a href="#wrong-specification" class="wikilink doubt-ref">Wrong specification</a></td><td><a href="#wrong-logic" class="wikilink doubt-ref">Wrong logic</a></td><td class="empty"></td></tr>
+<tr class="idle"><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/linter/" class="wikilink">Linter</a></th><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/model-checking/" class="wikilink">Model Checking</a></th><td><a href="#wrong-specification" class="wikilink doubt-ref">Wrong specification</a></td><td><a href="#wrong-logic" class="wikilink doubt-ref">Wrong logic</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/schema-validator/" class="wikilink">Schema Validator</a></th><td class="empty"></td><td><a href="#not-internally-consistent" class="wikilink doubt-ref">Not internally consistent</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/static-analysis/" class="wikilink">Static Analysis</a></th><td class="empty"></td><td><a href="#not-internally-consistent" class="wikilink doubt-ref">Not internally consistent</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/theorem-proving/" class="wikilink">Theorem Proving</a></th><td><a href="#wrong-specification" class="wikilink doubt-ref">Wrong specification</a></td><td><a href="#wrong-logic" class="wikilink doubt-ref">Wrong logic</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/type-checker/" class="wikilink">Type Checker</a></th><td class="empty"></td><td><a href="#not-internally-consistent" class="wikilink doubt-ref">Not internally consistent</a></td><td class="empty"></td></tr>
+<tr class="fam-row"><th scope="rowgroup" colspan="4">Behavioral</th></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/contract-tests/" class="wikilink">Contract Tests</a></th><td><a href="#emergent-failure" class="wikilink doubt-ref">Emergent failure</a></td><td class="empty"></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/example-based-tests/" class="wikilink">Example-Based Tests</a></th><td><a href="#missing-behavior" class="wikilink doubt-ref">Missing behavior</a><a href="#emergent-failure" class="wikilink doubt-ref">Emergent failure</a><a href="#unintended-change" class="wikilink doubt-ref">Unintended change</a></td><td><a href="#wrong-logic" class="wikilink doubt-ref">Wrong logic</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/integration-tests/" class="wikilink">Integration Tests</a></th><td><a href="#does-not-run-where-deployed" class="wikilink doubt-ref">Does not run where deployed</a></td><td><a href="#emergent-failure" class="wikilink doubt-ref">Emergent failure</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/smoke-tests/" class="wikilink">Smoke Tests</a></th><td class="empty"></td><td><a href="#does-not-run-where-deployed" class="wikilink doubt-ref">Does not run where deployed</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/snapshot-tests/" class="wikilink">Snapshot Tests</a></th><td><a href="#unasserted-execution" class="wikilink doubt-ref">Unasserted execution</a><a href="#wrong-specification" class="wikilink doubt-ref">Wrong specification</a></td><td><a href="#unintended-change" class="wikilink doubt-ref">Unintended change</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/synthetic-monitoring/" class="wikilink">Synthetic Monitoring</a></th><td><a href="#unspecified-property" class="wikilink doubt-ref">Unspecified property</a></td><td><a href="#does-not-run-where-deployed" class="wikilink doubt-ref">Does not run where deployed</a></td><td class="empty"></td></tr>
+<tr class="fam-row"><th scope="rowgroup" colspan="4">Test Effectiveness</th></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/branch-coverage/" class="wikilink">Branch Coverage</a></th><td><a href="#unasserted-execution" class="wikilink doubt-ref">Unasserted execution</a></td><td><a href="#unreached-by-tests" class="wikilink doubt-ref">Unreached by tests</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/diff-coverage/" class="wikilink">Diff Coverage</a></th><td><a href="#unasserted-execution" class="wikilink doubt-ref">Unasserted execution</a></td><td class="empty"></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/escaped-defect-rate/" class="wikilink">Escaped Defect Rate</a></th><td class="empty"></td><td class="empty"></td><td><a href="#wrong-specification" class="wikilink doubt-ref">Wrong specification</a><a href="#missing-behavior" class="wikilink doubt-ref">Missing behavior</a><a href="#late-effects" class="wikilink doubt-ref">Late effects</a></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/line-coverage/" class="wikilink">Line Coverage</a></th><td><a href="#unasserted-execution" class="wikilink doubt-ref">Unasserted execution</a></td><td><a href="#unreached-by-tests" class="wikilink doubt-ref">Unreached by tests</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/mutation-testing/" class="wikilink">Mutation Testing</a></th><td><a href="#missing-behavior" class="wikilink doubt-ref">Missing behavior</a></td><td><a href="#unasserted-execution" class="wikilink doubt-ref">Unasserted execution</a></td><td class="empty"></td></tr>
+<tr class="fam-row"><th scope="rowgroup" colspan="4">Invariants</th></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/business-invariants/" class="wikilink">Business Invariants</a></th><td><a href="#unspecified-property" class="wikilink doubt-ref">Unspecified property</a></td><td><a href="#wrong-logic" class="wikilink doubt-ref">Wrong logic</a><a href="#unjudged-observation" class="wikilink doubt-ref">Unjudged observation</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/database-invariants/" class="wikilink">Database Invariants</a></th><td class="empty"></td><td><a href="#unjudged-observation" class="wikilink doubt-ref">Unjudged observation</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/pre-promotion-invariant-gates/" class="wikilink">Pre-Promotion Invariant Gates</a></th><td><a href="#unspecified-property" class="wikilink doubt-ref">Unspecified property</a><a href="#wrong-specification" class="wikilink doubt-ref">Wrong specification</a></td><td><a href="#wrong-logic" class="wikilink doubt-ref">Wrong logic</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/runtime-invariants/" class="wikilink">Runtime Invariants</a></th><td class="empty"></td><td><a href="#wrong-logic" class="wikilink doubt-ref">Wrong logic</a><a href="#unjudged-observation" class="wikilink doubt-ref">Unjudged observation</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/statically-checked-invariants/" class="wikilink">Statically Checked Invariants</a></th><td><a href="#unspecified-property" class="wikilink doubt-ref">Unspecified property</a><a href="#wrong-specification" class="wikilink doubt-ref">Wrong specification</a></td><td><a href="#wrong-logic" class="wikilink doubt-ref">Wrong logic</a></td><td class="empty"></td></tr>
+<tr class="fam-row"><th scope="rowgroup" colspan="4">Adversarial</th></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/differential-testing/" class="wikilink">Differential Testing</a></th><td><a href="#correlated-blind-spot" class="wikilink doubt-ref">Correlated blind spot</a></td><td><a href="#wrong-logic" class="wikilink doubt-ref">Wrong logic</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/fault-injection/" class="wikilink">Fault Injection</a></th><td><a href="#unspecified-property" class="wikilink doubt-ref">Unspecified property</a><a href="#untested-conditions" class="wikilink doubt-ref">Untested conditions</a></td><td><a href="#dependency-failure" class="wikilink doubt-ref">Falls over with a dependency</a></td><td class="empty"></td></tr>
+<tr class="idle"><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/fuzzing/" class="wikilink">Fuzzing</a></th><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/live-chaos-experiments/" class="wikilink">Live Chaos Experiments</a></th><td><a href="#unspecified-property" class="wikilink doubt-ref">Unspecified property</a><a href="#untested-conditions" class="wikilink doubt-ref">Untested conditions</a></td><td><a href="#dependency-failure" class="wikilink doubt-ref">Falls over with a dependency</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/metamorphic-testing/" class="wikilink">Metamorphic Testing</a></th><td class="empty"></td><td><a href="#wrong-logic" class="wikilink doubt-ref">Wrong logic</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/property-based-testing/" class="wikilink">Property-Based Testing</a></th><td><a href="#unspecified-property" class="wikilink doubt-ref">Unspecified property</a></td><td><a href="#wrong-logic" class="wikilink doubt-ref">Wrong logic</a></td><td class="empty"></td></tr>
+<tr class="idle"><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/static-security-analysis/" class="wikilink">Static Security Analysis</a></th><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+<tr class="fam-row"><th scope="rowgroup" colspan="4">Runtime</th></tr>
+<tr class="idle"><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/continuous-profiling/" class="wikilink">Continuous Profiling</a></th><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+<tr class="idle"><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/distributed-traces/" class="wikilink">Distributed Traces</a></th><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/load-testing/" class="wikilink">Load Testing</a></th><td><a href="#untested-conditions" class="wikilink doubt-ref">Untested conditions</a></td><td><a href="#cannot-carry-load" class="wikilink doubt-ref">Cannot carry the load</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/observability-events/" class="wikilink">Observability Events</a></th><td><a href="#unjudged-observation" class="wikilink doubt-ref">Unjudged observation</a></td><td class="empty"></td><td><a href="#unspecified-property" class="wikilink doubt-ref">Unspecified property</a><a href="#untested-conditions" class="wikilink doubt-ref">Untested conditions</a></td></tr>
+<tr class="idle"><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/resource-telemetry/" class="wikilink">Resource Telemetry</a></th><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+<tr class="fam-row"><th scope="rowgroup" colspan="4">Change</th></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/ab-testing/" class="wikilink">A/B Testing</a></th><td><a href="#late-effects" class="wikilink doubt-ref">Late effects</a></td><td><a href="#wrong-specification" class="wikilink doubt-ref">Wrong specification</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/api-compatibility/" class="wikilink">API Compatibility</a></th><td class="empty"></td><td><a href="#unintended-change" class="wikilink doubt-ref">Unintended change</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/canary-analysis/" class="wikilink">Canary Analysis</a></th><td><a href="#unspecified-property" class="wikilink doubt-ref">Unspecified property</a><a href="#late-effects" class="wikilink doubt-ref">Late effects</a></td><td><a href="#emergent-failure" class="wikilink doubt-ref">Emergent failure</a><a href="#untested-conditions" class="wikilink doubt-ref">Untested conditions</a><a href="#unintended-change" class="wikilink doubt-ref">Unintended change</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/error-budget-impact/" class="wikilink">Error-Budget Impact</a></th><td class="empty"></td><td class="empty"></td><td><a href="#late-effects" class="wikilink doubt-ref">Late effects</a></td></tr>
+<tr class="idle"><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/feature-flag-exposure/" class="wikilink">Feature Flag Exposure Telemetry</a></th><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+<tr class="idle"><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/incremental-build-correctness/" class="wikilink">Incremental Build Correctness</a></th><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/shadow-traffic/" class="wikilink">Shadow Traffic</a></th><td class="empty"></td><td><a href="#emergent-failure" class="wikilink doubt-ref">Emergent failure</a><a href="#untested-conditions" class="wikilink doubt-ref">Untested conditions</a><a href="#unintended-change" class="wikilink doubt-ref">Unintended change</a></td><td class="empty"></td></tr>
+<tr class="fam-row"><th scope="rowgroup" colspan="4">Architecture</th></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/fitness-functions/" class="wikilink">Architecture Fitness Functions</a></th><td><a href="#unspecified-property" class="wikilink doubt-ref">Unspecified property</a></td><td><a href="#structure-decayed" class="wikilink doubt-ref">Nobody knows where the coupling is</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/boundary-sensors/" class="wikilink">Boundary Sensors</a></th><td class="empty"></td><td><a href="#structure-decayed" class="wikilink doubt-ref">Nobody knows where the coupling is</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/dependency-graph/" class="wikilink">Dependency Graph</a></th><td class="empty"></td><td><a href="#structure-decayed" class="wikilink doubt-ref">Nobody knows where the coupling is</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/hotspot-analysis/" class="wikilink">Hotspot Analysis</a></th><td class="empty"></td><td><a href="#risk-concentrated" class="wikilink doubt-ref">Nobody knows where the risk sits</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/live-service-graph/" class="wikilink">Live Service Graph Discovery</a></th><td class="empty"></td><td><a href="#structure-decayed" class="wikilink doubt-ref">Nobody knows where the coupling is</a></td><td class="empty"></td></tr>
+<tr class="fam-row"><th scope="rowgroup" colspan="4">Evolution</th></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/change-coupling/" class="wikilink">Change Coupling</a></th><td class="empty"></td><td><a href="#structure-decayed" class="wikilink doubt-ref">Nobody knows where the coupling is</a></td><td class="empty"></td></tr>
+<tr class="idle"><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/dora-metrics/" class="wikilink">DORA Metrics</a></th><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/incident-correlation/" class="wikilink">Incident Correlation</a></th><td class="empty"></td><td><a href="#risk-concentrated" class="wikilink doubt-ref">Nobody knows where the risk sits</a></td><td><a href="#unspecified-property" class="wikilink doubt-ref">Unspecified property</a><a href="#late-effects" class="wikilink doubt-ref">Late effects</a></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/revert-rate/" class="wikilink">Revert Rate</a></th><td class="empty"></td><td><a href="#risk-concentrated" class="wikilink doubt-ref">Nobody knows where the risk sits</a></td><td><a href="#late-effects" class="wikilink doubt-ref">Late effects</a></td></tr>
+<tr class="idle"><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/time-to-repair/" class="wikilink">Time-to-Repair</a></th><td class="empty"></td><td class="empty"></td><td class="empty"></td></tr>
+<tr class="fam-row"><th scope="rowgroup" colspan="4">Human Comprehension</th></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/decision-provenance/" class="wikilink">Decision Provenance</a></th><td class="empty"></td><td><a href="#unexplained" class="wikilink doubt-ref">Nobody can find out why</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/documentation-drift/" class="wikilink">Documentation Drift</a></th><td class="empty"></td><td><a href="#unexplained" class="wikilink doubt-ref">Nobody can find out why</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/independent-review/" class="wikilink">Independent Review</a></th><td class="empty"></td><td><a href="#wrong-specification" class="wikilink doubt-ref">Wrong specification</a><a href="#missing-behavior" class="wikilink doubt-ref">Missing behavior</a><a href="#correlated-blind-spot" class="wikilink doubt-ref">Correlated blind spot</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/onboarding-experiment/" class="wikilink">Onboarding Experiment</a></th><td class="empty"></td><td><a href="#unexplained" class="wikilink doubt-ref">Nobody can find out why</a></td><td class="empty"></td></tr>
+<tr><th scope="row"><a href="/software-observatory/previews/pr-148/sensors/second-agent-review/" class="wikilink">Second-Agent Review</a></th><td class="empty"></td><td><a href="#wrong-specification" class="wikilink doubt-ref">Wrong specification</a><a href="#missing-behavior" class="wikilink doubt-ref">Missing behavior</a></td><td class="empty"></td></tr>
+</tbody>
+</table>
+      </div>
+    </section>
+
+    <section class="doubt-notes">
+      <h2 id="where-the-vocabulary-came-from">Where the vocabulary came from</h2>
+      <p>
+        Ten of the doubts were mined from the "What it cannot detect" section of every entry, which is where the catalog names what it leaves open. That method finds the catalog's residue, not its
+        coverage: a doubt the catalog closes well never appears there, because
+        no entry is worse at it than the sensor that owns it. The other nine came from asking every sensor the first pass left with nothing to close what it does close.
+      </p>
+      <p>
+        Every edge was then stated as a plain assertion, "most engineers think
+        a passing X shows Y" or "X ensures Y", and judged true, partly true, or
+        false by reviewers who saw only the assertion. The false ones were
+        removed, and they were mostly misreadings: the reviewers' repeated
+        finding was that engineers know what a compiler does not prove. No
+        closing edge was judged fully true.
+      </p>
+    </section>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-148/about/">About</a> · <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-148/js/main.js"></script>
+</body>
+</html>

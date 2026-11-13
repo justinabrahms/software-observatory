@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-147/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Database Invariants — Software Observatory</title>
+  <meta name="description" content="Every foreign key refers to an existing object. Every request has exactly one request_id. created_at &lt;= updated_at.">
+  <link rel="canonical" href="/software-observatory/previews/pr-147/sensors/database-invariants/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Database Invariants — Software Observatory">
+  <meta property="og:description" content="Every foreign key refers to an existing object. Every request has exactly one request_id. created_at &lt;= updated_at.">
+  <meta property="og:url" content="/software-observatory/previews/pr-147/sensors/database-invariants/">
+  <meta property="og:image" content="/software-observatory/previews/pr-147/og/cards/database-invariants.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Database Invariants — Software Observatory">
+  <meta name="twitter:description" content="Every foreign key refers to an existing object. Every request has exactly one request_id. created_at &lt;= updated_at.">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-147/og/cards/database-invariants.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-147/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-147/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "TechArticle",
+        "DefinedTerm"
+      ],
+      "@id": "/software-observatory/previews/pr-147/sensors/database-invariants/#entry",
+      "headline": "Database Invariants",
+      "name": "Database Invariants",
+      "description": "Every foreign key refers to an existing object. Every request has exactly one request_id. created_at \u003c= updated_at.",
+      "termCode": "SO-004b",
+      "url": "/software-observatory/previews/pr-147/sensors/database-invariants/",
+      "mainEntityOfPage": "/software-observatory/previews/pr-147/sensors/database-invariants/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-147/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "publisher": {
+        "@id": "/software-observatory/previews/pr-147/#organization"
+      },
+      "inDefinedTermSet": {
+        "@id": "/software-observatory/previews/pr-147/catalog/#defined-term-set"
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-147/catalog/#defined-term-set"
+      },
+      "datePublished": "2026-08-23",
+      "dateModified": "2026-09-03",
+      "about": {
+        "@type": "Thing",
+        "@id": "/software-observatory/previews/pr-147/families/invariants/#defined-term-set",
+        "name": "Invariants",
+        "url": "/software-observatory/previews/pr-147/families/invariants/"
+      },
+      "keywords": "Invariants, Production Sensors",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "value": "high",
+          "description": "constraint violation is definitive"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#independence",
+          "name": "Independence",
+          "value": "high",
+          "description": "database enforces, not the application"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#scope",
+          "name": "Scope",
+          "value": "system"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "value": "minutes"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#actionability",
+          "name": "Actionability",
+          "value": "guiding",
+          "description": "shows which constraint was violated"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "value": "retrospective"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-147/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Invariants",
+          "item": "/software-observatory/previews/pr-147/families/invariants/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Database Invariants"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #147 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-147/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-147/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-147/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-147/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-147/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-147/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-147/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-147/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-147/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-147/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-147/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="wiki-layout">
+    <article class="signal-detail">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-147/catalog/">Catalog</a> › <a href="/software-observatory/previews/pr-147/families/invariants/">Invariants</a> › Database Invariants</p>
+
+      <header class="signal-detail-header">
+        <h1 class="signal-detail-title">Database Invariants</h1>
+        <div class="signal-detail-meta">
+          <span class="tag tag-family">Invariants</span>
+          <span class="tag tag-confidence">High oracle</span>
+          <span class="tag tag-type">Retrospective</span>
+        </div>
+      </header>
+
+      <div class="signal-detail-body">
+        <p>Every foreign key refers to an existing object. Every request has exactly
+one request_id. <code>created_at &lt;= updated_at</code>. These are sensors of
+<em>referential integrity</em> — structural invariants that the database enforces.</p>
+<p>Database invariants operate at a different level than <a class="body-link" href="/software-observatory/previews/pr-147/sensors/runtime-invariants/">runtime
+invariants</a>: they&rsquo;re checked by the database
+engine itself, not by querying the event stream. This gives them high oracle
+strength but limits them to properties the schema can express.</p>
+<h2 id="in-practice">In practice</h2>
+<p>A reading is a constraint violation exactly as the database reports it,
+with the constraint name, the offending statement, and the values:</p>
+<pre><code>ERROR:  insert or update on table &quot;orders&quot; violates foreign key
+        constraint &quot;orders_customer_id_fkey&quot;
+DETAIL:  Key (customer_id)=(88213) is not present in table &quot;customers&quot;.
+STATEMENT:  INSERT INTO orders (customer_id, total) VALUES (88213, 4120);
+</code></pre>
+<p>Three habits for reading it well:</p>
+<ul>
+<li><strong>The constraint name is the invariant.</strong> <code>orders_customer_id_fkey</code>
+  says which relationship broke. Name constraints deliberately so the
+  error line reads like a sentence about the domain.</li>
+<li><strong>One violation usually means many.</strong> The database stops at the
+  first row it cannot reconcile, so a single error on a batch write
+  implies a systematic cause: a missing join, a deleted parent, an
+  out-of-order migration.</li>
+<li><strong>Know which checks are deferred.</strong> Constraints added <code>NOT VALID</code>,
+  or enforced by triggers rather than the engine, are cheaper to run
+  and easier to lose. Know which of your invariants are
+  engine-enforced and which are merely scheduled.</li>
+</ul>
+<h2 id="how-it-gets-gamed">How it gets gamed</h2>
+<p>The database cannot be argued with, but the constraints can be edited:</p>
+<ul>
+<li><strong>Disable instead of fix.</strong> Dropping <code>NOT VALID</code> enforcement,
+  deleting a trigger, or loosening a CHECK turns violations into
+  silence. The data is no worse than before; the sensor is just gone.</li>
+<li><strong>Clean up before the check.</strong> Batch jobs reconcile the tables
+  shortly before the audit query runs, so the reading is of the
+  cleanup, not of the system. Point-in-time checks are harder to
+  scrub than scheduled ones.</li>
+<li><strong>Turn enforcement off for the write.</strong> A <code>FOREIGN KEY</code> is checked
+  for every writer, so raw SQL and admin endpoints do not evade it —
+  that is the whole point of enforcing in the engine. What does evade
+  it is <code>session_replication_role = 'replica'</code>, which makes Postgres
+  skip FK and trigger checks for the rest of the session, and bulk
+  loads that drop constraints and re-add them <code>NOT VALID</code> afterwards.
+  Both are one line, and both leave the schema looking untouched.</li>
+<li><strong>Let dirty data grandfather itself.</strong> Existing violations freeze
+  the rule in place, because enabling the constraint now would fail.
+  Every skipped fix compounds into a migration too expensive to run.</li>
+</ul>
+<p>The meta-signal is the constraint diff. Schema migrations that remove
+or relax constraints are deletions of a sensor, and deserve review the
+way deleting a test would. It will not catch the session that switches
+enforcement off at runtime, because the schema is identical afterwards;
+that one is only visible in the migration and bulk-load scripts
+themselves.</p>
+<h2 id="response-playbook">Response playbook</h2>
+<p>When a constraint violation fires:</p>
+<ol>
+<li><strong>Stop the write that triggered it.</strong> A failing <code>INSERT</code> or
+   <code>UPDATE</code> means the application is trying to put the database in an
+   impossible state. Roll back the transaction; do not retry the same
+   write.</li>
+<li><strong>Read the constraint name as the diagnosis.</strong>
+   <code>orders_customer_id_fkey</code> tells you which relationship broke. Find
+   the code path that issued the statement; the database has already
+   told you the what, so spend the budget on the why.</li>
+<li><strong>Check for dirty data already written.</strong> The violation surfaced on
+   one row, but the same cause may have written many. Run the
+   constraint as a <code>SELECT</code> across the table before assuming the
+   failure is isolated.</li>
+<li><strong>Fix the application, not the constraint.</strong> Dropping or relaxing
+   the constraint to unblock a deploy is the gaming path. If the
+   constraint is genuinely wrong, change it in a migration with a
+   named owner, not under incident pressure.</li>
+<li><strong>Add the failing case as a test.</strong> The write that violated the
+   constraint is a free specification. Encode it as a regression test
+   so the next version of the application fails in CI, not in
+   production.</li>
+</ol>
+<h2 id="what-it-cannot-detect">What it cannot detect</h2>
+<p>Only properties expressible as database constraints. Business rules
+(&ldquo;a successful payment implies an order eventually becomes paid&rdquo;) require
+<a class="body-link" href="/software-observatory/previews/pr-147/sensors/runtime-invariants/">runtime invariants</a> checked against <a class="body-link" href="/software-observatory/previews/pr-147/sensors/observability-events/">event
+streams</a>.</p>
+
+                <h2 id="related-sensors">Related sensors</h2>
+        <div class="see-also-grid">
+          <a href="/software-observatory/previews/pr-147/sensors/runtime-invariants/" class="see-also-card">
+            <span class="see-also-type">Invariants</span>
+            <span class="see-also-title">Runtime Invariants</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/business-invariants/" class="see-also-card">
+            <span class="see-also-type">Invariants</span>
+            <span class="see-also-title">Business Invariants</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/observability-events/" class="see-also-card">
+            <span class="see-also-type">Runtime</span>
+            <span class="see-also-title">Observability Events</span>
+          </a>
+        </div>
+
+        <div class="entry-categories">
+          <span class="cat-label">Categories:</span>
+          <a href="/software-observatory/previews/pr-147/families/invariants/" class="cat-link">Invariants</a>
+          <a href="/software-observatory/previews/pr-147/categories/#production-sensors" class="cat-link">Production Sensors</a>
+        </div>
+
+        <h2 id="references">References</h2>
+        <h3 class="references-subheading" id="publications">Publications</h3>
+        <ul class="reference-list">
+          <li><a href="https://www.vldb.org/pvldb/vol9/p993-abedjan.pdf" class="wikilink">Detecting Data Errors: Where are we and what needs to be done?</a> — <span class="ref-meta">Ziawasch Abedjan, Xu Chu, Dong Deng, Raul Castro Fernandez, Ihab F. Ilyas, Mourad Ouzzani, Paolo Papotti, Michael Stonebraker, Nan Tang · 2016 · controlled study · PVLDB 9(12)</span></li>
+          <li><a href="https://jepsen.io/analyses/mongodb-4.2.6" class="wikilink">Jepsen: MongoDB 4.2.6</a> — <span class="ref-meta">Kyle Kingsbury (Jepsen) · 2020 · observational study · jepsen.io analyses</span></li>
+        </ul>
+        <h3 class="references-subheading" id="tooling">Tooling</h3>
+        <ul class="reference-list reference-tools">
+          <li><span class="ref-title"><a href="https://www.postgresql.org/docs/current/ddl-constraints.html" class="wikilink">DB constraints</a></span><span class="ref-desc">Database-level CHECK/FOREIGN KEY constraints</span></li>
+          <li><span class="ref-title"><a href="https://www.postgresql.org/docs/current/ddl-constraints.html#ddl-constraints-check-constraints" class="wikilink">CHECK constraints</a></span><span class="ref-desc">SQL CHECK constraints</span></li>
+          <li><span class="ref-title"><a href="https://www.postgresql.org/docs/current/tutorial-fk.html" class="wikilink">foreign keys</a></span><span class="ref-desc">Database referential integrity constraints</span></li>
+          <li><span class="ref-title"><a href="https://www.postgresql.org/docs/current/catalog-pg-constraint.html" class="wikilink">pg_constraint</a></span><span class="ref-desc">PostgreSQL constraint catalog</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <aside class="wiki-sidebar">
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="sensor-properties">Sensor properties</h3>
+        <dl class="meta-list">
+          <dt>Family</dt>           <dd><a href="/software-observatory/previews/pr-147/families/invariants/" class="wikilink">Invariants</a></dd>
+          <dt>Oracle</dt>          <dd>High <span class="prop-note" title="constraint violation is definitive" aria-label="constraint violation is definitive">(?)</span></dd>
+          <dt>Independence</dt>     <dd>High <span class="prop-note" title="database enforces, not the application" aria-label="database enforces, not the application">(?)</span></dd>
+          <dt>Scope</dt>           <dd>System</dd>
+          <dt>Latency</dt>         <dd>Minutes</dd>
+          <dt>Actionability</dt>   <dd>Guiding <span class="prop-note" title="shows which constraint was violated" aria-label="shows which constraint was violated">(?)</span></dd>
+          <dt>Type</dt>             <dd>Retrospective</dd>
+          <dt>Entry ID</dt>        <dd>SO-004b</dd>
+          <dt>Reviewed</dt>        <dd>2026-09 <span class="review-age" title="Age measured against 2026-11-13, the newest date in the catalog. The build never uses the wall clock, so this page is byte-identical between builds.">— 2 months ago</span></dd>
+        </dl>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="what-links-here">What links here</h3>
+        <ul class="backlink-list">
+          <li><a href="/software-observatory/previews/pr-147/sensors/business-invariants/">Business Invariants</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/live-chaos-experiments/">Live Chaos Experiments</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+        </ul>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="in-the-playbook">In the playbook</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-147/playbook/stack-for-a-data-pipeline/">A minimal stack for a batch or data pipeline</a>
+        </ul>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="related-categories">Related categories</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-147/families/invariants/">Category: Invariants</a></li>
+          <li><a href="/software-observatory/previews/pr-147/categories/#production-sensors">Category: Production Sensors</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-147/about/">About</a> · <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-147/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-148/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Resource Telemetry — Software Observatory</title>
+  <meta name="description" content="CPU, memory, IO, network, GC, queues. Traditional monitoring — useful but limited. Low cardinality, low dimensionality, predetermined questions.">
+  <link rel="canonical" href="/software-observatory/previews/pr-148/sensors/resource-telemetry/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Resource Telemetry — Software Observatory">
+  <meta property="og:description" content="CPU, memory, IO, network, GC, queues. Traditional monitoring — useful but limited. Low cardinality, low dimensionality, predetermined questions.">
+  <meta property="og:url" content="/software-observatory/previews/pr-148/sensors/resource-telemetry/">
+  <meta property="og:image" content="/software-observatory/previews/pr-148/og/cards/resource-telemetry.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Resource Telemetry — Software Observatory">
+  <meta name="twitter:description" content="CPU, memory, IO, network, GC, queues. Traditional monitoring — useful but limited. Low cardinality, low dimensionality, predetermined questions.">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-148/og/cards/resource-telemetry.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-148/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-148/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "TechArticle",
+        "DefinedTerm"
+      ],
+      "@id": "/software-observatory/previews/pr-148/sensors/resource-telemetry/#entry",
+      "headline": "Resource Telemetry",
+      "name": "Resource Telemetry",
+      "description": "CPU, memory, IO, network, GC, queues. Traditional monitoring — useful but limited. Low cardinality, low dimensionality, predetermined questions. Resource telemetry is the weakest runtime sensor.",
+      "termCode": "SO-006d",
+      "url": "/software-observatory/previews/pr-148/sensors/resource-telemetry/",
+      "mainEntityOfPage": "/software-observatory/previews/pr-148/sensors/resource-telemetry/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-148/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "publisher": {
+        "@id": "/software-observatory/previews/pr-148/#organization"
+      },
+      "inDefinedTermSet": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "datePublished": "2026-08-23",
+      "about": {
+        "@type": "Thing",
+        "@id": "/software-observatory/previews/pr-148/families/runtime/#defined-term-set",
+        "name": "Runtime",
+        "url": "/software-observatory/previews/pr-148/families/runtime/"
+      },
+      "keywords": "Runtime",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "value": "low",
+          "description": "aggregate state, not causation"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#independence",
+          "name": "Independence",
+          "value": "high",
+          "description": "production reality"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#scope",
+          "name": "Scope",
+          "value": "system"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "value": "seconds"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#actionability",
+          "name": "Actionability",
+          "value": "exploratory",
+          "description": "but low dimensionality limits investigation"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "value": "retrospective"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-148/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Runtime",
+          "item": "/software-observatory/previews/pr-148/families/runtime/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Resource Telemetry"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #148 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-148/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-148/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-148/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-148/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-148/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-148/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-148/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-148/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-148/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-148/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="wiki-layout">
+    <article class="signal-detail">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-148/catalog/">Catalog</a> › <a href="/software-observatory/previews/pr-148/families/runtime/">Runtime</a> › Resource Telemetry</p>
+
+      <header class="signal-detail-header">
+        <h1 class="signal-detail-title">Resource Telemetry</h1>
+        <div class="signal-detail-meta">
+          <span class="tag tag-family">Runtime</span>
+          <span class="tag tag-confidence">Low oracle</span>
+          <span class="tag tag-type">Retrospective</span>
+        </div>
+      </header>
+
+      <div class="signal-detail-body">
+        <p>CPU, memory, IO, network, GC, queues. Traditional monitoring — useful but
+limited. Low cardinality, low dimensionality, predetermined questions.</p>
+<p>Resource telemetry is the weakest runtime sensor. It tells you aggregate
+system state (&ldquo;CPU is 82%&rdquo;) but not <em>which</em> requests or <em>which</em> code paths
+caused it. <a class="body-link" href="/software-observatory/previews/pr-148/sensors/observability-events/">Observability events</a> are a strictly
+richer sensor — they preserve the per-request context that telemetry
+discards.</p>
+<h2 id="in-practice">In practice</h2>
+<p>A typical reading is an alert firing against aggregate state:</p>
+<pre><code>[FIRING:1] CheckoutCPUHigh checkout prod us-east-1
+  Summary: checkout CPU above 85% for 5m
+  Value: 0.912
+  Started: 2026-08-23 14:02 UTC
+</code></pre>
+<p>The alert names the resource, not the cause. The dashboard behind it
+usually holds the first real comparison:</p>
+<table>
+<thead>
+<tr>
+<th>Replica</th>
+<th>CPU (5m avg)</th>
+<th>Memory</th>
+<th>p99 latency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>checkout-1</td>
+<td>0.91</td>
+<td>1.8 GiB</td>
+<td>840 ms</td>
+</tr>
+<tr>
+<td>checkout-2</td>
+<td>0.42</td>
+<td>1.2 GiB</td>
+<td>210 ms</td>
+</tr>
+<tr>
+<td>checkout-3</td>
+<td>0.44</td>
+<td>1.2 GiB</td>
+<td>195 ms</td>
+</tr>
+</tbody>
+</table>
+<p>Reading it well:</p>
+<ul>
+<li><strong>Distrust averages.</strong> The fleet mean is 0.59, under threshold, while
+  one replica is pinned. Alert and read on distributions or per-replica
+  values, not on the mean.</li>
+<li><strong>Overlay change and traffic.</strong> A CPU rise that starts at a deploy
+  boundary is code; one that tracks request volume is capacity. Same
+  number, different answer.</li>
+<li><strong>Treat telemetry as a doorway, not a diagnosis.</strong> Aggregate state says
+  something is wrong somewhere. The next step is a richer sensor:
+  <a class="body-link" href="/software-observatory/previews/pr-148/sensors/continuous-profiling/">continuous profiling</a> for where the CPU
+  goes, <a class="body-link" href="/software-observatory/previews/pr-148/sensors/distributed-traces/">distributed traces</a> for which requests
+  suffer.</li>
+</ul>
+<h2 id="how-it-gets-gamed">How it gets gamed</h2>
+<p>Telemetry is collected by machines, but it is curated and answered by
+people:</p>
+<ul>
+<li><strong>Alert fatigue as suppression.</strong> Pages get muted &ldquo;for now,&rdquo; thresholds
+  get raised after each alert, until the metric that would have caught
+  the incident quietly stops calling anyone. Rising thresholds without
+  a matching fall in incidents is the tell.</li>
+<li><strong>Averaging out the victims.</strong> Reporting fleet means while one replica
+  or one region burns. The dashboard says healthy; the users on the hot
+  replica disagree.</li>
+<li><strong>Buying capacity instead of finding cause.</strong> Scaling up resets the
+  gauge and closes the ticket, so the underlying leak never gets a
+  diagnosis. The sensor keeps reading normal because the budget grew,
+  not because the problem left.</li>
+</ul>
+<p>The meta-signal is the ratio of muted or raised alerts to active ones.
+A sensor nobody gets paged by is a sensor nobody is running.</p>
+<h2 id="response-playbook">Response playbook</h2>
+<p>When a resource alert fires:</p>
+<ol>
+<li><strong>Verify before escalating.</strong> Check that the reading is real and
+   persistent: confirm per-replica values, not just the aggregate, and
+   rule out a monitoring-agent or clock skew artifact.</li>
+<li><strong>Overlay change and traffic.</strong> Put the deploy timeline and request
+   volume over the same window. A step at a deploy points at code; a
+   climb with traffic points at capacity. The answer decides the next
+   move.</li>
+<li><strong>Contain first.</strong> Shed load, restart the hot replica, or scale the
+   pool to stop user impact. Containment is not the fix; it is what
+   buys time for the diagnosis.</li>
+<li><strong>Trace the resource to a request.</strong> Telemetry cannot say which code
+   path is burning, so hand off immediately:
+   <a class="body-link" href="/software-observatory/previews/pr-148/sensors/continuous-profiling/">continuous profiling</a> for where the
+   CPU goes, <a class="body-link" href="/software-observatory/previews/pr-148/sensors/distributed-traces/">distributed traces</a> for which
+   requests suffer.</li>
+<li><strong>File the follow-up before closing.</strong> If the cause was a leak or a
+   regression, open the ticket that adds the missing alert or limit
+   while the incident is still fresh.</li>
+</ol>
+<h2 id="what-it-cannot-detect">What it cannot detect</h2>
+<p>Resource telemetry cannot tell you <em>why</em> resources are consumed or <em>which</em>
+requests are responsible. It shows aggregate state, not per-execution
+reality. This is why <a class="body-link" href="/software-observatory/previews/pr-148/sensors/observability-events/">observability events</a> are a
+strictly richer sensor.</p>
+
+                <h2 id="related-sensors">Related sensors</h2>
+        <div class="see-also-grid">
+          <a href="/software-observatory/previews/pr-148/sensors/observability-events/" class="see-also-card">
+            <span class="see-also-type">Runtime</span>
+            <span class="see-also-title">Observability Events</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/distributed-traces/" class="see-also-card">
+            <span class="see-also-type">Runtime</span>
+            <span class="see-also-title">Distributed Traces</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/continuous-profiling/" class="see-also-card">
+            <span class="see-also-type">Runtime</span>
+            <span class="see-also-title">Continuous Profiling</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/load-testing/" class="see-also-card">
+            <span class="see-also-type">Runtime</span>
+            <span class="see-also-title">Load Testing</span>
+          </a>
+        </div>
+
+        <div class="entry-categories">
+          <span class="cat-label">Categories:</span>
+          <a href="/software-observatory/previews/pr-148/families/runtime/" class="cat-link">Runtime</a>
+        </div>
+
+        <h2 id="references">References</h2>
+        <h3 class="references-subheading" id="tooling">Tooling</h3>
+        <ul class="reference-list reference-tools">
+          <li><span class="ref-title"><a href="https://prometheus.io" class="wikilink">Prometheus</a></span><span class="ref-desc">Metrics collection and alerting</span></li>
+          <li><span class="ref-title"><a href="https://www.datadoghq.com" class="wikilink">Datadog</a></span><span class="ref-desc">Cloud monitoring and observability</span></li>
+          <li><span class="ref-title"><a href="https://grafana.com" class="wikilink">Grafana</a></span><span class="ref-desc">Metrics visualization and dashboards</span></li>
+          <li><span class="ref-title"><a href="https://aws.amazon.com/cloudwatch" class="wikilink">CloudWatch</a></span><span class="ref-desc">AWS monitoring and metrics</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <aside class="wiki-sidebar">
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="sensor-properties">Sensor properties</h3>
+        <dl class="meta-list">
+          <dt>Family</dt>           <dd><a href="/software-observatory/previews/pr-148/families/runtime/" class="wikilink">Runtime</a></dd>
+          <dt>Oracle</dt>          <dd>Low <span class="prop-note" title="aggregate state, not causation" aria-label="aggregate state, not causation">(?)</span></dd>
+          <dt>Independence</dt>     <dd>High <span class="prop-note" title="production reality" aria-label="production reality">(?)</span></dd>
+          <dt>Scope</dt>           <dd>System</dd>
+          <dt>Latency</dt>         <dd>Seconds</dd>
+          <dt>Actionability</dt>   <dd>Exploratory <span class="prop-note" title="but low dimensionality limits investigation" aria-label="but low dimensionality limits investigation">(?)</span></dd>
+          <dt>Type</dt>             <dd>Retrospective</dd>
+          <dt>Entry ID</dt>        <dd>SO-006d</dd>
+          <dt>Reviewed</dt>        <dd><span class="review-unreviewed" title="This entry is written and published, but has not yet been re-read in the editorial review pass. An absent review date is reported as absent rather than filled in.">pending</span></dd>
+        </dl>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="what-links-here">What links here</h3>
+        <ul class="backlink-list">
+          <li><a href="/software-observatory/previews/pr-148/sensors/continuous-profiling/">Continuous Profiling</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/distributed-traces/">Distributed Traces</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/load-testing/">Load Testing</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="related-categories">Related categories</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-148/families/runtime/">Category: Runtime</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-148/about/">About</a> · <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-148/js/main.js"></script>
+</body>
+</html>

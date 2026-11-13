@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-148/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Smoke Tests — Software Observatory</title>
+  <meta name="description" content="The cheapest behavioral check against a live deployment: hit /health, create one record, read it back, delete it. If any step fails, roll back.">
+  <link rel="canonical" href="/software-observatory/previews/pr-148/sensors/smoke-tests/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Smoke Tests — Software Observatory">
+  <meta property="og:description" content="The cheapest behavioral check against a live deployment: hit /health, create one record, read it back, delete it. If any step fails, roll back.">
+  <meta property="og:url" content="/software-observatory/previews/pr-148/sensors/smoke-tests/">
+  <meta property="og:image" content="/software-observatory/previews/pr-148/og/cards/smoke-tests.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Smoke Tests — Software Observatory">
+  <meta name="twitter:description" content="The cheapest behavioral check against a live deployment: hit /health, create one record, read it back, delete it. If any step fails, roll back.">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-148/og/cards/smoke-tests.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-148/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-148/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "TechArticle",
+        "DefinedTerm"
+      ],
+      "@id": "/software-observatory/previews/pr-148/sensors/smoke-tests/#entry",
+      "headline": "Smoke Tests",
+      "name": "Smoke Tests",
+      "description": "The cheapest behavioral check against a live deployment: hit /health, create one record, read it back, delete it. If any step fails, roll back.",
+      "termCode": "SO-012b",
+      "url": "/software-observatory/previews/pr-148/sensors/smoke-tests/",
+      "mainEntityOfPage": "/software-observatory/previews/pr-148/sensors/smoke-tests/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-148/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "publisher": {
+        "@id": "/software-observatory/previews/pr-148/#organization"
+      },
+      "inDefinedTermSet": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "datePublished": "2026-08-23",
+      "about": {
+        "@type": "Thing",
+        "@id": "/software-observatory/previews/pr-148/families/behavioral/#defined-term-set",
+        "name": "Behavioral",
+        "url": "/software-observatory/previews/pr-148/families/behavioral/"
+      },
+      "keywords": "Behavioral, Deployment Safety",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "value": "medium",
+          "description": "\"alive\" is a weak claim, but a true one"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#independence",
+          "name": "Independence",
+          "value": "high",
+          "description": "exercises the real deployed artifact end to end"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#scope",
+          "name": "Scope",
+          "value": "user-journey",
+          "description": "critical user paths through the deployed system"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "value": "seconds"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#actionability",
+          "name": "Actionability",
+          "value": "blocking",
+          "description": "a failed smoke test halts the rollout"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "value": "retrospective"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-148/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Behavioral",
+          "item": "/software-observatory/previews/pr-148/families/behavioral/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Smoke Tests"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #148 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-148/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-148/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-148/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-148/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-148/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-148/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-148/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-148/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-148/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-148/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="wiki-layout">
+    <article class="signal-detail">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-148/catalog/">Catalog</a> › <a href="/software-observatory/previews/pr-148/families/behavioral/">Behavioral</a> › Smoke Tests</p>
+
+      <header class="signal-detail-header">
+        <h1 class="signal-detail-title">Smoke Tests</h1>
+        <div class="signal-detail-meta">
+          <span class="tag tag-family">Behavioral</span>
+          <span class="tag tag-confidence">Medium oracle</span>
+          <span class="tag tag-type">Retrospective</span>
+        </div>
+      </header>
+
+      <div class="signal-detail-body">
+        <p>The cheapest behavioral check against a live deployment: hit <code>/health</code>,
+create one record, read it back, delete it. If any step fails, roll back.
+Smoke tests answer &ldquo;is the deployed system alive enough to behave at all?&rdquo;
+before <a class="body-link" href="/software-observatory/previews/pr-148/sensors/canary-analysis/">canary analysis</a> has enough traffic to judge.</p>
+<h2 id="in-practice">In practice</h2>
+<p>A reading is a short checklist run against the freshly deployed
+artifact, one line per vital sign:</p>
+<pre><code>$ smoke https://staging.example.com
+  GET    /health            200   41ms  ok
+  POST   /records           201   87ms  ok
+  GET    /records/8f3a      200   33ms  ok
+  DELETE /records/8f3a      204   52ms  ok
+4/4 passed in 0.9s
+</code></pre>
+<p>The same run, failing:</p>
+<pre><code>  GET    /health            200   39ms  ok
+  POST   /records           500  102ms  FAIL
+  GET    /records/8f3a      404   28ms  FAIL (depends on POST)
+  DELETE /records/8f3a      skipped
+1/4 passed. ROLLBACK.
+</code></pre>
+<p>Reading it well:</p>
+<ol>
+<li><strong>A failed smoke test is a blocking verdict, not a triage item.</strong>
+   The whole point of the sensor is that it runs before real traffic
+   arrives. Debating the failure while the rollout continues defeats
+   it.</li>
+<li><strong>Rule out the harness once, then trust the reading.</strong> Bad
+   credentials or a wrong URL produce the same red line as a broken
+   deployment. Re-run once; two consecutive failures are the
+   artifact.</li>
+<li><strong>Do not read more into a pass than it contains.</strong> Four green
+   lines mean the system is alive on four paths. They say nothing
+   about scale, correctness, or the other paths.</li>
+</ol>
+<h2 id="how-it-gets-gamed">How it gets gamed</h2>
+<ul>
+<li><strong>Shrink the checklist.</strong> Removing the failing endpoint from the
+  smoke set turns the sensor into a decoration. The smoke test now
+  passes and says less.</li>
+<li><strong>Point at the wrong target.</strong> A smoke run against staging while
+  production stays old, or against a cached edge, produces green
+  readings about a system nobody is serving.</li>
+<li><strong>Loosen the verdict.</strong> Turning a failed check into a warning
+  keeps the run and discards the gate. The rollout proceeds on the
+  same evidence, minus the evidence.</li>
+</ul>
+<p>The meta-signal is the check count over time. A smoke suite that
+shrinks after failures is being gamed.</p>
+<h2 id="response-playbook">Response playbook</h2>
+<p>When a smoke test fails:</p>
+<ol>
+<li><strong>Stop the rollout.</strong> The sensor exists to run before real
+   traffic arrives; debating the failure while the deploy continues
+   defeats the point of it.</li>
+<li><strong>Rule out the harness once.</strong> Bad credentials, a wrong URL, and
+   a downed test runner produce the same red line as a broken
+   artifact. Re-run once; two consecutive failures are the artifact.</li>
+<li><strong>Roll back, then diagnose.</strong> Restore the known-good version
+   before investigating. The smoke test is a blocking verdict by
+   design; the post-mortem is for after, not instead.</li>
+<li><strong>Capture what the failing check returned.</strong> The status code,
+   the body, and the response time are the reading. Without them,
+   the post-mortem reconstructs from memory.</li>
+</ol>
+<h2 id="what-it-cannot-detect">What it cannot detect</h2>
+<p>Anything that requires real load, real data shapes, or real user behavior.
+A smoke test passing is necessary for the deployment to proceed and
+sufficient for almost nothing else.</p>
+
+                <h2 id="related-sensors">Related sensors</h2>
+        <div class="see-also-grid">
+          <a href="/software-observatory/previews/pr-148/sensors/integration-tests/" class="see-also-card">
+            <span class="see-also-type">Behavioral</span>
+            <span class="see-also-title">Integration Tests</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/canary-analysis/" class="see-also-card">
+            <span class="see-also-type">Change</span>
+            <span class="see-also-title">Canary Analysis</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/pre-promotion-invariant-gates/" class="see-also-card">
+            <span class="see-also-type">Invariants</span>
+            <span class="see-also-title">Pre-Promotion Invariant Gates</span>
+          </a>
+        </div>
+
+        <div class="entry-categories">
+          <span class="cat-label">Categories:</span>
+          <a href="/software-observatory/previews/pr-148/families/behavioral/" class="cat-link">Behavioral</a>
+          <a href="/software-observatory/previews/pr-148/categories/#deployment-safety" class="cat-link">Deployment Safety</a>
+        </div>
+
+        <h2 id="references">References</h2>
+        <h3 class="references-subheading" id="publications">Publications</h3>
+        <ul class="reference-list">
+          <li><a href="https://abseil.io/resources/swe-book/html/ch11.html" class="wikilink">Software Engineering at Google, ch. 11: Testing Overview</a> — <span class="ref-meta">Adam Bender; eds. Titus Winters, Tom Manshreck, Hyrum Wright · 2020 · argument · O&#x27;Reilly Media</span></li>
+        </ul>
+        <h3 class="references-subheading" id="tooling">Tooling</h3>
+        <ul class="reference-list reference-tools">
+          <li><span class="ref-title"><a href="https://curl.se" class="wikilink">curl-based smoke tests</a></span><span class="ref-desc">Basic HTTP endpoint checks via curl</span></li>
+          <li><span class="ref-title"><a href="https://k6.io" class="wikilink">k6 smoke</a></span><span class="ref-desc">Smoke testing with k6 load testing tool</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <aside class="wiki-sidebar">
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="sensor-properties">Sensor properties</h3>
+        <dl class="meta-list">
+          <dt>Family</dt>           <dd><a href="/software-observatory/previews/pr-148/families/behavioral/" class="wikilink">Behavioral</a></dd>
+          <dt>Oracle</dt>          <dd>Medium <span class="prop-note" title="&quot;alive&quot; is a weak claim, but a true one" aria-label="&quot;alive&quot; is a weak claim, but a true one">(?)</span></dd>
+          <dt>Independence</dt>     <dd>High <span class="prop-note" title="exercises the real deployed artifact end to end" aria-label="exercises the real deployed artifact end to end">(?)</span></dd>
+          <dt>Scope</dt>           <dd>User Journey <span class="prop-note" title="critical user paths through the deployed system" aria-label="critical user paths through the deployed system">(?)</span></dd>
+          <dt>Latency</dt>         <dd>Seconds</dd>
+          <dt>Actionability</dt>   <dd>Blocking <span class="prop-note" title="a failed smoke test halts the rollout" aria-label="a failed smoke test halts the rollout">(?)</span></dd>
+          <dt>Type</dt>             <dd>Retrospective</dd>
+          <dt>Entry ID</dt>        <dd>SO-012b</dd>
+          <dt>Reviewed</dt>        <dd><span class="review-unreviewed" title="This entry is written and published, but has not yet been re-read in the editorial review pass. An absent review date is reported as absent rather than filled in.">pending</span></dd>
+        </dl>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="what-links-here">What links here</h3>
+        <ul class="backlink-list">
+          <li><a href="/software-observatory/previews/pr-148/sensors/build-provenance-sbom/">Build Provenance &amp; SBOM</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/pre-promotion-invariant-gates/">Pre-Promotion Invariant Gates</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/synthetic-monitoring/">Synthetic Monitoring</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+        </ul>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="in-the-playbook">In the playbook</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-148/playbook/inherited-codebase/">You inherited a codebase nobody explains</a>
+          <li><a href="/software-observatory/previews/pr-148/playbook/stack-for-a-data-pipeline/">A minimal stack for a batch or data pipeline</a>
+          <li><a href="/software-observatory/previews/pr-148/playbook/stack-for-a-service/">A minimal stack for a request-serving service</a>
+          <li><a href="/software-observatory/previews/pr-148/playbook/stack-for-an-internal-tool/">A minimal stack for an internal tool with ten users</a>
+          <li><a href="/software-observatory/previews/pr-148/playbook/starting-from-green-ci/">You have green CI and nothing from production</a>
+          <li><a href="/software-observatory/previews/pr-148/playbook/worked-in-ci-died-on-deploy/">It worked in CI and died on deploy</a>
+        </ul>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="related-categories">Related categories</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-148/families/behavioral/">Category: Behavioral</a></li>
+          <li><a href="/software-observatory/previews/pr-148/categories/#deployment-safety">Category: Deployment Safety</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-148/about/">About</a> · <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-148/js/main.js"></script>
+</body>
+</html>

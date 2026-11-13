@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-148/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Type Checker — Software Observatory</title>
+  <meta name="description" content="A Rust compiler saying expected Option&lt;Foo&gt;, found Foo is vastly more useful to an agent than “please reconsider whether this is correct.” This is the first…">
+  <link rel="canonical" href="/software-observatory/previews/pr-148/sensors/type-checker/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Type Checker — Software Observatory">
+  <meta property="og:description" content="A Rust compiler saying expected Option&lt;Foo&gt;, found Foo is vastly more useful to an agent than “please reconsider whether this is correct.” This is the first…">
+  <meta property="og:url" content="/software-observatory/previews/pr-148/sensors/type-checker/">
+  <meta property="og:image" content="/software-observatory/previews/pr-148/og/cards/type-checker.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Type Checker — Software Observatory">
+  <meta name="twitter:description" content="A Rust compiler saying expected Option&lt;Foo&gt;, found Foo is vastly more useful to an agent than “please reconsider whether this is correct.” This is the first…">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-148/og/cards/type-checker.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-148/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-148/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "TechArticle",
+        "DefinedTerm"
+      ],
+      "@id": "/software-observatory/previews/pr-148/sensors/type-checker/#entry",
+      "headline": "Type Checker",
+      "name": "Type Checker",
+      "description": "A Rust compiler saying expected Option\u003cFoo>, found Foo is vastly more useful to an agent than “please reconsider whether this is correct.” This is the first and strongest form of computational…",
+      "termCode": "SO-001",
+      "url": "/software-observatory/previews/pr-148/sensors/type-checker/",
+      "mainEntityOfPage": "/software-observatory/previews/pr-148/sensors/type-checker/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-148/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "publisher": {
+        "@id": "/software-observatory/previews/pr-148/#organization"
+      },
+      "inDefinedTermSet": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "datePublished": "2026-08-23",
+      "dateModified": "2026-08-28",
+      "about": {
+        "@type": "Thing",
+        "@id": "/software-observatory/previews/pr-148/families/structural/#defined-term-set",
+        "name": "Structural",
+        "url": "/software-observatory/previews/pr-148/families/structural/"
+      },
+      "keywords": "Structural, Syntactic Validity, Maximum Oracle",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "value": "maximum",
+          "description": "a type error is a fact, not an opinion"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#independence",
+          "name": "Independence",
+          "value": "maximum",
+          "description": "the implementation cannot game the compiler"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#scope",
+          "name": "Scope",
+          "value": "module"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "value": "milliseconds"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#actionability",
+          "name": "Actionability",
+          "value": "guiding",
+          "description": "tells you exactly what's wrong and where"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "value": "predictive",
+          "description": "catches errors before runtime"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-148/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Structural",
+          "item": "/software-observatory/previews/pr-148/families/structural/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Type Checker"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #148 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-148/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-148/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-148/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-148/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-148/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-148/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-148/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-148/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-148/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-148/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="wiki-layout">
+    <article class="signal-detail">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-148/catalog/">Catalog</a> › <a href="/software-observatory/previews/pr-148/families/structural/">Structural</a> › Type Checker</p>
+
+      <header class="signal-detail-header">
+        <h1 class="signal-detail-title">Type Checker</h1>
+        <div class="signal-detail-meta">
+          <span class="tag tag-family">Structural</span>
+          <span class="tag tag-confidence">Maximum oracle</span>
+          <span class="tag tag-type">Predictive</span>
+        </div>
+      </header>
+
+      <div class="signal-detail-body">
+        <p>A Rust compiler saying <code>expected Option&lt;Foo&gt;, found Foo</code> is vastly more useful
+to an agent than &ldquo;please reconsider whether this is correct.&rdquo; This is the
+first and strongest form of computational feedback in Böckeler&rsquo;s guides &amp;
+sensors framing. The implementation doesn&rsquo;t get to argue with it.</p>
+<h2 id="sensors-of-syntactic-validity">Sensors of syntactic validity</h2>
+<p>The type checker is the strongest member of the cheapest family of sensors
+— those that answer: <em>&ldquo;Is this thing even a valid inhabitant of the
+language/system?&rdquo;</em></p>
+<pre><code>compiler         → &quot;does it parse and compile?&quot;
+type checker     → &quot;are types consistent?&quot;
+schema validator → &quot;is this a valid instance of the schema?&quot;
+import resolver  → &quot;do all imports resolve?&quot;
+dependency resolver → &quot;are all dependencies available?&quot;
+</code></pre>
+<p>These are extremely strong sensors because the implementation doesn&rsquo;t get to
+argue with them. A type error is not a suggestion — it is a fact about the
+artifact. This makes them the baseline of the <a class="body-link" href="/software-observatory/previews/pr-148/atlas/">confidence stack</a>.</p>
+<blockquote>
+<p>A guiding sensor tells the agent what to do next. <code>expected Option&lt;Foo&gt;,
+found Foo</code> doesn&rsquo;t just say &ldquo;bad&rdquo; — it says &ldquo;you have an <code>Option</code> where you
+need a bare <code>Foo</code>, probably unwrap it or change the return type.&rdquo; That&rsquo;s
+actionability.</p>
+<p>Pointed at an LLM, the mechanism has a name: positive prompt injection.
+The diagnostic lands in the model&rsquo;s context and steers the next edit —
+and because the compiler wrote it, the steer is one you wanted. A
+checker whose errors only say &ldquo;bad&rdquo; throws that channel away.</p>
+</blockquote>
+<h2 id="in-practice">In practice</h2>
+<p>A type-checker reading is a diagnostic naming both sides of a
+mismatch, which is what makes it actionable rather than merely
+negative:</p>
+<pre><code>checkout.py:87: error: Argument 1 to &quot;apply_discount&quot; has
+  incompatible type &quot;float&quot;; expected &quot;Decimal&quot;  [arg-type]
+Found 1 error in 1 file (checked 214 source files)
+</code></pre>
+<p>In a gradual type system the reading is only as strong as the checked
+surface: mypy over an <code>Any</code>-riddled codebase, or <code>tsc</code> with
+<code>strict: false</code>, reports a subset of the truth. Read the diagnostic
+together with the coverage of the checker itself. And when the
+message names two types that look identical, suspect two distinct
+types with the same name from different modules, or a generic
+parameter that failed to unify. The checker is precise about this;
+the reader usually is not.</p>
+<h2 id="response-playbook">Response playbook</h2>
+<p>When the checker fires, the response is a decision, not a reflex:</p>
+<ol>
+<li><strong>Fix at the source of the mismatch, not at its symptom.</strong> If a
+   wrong value propagated through five call sites, correcting the
+   producer deletes all five errors at once.</li>
+<li><strong>If the type is wrong, change the type; if the code is wrong,
+   change the code.</strong> Both are legitimate. Guessing which without
+   checking the intent is how type errors get &ldquo;fixed&rdquo; by casts.</li>
+<li><strong>Reach for a cast or <code>ignore</code> only after the first two fail,</strong>
+   and treat each one as a reviewable artifact. A cast is the
+   author asserting the checker lacks information it actually has.</li>
+<li><strong>Tighten the checker after every real catch.</strong> A bug the checker
+   missed is an argument for a stricter mode or a narrower type, not
+   for moving on.</li>
+</ol>
+<h2 id="what-it-cannot-detect">What it cannot detect</h2>
+<p>Types measure a particular class of <em>structural inconsistency</em>. They cannot
+detect <em>logical errors</em> — a function that type-checks perfectly but returns
+the wrong answer. They cannot detect <em>runtime behavior</em>. They cannot tell
+you whether the system produces the <em>intended result for users</em>.</p>
+
+                <h2 id="related-sensors">Related sensors</h2>
+        <div class="see-also-grid">
+          <a href="/software-observatory/previews/pr-148/sensors/mutation-testing/" class="see-also-card">
+            <span class="see-also-type">Test Effectiveness</span>
+            <span class="see-also-title">Mutation Testing</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/compiler/" class="see-also-card">
+            <span class="see-also-type">Structural</span>
+            <span class="see-also-title">Compiler</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/runtime-invariants/" class="see-also-card">
+            <span class="see-also-type">Invariants</span>
+            <span class="see-also-title">Runtime Invariants</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/atlas/" class="see-also-card">
+            <span class="see-also-type">Atlas</span>
+            <span class="see-also-title">Sensor Atlas</span>
+          </a>
+        </div>
+
+        <div class="entry-categories">
+          <span class="cat-label">Categories:</span>
+          <a href="/software-observatory/previews/pr-148/families/structural/" class="cat-link">Structural</a>
+          <a href="/software-observatory/previews/pr-148/categories/#syntactic-validity" class="cat-link">Syntactic Validity</a>
+          <a href="/software-observatory/previews/pr-148/categories/#maximum-oracle" class="cat-link">Maximum Oracle</a>
+        </div>
+
+        <h2 id="references">References</h2>
+        <h3 class="references-subheading" id="publications">Publications</h3>
+        <ul class="reference-list">
+          <li><a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2017/09/gao2017javascript.pdf" class="wikilink">To Type or Not to Type: Quantifying Detectable Bugs in JavaScript</a> — <span class="ref-meta">Zheng Gao, Christian Bird, Earl T. Barr · 2017 · controlled study · ICSE 2017</span></li>
+          <li><a href="https://security.googleblog.com/2024/09/eliminating-memory-safety-vulnerabilities-Android.html" class="wikilink">Eliminating Memory Safety Vulnerabilities at the Source</a> — <span class="ref-meta">Google Security Blog, Android team · 2024 · observational study · Google Security Blog</span></li>
+          <li>Type Systems — <span class="ref-meta">Luca Cardelli · 2004 · argument</span></li>
+        </ul>
+        <h3 class="references-subheading" id="tooling">Tooling</h3>
+        <ul class="reference-list reference-tools">
+          <li><span class="ref-title"><a href="https://www.rust-lang.org" class="wikilink">Rust compiler</a></span></li>
+          <li><span class="ref-title"><a href="https://www.typescriptlang.org" class="wikilink">TypeScript</a></span></li>
+          <li><span class="ref-title"><a href="https://mypy-lang.org" class="wikilink">Mypy</a></span></li>
+          <li><span class="ref-title"><a href="https://github.com/microsoft/pyright" class="wikilink">pyright</a></span></li>
+        </ul>
+      </div>
+    </article>
+
+    <aside class="wiki-sidebar">
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="sensor-properties">Sensor properties</h3>
+        <dl class="meta-list">
+          <dt>Family</dt>           <dd><a href="/software-observatory/previews/pr-148/families/structural/" class="wikilink">Structural</a></dd>
+          <dt>Oracle</dt>          <dd>Maximum <span class="prop-note" title="a type error is a fact, not an opinion" aria-label="a type error is a fact, not an opinion">(?)</span></dd>
+          <dt>Independence</dt>     <dd>Maximum <span class="prop-note" title="the implementation cannot game the compiler" aria-label="the implementation cannot game the compiler">(?)</span></dd>
+          <dt>Scope</dt>           <dd>Module</dd>
+          <dt>Latency</dt>         <dd>Milliseconds</dd>
+          <dt>Actionability</dt>   <dd>Guiding <span class="prop-note" title="tells you exactly what&#x27;s wrong and where" aria-label="tells you exactly what&#x27;s wrong and where">(?)</span></dd>
+          <dt>Type</dt>             <dd>Predictive <span class="prop-note" title="catches errors before runtime" aria-label="catches errors before runtime">(?)</span></dd>
+          <dt>Entry ID</dt>        <dd>SO-001</dd>
+          <dt>Reviewed</dt>        <dd>2026-08 <span class="review-age" title="Age measured against 2026-09-03, the newest date in the catalog. The build never uses the wall clock, so this page is byte-identical between builds.">— current</span></dd>
+        </dl>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="what-links-here">What links here</h3>
+        <ul class="backlink-list">
+          <li><a href="/software-observatory/previews/pr-148/sensors/build-provenance-sbom/">Build Provenance &amp; SBOM</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/compiler/">Compiler</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/contract-refinement-types/">Contract &amp; Refinement Types</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/contract-tests/">Contract Tests</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/incremental-build-correctness/">Incremental Build Correctness</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/linter/">Linter</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/model-checking/">Model Checking</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/runtime-invariants/">Runtime Invariants</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/schema-validator/">Schema Validator</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/static-analysis/">Static Analysis</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/theorem-proving/">Theorem Proving</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+        </ul>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="in-the-playbook">In the playbook</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-148/playbook/stack-for-a-library/">A minimal stack for a library with downstream users</a>
+          <li><a href="/software-observatory/previews/pr-148/playbook/stack-for-a-service/">A minimal stack for a request-serving service</a>
+          <li><a href="/software-observatory/previews/pr-148/playbook/stack-for-an-internal-tool/">A minimal stack for an internal tool with ten users</a>
+        </ul>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="related-categories">Related categories</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-148/families/structural/">Category: Structural</a></li>
+          <li><a href="/software-observatory/previews/pr-148/categories/#syntactic-validity">Category: Syntactic Validity</a></li>
+          <li><a href="/software-observatory/previews/pr-148/categories/#maximum-oracle">Category: Maximum Oracle</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-148/about/">About</a> · <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-148/js/main.js"></script>
+</body>
+</html>

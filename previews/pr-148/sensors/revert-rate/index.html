@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-148/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Revert Rate — Software Observatory</title>
+  <meta name="description" content="How often does this area get reverted? A black-box sensor of maintainability — you don’t need to understand FooManagerFactoryImpl, you can observe: 27 changes…">
+  <link rel="canonical" href="/software-observatory/previews/pr-148/sensors/revert-rate/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Revert Rate — Software Observatory">
+  <meta property="og:description" content="How often does this area get reverted? A black-box sensor of maintainability — you don’t need to understand FooManagerFactoryImpl, you can observe: 27 changes…">
+  <meta property="og:url" content="/software-observatory/previews/pr-148/sensors/revert-rate/">
+  <meta property="og:image" content="/software-observatory/previews/pr-148/og/cards/revert-rate.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Revert Rate — Software Observatory">
+  <meta name="twitter:description" content="How often does this area get reverted? A black-box sensor of maintainability — you don’t need to understand FooManagerFactoryImpl, you can observe: 27 changes…">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-148/og/cards/revert-rate.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-148/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-148/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "TechArticle",
+        "DefinedTerm"
+      ],
+      "@id": "/software-observatory/previews/pr-148/sensors/revert-rate/#entry",
+      "headline": "Revert Rate",
+      "name": "Revert Rate",
+      "description": "How often does this area get reverted? A black-box sensor of maintainability — you don’t need to understand FooManagerFactoryImpl, you can observe: 27 changes in six months, 8 reverts, 4 incidents…",
+      "termCode": "SO-009",
+      "url": "/software-observatory/previews/pr-148/sensors/revert-rate/",
+      "mainEntityOfPage": "/software-observatory/previews/pr-148/sensors/revert-rate/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-148/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "publisher": {
+        "@id": "/software-observatory/previews/pr-148/#organization"
+      },
+      "inDefinedTermSet": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "datePublished": "2026-08-23",
+      "about": {
+        "@type": "Thing",
+        "@id": "/software-observatory/previews/pr-148/families/evolution/#defined-term-set",
+        "name": "Evolution",
+        "url": "/software-observatory/previews/pr-148/families/evolution/"
+      },
+      "keywords": "Evolution, Black-Box Sensors, Maintainability",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "value": "medium",
+          "description": "reversion correlates with problems"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#independence",
+          "name": "Independence",
+          "value": "high",
+          "description": "computed from git history"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#scope",
+          "name": "Scope",
+          "value": "module"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "value": "days",
+          "description": "days to weeks"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#actionability",
+          "name": "Actionability",
+          "value": "exploratory",
+          "description": "shows the pattern, you investigate"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "value": "retrospective"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-148/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Evolution",
+          "item": "/software-observatory/previews/pr-148/families/evolution/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Revert Rate"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #148 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-148/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-148/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-148/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-148/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-148/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-148/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-148/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-148/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-148/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-148/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="wiki-layout">
+    <article class="signal-detail">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-148/catalog/">Catalog</a> › <a href="/software-observatory/previews/pr-148/families/evolution/">Evolution</a> › Revert Rate</p>
+
+      <header class="signal-detail-header">
+        <h1 class="signal-detail-title">Revert Rate</h1>
+        <div class="signal-detail-meta">
+          <span class="tag tag-family">Evolution</span>
+          <span class="tag tag-confidence">Medium oracle</span>
+          <span class="tag tag-type">Retrospective</span>
+        </div>
+      </header>
+
+      <div class="signal-detail-body">
+        <p>How often does this area get reverted? A <em>black-box sensor</em> of
+maintainability — you don&rsquo;t need to understand <code>FooManagerFactoryImpl</code>, you
+can observe: 27 changes in six months, 8 reverts, 4 incidents, touched by
+11 teams. That&rsquo;s a signal.</p>
+<p>Revert rate is a retrospective sensor: it tells you that changes in this
+area have historically been unreliable, without reading a single line of
+code. High revert rate is a leading indicator of complexity, poor testing,
+or misunderstood requirements.</p>
+<h2 id="in-practice">In practice</h2>
+<p>A revert rate reading comes out of git history: per module or directory,
+the count of changes landed versus the count of those changes returned.
+Computed over the trailing six months:</p>
+<pre><code>git log --oneline --grep='^Revert' -- src/billing | wc -l
+
+area            changes   reverts   revert rate
+src/billing        27        8         30%
+src/checkout       41        2          5%
+src/search         15        0          0%
+</code></pre>
+<p>The reading is comparative: 30% next to 5% is the signal, not 30% by
+itself. Habits that make it usable:</p>
+<ol>
+<li><strong>Compare areas, not absolute numbers.</strong> Revert rate only means
+   something against a peer: this module reverts three times more often
+   than the neighboring one. Cross-area comparison is the actual
+   sensor.</li>
+<li><strong>Normalize by change volume.</strong> A module with two changes and one
+   revert is not the same reading as one with fifty changes and
+   twenty-five reverts, even at the same rate. Look at both columns.</li>
+<li><strong>Read reverts alongside incidents.</strong> A revert that rolled back a
+   broken deploy is a different event than a revert of a merge
+   conflict. The count alone does not say which; the incident record
+   does.</li>
+<li><strong>Watch the window.</strong> Revert rate over days measures merge hygiene;
+   over months it measures design quality. Pick the window that
+   matches the question before comparing numbers.</li>
+</ol>
+<h2 id="how-it-gets-gamed">How it gets gamed</h2>
+<p>Revert rate is computed from git history, and history can be shaped:</p>
+<ul>
+<li><strong>Batching work to dilute the denominator.</strong> Shipping many small
+   unrelated changes alongside a risky one spreads the revert cost
+   across a larger change count, lowering the rate without lowering
+   the risk. The area looks stable; the risky change is still risky.</li>
+<li><strong>Fixing forward instead of reverting.</strong> A broken change gets
+   patched in place rather than reverted, so the failure never enters
+   the count. The rate reads clean while the same class of mistake
+   keeps happening. Sometimes fixing forward is right; when it becomes
+   policy, the sensor goes blind.</li>
+<li><strong>Rebranding reverts.</strong> Squashing the revert into a commit titled
+   &ldquo;adjustments&rdquo; or &ldquo;cleanup&rdquo; removes the keyword the counter greps
+   for. The event survives; the record does not.</li>
+</ul>
+<p>The meta-signal is the ratio of fix-forward commits to reverts in the
+same area. If reverts fall while fix-forwards rise, the work is being
+re-labeled, not repaired.</p>
+<h2 id="response-playbook">Response playbook</h2>
+<p>When a module&rsquo;s revert rate climbs or a change keeps bouncing:</p>
+<ol>
+<li><strong>Read the reverted diffs, not the rate.</strong> Pull the revert commits
+   and their targets. The reasons cluster: schema assumptions, missing
+   tests, unclear ownership. Act on the cluster, not the number.</li>
+<li><strong>Shrink the change size in that area.</strong> High revert rate usually
+   means changes are bigger than the module&rsquo;s test coverage can
+   protect. Split work until individual changes are small enough to
+   revert cleanly.</li>
+<li><strong>Add the missing sensor before the next change.</strong> If reverts keep
+   citing the same failure class, install the check that would have
+   caught it: a <a class="body-link" href="/software-observatory/previews/pr-148/sensors/type-checker/">type checker</a> pass, an integration
+   test, a fitness function for the boundary being crossed.</li>
+<li><strong>Pair the area for one cycle.</strong> When a module reverts repeatedly,
+   the next change through it gets a second set of eyes at review time.
+   This is temporary; the goal is finding what the area knows that the
+   author does not.</li>
+</ol>
+<h2 id="what-it-cannot-detect">What it cannot detect</h2>
+<p>Revert rate can&rsquo;t tell you <em>why</em> changes are reverted. It identifies
+where attention is needed, not what the fix is. Also misses problems that
+were fixed forward rather than reverted.</p>
+
+                <h2 id="related-sensors">Related sensors</h2>
+        <div class="see-also-grid">
+          <a href="/software-observatory/previews/pr-148/sensors/change-coupling/" class="see-also-card">
+            <span class="see-also-type">Evolution</span>
+            <span class="see-also-title">Change Coupling</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/incident-correlation/" class="see-also-card">
+            <span class="see-also-type">Evolution</span>
+            <span class="see-also-title">Incident Correlation</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/time-to-repair/" class="see-also-card">
+            <span class="see-also-type">Evolution</span>
+            <span class="see-also-title">Time-to-Repair</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/ab-testing/" class="see-also-card">
+            <span class="see-also-type">Change</span>
+            <span class="see-also-title">A/B Testing</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/dora-metrics/" class="see-also-card">
+            <span class="see-also-type">Evolution</span>
+            <span class="see-also-title">DORA Metrics</span>
+          </a>
+        </div>
+
+        <div class="entry-categories">
+          <span class="cat-label">Categories:</span>
+          <a href="/software-observatory/previews/pr-148/families/evolution/" class="cat-link">Evolution</a>
+          <a href="/software-observatory/previews/pr-148/categories/#black-box-sensors" class="cat-link">Black-Box Sensors</a>
+          <a href="/software-observatory/previews/pr-148/categories/#maintainability" class="cat-link">Maintainability</a>
+        </div>
+
+        <h2 id="references">References</h2>
+        <h3 class="references-subheading" id="tooling">Tooling</h3>
+        <ul class="reference-list reference-tools">
+          <li><span class="ref-title"><a href="https://git-scm.com/docs/git-log" class="wikilink">git log</a></span><span class="ref-desc">Git commit history</span></li>
+          <li><span class="ref-title"><a href="https://github.com/arzzen/git-quick-stats" class="wikilink">git-quick-stats</a></span><span class="ref-desc">Git history analysis script</span></li>
+          <li><span class="ref-title"><a href="https://codescene.com" class="wikilink">CodeScene</a></span><span class="ref-desc">Code analysis predicting technical debt from behavioral code</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <aside class="wiki-sidebar">
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="sensor-properties">Sensor properties</h3>
+        <dl class="meta-list">
+          <dt>Family</dt>           <dd><a href="/software-observatory/previews/pr-148/families/evolution/" class="wikilink">Evolution</a></dd>
+          <dt>Oracle</dt>          <dd>Medium <span class="prop-note" title="reversion correlates with problems" aria-label="reversion correlates with problems">(?)</span></dd>
+          <dt>Independence</dt>     <dd>High <span class="prop-note" title="computed from git history" aria-label="computed from git history">(?)</span></dd>
+          <dt>Scope</dt>           <dd>Module</dd>
+          <dt>Latency</dt>         <dd>Days <span class="prop-note" title="days to weeks" aria-label="days to weeks">(?)</span></dd>
+          <dt>Actionability</dt>   <dd>Exploratory <span class="prop-note" title="shows the pattern, you investigate" aria-label="shows the pattern, you investigate">(?)</span></dd>
+          <dt>Type</dt>             <dd>Retrospective</dd>
+          <dt>Entry ID</dt>        <dd>SO-009</dd>
+          <dt>Reviewed</dt>        <dd><span class="review-unreviewed" title="This entry is written and published, but has not yet been re-read in the editorial review pass. An absent review date is reported as absent rather than filled in.">pending</span></dd>
+        </dl>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="what-links-here">What links here</h3>
+        <ul class="backlink-list">
+          <li><a href="/software-observatory/previews/pr-148/sensors/ab-testing/">A/B Testing</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/change-coupling/">Change Coupling</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/dora-metrics/">DORA Metrics</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/incident-correlation/">Incident Correlation</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/time-to-repair/">Time-to-Repair</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="related-categories">Related categories</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-148/families/evolution/">Category: Evolution</a></li>
+          <li><a href="/software-observatory/previews/pr-148/categories/#black-box-sensors">Category: Black-Box Sensors</a></li>
+          <li><a href="/software-observatory/previews/pr-148/categories/#maintainability">Category: Maintainability</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-148/about/">About</a> · <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-148/js/main.js"></script>
+</body>
+</html>

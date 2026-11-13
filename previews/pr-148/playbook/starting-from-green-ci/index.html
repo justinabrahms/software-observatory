@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-148/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>You have green CI and nothing from production — Software Observatory</title>
+  <meta name="description" content="Compiler, linter, unit tests, a coverage number. Every merge is green. The first you hear of a bug is a user telling you about it.">
+  <link rel="canonical" href="/software-observatory/previews/pr-148/playbook/starting-from-green-ci/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="You have green CI and nothing from production — Software Observatory">
+  <meta property="og:description" content="Compiler, linter, unit tests, a coverage number. Every merge is green. The first you hear of a bug is a user telling you about it.">
+  <meta property="og:url" content="/software-observatory/previews/pr-148/playbook/starting-from-green-ci/">
+  <meta property="og:image" content="/software-observatory/previews/pr-148/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="You have green CI and nothing from production — Software Observatory">
+  <meta name="twitter:description" content="Compiler, linter, unit tests, a coverage number. Every merge is green. The first you hear of a bug is a user telling you about it.">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-148/og.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-148/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-148/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "/software-observatory/previews/pr-148/playbook/starting-from-green-ci/#page",
+      "name": "You have green CI and nothing from production",
+      "description": "Compiler, linter, unit tests, a coverage number. Every merge is green. The first you hear of a bug is a user telling you about it.",
+      "url": "/software-observatory/previews/pr-148/playbook/starting-from-green-ci/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-148/#organization"
+      },
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-148/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "dateModified": "2026-09-03"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Playbook",
+          "item": "/software-observatory/previews/pr-148/playbook/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "You have green CI and nothing from production"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #148 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-148/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-148/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-148/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-148/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-148/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-148/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-148/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-148/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-148/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-148/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="play-layout">
+    <article class="play">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-148/playbook/">Playbook</a> › You have green CI and nothing from production</p>
+      <header class="page-header page-header--play">
+        <p class="eyebrow">Starting point</p>
+        <h1 class="page-title">You have green CI and nothing from production</h1>
+      </header>
+      <section class="play-where">
+        <h2 id="where-you-are">Where you are</h2>
+        <p>Compiler, linter, unit tests, a coverage number. Every merge is green. The first you hear of a bug is a user telling you about it.</p>
+        <p class="play-have">You run <a href="/software-observatory/previews/pr-148/sensors/compiler/" class="wikilink">Compiler</a>, <a href="/software-observatory/previews/pr-148/sensors/linter/" class="wikilink">Linter</a>, <a href="/software-observatory/previews/pr-148/sensors/example-based-tests/" class="wikilink">Example-Based Tests</a>, <a href="/software-observatory/previews/pr-148/sensors/line-coverage/" class="wikilink">Line Coverage</a>. Already closed: <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/#wrong-logic" class="wikilink">wrong logic</a>, <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/#not-internally-consistent" class="wikilink">not internally consistent</a>, <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/#unreached-by-tests" class="wikilink">unreached by tests</a>. 3 of 19 doubts.</p>
+      </section>
+      <section class="play-steps">
+        <h2 id="add-in-this-order">Add in this order</h2>
+        <p class="play-steps-lede">Each step closes a doubt the previous ones left open.</p>
+        <ol class="play-rows">
+          <li>
+            <p class="play-row-head"><a href="/software-observatory/previews/pr-148/sensors/smoke-tests/" class="wikilink">Smoke Tests</a> <span class="play-family" data-family="behavioral">Behavioral</span>
+              <span class="play-row-edge">closes <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/#does-not-run-where-deployed" class="wikilink">does not run where deployed</a></span></p>
+            <p class="play-row-why">Nothing you run today touches the deployed artifact. Four requests against the fresh deploy, one per vital sign, take an afternoon to wire up and close the doubt that the thing you tested is the thing that is running.</p>
+          </li>
+          <li>
+            <p class="play-row-head"><a href="/software-observatory/previews/pr-148/sensors/observability-events/" class="wikilink">Observability Events</a> <span class="play-family" data-family="runtime">Runtime</span>
+              <span class="play-row-edge">reveals <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/#unspecified-property" class="wikilink">unspecified property</a></span></p>
+            <p class="play-row-why">Closes nothing before shipping. It is the only sensor on this list that reveals unspecified property, which is where the bugs your users report currently live, and it is the data the next step and the last step both read from.</p>
+          </li>
+          <li>
+            <p class="play-row-head"><a href="/software-observatory/previews/pr-148/sensors/business-invariants/" class="wikilink">Business Invariants</a> <span class="play-family" data-family="invariants">Invariants</span>
+              <span class="play-row-edge">closes <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/#unjudged-observation" class="wikilink">unjudged observation</a></span></p>
+            <p class="play-row-why">The events from the previous step say what happened; nothing yet says whether it was right. One query per domain promise over those events is the judge the events lack, and it runs on real data rather than on the cases your unit tests thought to try.</p>
+          </li>
+          <li>
+            <p class="play-row-head"><a href="/software-observatory/previews/pr-148/sensors/mutation-testing/" class="wikilink">Mutation Testing</a> <span class="play-family" data-family="test-effectiveness">Test Effectiveness</span>
+              <span class="play-row-edge">closes <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/#unasserted-execution" class="wikilink">unasserted execution</a></span></p>
+            <p class="play-row-why">Fourth because it tells you nothing new about the system; it improves the tests you already have. Your coverage number counts lines that ran, and this is the first step that asks whether any test would notice if those lines returned the wrong answer.</p>
+          </li>
+          <li>
+            <p class="play-row-head"><a href="/software-observatory/previews/pr-148/sensors/canary-analysis/" class="wikilink">Canary Analysis</a> <span class="play-family" data-family="change">Change</span>
+              <span class="play-row-edge">closes <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/#untested-conditions" class="wikilink">untested conditions</a>, <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/#emergent-failure" class="wikilink">emergent failure</a>, <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/#unintended-change" class="wikilink">unintended change</a></span></p>
+            <p class="play-row-why">Three doubts from one sensor, and it depends on steps two and three: the events supply the metrics it compares between versions, and the invariants supply the violations that count as a divergence. Without them the canary has a tolerance band and nothing to apply it to.</p>
+          </li>
+        </ol>
+        <p class="play-after">After these steps: 9 of 19 doubts closed, 1 more revealed after the fact. Still untouched: <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/#wrong-specification" class="wikilink">wrong specification</a>, <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/#missing-behavior" class="wikilink">missing behavior</a>, <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/#correlated-blind-spot" class="wikilink">correlated blind spot</a>, <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/#late-effects" class="wikilink">late effects</a>, <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/#dependency-failure" class="wikilink">falls over with a dependency</a>, <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/#cannot-carry-load" class="wikilink">cannot carry the load</a>, <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/#structure-decayed" class="wikilink">nobody knows where the coupling is</a>, <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/#risk-concentrated" class="wikilink">nobody knows where the risk sits</a>, <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/#unexplained" class="wikilink">nobody can find out why</a>.</p>
+      </section>
+      <section class="play-skip">
+        <h2 id="what-not-to-add-yet">What not to add yet</h2>
+        <ul class="play-rows">
+          <li><p class="play-row-head"><a href="/software-observatory/previews/pr-148/sensors/branch-coverage/" class="wikilink">Branch Coverage</a></p>
+            <p class="play-row-why">Same doubt as line coverage. It tells you which side of a conditional never ran, and still says nothing about whether the side that ran was asserted on.</p></li>
+        </ul>
+      </section>
+      <p class="play-back"><a href="/software-observatory/previews/pr-148/playbook/" class="wikilink">All plays</a></p>
+    </article>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-148/about/">About</a> · <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-148/js/main.js"></script>
+</body>
+</html>

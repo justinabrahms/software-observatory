@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Software Observatory</title>
+    <link>https://softwareobservatory.com</link>
+    <atom:link href="/software-observatory/previews/pr-148/rss.xml" rel="self" type="application/rss+xml"/software-observatory/previews/pr-148/>
+    <description>New entries in the catalog of epistemic sensors for software correctness.</description>
+    <language>en</language>
+    <copyright>Content licensed CC BY-SA 4.0 — Justin Abrahms</copyright>
+    <managingEditor>justin@abrah.ms (Justin Abrahms)</managingEditor>
+    <webMaster>justin@abrah.ms (Justin Abrahms)</webMaster>
+    <image>
+      <url>/software-observatory/previews/pr-148/og.png</url>
+      <title>Software Observatory</title>
+      <link>https://softwareobservatory.com</link>
+    </image>
+    <lastBuildDate>Tue, 25 Aug 2026 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Theorem Proving</title>
+      <link>/software-observatory/previews/pr-148/sensors/theorem-proving/</link>
+      <guid isPermaLink="true">/software-observatory/previews/pr-148/sensors/theorem-proving/</guid>
+      <pubDate>Tue, 25 Aug 2026 00:00:00 +0000</pubDate>
+      <author>justin@abrah.ms (Justin Abrahms)</author>
+      <dc:creator>Justin Abrahms</dc:creator>
+      <description>A machine-checked proof that a property holds for all inputs, not just the ones a test happened to exercise.</description>
+      <category>Structural</category>
+    </item>
+    <item>
+      <title>Model Checking</title>
+      <link>/software-observatory/previews/pr-148/sensors/model-checking/</link>
+      <guid isPermaLink="true">/software-observatory/previews/pr-148/sensors/model-checking/</guid>
+      <pubDate>Tue, 25 Aug 2026 00:00:00 +0000</pubDate>
+      <author>justin@abrah.ms (Justin Abrahms)</author>
+      <dc:creator>Justin Abrahms</dc:creator>
+      <description>Exhaustive exploration of a system’s reachable states against a temporal property. Where a type checker proves a property holds for one step, and statically checked invariants prove a property holds…</description>
+      <category>Structural</category>
+    </item>
+    <item>
+      <title>Static Analysis</title>
+      <link>/software-observatory/previews/pr-148/sensors/static-analysis/</link>
+      <guid isPermaLink="true">/software-observatory/previews/pr-148/sensors/static-analysis/</guid>
+      <pubDate>Mon, 24 Aug 2026 00:00:00 +0000</pubDate>
+      <author>justin@abrah.ms (Justin Abrahms)</author>
+      <dc:creator>Justin Abrahms</dc:creator>
+      <description>Pattern-matching and dataflow analysis over the source without executing it. Covers the space between a linter (style and local patterns) and a type checker (type soundness): null dereferences…</description>
+      <category>Structural</category>
+    </item>
+    <item>
+      <title>Property-Based Testing</title>
+      <link>/software-observatory/previews/pr-148/sensors/property-based-testing/</link>
+      <guid isPermaLink="true">/software-observatory/previews/pr-148/sensors/property-based-testing/</guid>
+      <pubDate>Mon, 24 Aug 2026 00:00:00 +0000</pubDate>
+      <author>justin@abrah.ms (Justin Abrahms)</author>
+      <dc:creator>Justin Abrahms</dc:creator>
+      <description>You state a property that should hold for every input, and the tool generates inputs trying to break it.</description>
+      <category>Adversarial</category>
+    </item>
+    <item>
+      <title>Load Testing</title>
+      <link>/software-observatory/previews/pr-148/sensors/load-testing/</link>
+      <guid isPermaLink="true">/software-observatory/previews/pr-148/sensors/load-testing/</guid>
+      <pubDate>Mon, 24 Aug 2026 00:00:00 +0000</pubDate>
+      <author>justin@abrah.ms (Justin Abrahms)</author>
+      <dc:creator>Justin Abrahms</dc:creator>
+      <description>Does the system behave under the traffic it claims to handle? A load test drives generated requests at a target rate and measures what breaks — latency, errors, throughput — before real users do.</description>
+      <category>Runtime</category>
+    </item>
+    <item>
+      <title>A/B Testing</title>
+      <link>/software-observatory/previews/pr-148/sensors/ab-testing/</link>
+      <guid isPermaLink="true">/software-observatory/previews/pr-148/sensors/ab-testing/</guid>
+      <pubDate>Mon, 24 Aug 2026 00:00:00 +0000</pubDate>
+      <author>justin@abrah.ms (Justin Abrahms)</author>
+      <dc:creator>Justin Abrahms</dc:creator>
+      <description>Did users actually behave differently? An A/B test splits traffic between two versions and measures whether the treatment changes a user outcome metric — click-through, conversion, retention…</description>
+      <category>Change</category>
+    </item>
+    <item>
+      <title>Type Checker</title>
+      <link>/software-observatory/previews/pr-148/sensors/type-checker/</link>
+      <guid isPermaLink="true">/software-observatory/previews/pr-148/sensors/type-checker/</guid>
+      <pubDate>Sun, 23 Aug 2026 00:00:00 +0000</pubDate>
+      <author>justin@abrah.ms (Justin Abrahms)</author>
+      <dc:creator>Justin Abrahms</dc:creator>
+      <description>A Rust compiler saying expected Option&lt;Foo&gt;, found Foo is vastly more useful to an agent than “please reconsider whether this is correct.” This is the first and strongest form of computational…</description>
+      <category>Structural</category>
+    </item>
+    <item>
+      <title>Time-to-Repair</title>
+      <link>/software-observatory/previews/pr-148/sensors/time-to-repair/</link>
+      <guid isPermaLink="true">/software-observatory/previews/pr-148/sensors/time-to-repair/</guid>
+      <pubDate>Sun, 23 Aug 2026 00:00:00 +0000</pubDate>
+      <author>justin@abrah.ms (Justin Abrahms)</author>
+      <dc:creator>Justin Abrahms</dc:creator>
+      <description>When this component breaks, how long does it take to restore? A sensor of maintainability measured in hours, not in subjective assessment.</description>
+      <category>Evolution</category>
+    </item>
+    <item>
+      <title>Synthetic Monitoring</title>
+      <link>/software-observatory/previews/pr-148/sensors/synthetic-monitoring/</link>
+      <guid isPermaLink="true">/software-observatory/previews/pr-148/sensors/synthetic-monitoring/</guid>
+      <pubDate>Sun, 23 Aug 2026 00:00:00 +0000</pubDate>
+      <author>justin@abrah.ms (Justin Abrahms)</author>
+      <dc:creator>Justin Abrahms</dc:creator>
+      <description>Scripted user flows run against the production system around the clock: log in, search, add to cart, check out.</description>
+      <category>Behavioral</category>
+    </item>
+    <item>
+      <title>Statically Checked Invariants</title>
+      <link>/software-observatory/previews/pr-148/sensors/statically-checked-invariants/</link>
+      <guid isPermaLink="true">/software-observatory/previews/pr-148/sensors/statically-checked-invariants/</guid>
+      <pubDate>Sun, 23 Aug 2026 00:00:00 +0000</pubDate>
+      <author>justin@abrah.ms (Justin Abrahms)</author>
+      <dc:creator>Justin Abrahms</dc:creator>
+      <description>Invariants the compiler refuses to let you violate: Dafny invariant clauses, Frama-C annotations, JML specs, type-level witnesses like NonEmptyList.</description>
+      <category>Invariants</category>
+    </item>
+    <item>
+      <title>Static Security Analysis</title>
+      <link>/software-observatory/previews/pr-148/sensors/static-security-analysis/</link>
+      <guid isPermaLink="true">/software-observatory/previews/pr-148/sensors/static-security-analysis/</guid>
+      <pubDate>Sun, 23 Aug 2026 00:00:00 +0000</pubDate>
+      <author>justin@abrah.ms (Justin Abrahms)</author>
+      <dc:creator>Justin Abrahms</dc:creator>
+      <description>Attacking the code before it runs. Taint tracking, dataflow analysis, and pattern-based scanners (Semgrep, CodeQL) ask: “is there any path through this program where an adversary’s input reaches a…</description>
+      <category>Adversarial</category>
+    </item>
+    <item>
+      <title>Snapshot Tests</title>
+      <link>/software-observatory/previews/pr-148/sensors/snapshot-tests/</link>
+      <guid isPermaLink="true">/software-observatory/previews/pr-148/sensors/snapshot-tests/</guid>
+      <pubDate>Sun, 23 Aug 2026 00:00:00 +0000</pubDate>
+      <author>justin@abrah.ms (Justin Abrahms)</author>
+      <dc:creator>Justin Abrahms</dc:creator>
+      <description>Did observable output change? Not “is it correct” but “did it change” — a sensor for detecting unintended drift in externally observable artifacts.</description>
+      <category>Behavioral</category>
+    </item>
+    <item>
+      <title>Smoke Tests</title>
+      <link>/software-observatory/previews/pr-148/sensors/smoke-tests/</link>
+      <guid isPermaLink="true">/software-observatory/previews/pr-148/sensors/smoke-tests/</guid>
+      <pubDate>Sun, 23 Aug 2026 00:00:00 +0000</pubDate>
+      <author>justin@abrah.ms (Justin Abrahms)</author>
+      <dc:creator>Justin Abrahms</dc:creator>
+      <description>The cheapest behavioral check against a live deployment: hit /health, create one record, read it back, delete it. If any step fails, roll back.</description>
+      <category>Behavioral</category>
+    </item>
+    <item>
+      <title>Shadow Traffic</title>
+      <link>/software-observatory/previews/pr-148/sensors/shadow-traffic/</link>
+      <guid isPermaLink="true">/software-observatory/previews/pr-148/sensors/shadow-traffic/</guid>
+      <pubDate>Sun, 23 Aug 2026 00:00:00 +0000</pubDate>
+      <author>justin@abrah.ms (Justin Abrahms)</author>
+      <dc:creator>Justin Abrahms</dc:creator>
+      <description>Run the new implementation against real inputs without affecting users. A sensor that produces differential evidence with zero user risk.</description>
+      <category>Change</category>
+    </item>
+    <item>
+      <title>Second-Agent Review</title>
+      <link>/software-observatory/previews/pr-148/sensors/second-agent-review/</link>
+      <guid isPermaLink="true">/software-observatory/previews/pr-148/sensors/second-agent-review/</guid>
+      <pubDate>Sun, 23 Aug 2026 00:00:00 +0000</pubDate>
+      <author>justin@abrah.ms (Justin Abrahms)</author>
+      <dc:creator>Justin Abrahms</dc:creator>
+      <description>An independent agent reviews the first agent’s output. A sensor that applies adversarial pressure to AI-generated code without human-in-the-loop latency.</description>
+      <category>Human Comprehension</category>
+    </item>
+    <item>
+      <title>Schema Validator</title>
+      <link>/software-observatory/previews/pr-148/sensors/schema-validator/</link>
+      <guid isPermaLink="true">/software-observatory/previews/pr-148/sensors/schema-validator/</guid>
+      <pubDate>Sun, 23 Aug 2026 00:00:00 +0000</pubDate>
+      <author>justin@abrah.ms (Justin Abrahms)</author>
+      <dc:creator>Justin Abrahms</dc:creator>
+      <description>Structural coherence at the boundary of the system. OpenAPI/GraphQL schema validation, Terraform plan, Kubernetes admission validation, SQL parser/type checker — all of these answer: is this a valid…</description>
+      <category>Structural</category>
+    </item>
+    <item>
+      <title>Runtime Invariants</title>
+      <link>/software-observatory/previews/pr-148/sensors/runtime-invariants/</link>
+      <guid isPermaLink="true">/software-observatory/previews/pr-148/sensors/runtime-invariants/</guid>
+      <pubDate>Sun, 23 Aug 2026 00:00:00 +0000</pubDate>
+      <author>justin@abrah.ms (Justin Abrahms)</author>
+      <dc:creator>Justin Abrahms</dc:creator>
+      <description>You don’t need to know how the payment service works. You can observe: “5,213 payments occurred; 17 have no corresponding order transition.” That’s a sensor of correctness without understanding the…</description>
+      <category>Invariants</category>
+    </item>
+    <item>
+      <title>Revert Rate</title>
+      <link>/software-observatory/previews/pr-148/sensors/revert-rate/</link>
+      <guid isPermaLink="true">/software-observatory/previews/pr-148/sensors/revert-rate/</guid>
+      <pubDate>Sun, 23 Aug 2026 00:00:00 +0000</pubDate>
+      <author>justin@abrah.ms (Justin Abrahms)</author>
+      <dc:creator>Justin Abrahms</dc:creator>
+      <description>How often does this area get reverted? A black-box sensor of maintainability — you don’t need to understand FooManagerFactoryImpl, you can observe: 27 changes in six months, 8 reverts, 4 incidents…</description>
+      <category>Evolution</category>
+    </item>
+    <item>
+      <title>Resource Telemetry</title>
+      <link>/software-observatory/previews/pr-148/sensors/resource-telemetry/</link>
+      <guid isPermaLink="true">/software-observatory/previews/pr-148/sensors/resource-telemetry/</guid>
+      <pubDate>Sun, 23 Aug 2026 00:00:00 +0000</pubDate>
+      <author>justin@abrah.ms (Justin Abrahms)</author>
+      <dc:creator>Justin Abrahms</dc:creator>
+      <description>CPU, memory, IO, network, GC, queues. Traditional monitoring — useful but limited. Low cardinality, low dimensionality, predetermined questions. Resource telemetry is the weakest runtime sensor.</description>
+      <category>Runtime</category>
+    </item>
+    <item>
+      <title>Pre-Promotion Invariant Gates</title>
+      <link>/software-observatory/previews/pr-148/sensors/pre-promotion-invariant-gates/</link>
+      <guid isPermaLink="true">/software-observatory/previews/pr-148/sensors/pre-promotion-invariant-gates/</guid>
+      <pubDate>Sun, 23 Aug 2026 00:00:00 +0000</pubDate>
+      <author>justin@abrah.ms (Justin Abrahms)</author>
+      <dc:creator>Justin Abrahms</dc:creator>
+      <description>Invariants checked at the moment of promotion, before a change can reach users: migrations must be backward-compatible, no PII column may be added without an encryption flag, the new schema must…</description>
+      <category>Invariants</category>
+    </item>
+  </channel>
+</rss>

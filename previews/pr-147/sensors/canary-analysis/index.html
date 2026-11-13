@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-147/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Canary Analysis — Software Observatory</title>
+  <meta name="description" content="Does the new version behave differently from the old version? A sensor of behavioral drift between deployments, measured on real traffic.">
+  <link rel="canonical" href="/software-observatory/previews/pr-147/sensors/canary-analysis/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Canary Analysis — Software Observatory">
+  <meta property="og:description" content="Does the new version behave differently from the old version? A sensor of behavioral drift between deployments, measured on real traffic.">
+  <meta property="og:url" content="/software-observatory/previews/pr-147/sensors/canary-analysis/">
+  <meta property="og:image" content="/software-observatory/previews/pr-147/og/cards/canary-analysis.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Canary Analysis — Software Observatory">
+  <meta name="twitter:description" content="Does the new version behave differently from the old version? A sensor of behavioral drift between deployments, measured on real traffic.">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-147/og/cards/canary-analysis.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-147/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-147/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "TechArticle",
+        "DefinedTerm"
+      ],
+      "@id": "/software-observatory/previews/pr-147/sensors/canary-analysis/#entry",
+      "headline": "Canary Analysis",
+      "name": "Canary Analysis",
+      "description": "Does the new version behave differently from the old version? A sensor of behavioral drift between deployments, measured on real traffic.",
+      "termCode": "SO-007",
+      "url": "/software-observatory/previews/pr-147/sensors/canary-analysis/",
+      "mainEntityOfPage": "/software-observatory/previews/pr-147/sensors/canary-analysis/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-147/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "publisher": {
+        "@id": "/software-observatory/previews/pr-147/#organization"
+      },
+      "inDefinedTermSet": {
+        "@id": "/software-observatory/previews/pr-147/catalog/#defined-term-set"
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-147/catalog/#defined-term-set"
+      },
+      "datePublished": "2026-08-23",
+      "dateModified": "2026-08-26",
+      "about": {
+        "@type": "Thing",
+        "@id": "/software-observatory/previews/pr-147/families/change/#defined-term-set",
+        "name": "Change",
+        "url": "/software-observatory/previews/pr-147/families/change/"
+      },
+      "keywords": "Change, Deployment Safety",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "value": "high",
+          "description": "divergence on real traffic is strong evidence"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#independence",
+          "name": "Independence",
+          "value": "high",
+          "description": "production behavior cannot be gamed"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#scope",
+          "name": "Scope",
+          "value": "system"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "value": "minutes"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#actionability",
+          "name": "Actionability",
+          "value": "guiding",
+          "description": "shows which metrics diverged"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "value": "retrospective"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-147/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Change",
+          "item": "/software-observatory/previews/pr-147/families/change/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Canary Analysis"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #147 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-147/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-147/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-147/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-147/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-147/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-147/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-147/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-147/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-147/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-147/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-147/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="wiki-layout">
+    <article class="signal-detail">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-147/catalog/">Catalog</a> › <a href="/software-observatory/previews/pr-147/families/change/">Change</a> › Canary Analysis</p>
+
+      <header class="signal-detail-header">
+        <h1 class="signal-detail-title">Canary Analysis</h1>
+        <div class="signal-detail-meta">
+          <span class="tag tag-family">Change</span>
+          <span class="tag tag-confidence">High oracle</span>
+          <span class="tag tag-type">Retrospective</span>
+        </div>
+      </header>
+
+      <div class="signal-detail-body">
+        <p>Does the new version behave differently from the old version? A sensor of
+<em>behavioral drift</em> between deployments, measured on real traffic.</p>
+<p>Canary analysis routes a small percentage of production traffic to the new
+version and compares its behavior to the old. If error rates, latency, or
+<a class="body-link" href="/software-observatory/previews/pr-147/sensors/runtime-invariants/">invariant violations</a> diverge, the canary fails.</p>
+<h2 id="in-practice">In practice</h2>
+<p>A canary reading is a side-by-side comparison of the same metric across two
+populations, usually scored into a single pass/fail verdict rather than
+eyeballed per metric:</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Baseline v2.40.7</th>
+<th>Canary v2.41.0 (5%)</th>
+<th>Deviance</th>
+<th>Tolerance</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Error rate</td>
+<td>0.12%</td>
+<td>0.84%</td>
+<td>7.0x</td>
+<td>2x</td>
+<td>FAIL</td>
+</tr>
+<tr>
+<td>p99 latency</td>
+<td>212 ms</td>
+<td>231 ms</td>
+<td>+9%</td>
+<td>+10%</td>
+<td>pass</td>
+</tr>
+<tr>
+<td>Success rate</td>
+<td>99.88%</td>
+<td>99.16%</td>
+<td>-0.72 pp</td>
+<td>-0.10 pp</td>
+<td>FAIL</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>0.41 cores</td>
+<td>0.43 cores</td>
+<td>+5%</td>
+<td>+20%</td>
+<td>pass</td>
+</tr>
+<tr>
+<td><strong>Overall score</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><strong>42 / 100 — ROLLBACK</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The tolerance column is the part that was decided before the canary ran.
+Read the table without it and the verdicts look arbitrary: a 9% latency
+bump passes and a 0.72-point drop in success rate fails, with nothing on
+the page saying why. Read it with the column and every verdict is
+arithmetic.</p>
+<p>Reading it well requires four habits:</p>
+<ol>
+<li><strong>Compare, don&rsquo;t threshold.</strong> &ldquo;Error rate 0.84%&rdquo; means nothing on its
+   own; the baseline at 0.12% is what makes it a signal. A canary judged
+   against an absolute bar silently passes when everything degrades
+   together.</li>
+<li><strong>Set the tolerance before the canary runs.</strong> Every metric needs a
+   band written into the analysis config in advance. Note where that
+   bites in the table above: latency came in at +9% against a +10%
+   band and passed. Decided afterwards, +9% is whatever the person
+   reading it needs it to be — a regression if they were suspicious, a
+   Tuesday if they want to ship. Pre-set bands are also what stop the
+   argument that a failing canary was &ldquo;close enough.&rdquo;</li>
+<li><strong>Know which metrics are allowed to move.</strong> Latency within the noise
+   band is normal churn. Error rate and invariant violations are not. If
+   the score weights treat them alike, noise drowns the real divergences.</li>
+<li><strong>Match the populations.</strong> The canary and baseline must see comparable
+   traffic. Comparing a canary that only handles new signups against a
+   baseline serving the whole fleet reads drift into routing, and the
+   &ldquo;drift&rdquo; is the routing.</li>
+</ol>
+<p>The verdict is only as good as the metrics underneath it, which is why the
+canary is downstream of the <a class="body-link" href="/software-observatory/previews/pr-147/sensors/observability-events/">observability work</a>
+rather than a replacement for it.</p>
+<h2 id="what-it-cannot-detect">What it cannot detect</h2>
+<p>Canary analysis can only detect differences in metrics you&rsquo;re measuring.
+Unknown unknowns require <a class="body-link" href="/software-observatory/previews/pr-147/sensors/observability-events/">high-cardinality events</a>
+to investigate after the fact.</p>
+
+                <h2 id="related-sensors">Related sensors</h2>
+        <div class="see-also-grid">
+          <a href="/software-observatory/previews/pr-147/sensors/shadow-traffic/" class="see-also-card">
+            <span class="see-also-type">Change</span>
+            <span class="see-also-title">Shadow Traffic</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/api-compatibility/" class="see-also-card">
+            <span class="see-also-type">Change</span>
+            <span class="see-also-title">API Compatibility</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/error-budget-impact/" class="see-also-card">
+            <span class="see-also-type">Change</span>
+            <span class="see-also-title">Error-Budget Impact</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/differential-testing/" class="see-also-card">
+            <span class="see-also-type">Adversarial</span>
+            <span class="see-also-title">Differential Testing</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/ab-testing/" class="see-also-card">
+            <span class="see-also-type">Change</span>
+            <span class="see-also-title">A/B Testing</span>
+          </a>
+        </div>
+
+        <div class="entry-categories">
+          <span class="cat-label">Categories:</span>
+          <a href="/software-observatory/previews/pr-147/families/change/" class="cat-link">Change</a>
+          <a href="/software-observatory/previews/pr-147/categories/#deployment-safety" class="cat-link">Deployment Safety</a>
+        </div>
+
+        <h2 id="references">References</h2>
+        <h3 class="references-subheading" id="publications">Publications</h3>
+        <ul class="reference-list">
+          <li><a href="https://arxiv.org/abs/2606.18377" class="wikilink">Exploring Statistical Change Point Detection Techniques for Performance Anomaly Detection at Mozilla</a> — <span class="ref-meta">Mohamed Bilel Besbes, Gregory Mierzwinski, Suhaib Mujahid, Philipp Leitner, Alexander Serebrenik, Dave Hunt, Diego Elias Costa · 2026 · controlled study · arXiv preprint</span></li>
+          <li><a href="https://sigops.org/s/conferences/sosp/2015/current/2015-Monterey/printable/008-tang.pdf" class="wikilink">Holistic Configuration Management at Facebook</a> — <span class="ref-meta">Chunqiang Tang, Thawan Kooburat, Pradeep Venkatachalam, Akshay Chander, Zhe Wen, Aravind Narayanan, Patrick Dowell, Robert Karl · 2015 · case study · SOSP &#x27;15</span></li>
+        </ul>
+        <h3 class="references-subheading" id="tooling">Tooling</h3>
+        <ul class="reference-list reference-tools">
+          <li><span class="ref-title"><a href="https://github.com/spinnaker/kayenta" class="wikilink">Kayenta</a></span><span class="ref-desc">Netflix&#x27;s automated canary analysis</span></li>
+          <li><span class="ref-title"><a href="https://argoproj.github.io/rollouts" class="wikilink">Argo Rollouts</a></span><span class="ref-desc">Kubernetes progressive delivery</span></li>
+          <li><span class="ref-title"><a href="https://flagger.app" class="wikilink">Flagger</a></span><span class="ref-desc">Kubernetes progressive delivery and canary</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <aside class="wiki-sidebar">
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="sensor-properties">Sensor properties</h3>
+        <dl class="meta-list">
+          <dt>Family</dt>           <dd><a href="/software-observatory/previews/pr-147/families/change/" class="wikilink">Change</a></dd>
+          <dt>Oracle</dt>          <dd>High <span class="prop-note" title="divergence on real traffic is strong evidence" aria-label="divergence on real traffic is strong evidence">(?)</span></dd>
+          <dt>Independence</dt>     <dd>High <span class="prop-note" title="production behavior cannot be gamed" aria-label="production behavior cannot be gamed">(?)</span></dd>
+          <dt>Scope</dt>           <dd>System</dd>
+          <dt>Latency</dt>         <dd>Minutes</dd>
+          <dt>Actionability</dt>   <dd>Guiding <span class="prop-note" title="shows which metrics diverged" aria-label="shows which metrics diverged">(?)</span></dd>
+          <dt>Type</dt>             <dd>Retrospective</dd>
+          <dt>Entry ID</dt>        <dd>SO-007</dd>
+          <dt>Reviewed</dt>        <dd>2026-08 <span class="review-age" title="Age measured against 2026-11-13, the newest date in the catalog. The build never uses the wall clock, so this page is byte-identical between builds.">— 2 months ago</span></dd>
+        </dl>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="what-links-here">What links here</h3>
+        <ul class="backlink-list">
+          <li><a href="/software-observatory/previews/pr-147/sensors/ab-testing/">A/B Testing</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/api-compatibility/">API Compatibility</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/error-budget-impact/">Error-Budget Impact</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/feature-flag-exposure/">Feature Flag Exposure Telemetry</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/load-testing/">Load Testing</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/pre-promotion-invariant-gates/">Pre-Promotion Invariant Gates</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/real-user-monitoring/">Real User Monitoring (RUM)</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/shadow-traffic/">Shadow Traffic</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/smoke-tests/">Smoke Tests</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/synthetic-monitoring/">Synthetic Monitoring</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+        </ul>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="in-the-playbook">In the playbook</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-147/playbook/agent-written-code/">You ship agent-written code faster than you can read it</a>
+          <li><a href="/software-observatory/previews/pr-147/playbook/stack-for-a-service/">A minimal stack for a request-serving service</a>
+          <li><a href="/software-observatory/previews/pr-147/playbook/starting-from-green-ci/">You have green CI and nothing from production</a>
+        </ul>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="related-categories">Related categories</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-147/families/change/">Category: Change</a></li>
+          <li><a href="/software-observatory/previews/pr-147/categories/#deployment-safety">Category: Deployment Safety</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-147/about/">About</a> · <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-147/js/main.js"></script>
+</body>
+</html>

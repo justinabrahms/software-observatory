@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-147/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>The Playbook — Software Observatory</title>
+  <meta name="description" content="Situational plays for the sensor catalog: what to point at a symptom, what to add first from where you are, and a minimal stack for each shape of system.">
+  <link rel="canonical" href="/software-observatory/previews/pr-147/playbook/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="The Playbook — Software Observatory">
+  <meta property="og:description" content="Situational plays for the sensor catalog: what to point at a symptom, what to add first from where you are, and a minimal stack for each shape of system.">
+  <meta property="og:url" content="/software-observatory/previews/pr-147/playbook/">
+  <meta property="og:image" content="/software-observatory/previews/pr-147/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Playbook — Software Observatory">
+  <meta name="twitter:description" content="Situational plays for the sensor catalog: what to point at a symptom, what to add first from where you are, and a minimal stack for each shape of system.">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-147/og.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-147/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-147/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": "/software-observatory/previews/pr-147/playbook/#page",
+      "name": "The Playbook",
+      "description": "Situational plays for the sensor catalog: what to point at a symptom, what to add first from where you are, and a minimal stack for each shape of system.",
+      "url": "/software-observatory/previews/pr-147/playbook/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-147/#organization"
+      },
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-147/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "dateModified": "2026-09-03"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Playbook"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #147 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-147/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-147/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-147/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-147/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-147/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-147/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-147/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-147/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-147/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-147/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-147/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <section class="page-header page-header--reading">
+    <p class="eyebrow">The Playbook</p>
+    <h1 class="page-title">The playbook</h1>
+    <p class="page-lede">
+      Start from what you already run, what you noticed, where you are, or
+      what you are building. Each play names the doubt, the sensor to point
+      at it, and where to go next. The catalog is the reference; this is the
+      route through it.
+    </p>
+  </section>
+
+  <div class="playbook-content">
+    <section class="stack-check" id="your-stack">
+      <details class="stack-details">
+      <summary><span class="stack-summary-title">Not sure what to do next?</span>
+        <span class="stack-summary-sub">Tick what you already run and the page says what it closes and what to add.</span></summary>
+      <p class="play-group-lede">
+        Tick the sensors you run. The page says which of the 19 doubts they
+        close, which are still open, and which one addition would close the
+        most of what is left. Two sensors that close the same doubt count
+        once; a sensor with no doubt edge in the vocabulary counts for
+        nothing here, however useful it is.
+      </p>
+      <form class="stack-form" autocomplete="off">
+        <fieldset class="stack-family" data-family="structural">
+          <legend>Structural</legend>
+          <label class="stack-box stack-box--silent"><input type="checkbox" name="sensor" value="build-provenance-sbom" data-closes="" data-reveals=""> Build Provenance &amp; SBOM</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="compiler" data-closes="not-internally-consistent" data-reveals=""> Compiler</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="contract-refinement-types" data-closes="wrong-logic" data-reveals=""> Contract &amp; Refinement Types</label>
+          <label class="stack-box stack-box--silent"><input type="checkbox" name="sensor" value="linter" data-closes="" data-reveals=""> Linter</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="model-checking" data-closes="wrong-logic" data-reveals=""> Model Checking</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="schema-validator" data-closes="not-internally-consistent" data-reveals=""> Schema Validator</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="static-analysis" data-closes="not-internally-consistent" data-reveals=""> Static Analysis</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="theorem-proving" data-closes="wrong-logic" data-reveals=""> Theorem Proving</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="type-checker" data-closes="not-internally-consistent" data-reveals=""> Type Checker</label>
+        </fieldset>
+        <fieldset class="stack-family" data-family="behavioral">
+          <legend>Behavioral</legend>
+          <label class="stack-box stack-box--silent"><input type="checkbox" name="sensor" value="contract-tests" data-closes="" data-reveals=""> Contract Tests</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="example-based-tests" data-closes="wrong-logic" data-reveals=""> Example-Based Tests</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="integration-tests" data-closes="emergent-failure" data-reveals=""> Integration Tests</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="smoke-tests" data-closes="does-not-run-where-deployed" data-reveals=""> Smoke Tests</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="snapshot-tests" data-closes="unintended-change" data-reveals=""> Snapshot Tests</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="synthetic-monitoring" data-closes="does-not-run-where-deployed" data-reveals=""> Synthetic Monitoring</label>
+        </fieldset>
+        <fieldset class="stack-family" data-family="test-effectiveness">
+          <legend>Test Effectiveness</legend>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="branch-coverage" data-closes="unreached-by-tests" data-reveals=""> Branch Coverage</label>
+          <label class="stack-box stack-box--silent"><input type="checkbox" name="sensor" value="diff-coverage" data-closes="" data-reveals=""> Diff Coverage</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="escaped-defect-rate" data-closes="" data-reveals="wrong-specification missing-behavior late-effects"> Escaped Defect Rate</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="line-coverage" data-closes="unreached-by-tests" data-reveals=""> Line Coverage</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="mutation-testing" data-closes="unasserted-execution" data-reveals=""> Mutation Testing</label>
+        </fieldset>
+        <fieldset class="stack-family" data-family="invariants">
+          <legend>Invariants</legend>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="business-invariants" data-closes="wrong-logic unjudged-observation" data-reveals=""> Business Invariants</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="database-invariants" data-closes="unjudged-observation" data-reveals=""> Database Invariants</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="pre-promotion-invariant-gates" data-closes="wrong-logic" data-reveals=""> Pre-Promotion Invariant Gates</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="runtime-invariants" data-closes="wrong-logic unjudged-observation" data-reveals=""> Runtime Invariants</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="statically-checked-invariants" data-closes="wrong-logic" data-reveals=""> Statically Checked Invariants</label>
+        </fieldset>
+        <fieldset class="stack-family" data-family="adversarial">
+          <legend>Adversarial</legend>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="differential-testing" data-closes="wrong-logic" data-reveals=""> Differential Testing</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="fault-injection" data-closes="dependency-failure" data-reveals=""> Fault Injection</label>
+          <label class="stack-box stack-box--silent"><input type="checkbox" name="sensor" value="fuzzing" data-closes="" data-reveals=""> Fuzzing</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="live-chaos-experiments" data-closes="dependency-failure" data-reveals=""> Live Chaos Experiments</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="metamorphic-testing" data-closes="wrong-logic" data-reveals=""> Metamorphic Testing</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="property-based-testing" data-closes="wrong-logic" data-reveals=""> Property-Based Testing</label>
+          <label class="stack-box stack-box--silent"><input type="checkbox" name="sensor" value="static-security-analysis" data-closes="" data-reveals=""> Static Security Analysis</label>
+        </fieldset>
+        <fieldset class="stack-family" data-family="runtime">
+          <legend>Runtime</legend>
+          <label class="stack-box stack-box--silent"><input type="checkbox" name="sensor" value="continuous-profiling" data-closes="" data-reveals=""> Continuous Profiling</label>
+          <label class="stack-box stack-box--silent"><input type="checkbox" name="sensor" value="distributed-traces" data-closes="" data-reveals=""> Distributed Traces</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="load-testing" data-closes="cannot-carry-load" data-reveals=""> Load Testing</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="observability-events" data-closes="" data-reveals="unspecified-property untested-conditions"> Observability Events</label>
+          <label class="stack-box stack-box--silent"><input type="checkbox" name="sensor" value="real-user-monitoring" data-closes="" data-reveals=""> Real User Monitoring (RUM)</label>
+          <label class="stack-box stack-box--silent"><input type="checkbox" name="sensor" value="resource-telemetry" data-closes="" data-reveals=""> Resource Telemetry</label>
+        </fieldset>
+        <fieldset class="stack-family" data-family="change">
+          <legend>Change</legend>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="ab-testing" data-closes="wrong-specification" data-reveals=""> A/B Testing</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="api-compatibility" data-closes="unintended-change" data-reveals=""> API Compatibility</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="canary-analysis" data-closes="emergent-failure untested-conditions unintended-change" data-reveals=""> Canary Analysis</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="error-budget-impact" data-closes="" data-reveals="late-effects"> Error-Budget Impact</label>
+          <label class="stack-box stack-box--silent"><input type="checkbox" name="sensor" value="feature-flag-exposure" data-closes="" data-reveals=""> Feature Flag Exposure Telemetry</label>
+          <label class="stack-box stack-box--silent"><input type="checkbox" name="sensor" value="incremental-build-correctness" data-closes="" data-reveals=""> Incremental Build Correctness</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="shadow-traffic" data-closes="emergent-failure untested-conditions unintended-change" data-reveals=""> Shadow Traffic</label>
+        </fieldset>
+        <fieldset class="stack-family" data-family="architecture">
+          <legend>Architecture</legend>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="fitness-functions" data-closes="structure-decayed" data-reveals=""> Architecture Fitness Functions</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="boundary-sensors" data-closes="structure-decayed" data-reveals=""> Boundary Sensors</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="dependency-graph" data-closes="structure-decayed" data-reveals=""> Dependency Graph</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="hotspot-analysis" data-closes="risk-concentrated" data-reveals=""> Hotspot Analysis</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="live-service-graph" data-closes="structure-decayed" data-reveals=""> Live Service Graph Discovery</label>
+        </fieldset>
+        <fieldset class="stack-family" data-family="evolution">
+          <legend>Evolution</legend>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="change-coupling" data-closes="structure-decayed" data-reveals=""> Change Coupling</label>
+          <label class="stack-box stack-box--silent"><input type="checkbox" name="sensor" value="dora-metrics" data-closes="" data-reveals=""> DORA Metrics</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="incident-correlation" data-closes="risk-concentrated" data-reveals="unspecified-property late-effects"> Incident Correlation</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="revert-rate" data-closes="risk-concentrated" data-reveals="late-effects"> Revert Rate</label>
+          <label class="stack-box stack-box--silent"><input type="checkbox" name="sensor" value="time-to-repair" data-closes="" data-reveals=""> Time-to-Repair</label>
+        </fieldset>
+        <fieldset class="stack-family" data-family="comprehension">
+          <legend>Human Comprehension</legend>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="decision-provenance" data-closes="unexplained" data-reveals=""> Decision Provenance</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="documentation-drift" data-closes="unexplained" data-reveals=""> Documentation Drift</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="independent-review" data-closes="wrong-specification missing-behavior correlated-blind-spot" data-reveals=""> Independent Review</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="onboarding-experiment" data-closes="unexplained" data-reveals=""> Onboarding Experiment</label>
+          <label class="stack-box"><input type="checkbox" name="sensor" value="second-agent-review" data-closes="wrong-specification missing-behavior" data-reveals=""> Second-Agent Review</label>
+        </fieldset>
+        <p class="stack-actions"><button type="reset" class="stack-clear">Clear</button>
+          <span class="stack-tally"></span>
+          <span class="stack-remember">Your ticks stay in this browser.</span></p>
+      </form>
+      <div class="stack-result" id="stack-result" hidden aria-live="polite"></div>
+      <ul class="stack-doubts" hidden>
+        <li data-d="wrong-logic" data-closable="1">Wrong logic</li>
+        <li data-d="unasserted-execution" data-closable="1">Unasserted execution</li>
+        <li data-d="unjudged-observation" data-closable="1">Unjudged observation</li>
+        <li data-d="unspecified-property" data-closable="0">Unspecified property</li>
+        <li data-d="wrong-specification" data-closable="1">Wrong specification</li>
+        <li data-d="missing-behavior" data-closable="1">Missing behavior</li>
+        <li data-d="emergent-failure" data-closable="1">Emergent failure</li>
+        <li data-d="untested-conditions" data-closable="1">Untested conditions</li>
+        <li data-d="correlated-blind-spot" data-closable="1">Correlated blind spot</li>
+        <li data-d="late-effects" data-closable="0">Late effects</li>
+        <li data-d="not-internally-consistent" data-closable="1">Not internally consistent</li>
+        <li data-d="unintended-change" data-closable="1">Unintended change</li>
+        <li data-d="unreached-by-tests" data-closable="1">Unreached by tests</li>
+        <li data-d="does-not-run-where-deployed" data-closable="1">Does not run where deployed</li>
+        <li data-d="dependency-failure" data-closable="1">Falls over with a dependency</li>
+        <li data-d="cannot-carry-load" data-closable="1">Cannot carry the load</li>
+        <li data-d="structure-decayed" data-closable="1">Nobody knows where the coupling is</li>
+        <li data-d="risk-concentrated" data-closable="1">Nobody knows where the risk sits</li>
+        <li data-d="unexplained" data-closable="1">Nobody can find out why</li>
+      </ul>
+      <noscript><p class="stack-noscript">The count needs JavaScript. The
+        <a href="/software-observatory/previews/pr-147/what-each-sensor-proves/#by-sensor" class="wikilink">by-sensor table</a>
+        on the doubts page has the same edges as a static list.</p></noscript>
+      </details>
+    </section>
+
+    <section class="play-group play-group--symptom">
+      <h2 id="what-you-noticed">What you noticed</h2>
+      <p class="play-group-lede">Something is wrong and you can say what it looks like. Each play names the doubt behind it, the sensor to point at it, and where to go if the doubt survives.</p>
+      <ul class="play-list">
+          <li><a href="/software-observatory/previews/pr-147/playbook/tests-pass-bugs-ship/" class="play-link"><span class="play-link-title">Tests pass, bugs still ship</span><span class="play-link-sub">the doubt: unasserted execution</span></a></li>
+          <li><a href="/software-observatory/previews/pr-147/playbook/bugs-in-inputs-nobody-tried/" class="play-link"><span class="play-link-title">The bug was in an input nobody tried</span><span class="play-link-sub">the doubt: wrong logic</span></a></li>
+          <li><a href="/software-observatory/previews/pr-147/playbook/prod-says-200-answer-was-wrong/" class="play-link"><span class="play-link-title">Production says 200 and the answer was wrong</span><span class="play-link-sub">the doubt: unjudged observation</span></a></li>
+          <li><a href="/software-observatory/previews/pr-147/playbook/something-changed-nobody-meant-to/" class="play-link"><span class="play-link-title">Something changed that nobody meant to change</span><span class="play-link-sub">the doubt: unintended change</span></a></li>
+          <li><a href="/software-observatory/previews/pr-147/playbook/every-service-passes-alone/" class="play-link"><span class="play-link-title">Every service passes alone, the system fails together</span><span class="play-link-sub">the doubt: emergent failure</span></a></li>
+          <li><a href="/software-observatory/previews/pr-147/playbook/worked-in-ci-died-on-deploy/" class="play-link"><span class="play-link-title">It worked in CI and died on deploy</span><span class="play-link-sub">the doubt: does not run where deployed</span></a></li>
+          <li><a href="/software-observatory/previews/pr-147/playbook/one-slow-dependency/" class="play-link"><span class="play-link-title">One slow dependency took everything down</span><span class="play-link-sub">the doubt: falls over with a dependency</span></a></li>
+          <li><a href="/software-observatory/previews/pr-147/playbook/agent-wrote-it-agent-reviewed-it/" class="play-link"><span class="play-link-title">The agent wrote it, the agent reviewed it, both agreed</span><span class="play-link-sub">the doubt: correlated blind spot</span></a></li>
+          <li><a href="/software-observatory/previews/pr-147/playbook/same-three-files/" class="play-link"><span class="play-link-title">The same three files keep causing incidents</span><span class="play-link-sub">the doubt: nobody knows where the risk sits</span></a></li>
+          <li><a href="/software-observatory/previews/pr-147/playbook/nobody-can-say-why/" class="play-link"><span class="play-link-title">Nobody can say why the code is like this</span><span class="play-link-sub">the doubt: nobody can find out why</span></a></li>
+      </ul>
+    </section>
+    <section class="play-group play-group--starting-point">
+      <h2 id="where-you-are">Where you are</h2>
+      <p class="play-group-lede">What you already run decides what to add first. Each play starts from a set of sensors and adds them in the order that closes a new doubt at every step.</p>
+      <ul class="play-list">
+          <li><a href="/software-observatory/previews/pr-147/playbook/starting-from-green-ci/" class="play-link"><span class="play-link-title">You have green CI and nothing from production</span><span class="play-link-sub">5 steps</span></a></li>
+          <li><a href="/software-observatory/previews/pr-147/playbook/inherited-codebase/" class="play-link"><span class="play-link-title">You inherited a codebase nobody explains</span><span class="play-link-sub">6 steps</span></a></li>
+          <li><a href="/software-observatory/previews/pr-147/playbook/agent-written-code/" class="play-link"><span class="play-link-title">You ship agent-written code faster than you can read it</span><span class="play-link-sub">5 steps</span></a></li>
+          <li><a href="/software-observatory/previews/pr-147/playbook/still-surprised/" class="play-link"><span class="play-link-title">You have everything and still get surprised</span><span class="play-link-sub">3 steps</span></a></li>
+      </ul>
+    </section>
+    <section class="play-group play-group--composition">
+      <h2 id="what-you-are-building">What you are building</h2>
+      <p class="play-group-lede">A minimal stack for one shape of system, composed by distinct doubts closed rather than one sensor per family.</p>
+      <ul class="play-list">
+          <li><a href="/software-observatory/previews/pr-147/playbook/stack-for-a-service/" class="play-link"><span class="play-link-title">A minimal stack for a request-serving service</span><span class="play-link-sub">8 sensors</span></a></li>
+          <li><a href="/software-observatory/previews/pr-147/playbook/stack-for-a-library/" class="play-link"><span class="play-link-title">A minimal stack for a library with downstream users</span><span class="play-link-sub">6 sensors</span></a></li>
+          <li><a href="/software-observatory/previews/pr-147/playbook/stack-for-a-data-pipeline/" class="play-link"><span class="play-link-title">A minimal stack for a batch or data pipeline</span><span class="play-link-sub">7 sensors</span></a></li>
+          <li><a href="/software-observatory/previews/pr-147/playbook/stack-for-an-internal-tool/" class="play-link"><span class="play-link-title">A minimal stack for an internal tool with ten users</span><span class="play-link-sub">3 sensors</span></a></li>
+      </ul>
+    </section>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-147/about/">About</a> · <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-147/js/main.js"></script>
+</body>
+</html>

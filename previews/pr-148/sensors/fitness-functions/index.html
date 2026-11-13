@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-148/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Architecture Fitness Functions — Software Observatory</title>
+  <meta name="description" content="frontend -&gt; application -&gt; domain -&gt; infrastructure, and fail if domain -&gt; infrastructure. A sensor of architectural drift.">
+  <link rel="canonical" href="/software-observatory/previews/pr-148/sensors/fitness-functions/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Architecture Fitness Functions — Software Observatory">
+  <meta property="og:description" content="frontend -&gt; application -&gt; domain -&gt; infrastructure, and fail if domain -&gt; infrastructure. A sensor of architectural drift.">
+  <meta property="og:url" content="/software-observatory/previews/pr-148/sensors/fitness-functions/">
+  <meta property="og:image" content="/software-observatory/previews/pr-148/og/cards/fitness-functions.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Architecture Fitness Functions — Software Observatory">
+  <meta name="twitter:description" content="frontend -&gt; application -&gt; domain -&gt; infrastructure, and fail if domain -&gt; infrastructure. A sensor of architectural drift.">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-148/og/cards/fitness-functions.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-148/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-148/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "TechArticle",
+        "DefinedTerm"
+      ],
+      "@id": "/software-observatory/previews/pr-148/sensors/fitness-functions/#entry",
+      "headline": "Architecture Fitness Functions",
+      "name": "Architecture Fitness Functions",
+      "description": "frontend -> application -> domain -> infrastructure, and fail if domain -> infrastructure. A sensor of architectural drift.",
+      "termCode": "SO-008b",
+      "url": "/software-observatory/previews/pr-148/sensors/fitness-functions/",
+      "mainEntityOfPage": "/software-observatory/previews/pr-148/sensors/fitness-functions/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-148/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "publisher": {
+        "@id": "/software-observatory/previews/pr-148/#organization"
+      },
+      "inDefinedTermSet": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "datePublished": "2026-08-23",
+      "about": {
+        "@type": "Thing",
+        "@id": "/software-observatory/previews/pr-148/families/architecture/#defined-term-set",
+        "name": "Architecture",
+        "url": "/software-observatory/previews/pr-148/families/architecture/"
+      },
+      "keywords": "Architecture, Boundary Sensors",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "value": "high",
+          "description": "a violation is definitive"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#independence",
+          "name": "Independence",
+          "value": "high",
+          "description": "rules are external to the code"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#scope",
+          "name": "Scope",
+          "value": "system"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "value": "seconds"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#actionability",
+          "name": "Actionability",
+          "value": "guiding",
+          "description": "shows which rule was violated and where"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "value": "predictive"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-148/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Architecture",
+          "item": "/software-observatory/previews/pr-148/families/architecture/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Architecture Fitness Functions"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #148 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-148/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-148/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-148/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-148/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-148/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-148/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-148/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-148/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-148/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-148/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="wiki-layout">
+    <article class="signal-detail">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-148/catalog/">Catalog</a> › <a href="/software-observatory/previews/pr-148/families/architecture/">Architecture</a> › Architecture Fitness Functions</p>
+
+      <header class="signal-detail-header">
+        <h1 class="signal-detail-title">Architecture Fitness Functions</h1>
+        <div class="signal-detail-meta">
+          <span class="tag tag-family">Architecture</span>
+          <span class="tag tag-confidence">High oracle</span>
+          <span class="tag tag-type">Predictive</span>
+        </div>
+      </header>
+
+      <div class="signal-detail-body">
+        <p><code>frontend -&gt; application -&gt; domain -&gt; infrastructure</code>, and fail if <code>domain
+-&gt; infrastructure</code>. A sensor of <em>architectural drift</em>.</p>
+<p>Architecture fitness functions are executable assertions about the structure
+of the code. They fail when the architecture violates a rule: a domain layer
+importing infrastructure, a service bypassing its API, a forbidden
+dependency forming. They turn architectural rules from prose into
+computational gates.</p>
+<h2 id="in-practice">In practice</h2>
+<p>A fitness function reading is a test result: the rule either holds or it
+does not, and the failure names the exact violating edge. In Java with
+ArchUnit:</p>
+<pre><code>Architecture Violation [Priority: MEDIUM] - Rule
+'no classes that reside in package '..domain..' should depend on
+classes that reside in package '..infrastructure..'' was violated
+(1 times):
+Class &lt;com.acme.domain.InvoiceService&gt; depends on
+&lt;com.acme.infrastructure.EmailClient&gt; in (InvoiceService.java:42)
+</code></pre>
+<p>In CI it arrives as one failing check among the rest, no different in
+shape from a unit test failure. Reading it well:</p>
+<ol>
+<li><strong>The violation message is the diagnosis.</strong> Unlike most sensors, the
+   output names both the rule and the exact dependency that broke it.
+   There is no investigation step between reading and acting.</li>
+<li><strong>A new violation is cheaper than an old one.</strong> The reading that
+   matters is the delta: did this change introduce the edge? Catching
+   drift at merge time is the whole point of the sensor.</li>
+<li><strong>Watch the violation count per rule over time.</strong> A rule with a
+   frozen baseline of 40 grandfathered violations that is not shrinking
+   is a rule the team has stopped believing in.</li>
+<li><strong>Treat every rule as a claim about the architecture.</strong> If the team
+   cannot say why the rule exists, the fitness function is asserting
+   folklore, and its failure is noise, not signal.</li>
+</ol>
+<h2 id="how-it-gets-gamed">How it gets gamed</h2>
+<p>Fitness functions are tests, so they can be tuned like tests:</p>
+<ul>
+<li><strong>Grandfathering forever.</strong> Freeze the current violations in a
+  baseline and promise to burn it down later. If the baseline never
+  shrinks, the rule applies only to code nobody has written yet, and
+  the architecture it protects keeps eroding underneath.</li>
+<li><strong>Tuning the rule to pass.</strong> When a rule fails, the fast fix is
+  narrowing its scope, excluding the offending package, or rewording
+  the matcher until the suite is green again. The rule now describes
+  the code as it is, not as it should be.</li>
+<li><strong>Rules that assert nothing.</strong> A fitness function that every change
+  passes is a sensor with its mouth taped. Rules need to be able to
+  lose: if a rule has never fired, either the architecture is perfect
+  or the rule is toothless, and it is usually the second.</li>
+</ul>
+<p>The meta-signal is the ratio of rule changes to code changes. When the
+rules move to accommodate the code instead of the reverse, the sensor
+has been inverted.</p>
+<h2 id="response-playbook">Response playbook</h2>
+<p>When a fitness function fails or its output stops being trusted:</p>
+<ol>
+<li><strong>Read the violation, not just the failure.</strong> The output names the
+   violating dependency and its location. Decide explicitly whether the
+   new edge is wrong or whether the rule is wrong.</li>
+<li><strong>Fix the edge if the rule is right.</strong> Restructure the change so the
+   forbidden dependency does not form. This is usually a small refactor
+   at merge time, not a project.</li>
+<li><strong>Amend the rule in a separate, reviewed change if the rule is
+   wrong.</strong> Rule changes deserve their own commit and a reason, so the
+   tuning described above is visible rather than smuggled in.</li>
+<li><strong>Burn down the baseline.</strong> If violations are grandfathered, assign
+   each one an owner or a deletion date. A frozen baseline is a rule in
+   name only.</li>
+<li><strong>Add the rule that just failed for the first time.</strong> If drift was
+   caught by review rather than by a fitness function, codify the
+   principle as a new rule so the next drift fails in CI.</li>
+</ol>
+<h2 id="what-it-cannot-detect">What it cannot detect</h2>
+<p>Fitness functions only check rules you&rsquo;ve <em>codified</em>. Implicit architectural
+rules that haven&rsquo;t been expressed as functions are invisible to this sensor.</p>
+
+                <h2 id="related-sensors">Related sensors</h2>
+        <div class="see-also-grid">
+          <a href="/software-observatory/previews/pr-148/sensors/dependency-graph/" class="see-also-card">
+            <span class="see-also-type">Architecture</span>
+            <span class="see-also-title">Dependency Graph</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/hotspot-analysis/" class="see-also-card">
+            <span class="see-also-type">Architecture</span>
+            <span class="see-also-title">Hotspot Analysis</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/boundary-sensors/" class="see-also-card">
+            <span class="see-also-type">Architecture</span>
+            <span class="see-also-title">Boundary Sensors</span>
+          </a>
+        </div>
+
+        <div class="entry-categories">
+          <span class="cat-label">Categories:</span>
+          <a href="/software-observatory/previews/pr-148/families/architecture/" class="cat-link">Architecture</a>
+          <a href="/software-observatory/previews/pr-148/categories/#boundary-sensors" class="cat-link">Boundary Sensors</a>
+        </div>
+
+        <h2 id="references">References</h2>
+        <h3 class="references-subheading" id="tooling">Tooling</h3>
+        <ul class="reference-list reference-tools">
+          <li><span class="ref-title"><a href="https://www.archunit.org" class="wikilink">ArchUnit</a></span><span class="ref-desc">Architecture testing for Java</span></li>
+          <li><span class="ref-title"><a href="https://github.com/BenMorris/NetArchTest" class="wikilink">NetArchTest</a></span><span class="ref-desc">.NET architecture rules testing</span></li>
+          <li><span class="ref-title"><a href="https://github.com/sverweij/dependency-cruiser" class="wikilink">dependency-cruiser</a></span><span class="ref-desc">JavaScript/TypeScript dependency analysis</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <aside class="wiki-sidebar">
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="sensor-properties">Sensor properties</h3>
+        <dl class="meta-list">
+          <dt>Family</dt>           <dd><a href="/software-observatory/previews/pr-148/families/architecture/" class="wikilink">Architecture</a></dd>
+          <dt>Oracle</dt>          <dd>High <span class="prop-note" title="a violation is definitive" aria-label="a violation is definitive">(?)</span></dd>
+          <dt>Independence</dt>     <dd>High <span class="prop-note" title="rules are external to the code" aria-label="rules are external to the code">(?)</span></dd>
+          <dt>Scope</dt>           <dd>System</dd>
+          <dt>Latency</dt>         <dd>Seconds</dd>
+          <dt>Actionability</dt>   <dd>Guiding <span class="prop-note" title="shows which rule was violated and where" aria-label="shows which rule was violated and where">(?)</span></dd>
+          <dt>Type</dt>             <dd>Predictive</dd>
+          <dt>Entry ID</dt>        <dd>SO-008b</dd>
+          <dt>Reviewed</dt>        <dd><span class="review-unreviewed" title="This entry is written and published, but has not yet been re-read in the editorial review pass. An absent review date is reported as absent rather than filled in.">pending</span></dd>
+        </dl>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="what-links-here">What links here</h3>
+        <ul class="backlink-list">
+          <li><a href="/software-observatory/previews/pr-148/sensors/boundary-sensors/">Boundary Sensors</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/dependency-graph/">Dependency Graph</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/hotspot-analysis/">Hotspot Analysis</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/live-service-graph/">Live Service Graph Discovery</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+        </ul>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="in-the-playbook">In the playbook</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-148/playbook/agent-written-code/">You ship agent-written code faster than you can read it</a>
+        </ul>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="related-categories">Related categories</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-148/families/architecture/">Category: Architecture</a></li>
+          <li><a href="/software-observatory/previews/pr-148/categories/#boundary-sensors">Category: Boundary Sensors</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-148/about/">About</a> · <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-148/js/main.js"></script>
+</body>
+</html>

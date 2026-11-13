@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-148/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Metamorphic Testing — Software Observatory</title>
+  <meta name="description" content="You don’t know the answer, but you know how the answer should change. This is a particularly beautiful sensor because you don’t need an oracle.">
+  <link rel="canonical" href="/software-observatory/previews/pr-148/sensors/metamorphic-testing/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Metamorphic Testing — Software Observatory">
+  <meta property="og:description" content="You don’t know the answer, but you know how the answer should change. This is a particularly beautiful sensor because you don’t need an oracle.">
+  <meta property="og:url" content="/software-observatory/previews/pr-148/sensors/metamorphic-testing/">
+  <meta property="og:image" content="/software-observatory/previews/pr-148/og/cards/metamorphic-testing.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Metamorphic Testing — Software Observatory">
+  <meta name="twitter:description" content="You don’t know the answer, but you know how the answer should change. This is a particularly beautiful sensor because you don’t need an oracle.">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-148/og/cards/metamorphic-testing.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-148/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-148/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "TechArticle",
+        "DefinedTerm"
+      ],
+      "@id": "/software-observatory/previews/pr-148/sensors/metamorphic-testing/#entry",
+      "headline": "Metamorphic Testing",
+      "name": "Metamorphic Testing",
+      "description": "You don’t know the answer, but you know how the answer should change. This is a particularly beautiful sensor because you don’t need an oracle.",
+      "termCode": "SO-005b",
+      "url": "/software-observatory/previews/pr-148/sensors/metamorphic-testing/",
+      "mainEntityOfPage": "/software-observatory/previews/pr-148/sensors/metamorphic-testing/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-148/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "publisher": {
+        "@id": "/software-observatory/previews/pr-148/#organization"
+      },
+      "inDefinedTermSet": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "datePublished": "2026-08-23",
+      "dateModified": "2026-08-31",
+      "about": {
+        "@type": "Thing",
+        "@id": "/software-observatory/previews/pr-148/families/adversarial/#defined-term-set",
+        "name": "Adversarial",
+        "url": "/software-observatory/previews/pr-148/families/adversarial/"
+      },
+      "keywords": "Adversarial, Oracle-Free",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "value": "high",
+          "description": "relation violations are definitive"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#independence",
+          "name": "Independence",
+          "value": "high",
+          "description": "relations are independent of implementation"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#scope",
+          "name": "Scope",
+          "value": "function"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "value": "minutes"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#actionability",
+          "name": "Actionability",
+          "value": "guiding",
+          "description": "shows which relation was violated"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "value": "predictive",
+          "description": "explores input perturbations"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-148/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Adversarial",
+          "item": "/software-observatory/previews/pr-148/families/adversarial/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Metamorphic Testing"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #148 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-148/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-148/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-148/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-148/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-148/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-148/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-148/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-148/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-148/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-148/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="wiki-layout">
+    <article class="signal-detail">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-148/catalog/">Catalog</a> › <a href="/software-observatory/previews/pr-148/families/adversarial/">Adversarial</a> › Metamorphic Testing</p>
+
+      <header class="signal-detail-header">
+        <h1 class="signal-detail-title">Metamorphic Testing</h1>
+        <div class="signal-detail-meta">
+          <span class="tag tag-family">Adversarial</span>
+          <span class="tag tag-confidence">High oracle</span>
+          <span class="tag tag-type">Predictive</span>
+        </div>
+      </header>
+
+      <div class="signal-detail-body">
+        <p>You don&rsquo;t know the answer, but you know <em>how the answer should change</em>. This
+is a particularly beautiful sensor because you don&rsquo;t need an oracle.</p>
+<h2 id="metamorphic-relations">Metamorphic relations</h2>
+<p>A metamorphic relation is a statement about how the output of a function
+should change when the input changes in a specific way:</p>
+<pre><code>sort(sort(x))       == sort(x)         # idempotence
+decrypt(encrypt(x)) == x               # round-trip
+sort(x) == sort(shuffle(x))            # order-independence
+
+# Numeric examples:
+abs(x) == abs(-x)                      # sign-independence
+abs(x + y) &lt;= abs(x) + abs(y)          # triangle inequality
+max(x, y) == max(y, x)                 # commutativity
+</code></pre>
+<p>You don&rsquo;t need to know what <code>sort(x)</code> returns. You just need to know that
+<code>sort(sort(x))</code> should equal <code>sort(x)</code>. If it doesn&rsquo;t, something is wrong —
+and you&rsquo;ve found a bug without ever needing to compute the correct answer.</p>
+<blockquote>
+<p>Metamorphic testing is the answer to &ldquo;how do you test something when you
+can&rsquo;t compute the expected output?&rdquo; Fuzzing explores the input space.
+Mutation testing perturbs the implementation. Metamorphic testing perturbs
+the input and checks relations between outputs. All three are adversarial
+— all three try to make the system fail.</p>
+</blockquote>
+<h2 id="in-practice">In practice</h2>
+<p>A reading is a relation violation, already reduced. The relation below
+is order-independence — sorting a list and sorting its reverse must
+agree, which is checkable without knowing what the sorted answer is —
+run against a <code>my_sort</code> that makes one bubble pass instead of a full
+sort:</p>
+<pre><code>xs = [0, 0, -1]
+
+    @given(st.lists(st.integers()))
+    def test_sort_is_order_independent(xs):
+&gt;       assert my_sort(xs) == my_sort(list(reversed(xs)))
+E       assert [0, -1, 0] == [-1, 0, 0]
+E         At index 0 diff: 0 != -1
+E         Use -v to get more diff
+E       Failing test case: test_sort_is_order_independent(
+E           xs=[0, 0, -1],
+E       )
+</code></pre>
+<p>Reading it well:</p>
+<ol>
+<li><strong>The named relation is the oracle.</strong> The failure says which
+   relation broke (idempotence, round-trip, commutativity), which
+   tells you what kind of bug to look for before you look at the
+   code.</li>
+<li><strong>The printed case is already the shrunk one.</strong> Hypothesis reports
+   the reduced input and nothing else; the larger inputs that also
+   failed never reach the console. If the printed case is still too
+   big to hand-check, the shrinker was blocked — usually by an
+   <code>assume</code> filter or a test that is not deterministic.</li>
+<li><strong>A relation that never fails deserves a glance.</strong> It may be a
+   strong invariant, or it may be vacuous. Check that it would have
+   fired on a known-bad version of the code.</li>
+</ol>
+<h2 id="how-it-gets-gamed">How it gets gamed</h2>
+<ul>
+<li><strong>Weaken the relation.</strong> Replacing equality with &ldquo;same length,&rdquo; or
+  adding assumption filters, makes violations disappear by narrowing
+  what the relation claims. The test still runs and now detects
+  less.</li>
+<li><strong>Shrink the campaign.</strong> Cutting the example count until failures
+  stop appearing keeps the sensor&rsquo;s name and discards its reach.</li>
+<li><strong>Label violations as flaky.</strong> A relation that fails on one input
+  in a thousand is failing; retrying until it passes converts a
+  finding into noise.</li>
+</ul>
+<p>The meta-signal is the ratio of discarded (assumed-away) examples to
+generated ones. As it climbs, the relation is being strangled.</p>
+<h2 id="response-playbook">Response playbook</h2>
+<p>When a relation is violated:</p>
+<ol>
+<li><strong>Work from the shrunk example.</strong> The minimized input is the one
+   a human can verify by hand in seconds. If you cannot hand-check
+   it, shrink it further before debugging.</li>
+<li><strong>Decide which side of the relation is wrong.</strong> Usually the
+   implementation. Occasionally the relation overclaims, and then
+   the fix is a corrected relation, written with the reason, not a
+   deleted test.</li>
+<li><strong>Fix the implementation and re-run the campaign.</strong> A relation
+   violation is rarely one input wide; the same bug usually breaks a
+   neighborhood.</li>
+<li><strong>Pin the counterexample as a regression test.</strong> The shrunk input
+   is a free <a class="body-link" href="/software-observatory/previews/pr-148/sensors/example-based-tests/">example-based test</a> that
+   runs in milliseconds and guards the fix forever.</li>
+</ol>
+<h2 id="what-it-cannot-detect">What it cannot detect</h2>
+<p>Metamorphic testing can only check relations you <em>know</em>. If a function has
+no obvious metamorphic relations, this sensor has nothing to test. It also
+cannot detect <a class="body-link" href="/software-observatory/previews/pr-148/sensors/mutation-testing/">missing behavior</a> — if a feature is
+absent, there&rsquo;s no function to check relations on.</p>
+
+                <h2 id="related-sensors">Related sensors</h2>
+        <div class="see-also-grid">
+          <a href="/software-observatory/previews/pr-148/sensors/fuzzing/" class="see-also-card">
+            <span class="see-also-type">Adversarial</span>
+            <span class="see-also-title">Fuzzing</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/mutation-testing/" class="see-also-card">
+            <span class="see-also-type">Test Effectiveness</span>
+            <span class="see-also-title">Mutation Testing</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/property-based-testing/" class="see-also-card">
+            <span class="see-also-type">Adversarial</span>
+            <span class="see-also-title">Property-Based Testing</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/families/adversarial/" class="see-also-card">
+            <span class="see-also-type">Family</span>
+            <span class="see-also-title">Adversarial</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/families/invariants/" class="see-also-card">
+            <span class="see-also-type">Family</span>
+            <span class="see-also-title">Invariants</span>
+          </a>
+        </div>
+
+        <div class="entry-categories">
+          <span class="cat-label">Categories:</span>
+          <a href="/software-observatory/previews/pr-148/families/adversarial/" class="cat-link">Adversarial</a>
+          <a href="/software-observatory/previews/pr-148/categories/#oracle-free" class="cat-link">Oracle-Free</a>
+        </div>
+
+        <h2 id="references">References</h2>
+        <h3 class="references-subheading" id="publications">Publications</h3>
+        <ul class="reference-list">
+          <li><a href="https://cseweb.ucsd.edu/~mcoblenz/assets/pdf/OOPSLA_2025_PBT.pdf" class="wikilink">An Empirical Evaluation of Property-Based Testing in Python</a> — <span class="ref-meta">Savitha Ravi, Michael Coblenz · 2025 · controlled study · Proc. ACM Program. Lang. (OOPSLA2)</span></li>
+          <li>Metamorphic Testing: A New Approach for Generating Next Test Cases — <span class="ref-meta">Chen et al. · 1998 · argument</span></li>
+        </ul>
+        <h3 class="references-subheading" id="tooling">Tooling</h3>
+        <ul class="reference-list reference-tools">
+          <li><span class="ref-title"><a href="https://hypothesis.readthedocs.io" class="wikilink">Hypothesis</a></span><span class="ref-desc">Property-based testing for Python</span></li>
+          <li><span class="ref-title"><a href="https://hackage.haskell.org/package/QuickCheck" class="wikilink">QuickCheck</a></span><span class="ref-desc">Property-based testing for Haskell</span></li>
+          <li><span class="ref-title"><a href="https://fast-check.dev" class="wikilink">fast-check</a></span><span class="ref-desc">Property-based testing for TypeScript</span></li>
+          <li><span class="ref-title"><a href="https://github.com/clojure/test.check" class="wikilink">test.check</a></span><span class="ref-desc">Property-based testing for Clojure</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <aside class="wiki-sidebar">
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="sensor-properties">Sensor properties</h3>
+        <dl class="meta-list">
+          <dt>Family</dt>           <dd><a href="/software-observatory/previews/pr-148/families/adversarial/" class="wikilink">Adversarial</a></dd>
+          <dt>Oracle</dt>          <dd>High <span class="prop-note" title="relation violations are definitive" aria-label="relation violations are definitive">(?)</span></dd>
+          <dt>Independence</dt>     <dd>High <span class="prop-note" title="relations are independent of implementation" aria-label="relations are independent of implementation">(?)</span></dd>
+          <dt>Scope</dt>           <dd>Function</dd>
+          <dt>Latency</dt>         <dd>Minutes</dd>
+          <dt>Actionability</dt>   <dd>Guiding <span class="prop-note" title="shows which relation was violated" aria-label="shows which relation was violated">(?)</span></dd>
+          <dt>Type</dt>             <dd>Predictive <span class="prop-note" title="explores input perturbations" aria-label="explores input perturbations">(?)</span></dd>
+          <dt>Entry ID</dt>        <dd>SO-005b</dd>
+          <dt>Reviewed</dt>        <dd>2026-08 <span class="review-age" title="Age measured against 2026-09-03, the newest date in the catalog. The build never uses the wall clock, so this page is byte-identical between builds.">— current</span></dd>
+        </dl>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="what-links-here">What links here</h3>
+        <ul class="backlink-list">
+          <li><a href="/software-observatory/previews/pr-148/sensors/differential-testing/">Differential Testing</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/fuzzing/">Fuzzing</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/mutation-testing/">Mutation Testing</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/property-based-testing/">Property-Based Testing</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+        </ul>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="in-the-playbook">In the playbook</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-148/playbook/stack-for-a-data-pipeline/">A minimal stack for a batch or data pipeline</a>
+        </ul>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="related-categories">Related categories</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-148/families/adversarial/">Category: Adversarial</a></li>
+          <li><a href="/software-observatory/previews/pr-148/categories/#oracle-free">Category: Oracle-Free</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-148/about/">About</a> · <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-148/js/main.js"></script>
+</body>
+</html>

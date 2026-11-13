@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-148/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Evolution sensors — Software Observatory</title>
+  <meta name="description" content="Evolution sensors ask: Does this look like changes that caused trouble before? 5 entries in the Software Observatory — Revert rate, regression rate, churn…">
+  <link rel="canonical" href="/software-observatory/previews/pr-148/families/evolution/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Evolution sensors — Software Observatory">
+  <meta property="og:description" content="Evolution sensors ask: Does this look like changes that caused trouble before? 5 entries in the Software Observatory — Revert rate, regression rate, churn…">
+  <meta property="og:url" content="/software-observatory/previews/pr-148/families/evolution/">
+  <meta property="og:image" content="/software-observatory/previews/pr-148/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Evolution sensors — Software Observatory">
+  <meta name="twitter:description" content="Evolution sensors ask: Does this look like changes that caused trouble before? 5 entries in the Software Observatory — Revert rate, regression rate, churn…">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-148/og.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-148/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-148/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "DefinedTermSet",
+      "@id": "/software-observatory/previews/pr-148/families/evolution/#defined-term-set",
+      "name": "Evolution sensors",
+      "description": "Evolution sensors ask: Does this look like changes that caused trouble before? 5 entries in the Software Observatory — Revert rate, regression rate, churn, incident correlation.",
+      "url": "/software-observatory/previews/pr-148/families/evolution/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "creator": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-148/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "hasDefinedTerm": [
+        {
+          "@type": "DefinedTerm",
+          "@id": "/software-observatory/previews/pr-148/sensors/change-coupling/#term",
+          "name": "Change Coupling",
+          "description": "Which files repeatedly change together? A sensor of hidden coupling — the repository itself becomes a sensor, no code reading required.",
+          "termCode": "SO-009b",
+          "url": "/software-observatory/previews/pr-148/sensors/change-coupling/",
+          "inDefinedTermSet": {
+            "@id": "/software-observatory/previews/pr-148/families/evolution/#defined-term-set"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "/software-observatory/previews/pr-148/sensors/dora-metrics/#term",
+          "name": "DORA Metrics",
+          "description": "Change lead time, deployment frequency, failed deployment recovery time, change fail rate, deployment rework rate.",
+          "termCode": "SO-015b",
+          "url": "/software-observatory/previews/pr-148/sensors/dora-metrics/",
+          "inDefinedTermSet": {
+            "@id": "/software-observatory/previews/pr-148/families/evolution/#defined-term-set"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "/software-observatory/previews/pr-148/sensors/incident-correlation/#term",
+          "name": "Incident Correlation",
+          "description": "Which components correlate with production failures? A sensor of operational risk concentration, measured from observability events.",
+          "termCode": "SO-009c",
+          "url": "/software-observatory/previews/pr-148/sensors/incident-correlation/",
+          "inDefinedTermSet": {
+            "@id": "/software-observatory/previews/pr-148/families/evolution/#defined-term-set"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "/software-observatory/previews/pr-148/sensors/revert-rate/#term",
+          "name": "Revert Rate",
+          "description": "How often does this area get reverted? A black-box sensor of maintainability — you don’t need to understand FooManagerFactoryImpl, you can observe: 27 changes in six months, 8 reverts, 4 incidents…",
+          "termCode": "SO-009",
+          "url": "/software-observatory/previews/pr-148/sensors/revert-rate/",
+          "inDefinedTermSet": {
+            "@id": "/software-observatory/previews/pr-148/families/evolution/#defined-term-set"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "/software-observatory/previews/pr-148/sensors/time-to-repair/#term",
+          "name": "Time-to-Repair",
+          "description": "When this component breaks, how long does it take to restore? A sensor of maintainability measured in hours, not in subjective assessment.",
+          "termCode": "SO-009d",
+          "url": "/software-observatory/previews/pr-148/sensors/time-to-repair/",
+          "inDefinedTermSet": {
+            "@id": "/software-observatory/previews/pr-148/families/evolution/#defined-term-set"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-148/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Evolution"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #148 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-148/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-148/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-148/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-148/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-148/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-148/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-148/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-148/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-148/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-148/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <article class="family-page">
+    <p class="breadcrumb"><a href="/software-observatory/previews/pr-148/catalog/">Catalog</a> › Evolution</p>
+
+    <section class="page-header">
+      <p class="eyebrow">Sensor family 09</p>
+      <h1 class="page-title">Evolution</h1>
+      <p class="page-lede">“Does this look like changes that caused trouble before?”</p>
+    </section>
+
+    <div class="about-content">
+      <h2 id="what-belongs-here">What belongs here</h2>
+      <p>These sensors read history rather than the current artifact. They are retrospective and statistical — they answer “does this look like changes that caused trouble before?” and can never be a verdict on one specific change.</p>
+
+      <h2 id="contested-placements">Contested placements</h2>
+      <p>DORA Metrics describe the delivery system rather than the software, and Incident Correlation overlaps Runtime. Everything here is a base rate: useful for directing attention, useless as proof.</p>
+      <h2 id="where-its-signals-arrive">Where its signals arrive</h2>
+      <ul>
+        <li><strong>User outcome</strong> — Outcome stage. Does the system produce the intended result for users?</li>
+      </ul>
+      <p>
+        The <a href="/software-observatory/previews/pr-148/atlas/" class="wikilink">atlas</a> places every family on
+        the same lifecycle grid; the
+        <a href="/software-observatory/previews/pr-148/framework/" class="wikilink">framework</a> defines the six
+        dimensions each entry below is characterized along.
+      </p>
+
+      <h2 id="entries">Entries (5)</h2>
+    </div>
+
+    <div class="signal-grid">
+          <a class="signal-card" href="/software-observatory/previews/pr-148/sensors/change-coupling/">
+            <div class="signal-card-meta">
+              <span class="tag tag-family">Evolution</span>
+              <span class="tag tag-type">Retrospective</span>
+            </div>
+            <h3 class="signal-card-title" id="change-coupling">Change Coupling</h3>
+            <p class="signal-card-blurb">Which files repeatedly change together? A sensor of hidden coupling — the repository itself becomes a sensor, no code reading required.</p>
+            <div class="signal-card-footer">
+              <span class="oracle-meter"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot empty"></span><span class="dot empty"></span> Oracle</span>
+              <span class="latency-badge" title="How long it takes to get this feedback: days"><span class="sr-only">Feedback latency: </span>~days</span>
+            </div>
+          </a>
+          <a class="signal-card" href="/software-observatory/previews/pr-148/sensors/dora-metrics/">
+            <div class="signal-card-meta">
+              <span class="tag tag-family">Evolution</span>
+              <span class="tag tag-type">Retrospective</span>
+            </div>
+            <h3 class="signal-card-title" id="dora-metrics">DORA Metrics</h3>
+            <p class="signal-card-blurb">Change lead time, deployment frequency, failed deployment recovery time, change fail rate, deployment rework rate.</p>
+            <div class="signal-card-footer">
+              <span class="oracle-meter"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot empty"></span><span class="dot empty"></span> Oracle</span>
+              <span class="latency-badge" title="How long it takes to get this feedback: days"><span class="sr-only">Feedback latency: </span>~days</span>
+            </div>
+          </a>
+          <a class="signal-card" href="/software-observatory/previews/pr-148/sensors/incident-correlation/">
+            <div class="signal-card-meta">
+              <span class="tag tag-family">Evolution</span>
+              <span class="tag tag-type">Retrospective</span>
+            </div>
+            <h3 class="signal-card-title" id="incident-correlation">Incident Correlation</h3>
+            <p class="signal-card-blurb">Which components correlate with production failures? A sensor of operational risk concentration, measured from observability events.</p>
+            <div class="signal-card-footer">
+              <span class="oracle-meter"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot empty"></span><span class="dot empty"></span> Oracle</span>
+              <span class="latency-badge" title="How long it takes to get this feedback: weeks"><span class="sr-only">Feedback latency: </span>~weeks</span>
+            </div>
+          </a>
+          <a class="signal-card" href="/software-observatory/previews/pr-148/sensors/revert-rate/">
+            <div class="signal-card-meta">
+              <span class="tag tag-family">Evolution</span>
+              <span class="tag tag-type">Retrospective</span>
+            </div>
+            <h3 class="signal-card-title" id="revert-rate">Revert Rate</h3>
+            <p class="signal-card-blurb">How often does this area get reverted? A black-box sensor of maintainability — you don’t need to understand FooManagerFactoryImpl, you can observe: 27 changes in six months, 8 reverts, 4 incidents…</p>
+            <div class="signal-card-footer">
+              <span class="oracle-meter"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot empty"></span><span class="dot empty"></span> Oracle</span>
+              <span class="latency-badge" title="How long it takes to get this feedback: days"><span class="sr-only">Feedback latency: </span>~days</span>
+            </div>
+          </a>
+          <a class="signal-card" href="/software-observatory/previews/pr-148/sensors/time-to-repair/">
+            <div class="signal-card-meta">
+              <span class="tag tag-family">Evolution</span>
+              <span class="tag tag-type">Retrospective</span>
+            </div>
+            <h3 class="signal-card-title" id="time-to-repair">Time-to-Repair</h3>
+            <p class="signal-card-blurb">When this component breaks, how long does it take to restore? A sensor of maintainability measured in hours, not in subjective assessment.</p>
+            <div class="signal-card-footer">
+              <span class="oracle-meter"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot empty"></span><span class="dot empty"></span> Oracle</span>
+              <span class="latency-badge" title="How long it takes to get this feedback: weeks"><span class="sr-only">Feedback latency: </span>~weeks</span>
+            </div>
+          </a>
+    </div>
+
+    <div class="about-content">
+      <h2 id="adjacent-families">Adjacent families</h2>
+      <ul>
+        <li>Previous: <a href="/software-observatory/previews/pr-148/families/architecture/" class="wikilink">Architecture</a> — Is the system becoming harder to reason about?</li>
+        <li>Next: <a href="/software-observatory/previews/pr-148/families/comprehension/" class="wikilink">Human Comprehension</a> — Can another observer understand and challenge this?</li>
+        <li>All of them: the <a href="/software-observatory/previews/pr-148/catalog/" class="wikilink">complete catalog</a>
+          (this family is also anchored there at
+          <a href="/software-observatory/previews/pr-148/catalog/#evolution" class="wikilink">/catalog/#evolution</a>).</li>
+      </ul>
+    </div>
+  </article>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-148/about/">About</a> · <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-148/js/main.js"></script>
+</body>
+</html>

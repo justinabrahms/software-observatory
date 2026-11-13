@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-148/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Sensor Atlas — Software Observatory</title>
+  <meta name="description" content="A map of the 10 sensor families against the software lifecycle: which signals are available while you write code, and which only appear in production.">
+  <link rel="canonical" href="/software-observatory/previews/pr-148/atlas/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sensor Atlas — Software Observatory">
+  <meta property="og:description" content="A map of the 10 sensor families against the software lifecycle: which signals are available while you write code, and which only appear in production.">
+  <meta property="og:url" content="/software-observatory/previews/pr-148/atlas/">
+  <meta property="og:image" content="/software-observatory/previews/pr-148/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sensor Atlas — Software Observatory">
+  <meta name="twitter:description" content="A map of the 10 sensor families against the software lifecycle: which signals are available while you write code, and which only appear in production.">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-148/og.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-148/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-148/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": "/software-observatory/previews/pr-148/atlas/#page",
+      "name": "Sensor Atlas",
+      "description": "A map of the 10 sensor families against the software lifecycle: which signals are available while you write code, and which only appear in production.",
+      "url": "/software-observatory/previews/pr-148/atlas/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-148/#organization"
+      },
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-148/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Atlas"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #148 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-148/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-148/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-148/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-148/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-148/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-148/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-148/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-148/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-148/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-148/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="atlas-container">
+    <section class="page-header">
+      <p class="eyebrow">The Atlas</p>
+      <h1 class="page-title">Sensor Atlas</h1>
+      <p class="page-lede">
+        A navigational map of the sensor landscape. Each row is a
+        <a href="/software-observatory/previews/pr-148/catalog/" class="wikilink">sensor family</a> — a question
+        you're asking about the system. Each column is a stage of the software
+        lifecycle — <em>when</em> the signal becomes available, from authoring
+        the code on the left to observing real-world outcomes on the right.
+        For the narrative version of how evidence accumulates, see the
+        <a href="/software-observatory/previews/pr-148/#confidence-stack" class="wikilink">confidence stack</a>.
+      </p>
+    </section>
+
+    <div class="atlas-intro">
+      <p style="color:var(--text-soft);max-width:44rem;line-height:1.7;">
+        Use the atlas to orient yourself. <em>What question are you
+        asking?</em> Find the row. <em>When can you afford to learn the
+        answer?</em> Find the column. Empty cells are questions nobody
+        instrumented at that stage yet.
+      </p>
+    </div>
+
+    <!-- Grid -->
+    <div class="atlas-matrix-wrapper">
+      <div class="atlas-matrix">
+        <div class="matrix-header-row">
+          <div class="matrix-corner"></div>
+            <div class="matrix-col-header" title="Signals available before the code runs.">
+              <span class="col-label">Build</span>
+            </div>
+            <div class="matrix-col-header" title="Signals from exercising the system with chosen inputs.">
+              <span class="col-label">Test</span>
+            </div>
+            <div class="matrix-col-header" title="Signals from rolling a change out safely.">
+              <span class="col-label">Deploy</span>
+            </div>
+            <div class="matrix-col-header" title="Signals from the live system.">
+              <span class="col-label">Production</span>
+            </div>
+            <div class="matrix-col-header" title="Signals about real-world results and history.">
+              <span class="col-label">Outcome</span>
+            </div>
+        </div>
+        <div class="matrix-row">
+          <div class="matrix-row-label">
+            <span class="matrix-fam-num">01</span>
+            <span class="matrix-fam-icon fam-structural" aria-hidden="true">■</span>
+            <a href="/software-observatory/previews/pr-148/families/structural/" class="matrix-fam-name">Structural</a>
+          </div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/compiler/" class="matrix-chip">Compiler</a>
+<a href="/software-observatory/previews/pr-148/sensors/contract-refinement-types/" class="matrix-chip">Contract &amp; Refinement Types</a>
+<a href="/software-observatory/previews/pr-148/sensors/linter/" class="matrix-chip">Linter</a>
+<a href="/software-observatory/previews/pr-148/sensors/model-checking/" class="matrix-chip">Model Checking</a>
+<a href="/software-observatory/previews/pr-148/sensors/schema-validator/" class="matrix-chip">Schema Validator</a>
+<a href="/software-observatory/previews/pr-148/sensors/static-analysis/" class="matrix-chip">Static Analysis</a>
+<a href="/software-observatory/previews/pr-148/sensors/theorem-proving/" class="matrix-chip">Theorem Proving</a>
+<a href="/software-observatory/previews/pr-148/sensors/type-checker/" class="matrix-chip">Type Checker</a>
+          </div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/build-provenance-sbom/" class="matrix-chip">Build Provenance &amp; SBOM</a>
+          </div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+        </div>
+        <div class="matrix-row">
+          <div class="matrix-row-label">
+            <span class="matrix-fam-num">02</span>
+            <span class="matrix-fam-icon fam-behavioral" aria-hidden="true">●</span>
+            <a href="/software-observatory/previews/pr-148/families/behavioral/" class="matrix-fam-name">Behavioral</a>
+          </div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/contract-tests/" class="matrix-chip">Contract Tests</a>
+<a href="/software-observatory/previews/pr-148/sensors/example-based-tests/" class="matrix-chip">Example-Based Tests</a>
+<a href="/software-observatory/previews/pr-148/sensors/integration-tests/" class="matrix-chip">Integration Tests</a>
+<a href="/software-observatory/previews/pr-148/sensors/snapshot-tests/" class="matrix-chip">Snapshot Tests</a>
+          </div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/smoke-tests/" class="matrix-chip">Smoke Tests</a>
+          </div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/synthetic-monitoring/" class="matrix-chip">Synthetic Monitoring</a>
+          </div>
+          <div class="matrix-cell empty"></div>
+        </div>
+        <div class="matrix-row">
+          <div class="matrix-row-label">
+            <span class="matrix-fam-num">03</span>
+            <span class="matrix-fam-icon fam-test-effectiveness" aria-hidden="true">▲</span>
+            <a href="/software-observatory/previews/pr-148/families/test-effectiveness/" class="matrix-fam-name">Test Effectiveness</a>
+          </div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/branch-coverage/" class="matrix-chip">Branch Coverage</a>
+<a href="/software-observatory/previews/pr-148/sensors/diff-coverage/" class="matrix-chip">Diff Coverage</a>
+<a href="/software-observatory/previews/pr-148/sensors/line-coverage/" class="matrix-chip">Line Coverage</a>
+<a href="/software-observatory/previews/pr-148/sensors/mutation-testing/" class="matrix-chip">Mutation Testing</a>
+          </div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/escaped-defect-rate/" class="matrix-chip">Escaped Defect Rate</a>
+          </div>
+        </div>
+        <div class="matrix-row">
+          <div class="matrix-row-label">
+            <span class="matrix-fam-num">04</span>
+            <span class="matrix-fam-icon fam-invariants" aria-hidden="true">◆</span>
+            <a href="/software-observatory/previews/pr-148/families/invariants/" class="matrix-fam-name">Invariants</a>
+          </div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/statically-checked-invariants/" class="matrix-chip">Statically Checked Invariants</a>
+          </div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/pre-promotion-invariant-gates/" class="matrix-chip">Pre-Promotion Invariant Gates</a>
+          </div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/database-invariants/" class="matrix-chip">Database Invariants</a>
+<a href="/software-observatory/previews/pr-148/sensors/runtime-invariants/" class="matrix-chip">Runtime Invariants</a>
+          </div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/business-invariants/" class="matrix-chip">Business Invariants</a>
+          </div>
+        </div>
+        <div class="matrix-row">
+          <div class="matrix-row-label">
+            <span class="matrix-fam-num">05</span>
+            <span class="matrix-fam-icon fam-adversarial" aria-hidden="true">✖</span>
+            <a href="/software-observatory/previews/pr-148/families/adversarial/" class="matrix-fam-name">Adversarial</a>
+          </div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/static-security-analysis/" class="matrix-chip">Static Security Analysis</a>
+          </div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/differential-testing/" class="matrix-chip">Differential Testing</a>
+<a href="/software-observatory/previews/pr-148/sensors/fuzzing/" class="matrix-chip">Fuzzing</a>
+<a href="/software-observatory/previews/pr-148/sensors/metamorphic-testing/" class="matrix-chip">Metamorphic Testing</a>
+<a href="/software-observatory/previews/pr-148/sensors/property-based-testing/" class="matrix-chip">Property-Based Testing</a>
+          </div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/fault-injection/" class="matrix-chip">Fault Injection</a>
+          </div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/live-chaos-experiments/" class="matrix-chip">Live Chaos Experiments</a>
+          </div>
+          <div class="matrix-cell empty"></div>
+        </div>
+        <div class="matrix-row">
+          <div class="matrix-row-label">
+            <span class="matrix-fam-num">06</span>
+            <span class="matrix-fam-icon fam-runtime" aria-hidden="true">○</span>
+            <a href="/software-observatory/previews/pr-148/families/runtime/" class="matrix-fam-name">Runtime</a>
+          </div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/continuous-profiling/" class="matrix-chip">Continuous Profiling</a>
+<a href="/software-observatory/previews/pr-148/sensors/distributed-traces/" class="matrix-chip">Distributed Traces</a>
+<a href="/software-observatory/previews/pr-148/sensors/load-testing/" class="matrix-chip">Load Testing</a>
+<a href="/software-observatory/previews/pr-148/sensors/observability-events/" class="matrix-chip">Observability Events</a>
+<a href="/software-observatory/previews/pr-148/sensors/resource-telemetry/" class="matrix-chip">Resource Telemetry</a>
+          </div>
+          <div class="matrix-cell empty"></div>
+        </div>
+        <div class="matrix-row">
+          <div class="matrix-row-label">
+            <span class="matrix-fam-num">07</span>
+            <span class="matrix-fam-icon fam-change" aria-hidden="true">→</span>
+            <a href="/software-observatory/previews/pr-148/families/change/" class="matrix-fam-name">Change</a>
+          </div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/incremental-build-correctness/" class="matrix-chip">Incremental Build Correctness</a>
+          </div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/api-compatibility/" class="matrix-chip">API Compatibility</a>
+          </div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/canary-analysis/" class="matrix-chip">Canary Analysis</a>
+<a href="/software-observatory/previews/pr-148/sensors/shadow-traffic/" class="matrix-chip">Shadow Traffic</a>
+          </div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/feature-flag-exposure/" class="matrix-chip">Feature Flag Exposure Telemetry</a>
+          </div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/ab-testing/" class="matrix-chip">A/B Testing</a>
+<a href="/software-observatory/previews/pr-148/sensors/error-budget-impact/" class="matrix-chip">Error-Budget Impact</a>
+          </div>
+        </div>
+        <div class="matrix-row">
+          <div class="matrix-row-label">
+            <span class="matrix-fam-num">08</span>
+            <span class="matrix-fam-icon fam-architecture" aria-hidden="true">▣</span>
+            <a href="/software-observatory/previews/pr-148/families/architecture/" class="matrix-fam-name">Architecture</a>
+          </div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/boundary-sensors/" class="matrix-chip">Boundary Sensors</a>
+<a href="/software-observatory/previews/pr-148/sensors/dependency-graph/" class="matrix-chip">Dependency Graph</a>
+<a href="/software-observatory/previews/pr-148/sensors/fitness-functions/" class="matrix-chip">Architecture Fitness Functions</a>
+<a href="/software-observatory/previews/pr-148/sensors/hotspot-analysis/" class="matrix-chip">Hotspot Analysis</a>
+          </div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/live-service-graph/" class="matrix-chip">Live Service Graph Discovery</a>
+          </div>
+          <div class="matrix-cell empty"></div>
+        </div>
+        <div class="matrix-row">
+          <div class="matrix-row-label">
+            <span class="matrix-fam-num">09</span>
+            <span class="matrix-fam-icon fam-evolution" aria-hidden="true">⟳</span>
+            <a href="/software-observatory/previews/pr-148/families/evolution/" class="matrix-fam-name">Evolution</a>
+          </div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/change-coupling/" class="matrix-chip">Change Coupling</a>
+          </div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/dora-metrics/" class="matrix-chip">DORA Metrics</a>
+          </div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/incident-correlation/" class="matrix-chip">Incident Correlation</a>
+<a href="/software-observatory/previews/pr-148/sensors/revert-rate/" class="matrix-chip">Revert Rate</a>
+<a href="/software-observatory/previews/pr-148/sensors/time-to-repair/" class="matrix-chip">Time-to-Repair</a>
+          </div>
+        </div>
+        <div class="matrix-row">
+          <div class="matrix-row-label">
+            <span class="matrix-fam-num">10</span>
+            <span class="matrix-fam-icon fam-comprehension" aria-hidden="true">✔</span>
+            <a href="/software-observatory/previews/pr-148/families/comprehension/" class="matrix-fam-name">Human Comprehension</a>
+          </div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/decision-provenance/" class="matrix-chip">Decision Provenance</a>
+          </div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/independent-review/" class="matrix-chip">Independent Review</a>
+<a href="/software-observatory/previews/pr-148/sensors/second-agent-review/" class="matrix-chip">Second-Agent Review</a>
+          </div>
+          <div class="matrix-cell empty"></div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/documentation-drift/" class="matrix-chip">Documentation Drift</a>
+          </div>
+          <div class="matrix-cell has-sensors">
+            <a href="/software-observatory/previews/pr-148/sensors/onboarding-experiment/" class="matrix-chip">Onboarding Experiment</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Axis labels -->
+    <div class="atlas-axes">
+      <div class="axis-label-h">← What question are you asking? (sensor families)</div>
+      <div class="axis-label-v">← earlier / cheaper &nbsp;&nbsp;|&nbsp;&nbsp; later / closer to reality → <br>Lifecycle stages</div>
+    </div>
+
+    <!-- Family map -->
+    <div class="family-map-section">
+      <h2 class="section-heading" id="10-families-at-a-glance">10 families at a glance</h2>
+      <div class="family-map-grid">
+        <a href="/software-observatory/previews/pr-148/families/structural/" class="family-map-card">
+          <span class="fam-num">01</span>
+          <span class="fam-name">Structural</span>
+          <span class="fam-q">"Is this artifact internally coherent?"</span>
+        </a>
+        <a href="/software-observatory/previews/pr-148/families/behavioral/" class="family-map-card">
+          <span class="fam-num">02</span>
+          <span class="fam-name">Behavioral</span>
+          <span class="fam-q">"Does it do what we expect?"</span>
+        </a>
+        <a href="/software-observatory/previews/pr-148/families/test-effectiveness/" class="family-map-card">
+          <span class="fam-num">03</span>
+          <span class="fam-name">Test Effectiveness</span>
+          <span class="fam-q">"Do our tests actually detect failures?"</span>
+        </a>
+        <a href="/software-observatory/previews/pr-148/families/invariants/" class="family-map-card">
+          <span class="fam-num">04</span>
+          <span class="fam-name">Invariants</span>
+          <span class="fam-q">"What must always be true?"</span>
+        </a>
+        <a href="/software-observatory/previews/pr-148/families/adversarial/" class="family-map-card">
+          <span class="fam-num">05</span>
+          <span class="fam-name">Adversarial</span>
+          <span class="fam-q">"Can we make our evidence of correctness fail?"</span>
+        </a>
+        <a href="/software-observatory/previews/pr-148/families/runtime/" class="family-map-card">
+          <span class="fam-num">06</span>
+          <span class="fam-name">Runtime</span>
+          <span class="fam-q">"What is it actually doing?"</span>
+        </a>
+        <a href="/software-observatory/previews/pr-148/families/change/" class="family-map-card">
+          <span class="fam-num">07</span>
+          <span class="fam-name">Change</span>
+          <span class="fam-q">"What did this change actually affect?"</span>
+        </a>
+        <a href="/software-observatory/previews/pr-148/families/architecture/" class="family-map-card">
+          <span class="fam-num">08</span>
+          <span class="fam-name">Architecture</span>
+          <span class="fam-q">"Is the system becoming harder to reason about?"</span>
+        </a>
+        <a href="/software-observatory/previews/pr-148/families/evolution/" class="family-map-card">
+          <span class="fam-num">09</span>
+          <span class="fam-name">Evolution</span>
+          <span class="fam-q">"Does this look like changes that caused trouble before?"</span>
+        </a>
+        <a href="/software-observatory/previews/pr-148/families/comprehension/" class="family-map-card">
+          <span class="fam-num">10</span>
+          <span class="fam-name">Human Comprehension</span>
+          <span class="fam-q">"Can another observer understand and challenge this?"</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Dependency graph -->
+    <div class="dep-map-section">
+      <h2 class="section-heading" id="how-the-families-lean-on-each-other">How the families lean on each other</h2>
+      <p class="dep-map-lede">
+        Sensor families are not a stack — evidence from one family routinely
+        depends on another family having done its job. Arrows point from the
+        family that leans to the family it leans on, labelled with a sensor
+        that carries the connection. Hover a node to isolate its
+        neighborhood. Drawn from the cross-references inside the catalog
+        entries themselves; only the strongest links are shown.
+      </p>
+      <div class="dep-graph-wrapper">
+      <svg class="dep-graph" viewBox="0 0 1120 920" role="img" aria-label="Family dependency graph: how sensor families lean on each other">
+        <title>Family dependency graph</title>
+        <desc>Arrows point from the family that leans to the family it leans on. 44 edges shown. See the text list below the graph for the full edge set.</desc>
+          <path class="dep-edge" data-src="behavioral" data-tgt="change" d="M 754.6 192.2 Q 463.6 390.0 365.4 727.8"><title>behavioral leans on change</title></path>
+          <polygon class="dep-arrowhead" data-src="behavioral" data-tgt="change" points="365.4,727.8 363.8,719.0 371.5,721.2" />
+          <path class="dep-edge" data-src="structural" data-tgt="adversarial" d="M 562.8 128.6 Q 767.6 392.6 757.1 726.5"><title>structural leans on adversarial</title></path>
+          <polygon class="dep-arrowhead" data-src="structural" data-tgt="adversarial" points="757.1,726.5 753.3,718.4 761.3,718.6" />
+          <path class="dep-edge" data-src="structural" data-tgt="behavioral" d="M 568.6 122.8 Q 649.2 185.4 751.3 182.2"><title>structural leans on behavioral</title></path>
+          <polygon class="dep-arrowhead" data-src="structural" data-tgt="behavioral" points="751.3,182.2 743.4,186.4 743.2,178.4" />
+          <path class="dep-edge" data-src="invariants" data-tgt="runtime" d="M 876.1 570.4 Q 762.1 738.1 567.3 794.7"><title>invariants leans on runtime</title></path>
+          <polygon class="dep-arrowhead" data-src="invariants" data-tgt="runtime" points="567.3,794.7 573.8,788.6 576.1,796.3" />
+          <path class="dep-edge" data-src="runtime" data-tgt="change" d="M 551.4 797.2 Q 470.8 734.6 368.7 737.8"><title>runtime leans on change</title></path>
+          <polygon class="dep-arrowhead" data-src="runtime" data-tgt="change" points="368.7,737.8 376.6,733.6 376.8,741.6" />
+          <path class="dep-edge" data-src="adversarial" data-tgt="invariants" d="M 765.1 727.8 Q 793.6 629.7 878.1 572.3"><title>adversarial leans on invariants</title></path>
+          <polygon class="dep-arrowhead" data-src="adversarial" data-tgt="invariants" points="878.1,572.3 873.7,580.2 869.2,573.5" />
+          <path class="dep-edge" data-src="adversarial" data-tgt="test-effectiveness" d="M 762.6 726.5 Q 886.9 566.2 880.6 363.5"><title>adversarial leans on test-effectiveness</title></path>
+          <polygon class="dep-arrowhead" data-src="adversarial" data-tgt="test-effectiveness" points="880.6,363.5 884.8,371.4 876.8,371.6" />
+          <path class="dep-edge" data-src="structural" data-tgt="invariants" d="M 565.3 127.3 Q 799.2 286.2 878.1 557.8"><title>structural leans on invariants</title></path>
+          <polygon class="dep-arrowhead" data-src="structural" data-tgt="invariants" points="878.1,557.8 872.0,551.2 879.7,549.0" />
+          <path class="dep-edge" data-src="change" data-tgt="evolution" d="M 357.4 726.5 Q 363.7 523.8 239.4 363.5"><title>change leans on evolution</title></path>
+          <polygon class="dep-arrowhead" data-src="change" data-tgt="evolution" points="239.4,363.5 247.5,367.4 241.2,372.3" />
+          <path class="dep-edge" data-src="change" data-tgt="adversarial" d="M 369.2 735.1 Q 560.0 666.4 750.8 735.1"><title>change leans on adversarial</title></path>
+          <polygon class="dep-arrowhead" data-src="change" data-tgt="adversarial" points="750.8,735.1 742.0,736.1 744.7,728.6" />
+          <path class="dep-edge" data-src="behavioral" data-tgt="invariants" d="M 762.6 193.5 Q 756.3 396.2 880.6 556.5"><title>behavioral leans on invariants</title></path>
+          <polygon class="dep-arrowhead" data-src="behavioral" data-tgt="invariants" points="880.6,556.5 872.5,552.6 878.8,547.7" />
+          <path class="dep-edge" data-src="test-effectiveness" data-tgt="behavioral" d="M 878.1 347.7 Q 793.6 290.3 765.1 192.2"><title>test-effectiveness leans on behavioral</title></path>
+          <polygon class="dep-arrowhead" data-src="test-effectiveness" data-tgt="behavioral" points="765.1,192.2 771.2,198.8 763.5,201.0" />
+          <path class="dep-edge" data-src="change" data-tgt="test-effectiveness" d="M 367.4 729.8 Q 688.3 636.6 876.1 360.2"><title>change leans on test-effectiveness</title></path>
+          <polygon class="dep-arrowhead" data-src="change" data-tgt="test-effectiveness" points="876.1,360.2 874.9,369.1 868.3,364.6" />
+          <path class="dep-edge" data-src="architecture" data-tgt="behavioral" d="M 243.9 559.8 Q 431.7 283.4 752.6 190.2"><title>architecture leans on behavioral</title></path>
+          <polygon class="dep-arrowhead" data-src="architecture" data-tgt="behavioral" points="752.6,190.2 746.0,196.3 743.8,188.6" />
+          <text class="dep-edge-label" data-src="behavioral" data-tgt="change" x="500.8" y="417.0" text-anchor="middle"><title>Contract Tests, Smoke Tests, Synthetic Monitoring</title>Smoke Tests</text>
+          <text class="dep-edge-label" data-src="structural" data-tgt="adversarial" x="703.9" y="413.3" text-anchor="middle"><title>Build Provenance &amp; SBOM, Contract &amp; Refinement Types, Static Analysis</title>Static Analysis</text>
+          <text class="dep-edge-label" data-src="structural" data-tgt="behavioral" x="650.4" y="181.9" text-anchor="middle"><title>Build Provenance &amp; SBOM, Contract &amp; Refinement Types, Schema Validator</title>Schema Validator</text>
+          <text class="dep-edge-label" data-src="invariants" data-tgt="runtime" x="735.8" y="701.9" text-anchor="middle"><title>Business Invariants, Database Invariants, Runtime Invariants</title>Runtime Invariants</text>
+          <text class="dep-edge-label" data-src="runtime" data-tgt="change" x="469.6" y="738.1" text-anchor="middle"><title>Distributed Traces, Load Testing, Observability Events</title>Load Testing</text>
+          <text class="dep-edge-label" data-src="adversarial" data-tgt="invariants" x="816.0" y="646.0" text-anchor="middle"><title>Fault Injection, Live Chaos Experiments, Metamorphic Testing</title>Fault Injection</text>
+          <text class="dep-edge-label" data-src="adversarial" data-tgt="test-effectiveness" x="867.2" y="559.8" text-anchor="middle"><title>Fuzzing, Metamorphic Testing, Property-Based Testing</title>Fuzzing</text>
+          <text class="dep-edge-label" data-src="structural" data-tgt="invariants" x="752.0" y="320.5" text-anchor="middle"><title>Model Checking, Theorem Proving, Type Checker</title>Type Checker</text>
+          <text class="dep-edge-label" data-src="change" data-tgt="evolution" x="344.0" y="530.2" text-anchor="middle"><title>A/B Testing, Error-Budget Impact</title>A/B Testing</text>
+          <text class="dep-edge-label" data-src="change" data-tgt="adversarial" x="560.0" y="711.1" text-anchor="middle"><title>Canary Analysis, Shadow Traffic</title>Shadow Traffic</text>
+          <text class="dep-edge-label" data-src="behavioral" data-tgt="invariants" x="776.0" y="389.8" text-anchor="middle"><title>Contract Tests, Smoke Tests</title>Smoke Tests</text>
+          <text class="dep-edge-label" data-src="test-effectiveness" data-tgt="behavioral" x="816.0" y="274.0" text-anchor="middle"><title>Escaped Defect Rate, Mutation Testing</title>Mutation Testing</text>
+          <text class="dep-edge-label" data-src="change" data-tgt="test-effectiveness" x="663.0" y="601.8" text-anchor="middle"><title>A/B Testing</title>A/B Testing</text>
+          <text class="dep-edge-label" data-src="architecture" data-tgt="behavioral" x="471.1" y="337.6" text-anchor="middle"><title>Boundary Sensors</title>Boundary Sensors</text>
+          <a href="/software-observatory/previews/pr-148/families/structural/" class="dep-node" data-family="structural">
+            <circle cx="560.0" cy="120.0" r="9" class="dep-node-dot" />
+            <text class="dep-node-label" x="560.0" y="102.0" text-anchor="middle">Structural</text>
+          </a>
+          <a href="/software-observatory/previews/pr-148/families/behavioral/" class="dep-node" data-family="behavioral">
+            <circle cx="759.8" cy="184.9" r="9" class="dep-node-dot" />
+            <text class="dep-node-label" x="775.8" y="166.9" text-anchor="start">Behavioral</text>
+          </a>
+          <a href="/software-observatory/previews/pr-148/families/test-effectiveness/" class="dep-node" data-family="test-effectiveness">
+            <circle cx="883.4" cy="354.9" r="9" class="dep-node-dot" />
+            <text class="dep-node-label" x="899.4" y="336.9" text-anchor="start">Test Effectiveness</text>
+          </a>
+          <a href="/software-observatory/previews/pr-148/families/invariants/" class="dep-node" data-family="invariants">
+            <circle cx="883.4" cy="565.1" r="9" class="dep-node-dot" />
+            <text class="dep-node-label" x="899.4" y="593.1" text-anchor="start">Invariants</text>
+          </a>
+          <a href="/software-observatory/previews/pr-148/families/adversarial/" class="dep-node" data-family="adversarial">
+            <circle cx="759.8" cy="735.1" r="9" class="dep-node-dot" />
+            <text class="dep-node-label" x="775.8" y="763.1" text-anchor="start">Adversarial</text>
+          </a>
+          <a href="/software-observatory/previews/pr-148/families/runtime/" class="dep-node" data-family="runtime">
+            <circle cx="560.0" cy="800.0" r="9" class="dep-node-dot" />
+            <text class="dep-node-label" x="560.0" y="828.0" text-anchor="middle">Runtime</text>
+          </a>
+          <a href="/software-observatory/previews/pr-148/families/change/" class="dep-node" data-family="change">
+            <circle cx="360.2" cy="735.1" r="9" class="dep-node-dot" />
+            <text class="dep-node-label" x="344.2" y="763.1" text-anchor="end">Change</text>
+          </a>
+          <a href="/software-observatory/previews/pr-148/families/architecture/" class="dep-node" data-family="architecture">
+            <circle cx="236.6" cy="565.1" r="9" class="dep-node-dot" />
+            <text class="dep-node-label" x="220.6" y="593.1" text-anchor="end">Architecture</text>
+          </a>
+          <a href="/software-observatory/previews/pr-148/families/evolution/" class="dep-node" data-family="evolution">
+            <circle cx="236.6" cy="354.9" r="9" class="dep-node-dot" />
+            <text class="dep-node-label" x="220.6" y="336.9" text-anchor="end">Evolution</text>
+          </a>
+          <a href="/software-observatory/previews/pr-148/families/comprehension/" class="dep-node" data-family="comprehension">
+            <circle cx="360.2" cy="184.9" r="9" class="dep-node-dot" />
+            <text class="dep-node-label" x="344.2" y="166.9" text-anchor="end">Human Comprehension</text>
+          </a>
+      </svg>
+      </div>
+      <details class="sr-only">
+        <summary>Family dependency graph (text)</summary>
+        <ul>
+        <li>Adversarial leans on Behavioral via: Property-Based Testing</li>
+        <li>Adversarial leans on Change via: Fault Injection</li>
+        <li>Adversarial leans on Invariants via: Fault Injection, Live Chaos Experiments, Metamorphic Testing</li>
+        <li>Adversarial leans on Runtime via: Live Chaos Experiments</li>
+        <li>Adversarial leans on Structural via: Static Security Analysis</li>
+        <li>Adversarial leans on Test Effectiveness via: Fuzzing, Metamorphic Testing, Property-Based Testing</li>
+        <li>Architecture leans on Behavioral via: Boundary Sensors</li>
+        <li>Architecture leans on Change via: Dependency Graph</li>
+        <li>Architecture leans on Evolution via: Hotspot Analysis</li>
+        <li>Architecture leans on Runtime via: Live Service Graph Discovery</li>
+        <li>Architecture leans on Test Effectiveness via: Hotspot Analysis</li>
+        <li>Behavioral leans on Adversarial via: Example-Based Tests</li>
+        <li>Behavioral leans on Change via: Contract Tests, Smoke Tests, Synthetic Monitoring</li>
+        <li>Behavioral leans on Invariants via: Contract Tests, Smoke Tests</li>
+        <li>Behavioral leans on Runtime via: Synthetic Monitoring</li>
+        <li>Behavioral leans on Structural via: Contract Tests</li>
+        <li>Behavioral leans on Test Effectiveness via: Example-Based Tests, Snapshot Tests</li>
+        <li>Change leans on Adversarial via: Canary Analysis, Shadow Traffic</li>
+        <li>Change leans on Behavioral via: API Compatibility, Feature Flag Exposure Telemetry</li>
+        <li>Change leans on Evolution via: A/B Testing, Error-Budget Impact</li>
+        <li>Change leans on Runtime via: Feature Flag Exposure Telemetry</li>
+        <li>Change leans on Structural via: Incremental Build Correctness</li>
+        <li>Change leans on Test Effectiveness via: A/B Testing</li>
+        <li>Evolution leans on Architecture via: Change Coupling</li>
+        <li>Evolution leans on Change via: Revert Rate</li>
+        <li>Evolution leans on Runtime via: Incident Correlation</li>
+        <li>Invariants leans on Adversarial via: Runtime Invariants</li>
+        <li>Invariants leans on Behavioral via: Pre-Promotion Invariant Gates, Runtime Invariants</li>
+        <li>Invariants leans on Change via: Pre-Promotion Invariant Gates</li>
+        <li>Invariants leans on Runtime via: Business Invariants, Database Invariants, Runtime Invariants</li>
+        <li>Invariants leans on Structural via: Runtime Invariants, Statically Checked Invariants</li>
+        <li>Runtime leans on Change via: Distributed Traces, Load Testing, Observability Events</li>
+        <li>Runtime leans on Human Comprehension via: Observability Events</li>
+        <li>Runtime leans on Evolution via: Observability Events</li>
+        <li>Runtime leans on Invariants via: Observability Events</li>
+        <li>Structural leans on Adversarial via: Build Provenance &amp; SBOM, Contract &amp; Refinement Types, Static Analysis</li>
+        <li>Structural leans on Behavioral via: Build Provenance &amp; SBOM, Contract &amp; Refinement Types, Schema Validator</li>
+        <li>Structural leans on Change via: Build Provenance &amp; SBOM</li>
+        <li>Structural leans on Invariants via: Model Checking, Theorem Proving, Type Checker</li>
+        <li>Structural leans on Test Effectiveness via: Type Checker</li>
+        <li>Test Effectiveness leans on Adversarial via: Mutation Testing</li>
+        <li>Test Effectiveness leans on Behavioral via: Escaped Defect Rate, Mutation Testing</li>
+        <li>Test Effectiveness leans on Change via: Diff Coverage</li>
+        <li>Test Effectiveness leans on Evolution via: Escaped Defect Rate</li>
+        </ul>
+      </details>
+    </div>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-148/about/">About</a> · <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-148/js/main.js"></script>
+</body>
+</html>

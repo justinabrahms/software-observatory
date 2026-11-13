@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-147/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Static Analysis — Software Observatory</title>
+  <meta name="description" content="Pattern-matching and dataflow analysis over the source without executing it. Covers the space between a linter (style and local patterns) and a type checker…">
+  <link rel="canonical" href="/software-observatory/previews/pr-147/sensors/static-analysis/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Static Analysis — Software Observatory">
+  <meta property="og:description" content="Pattern-matching and dataflow analysis over the source without executing it. Covers the space between a linter (style and local patterns) and a type checker…">
+  <meta property="og:url" content="/software-observatory/previews/pr-147/sensors/static-analysis/">
+  <meta property="og:image" content="/software-observatory/previews/pr-147/og/cards/static-analysis.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Static Analysis — Software Observatory">
+  <meta name="twitter:description" content="Pattern-matching and dataflow analysis over the source without executing it. Covers the space between a linter (style and local patterns) and a type checker…">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-147/og/cards/static-analysis.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-147/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-147/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "TechArticle",
+        "DefinedTerm"
+      ],
+      "@id": "/software-observatory/previews/pr-147/sensors/static-analysis/#entry",
+      "headline": "Static Analysis",
+      "name": "Static Analysis",
+      "description": "Pattern-matching and dataflow analysis over the source without executing it. Covers the space between a linter (style and local patterns) and a type checker (type soundness): null dereferences…",
+      "termCode": "SO-001e",
+      "url": "/software-observatory/previews/pr-147/sensors/static-analysis/",
+      "mainEntityOfPage": "/software-observatory/previews/pr-147/sensors/static-analysis/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-147/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "publisher": {
+        "@id": "/software-observatory/previews/pr-147/#organization"
+      },
+      "inDefinedTermSet": {
+        "@id": "/software-observatory/previews/pr-147/catalog/#defined-term-set"
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-147/catalog/#defined-term-set"
+      },
+      "datePublished": "2026-08-24",
+      "dateModified": "2026-08-28",
+      "about": {
+        "@type": "Thing",
+        "@id": "/software-observatory/previews/pr-147/families/structural/#defined-term-set",
+        "name": "Structural",
+        "url": "/software-observatory/previews/pr-147/families/structural/"
+      },
+      "keywords": "Structural",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "value": "medium",
+          "description": "findings are patterns, not proofs"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#independence",
+          "name": "Independence",
+          "value": "high",
+          "description": "the analysis does not trust the code's own intentions"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#scope",
+          "name": "Scope",
+          "value": "module",
+          "description": "typically module to system"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "value": "seconds"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#actionability",
+          "name": "Actionability",
+          "value": "guiding",
+          "description": "shows the rule, the line, and often the fix"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "value": "predictive"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-147/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Structural",
+          "item": "/software-observatory/previews/pr-147/families/structural/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Static Analysis"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #147 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-147/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-147/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-147/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-147/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-147/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-147/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-147/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-147/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-147/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-147/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-147/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="wiki-layout">
+    <article class="signal-detail">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-147/catalog/">Catalog</a> › <a href="/software-observatory/previews/pr-147/families/structural/">Structural</a> › Static Analysis</p>
+
+      <header class="signal-detail-header">
+        <h1 class="signal-detail-title">Static Analysis</h1>
+        <div class="signal-detail-meta">
+          <span class="tag tag-family">Structural</span>
+          <span class="tag tag-confidence">Medium oracle</span>
+          <span class="tag tag-type">Predictive</span>
+        </div>
+      </header>
+
+      <div class="signal-detail-body">
+        <p>Pattern-matching and dataflow analysis over the source without executing it.
+Covers the space between a <a class="body-link" href="/software-observatory/previews/pr-147/sensors/linter/">linter</a> (style and local patterns)
+and a <a class="body-link" href="/software-observatory/previews/pr-147/sensors/type-checker/">type checker</a> (type soundness): null dereferences,
+unreachable code, resource leaks, taint flow, API misuse. It subsumes
+neither neighbor: it carries no style rules and proves no types. It also
+gets adopted differently. A linter arrives with the toolchain and runs from
+the first commit; a dataflow analyzer is slower, noisier out of the box, and
+has to be tuned against the codebase before its output is worth reading, so
+teams switch it on deliberately and usually later. What it buys for that
+cost is reasoning that follows values across function boundaries and down
+particular execution paths, which neither neighbor attempts.</p>
+<h2 id="in-practice">In practice</h2>
+<p>A reading is a finding with a rule, a location, and usually a trace:</p>
+<p>Illustrative finding, not Infer console output. The call context is a
+summary of the trace a reviewer would inspect in the analyzer&rsquo;s report:</p>
+<pre><code class="language-text">Rule: NULL_DEREFERENCE
+Location: src/Checkout.java:42
+Value: user, assigned from findById(session, id) on line 38
+Problem: user may be null when dereferenced
+Call context: placeOrder at src/Checkout.java:24
+</code></pre>
+<p>The trace is the value. A linter points at a line; a static analyzer
+reconstructs how a value got there, which is what makes the finding
+actionable rather than just located.</p>
+<h2 id="how-it-gets-gamed">How it gets gamed</h2>
+<ul>
+<li><strong>Disable, don&rsquo;t fix.</strong> Like the linter, <code>// nolint</code> and rule
+  exclusions turn findings into noise by decree. The suppression ratio
+  is the meta-signal.</li>
+<li><strong>Narrow the analysis scope.</strong> Excluding generated directories,
+  vendored code, or &ldquo;legacy&rdquo; modules shrinks what the analyzer sees
+  while keeping its name on the pipeline.</li>
+<li><strong>Tune for silence.</strong> Lowering sensitivity thresholds until the
+  finding count drops to zero keeps the sensor and discards its reach.</li>
+<li><strong>Baseline erosion.</strong> Freezing known findings into a baseline and
+  only failing on new ones, while the baseline grows forever because
+  old findings are &ldquo;someone else&rsquo;s problem.&rdquo;</li>
+</ul>
+<p>The meta-signal is the trend of the unsuppressed finding count per
+commit. A rising baseline or a falling suppression ratio both indicate
+the sensor being neutered.</p>
+<h2 id="what-it-cannot-detect">What it cannot detect</h2>
+<p>Static analysis cannot detect <a class="body-link" href="/software-observatory/previews/pr-147/catalog/#behavioral">behavioral correctness</a> —
+it reasons about the code, not its execution. It will not catch a wrong
+algorithm that type-checks and follows every pattern rule. It also
+produces false positives on code paths the analyzer&rsquo;s abstraction can&rsquo;t
+prove safe, which is the cost of path-sensitivity: precision trades
+against noise. A clean scan says nothing about what the code does at
+runtime — that belongs to <a class="body-link" href="/software-observatory/previews/pr-147/sensors/observability-events/">observability events</a>
+and <a class="body-link" href="/software-observatory/previews/pr-147/sensors/runtime-invariants/">runtime invariants</a>.</p>
+
+                <h2 id="related-sensors">Related sensors</h2>
+        <div class="see-also-grid">
+          <a href="/software-observatory/previews/pr-147/sensors/type-checker/" class="see-also-card">
+            <span class="see-also-type">Structural</span>
+            <span class="see-also-title">Type Checker</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/linter/" class="see-also-card">
+            <span class="see-also-type">Structural</span>
+            <span class="see-also-title">Linter</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/schema-validator/" class="see-also-card">
+            <span class="see-also-type">Structural</span>
+            <span class="see-also-title">Schema Validator</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/static-security-analysis/" class="see-also-card">
+            <span class="see-also-type">Adversarial</span>
+            <span class="see-also-title">Static Security Analysis</span>
+          </a>
+        </div>
+
+        <div class="entry-categories">
+          <span class="cat-label">Categories:</span>
+          <a href="/software-observatory/previews/pr-147/families/structural/" class="cat-link">Structural</a>
+        </div>
+
+        <h2 id="references">References</h2>
+        <h3 class="references-subheading" id="publications">Publications</h3>
+        <ul class="reference-list">
+          <li><a href="https://software-lab.org/publications/ase2018_static_bug_detectors_study.pdf" class="wikilink">How Many of All Bugs Do We Find? A Study of Static Bug Detectors</a> — <span class="ref-meta">Andrew Habib, Michael Pradel · 2018 · controlled study · ASE 2018</span></li>
+          <li><a href="https://research.google/pubs/lessons-from-building-static-analysis-tools-at-google/" class="wikilink">Lessons from Building Static Analysis Tools at Google</a> — <span class="ref-meta">Caitlin Sadowski, Edward Aftandilian, Alex Eagle, Liam Miller-Cushon, Ciera Jaspan · 2018 · case study · Communications of the ACM 61(4)</span></li>
+        </ul>
+        <h3 class="references-subheading" id="tooling">Tooling</h3>
+        <ul class="reference-list reference-tools">
+          <li><span class="ref-title"><a href="https://fbinfer.com" class="wikilink">Infer</a></span><span class="ref-desc">Separation logic and taint analysis by Meta</span></li>
+          <li><span class="ref-title"><a href="https://codeql.github.com" class="wikilink">CodeQL</a></span><span class="ref-desc">Semantic code analysis engine by GitHub</span></li>
+          <li><span class="ref-title"><a href="https://semgrep.dev" class="wikilink">Semgrep</a></span><span class="ref-desc">Multi-language static analysis with custom rules</span></li>
+          <li><span class="ref-title"><a href="https://clang-analyzer.llvm.org" class="wikilink">Clang Static Analyzer</a></span><span class="ref-desc">Path-sensitive analysis for C/C++/Objective-C</span></li>
+          <li><span class="ref-title"><a href="https://pylint.readthedocs.io" class="wikilink">Pylint</a></span><span class="ref-desc">Python static analysis and style checker</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <aside class="wiki-sidebar">
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="sensor-properties">Sensor properties</h3>
+        <dl class="meta-list">
+          <dt>Family</dt>           <dd><a href="/software-observatory/previews/pr-147/families/structural/" class="wikilink">Structural</a></dd>
+          <dt>Oracle</dt>          <dd>Medium <span class="prop-note" title="findings are patterns, not proofs" aria-label="findings are patterns, not proofs">(?)</span></dd>
+          <dt>Independence</dt>     <dd>High <span class="prop-note" title="the analysis does not trust the code&#x27;s own intentions" aria-label="the analysis does not trust the code&#x27;s own intentions">(?)</span></dd>
+          <dt>Scope</dt>           <dd>Module <span class="prop-note" title="typically module to system" aria-label="typically module to system">(?)</span></dd>
+          <dt>Latency</dt>         <dd>Seconds</dd>
+          <dt>Actionability</dt>   <dd>Guiding <span class="prop-note" title="shows the rule, the line, and often the fix" aria-label="shows the rule, the line, and often the fix">(?)</span></dd>
+          <dt>Type</dt>             <dd>Predictive</dd>
+          <dt>Entry ID</dt>        <dd>SO-001e</dd>
+          <dt>Reviewed</dt>        <dd>2026-08 <span class="review-age" title="Age measured against 2026-11-13, the newest date in the catalog. The build never uses the wall clock, so this page is byte-identical between builds.">— 2 months ago</span></dd>
+        </dl>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="what-links-here">What links here</h3>
+        <ul class="backlink-list">
+          <li><a href="/software-observatory/previews/pr-147/sensors/model-checking/">Model Checking</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="related-categories">Related categories</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-147/families/structural/">Category: Structural</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-147/about/">About</a> · <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-147/js/main.js"></script>
+</body>
+</html>

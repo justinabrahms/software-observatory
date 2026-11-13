@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-148/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Synthetic Monitoring — Software Observatory</title>
+  <meta name="description" content="Scripted user flows run against the production system around the clock: log in, search, add to cart, check out.">
+  <link rel="canonical" href="/software-observatory/previews/pr-148/sensors/synthetic-monitoring/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Synthetic Monitoring — Software Observatory">
+  <meta property="og:description" content="Scripted user flows run against the production system around the clock: log in, search, add to cart, check out.">
+  <meta property="og:url" content="/software-observatory/previews/pr-148/sensors/synthetic-monitoring/">
+  <meta property="og:image" content="/software-observatory/previews/pr-148/og/cards/synthetic-monitoring.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Synthetic Monitoring — Software Observatory">
+  <meta name="twitter:description" content="Scripted user flows run against the production system around the clock: log in, search, add to cart, check out.">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-148/og/cards/synthetic-monitoring.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-148/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-148/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "TechArticle",
+        "DefinedTerm"
+      ],
+      "@id": "/software-observatory/previews/pr-148/sensors/synthetic-monitoring/#entry",
+      "headline": "Synthetic Monitoring",
+      "name": "Synthetic Monitoring",
+      "description": "Scripted user flows run against the production system around the clock: log in, search, add to cart, check out.",
+      "termCode": "SO-012c",
+      "url": "/software-observatory/previews/pr-148/sensors/synthetic-monitoring/",
+      "mainEntityOfPage": "/software-observatory/previews/pr-148/sensors/synthetic-monitoring/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-148/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "publisher": {
+        "@id": "/software-observatory/previews/pr-148/#organization"
+      },
+      "inDefinedTermSet": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "datePublished": "2026-08-23",
+      "about": {
+        "@type": "Thing",
+        "@id": "/software-observatory/previews/pr-148/families/behavioral/#defined-term-set",
+        "name": "Behavioral",
+        "url": "/software-observatory/previews/pr-148/families/behavioral/"
+      },
+      "keywords": "Behavioral, Production Sensors",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "value": "high",
+          "description": "a failed checkout flow is unambiguous"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#independence",
+          "name": "Independence",
+          "value": "high",
+          "description": "runs outside the system, against its public surface"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#scope",
+          "name": "Scope",
+          "value": "user-journey",
+          "description": "scripted end-to-end user flows"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "value": "minutes"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#actionability",
+          "name": "Actionability",
+          "value": "guiding",
+          "description": "the failing step localizes the breakage"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "value": "retrospective"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-148/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Behavioral",
+          "item": "/software-observatory/previews/pr-148/families/behavioral/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Synthetic Monitoring"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #148 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-148/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-148/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-148/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-148/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-148/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-148/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-148/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-148/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-148/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-148/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="wiki-layout">
+    <article class="signal-detail">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-148/catalog/">Catalog</a> › <a href="/software-observatory/previews/pr-148/families/behavioral/">Behavioral</a> › Synthetic Monitoring</p>
+
+      <header class="signal-detail-header">
+        <h1 class="signal-detail-title">Synthetic Monitoring</h1>
+        <div class="signal-detail-meta">
+          <span class="tag tag-family">Behavioral</span>
+          <span class="tag tag-confidence">High oracle</span>
+          <span class="tag tag-type">Retrospective</span>
+        </div>
+      </header>
+
+      <div class="signal-detail-body">
+        <p>Scripted user flows run against the production system around the clock:
+log in, search, add to cart, check out. Synthetic monitoring is a behavioral
+test suite whose environment is the real world, giving you a baseline answer
+to &ldquo;does it do what we expect?&rdquo; even when no user happens to be asking.</p>
+<h2 id="in-practice">In practice</h2>
+<p>A typical reading is a failed check, step by step:</p>
+<pre><code>CHECK checkout-flow FAILED  run 14:35 UTC  vantage fra-1
+  step 1  GET  /login            200   312ms  ok
+  step 2  POST /login            200   428ms  ok
+  step 3  GET  /search?q=kettle  200   391ms  ok
+  step 4  POST /cart             500  2104ms  FAILED
+  step 5  POST /checkout         ---  skipped
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Vantage</th>
+<th>Result</th>
+<th>Failing step</th>
+<th>p95 latency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fra-1</td>
+<td>FAIL</td>
+<td>POST /cart (500)</td>
+<td>2104 ms</td>
+</tr>
+<tr>
+<td>iad-1</td>
+<td>FAIL</td>
+<td>POST /cart (500)</td>
+<td>1980 ms</td>
+</tr>
+<tr>
+<td>sin-1</td>
+<td>PASS</td>
+<td></td>
+<td>412 ms</td>
+</tr>
+</tbody>
+</table>
+<p>Reading it well:</p>
+<ul>
+<li><strong>Read the step, not the check name.</strong> &ldquo;checkout-flow failed&rdquo; is a
+  headline; &ldquo;step 4, POST /cart, 500&rdquo; is a lead. The failing step is the
+  localization the sensor exists to give.</li>
+<li><strong>One failure is a question, three is a signal.</strong> Checks hit real
+  infrastructure and flake. Confirmation avoids paging on a blip, but
+  retries tuned high enough to always pass have silenced the sensor.</li>
+<li><strong>Separate target failure from probe failure.</strong> Expired test
+  credentials, a blocked agent IP, and a stale selector all look like
+  the system failing. The error body usually says which.</li>
+<li><strong>Suspect a check that always passes.</strong> Assertions weaken over time; a
+  five-year-old check that has never failed may no longer be checking
+  anything.</li>
+</ul>
+<h2 id="how-it-gets-gamed">How it gets gamed</h2>
+<p>Synthetics are owned by the teams that ship the flows, so they can be
+tuned to pass:</p>
+<ul>
+<li><strong>Checks tuned to green.</strong> Slow assertions get wider timeouts, flaky
+  steps get more retries, and the check that used to fail in 2 seconds
+  now passes in 40. The monitor still &ldquo;works&rdquo;; it just stopped sensing.</li>
+<li><strong>Silence as maintenance.</strong> A failing check gets snoozed &ldquo;until the
+  deploy lands,&rdquo; then the snooze gets extended, then forgotten. Muted
+  checks are the sensor&rsquo;s off switch.</li>
+<li><strong>Testing the happy path only.</strong> Checks that avoid the paths where bugs
+  live, or that run only from the best-connected region, report a green
+  board over a real degradation elsewhere.</li>
+<li><strong>Credential theater.</strong> Expired test credentials make the check fail
+  for reasons that have nothing to do with the system; after a while
+  everyone learns to ignore check failures, real or not.</li>
+</ul>
+<p>The meta-signal is the check pass rate over months. A fleet of checks
+that has not failed in a year, on a system that has had incidents in the
+same year, is a sensor that has been tuned silent.</p>
+<h2 id="response-playbook">Response playbook</h2>
+<p>When a synthetic check fails:</p>
+<ol>
+<li><strong>Confirm the failure.</strong> Re-run the check, or wait for the next
+   scheduled run if it is minutes away. One failure is a question; two
+   consecutive failures are a signal. Do not page on a single blip, and
+   do not tune the retry count high enough to make this step meaningless.</li>
+<li><strong>Rule out the probe.</strong> Check whether the failure is in the target or
+   in the test itself: expired credentials, blocked agent IPs, a stale
+   selector, a provider outage at the vantage point. The failing step&rsquo;s
+   error body usually says which.</li>
+<li><strong>Measure the blast radius.</strong> Check the same flow from other vantage
+   points and check real-user metrics for the same endpoint. If only one
+   region fails, suspect network or regional infrastructure; if all fail,
+   suspect the service.</li>
+<li><strong>Correlate with recent changes.</strong> Overlay the failure time with
+   deploys and config changes. A check that fails within minutes of a
+   deploy is a <a class="body-link" href="/software-observatory/previews/pr-148/sensors/canary-analysis/">canary</a> that caught something, and
+   the deploy owner is the next person to talk to.</li>
+<li><strong>Keep the check armed after the fix.</strong> Do not mute the check while
+   investigating; that is how suppression starts. If the check is truly
+   broken, fix the check in the same PR as the incident, and record why.</li>
+</ol>
+<h2 id="what-it-cannot-detect">What it cannot detect</h2>
+<p>Behavior outside the scripted paths. Synthetics cover the flows you thought
+to script; the long tail of user behavior is the domain of
+<a class="body-link" href="/software-observatory/previews/pr-148/sensors/observability-events/">observability events</a> and real-user monitoring.</p>
+
+                <h2 id="related-sensors">Related sensors</h2>
+        <div class="see-also-grid">
+          <a href="/software-observatory/previews/pr-148/sensors/continuous-profiling/" class="see-also-card">
+            <span class="see-also-type">Runtime</span>
+            <span class="see-also-title">Continuous Profiling</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/canary-analysis/" class="see-also-card">
+            <span class="see-also-type">Change</span>
+            <span class="see-also-title">Canary Analysis</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/smoke-tests/" class="see-also-card">
+            <span class="see-also-type">Behavioral</span>
+            <span class="see-also-title">Smoke Tests</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/load-testing/" class="see-also-card">
+            <span class="see-also-type">Runtime</span>
+            <span class="see-also-title">Load Testing</span>
+          </a>
+        </div>
+
+        <div class="entry-categories">
+          <span class="cat-label">Categories:</span>
+          <a href="/software-observatory/previews/pr-148/families/behavioral/" class="cat-link">Behavioral</a>
+          <a href="/software-observatory/previews/pr-148/categories/#production-sensors" class="cat-link">Production Sensors</a>
+        </div>
+
+        <h2 id="references">References</h2>
+        <h3 class="references-subheading" id="publications">Publications</h3>
+        <ul class="reference-list">
+          <li><a href="https://www.usenix.org/system/files/nsdi20-paper-hauer.pdf" class="wikilink">Meaningful Availability</a> — <span class="ref-meta">Tamás Hauer, Philipp Hoffmann, John Lunney, Dan Ardelean, Amer Diwan · 2020 · case study · USENIX NSDI &#x27;20</span></li>
+          <li><a href="https://sre.google/sre-book/monitoring-distributed-systems/" class="wikilink">Monitoring Distributed Systems (SRE Book, ch. 6)</a> — <span class="ref-meta">Rob Ewaschuk, Betsy Beyer · 2016 · argument · Site Reliability Engineering, O&#x27;Reilly</span></li>
+        </ul>
+        <h3 class="references-subheading" id="tooling">Tooling</h3>
+        <ul class="reference-list reference-tools">
+          <li><span class="ref-title"><a href="https://checklyhq.com" class="wikilink">Checkly</a></span><span class="ref-desc">Synthetic monitoring as code</span></li>
+          <li><span class="ref-title"><a href="https://k6.io" class="wikilink">k6</a></span><span class="ref-desc">Open-source load testing tool</span></li>
+          <li><span class="ref-title"><a href="https://www.pingdom.com" class="wikilink">Pingdom</a></span><span class="ref-desc">Uptime and performance monitoring</span></li>
+          <li><span class="ref-title"><a href="https://docs.datadoghq.com/synthetics/" class="wikilink">Datadog Synthetic</a></span><span class="ref-desc">Synthetic monitoring in Datadog</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <aside class="wiki-sidebar">
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="sensor-properties">Sensor properties</h3>
+        <dl class="meta-list">
+          <dt>Family</dt>           <dd><a href="/software-observatory/previews/pr-148/families/behavioral/" class="wikilink">Behavioral</a></dd>
+          <dt>Oracle</dt>          <dd>High <span class="prop-note" title="a failed checkout flow is unambiguous" aria-label="a failed checkout flow is unambiguous">(?)</span></dd>
+          <dt>Independence</dt>     <dd>High <span class="prop-note" title="runs outside the system, against its public surface" aria-label="runs outside the system, against its public surface">(?)</span></dd>
+          <dt>Scope</dt>           <dd>User Journey <span class="prop-note" title="scripted end-to-end user flows" aria-label="scripted end-to-end user flows">(?)</span></dd>
+          <dt>Latency</dt>         <dd>Minutes</dd>
+          <dt>Actionability</dt>   <dd>Guiding <span class="prop-note" title="the failing step localizes the breakage" aria-label="the failing step localizes the breakage">(?)</span></dd>
+          <dt>Type</dt>             <dd>Retrospective</dd>
+          <dt>Entry ID</dt>        <dd>SO-012c</dd>
+          <dt>Reviewed</dt>        <dd><span class="review-unreviewed" title="This entry is written and published, but has not yet been re-read in the editorial review pass. An absent review date is reported as absent rather than filled in.">pending</span></dd>
+        </dl>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="what-links-here">What links here</h3>
+        <ul class="backlink-list">
+          <li><a href="/software-observatory/previews/pr-148/sensors/escaped-defect-rate/">Escaped Defect Rate</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/feature-flag-exposure/">Feature Flag Exposure Telemetry</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="related-categories">Related categories</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-148/families/behavioral/">Category: Behavioral</a></li>
+          <li><a href="/software-observatory/previews/pr-148/categories/#production-sensors">Category: Production Sensors</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-148/about/">About</a> · <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-148/js/main.js"></script>
+</body>
+</html>

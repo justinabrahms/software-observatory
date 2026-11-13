@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-148/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Incident Correlation — Software Observatory</title>
+  <meta name="description" content="Which components correlate with production failures? A sensor of operational risk concentration, measured from observability events.">
+  <link rel="canonical" href="/software-observatory/previews/pr-148/sensors/incident-correlation/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Incident Correlation — Software Observatory">
+  <meta property="og:description" content="Which components correlate with production failures? A sensor of operational risk concentration, measured from observability events.">
+  <meta property="og:url" content="/software-observatory/previews/pr-148/sensors/incident-correlation/">
+  <meta property="og:image" content="/software-observatory/previews/pr-148/og/cards/incident-correlation.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Incident Correlation — Software Observatory">
+  <meta name="twitter:description" content="Which components correlate with production failures? A sensor of operational risk concentration, measured from observability events.">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-148/og/cards/incident-correlation.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-148/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-148/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "TechArticle",
+        "DefinedTerm"
+      ],
+      "@id": "/software-observatory/previews/pr-148/sensors/incident-correlation/#entry",
+      "headline": "Incident Correlation",
+      "name": "Incident Correlation",
+      "description": "Which components correlate with production failures? A sensor of operational risk concentration, measured from observability events.",
+      "termCode": "SO-009c",
+      "url": "/software-observatory/previews/pr-148/sensors/incident-correlation/",
+      "mainEntityOfPage": "/software-observatory/previews/pr-148/sensors/incident-correlation/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-148/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "publisher": {
+        "@id": "/software-observatory/previews/pr-148/#organization"
+      },
+      "inDefinedTermSet": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "datePublished": "2026-08-23",
+      "about": {
+        "@type": "Thing",
+        "@id": "/software-observatory/previews/pr-148/families/evolution/#defined-term-set",
+        "name": "Evolution",
+        "url": "/software-observatory/previews/pr-148/families/evolution/"
+      },
+      "keywords": "Evolution, Black-Box Sensors",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "value": "medium",
+          "description": "correlation, not causation"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#independence",
+          "name": "Independence",
+          "value": "high",
+          "description": "incident data is external to the code"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#scope",
+          "name": "Scope",
+          "value": "service"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "value": "weeks"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#actionability",
+          "name": "Actionability",
+          "value": "exploratory",
+          "description": "shows the correlation pattern"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-148/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "value": "retrospective"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-148/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Evolution",
+          "item": "/software-observatory/previews/pr-148/families/evolution/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Incident Correlation"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #148 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-148/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-148/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-148/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-148/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-148/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-148/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-148/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-148/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-148/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-148/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="wiki-layout">
+    <article class="signal-detail">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-148/catalog/">Catalog</a> › <a href="/software-observatory/previews/pr-148/families/evolution/">Evolution</a> › Incident Correlation</p>
+
+      <header class="signal-detail-header">
+        <h1 class="signal-detail-title">Incident Correlation</h1>
+        <div class="signal-detail-meta">
+          <span class="tag tag-family">Evolution</span>
+          <span class="tag tag-confidence">Medium oracle</span>
+          <span class="tag tag-type">Retrospective</span>
+        </div>
+      </header>
+
+      <div class="signal-detail-body">
+        <p>Which components correlate with production failures? A sensor of operational
+risk concentration, measured from <a class="body-link" href="/software-observatory/previews/pr-148/sensors/observability-events/">observability events</a>.</p>
+<p>Incident correlation maps production incidents to the components they
+involve. Components that appear disproportionately often in incident reports
+are risk concentrations — places where the system is most likely to fail.</p>
+<h2 id="in-practice">In practice</h2>
+<p>A typical reading is a quarter of incidents grouped by component:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Incidents (90d)</th>
+<th>Share of SEV-2+</th>
+<th>Trend</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>payments-worker</td>
+<td>7</td>
+<td>38%</td>
+<td>rising</td>
+</tr>
+<tr>
+<td>session-cache</td>
+<td>3</td>
+<td>16%</td>
+<td>flat</td>
+</tr>
+<tr>
+<td>search-indexer</td>
+<td>2</td>
+<td>11%</td>
+<td>falling</td>
+</tr>
+<tr>
+<td>everything else</td>
+<td>6</td>
+<td>33%</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Reading it well:</p>
+<ul>
+<li><strong>Normalize by exposure.</strong> A component that ships daily and carries the
+  most traffic meets more opportunities to fail. Compare incidents per
+  deploy or per request, not raw counts, before declaring a hotspot.</li>
+<li><strong>Distinguish cause from scene.</strong> The component in the incident title
+  is often where the symptom surfaced, not where the fault began. Read
+  the postmortems before ranking.</li>
+<li><strong>Look for repeats.</strong> One incident is an event; the same component
+  failing in similar ways three times in a quarter is a structural
+  weakness with a name on it.</li>
+<li><strong>Unreported incidents are dark matter.</strong> The table only covers what
+  got filed. If half the outages get fixed quietly, the ranking is built
+  on the sample of teams that report.</li>
+</ul>
+<h2 id="how-it-gets-gamed">How it gets gamed</h2>
+<p>The sensor reads the incident record, so the record is what gets gamed:</p>
+<ul>
+<li><strong>Under-reporting.</strong> Small outages get fixed in a chat and never filed,
+  so the component&rsquo;s incident count stays clean. The correlation table
+  then reflects reporting culture, not reliability.</li>
+<li><strong>Severity laundering.</strong> A SEV-2 becomes a SEV-3 because &ldquo;nobody was
+  paged,&rdquo; or the incident gets logged as a maintenance note. Ranking by
+  severity then ranks by willingness to label honestly.</li>
+<li><strong>Wrong-component attribution.</strong> Filing the incident against the team
+  that got paged instead of the component that broke spreads the risk
+  away from the real hotspot.</li>
+</ul>
+<p>The meta-signal is the filing rate: incidents filed per outage detected
+by other sensors, such as <a class="body-link" href="/software-observatory/previews/pr-148/sensors/synthetic-monitoring/">synthetic monitoring</a>
+failures. Detected outages with no matching incident are dark matter.</p>
+<h2 id="response-playbook">Response playbook</h2>
+<p>When correlation shows a component concentrating failures:</p>
+<ol>
+<li><strong>Read the postmortems before acting.</strong> Pull every incident the
+   component appears in and check whether it was the cause or the scene.
+   Correlation proposes; the write-ups dispose.</li>
+<li><strong>Normalize by exposure.</strong> Divide incidents by deploys and by traffic
+   before comparing components; a hot component may just be the busiest
+   one.</li>
+<li><strong>Fund the hotspot.</strong> The standard move is a reliability investment in
+   the named component: better <a class="body-link" href="/software-observatory/previews/pr-148/sensors/runtime-invariants/">runtime invariants</a>,
+   more <a class="body-link" href="/software-observatory/previews/pr-148/sensors/synthetic-monitoring/">synthetic monitoring</a> around it, or a
+   dedicated hardening sprint. Risk concentration is a budgeting signal.</li>
+<li><strong>Decide whether to isolate.</strong> If the component keeps failing and
+   cannot be hardened quickly, wrap it: bulkheads, timeouts, fallbacks,
+   so its failures stop cascading. Containment is the honest alternative
+   to pretending the correlation will improve on its own.</li>
+<li><strong>Re-run the correlation next quarter.</strong> If the investment worked, the
+   component&rsquo;s share should fall. If it did not, the diagnosis was wrong
+   or the fix was cosmetic.</li>
+</ol>
+<h2 id="what-it-cannot-detect">What it cannot detect</h2>
+<p>Incident correlation can&rsquo;t tell you <em>why</em> a component fails — only that it
+does. Also depends on incident reporting quality: unreported incidents
+produce no signal.</p>
+
+                <h2 id="related-sensors">Related sensors</h2>
+        <div class="see-also-grid">
+          <a href="/software-observatory/previews/pr-148/sensors/revert-rate/" class="see-also-card">
+            <span class="see-also-type">Evolution</span>
+            <span class="see-also-title">Revert Rate</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/change-coupling/" class="see-also-card">
+            <span class="see-also-type">Evolution</span>
+            <span class="see-also-title">Change Coupling</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/time-to-repair/" class="see-also-card">
+            <span class="see-also-type">Evolution</span>
+            <span class="see-also-title">Time-to-Repair</span>
+          </a>
+          <a href="/software-observatory/previews/pr-148/sensors/observability-events/" class="see-also-card">
+            <span class="see-also-type">Runtime</span>
+            <span class="see-also-title">Observability Events</span>
+          </a>
+        </div>
+
+        <div class="entry-categories">
+          <span class="cat-label">Categories:</span>
+          <a href="/software-observatory/previews/pr-148/families/evolution/" class="cat-link">Evolution</a>
+          <a href="/software-observatory/previews/pr-148/categories/#black-box-sensors" class="cat-link">Black-Box Sensors</a>
+        </div>
+
+        <h2 id="references">References</h2>
+        <h3 class="references-subheading" id="publications">Publications</h3>
+        <ul class="reference-list">
+          <li><a href="https://acmsocc.org/2022/assets/slides/95.pdf" class="wikilink">How to Fight Production Incidents? An Empirical Study on a Large-scale Cloud Service</a> — <span class="ref-meta">Supriyo Ghosh, Manish Shetty, Chetan Bansal, Suman Nath · 2022 · observational study · ACM SoCC &#x27;22</span></li>
+          <li><a href="https://about.gitlab.com/blog/postmortem-of-database-outage-of-january-31/" class="wikilink">Postmortem of database outage of January 31</a> — <span class="ref-meta">GitLab Inc. · 2017 · case study · GitLab engineering blog</span></li>
+        </ul>
+        <h3 class="references-subheading" id="tooling">Tooling</h3>
+        <ul class="reference-list reference-tools">
+          <li><span class="ref-title"><a href="https://www.datadoghq.com" class="wikilink">Datadog</a></span><span class="ref-desc">Cloud monitoring and observability</span></li>
+          <li><span class="ref-title"><a href="https://sentry.io" class="wikilink">Sentry</a></span><span class="ref-desc">Error tracking and crash reporting</span></li>
+          <li><span class="ref-title"><a href="https://support.atlassian.com/jira-cloud-administration/docs/configure-issue-linking/" class="wikilink">Jira correlation</a></span><span class="ref-desc">Incident-to-commit correlation via Jira</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <aside class="wiki-sidebar">
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="sensor-properties">Sensor properties</h3>
+        <dl class="meta-list">
+          <dt>Family</dt>           <dd><a href="/software-observatory/previews/pr-148/families/evolution/" class="wikilink">Evolution</a></dd>
+          <dt>Oracle</dt>          <dd>Medium <span class="prop-note" title="correlation, not causation" aria-label="correlation, not causation">(?)</span></dd>
+          <dt>Independence</dt>     <dd>High <span class="prop-note" title="incident data is external to the code" aria-label="incident data is external to the code">(?)</span></dd>
+          <dt>Scope</dt>           <dd>Service</dd>
+          <dt>Latency</dt>         <dd>Weeks</dd>
+          <dt>Actionability</dt>   <dd>Exploratory <span class="prop-note" title="shows the correlation pattern" aria-label="shows the correlation pattern">(?)</span></dd>
+          <dt>Type</dt>             <dd>Retrospective</dd>
+          <dt>Entry ID</dt>        <dd>SO-009c</dd>
+          <dt>Reviewed</dt>        <dd><span class="review-unreviewed" title="This entry is written and published, but has not yet been re-read in the editorial review pass. An absent review date is reported as absent rather than filled in.">pending</span></dd>
+        </dl>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="what-links-here">What links here</h3>
+        <ul class="backlink-list">
+          <li><a href="/software-observatory/previews/pr-148/sensors/change-coupling/">Change Coupling</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/escaped-defect-rate/">Escaped Defect Rate</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/revert-rate/">Revert Rate</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-148/sensors/time-to-repair/">Time-to-Repair</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+        </ul>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="in-the-playbook">In the playbook</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-148/playbook/still-surprised/">You have everything and still get surprised</a>
+        </ul>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="related-categories">Related categories</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-148/families/evolution/">Category: Evolution</a></li>
+          <li><a href="/software-observatory/previews/pr-148/categories/#black-box-sensors">Category: Black-Box Sensors</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-148/about/">About</a> · <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-148/js/main.js"></script>
+</body>
+</html>

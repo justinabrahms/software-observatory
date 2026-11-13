@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-148/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Test Effectiveness sensors — Software Observatory</title>
+  <meta name="description" content="Test Effectiveness sensors ask: Do our tests actually detect failures? 5 entries in the Software Observatory — Coverage, diff coverage, mutation testing.">
+  <link rel="canonical" href="/software-observatory/previews/pr-148/families/test-effectiveness/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Test Effectiveness sensors — Software Observatory">
+  <meta property="og:description" content="Test Effectiveness sensors ask: Do our tests actually detect failures? 5 entries in the Software Observatory — Coverage, diff coverage, mutation testing.">
+  <meta property="og:url" content="/software-observatory/previews/pr-148/families/test-effectiveness/">
+  <meta property="og:image" content="/software-observatory/previews/pr-148/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Test Effectiveness sensors — Software Observatory">
+  <meta name="twitter:description" content="Test Effectiveness sensors ask: Do our tests actually detect failures? 5 entries in the Software Observatory — Coverage, diff coverage, mutation testing.">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-148/og.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-148/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-148/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "DefinedTermSet",
+      "@id": "/software-observatory/previews/pr-148/families/test-effectiveness/#defined-term-set",
+      "name": "Test Effectiveness sensors",
+      "description": "Test Effectiveness sensors ask: Do our tests actually detect failures? 5 entries in the Software Observatory — Coverage, diff coverage, mutation testing.",
+      "url": "/software-observatory/previews/pr-148/families/test-effectiveness/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "creator": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-148/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-148/catalog/#defined-term-set"
+      },
+      "hasDefinedTerm": [
+        {
+          "@type": "DefinedTerm",
+          "@id": "/software-observatory/previews/pr-148/sensors/branch-coverage/#term",
+          "name": "Branch Coverage",
+          "description": "Did we exercise both sides of decisions? Better than line coverage. Path coverage is better still, but usually expensive and impractical at scale.",
+          "termCode": "SO-003c-b",
+          "url": "/software-observatory/previews/pr-148/sensors/branch-coverage/",
+          "inDefinedTermSet": {
+            "@id": "/software-observatory/previews/pr-148/families/test-effectiveness/#defined-term-set"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "/software-observatory/previews/pr-148/sensors/diff-coverage/#term",
+          "name": "Diff Coverage",
+          "description": "You don’t necessarily care whether some 15-year-old module has 43% coverage. You care: did the code I just changed have evidence attached to it?",
+          "termCode": "SO-003b",
+          "url": "/software-observatory/previews/pr-148/sensors/diff-coverage/",
+          "inDefinedTermSet": {
+            "@id": "/software-observatory/previews/pr-148/families/test-effectiveness/#defined-term-set"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "/software-observatory/previews/pr-148/sensors/escaped-defect-rate/#term",
+          "name": "Escaped Defect Rate",
+          "description": "Of the bugs that reached users, which ones should the test suite have caught? Escaped defect rate is the slowest and most honest measure of test effectiveness: not “would the tests catch a…",
+          "termCode": "SO-012d",
+          "url": "/software-observatory/previews/pr-148/sensors/escaped-defect-rate/",
+          "inDefinedTermSet": {
+            "@id": "/software-observatory/previews/pr-148/families/test-effectiveness/#defined-term-set"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "/software-observatory/previews/pr-148/sensors/line-coverage/#term",
+          "name": "Line Coverage",
+          "description": "Did we execute this line? Useful but weak. A project can have 90% line coverage while mutation testing finds large numbers of mutations that tests don’t detect. Coverage measures execution.",
+          "termCode": "SO-003c",
+          "url": "/software-observatory/previews/pr-148/sensors/line-coverage/",
+          "inDefinedTermSet": {
+            "@id": "/software-observatory/previews/pr-148/families/test-effectiveness/#defined-term-set"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "/software-observatory/previews/pr-148/sensors/mutation-testing/#term",
+          "name": "Mutation Testing",
+          "description": "Take if user.is_admin: allow() and mutate it to if not user.is_admin: allow(). If all your tests still pass, your tests did not actually establish the behavior you thought they established.",
+          "termCode": "SO-003",
+          "url": "/software-observatory/previews/pr-148/sensors/mutation-testing/",
+          "inDefinedTermSet": {
+            "@id": "/software-observatory/previews/pr-148/families/test-effectiveness/#defined-term-set"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-148/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Test Effectiveness"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #148 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-148/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-148/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-148/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-148/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-148/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-148/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-148/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-148/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-148/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-148/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-148/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-148/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-148/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <article class="family-page">
+    <p class="breadcrumb"><a href="/software-observatory/previews/pr-148/catalog/">Catalog</a> › Test Effectiveness</p>
+
+    <section class="page-header">
+      <p class="eyebrow">Sensor family 03</p>
+      <h1 class="page-title">Test Effectiveness</h1>
+      <p class="page-lede">“Do our tests actually detect failures?”</p>
+    </section>
+
+    <div class="about-content">
+      <h2 id="what-belongs-here">What belongs here</h2>
+      <p>Every entry here points at the test suite rather than at the system. They answer a second-order question — would these tests have noticed? — which makes this the one family whose subject is other sensors.</p>
+
+      <h2 id="contested-placements">Contested placements</h2>
+      <p>Escaped Defect Rate measures the whole delivery pipeline after the fact and could equally sit in Evolution. The coverage entries are weak oracles by construction: they can prove a line was never executed, never that a behaviour was established.</p>
+      <h2 id="where-its-signals-arrive">Where its signals arrive</h2>
+      <ul>
+        <li><strong>Mutation testing</strong> — Test stage. Would our tests detect plausible wrong implementations?</li>
+      </ul>
+      <p>
+        The <a href="/software-observatory/previews/pr-148/atlas/" class="wikilink">atlas</a> places every family on
+        the same lifecycle grid; the
+        <a href="/software-observatory/previews/pr-148/framework/" class="wikilink">framework</a> defines the six
+        dimensions each entry below is characterized along.
+      </p>
+
+      <h2 id="entries">Entries (5)</h2>
+    </div>
+
+    <div class="signal-grid">
+          <a class="signal-card" href="/software-observatory/previews/pr-148/sensors/branch-coverage/">
+            <div class="signal-card-meta">
+              <span class="tag tag-family">Test Effectiveness</span>
+              <span class="tag tag-type">Predictive</span>
+            </div>
+            <h3 class="signal-card-title" id="branch-coverage">Branch Coverage</h3>
+            <p class="signal-card-blurb">Did we exercise both sides of decisions? Better than line coverage. Path coverage is better still, but usually expensive and impractical at scale.</p>
+            <div class="signal-card-footer">
+              <span class="oracle-meter"><span class="dot filled"></span><span class="dot filled"></span><span class="dot empty"></span><span class="dot empty"></span><span class="dot empty"></span> Oracle</span>
+              <span class="latency-badge" title="How long it takes to get this feedback: seconds"><span class="sr-only">Feedback latency: </span>~seconds</span>
+            </div>
+          </a>
+          <a class="signal-card" href="/software-observatory/previews/pr-148/sensors/diff-coverage/">
+            <div class="signal-card-meta">
+              <span class="tag tag-family">Test Effectiveness</span>
+              <span class="tag tag-type">Predictive</span>
+            </div>
+            <h3 class="signal-card-title" id="diff-coverage">Diff Coverage</h3>
+            <p class="signal-card-blurb">You don’t necessarily care whether some 15-year-old module has 43% coverage. You care: did the code I just changed have evidence attached to it?</p>
+            <div class="signal-card-footer">
+              <span class="oracle-meter"><span class="dot filled"></span><span class="dot filled"></span><span class="dot empty"></span><span class="dot empty"></span><span class="dot empty"></span> Oracle</span>
+              <span class="latency-badge" title="How long it takes to get this feedback: minutes"><span class="sr-only">Feedback latency: </span>~minutes</span>
+            </div>
+          </a>
+          <a class="signal-card" href="/software-observatory/previews/pr-148/sensors/escaped-defect-rate/">
+            <div class="signal-card-meta">
+              <span class="tag tag-family">Test Effectiveness</span>
+              <span class="tag tag-type">Retrospective</span>
+            </div>
+            <h3 class="signal-card-title" id="escaped-defect-rate">Escaped Defect Rate</h3>
+            <p class="signal-card-blurb">Of the bugs that reached users, which ones should the test suite have caught? Escaped defect rate is the slowest and most honest measure of test effectiveness: not “would the tests catch a…</p>
+            <div class="signal-card-footer">
+              <span class="oracle-meter"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot empty"></span><span class="dot empty"></span> Oracle</span>
+              <span class="latency-badge" title="How long it takes to get this feedback: months"><span class="sr-only">Feedback latency: </span>~months</span>
+            </div>
+          </a>
+          <a class="signal-card" href="/software-observatory/previews/pr-148/sensors/line-coverage/">
+            <div class="signal-card-meta">
+              <span class="tag tag-family">Test Effectiveness</span>
+              <span class="tag tag-type">Predictive</span>
+            </div>
+            <h3 class="signal-card-title" id="line-coverage">Line Coverage</h3>
+            <p class="signal-card-blurb">Did we execute this line? Useful but weak. A project can have 90% line coverage while mutation testing finds large numbers of mutations that tests don’t detect. Coverage measures execution.</p>
+            <div class="signal-card-footer">
+              <span class="oracle-meter"><span class="dot filled"></span><span class="dot filled"></span><span class="dot empty"></span><span class="dot empty"></span><span class="dot empty"></span> Oracle</span>
+              <span class="latency-badge" title="How long it takes to get this feedback: seconds"><span class="sr-only">Feedback latency: </span>~seconds</span>
+            </div>
+          </a>
+          <a class="signal-card" href="/software-observatory/previews/pr-148/sensors/mutation-testing/">
+            <div class="signal-card-meta">
+              <span class="tag tag-family">Test Effectiveness</span>
+              <span class="tag tag-type">Predictive</span>
+            </div>
+            <h3 class="signal-card-title" id="mutation-testing">Mutation Testing</h3>
+            <p class="signal-card-blurb">Take if user.is_admin: allow() and mutate it to if not user.is_admin: allow(). If all your tests still pass, your tests did not actually establish the behavior you thought they established.</p>
+            <div class="signal-card-footer">
+              <span class="oracle-meter"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot empty"></span> Oracle</span>
+              <span class="latency-badge" title="How long it takes to get this feedback: minutes to hours"><span class="sr-only">Feedback latency: </span>~minutes to hours</span>
+            </div>
+          </a>
+    </div>
+
+    <div class="about-content">
+      <h2 id="adjacent-families">Adjacent families</h2>
+      <ul>
+        <li>Previous: <a href="/software-observatory/previews/pr-148/families/behavioral/" class="wikilink">Behavioral</a> — Does it do what we expect?</li>
+        <li>Next: <a href="/software-observatory/previews/pr-148/families/invariants/" class="wikilink">Invariants</a> — What must always be true?</li>
+        <li>All of them: the <a href="/software-observatory/previews/pr-148/catalog/" class="wikilink">complete catalog</a>
+          (this family is also anchored there at
+          <a href="/software-observatory/previews/pr-148/catalog/#test-effectiveness" class="wikilink">/catalog/#test-effectiveness</a>).</li>
+      </ul>
+    </div>
+  </article>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-148/about/">About</a> · <a href="/software-observatory/previews/pr-148/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-148/js/main.js"></script>
+</body>
+</html>

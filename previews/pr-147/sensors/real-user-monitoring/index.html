@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' stats.softwareobservatory.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; img-src 'self' data:; connect-src 'self' stats.softwareobservatory.com; base-uri 'self'; form-action 'self'">
+  <link rel="icon" type="image/svg+xml" href="/software-observatory/previews/pr-147/favicon.svg">
+  <!-- The catalog content is CC BY-SA 4.0. rel="license" is the machine-
+       readable half of that; the footer badge is the human half, and one
+       without the other is how content gets reused with the attribution
+       silently dropped. -->
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+  <title>Real User Monitoring (RUM) — Software Observatory</title>
+  <meta name="description" content="Real user monitoring (RUM) measures how an application performs for people using it: how long pages take to load, how quickly they respond, and where users…">
+  <link rel="canonical" href="/software-observatory/previews/pr-147/sensors/real-user-monitoring/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Real User Monitoring (RUM) — Software Observatory">
+  <meta property="og:description" content="Real user monitoring (RUM) measures how an application performs for people using it: how long pages take to load, how quickly they respond, and where users…">
+  <meta property="og:url" content="/software-observatory/previews/pr-147/sensors/real-user-monitoring/">
+  <meta property="og:image" content="/software-observatory/previews/pr-147/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Software Observatory">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Real User Monitoring (RUM) — Software Observatory">
+  <meta name="twitter:description" content="Real user monitoring (RUM) measures how an application performs for people using it: how long pages take to load, how quickly they respond, and where users…">
+  <meta name="twitter:image" content="/software-observatory/previews/pr-147/og.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/software-observatory/previews/pr-147/css/observatory.css">
+  <link rel="alternate" type="application/rss+xml" title="Software Observatory" href="/software-observatory/previews/pr-147/rss.xml">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "TechArticle",
+        "DefinedTerm"
+      ],
+      "@id": "/software-observatory/previews/pr-147/sensors/real-user-monitoring/#entry",
+      "headline": "Real User Monitoring (RUM)",
+      "name": "Real User Monitoring (RUM)",
+      "description": "Real user monitoring (RUM) measures how an application performs for people using it: how long pages take to load, how quickly they respond, and where users encounter errors.",
+      "termCode": "SO-006f",
+      "url": "/software-observatory/previews/pr-147/sensors/real-user-monitoring/",
+      "mainEntityOfPage": "/software-observatory/previews/pr-147/sensors/real-user-monitoring/",
+      "inLanguage": "en",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "author": {
+        "@type": "Person",
+        "@id": "/software-observatory/previews/pr-147/#author",
+        "name": "Justin Abrahms",
+        "url": "https://justin.abrah.ms",
+        "email": "mailto:justin@abrah.ms",
+        "sameAs": [
+          "https://github.com/justinabrahms",
+          "https://bsky.app/profile/justin.abrah.ms",
+          "https://www.linkedin.com/in/justinabrahms"
+        ]
+      },
+      "publisher": {
+        "@id": "/software-observatory/previews/pr-147/#organization"
+      },
+      "inDefinedTermSet": {
+        "@id": "/software-observatory/previews/pr-147/catalog/#defined-term-set"
+      },
+      "isPartOf": {
+        "@id": "/software-observatory/previews/pr-147/catalog/#defined-term-set"
+      },
+      "datePublished": "2026-11-13",
+      "about": {
+        "@type": "Thing",
+        "@id": "/software-observatory/previews/pr-147/families/runtime/#defined-term-set",
+        "name": "Runtime",
+        "url": "/software-observatory/previews/pr-147/families/runtime/"
+      },
+      "keywords": "Runtime, Production Sensors",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#oracle-strength",
+          "name": "Oracle strength",
+          "value": "medium",
+          "description": "measures experienced performance and failures; correctness needs an explicit outcome or threshold"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#independence",
+          "name": "Independence",
+          "value": "high",
+          "description": "actual devices and networks supply the workload, but the application team chooses instrumentation and sampling"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#scope",
+          "name": "Scope",
+          "value": "user-journey"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#feedback-latency",
+          "name": "Feedback latency",
+          "value": "seconds"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#actionability",
+          "name": "Actionability",
+          "value": "exploratory",
+          "description": "segment by release, route, browser, and device to locate the affected population"
+        },
+        {
+          "@type": "PropertyValue",
+          "propertyID": "/software-observatory/previews/pr-147/framework/#predictive-vs-retrospective",
+          "name": "Predictive vs retrospective",
+          "value": "retrospective"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Catalog",
+          "item": "/software-observatory/previews/pr-147/catalog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Runtime",
+          "item": "/software-observatory/previews/pr-147/families/runtime/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Real User Monitoring (RUM)"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  
+</head>
+<body>
+  <div class="container" role="note"><p>PR #147 preview. This is a proposed change.</p></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <a href="/software-observatory/previews/pr-147/" class="logo">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <!-- brass spyglass on a small tripod, angled up to the right -->
+        <g transform="rotate(-30 16 16)">
+          <rect x="4" y="13.5" width="7" height="5" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="11" y="12.5" width="8" height="7" rx="1"/software-observatory/previews/pr-147/>
+          <rect x="19" y="11" width="6.5" height="10" rx="1"/software-observatory/previews/pr-147/>
+          <line x1="25.5" y1="12" x2="25.5" y2="20"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="19.5" x2="17" y2="24"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="12" y2="28"/software-observatory/previews/pr-147/>
+          <line x1="17" y1="24" x2="22" y2="28"/software-observatory/previews/pr-147/>
+        </g>
+      </svg></span>
+      <span class="logo-text">Software&nbsp;Observatory</span>
+    </a>
+    <nav class="primary-nav">
+      <a href="/software-observatory/previews/pr-147/catalog/">Catalog</a>
+      <a href="/software-observatory/previews/pr-147/playbook/">Playbook</a>
+      <a href="/software-observatory/previews/pr-147/atlas/">Atlas</a>
+      <a href="/software-observatory/previews/pr-147/framework/">Framework</a>
+      <a href="/software-observatory/previews/pr-147/what-each-sensor-proves/">Removing Doubt</a>
+      <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a>
+      <a href="/software-observatory/previews/pr-147/about/">About</a>
+    </nav>
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search sensors…" aria-label="Search sensors" autocomplete="off">
+      <div class="search-results" hidden></div>
+      <noscript><p class="search-noscript"><a href="/software-observatory/previews/pr-147/catalog/">Browse the catalog</a> or <a href="/software-observatory/previews/pr-147/categories/">browse by category</a>.</p></noscript>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+  <div class="wiki-layout">
+    <article class="signal-detail">
+      <p class="breadcrumb"><a href="/software-observatory/previews/pr-147/catalog/">Catalog</a> › <a href="/software-observatory/previews/pr-147/families/runtime/">Runtime</a> › Real User Monitoring (RUM)</p>
+
+      <header class="signal-detail-header">
+        <h1 class="signal-detail-title">Real User Monitoring (RUM)</h1>
+        <div class="signal-detail-meta">
+          <span class="tag tag-family">Runtime</span>
+          <span class="tag tag-confidence">Medium oracle</span>
+          <span class="tag tag-type">Retrospective</span>
+        </div>
+      </header>
+
+      <div class="signal-detail-body">
+        <p>Real user monitoring (RUM) measures how an application performs for people
+using it: how long pages take to load, how quickly they respond, and where
+users encounter errors. It captures devices, networks, and interactions
+that a test lab can miss.</p>
+<p>A server can return a successful response while the browser spends seconds
+blocked on JavaScript or fails to display the result. RUM helps close that
+gap. Where <a class="body-link" href="/software-observatory/previews/pr-147/sensors/synthetic-monitoring/">synthetic monitoring</a> runs a scripted
+journey, RUM follows the journeys people actually take. It is a client-side
+form of <a class="body-link" href="/software-observatory/previews/pr-147/sensors/observability-events/">observability</a>, with the same need to
+ask whether the data represents the people you meant to observe.</p>
+<h2 id="what-to-measure">What to measure</h2>
+<p>Start with what a person can notice. Google&rsquo;s Core Web Vitals describe
+three parts of the experience: <strong>Largest Contentful Paint (LCP)</strong> measures
+when the largest eligible piece of visible content appears;
+<strong>Interaction to Next Paint (INP)</strong> measures responsiveness to qualifying
+interactions during a visit; <strong>Cumulative Layout Shift (CLS)</strong> measures
+unexpected movement of visible content. A page can do well on all three
+and still display the wrong price.</p>
+<p>Google&rsquo;s guidance calls for evaluating these at the <strong>75th percentile</strong>,
+separately for mobile and desktop. That is the value at or below which
+75% of the observations fall. Good values are at most 2.5 seconds for LCP,
+200 milliseconds for INP, and 0.1 for CLS. The <code>web-vitals</code> library handles
+the details of measuring and reporting them. A visit without a qualifying
+interaction has no INP reading, so keep the observation count for each
+metric rather than assuming every session contributed one.</p>
+<p>Performance is only part of the picture. Collect client errors and the
+outcomes of important actions, such as completing checkout. Browser timing
+APIs can help show whether a delay came from fetching an asset or waiting
+for an API response, though cross-origin timing detail may be restricted.
+A fast response still needs a check that it contained the right result.</p>
+<p>Be explicit about what a rate counts. “Errors per request” and “sessions
+with an error” answer different questions: one session with twenty
+exceptions is still one affected session. Likewise, a checkout failure
+rate needs a definition of an attempt, including how abandoned attempts
+are counted. Handled failures need their own reporting; uncaught exceptions
+alone will miss them.</p>
+<h2 id="reading-a-release">Reading a release</h2>
+<p>These illustrative readings compare one checkout route over equal time
+windows. Here, p75 means the 75th percentile:</p>
+<table>
+<thead>
+<tr>
+<th>Release and device</th>
+<th style="text-align: right;">Observed sessions</th>
+<th style="text-align: right;">Sessions with client errors</th>
+<th style="text-align: right;">LCP p75</th>
+<th style="text-align: right;">INP p75</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Previous, mobile</td>
+<td style="text-align: right;">10,000</td>
+<td style="text-align: right;">100 (1%)</td>
+<td style="text-align: right;">2.2 s</td>
+<td style="text-align: right;">180 ms</td>
+</tr>
+<tr>
+<td>Current, mobile</td>
+<td style="text-align: right;">10,000</td>
+<td style="text-align: right;">600 (6%)</td>
+<td style="text-align: right;">3.4 s</td>
+<td style="text-align: right;">310 ms</td>
+</tr>
+<tr>
+<td>Previous, desktop</td>
+<td style="text-align: right;">10,000</td>
+<td style="text-align: right;">100 (1%)</td>
+<td style="text-align: right;">1.4 s</td>
+<td style="text-align: right;">110 ms</td>
+</tr>
+<tr>
+<td>Current, desktop</td>
+<td style="text-align: right;">10,000</td>
+<td style="text-align: right;">100 (1%)</td>
+<td style="text-align: right;">1.4 s</td>
+<td style="text-align: right;">110 ms</td>
+</tr>
+</tbody>
+</table>
+<p>Mobile users are seeing more errors and slower responses while desktop
+users are seeing little change. That gives the investigation a place to
+start. It does not yet establish that the release caused the regression:
+the browser versions, network conditions, or collection settings may also
+have changed. The session counts support the error rates; interpreting
+the percentiles also requires the counts of eligible metric observations.</p>
+<p>Keep enough context to follow that lead: the release, route template,
+browser, device class, and sampling rate. Where possible, use a scoped
+correlation identifier to connect a client failure to a
+<a class="body-link" href="/software-observatory/previews/pr-147/sensors/distributed-traces/">distributed trace</a>. Raw form fields, query
+strings, and persistent personal identifiers should not be the price of
+being able to investigate a slow page.</p>
+<h2 id="how-it-gets-gamed">How it gets gamed</h2>
+<p>A dashboard can improve because its audience changed. Bots that execute
+JavaScript can enter browser RUM data, as can your own synthetic checks.
+Their timings, errors, and repeated journeys can distort the picture of
+human experience. Label known automation and inspect it separately from
+human traffic. Bot detection is imperfect: a user-agent filter catches
+self-declared bots, not every automated browser. Record filter changes so
+removing traffic cannot quietly pass for a performance improvement.</p>
+<p>The opposite problem is losing the people with the worst experience.
+Script blockers, consent choices, early exits, crashes, or a failed
+collection endpoint can leave sessions unreported. Compare collection
+volume with an independent source and investigate sudden drops. A client
+that went silent has not demonstrated a successful visit.</p>
+<p>Even the sessions you retain can mislead. A fast majority can hide a slow
+device class in an overall average. Keeping every error but only a small
+sample of successful sessions inflates a naive error rate. Compare the same
+groups, retain observation counts, and record each session&rsquo;s chance of
+being sampled so the rates can be calculated consistently or weighted to
+account for unequal sampling.</p>
+<p>Finally, the definition itself can move. Dropping a slow route, changing
+metric versions, or reclassifying an error as handled can make the chart
+look healthier without changing anyone&rsquo;s experience. Annotate those
+changes alongside application releases.</p>
+<h2 id="response-playbook">Response playbook</h2>
+<p>First check whether the reading is trustworthy. Did collection volume,
+bot filtering, sampling, or metric eligibility change? Then narrow the
+problem to a comparable group of users: the same route, device, browser,
+and time window across releases. Small samples need caution, and
+percentiles from separate groups cannot simply be averaged together.</p>
+<p>Inspect a few representative failures using sanitized error stacks,
+performance attribution, and trace links. Look for the point where the
+experience breaks: rendering, the network, a third-party script, or the
+API. Use a previously agreed failure budget or performance limit to decide
+whether to roll back or disable a feature.
+<a class="body-link" href="/software-observatory/previews/pr-147/sensors/canary-analysis/">Canary analysis</a> can use these RUM readings too.</p>
+<p>After the fix, check the affected users again. A passing lab run helps
+explain the repair; recovery in the field shows whether it reached the
+people who were struggling. Confirm that the readings recovered without
+those people disappearing from the measured population.</p>
+<h2 id="what-it-cannot-detect">What it cannot detect</h2>
+<p>RUM cannot observe users who never arrive or clients that never report.
+It cannot cover unvisited paths, prove accessibility, or establish that a
+completed purchase had the correct price. Use synthetics to check scripted
+paths even when traffic is quiet, business invariants to check correct
+outcomes, and <a class="body-link" href="/software-observatory/previews/pr-147/sensors/load-testing/">load testing</a> to apply controlled stress.</p>
+
+                <h2 id="related-sensors">Related sensors</h2>
+        <div class="see-also-grid">
+          <a href="/software-observatory/previews/pr-147/sensors/observability-events/" class="see-also-card">
+            <span class="see-also-type">Runtime</span>
+            <span class="see-also-title">Observability Events</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/distributed-traces/" class="see-also-card">
+            <span class="see-also-type">Runtime</span>
+            <span class="see-also-title">Distributed Traces</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/load-testing/" class="see-also-card">
+            <span class="see-also-type">Runtime</span>
+            <span class="see-also-title">Load Testing</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/synthetic-monitoring/" class="see-also-card">
+            <span class="see-also-type">Behavioral</span>
+            <span class="see-also-title">Synthetic Monitoring</span>
+          </a>
+          <a href="/software-observatory/previews/pr-147/sensors/canary-analysis/" class="see-also-card">
+            <span class="see-also-type">Change</span>
+            <span class="see-also-title">Canary Analysis</span>
+          </a>
+        </div>
+
+        <div class="entry-categories">
+          <span class="cat-label">Categories:</span>
+          <a href="/software-observatory/previews/pr-147/families/runtime/" class="cat-link">Runtime</a>
+          <a href="/software-observatory/previews/pr-147/categories/#production-sensors" class="cat-link">Production Sensors</a>
+        </div>
+
+        <h2 id="references">References</h2>
+        <h3 class="references-subheading" id="tooling">Tooling</h3>
+        <ul class="reference-list reference-tools">
+          <li><span class="ref-title"><a href="https://github.com/GoogleChrome/web-vitals" class="wikilink">web-vitals</a></span><span class="ref-desc">Browser library for measuring Core Web Vitals, with attribution builds for diagnosis</span></li>
+        </ul>
+        <h3 class="references-subheading" id="further-reading">Further reading</h3>
+        <ul class="reference-list">
+          <li><a href="https://web.dev/articles/vitals" class="wikilink">Web Vitals</a> <span class="ref-meta">2020</span></li>
+          <li><a href="https://www.w3.org/TR/performance-timeline/" class="wikilink">Performance Timeline</a></li>
+          <li><a href="https://www.w3.org/TR/resource-timing/" class="wikilink">Resource Timing</a></li>
+          <li><a href="https://docs.datadoghq.com/real_user_monitoring/guide/identify-bots-in-the-ui/" class="wikilink">Identify Bots in the RUM Explorer</a></li>
+        </ul>
+      </div>
+    </article>
+
+    <aside class="wiki-sidebar">
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="sensor-properties">Sensor properties</h3>
+        <dl class="meta-list">
+          <dt>Family</dt>           <dd><a href="/software-observatory/previews/pr-147/families/runtime/" class="wikilink">Runtime</a></dd>
+          <dt>Oracle</dt>          <dd>Medium <span class="prop-note" title="measures experienced performance and failures; correctness needs an explicit outcome or threshold" aria-label="measures experienced performance and failures; correctness needs an explicit outcome or threshold">(?)</span></dd>
+          <dt>Independence</dt>     <dd>High <span class="prop-note" title="actual devices and networks supply the workload, but the application team chooses instrumentation and sampling" aria-label="actual devices and networks supply the workload, but the application team chooses instrumentation and sampling">(?)</span></dd>
+          <dt>Scope</dt>           <dd>User Journey</dd>
+          <dt>Latency</dt>         <dd>Seconds</dd>
+          <dt>Actionability</dt>   <dd>Exploratory <span class="prop-note" title="segment by release, route, browser, and device to locate the affected population" aria-label="segment by release, route, browser, and device to locate the affected population">(?)</span></dd>
+          <dt>Type</dt>             <dd>Retrospective</dd>
+          <dt>Entry ID</dt>        <dd>SO-006f</dd>
+          <dt>Reviewed</dt>        <dd><span class="review-unreviewed" title="This entry is written and published, but has not yet been re-read in the editorial review pass. An absent review date is reported as absent rather than filled in.">pending</span></dd>
+        </dl>
+      </div>
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="what-links-here">What links here</h3>
+        <ul class="backlink-list">
+          <li><a href="/software-observatory/previews/pr-147/sensors/observability-events/">Observability Events</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+          <li><a href="/software-observatory/previews/pr-147/sensors/synthetic-monitoring/">Synthetic Monitoring</a>
+            <span class="backlink-context">references this as a related sensor</span></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading" id="related-categories">Related categories</h3>
+        <ul class="sidebar-cat-list">
+          <li><a href="/software-observatory/previews/pr-147/families/runtime/">Category: Runtime</a></li>
+          <li><a href="/software-observatory/previews/pr-147/categories/#production-sensors">Category: Production Sensors</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-tagline">Software Observatory — a catalog of epistemic sensors for software.</p>
+      <p class="footer-copy">© 2026 <a href="https://justin.abrah.ms/">Justin Abrahms</a> · <a href="/software-observatory/previews/pr-147/about/">About</a> · <a href="/software-observatory/previews/pr-147/glossary/">Glossary</a> · <span class="license-badge">CC BY-SA 4.0</span></p>
+    </div>
+  </footer>
+  <script src="/software-observatory/previews/pr-147/js/main.js"></script>
+</body>
+</html>
