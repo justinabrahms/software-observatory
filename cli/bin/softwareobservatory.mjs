@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { readFileSync } from "node:fs";
 import {
   CLI_VERSION,
   loadData,
@@ -12,6 +13,7 @@ import {
   listFields,
   suggestSensors,
   stackCoverage,
+  auditInventory,
 } from "../lib/core.mjs";
 import { startMcpServer } from "../lib/mcp.mjs";
 
@@ -28,6 +30,7 @@ Commands:
   suggest <question...>         Suggest sensors relevant to a concern
   gaps <question...>            Like suggest, but only the family-coverage gaps
   stack <id,slug,...>           Family/stack coverage report for a sensor set
+  audit <inventory.json|->      Audit an evidence inventory for gaps and unenforced checks
   mcp                           Run an MCP (stdio JSON-RPC) server for agents
   version                       Print CLI and dataset versions
   help                          This message
@@ -60,6 +63,7 @@ const COMMANDS = {
   suggest: { flags: [], min: 1, max: Infinity, usage: "suggest <question...>" },
   gaps: { flags: [], min: 1, max: Infinity, usage: "gaps <question...>" },
   stack: { flags: [], min: 1, max: Infinity, usage: "stack <id,slug,...>" },
+  audit: { flags: [], min: 1, max: 1, usage: "audit <inventory.json|->" },
   mcp: { flags: [], min: 0, max: 0, usage: "mcp" },
   version: { flags: [], min: 0, max: 0, usage: "version" },
   help: { flags: [], min: 0, max: 0, usage: "help" },
@@ -126,7 +130,8 @@ function parseArgv(argv) {
       literal = true;
       continue;
     }
-    if (!arg.startsWith("-")) {
+    // A bare "-" is a positional reading from stdin (used by `audit -`), not a flag.
+    if (!arg.startsWith("-") || arg === "-") {
       positionals.push(arg);
       continue;
     }
@@ -386,6 +391,24 @@ function humanStack(report) {
   }
 }
 
+function humanAudit(report) {
+  const sys = report.system;
+  if (sys && sys.name) {
+    const rev = sys.revision ? ` @ ${sys.revision}` : "";
+    console.log(`System: ${sys.name}${rev}`);
+  }
+  const s = report.summary;
+  console.log(
+    `Checks: ${s.checks}  |  evidence: ${s.evidence}  |  no result: ${s.no_result}  |  failing: ${s.failing}  |  unknown sensor: ${s.unknown_sensor}`
+  );
+  console.log("");
+  for (const check of report.checks) {
+    console.log(`  ${check.id} [${check.sensor ?? "no sensor"}] execution=${check.execution ?? "?"} outcome=${check.outcome ?? "none"} enforcement=${check.enforcement ?? "?"}`);
+    if (check.claim) console.log(`      claim: ${check.claim}`);
+    if (check.finding) console.log(`      ${check.finding.code}: ${check.finding.summary}`);
+  }
+}
+
 function main() {
   const { flags, command, args } = resolveInvocation(process.argv.slice(2));
 
@@ -473,6 +496,31 @@ function main() {
       }
       const report = stackCoverage(ids);
       emit(flags, report, () => humanStack(report));
+      break;
+    }
+    case "audit": {
+      const target = args[0];
+      let raw;
+      if (target === "-") {
+        raw = readFileSync(0, "utf8");
+      } else {
+        try {
+          raw = readFileSync(target, "utf8");
+        } catch {
+          fail(flags.json, { error: "read_failed", path: target }, `Cannot read inventory file '${target}'.`);
+        }
+      }
+      let inventory;
+      try {
+        inventory = JSON.parse(raw);
+      } catch {
+        fail(flags.json, { error: "invalid_json", path: target }, `Inventory '${target}' is not valid JSON.`);
+      }
+      const report = auditInventory(inventory);
+      if (!report.valid) {
+        fail(flags.json, report, `Inventory '${target}' is invalid: ${report.errors.map((e) => e.message).join("; ")}`);
+      }
+      emit(flags, report, () => humanAudit(report));
       break;
     }
     case "mcp": {

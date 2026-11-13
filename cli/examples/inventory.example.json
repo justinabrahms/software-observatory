@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "system": {
+    "name": "Identity",
+    "repo": "https://github.com/parloa/identity",
+    "revision": "5a3ba94ed402b25694e7c9498caffcbdf4a76d6e"
+  },
+  "checks": [
+    {
+      "id": "staging-tests",
+      "claim": "the staging image runs its unit suite",
+      "sensor": "SO-002b",
+      "implementation": ".github/actions/test/action.yml",
+      "execution": "skipped",
+      "outcome": "none",
+      "enforcement": "blocking",
+      "artifact": { "ref": "run 36882670593" },
+      "evidence": {
+        "url": "https://github.com/parloa/identity/actions/runs/36882670593",
+        "observed_at": "2026-10-08T00:00:00Z",
+        "config_version": "5a3ba94"
+      }
+    },
+    {
+      "id": "sonar-quality-gate",
+      "claim": "code quality gate blocks the build on failure",
+      "sensor": "SO-001e",
+      "implementation": ".github/workflows/sonarcheck.yaml",
+      "execution": "ran",
+      "outcome": "fail",
+      "enforcement": "advisory",
+      "artifact": { "ref": "run 36882670593" },
+      "evidence": {
+        "url": "https://github.com/parloa/identity/actions/runs/36882670593",
+        "observed_at": "2026-10-08T00:00:00Z",
+        "config_version": "5a3ba94"
+      }
+    },
+    {
+      "id": "contract-tests",
+      "claim": "changing an API route without updating the committed contract fails CI",
+      "sensor": "SO-002",
+      "implementation": "test/contract",
+      "execution": "ran",
+      "outcome": "pass",
+      "enforcement": "blocking",
+      "artifact": { "ref": "run 36882670593" },
+      "evidence": {
+        "url": "https://github.com/parloa/identity/actions/runs/36882670593",
+        "observed_at": "2026-10-08T00:00:00Z",
+        "config_version": "5a3ba94"
+      }
+    }
+  ]
+}

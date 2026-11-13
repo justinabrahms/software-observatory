@@ -10,6 +10,7 @@ import {
   getRelated,
   suggestSensors,
   stackCoverage,
+  auditInventory,
 } from "./core.mjs";
 
 const PROTOCOL_VERSION = "2024-11-05";
@@ -67,6 +68,21 @@ const TOOLS = [
       required: ["ids"],
     },
   },
+  {
+    name: "audit_inventory",
+    description:
+      "Audit an evidence inventory (schema_version 1) against the catalog: which checks supplied evidence, which supplied no result (skipped or ran without a pass/fail outcome), which failures are advisory rather than blocking, and which sensors are unknown to the catalog. Returns { summary, checks } with a per-check finding if the inventory validates, else { error }.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        inventory: {
+          type: "object",
+          description: "The evidence inventory: { schema_version: 1, system?: {...}, checks: [{ id, claim, sensor, execution, outcome, enforcement, ... }] }.",
+        },
+      },
+      required: ["inventory"],
+    },
+  },
 ];
 
 function sensorSummary(sensor) {
@@ -99,6 +115,10 @@ function callTool(name, args = {}) {
       return suggestSensors(args.question || "", { limit: args.limit });
     case "stack_coverage":
       return stackCoverage(args.ids || []);
+    case "audit_inventory": {
+      const report = auditInventory(args.inventory);
+      return report.valid === false ? { error: report.errors.map((e) => e.message).join("; ") } : report;
+    }
     default:
       throw Object.assign(new Error(`unknown tool '${name}'`), { code: -32602 });
   }
