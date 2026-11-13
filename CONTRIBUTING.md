@@ -300,8 +300,22 @@ Preview JavaScript is untrusted. It must never run on the production origin.
 The publisher queries GitHub's Pages configuration and rejects custom domains,
 non-HTTPS URLs, an unexpected project path, or any host other than the owner's
 default Pages host. Tests demonstrate that the former production-origin URL
-is rejected. Keep this Pages origin for public, untrusted previews only;
-PRs share an origin with each other, so it must not host a trusted application.
+is rejected.
+
+**The origin is shared, and that is a prerequisite this feature does not create.**
+`<owner>.github.io` is one origin for every project page on the account: local
+storage, IndexedDB and cookies set by one are readable by all of them. A preview
+runs a contributor's branch as JavaScript at
+`https://<owner>.github.io/<project>/previews/pr-N/`, so anything that keeps user
+data on that origin is exposed to it — and at least one project page on this
+account does (`pain-relief-timer` stores doses in `localStorage`). Before previews
+run against an account, the account's Pages origin must hold nothing worth
+reading: a storage-backed project page either moves to its own origin (a custom
+domain, or a user/org Pages site) or loses its Pages deployment. Until then the
+guard below protects the production origin and not the account's.
+
+Beyond that, keep this origin for public, untrusted previews only; PRs share an
+origin with each other, so it must not host a trusted application.
 
 Staging uses the production deploy allow-list, rewrites navigation, assets,
 search data, and dynamic links into the Pages project and PR prefix, omits
