@@ -9,6 +9,18 @@ noticed: >-
 doubt: unintended-change
 sensor: api-compatibility
 next: every-service-passes-alone
+
+suggest_when:
+- - api
+  - interface
+  - contract
+- - breaking
+  - compatibility
+  - unintended
+recommendations:
+- sensor: api-compatibility
+  reason: API compatibility checks compare interface versions for incompatible shape changes;
+    behavioral compatibility still needs other evidence.
 ---
 
 ## Point this at it

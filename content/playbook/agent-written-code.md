@@ -52,4 +52,15 @@ skip:
       An agent will happily execute every line without asserting anything,
       and coverage counts executed lines. The number will be high and mean
       nothing; mutation testing is the reading you wanted from it.
+
+suggest_when:
+- - ai
+  - agent
+  - model
+- - code
+  - output
+- - review
+  - safe
+  - trust
+
 ---

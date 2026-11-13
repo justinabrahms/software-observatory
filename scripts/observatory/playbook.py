@@ -44,6 +44,14 @@ def _rows(play):
     return []
 
 
+def recommendations_for(play):
+    """Use a symptom's authored readings or a stack's existing ordered rows."""
+    if "recommendations" in play:
+        return play["recommendations"]
+    return [{"sensor": row["sensor"], "reason": " ".join(row["why"].split())}
+            for row in _rows(play)]
+
+
 def shape_errors(plays, doubts, sensors):
     """Every way a play file can be malformed, as a list of messages."""
     by_slug = {s["slug"]: s for s in sensors}
@@ -87,6 +95,30 @@ def shape_errors(plays, doubts, sensors):
             continue
         if not str(p.get("title") or "").strip():
             errors.append(f"{where}: title is required")
+
+        if "suggest_when" in p or "recommendations" in p:
+            groups = p.get("suggest_when")
+            if (not isinstance(groups, list) or not groups
+                    or any(not isinstance(g, list) or not g
+                           or any(not isinstance(t, str) or not re.search(r"[a-zA-Z0-9]", t) for t in g)
+                           for g in groups)):
+                errors.append(f"{where}: suggest_when must be nonempty groups of search phrases")
+            rows = recommendations_for(p)
+            if not isinstance(rows, list) or not rows:
+                errors.append(f"{where}: recommendations must be a nonempty ordered list")
+            else:
+                seen = set()
+                for row in rows:
+                    sensor = row.get("sensor") if isinstance(row, dict) else None
+                    if sensor not in by_slug:
+                        errors.append(f"{where}: recommendation names unknown sensor {sensor!r}")
+                    if sensor in seen:
+                        errors.append(f"{where}: duplicate recommendation {sensor!r}")
+                    seen.add(sensor)
+                    if not isinstance(row, dict) or not str(row.get("reason") or "").strip():
+                        errors.append(f"{where}: every recommendation needs a reason")
+                if kind == "symptom" and isinstance(rows[0], dict) and rows[0].get("sensor") != p.get("sensor"):
+                    errors.append(f"{where}: first recommendation must be the play's primary sensor")
 
         if kind == "symptom":
             for field in ("noticed",):

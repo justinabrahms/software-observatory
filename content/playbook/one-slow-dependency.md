@@ -8,6 +8,16 @@ noticed: >-
   pools were full, and the whole thing was down.
 doubt: dependency-failure
 sensor: fault-injection
+
+suggest_when:
+- - dependency
+  - downstream
+- - slow
+  - timeout
+  - unavailable
+recommendations:
+- sensor: fault-injection
+  reason: Fault injection tests what happens when the downstream dependency is slow or unavailable.
 ---
 
 ## Point this at it

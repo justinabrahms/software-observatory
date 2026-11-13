@@ -8,6 +8,17 @@ noticed: >-
   safe to remove.
 doubt: unexplained
 sensor: decision-provenance
+
+suggest_when:
+- - code
+  - decision
+- - why
+  - rationale
+  - reason
+recommendations:
+- sensor: decision-provenance
+  reason: Decision provenance links the code to the recorded rationale and constraints behind
+    the change.
 ---
 
 ## Point this at it

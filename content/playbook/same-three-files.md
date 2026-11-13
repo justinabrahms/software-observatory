@@ -8,6 +8,19 @@ noticed: >-
   rest of the repository for the next one.
 doubt: risk-concentrated
 sensor: hotspot-analysis
+
+suggest_when:
+- - file
+  - module
+- - same
+  - repeated
+- - incident
+  - bug
+  - failure
+recommendations:
+- sensor: hotspot-analysis
+  reason: Hotspot analysis combines change frequency with code structure to focus investigation
+    on recurring trouble.
 ---
 
 ## Point this at it

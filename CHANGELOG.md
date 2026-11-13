@@ -4,6 +4,20 @@ All notable changes to the Software Observatory catalog are documented here.
 Dates are when the change was reviewed/published, not when the content was
 originally written.
 
+## 2026-10-21
+
+### CLI 0.4.0: authored recommendations (#121)
+
+- Known situations use ordered recommendations and reasons from the site's
+  playbooks, shared by the website, CLI, and MCP. Unmatched questions retain
+  keyword retrieval and explicitly identify that basis.
+- The headline example returns mutation testing, then escaped defect rate.
+- `stack` continues to report family coverage; composition by distinct
+  doubts remains tracked in #101. Curated recommendations do not change
+  what a family-coverage gap means.
+- Embedded catalog: no catalog release tag exists. Based on main at
+  `a114fa6`, with authored playbook recommendations added in this release.
+
 ## 2026-08-24
 
 ### Decisions (from multi-model critical review)

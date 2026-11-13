@@ -313,6 +313,15 @@ def generate_play_page(play, plays, doubts, sensors, output_dir):
     else:
         sections = _composition_sections(play, by_id, by_slug, doubts)
 
+    if play.get("recommendations"):
+        items = "".join(
+            f'<li><p>{_sensor_link(row["sensor"], by_slug)}: '
+            f'{html.escape(row["reason"])}</p></li>'
+            for row in play["recommendations"]
+        )
+        sections += ('<section class="play-recommendations"><h2>Recommended readings</h2>'
+                     f'<ol>{items}</ol></section>')
+
     trail = [("Playbook", "/playbook/"), (play["title"], None)]
     crumbs = " › ".join(
         f'<a href="{path}">{html.escape(name)}</a>' if path else html.escape(name)

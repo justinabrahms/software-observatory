@@ -8,6 +8,21 @@ noticed: >-
   in an assumption both of them share.
 doubt: correlated-blind-spot
 sensor: independent-review
+
+suggest_when:
+- - agent
+  - ai
+  - model
+- - wrote
+  - written
+  - generated
+- - review
+- - same
+  - both
+recommendations:
+- sensor: independent-review
+  reason: Independent review supplies a reviewer who did not produce the change; another pass
+    by the producing agent can repeat the same assumptions.
 ---
 
 ## Point this at it

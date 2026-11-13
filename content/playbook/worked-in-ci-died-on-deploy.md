@@ -10,6 +10,22 @@ noticed: >-
 doubt: does-not-run-where-deployed
 sensor: smoke-tests
 next: one-slow-dependency
+
+suggest_when:
+- - deploy
+  - production
+  - prod
+- - break
+  - fail
+  - die
+- - ci
+  - worked
+  - pass
+  - deploy
+recommendations:
+- sensor: smoke-tests
+  reason: Smoke tests exercise the deployed artifact and its vital paths in the environment
+    where it must run.
 ---
 
 ## Point this at it
