@@ -75,12 +75,15 @@ particular execution paths, which neither neighbor attempts.
 
 A reading is a finding with a rule, a location, and usually a trace:
 
-```
-infer run -- javac ./src
-src/Checkout.java:42: error: NULL_DEREFERENCE
-  object `user` last assigned on line 38 could be null
-  -> called from placeOrder(src/Checkout.java:24)
-  -> where `user` is the return of findById(session, id)
+Illustrative finding, not Infer console output. The call context is a
+summary of the trace a reviewer would inspect in the analyzer's report:
+
+```text
+Rule: NULL_DEREFERENCE
+Location: src/Checkout.java:42
+Value: user, assigned from findById(session, id) on line 38
+Problem: user may be null when dereferenced
+Call context: placeOrder at src/Checkout.java:24
 ```
 
 The trace is the value. A linter points at a line; a static analyzer

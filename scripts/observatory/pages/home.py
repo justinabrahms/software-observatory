@@ -1,10 +1,7 @@
 """The homepage: /index.html."""
 
-import hashlib
-import html
 
 from ..config import SITE_URL
-from ..dates import _iso_date
 from ..jsonld import (
     AUTHOR_LD,
     CATALOG_TERMSET_ID,
@@ -12,183 +9,29 @@ from ..jsonld import (
     ORGANIZATION_LD,
 )
 from ..layout import html_page
-from ..render import blurb_text
-from ..review import review_dates_discriminate, reviewed_newest_first
-from ..taxonomy import (
-    FAMILIES,
-    FAMILY_BY_SLUG,
-    LATENCY_X,
-    ORACLE_Y,
-    STACK_LAYERS,
-    STACK_SCATTER,
-    family_url,
-)
 
 
 def generate_index_page(sensors, output_dir):
     """Generate the homepage."""
 
-    # Featured sensor
-    featured = next((s for s in sensors if s["id"] == "SO-003"), sensors[0] if sensors else None)
-    featured_family = FAMILY_BY_SLUG.get(featured.get("family", ""), {}) if featured else {}
-
-    # Families grid
-    families_grid = ""
-    for f in FAMILIES:
-        families_grid += f"""        <a href="{family_url(f["slug"])}" class="family-card">
-          <span class="family-num">{f['num']}</span>
-          <h3 class="family-name">{html.escape(f['name'])}</h3>
-          <p class="family-question">"{html.escape(f['question'])}"</p>
-          <p class="family-examples">{html.escape(f['examples'])}</p>
-        </a>
-"""
-
-    # This list is "Recently reviewed" only when the review dates can actually
-    # support that claim — see review_dates_discriminate(). While every entry
-    # carries the same bulk stamp, sorting by it would be sorting by a
-    # constant, so the section falls back to a fixed, spread-out starting set
-    # and says so in its heading. When the stamps become real the ordering
-    # switches over by itself; nothing has to be remembered.
-    featured_slugs = [
-        "type-checker", "mutation-testing", "fuzzing",
-        "observability-events", "independent-review", "canary-analysis",
-    ]
-    sensors_by_slug = {s["slug"]: s for s in sensors}
-    if review_dates_discriminate(sensors):
-        recent_heading = "Recently reviewed"
-        recent_sensors = reviewed_newest_first(sensors)[:len(featured_slugs)]
-        show_review_date = True
-    else:
-        recent_heading = "Start here"
-        recent_sensors = [
-            sensors_by_slug[slug] for slug in featured_slugs
-            if slug in sensors_by_slug
-        ]
-        show_review_date = False
-    recent_html = ""
-    for s in recent_sensors:
-        fam = FAMILY_BY_SLUG.get(s.get("family", ""), {})
-        reviewed = _iso_date(s.get("last_reviewed"))
-        reviewed_html = (
-            f'          <span class="entry-reviewed">reviewed {reviewed[:7]}</span>\n'
-            if show_review_date and reviewed else ""
-        )
-        recent_html += f"""        <li class="entry">
-          <span class="entry-family">{html.escape(fam.get('name', ''))}</span>
-          <a href="/sensors/{s['slug']}/" class="entry-title wikilink">{html.escape(s['title'])}</a>
-{reviewed_html}          <span class="entry-blurb">{html.escape(blurb_text(s.get('body_html', ''), 140))}</span>
-        </li>
-"""
-
-    # Confidence scatter: feedback latency (x) against signal efficacy (y).
-    # Two datasets — stack layers (hand-positioned) and individual sensors
-    # (positioned from latency/oracle frontmatter, jittered to declutter).
-    def scatter_layer_points():
-        pts = ""
-        for layer in STACK_LAYERS:
-            pos = STACK_SCATTER.get(layer["slug"])
-            if not pos:
-                continue
-            pts += f"""          <a href="/atlas/" class="scatter-point layer-point" style="left:{pos['x']}%;bottom:{pos['y']}%" data-label="{html.escape(layer['label'])}">
-            <span class="scatter-dot"></span>
-            <span class="scatter-tag">{html.escape(layer['label'])}</span>
-          </a>
-"""
-        return pts.rstrip()
-
-    def scatter_sensor_points():
-        # Group by cell so overlapping sensors fan out deterministically
-        cells = {}
-        for s in sensors:
-            x = LATENCY_X.get(s.get("latency", ""), 50)
-            y = ORACLE_Y.get(s.get("oracle", ""), 50)
-            cells.setdefault((x, y), []).append(s)
-        pts = ""
-        for (x, y), members in cells.items():
-            n = len(members)
-            for i, s in enumerate(members):
-                # deterministic fan: hash the slug for a stable pseudo-random
-                # offset within a disc that grows with cell population
-                import math
-                h = int(hashlib.md5(s["slug"].encode()).hexdigest(), 16)
-                ang = (h % 360) * math.pi / 180
-                rad = 2.2 * math.sqrt(i / max(n - 1, 1)) if n > 1 else 0
-                spread = min(7, 1.5 + n * 0.55) if n > 1 else 0
-                dx = math.cos(ang) * spread * rad / 2.2
-                dy = math.sin(ang) * spread * rad / 2.2
-                fam = FAMILY_BY_SLUG.get(s.get("family", ""), {}).get("name", "")
-                fam_slug = s.get("family", "")
-                fam_icon = FAMILY_BY_SLUG.get(fam_slug, {}).get("icon", "")
-                pts += f"""          <a href="/sensors/{s['slug']}/" class="scatter-point sensor-point fam-{html.escape(fam_slug)}" style="left:{x + dx:.1f}%;bottom:{y + dy:.1f}%" data-label="{html.escape(s['title'])}" data-family="{html.escape(fam)}">
-            <span class="scatter-dot" aria-hidden="true">{fam_icon}</span>
-            <span class="scatter-tag">{html.escape(s['title'])}</span>
-          </a>
-"""
-        return pts.rstrip()
-
-    def scatter_legend():
-        keys = ""
-        for f in FAMILIES:
-            keys += f"""          <span class="legend-key"><span class="legend-dot fam-{f['slug']}" aria-hidden="true">{f['icon']}</span>{html.escape(f['name'])}</span>
-"""
-        return keys.rstrip()
-
-    scatter_html = f"""      <div class="scatter-toggle" role="group" aria-label="Scatter data">
-        <button type="button" class="scatter-toggle-btn active" data-scatter="layers">Layers</button>
-        <button type="button" class="scatter-toggle-btn" data-scatter="sensors">Sensors</button>
-      </div>
-      <div class="scatter-frame" data-scatter-mode="layers">
-        <div class="scatter-y-label">efficacy of the signal</div>
-        <div class="scatter-body">
-          <div class="scatter-y-ticks">
-            <span>definitive</span>
-            <span>suggestive</span>
-          </div>
-          <div class="scatter-plot">
-{scatter_layer_points()}
-{scatter_sensor_points()}
-          </div>
-        </div>
-        <div class="scatter-x-axis">
-          <span>instant</span>
-          <span>feedback latency →</span>
-          <span>slow</span>
-        </div>
-        <p class="scatter-hint">Hover a point to name it. Click to open the entry.</p>
-        <div class="scatter-legend">
-{scatter_legend()}
-        </div>
-      </div>
-      <details class="sr-only">
-        <summary>Sensor list (latency × efficacy)</summary>
-        <table>
-          <thead><tr><th>Sensor</th><th>Family</th><th>Feedback latency</th><th>Efficacy (oracle)</th></tr></thead>
-          <tbody>
-{"".join(f'          <tr><td><a href="/sensors/{s["slug"]}/">{html.escape(s["title"])}</a></td><td>{html.escape(FAMILY_BY_SLUG.get(s.get("family",""),{}).get("name",""))}</td><td>{html.escape(s.get("latency",""))}</td><td>{html.escape(s.get("oracle",""))}</td></tr>\n' for s in sensors)}
-          </tbody>
-        </table>
-      </details>"""
-
     body = f"""  <main id="main" tabindex="-1">
     <section class="hero">
       <div class="hero-inner">
-        <p class="eyebrow">An industry resource</p>
+        <p class="eyebrow">A thought experiment about software quality</p>
         <h1 class="hero-title">
-          What independent observations<br>
-          <em>would cause us to believe</em><br>
-          this software is correct?
+          If you couldn't read the source code,<br>
+          <em>how would you know it was good?</em>
         </h1>
         <p class="hero-lede">
-          Software is increasingly an opaque artifact. We cannot — and often
-          do not want to — fully understand every implementation. The Software
-          Observatory is a catalog of <a href="/catalog/" class="wikilink">epistemic sensors</a>:
-          the observable signals that reduce uncertainty about whether a system
-          is correct, maintainable, and behaving as intended. Not "code quality
-          metrics." Measurement instruments pointed at different failure modes.
+          Treat the software as an opaque artifact. You can still observe
+          whether a test notices a changed behavior, whether a contract holds,
+          and what happens to real users. Each signal answers a different
+          question. The Observatory maps what those signals can tell us — and
+          what they leave unknown.
         </p>
         <div class="hero-actions">
-          <a href="/catalog/" class="btn btn-primary">Browse the catalog →</a>
-          <a href="/atlas/" class="btn btn-ghost">Open the atlas</a>
+          <a href="#without-source" class="btn btn-primary">Try the thought experiment ↓</a>
+          <a href="/catalog/" class="btn btn-ghost">Explore the catalog</a>
         </div>
       </div>
       <div class="hero-visual" aria-hidden="true">
@@ -362,79 +205,124 @@ def generate_index_page(sensors, output_dir):
       </div>
     </section>
 
-    <section class="core-insight">
-      <blockquote class="big-quote">
-        <p>
-          <a href="/glossary/#no-single-sensor" class="wikilink">No single sensor measures correctness</a>. Coverage measures execution.
-          <a href="/sensors/mutation-testing/" class="wikilink">Mutation testing</a> measures
-          test sensitivity. <a href="/sensors/type-checker/" class="wikilink">Types</a> measure
-          a particular class of structural inconsistency.
-          <a href="/sensors/contract-tests/" class="wikilink">Contracts</a> measure boundary
-          assumptions. <a href="/sensors/observability-events/" class="wikilink">Observability</a>
-          measures what actually happened and preserves enough dimensionality
-          to investigate unknown unknowns.
-        </p>
-        <p>They are all measurement instruments pointed at different failure modes.</p>
-      </blockquote>
-    </section>
-
-    <section class="families-section">
-      <h2 class="section-heading">{len(FAMILIES)} sensor families</h2>
-      <p class="section-lede">
-        The catalog is organized into {len(FAMILIES)} families, each asking a different
-        question about the system. Each family rules out a different way the
-        software could be wrong. No single sensor is sufficient, and neither
-        is a pile of them: a sensor earns its place by
-        <a href="/framework/#combining-sensors" class="wikilink">eliminating a
-        doubt the others leave open</a>, not by adding another green check.
-      </p>
-      <div class="families-grid">
-{families_grid.rstrip()}
+    <section class="thought-experiment" id="without-source" aria-labelledby="thought-title">
+      <div class="thought-intro">
+        <p class="eyebrow">Without the source</p>
+        <h2 id="thought-title">What would change your mind?</h2>
+        <p>Someone says the system works. You cannot inspect its implementation.
+          What could you observe that would make you more confident?</p>
+        <p>No single observation settles the question. Each one rules out a
+          particular way the software could be wrong.</p>
+      </div>
+      <div class="thought-observations">
+        <a href="/sensors/mutation-testing/" class="thought-observation">
+          <span class="thought-number">01 / TEST SENSITIVITY</span>
+          <h3>A changed condition makes a test fail.</h3>
+          <p>The suite notices that behavior changed. It cannot tell you whether
+            the intended behavior was right in the first place.</p>
+          <span class="thought-link">Examine mutation testing →</span>
+        </a>
+        <a href="/sensors/contract-tests/" class="thought-observation">
+          <span class="thought-number">02 / BOUNDARY AGREEMENT</span>
+          <h3>A consumer's contract still holds.</h3>
+          <p>One system still meets another's expectations. The rest of the
+            workflow may still be wrong.</p>
+          <span class="thought-link">Examine contract tests →</span>
+        </a>
+        <a href="/sensors/canary-analysis/" class="thought-observation">
+          <span class="thought-number">03 / LIVE BEHAVIOR</span>
+          <h3>A canary behaves normally under real traffic.</h3>
+          <p>The release has not shifted the signals you watch. That cannot
+            establish that users get the outcome they need.</p>
+          <span class="thought-link">Examine canary analysis →</span>
+        </a>
+        <div class="thought-next">
+          <p>Which observations would you want <em>together</em>?</p>
+          <a href="/catalog/" class="btn btn-primary">Explore all {len(sensors)} sensors →</a>
+          <a href="/framework/#combining-sensors" class="thought-framework">How the signals combine</a>
+        </div>
       </div>
     </section>
 
-    <section class="stack-preview" id="confidence-stack">
-      <h2 class="section-heading">The confidence landscape</h2>
-      <p class="section-lede">
-        No single sensor is sufficient, so there is no total ordering across
-        sensors — no "best" sensor. But each <em>dimension</em> (oracle
-        strength, latency, scope) is a partial order, and the atlas's
-        left-to-right axis is <em>time</em>, not quality. Each one trades
-        <em>feedback latency</em> — how long you wait for the signal —
-        against <em>efficacy</em>: how much the signal can actually tell
-        you. Compilation is instant and definitive about validity; user
-        outcomes are slow and definitive about everything that matters. Most
-        sensors live somewhere in between.
-      </p>
-{scatter_html}
-      <div class="stack-cta">
-        <a href="/atlas/" class="btn btn-ghost">Open the atlas →</a>
+    <section class="evidence-case" aria-labelledby="evidence-case-title">
+      <div class="evidence-case-story">
+        <p class="eyebrow">A worked example</p>
+        <h2 id="evidence-case-title">What does a successful payment response tell us?</h2>
+        <p>Suppose the payment endpoint reports success, but the order never
+          enters the paid state. The response tells us the endpoint answered.
+          It does not establish that the business promise was kept.</p>
+        <a href="/playbook/prod-says-200-answer-was-wrong/" class="evidence-case-link">Read the full example →</a>
+      </div>
+      <div class="evidence-case-readings">
+        <div class="evidence-case-reading">
+          <span class="evidence-case-label">OBSERVED</span>
+          <p>The payment endpoint responded successfully.</p>
+        </div>
+        <div class="evidence-case-reading">
+          <span class="evidence-case-label">STILL UNKNOWN</span>
+          <p>Whether the order entered the paid state.</p>
+        </div>
+        <div class="evidence-case-reading">
+          <span class="evidence-case-label">A SECOND OBSERVATION</span>
+          <p>Check that every payment event has an order in state paid
+            within an hour.</p>
+          <a href="/sensors/business-invariants/" class="wikilink">Examine business invariants →</a>
+        </div>
       </div>
     </section>
 
-    <section class="featured-signal">
-      <div class="featured-meta">
-        <span class="tag tag-family">{html.escape(featured_family.get('name', ''))}</span>
-        <span class="tag tag-confidence">High oracle strength</span>
+    <section class="confidence-story" id="confidence-stack" aria-labelledby="confidence-title">
+      <div class="confidence-intro">
+        <p class="eyebrow">The confidence stack</p>
+        <h2 id="confidence-title">You do not get one verdict.<br><em>You build a case.</em></h2>
+        <p>Evidence arrives at different times and from different vantage
+          points. Each observation narrows a different doubt. A green result
+          from one says nothing about the claims measured by the others.</p>
       </div>
-      <h2 class="featured-title"><a href="/sensors/{featured['slug']}/" class="wikilink" style="border-bottom:none">{html.escape(featured['title'])}</a></h2>
-      <p class="featured-blurb">
-        Take <code>if user.is_admin: allow()</code> and mutate it to
-        <code>if not user.is_admin: allow()</code>. If all your tests still
-        pass, your tests did not actually establish the behavior you thought
-        you established. Mutation testing is a sensor of test
-        <em>sensitivity</em> rather than test <em>presence</em>.
-      </p>
-      <div class="featured-cta">
-        <a href="/sensors/{featured['slug']}/">Read the full entry →</a>
-      </div>
+      <ol class="confidence-steps">
+        <li>
+          <span class="confidence-step-num">01 / BEFORE IT RUNS</span>
+          <h3>Is the artifact internally coherent?</h3>
+          <p>A <a href="/sensors/type-checker/" class="wikilink">type checker</a>
+            catches contradictions in the program. It cannot know whether the
+            behavior is useful or intended.</p>
+        </li>
+        <li>
+          <span class="confidence-step-num">02 / BEFORE IT SHIPS</span>
+          <h3>Does the behavior meet a stated expectation?</h3>
+          <p><a href="/sensors/contract-tests/" class="wikilink">Contract tests</a>
+            check a boundary another system depends on. They say nothing about
+            expectations nobody stated.</p>
+        </li>
+        <li>
+          <span class="confidence-step-num">03 / WHILE IT RUNS</span>
+          <h3>What happened outside the test environment?</h3>
+          <p><a href="/sensors/observability-events/" class="wikilink">Events</a>
+            and <a href="/sensors/canary-analysis/" class="wikilink">canaries</a>
+            show live behavior. They only see what you chose to record and compare.</p>
+        </li>
+        <li>
+          <span class="confidence-step-num">04 / AFTER USERS MEET IT</span>
+          <h3>Did the system keep its promise?</h3>
+          <p><a href="/sensors/business-invariants/" class="wikilink">Business invariants</a>
+            test outcomes the domain requires. A pass covers those promises,
+            in that window, and no others.</p>
+        </li>
+      </ol>
+      <a href="/atlas/" class="confidence-atlas-link">See all layers in the atlas →</a>
     </section>
 
-    <section class="recent">
-      <h2 class="section-heading">{recent_heading}</h2>
-      <ul class="entry-list">
-{recent_html.rstrip()}
-      </ul>
+    <section class="research-next" aria-labelledby="research-next-title">
+      <p class="eyebrow">Continue the inquiry</p>
+      <h2 id="research-next-title">What would convince you about your system?</h2>
+      <p>The catalog has {len(sensors)} instruments. Each entry says what it can
+        observe, what it cannot detect, and what evidence it produces. Start
+        with a claim you want to test, then look for observations that do not
+        share the same blind spot.</p>
+      <div class="research-next-actions">
+        <a href="/catalog/" class="btn btn-primary">Explore the catalog →</a>
+        <a href="/what-each-sensor-proves/" class="btn btn-ghost">Start from a doubt</a>
+      </div>
     </section>
   </main>"""
 
@@ -458,9 +346,9 @@ def generate_index_page(sensors, output_dir):
     page_html = html_page(
         "Software Observatory", body, canonical="", json_ld=website_ld,
         description=(
-            f"{len(sensors)} epistemic sensors for software correctness: the "
-            "signals that tell you whether a system works, what each one can "
-            "detect, and what it cannot."
+            "If you could not read the source code, how would you know the "
+            f"software was good? Explore {len(sensors)} independent signals, "
+            "what each reveals, and what remains unknown."
         ),
     )
     out_path = output_dir / "index.html"

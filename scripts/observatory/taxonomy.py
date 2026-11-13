@@ -291,52 +291,12 @@ for _stage in LIFECYCLE_STAGES:
         STAGE_BY_LEVEL[_lvl] = _stage["slug"]
 
 
-# Scatter positions for the homepage latency/efficacy diagram, keyed by
-# confidence-stack layer slug. x = feedback latency (0=instant, 100=slow),
-# y = efficacy of the signal (0=suggestive, 100=definitive). Hand-tuned;
-# "source-text" is not a sensor and is intentionally absent.
-STACK_SCATTER = {
-    "compilation":          {"x": 4,  "y": 82},
-    "static-analysis":      {"x": 14, "y": 64},
-    "mutation-testing":     {"x": 46, "y": 78},
-    "property-metamorphic": {"x": 42, "y": 62},
-    "behavioral-tests":     {"x": 32, "y": 48},
-    "integration-tests":    {"x": 56, "y": 58},
-    "canary-shadow":        {"x": 66, "y": 50},
-    "production-behavior":  {"x": 82, "y": 42},
-    "user-outcome":         {"x": 94, "y": 92},
-}
-
-
-# Ordinal scales mapping sensor frontmatter onto the same axes
+# Reference tiers for cited evidence
 TIER_LABELS = {
     "I":   "controlled study",
     "II":  "observational study",
     "III": "case study",
     "IV":  "argument",
-}
-
-
-LATENCY_X = {
-    "milliseconds": 6,
-    "seconds": 20,
-    "minutes": 42,
-    "minutes-hours": 56,
-    "hours": 62,
-    "seconds-hours": 68,
-    "days": 76,
-    "weeks": 90,
-    "months": 95,
-    "varies": 50,
-}
-
-
-ORACLE_Y = {
-    "minimum": 14,
-    "low": 30,
-    "medium": 50,
-    "high": 72,
-    "maximum": 92,
 }
 
 

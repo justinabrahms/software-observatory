@@ -87,8 +87,11 @@ enough to exhaust.
 
 ## In practice
 
-A reading is a counter-example trace — the minimal sequence of steps that
-reaches a state violating the property. The checker's console says only
+A reading is a counter-example trace: a sequence of steps reaching a state
+that violates the property. Whether it is a shortest trace depends on the
+checker and search configuration. Apalache checks a bounded number of steps;
+a successful check does not establish the property beyond that bound.
+The checker's console says only
 where it broke and where to look:
 
 ```
@@ -140,7 +143,7 @@ the transition that did it.
 The counter-example is the reading's value. A failing test tells you a
 case broke; a model-checker counter-example tells you the *exact sequence*
 of events that broke it, including interleavings a test suite would never
-generate. Triage is fast because the trace is minimal and reproducible.
+generate. The trace gives triage a concrete sequence to replay and inspect.
 
 ## Response playbook
 

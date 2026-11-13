@@ -61,20 +61,27 @@ of exploitable structure, not of known-bad strings.
 
 ## In practice
 
-A scanner reading is a source-to-sink path with a severity attached,
-not a bare pattern match:
+A security scanner may report a pattern match or reconstruct a path from
+untrusted input to a sensitive operation. A path finding needs enough
+context for a reviewer to check the connection:
 
-```
-semgrep --config p/owasp-top-ten src/
-src/api/search.py:31: Possible SQL injection (high)
-  query = "SELECT * FROM items WHERE name = '%s'" % request.args["q"]
-  taint: request.args["q"] -> cursor.execute(query)
+Illustrative finding, not Semgrep console output. It shows the source and
+sink a reviewer needs to connect; a scanner may require a separate trace
+view or report to expose that path.
+
+```text
+Finding: possible SQL injection
+Location: src/api/search.py:31
+Source: request.args["q"] (request input)
+Query construction: "SELECT * FROM items WHERE name = '%s'" % request.args["q"]
+Sink: cursor.execute(query)
+Severity assigned by the scanner: high
 ```
 
 The value is the path. The finding is not "this string looks
 dangerous" but "input from here reaches that sink through these
-lines," and the reading takes minutes because the intermediate steps
-are printed.
+lines." Inspect the intermediate steps in the tool's trace view or report;
+a location and a severity alone do not establish that path.
 
 Severity is the scanner's estimate, not the exploitability. A high
 finding behind an authenticated, sanitized code path may matter less

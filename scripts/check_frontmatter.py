@@ -23,6 +23,8 @@ Usage:
 
 import sys
 import glob
+import re
+import subprocess
 from collections import Counter
 from pathlib import Path
 
@@ -90,6 +92,68 @@ def parse_frontmatter(filepath):
     if len(parts) < 3:
         return {}, content
     return yaml.safe_load(parts[1]) or {}, parts[2].strip()
+
+
+def history_problem():
+    """Why this checkout cannot date a file's creation, or None when it can.
+
+    `actions/checkout@v4` clones shallow by default (`--depth 1`), and a shallow
+    clone does not merely *lack* the commit that added a file: the boundary
+    commit is a graft root, so git reports every file in it as **added** there.
+    `git log --diff-filter=A` therefore answers with the clone date and looks
+    perfectly plausible (measured: a `--depth 1` clone of this repo dates all 27
+    entries to the day it was cloned). So shallowness is asked about directly
+    instead of inferred from an empty answer.
+
+    Returns None when history is usable, and a sentence naming the problem when
+    it is not: the caller fails closed on any non-None value.
+    """
+    result = subprocess.run(
+        ["git", "rev-parse", "--is-shallow-repository"],
+        cwd=SITE_ROOT,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        return (
+            "this is not a git checkout, so no file has a readable creation date "
+            f"(git said: {result.stderr.strip() or 'no repository'})"
+        )
+    if result.stdout.strip() != "false":
+        return (
+            "this is a shallow checkout (git rev-parse --is-shallow-repository is "
+            "true), so the commit that added each file is not here and git dates "
+            "every file to the clone instead"
+        )
+    return None
+
+
+def first_commit_date(filepath):
+    """The author date of the commit that added `filepath`, or None if no commit did.
+
+    Call only when `history_problem()` says the history is usable; in a shallow
+    clone this returns a confident wrong answer.
+
+    None means no commit adds the file at all, which is the answer for a file
+    that has not been committed yet.
+
+    When a file was deleted and re-added, the earliest add is its creation, so
+    the last line wins (git log is newest-first).
+    """
+    try:
+        rel = filepath.relative_to(SITE_ROOT)
+    except ValueError:
+        rel = filepath
+    result = subprocess.run(
+        ["git", "log", "--diff-filter=A", "--format=%as", "--", str(rel)],
+        cwd=SITE_ROOT,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        return None
+    dates = [line.strip() for line in result.stdout.splitlines() if line.strip()]
+    return dates[-1] if dates else None
 
 
 def check_vocabulary_drift(used):
@@ -179,6 +243,10 @@ def main():
     if not files:
         print("No sensor files found.")
         return 1
+
+    # Checked once, not per file: the answer is a property of the checkout.
+    history = history_problem()
+    unchecked = []
 
     for filepath in files:
         slug = filepath.stem
@@ -271,9 +339,23 @@ def main():
 
         reviewed = meta.get("last_reviewed", "")
         if reviewed:
-            import re as _re
-            if not _re.match(r"^\d{4}-\d{2}-\d{2}$", str(reviewed)):
+            if not re.match(r"^\d{4}-\d{2}-\d{2}$", str(reviewed)):
                 errors.append(f"{loc}: last_reviewed '{reviewed}' must be YYYY-MM-DD")
+            elif history is not None:
+                unchecked.append(loc)
+            else:
+                created = first_commit_date(filepath)
+                if created is None:
+                    errors.append(
+                        f"{loc}: no commit adds this entry, so its last_reviewed "
+                        f"date cannot be checked -- the file is untracked"
+                    )
+                elif str(reviewed) < created:
+                    errors.append(
+                        f"{loc}: last_reviewed '{reviewed}' predates the entry's "
+                        f"first commit ({created}) -- a review cannot happen before "
+                        f"the thing reviewed exists"
+                    )
 
         if sid and see_also and sid in see_also:
             errors.append(f"{loc}: see_also references its own id '{sid}' (self-loop)")
@@ -332,6 +414,15 @@ def main():
                     )
                 else:
                     seen[url] = (i, ref.get("title", "?"))
+
+    if unchecked:
+        # One error, not one per entry: the cause is the checkout, not the files.
+        errors.append(
+            f"{len(unchecked)} entries carry last_reviewed but their creation dates "
+            f"cannot be read here, starting with {unchecked[0]}: {history}. "
+            f"The gate fails closed rather than passing where its evidence is "
+            f"missing; CI's check job needs fetch-depth: 0 on actions/checkout"
+        )
 
     vocab_errors, vocab_warnings = check_vocabulary_drift(used)
     errors.extend(vocab_errors)

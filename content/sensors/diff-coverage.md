@@ -83,15 +83,17 @@ mutation testing    → would we catch a wrong impl?
 A diff coverage reading appears in CI as a check on the change, scoped to
 the lines this diff touched rather than the whole repository:
 
-```
-diff-cover report
--------------
-Total:   42 lines changed, 29 covered (69%)
-Threshold: 80%  FAIL
+Illustrative summary of a diff-coverage check, not diff-cover console output:
 
-Uncovered lines:
-  billing/invoice.py (4 lines): 112, 113, 141, 142
-  billing/tax.py (9 lines): 30-38
+```text
+Changed executable lines: 42
+Covered changed lines:   29 (69%)
+Required coverage:      80%
+Result:                 fail
+
+Uncovered changed lines:
+  billing/invoice.py: 112, 113, 141, 142
+  billing/tax.py: 30-38
 ```
 
 The verdict is pass or fail against a threshold set on changed lines

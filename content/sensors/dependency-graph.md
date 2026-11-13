@@ -67,13 +67,16 @@ risk factors.
 The reading is a list of edges plus a few numbers, often surfaced by
 an import-boundary tool refusing an edge:
 
-```
-import-linter: forbidden import detected
-  src/api/views.py -> src/db/session
-  contract "api must not import db internals": BROKEN (1 violation)
+Illustrative findings from an import-boundary check and a cycle check,
+not import-linter or dependency-cruiser console output:
 
-dependency-cruiser: circular
-  src/auth/token.ts -> src/auth/session.ts -> src/auth/token.ts
+```text
+Boundary violation:
+  api.views imports db.session
+  Rule: api must not import db internals
+
+Dependency cycle:
+  auth/token.ts -> auth/session.ts -> auth/token.ts
 ```
 
 | Metric | Reading | Read as |
@@ -81,13 +84,13 @@ dependency-cruiser: circular
 | Fan-in | 47 modules import `util.ts` | Blast radius of any change to it |
 | Fan-out | `checkout.ts` imports 31 modules | Fragility: any of them can break it |
 | Cycles | auth <-> session | Coupling that blocks separate testing |
-| Instability | 9 changes to `core.py` this quarter | Every dependent pays churn tax |
+| Recent changes | 9 changes to `core.py` this quarter | A reason to examine the cost to dependents |
 
 The numbers are not verdicts; they are the inputs to a judgment about
 where change will be expensive. Read the graph against recent change
 history, because a stable hub is cheap and a churning hub is a
 bottleneck, and the graph alone cannot tell them apart. Treat a
-single module with high fan-in and high instability as the highest-
+single module with high fan-in and frequent changes as the highest-
 priority refactoring target in the codebase.
 
 ## Response playbook

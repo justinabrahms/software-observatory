@@ -83,12 +83,10 @@ The `templates/` directory is **empty** — templates are f-strings in
 `observatory/pages/`. Do not look for Jinja.
 
 Shared site data (the sensor families, confidence-stack layers, oracle
-bar widths, latency labels, and the homepage scatter axes `STACK_SCATTER` /
-`LATENCY_X` / `ORACLE_Y`) are module-level constants in
+bar widths, and latency labels) are module-level constants in
 `observatory/taxonomy.py`. Adding or renumbering a family means editing
-`FAMILIES` there
-— and adding a `--fam-<slug>` color token in `css/observatory.css`, which
-the homepage scatter legend and dots key off.
+`FAMILIES` there. The homepage's editorial examples live in
+`observatory/pages/home.py`.
 
 ## Directory layout
 
@@ -106,7 +104,7 @@ the homepage scatter legend and dots key off.
 | `.gitignore` note | `pages/` entry retained for historical output; new layout dirs (`catalog/`, `sensors/`, …) are also ignored. |
 | `index.html`, `catalog/`, `atlas/`, `sensors/`, `search-index.json` | **Generated output** — gitignored, overwritten by every build; deploys ship it from the working tree. |
 | `css/observatory.css` | Hand-written stylesheet (design tokens in `:root` at top). |
-| `js/main.js` | No build step. Family filter, card a11y, header search dropdown, heading-jumplink copy buttons, homepage scatter toggle + legend isolation. |
+| `js/main.js` | No build step. Family filter, card a11y, header search dropdown, and heading-jumplink copy buttons. |
 | `archive-NMUHEr/` | Untracked crush release tarball. Ignore. |
 
 ## Adding a sensor (the main workflow)
@@ -173,9 +171,8 @@ are left alone and `check_links.py` will flag them.
   effect *structurally* (they're copied by reference, not processed), but
   content/template changes require a build + browser refresh. There is no
   dev server or watch mode.
-- `generate_index_page` hard-codes featured sensor `SO-003` (mutation
-  testing) and the "recent entries" are just the first 6 sensors by
-  filename sort — not actually sorted by date.
+- The homepage's worked examples link to specific sensor and playbook pages;
+  if those slugs change, update the links in `observatory/pages/home.py`.
 - The catalog page's sensor blurb comes from `blurb_text()`: first rendered
   *paragraph* (not line — markdown source is hard-wrapped), tags stripped,
   entities decoded, cut at a sentence boundary inside 200 chars with a

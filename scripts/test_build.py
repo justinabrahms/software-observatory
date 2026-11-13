@@ -6,7 +6,7 @@ WHY THIS FILE EXISTS
 --------------------
 build.py is ~3,900 lines and is the entire CMS: frontmatter parsing, the
 family/stack-level models, see_also resolution, backlinks, the atlas grid,
-the scatter geometry, the SVG dependency graph, eleven page generators, the
+the SVG dependency graph, eleven page generators, the
 search index, the sitemap, RSS, llms.txt and the CLI dataset. Eight closed
 bugs lived in it, and every one of them was found by a human reading the
 rendered site. A snapshot of the rendered site is therefore the oracle that

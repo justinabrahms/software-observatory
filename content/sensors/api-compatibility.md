@@ -75,12 +75,14 @@ breakage is a property of two versions plus the people using them.
 
 The reading is a classified diff of the API surface:
 
-```
-openapi-diff old.yaml new.yaml
-BREAKING: removed endpoint GET /v1/invoices/{id}/export
-BREAKING: changed type of Invoice.total: number -> string
-NON-BREAKING: added optional query param `cursor` to GET /v1/invoices
-NON-BREAKING: added endpoint POST /v1/invoices/{id}/void
+Illustrative classification of an API diff, not openapi-diff or oasdiff
+console output:
+
+```text
+Breaking: removed endpoint GET /v1/invoices/{id}/export
+Breaking: changed response field Invoice.total from number to string
+Compatible addition: optional query parameter cursor on GET /v1/invoices
+Compatible addition: endpoint POST /v1/invoices/{id}/void
 ```
 
 That classification is the whole reading, and its strength is that it

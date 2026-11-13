@@ -139,7 +139,7 @@ Operator-only notes live in an untracked `OPERATIONS.md` at the repo root
    ```
 
 3. Write the markdown body. Keep the opening paragraph self-contained —
-   it becomes the catalog card blurb and the homepage entry row.
+   it becomes the catalog card blurb.
 4. Run `make check` (above). A `family` with no matching entry in
    `FAMILIES` silently drops the sensor off the catalog and atlas (the
    detail page still generates) — check the build output counts.
@@ -276,3 +276,12 @@ By contributing, you agree your content contributions will be licensed
 under
 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/),
 the same license as the rest of the site content.
+
+## Sample readings
+
+A block attributed to a tool must come from an actual run. Record the tool
+version, command, input fixture, and where the captured output can be checked.
+Keep interpretation outside the captured block. If a sample is constructed or
+combines several runs, label it **illustrative** immediately before the sample
+and say it is not the named tool's console output. Do not put a real command
+above invented diagnostics in the same block.

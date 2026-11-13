@@ -37,6 +37,7 @@ Also state what the sensor cannot detect; every entry needs one.
       `search-index.json`, … are gitignored; `cli/data/sensors.json` is the
       one exception and *is* committed)
 - [ ] Empirical claims carry a source in `references:`
-- [ ] Any tool output shown was produced by really running the tool
+- [ ] Any tool output shown was produced by really running the tool, or the
+      sample is explicitly labelled illustrative and does not claim to be console output
 - [ ] No hostnames, IPs, account numbers, credential paths, or other
       projects' infrastructure in anything tracked

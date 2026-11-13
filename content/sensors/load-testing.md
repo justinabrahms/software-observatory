@@ -70,24 +70,26 @@ practitioners reach for when "performance" is the question.
 A reading is a break at a concurrency level, with the endpoint and the
 metric that broke:
 
-```
-k6 run --vus 500 --duration 5m load.js
+Illustrative results from separate runs at increasing concurrency, not k6
+console output. Each row summarizes one run against the same endpoint and
+request mix. The limits were set before testing: p95 below 500 ms and
+failed requests below 0.01%.
 
-running: 2m30s  ========================================= 50%
-  http_req_duration..........: p(95)=840ms  p(99)=2.1s   ← SLO breach at 300 VUs
-  http_req_failed.............: 0.04%   ← errors begin at 350 VUs
-  iterations_per_second.......: 1240/s  ← throughput plateaus at 400 VUs
-
-threshold: http_req_duration{p(95)<500ms}  ✗ failed
-threshold: http_req_failed<0.01%          ✗ failed
-```
+| Concurrent users | p95 latency | Failed requests | Requests/second | Verdict |
+|------------------|-------------|-----------------|-----------------|---------|
+| 200 | 210 ms | 0% | 980 | Pass |
+| 300 | 840 ms | 0% | 1,220 | Fail: latency |
+| 350 | 1,300 ms | 0.04% | 1,235 | Fail: latency and errors |
+| 400 | 1,700 ms | 0.08% | 1,240 | Fail: latency and errors |
+| 500 | 2,100 ms | 0.15% | 1,238 | Fail: latency and errors |
 
 Three habits matter when reading these:
 
 1. **Find the knee, not the red.** The interesting number is the
-   concurrency where latency degrades non-linearly (the knee at 300
-   VUs above), not the concurrency where everything falls over. Past
-   the knee, the system is failing; before it, the system is working.
+   concurrency range where latency rises sharply while throughput gains
+   shrink. Here that happens between 200 and 300 users; more runs in
+   that interval would locate it more closely. The table does not
+   establish an exact capacity limit.
 2. **Separate saturating from breaking.** Throughput plateauing means
    the system is saturated (busy, not broken); latency spiking and
    error rates rising means the system is breaking. Both are findings,

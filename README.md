@@ -57,6 +57,7 @@ npx softwareobservatory list --family structural
 npx softwareobservatory get SO-003
 npx softwareobservatory suggest "our tests pass but bugs still ship"
 npx softwareobservatory stack linter,SO-003,canary-analysis
+npx softwareobservatory audit evidence-inventory.json
 npx softwareobservatory mcp   # MCP server for agent clients
 ```
 
@@ -74,7 +75,7 @@ scripts/check_frontmatter.py Frontmatter schema validator over content/sensors/*
 scripts/export_cli_data.py Emits cli/data/sensors.json on every build
 cli/                       Node CLI + MCP server (npm: softwareobservatory)
 css/observatory.css        Hand-written stylesheet (design tokens in :root)
-js/main.js                 No build step — filter, search dropdown, scatter, jumplinks
+js/main.js                 No build step — filter, search dropdown, jumplinks
 templates/                 Page templates used by the generator
 
 Generated (all gitignored, all written in place at the repo root):
@@ -159,7 +160,7 @@ host.
    ```
 
 3. Write the markdown body. Keep the opening paragraph self-contained —
-   it becomes the catalog card blurb and the homepage entry row.
+   it becomes the catalog card blurb.
 4. Run `.venv/bin/python scripts/build.py`. A `family` with no matching
    entry in `FAMILIES` silently drops the sensor off the catalog and atlas
    (the detail page still generates) — check the build output counts.

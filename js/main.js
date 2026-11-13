@@ -81,41 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
     h.appendChild(btn);
   });
 
-  // Confidence scatter: toggle between stack layers and individual sensors
-  const scatterFrame = document.querySelector('.scatter-frame');
-  if (scatterFrame) {
-    document.querySelectorAll('.scatter-toggle-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.scatter-toggle-btn')
-          .forEach(b => b.classList.toggle('active', b === btn));
-        scatterFrame.dataset.scatterMode = btn.dataset.scatter;
-      });
-    });
-
-    // Legend hover/focus isolates one family's dots
-    const sensorPoints = Array.from(scatterFrame.querySelectorAll('.sensor-point'));
-    document.querySelectorAll('.scatter-legend .legend-key').forEach((key, i) => {
-      const slug = key.querySelector('.legend-dot').className.match(/fam-[\w-]+/)[0].slice(4);
-      key.setAttribute('tabindex', '0');
-      key.setAttribute('role', 'button');
-      key.setAttribute('aria-label', key.textContent.trim());
-      const isolate = () => {
-        sensorPoints.forEach(p => {
-          const match = p.classList.contains('fam-' + slug);
-          p.classList.toggle('fam-dim', !match);
-          p.classList.toggle('fam-spotlit', match);
-        });
-      };
-      const reset = () => {
-        sensorPoints.forEach(p => p.classList.remove('fam-dim', 'fam-spotlit'));
-      };
-      key.addEventListener('mouseenter', isolate);
-      key.addEventListener('mouseleave', reset);
-      key.addEventListener('focus', isolate);
-      key.addEventListener('blur', reset);
-    });
-  }
-
   // Search: fetch the build-time index, filter on input, render a dropdown
   const searchBox = document.querySelector('.search-box');
   if (searchBox) {

@@ -35,7 +35,7 @@
   --max-width:   1200px;
   --reading:     680px;
 
-  /* Categorical palette for the sensor families (scatter, future maps).
+  /* Categorical palette for the sensor families and atlas maps.
      Hues spaced around the wheel, tuned to read on the dark background. */
   --fam-structural:        #e5c07b;
   --fam-behavioral:        #61afef;
@@ -333,6 +333,229 @@ a.wikilink:hover {
   max-width: 38rem;
 }
 .hero-actions { display: flex; gap: 1rem; }
+/* A worked version of the source-code thought experiment. The observation,
+   its reach, and its limit stay together as one link to the research. */
+.thought-experiment {
+  display: grid;
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 4rem 2rem 5rem;
+  scroll-margin-top: 6.5rem;
+  border-top: 1px solid var(--border);
+}
+.thought-intro h2 {
+  max-width: 25rem;
+  margin-bottom: 1.5rem;
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  line-height: 1.15;
+}
+.thought-intro p:not(.eyebrow) {
+  max-width: 27rem;
+  margin-bottom: 1rem;
+  color: var(--text-soft);
+  line-height: 1.7;
+}
+.thought-observation {
+  display: block;
+  padding: 1.2rem 0 1.4rem;
+  border-top: 1px solid var(--border-soft);
+}
+.thought-observation:hover h3,
+.thought-observation:focus-visible h3 { color: var(--accent); }
+.thought-number {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  letter-spacing: .08em;
+}
+.thought-observation h3 {
+  margin: .55rem 0 .4rem;
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 1.42rem;
+  line-height: 1.25;
+  transition: color .2s ease;
+}
+.thought-observation p {
+  max-width: 36rem;
+  color: var(--text-soft);
+  font-size: .92rem;
+  line-height: 1.6;
+}
+.thought-link {
+  display: inline-block;
+  margin-top: .75rem;
+  color: var(--accent);
+  font-size: .84rem;
+  font-weight: 500;
+}
+.thought-next {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-soft);
+}
+.thought-next p {
+  margin-bottom: 1.15rem;
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+}
+.thought-framework {
+  display: inline-block;
+  margin: .9rem 0 .9rem 1rem;
+  color: var(--text-soft);
+  font-size: .9rem;
+  border-bottom: 1px solid var(--border-soft);
+}
+.thought-framework:hover { color: var(--accent); border-color: var(--accent); }
+
+.evidence-case {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 4.5rem 2rem;
+  border-top: 1px solid var(--border);
+}
+.evidence-case-story h2 {
+  margin-bottom: 1.5rem;
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.5vw, 3.4rem);
+  line-height: 1.13;
+}
+.evidence-case-story > p:not(.eyebrow) {
+  max-width: 33rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-soft);
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+.evidence-case-link {
+  color: var(--accent);
+  font-size: .9rem;
+  font-weight: 500;
+  border-bottom: 1px solid var(--accent-soft);
+}
+.evidence-case-link:hover { border-color: var(--accent); }
+.evidence-case-reading {
+  padding: 1rem 0 1.1rem;
+  border-top: 1px solid var(--border-soft);
+}
+.evidence-case-label {
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  letter-spacing: .08em;
+  color: var(--text-dim);
+}
+.evidence-case-reading p {
+  margin: .55rem 0 .2rem;
+  font-family: var(--font-serif);
+  font-size: 1.22rem;
+  line-height: 1.45;
+}
+.evidence-case-reading:last-child .evidence-case-label { color: var(--accent); }
+.evidence-case-reading .wikilink { font-size: .85rem; }
+
+.confidence-story {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 4.5rem 2rem;
+  border-top: 1px solid var(--border);
+  scroll-margin-top: 6.5rem;
+}
+.confidence-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+  gap: 3rem;
+  align-items: end;
+  margin-bottom: 2.5rem;
+}
+.confidence-intro .eyebrow { grid-column: 1 / -1; margin-bottom: -1.5rem; }
+.confidence-intro h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.3vw, 3.2rem);
+  line-height: 1.16;
+}
+.confidence-intro h2 em { color: var(--accent); font-weight: 400; }
+.confidence-intro > p:not(.eyebrow) {
+  color: var(--text-soft);
+  line-height: 1.7;
+}
+.confidence-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.25rem;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.6rem;
+}
+.confidence-steps li {
+  position: relative;
+  padding-top: 1.5rem;
+  border-top: 2px solid var(--accent-soft);
+}
+.confidence-steps li::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.confidence-step-num {
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  letter-spacing: .07em;
+  color: var(--accent);
+}
+.confidence-steps h3 {
+  margin: .75rem 0 .55rem;
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  line-height: 1.3;
+}
+.confidence-steps p {
+  color: var(--text-soft);
+  font-size: .9rem;
+  line-height: 1.65;
+}
+.confidence-atlas-link {
+  display: inline-block;
+  color: var(--accent);
+  font-size: .9rem;
+  border-bottom: 1px solid var(--accent-soft);
+}
+.confidence-atlas-link:hover { border-color: var(--accent); }
+
+.research-next {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 5rem 2rem 6rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+.research-next h2 {
+  max-width: 46rem;
+  margin: 0 auto 1.2rem;
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.4vw, 3.2rem);
+  line-height: 1.18;
+}
+.research-next > p:not(.eyebrow) {
+  max-width: 42rem;
+  margin: 0 auto 2rem;
+  color: var(--text-soft);
+  line-height: 1.7;
+}
+.research-next-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
 
 /* Buttons */
 .btn {
@@ -1331,41 +1554,7 @@ a.wikilink:hover {
   color: var(--text);
 }
 
-/* ── Homepage: core insight ──────────────────────────────────────────────── */
-.core-insight {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 4rem 2rem;
-  border-top: 1px solid var(--border);
-}
-.big-quote {
-  max-width: 48rem;
-  margin: 0 auto;
-  border-left: 3px solid var(--accent);
-  padding-left: 2rem;
-}
-.big-quote p {
-  font-family: var(--font-serif);
-  font-size: 1.3rem;
-  font-weight: 400;
-  line-height: 1.6;
-  color: var(--text);
-  margin-bottom: 1.5rem;
-  font-style: italic;
-}
-.big-quote .wikilink {
-  color: var(--text);
-}
-
-/* ── Homepage: families grid ─────────────────────────────────────── */
-.families-section,
-.stack-preview,
-.properties-preview {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 4rem 2rem;
-  border-top: 1px solid var(--border);
-}
+/* ── Shared section headings ─────────────────────────────────────── */
 .section-heading {
   font-family: var(--font-serif);
   font-size: 1.5rem;
@@ -1379,291 +1568,6 @@ a.wikilink:hover {
   line-height: 1.7;
   margin-bottom: 2.5rem;
 }
-.families-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-.family-card {
-  display: block;
-  padding: 1.8rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  transition: border-color .25s, transform .25s;
-}
-.family-card:hover {
-  border-color: var(--accent-soft);
-  transform: translateY(-2px);
-}
-.family-num {
-  font-family: var(--font-mono);
-  font-size: .82rem;
-  color: var(--accent);
-  letter-spacing: .1em;
-}
-.family-name {
-  font-family: var(--font-serif);
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin: .6rem 0 .4rem;
-}
-.family-question {
-  font-size: .92rem;
-  color: var(--text-soft);
-  font-style: italic;
-  margin-bottom: .8rem;
-}
-.family-examples {
-  font-family: var(--font-mono);
-  font-size: .76rem;
-  color: var(--text-dim);
-  line-height: 1.5;
-}
-
-/* ── Homepage: confidence landscape scatter ─────────────────────────────── */
-.scatter-toggle {
-  display: flex;
-  justify-content: center;
-  gap: .4rem;
-  margin-bottom: 1rem;
-}
-.scatter-toggle-btn {
-  font-family: var(--font-mono);
-  font-size: .78rem;
-  letter-spacing: .04em;
-  padding: .3rem .9rem;
-  background: var(--bg-card);
-  color: var(--text-dim);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  cursor: pointer;
-  transition: all .2s ease;
-}
-.scatter-toggle-btn:hover { color: var(--text); border-color: var(--accent-soft); }
-.scatter-toggle-btn.active {
-  color: var(--accent);
-  border-color: var(--accent-soft);
-  background: var(--accent-glow);
-}
-.scatter-frame {
-  max-width: 52rem;
-  margin: 0 auto;
-}
-.scatter-y-label {
-  font-family: var(--font-mono);
-  font-size: .72rem;
-  color: var(--text-soft);
-  letter-spacing: .06em;
-  margin-bottom: .35rem;
-  margin-left: 3.2rem;
-}
-.scatter-y-label::before { content: "↑ "; color: var(--text-dim); }
-.scatter-body {
-  display: flex;
-  align-items: stretch;
-  gap: .5rem;
-}
-.scatter-y-ticks {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-end;
-  width: 5rem;
-  padding: .15rem 0;
-  font-family: var(--font-mono);
-  font-size: .66rem;
-  color: var(--text-dim);
-  letter-spacing: .04em;
-}
-.scatter-plot {
-  position: relative;
-  flex: 1;
-  height: 24rem;
-  border-left: 1px solid var(--border-soft);
-  border-bottom: 1px solid var(--border-soft);
-  background:
-    repeating-linear-gradient(to top, transparent 0 calc(25% - 1px), var(--border) calc(25% - 1px) 25%),
-    repeating-linear-gradient(to right, transparent 0 calc(25% - 1px), var(--border) calc(25% - 1px) 25%);
-  background-color: var(--bg-soft);
-  border-radius: 4px;
-}
-.scatter-x-axis {
-  display: flex;
-  justify-content: space-between;
-  font-family: var(--font-mono);
-  font-size: .68rem;
-  color: var(--text-dim);
-  letter-spacing: .06em;
-  margin-top: .5rem;
-  margin-left: 5.5rem;
-}
-.scatter-hint {
-  text-align: center;
-  font-size: .78rem;
-  color: var(--text-dim);
-  margin-top: .9rem;
-}
-/* family-color legend — only meaningful in sensors mode */
-.scatter-legend {
-  display: none;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: .4rem 1.1rem;
-  margin-top: .8rem;
-  max-width: 60rem;
-  margin-left: auto;
-  margin-right: auto;
-}
-.scatter-frame[data-scatter-mode="sensors"] .scatter-legend { display: flex; }
-.legend-key {
-  display: inline-flex;
-  align-items: center;
-  gap: .35rem;
-  font-family: var(--font-mono);
-  font-size: .68rem;
-  color: var(--text-dim);
-}
-.legend-dot {
-  width: 14px; height: 14px; border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  line-height: 1;
-  margin-right: .3rem;
-  background: transparent;
-}
-.legend-dot.fam-structural        { color: var(--fam-structural); }
-.legend-dot.fam-behavioral        { color: var(--fam-behavioral); }
-.legend-dot.fam-test-effectiveness{ color: var(--fam-test-effectiveness); }
-.legend-dot.fam-invariants        { color: var(--fam-invariants); }
-.legend-dot.fam-adversarial       { color: var(--fam-adversarial); }
-.legend-dot.fam-runtime           { color: var(--fam-runtime); }
-.legend-dot.fam-change            { color: var(--fam-change); }
-.legend-dot.fam-architecture      { color: var(--fam-architecture); }
-.legend-dot.fam-evolution         { color: var(--fam-evolution); }
-.legend-dot.fam-comprehension     { color: var(--fam-comprehension); }
-.scatter-point {
-  position: absolute;
-  transform: translate(-50%, 50%);
-  display: block;
-  z-index: 1;
-}
-/* The visible dot is 13-14px; this invisible pad lifts the pointer/touch
-   target to the 24px WCAG 2.5.8 minimum without changing the plot. */
-.scatter-point::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 24px;
-  height: 24px;
-  transform: translate(-50%, -50%);
-}
-.scatter-dot {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 14px;
-  height: 14px;
-  font-size: 11px;
-  line-height: 1;
-  color: var(--accent);
-  border: 2px solid var(--bg);
-  border-radius: 50%;
-  background: transparent;
-  transition: transform .15s ease;
-}
-.scatter-point:hover .scatter-dot { transform: scale(1.5); }
-.scatter-tag {
-  position: absolute;
-  left: 50%;
-  top: -1.5rem;
-  transform: translateX(-50%);
-  white-space: nowrap;
-  font-family: var(--font-mono);
-  font-size: .68rem;
-  color: var(--text);
-  background: var(--bg-elev);
-  border: 1px solid var(--border-soft);
-  padding: .1rem .4rem;
-  border-radius: 3px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .15s ease;
-}
-.scatter-point:hover .scatter-tag,
-.scatter-point:focus-visible .scatter-tag { opacity: 1; }
-
-/* Layers mode: always show labels, bigger dots */
-.scatter-frame[data-scatter-mode="layers"] .layer-point .scatter-dot {
-  width: 14px;
-  height: 14px;
-}
-.scatter-frame[data-scatter-mode="layers"] .layer-point .scatter-tag {
-  opacity: 1;
-  top: auto;
-  bottom: 1.1rem;
-  background: none;
-  border: none;
-  color: var(--text-soft);
-}
-.scatter-frame[data-scatter-mode="layers"] .layer-point:hover .scatter-tag { color: var(--accent); }
-.scatter-frame[data-scatter-mode="layers"] .sensor-point { display: none; }
-
-/* Sensors mode: dots colored by sensor family, labels on hover only */
-.scatter-frame[data-scatter-mode="sensors"] .layer-point { display: none; }
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point .scatter-dot {
-  width: 13px;
-  height: 13px;
-  font-size: 10px;
-  color: var(--signal);
-}
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-structural .scatter-dot        { color: var(--fam-structural); }
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-behavioral .scatter-dot        { color: var(--fam-behavioral); }
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-test-effectiveness .scatter-dot{ color: var(--fam-test-effectiveness); }
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-invariants .scatter-dot        { color: var(--fam-invariants); }
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-adversarial .scatter-dot       { color: var(--fam-adversarial); }
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-runtime .scatter-dot           { color: var(--fam-runtime); }
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-change .scatter-dot            { color: var(--fam-change); }
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-architecture .scatter-dot      { color: var(--fam-architecture); }
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-evolution .scatter-dot         { color: var(--fam-evolution); }
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-comprehension .scatter-dot     { color: var(--fam-comprehension); }
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point { z-index: 0; }
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point:hover { z-index: 2; }
-/* legend hover dims other families and names the surviving dots */
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-dim .scatter-dot {
-  opacity: .18;
-}
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-spotlit .scatter-tag {
-  opacity: 1;
-  top: auto;
-  bottom: .85rem;
-  background: var(--bg);
-  border: none;
-  color: var(--text-soft);
-  font-size: .62rem;
-  padding: 0 .2rem;
-}
-/* dots near the top of the plot get their label below instead */
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-spotlit[style*="bottom:7"] .scatter-tag,
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-spotlit[style*="bottom:8"] .scatter-tag,
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-spotlit[style*="bottom:9"] .scatter-tag {
-  bottom: auto;
-  top: .85rem;
-}
-.scatter-frame[data-scatter-mode="sensors"] .sensor-point.fam-spotlit:hover .scatter-tag {
-  color: var(--accent);
-}
-.legend-key { cursor: default; }
-.legend-key:hover { color: var(--text); }
-
-.stack-cta {
-  text-align: center;
-  margin-top: 2rem;
-}
-
 /* ── Homepage: properties preview ───────────────────────────────────────── */
 .properties-grid {
   display: grid;
@@ -2464,24 +2368,18 @@ a.wikilink:hover {
   .eyebrow { margin-bottom: 1rem; }
   .hero-title { margin-bottom: 1.4rem; }
   .hero-lede { margin-bottom: 1.8rem; }
+  .thought-experiment { grid-template-columns: 1fr; padding: 3rem 1.5rem 4rem; }
+  .evidence-case { grid-template-columns: 1fr; padding: 3.5rem 1.5rem; }
+  .confidence-story { padding: 3.5rem 1.5rem; }
+  .confidence-intro { grid-template-columns: 1fr; gap: 1rem; }
+  .confidence-intro .eyebrow { margin-bottom: 0; }
+  .confidence-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .research-next { padding: 4rem 1.5rem 5rem; }
   .pillars { grid-template-columns: 1fr; gap: 1.5rem; padding: 3rem 1.5rem; }
   .catalog-layout { grid-template-columns: 1fr; padding: 1.5rem; }
   .filter-sidebar { position: static; }
   .signal-grid { grid-template-columns: minmax(0, 1fr); }
 
-
-  /* Scatter labels are centred on their dot, so points near the right edge
-     of the plot used to push the whole document sideways. Flip the far-right
-     ones to right-aligned and clip anything still hanging over. The literal
-     `left:8`/`left:9` match is the same style-attribute idiom the layers/
-     sensors rules already use; there are no 8.x% or 9.x% points. */
-  .scatter-point[style*="left:8"] .scatter-tag,
-  .scatter-point[style*="left:9"] .scatter-tag {
-    left: auto;
-    right: 0;
-    transform: none;
-  }
-  .scatter-frame { overflow-x: clip; }
 
   /* Wide prose tables scroll rather than reflowing: like the `pre` blocks,
      the column alignment is the content. `display: block` turns the table
@@ -2506,12 +2404,9 @@ a.wikilink:hover {
   .wiki-layout { grid-template-columns: 1fr; padding: 0 1.5rem; }
   .wiki-sidebar { position: static; padding-top: 0; }
   .see-also-grid { grid-template-columns: 1fr; }
-  .families-grid { grid-template-columns: 1fr; }
   .properties-grid { grid-template-columns: 1fr; }
   .family-map-grid { grid-template-columns: 1fr; }
   .stack-desc { display: none; }
-  .big-quote { padding-left: 1rem; }
-  .big-quote p { font-size: 1.1rem; }
   .predictive-retro { grid-template-columns: 1fr; }
   .actionability-spectrum { grid-template-columns: 1fr; }
   .action-spectrum-bar { display: none; }
@@ -2522,6 +2417,10 @@ a.wikilink:hover {
 @media (max-width: 480px) {
   .hero-title { font-size: 2rem; }
   .hero-actions { flex-direction: column; }
+  .hero-actions .btn { text-align: center; }
+  .thought-framework { display: table; margin: 1rem 0 0; }
+  .research-next-actions { flex-direction: column; }
+  .confidence-steps { grid-template-columns: 1fr; }
   .featured-signal { padding: 2rem 1.5rem; }
   .site-header { padding: .55rem 1rem 1rem; }
   .primary-nav { margin: 0 -1rem -1rem; }
