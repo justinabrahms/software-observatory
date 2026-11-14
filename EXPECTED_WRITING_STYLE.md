@@ -1,12 +1,54 @@
 # Expected writing style
 
-What the sensor pages are supposed to sound like, derived from review
-feedback on the pages themselves. This is a living file: every round of
-`/crit` on a sensor page that produces a general lesson gets appended
-here, with the page it came from cited so the evidence is traceable.
+Write like an experienced, self-taught engineer sharing something they
+have figured out with a colleague. The reader is a peer. This guide applies
+to sensor pages and the site's other explanatory prose.
 
-It is not a style guide invented in advance. Every rule below was paid
-for by a specific correction.
+The voice below is the governing direction. The review lessons that follow
+keep the technical claims honest; they are not a reason to make the prose
+terse or solemn. Add general lessons from future reviews with the page
+that prompted them, and reconcile them with this direction.
+
+## Voice
+
+- **Be intellectually direct.** Say what you mean and make distinctions
+  explicit. Give the reason for a distinction so the reader can use it.
+- **Be epistemically humble.** Distinguish what is known, what has been
+  observed, and what is suspected. Qualify the uncertain claim itself;
+  avoid coating every sentence in "maybe." Never invent firsthand
+  experience to sound conversational.
+- **Supply the context.** Assume an intelligent reader who may not share
+  your background. Explain what they need to follow the idea without
+  making a ceremony of the explanation.
+- **Be curious and earnest.** Let enthusiasm come through in the detail
+  you find interesting and why it matters. There is no need to announce
+  that something is fascinating.
+- **Use conversational, unpretentious language.** Technical sophistication
+  does not require elaborate language. Use the precise technical term
+  when it helps, and explain it.
+- **Be mildly irreverent and generous toward people.** Question convention,
+  authority, and unnecessary complexity. Explain where a practice falls
+  short without sneering at the people who use it.
+- **Let humor emerge.** An observation, an understated aside, or an
+  occasionally silly word can fit. Do not manufacture punchlines or add
+  a joke because a paragraph seems to need one.
+- **Value practical outcomes.** Show what helps someone do the work.
+  Ordinary work done well deserves the same care as a sophisticated
+  technique; novelty and complexity are not evidence of usefulness.
+- **Prefer concrete examples and observations.** Give the reader something
+  they can inspect before asking them to accept a general prescription.
+- **Be economical without becoming terse.** Give an idea the space it
+  needs. Keep the context, reasoning, and examples that help it land;
+  remove repetition and ceremony.
+
+Avoid performative cynicism, manufactured gravitas, excessive rhetorical
+contrasts, and the voice of someone dispensing wisdom from on high. A real
+distinction earns its place by explaining a difference the reader needs.
+
+For example, "Green CI is a comforting fiction" supplies a pose without
+explaining much. "The tests passed, but none sent two requests at once.
+This run tells us little about the race" gives the reader the observation
+and its limit.
 
 ## The reader
 
@@ -74,7 +116,7 @@ correction is worth more as a stated habit than as a silent fix.
 sample reading on the page, argue from those numbers. It keeps the
 claim checkable and stops made-up figures from carrying the argument.
 
-## Each sensor answers exactly one question
+## Keep the sensor's question clear
 
 **Know the question this sensor asks, and do not let it drift into a
 neighbouring sensor's question.** Related sensors sound similar and are
@@ -181,9 +223,11 @@ check whether it is carrying an argument or replacing one.
 > *compiler:* "Is this thing even a valid inhabitant of the language? If
 > not, everything else is noise." → "this noise comment is AI-ish."
 
-**Say the thing, then stop.** The pages are short and declarative. A
-sentence that only sets up the next sentence should be deleted and its
-job given to the next sentence.
+**Give the idea enough room, then stop.** Keep sentences that supply
+context, explain a cause, or help the reader interpret an example. Cut
+sentences that merely announce what comes next. Directness does not
+require every sentence to be short or every explanation to fit in a
+single paragraph.
 
 ## Code and notation in examples
 
