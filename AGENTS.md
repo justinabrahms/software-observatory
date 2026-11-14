@@ -146,6 +146,12 @@ section. `fix_link_depths()` rewrites these to **site-absolute URLs**
 page emits absolute links regardless of its own depth. Unrecognized targets
 are left alone and `check_links.py` will flag them.
 
+## Writing
+
+Read [EXPECTED_WRITING_STYLE.md](EXPECTED_WRITING_STYLE.md) before writing
+or reviewing site prose. It defines the voice and the technical standards
+for examples, claims, references, and sensor boundaries.
+
 ## Conventions
 
 - **Generated files are gitignored.** `index.html`, the section directories
