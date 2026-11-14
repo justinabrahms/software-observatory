@@ -1,0 +1,45 @@
+name: Build PR preview
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+permissions:
+  contents: read
+concurrency:
+  group: preview-build-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          # `make check` runs check-frontmatter, which reads each entry's first
+          # commit to refuse a review date that predates the entry it describes.
+          # That gate fails closed on a shallow checkout by design -- a default
+          # --depth 1 clone cannot answer, so it refuses rather than guessing.
+          # Without this line every preview build fails, and preview-publish is
+          # gated on a successful build, so no preview would ever be published,
+          # with a symptom that points nowhere near the cause.
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install -r requirements.txt
+      - run: make check
+      - name: Stage only public files
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: .venv/bin/python scripts/preview.py --number "$PR_NUMBER" --project "${GITHUB_REPOSITORY#*/}" --output "$RUNNER_TEMP/preview"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pr-preview
+          path: ${{ runner.temp }}/preview/
+          retention-days: 7
+          if-no-files-found: error

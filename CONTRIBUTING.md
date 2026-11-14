@@ -285,3 +285,66 @@ Keep interpretation outside the captured block. If a sample is constructed or
 combines several runs, label it **illustrative** immediately before the sample
 and say it is not the named tool's console output. Do not put a real command
 above invented diagnostics in the same block.
+
+## PR previews
+
+Every PR builds a public preview after `make check` passes. A bot updates one
+comment with the exact source commit, home/catalog/atlas links, and direct links
+to added or changed sensor pages. Previews use this repository's default GitHub
+Pages site, under `/<repository>/previews/pr-N/`. No custom domain is configured.
+New successful builds replace that PR's snapshot; failed builds leave its
+previously labeled commit in place. Closed snapshots are retained for review
+history. Downloadable build artifacts expire after seven days.
+
+Preview JavaScript is untrusted. It must never run on the production origin.
+The publisher queries GitHub's Pages configuration and rejects custom domains,
+non-HTTPS URLs, an unexpected project path, or any host other than the owner's
+default Pages host. Tests demonstrate that the former production-origin URL
+is rejected.
+
+**The origin is shared, and that is a prerequisite this feature does not create.**
+`<owner>.github.io` is one origin for every project page on the account: local
+storage, IndexedDB and cookies set by one are readable by all of them. A preview
+runs a contributor's branch as JavaScript at
+`https://<owner>.github.io/<project>/previews/pr-N/`, so anything that keeps user
+data on that origin is exposed to it — and at least one project page on this
+account does (`pain-relief-timer` stores doses in `localStorage`). Before previews
+run against an account, the account's Pages origin must hold nothing worth
+reading: a storage-backed project page either moves to its own origin (a custom
+domain, or a user/org Pages site) or loses its Pages deployment. Until then the
+guard below protects the production origin and not the account's.
+
+Beyond that, keep this origin for public, untrusted previews only; PRs share an
+origin with each other, so it must not host a trusted application.
+
+Staging uses the production deploy allow-list, rewrites navigation, assets,
+search data, and dynamic links into the Pages project and PR prefix, omits
+analytics, and adds noindex metadata and a preview notice. These are public
+pages: do not put confidential data in a PR. The production deploy retires the
+former `/previews/` directory so abandoned same-origin previews are removed.
+
+The build job has read-only permissions and no deploy secrets. A separate
+`workflow_run` publisher uses only default-branch code, rejects superseded
+heads, and validates archive paths, file types, symlinks, and size before
+extraction. It never executes artifact or snapshot scripts. Static snapshots
+are persisted on `gh-pages`; a Pages deployment publishes them together so a
+new PR preview preserves the others. The publisher uses GitHub's short-lived
+token and Pages OIDC permissions. It has no SSH steps, production deployment
+secret, or long-lived publishing credential. Fork builds may first need
+GitHub's normal maintainer approval.
+
+Operator setup: initialize the static `gh-pages` branch, enable Pages with
+GitHub Actions as its source, leave the custom domain empty, and restrict the
+`github-pages` environment to deployments from the default branch. No preview
+repository variables or additional secrets are needed. GitHub activates the
+publisher after it lands on the default branch; the introducing PR needs a
+one-time manual Pages deployment.
+
+Local staging after `make check` (use a new output directory each time):
+
+```sh
+.venv/bin/python scripts/preview.py --number 123 --project software-observatory --output /tmp/observatory-preview-123
+```
+
+The staging script reads `DEPLOY_PUBLIC` from the Makefile rather than
+maintaining another publication allow-list.
