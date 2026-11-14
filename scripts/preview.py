@@ -35,7 +35,7 @@ def unpack(archive, output):
 def stage(root, output, number, project):
     from observatory.config import SITE_URL
 
-    if not re.fullmatch(r'[A-Za-z0-9_.-]+', project) or project in {'.', '..'}:
+    if not project or not re.fullmatch(r'[A-Za-z0-9_.-]+', project) or project in {'.', '..'}:
         raise ValueError('Invalid Pages project name')
     prefix = f'/{project}/previews/pr-{number}'
     public = subprocess.check_output(
