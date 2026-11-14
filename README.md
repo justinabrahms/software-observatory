@@ -178,6 +178,10 @@ body works at any depth. Root-relative and absolute URLs are left alone.
 
 ## Contributing
 
+Pull requests receive a bot comment with an isolated preview, the source commit,
+and links to changed sensor pages after checks pass. See the
+[preview workflow](CONTRIBUTING.md#pr-previews) for publication and isolation rules.
+
 The Observatory is meant to be an open reference, and the field should be
 able to correct it. The best way to contribute right now:
 
