@@ -290,61 +290,56 @@ above invented diagnostics in the same block.
 
 Every PR builds a public preview after `make check` passes. A bot updates one
 comment with the exact source commit, home/catalog/atlas links, and direct links
-to added or changed sensor pages. Previews use this repository's default GitHub
-Pages site, under `/<repository>/previews/pr-N/`. No custom domain is configured.
-New successful builds replace that PR's snapshot; failed builds leave its
-previously labeled commit in place. Closed snapshots are retained for review
-history. Downloadable build artifacts expire after seven days.
+to added or changed sensor pages. Previews use a separate repository on a
+separate GitHub account, under that repository's default Pages project path.
+The account's entire Pages origin is reserved for public, untrusted previews.
+It must never host trusted applications or private browser storage.
 
-Preview JavaScript is untrusted. It must never run on the production origin.
-The publisher queries GitHub's Pages configuration and rejects custom domains,
-non-HTTPS URLs, an unexpected project path, or any host other than the owner's
-default Pages host. Tests demonstrate that the former production-origin URL
-is rejected.
+A different repository under the source account does not provide isolation:
+all of that account's project sites share a browser origin. The publisher
+requires a different account, constructs its default HTTPS Pages address, and
+refuses redirects (including custom-domain redirects). The static snapshot
+repository must not contain a CNAME or symlinks. Pages publishes its `main`
+branch. It also refuses if any
+other public repository on the preview account has Pages enabled, or if that
+check cannot be completed. Setup must audit private repositories too; the
+source workflow cannot enumerate another account's private repositories.
 
-**The origin is shared, and that is a prerequisite this feature does not create.**
-`<owner>.github.io` is one origin for every project page on the account: local
-storage, IndexedDB and cookies set by one are readable by all of them. A preview
-runs a contributor's branch as JavaScript at
-`https://<owner>.github.io/<project>/previews/pr-N/`, so anything that keeps user
-data on that origin is exposed to it — and at least one project page on this
-account does (`pain-relief-timer` stores doses in `localStorage`). Before previews
-run against an account, the account's Pages origin must hold nothing worth
-reading: a storage-backed project page either moves to its own origin (a custom
-domain, or a user/org Pages site) or loses its Pages deployment. Until then the
-guard below protects the production origin and not the account's.
+The read-only PR build receives no deployment credentials. It stages only
+`DEPLOY_PUBLIC`, rewrites navigation/assets/search into the destination project
+and PR prefix, omits analytics, and adds noindex metadata and a preview notice.
+The publisher runs default-branch code, validates archive paths/types/size and
+symlinks, checks the current PR head, and never executes artifact scripts.
 
-Beyond that, keep this origin for public, untrusted previews only; PRs share an
-origin with each other, so it must not host a trusted application.
+`PREVIEW_REPOSITORY` is the destination `owner/repository`. A single
+`PREVIEW_PUBLISH_KEY` secret is a write-enabled SSH deploy key attached only to
+that public static preview repository. It cannot write production or the
+source repository. The publisher's GitHub token has only source read access,
+artifact read access, and PR comment permission. The `preview-publishing`
+environment allows only the default branch. No production credentials are
+used. Host keys come from GitHub's HTTPS metadata API and SSH checks them.
 
-Staging uses the production deploy allow-list, rewrites navigation, assets,
-search data, and dynamic links into the Pages project and PR prefix, omits
-analytics, and adds noindex metadata and a preview notice. These are public
-pages: do not put confidential data in a PR. The production deploy retires the
-former `/previews/` directory so abandoned same-origin previews are removed.
+The destination holds only static snapshots, a trusted index, `robots.txt`,
+and `.nojekyll`. Enable branch-based Pages from `main` with no custom domain.
+A deploy-key push triggers Pages' native static deployment. Each update
+replaces only its PR directory and preserves other snapshots. A trusted
+revision manifest lets the publisher wait for the exact source commit before
+verifying pages/anchors and updating the PR comment. Failed builds leave the
+previously labeled preview in place. Closed snapshots are retained for review
+history; downloadable build artifacts expire after seven days.
 
-The build job has read-only permissions and no deploy secrets. A separate
-`workflow_run` publisher uses only default-branch code, rejects superseded
-heads, and validates archive paths, file types, symlinks, and size before
-extraction. It never executes artifact or snapshot scripts. Static snapshots
-are persisted on `gh-pages`; a Pages deployment publishes them together so a
-new PR preview preserves the others. The publisher uses GitHub's short-lived
-token and Pages OIDC permissions. It has no SSH steps, production deployment
-secret, or long-lived publishing credential. Fork builds may first need
-GitHub's normal maintainer approval.
+Before changing destinations, disable the publisher, verify that the whole
+new account origin has no trusted data, configure its scoped key and Pages
+site, migrate/restage the snapshots, and run the origin tests. Retire the old
+site, then enable the publisher and verify an end-to-end PR build. Fork builds
+may first need GitHub's normal maintainer approval. These are public pages;
+never put confidential data in a PR.
 
-Operator setup: initialize the static `gh-pages` branch, enable Pages with
-GitHub Actions as its source, leave the custom domain empty, and restrict the
-`github-pages` environment to deployments from the default branch. No preview
-repository variables or additional secrets are needed. GitHub activates the
-publisher after it lands on the default branch; the introducing PR needs a
-one-time manual Pages deployment.
-
-Local staging after `make check` (use a new output directory each time):
+Local staging after `make check` (use the destination repository's name and a
+new output directory):
 
 ```sh
-.venv/bin/python scripts/preview.py --number 123 --project software-observatory --output /tmp/observatory-preview-123
+.venv/bin/python scripts/preview.py --number 123 --project <preview-repository> --output /tmp/observatory-preview-123
 ```
 
-The staging script reads `DEPLOY_PUBLIC` from the Makefile rather than
-maintaining another publication allow-list.
+The allow-list is read from the Makefile; do not maintain a second copy.

@@ -36,7 +36,8 @@ jobs:
       - name: Stage only public files
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
-        run: .venv/bin/python scripts/preview.py --number "$PR_NUMBER" --project "${GITHUB_REPOSITORY#*/}" --output "$RUNNER_TEMP/preview"
+          PREVIEW_REPOSITORY: ${{ vars.PREVIEW_REPOSITORY }}
+        run: .venv/bin/python scripts/preview.py --number "$PR_NUMBER" --project "${PREVIEW_REPOSITORY#*/}" --output "$RUNNER_TEMP/preview"
       - uses: actions/upload-artifact@v4
         with:
           name: pr-preview

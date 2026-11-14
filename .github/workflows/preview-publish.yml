@@ -4,13 +4,9 @@ on:
     workflows: [Build PR preview]
     types: [completed]
 permissions:
-  contents: write # persist static snapshots to gh-pages only
+  contents: read
   actions: read
-  pages: write
-  id-token: write
   pull-requests: write
-# Each deployment includes all persisted PR snapshots. Serialize updates so
-# publishing one PR cannot overwrite another PR's files or a newer deployment.
 concurrency:
   group: preview-pages-publish
   cancel-in-progress: false
@@ -18,18 +14,18 @@ jobs:
   publish:
     if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request'
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    environment: preview-publishing
     steps:
-      # Privileged job uses ONLY default-branch code, never PR code. It has
-      # no production SSH key and never executes artifact or snapshot scripts.
+      # Only default-branch code runs with publication credentials. The key
+      # can write only the separate, public preview repository, not production.
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.repository.default_branch }}
           persist-credentials: false
       - uses: actions/github-script@v7
         id: preview
+        env:
+          PREVIEW_REPOSITORY: ${{ vars.PREVIEW_REPOSITORY }}
         with:
           script: |
             const prepare = require('./scripts/preview-publish.cjs');
@@ -37,43 +33,46 @@ jobs:
       - name: Validate and unpack static files
         if: steps.preview.outputs.number != ''
         run: python3 scripts/preview.py --archive "$RUNNER_TEMP/preview.zip" --output "$RUNNER_TEMP/preview"
-      - name: Load persisted static snapshots
-        if: steps.preview.outputs.number != ''
-        uses: actions/checkout@v4
-        with:
-          ref: gh-pages
-          path: pages-state
-      - name: Update only this PR's snapshot
+      - name: Configure preview-repository key
         if: steps.preview.outputs.number != ''
         env:
+          PREVIEW_KEY: ${{ secrets.PREVIEW_PUBLISH_KEY }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          test -n "$PREVIEW_KEY"
+          printf '%s\n' "$PREVIEW_KEY" > "$RUNNER_TEMP/preview-key"
+          chmod 600 "$RUNNER_TEMP/preview-key"
+          ssh-keygen -y -f "$RUNNER_TEMP/preview-key" > /dev/null
+          gh api meta --jq '.ssh_keys[] | "github.com " + .' > "$RUNNER_TEMP/preview-known-hosts"
+      - name: Publish only this PR's static snapshot
+        if: steps.preview.outputs.number != ''
+        env:
+          PREVIEW_REPOSITORY: ${{ vars.PREVIEW_REPOSITORY }}
           PR_NUMBER: ${{ steps.preview.outputs.number }}
         run: |
           set -euo pipefail
-          mkdir -p "pages-state/previews/pr-$PR_NUMBER"
-          rsync -a --delete "$RUNNER_TEMP/preview/" "pages-state/previews/pr-$PR_NUMBER/"
-          python3 scripts/preview_index.py pages-state
-          git -C pages-state config user.name 'github-actions[bot]'
-          git -C pages-state config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git -C pages-state add previews index.html robots.txt .nojekyll
-          if ! git -C pages-state diff --cached --quiet; then
-            git -C pages-state commit -m "Update preview for PR #$PR_NUMBER"
-            git -C pages-state push origin HEAD:gh-pages
+          export GIT_SSH_COMMAND="ssh -i $RUNNER_TEMP/preview-key -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$RUNNER_TEMP/preview-known-hosts"
+          git clone --depth 1 --branch main "git@github.com:$PREVIEW_REPOSITORY.git" "$RUNNER_TEMP/pages-state"
+          # A snapshot repository must not redirect writes through symlinks.
+          if [ -n "$(find "$RUNNER_TEMP/pages-state" -type l -print -quit)" ]; then
+            echo 'Preview repository contains a symlink; refusing to publish.' >&2
+            exit 1
           fi
-      - name: Package all snapshots without repository metadata
+          mkdir -p "$RUNNER_TEMP/pages-state/previews/pr-$PR_NUMBER"
+          rsync -a --delete "$RUNNER_TEMP/preview/" "$RUNNER_TEMP/pages-state/previews/pr-$PR_NUMBER/"
+          cp "$RUNNER_TEMP/preview-links.json" "$RUNNER_TEMP/pages-state/previews/pr-$PR_NUMBER/preview-revision.json"
+          python3 scripts/preview_index.py "$RUNNER_TEMP/pages-state"
+          git -C "$RUNNER_TEMP/pages-state" config user.name 'github-actions[bot]'
+          git -C "$RUNNER_TEMP/pages-state" config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git -C "$RUNNER_TEMP/pages-state" add previews index.html robots.txt .nojekyll
+          if ! git -C "$RUNNER_TEMP/pages-state" diff --cached --quiet; then
+            git -C "$RUNNER_TEMP/pages-state" commit -m "Update preview for PR #$PR_NUMBER"
+            git -C "$RUNNER_TEMP/pages-state" push origin HEAD:main
+          fi
+      - name: Verify deployment and served pages
         if: steps.preview.outputs.number != ''
-        run: |
-          mkdir -p "$RUNNER_TEMP/pages"
-          rsync -a --exclude='.git' --exclude='.github' pages-state/ "$RUNNER_TEMP/pages/"
-      - uses: actions/upload-pages-artifact@v3
-        if: steps.preview.outputs.number != ''
-        with:
-          path: ${{ runner.temp }}/pages
-      - uses: actions/deploy-pages@v4
-        if: steps.preview.outputs.number != ''
-        id: deployment
-      - name: Verify served pages
-        if: steps.preview.outputs.number != ''
-        run: python3 scripts/verify_preview.py "$RUNNER_TEMP/preview-links.json"
+        run: python3 scripts/verify_preview.py "$RUNNER_TEMP/preview-links.json" --wait 180
       - name: Update PR preview comment
         if: steps.preview.outputs.number != ''
         uses: actions/github-script@v7
@@ -83,9 +82,12 @@ jobs:
             const data = JSON.parse(fs.readFileSync(`${process.env.RUNNER_TEMP}/preview-links.json`));
             const issue_number = Number('${{ steps.preview.outputs.number }}');
             const marker = '<!-- observatory-preview -->';
-            const body = `${marker}\nPreview for \`${data.sha}\` (public, noindex, isolated GitHub Pages origin):\n\n` +
+            const body = `${marker}\nPreview for \`${data.sha}\` (public, noindex, separate preview account):\n\n` +
               data.links.map(link => `- [${link.label}](${link.url})`).join('\n');
             const comments = await github.paginate(github.rest.issues.listComments, {...context.repo, issue_number});
             const old = comments.find(c => c.user.type === 'Bot' && c.body.includes(marker));
             if (old) await github.rest.issues.updateComment({...context.repo, comment_id: old.id, body});
             else await github.rest.issues.createComment({...context.repo, issue_number, body});
+      - name: Remove temporary key
+        if: always()
+        run: rm -f "$RUNNER_TEMP/preview-key"

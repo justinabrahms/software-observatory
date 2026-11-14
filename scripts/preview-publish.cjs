@@ -6,9 +6,12 @@ module.exports = async ({github, context, core}) => {
   const pr = pulls.find(p => p.head.sha === run.head_sha &&
     p.head.repo?.full_name === run.head_repository.full_name && p.head.ref === run.head_branch);
   if (!pr) { core.info('PR closed or head superseded; skipping'); return; }
-  const {previewBase} = require('./preview_config.cjs');
-  const pages = await github.rest.repos.getPages(context.repo);
-  const base = previewBase(context.repo, pages.data);
+  const {previewRepository, previewBase, assertNoSiblingPages, assertDefaultOrigin} = require('./preview_config.cjs');
+  const target = previewRepository(process.env.PREVIEW_REPOSITORY);
+  const metadata = await github.rest.repos.get(target);
+  const base = previewBase(context.repo, target, metadata.data);
+  await assertNoSiblingPages(github, target);
+  await assertDefaultOrigin(base);
   const url = `${base.replace(/\/$/, '')}/pr-${pr.number}`;
   const links = [
     {label: 'Home', url: `${url}/`},

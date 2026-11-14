@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Exercise preview path isolation and the privileged artifact boundary."""
 import json
+import re
 import stat
 import tempfile
 import unittest
@@ -9,15 +10,18 @@ from pathlib import Path
 from unittest.mock import patch
 
 from preview import stage, unpack
+from verify_preview import verify
 
 
 class PreviewTests(unittest.TestCase):
-    def test_publisher_has_no_production_credentials_or_arbitrary_base_url(self):
+    def test_publisher_key_is_the_only_secret_and_no_source_write_permissions(self):
         root = Path(__file__).resolve().parents[1]
         workflow = (root / '.github/workflows/preview-publish.yml').read_text()
-        self.assertNotIn('secrets.', workflow)
+        self.assertEqual(set(re.findall(r'secrets\.([A-Za-z0-9_]+)', workflow)), {'PREVIEW_PUBLISH_KEY'})
+        self.assertNotIn('contents: write', workflow)
+        self.assertNotIn('pages: write', workflow)
         self.assertNotIn('PREVIEW_BASE_URL', workflow)
-        self.assertIn('actions/deploy-pages@', workflow)
+        self.assertIn('preview-publishing', workflow)
 
     def test_staging_keeps_navigation_search_and_assets_in_preview(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -53,6 +57,28 @@ class PreviewTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     unpack(root / 'artifact.zip', root / 'output')
                 self.assertFalse((root / 'output').exists())
+
+    def test_verification_rejects_stale_revision_and_cross_origin_redirects(self):
+        from io import BytesIO
+
+        data = {'sha': 'current', 'links': [{'url': 'https://preview.invalid/pr-1/'}]}
+
+        def fetch(url, timeout):
+            response = BytesIO(json.dumps({'sha': 'old'}).encode())
+            response.status = 200
+            response.url = url
+            return response
+
+        with self.assertRaisesRegex(ValueError, 'older preview revision'):
+            verify(data, fetch)
+
+        def redirected(url, timeout):
+            response = fetch(url, timeout)
+            response.url = 'https://production.invalid/'
+            return response
+
+        with self.assertRaisesRegex(ValueError, 'outside its isolated origin'):
+            verify(data, redirected)
 
     def test_valid_static_archive(self):
         with tempfile.TemporaryDirectory() as directory:
