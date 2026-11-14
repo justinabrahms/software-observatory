@@ -21,6 +21,7 @@ categories:
 see_also:
 - SO-004
 - SO-006b
+- SO-006f
 - change
 - evolution
 - comprehension
